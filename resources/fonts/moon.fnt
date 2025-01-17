@@ -1,0 +1,13 @@
+info face="Moon" size=20 bold=0 italic=0 smooth=1 spacing=1,1
+common lineHeight=20 base=20 scaleW=156 scaleH=20 pages=1
+page id=0 file="moon.png"
+chars count=8
+
+char id=48 x=0 y=0 width=20 height=20 xoffset=0 yoffset=0 xadvance=20 page=0
+char id=49 x=21 y=0 width=20 height=20 xoffset=0 yoffset=0 xadvance=20 page=0
+char id=50 x=42 y=0 width=20 height=20 xoffset=0 yoffset=0 xadvance=20 page=0
+char id=51 x=63 y=0 width=20 height=20 xoffset=0 yoffset=0 xadvance=20 page=0
+char id=52 x=84 y=0 width=20 height=20 xoffset=0 yoffset=0 xadvance=20 page=0
+char id=53 x=105 y=0 width=20 height=20 xoffset=0 yoffset=0 xadvance=20 page=0
+char id=54 x=126 y=0 width=20 height=20 xoffset=0 yoffset=0 xadvance=20 page=0
+char id=55 x=147 y=0 width=20 height=20 xoffset=0 yoffset=0 xadvance=20 page=0

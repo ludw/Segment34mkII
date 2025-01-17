@@ -1,0 +1,22 @@
+<drawables>
+    <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+    <bitmap id="w_clear" filename="clear.png" />
+    <bitmap id="w_partly_cloudy" filename="w_partly_cloudy.png" />
+    <bitmap id="w_mostly_cloudy" filename="w_mostly_cloudy.png" />
+    <bitmap id="w_cloudy" filename="w_cloudy.png" />
+    <bitmap id="w_rain" filename="w_rain.png" />
+    <bitmap id="w_light_rain" filename="w_light_rain.png" />
+    <bitmap id="w_heavy_rain" filename="w_heavy_rain.png" />
+    <bitmap id="w_snow" filename="w_snow.png" />
+    <bitmap id="w_light_snow" filename="w_light_snow.png" />
+    <bitmap id="w_heavy_snow" filename="w_heavy_snow.png" />
+    <bitmap id="w_rain_snow" filename="w_rain_snow.png" />
+    <bitmap id="w_fog" filename="w_fog.png" />
+    <bitmap id="w_haze" filename="w_haze.png" />
+    <bitmap id="w_dust" filename="w_dust.png" />
+    <bitmap id="w_hail" filename="w_hail.png" />
+    <bitmap id="w_thunder" filename="w_thunder.png" />
+    <bitmap id="w_tornado" filename="w_tornado.png" />
+    <bitmap id="w_hurricane" filename="w_hurricane.png" />
+    <bitmap id="w_default" filename="w_default.png" />
+</drawables>

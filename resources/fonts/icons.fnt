@@ -1,0 +1,15 @@
+info face="Icons" size=20 bold=0 italic=0 smooth=1 spacing=1,1
+common lineHeight=20 base=20 scaleW=200 scaleH=20 pages=1
+page id=0 file="icons.png"
+chars count=3
+char id=104 x=0 y=0 width=15 height=20 xoffset=3 yoffset=0 xadvance=22 page=0
+char id=72 x=16 y=0 width=15 height=20 xoffset=3 yoffset=0 xadvance=22 page=0
+
+char id=48 x=32 y=0 width=7 height=20 xoffset=0 yoffset=0 xadvance=8 page=0
+char id=49 x=41 y=0 width=11 height=20 xoffset=0 yoffset=0 xadvance=12 page=0
+char id=50 x=54 y=0 width=13 height=20 xoffset=0 yoffset=0 xadvance=14 page=0
+char id=51 x=69 y=0 width=11 height=20 xoffset=0 yoffset=0 xadvance=12 page=0
+char id=52 x=82 y=0 width=7 height=20 xoffset=0 yoffset=0 xadvance=8 page=0
+char id=53 x=91 y=0 width=11 height=20 xoffset=0 yoffset=0 xadvance=12 page=0
+char id=54 x=104 y=0 width=13 height=20 xoffset=0 yoffset=0 xadvance=14 page=0
+char id=55 x=119 y=0 width=11 height=20 xoffset=0 yoffset=0 xadvance=12 page=0

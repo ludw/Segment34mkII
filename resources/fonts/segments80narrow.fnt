@@ -1,0 +1,16 @@
+info face="Segments 80" size=80 bold=0 italic=0 smooth=1 spacing=2,2
+common lineHeight=80 base=80 scaleW=503 scaleH=80 pages=1
+page id=0 file="segments80.png"
+chars count=11
+char id=35 x=0 y=0 width=42 height=80 xoffset=1 yoffset=0 xadvance=44 page=0
+char id=49 x=42 y=0 width=42 height=80 xoffset=1 yoffset=0 xadvance=44 page=0
+char id=50 x=84 y=0 width=42 height=80 xoffset=1 yoffset=0 xadvance=44 page=0
+char id=51 x=126 y=0 width=42 height=80 xoffset=1 yoffset=0 xadvance=44 page=0
+char id=52 x=168 y=0 width=42 height=80 xoffset=1 yoffset=0 xadvance=44 page=0
+char id=53 x=210 y=0 width=42 height=80 xoffset=1 yoffset=0 xadvance=44 page=0
+char id=54 x=252 y=0 width=42 height=80 xoffset=1 yoffset=0 xadvance=44 page=0
+char id=55 x=294 y=0 width=42 height=80 xoffset=1 yoffset=0 xadvance=44 page=0
+char id=56 x=336 y=0 width=42 height=80 xoffset=1 yoffset=0 xadvance=44 page=0
+char id=57 x=378 y=0 width=42 height=80 xoffset=1 yoffset=0 xadvance=44 page=0
+char id=48 x=420 y=0 width=42 height=80 xoffset=1 yoffset=0 xadvance=44 page=0
+char id=58 x=462 y=0 width=42 height=80 xoffset=1 yoffset=0 xadvance=44 page=0
