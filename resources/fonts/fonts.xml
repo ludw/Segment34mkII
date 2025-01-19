@@ -5,7 +5,7 @@
     <font id="id_segments125" filename="segments125.fnt" antialias="true" filter="#1234567890:" />
     <font id="id_segments145" filename="segments145.fnt" antialias="true" filter="#1234567890:" />
     <font id="id_icons" filename="icons.fnt" antialias="false" filter="hH01234567B" />
-    <font id="id_led" filename="led.fnt" antialias="false" filter="0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ,() abcdefgh" />
+    <font id="id_led" filename="led.fnt" antialias="false" filter="0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ,() abcdefgh%:" />
     <font id="id_led_big" filename="led_big.fnt" antialias="false" filter="0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ,() h#" />
     <font id="id_smol" filename="smol.fnt" antialias="false" />
     <font id="id_xsmol" filename="xsmol.fnt" antialias="false" />

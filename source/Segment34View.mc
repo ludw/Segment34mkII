@@ -14,7 +14,6 @@ const INTEGER_FORMAT = "%d";
 class Segment34View extends WatchUi.WatchFace {
 
     private var isSleeping = false;
-    private var lastCondition = null;
     private var lastUpdate = null;
 
     function initialize() {
@@ -202,42 +201,60 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function setWeather(dc) as Void {
         var weather = Weather.getCurrentConditions();
+        var tempUnitSetting = System.getDeviceSettings().temperatureUnits;
+        var temp = "";
+        var tempUnit = "";
+        var windspeed = "";
+        var bearing = "";
+        var fl = "";
         if (weather == null) { return; }
-        lastCondition = weather.condition;
-        if(lastCondition == null) { return; }
+        if (weather.condition == null) { return; }
 
-/*
         if(weather.temperature != null) {
-            var tempUnit = System.getDeviceSettings().temperatureUnits;
-            var temp = weather.temperature;
-            var tempLabel = View.findDrawableById("TempLabel") as Text;
-            if(tempUnit != System.UNIT_METRIC) {
-                temp = (temp * 9/5) + 32;
+            var tempVal = weather.temperature;
+
+            if(tempUnitSetting == System.UNIT_METRIC) {
+                temp = tempVal.format("%01d");
+                tempUnit = "C";
+            } else {
+                temp = ((tempVal * 9/5) + 32).format("%01d");
+                tempUnit = "F";
             }
-            tempLabel.setText(temp.format(INTEGER_FORMAT));
         }
         
-        var windLabel = View.findDrawableById("WindLabel") as Text;
         if(weather.windSpeed != null) {
-            windLabel.setText(weather.windSpeed.format(INTEGER_FORMAT));
+            windspeed = weather.windSpeed.format(INTEGER_FORMAT);
         }
-*/
-/*
+
         if(weather.windBearing != null) {
-            var windIcon = View.findDrawableById("WindIcon") as Text;
-            var bearing = (Math.round((weather.windBearing.toFloat() + 180) / 45.0).toNumber() % 8).format(INTEGER_FORMAT);
-            windIcon.setText(bearing);
+            bearing = ((Math.round((weather.windBearing.toFloat() + 180) / 45.0).toNumber() % 8) + 97).toChar().toString();
         }
-*/
+
+        if(weather.feelsLikeTemperature != null) {
+            var fltemp = weather.feelsLikeTemperature;
+            if(tempUnitSetting != System.UNIT_METRIC) {
+                fltemp = ((fltemp * 9/5) + 32);
+            }
+            fl = Lang.format("FL: $1$$2$", [fltemp.format(INTEGER_FORMAT), tempUnit]);
+        }
+        
+        var weatherLabel = View.findDrawableById("WeatherLabel1") as Text;
+        weatherLabel.setText(Lang.format("$1$$2$, $3$$4$, $5$", [temp, tempUnit, bearing, windspeed, fl]));
     }
 
     hidden function setWeatherLabel() as Void {
+        var weather = Weather.getCurrentConditions();
         var condition;
-        if(lastCondition == null) {
-            return;
+        var perp = "";
+        if(weather.condition == null) { return; }
+
+        if(weather has :precipitationChance) {
+            if(weather.precipitationChance != null) {
+             perp = Lang.format(" ($1$%)", [weather.precipitationChance.format("%02d")]);
+            }
         }
 
-        switch(lastCondition) {
+        switch(weather.condition) {
             case Weather.CONDITION_CLEAR:
                 condition = "CLEAR";
                 break;
@@ -248,10 +265,10 @@ class Segment34View extends WatchUi.WatchFace {
                 condition = "MOSTLY CLOUDY";
                 break;
             case Weather.CONDITION_RAIN:
-                condition = "RAIN";
+                condition = "RAIN" + perp;
                 break;
             case Weather.CONDITION_SNOW:
-                condition = "SNOW";
+                condition = "SNOW" + perp;
                 break;
             case Weather.CONDITION_WINDY:
                 condition = "WINDY";
@@ -269,10 +286,10 @@ class Segment34View extends WatchUi.WatchFace {
                 condition = "HAZY";
                 break;
             case Weather.CONDITION_HAIL:
-                condition = "HAIL";
+                condition = "HAIL" + perp;
                 break;
             case Weather.CONDITION_SCATTERED_SHOWERS:
-                condition = "SCT SHOWERS";
+                condition = "SCT SHOWERS" + perp;
                 break;
             case Weather.CONDITION_SCATTERED_THUNDERSTORMS:
                 condition = "SCT THUNDERSTORMS";
@@ -281,16 +298,16 @@ class Segment34View extends WatchUi.WatchFace {
                 condition = "UNKN PRECIPITATION";
                 break;
             case Weather.CONDITION_LIGHT_RAIN:
-                condition = "LIGHT RAIN";
+                condition = "LIGHT RAIN" + perp;
                 break;
             case Weather.CONDITION_HEAVY_RAIN:
-                condition = "HEAVY RAIN";
+                condition = "HEAVY RAIN" + perp;
                 break;
             case Weather.CONDITION_LIGHT_SNOW:
-                condition = "LIGHT SNOW";
+                condition = "LIGHT SNOW" + perp;
                 break;
             case Weather.CONDITION_HEAVY_SNOW:
-                condition = "HEAVY SNOW";
+                condition = "HEAVY SNOW" + perp;
                 break;
             case Weather.CONDITION_LIGHT_RAIN_SNOW:
                 condition = "LIGHT RAIN SNOW";
@@ -302,7 +319,7 @@ class Segment34View extends WatchUi.WatchFace {
                 condition = "CLOUDY";
                 break;
             case Weather.CONDITION_RAIN_SNOW:
-                condition = "RAIN SNOW";
+                condition = "RAIN SNOW" + perp;
                 break;
             case Weather.CONDITION_PARTLY_CLEAR:
                 condition = "PARTLY CLEAR";
@@ -311,16 +328,16 @@ class Segment34View extends WatchUi.WatchFace {
                 condition = "MOSTLY CLEAR";
                 break;
             case Weather.CONDITION_LIGHT_SHOWERS:
-                condition = "LIGHT SHOWERS";
+                condition = "LIGHT SHOWERS" + perp;
                 break;
             case Weather.CONDITION_SHOWERS:
-                condition = "SHOWERS";
+                condition = "SHOWERS" + perp;
                 break;
             case Weather.CONDITION_HEAVY_SHOWERS:
-                condition = "HEAVY SHOWERS";
+                condition = "HEAVY SHOWERS" + perp;
                 break;
             case Weather.CONDITION_CHANCE_OF_SHOWERS:
-                condition = "CHC OF SHOWERS";
+                condition = "CHC OF SHOWERS" + perp;
                 break;
             case Weather.CONDITION_CHANCE_OF_THUNDERSTORMS:
                 condition = "CHC THUNDERSTORMS";
@@ -386,10 +403,10 @@ class Segment34View extends WatchUi.WatchFace {
                 condition = "FLURRIES";
                 break;
             case Weather.CONDITION_FREEZING_RAIN:
-                condition = "FREEZING RAIN";
+                condition = "FREEZING RAIN" + perp;
                 break;
             case Weather.CONDITION_SLEET:
-                condition = "SLEET";
+                condition = "SLEET" + perp;
                 break;
             case Weather.CONDITION_ICE_SNOW:
                 condition = "ICE SNOW";
