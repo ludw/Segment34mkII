@@ -1,0 +1,26 @@
+<layout id="WatchFace">
+    <label id="NotifLabel" x="center" y="7" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x00AAFF" />
+
+    <label id="WeatherLabel" x="center" y="30" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+
+    <label id="WindIcon" x="67.5%" y="62" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+    <label id="MoonLabel" x="15.7%" y="90" font="@Fonts.id_moon" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+    <label id="HRLabel" x="33%" y="90" font="@Fonts.id_led_big" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+    <label id="TempLabel" x="center" y="90" font="@Fonts.id_led_big" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+    <label id="WindLabel" x="67.5%" y="90" font="@Fonts.id_led_big" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+
+    <label id="TimeBg" x="center" y="center" font="@Fonts.id_segments145" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x0c292f" />
+    <label id="TimeLabel" x="center" y="center" font="@Fonts.id_segments145" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xfbcb77" />
+    <bitmap id="gradient" x="center" y="center" filename="../../resources/drawables/gradient.png" />
+
+    <label id="DateLabel" x="21" y="265" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xFFFFAA" />
+    <label id="SecondsLabel" x="371" y="265" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xFFFFAA" />
+
+    <label id="TTRLabel" x="120" y="305" font="@Fonts.id_led_big" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xFFFFFF" />
+    <label id="TTRDesc" x="125" y="310" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x005555" />
+    <label id="TTRReady" x="90" y="305" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x55AAAA" />
+    <label id="StepLabel" x="center" y="350" font="@Fonts.id_led_big" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+    <label id="ActiveLabel" x="265" y="305" font="@Fonts.id_led_big" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xFFFFFF" />
+    <label id="ActiveDesc" x="260" y="310" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x005555" />
+    <label id="BattLabel" x="center" y="380" font="@Fonts.id_xsmol" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x00FF00" />
+</layout>

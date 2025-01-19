@@ -34,54 +34,44 @@ class Segment34View extends WatchUi.WatchFace {
 
     // Update the view
     function onUpdate(dc as Dc) as Void {
-        // Get and show the current time
         var clockTime = System.getClockTime();
         var now = Time.now().value();
+        var canBurnIn=System.getDeviceSettings().requiresBurnInProtection;
 
-        var secLabel = View.findDrawableById("SecondsLabel") as Text;
-        if(isSleeping) {
-            secLabel.setText("");
+        if(isSleeping and canBurnIn) {
+            toggleNonEssentials(false);
         } else {
-            var secString = Lang.format("$1$", [clockTime.sec.format("%02d")]);
-            secLabel.setText(secString);
+            toggleNonEssentials(true);
         }
+    
+        setSeconds(dc);
 
         if(clockTime.sec % 2 == 0) {
             setHR(dc);
             setHRIcons(dc);
             setNotif(dc);
         }
-        
+
         if(lastUpdate != null && now - lastUpdate < 30 && clockTime.sec % 60 != 0) {
             View.onUpdate(dc);
             setStressAndBodyBattery(dc);
             return;
         }
-        var hour = clockTime.hour;
-        if(!System.getDeviceSettings().is24Hour) {
-            hour = hour % 12;
-        }
-        var timeString = Lang.format("$1$:$2$", [hour.format("%02d"), clockTime.min.format("%02d")]);
-        var timelabel = View.findDrawableById("TimeLabel") as Text;
-        timelabel.setText(timeString);
-        
 
-        // time background 
-        var timebg = View.findDrawableById("TimeBg") as Text;
-        timebg.setText("#####");
+        setClock(dc);
 
         setMoon(dc);
         setWeather(dc);
-        setSunUpDown(dc);
+        setWeatherLabel();
+        //setSunUpDown(dc);
         setDate(dc);
         setStep(dc);
         setTraining(dc);
         setBatt(dc);
-        
+
         View.onUpdate(dc);
         setStressAndBodyBattery(dc);
-        setWeatherLabel();
-
+        
         lastUpdate = now;
     }
 
@@ -91,6 +81,67 @@ class Segment34View extends WatchUi.WatchFace {
     function onPowerBudgetExceeded() {
         System.println("Power budget exceeded");
     }
+
+    hidden function toggleNonEssentials(visible){
+        if(visible) {
+            (View.findDrawableById("TimeBg") as Text).setColor(0x0c292f);
+            (View.findDrawableById("TTRBg") as Text).setColor(0x0e333c);
+            (View.findDrawableById("HRBg") as Text).setColor(0x0e333c);
+            (View.findDrawableById("ActiveBg") as Text).setColor(0x0e333c);
+
+            (View.findDrawableById("TimeLabel") as Text).setColor(0xfbcb77);
+            (View.findDrawableById("DateLabel") as Text).setColor(0xfbcb77);
+            (View.findDrawableById("NotifLabel") as Text).setColor(0x00AAFF);
+            (View.findDrawableById("SecondsLabel") as Text).setColor(0xfbcb77);
+            (View.findDrawableById("MoonLabel") as Text).setColor(Graphics.COLOR_WHITE);
+            (View.findDrawableById("WeatherLabel1") as Text).setColor(Graphics.COLOR_WHITE);
+            (View.findDrawableById("WeatherLabel2") as Text).setColor(Graphics.COLOR_WHITE);
+            (View.findDrawableById("TTRLabel") as Text).setColor(Graphics.COLOR_WHITE);
+            (View.findDrawableById("ActiveLabel") as Text).setColor(Graphics.COLOR_WHITE);
+            (View.findDrawableById("StepLabel") as Text).setColor(Graphics.COLOR_WHITE);
+        } else {
+            (View.findDrawableById("TimeBg") as Text).setColor(0x091d21);
+            (View.findDrawableById("TTRBg") as Text).setColor(0x091d21);
+            (View.findDrawableById("HRBg") as Text).setColor(0x091d21);
+            (View.findDrawableById("ActiveBg") as Text).setColor(0x091d21);
+
+            (View.findDrawableById("TimeLabel") as Text).setColor(0xc19c5c);
+            (View.findDrawableById("DateLabel") as Text).setColor(0xc19c5c);
+            (View.findDrawableById("NotifLabel") as Text).setColor(0x017bbb);
+            (View.findDrawableById("SecondsLabel") as Text).setColor(0xc19c5c);
+            (View.findDrawableById("MoonLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
+            (View.findDrawableById("WeatherLabel1") as Text).setColor(Graphics.COLOR_DK_GRAY);
+            (View.findDrawableById("WeatherLabel2") as Text).setColor(Graphics.COLOR_DK_GRAY);
+            (View.findDrawableById("TTRLabel") as Text).setColor(Graphics.COLOR_LT_GRAY);
+            (View.findDrawableById("HRLabel") as Text).setColor(Graphics.COLOR_LT_GRAY);
+            (View.findDrawableById("ActiveLabel") as Text).setColor(Graphics.COLOR_LT_GRAY);
+            (View.findDrawableById("StepLabel") as Text).setColor(Graphics.COLOR_LT_GRAY);
+        }
+        
+    }
+    
+    hidden function setSeconds(dc) as Void {
+        var clockTime = System.getClockTime();
+        var secLabel = View.findDrawableById("SecondsLabel") as Text;
+        if(isSleeping) {
+            secLabel.setText("");
+        } else {
+            var secString = Lang.format("$1$", [clockTime.sec.format("%02d")]);
+            secLabel.setText(secString);
+        }
+    }
+
+    hidden function setClock(dc) as Void {
+        var clockTime = System.getClockTime();
+        var hour = clockTime.hour;
+        if(!System.getDeviceSettings().is24Hour) {
+            hour = hour % 12;
+        }
+        var timeString = Lang.format("$1$:$2$", [hour.format("%02d"), clockTime.min.format("%02d")]);
+        var timelabel = View.findDrawableById("TimeLabel") as Text;
+        timelabel.setText(timeString);
+    }
+
 
     hidden function setHRIcons(dc) as Void {
         /*var hrIconW = View.findDrawableById("HRIconW") as Text;
@@ -115,32 +166,37 @@ class Segment34View extends WatchUi.WatchFace {
     }
     
     hidden function setHR(dc) as Void {
-        var value = "";
+        var hrLabel = View.findDrawableById("HRLabel") as Text;
+        
         // Try to retrieve live HR from Activity::Info
         var activityInfo = Activity.getActivityInfo();
         var sample = activityInfo.currentHeartRate;
-        if (sample != null) {
-            value = sample.format(INTEGER_FORMAT);
+        if(sample != null) {
+            hrLabel.setText(sample.format("%01d"));
+            hrLabel.setColor(Graphics.COLOR_WHITE);
         } else if (ActivityMonitor has :getHeartRateHistory) {
             // Falling back to historical HR from ActivityMonitor
-            sample = ActivityMonitor.getHeartRateHistory(1, /* newestFirst */ true).next();
-            if ((sample != null) && (sample.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)) {
-                value = sample.heartRate.format(INTEGER_FORMAT);
+            var hist = ActivityMonitor.getHeartRateHistory(1, /* newestFirst */ true).next();
+            if ((hist != null) && (hist.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)) {
+                hrLabel.setText(hist.heartRate.format("%01d"));
+                hrLabel.setColor(0x55AAAA);
             }
         }
 
-        var hrLabel = View.findDrawableById("HRLabel") as Text;
-        hrLabel.setText(value);
         hrLabel.draw(dc);
     }
 
     hidden function setBatt(dc) as Void {
-        var value = "";
-        var sample = System.getSystemStats().battery / 5;
-        for(var i = 0; i < sample; i++) {
-            value += "&";
-        }
         var battLabel = View.findDrawableById("BattLabel") as Text;
+        var sample = System.getSystemStats().battery;
+        var value = Lang.format("$1$", [sample.format("%03d")]);
+        if(System.getSystemStats() has :batteryInDays) {
+            if (System.getSystemStats().batteryInDays != null and System.getSystemStats().batteryInDays != 0){
+                sample = System.getSystemStats().batteryInDays;
+                value = Lang.format("$1$D", [sample.format("%01d")]);
+            }
+        }
+        
         battLabel.setText(value);
     }
 
@@ -150,6 +206,7 @@ class Segment34View extends WatchUi.WatchFace {
         lastCondition = weather.condition;
         if(lastCondition == null) { return; }
 
+/*
         if(weather.temperature != null) {
             var tempUnit = System.getDeviceSettings().temperatureUnits;
             var temp = weather.temperature;
@@ -164,62 +221,14 @@ class Segment34View extends WatchUi.WatchFace {
         if(weather.windSpeed != null) {
             windLabel.setText(weather.windSpeed.format(INTEGER_FORMAT));
         }
-
+*/
+/*
         if(weather.windBearing != null) {
             var windIcon = View.findDrawableById("WindIcon") as Text;
             var bearing = (Math.round((weather.windBearing.toFloat() + 180) / 45.0).toNumber() % 8).format(INTEGER_FORMAT);
             windIcon.setText(bearing);
         }
-    }
-
-    hidden function setWeatherIcon(dc) as Void {
-        var icon;
-        if(lastCondition == null) {
-            return;
-        }
-
-        switch(lastCondition) {
-            case Weather.CONDITION_CLEAR:
-                icon = Application.loadResource( Rez.Drawables.w_clear ) as BitmapResource;
-                break;
-            case Weather.CONDITION_PARTLY_CLOUDY:
-                icon = Application.loadResource( Rez.Drawables.w_partly_cloudy ) as BitmapResource;
-                break;
-            case Weather.CONDITION_MOSTLY_CLOUDY:
-                icon = Application.loadResource( Rez.Drawables.w_mostly_cloudy ) as BitmapResource;
-                break;
-            case Weather.CONDITION_CLOUDY:
-                icon = Application.loadResource( Rez.Drawables.w_cloudy ) as BitmapResource;
-                break;
-            case Weather.CONDITION_RAIN:
-                icon = Application.loadResource( Rez.Drawables.w_rain ) as BitmapResource;
-                break;
-            case Weather.CONDITION_LIGHT_RAIN:
-                icon = Application.loadResource( Rez.Drawables.w_light_rain ) as BitmapResource;
-            break;
-                case Weather.CONDITION_HEAVY_RAIN:
-                icon = Application.loadResource( Rez.Drawables.w_heavy_rain ) as BitmapResource;
-                break;
-            case Weather.CONDITION_SNOW:
-                icon = Application.loadResource( Rez.Drawables.w_snow ) as BitmapResource;
-                break;
-            case Weather.CONDITION_LIGHT_SNOW:
-                icon = Application.loadResource( Rez.Drawables.w_light_snow ) as BitmapResource;
-                break;
-            case Weather.CONDITION_FOG:
-                icon = Application.loadResource( Rez.Drawables.w_fog ) as BitmapResource;
-                break;
-            case Weather.CONDITION_THUNDERSTORMS:
-                icon = Application.loadResource( Rez.Drawables.w_thunder ) as BitmapResource;
-                break;
-            case Weather.CONDITION_SCATTERED_THUNDERSTORMS:
-                icon = Application.loadResource( Rez.Drawables.w_thunder ) as BitmapResource;
-                break;
-            default:
-                icon = Application.loadResource( Rez.Drawables.w_default ) as BitmapResource;
-        }
-        dc.drawBitmap((dc.getWidth() / 2) - 30, 23, icon);
-
+*/
     }
 
     hidden function setWeatherLabel() as Void {
@@ -238,11 +247,38 @@ class Segment34View extends WatchUi.WatchFace {
             case Weather.CONDITION_MOSTLY_CLOUDY:
                 condition = "MOSTLY CLOUDY";
                 break;
-            case Weather.CONDITION_CLOUDY:
-                condition = "CLOUDY";
-                break;
             case Weather.CONDITION_RAIN:
                 condition = "RAIN";
+                break;
+            case Weather.CONDITION_SNOW:
+                condition = "SNOW";
+                break;
+            case Weather.CONDITION_WINDY:
+                condition = "WINDY";
+                break;
+            case Weather.CONDITION_THUNDERSTORMS:
+                condition = "THUNDERSTORMS";
+                break;
+            case Weather.CONDITION_WINTRY_MIX:
+                condition = "WINTRY MIX";
+                break;
+            case Weather.CONDITION_FOG:
+                condition = "FOG";
+                break;
+            case Weather.CONDITION_HAZY:
+                condition = "HAZY";
+                break;
+            case Weather.CONDITION_HAIL:
+                condition = "HAIL";
+                break;
+            case Weather.CONDITION_SCATTERED_SHOWERS:
+                condition = "SCT SHOWERS";
+                break;
+            case Weather.CONDITION_SCATTERED_THUNDERSTORMS:
+                condition = "SCT THUNDERSTORMS";
+                break;
+            case Weather.CONDITION_UNKNOWN_PRECIPITATION:
+                condition = "UNKN PRECIPITATION";
                 break;
             case Weather.CONDITION_LIGHT_RAIN:
                 condition = "LIGHT RAIN";
@@ -250,26 +286,122 @@ class Segment34View extends WatchUi.WatchFace {
             case Weather.CONDITION_HEAVY_RAIN:
                 condition = "HEAVY RAIN";
                 break;
-            case Weather.CONDITION_SNOW:
-                condition = "SNOW";
-                break;
             case Weather.CONDITION_LIGHT_SNOW:
                 condition = "LIGHT SNOW";
                 break;
-            case Weather.CONDITION_FOG:
-                condition = "FOG";
+            case Weather.CONDITION_HEAVY_SNOW:
+                condition = "HEAVY SNOW";
                 break;
-            case Weather.CONDITION_THUNDERSTORMS:
-                condition = "THUNDER";
+            case Weather.CONDITION_LIGHT_RAIN_SNOW:
+                condition = "LIGHT RAIN SNOW";
                 break;
-            case Weather.CONDITION_SCATTERED_THUNDERSTORMS:
-                condition = "SCATTERED\nTHUNDERSTORMS";
+            case Weather.CONDITION_HEAVY_RAIN_SNOW:
+                condition = "HEAVY RAIN SNOW";
+                break;
+            case Weather.CONDITION_CLOUDY:
+                condition = "CLOUDY";
+                break;
+            case Weather.CONDITION_RAIN_SNOW:
+                condition = "RAIN SNOW";
+                break;
+            case Weather.CONDITION_PARTLY_CLEAR:
+                condition = "PARTLY CLEAR";
+                break;
+            case Weather.CONDITION_MOSTLY_CLEAR:
+                condition = "MOSTLY CLEAR";
+                break;
+            case Weather.CONDITION_LIGHT_SHOWERS:
+                condition = "LIGHT SHOWERS";
+                break;
+            case Weather.CONDITION_SHOWERS:
+                condition = "SHOWERS";
+                break;
+            case Weather.CONDITION_HEAVY_SHOWERS:
+                condition = "HEAVY SHOWERS";
+                break;
+            case Weather.CONDITION_CHANCE_OF_SHOWERS:
+                condition = "CHC OF SHOWERS";
+                break;
+            case Weather.CONDITION_CHANCE_OF_THUNDERSTORMS:
+                condition = "CHC THUNDERSTORMS";
+                break;
+            case Weather.CONDITION_MIST:
+                condition = "MIST";
+                break;
+            case Weather.CONDITION_DUST:
+                condition = "DUST";
+                break;
+            case Weather.CONDITION_DRIZZLE:
+                condition = "DRIZZLE";
+                break;
+            case Weather.CONDITION_TORNADO:
+                condition = "TORNADO";
+                break;
+            case Weather.CONDITION_SMOKE:
+                condition = "SMOKE";
+                break;
+            case Weather.CONDITION_ICE:
+                condition = "ICE";
+                break;
+            case Weather.CONDITION_SAND:
+                condition = "SAND";
+                break;
+            case Weather.CONDITION_SQUALL:
+                condition = "SQUALL";
+                break;
+            case Weather.CONDITION_SANDSTORM:
+                condition = "SANDSTORM";
+                break;
+            case Weather.CONDITION_VOLCANIC_ASH:
+                condition = "VOLCANIC ASH";
+                break;
+            case Weather.CONDITION_HAZE:
+                condition = "HAZE";
+                break;
+            case Weather.CONDITION_FAIR:
+                condition = "FAIR";
+                break;
+            case Weather.CONDITION_HURRICANE:
+                condition = "HURRICANE";
+                break;
+            case Weather.CONDITION_TROPICAL_STORM:
+                condition = "TROPICAL STORM";
+                break;
+            case Weather.CONDITION_CHANCE_OF_SNOW:
+                condition = "CHC OF SNOW";
+                break;
+            case Weather.CONDITION_CHANCE_OF_RAIN_SNOW:
+                condition = "CHC OF RAIN SNOW";
+                break;
+            case Weather.CONDITION_CLOUDY_CHANCE_OF_RAIN:
+                condition = "CLOUDY CHC RAIN";
+                break;
+            case Weather.CONDITION_CLOUDY_CHANCE_OF_SNOW:
+                condition = "CLOUDY CHC SNOW";
+                break;
+            case Weather.CONDITION_CLOUDY_CHANCE_OF_RAIN_SNOW:
+                condition = "CLOUDY RAIN SNOW";
+                break;
+            case Weather.CONDITION_FLURRIES:
+                condition = "FLURRIES";
+                break;
+            case Weather.CONDITION_FREEZING_RAIN:
+                condition = "FREEZING RAIN";
+                break;
+            case Weather.CONDITION_SLEET:
+                condition = "SLEET";
+                break;
+            case Weather.CONDITION_ICE_SNOW:
+                condition = "ICE SNOW";
+                break;
+            case Weather.CONDITION_THIN_CLOUDS:
+                condition = "THIN CLOUDS";
                 break;
             default:
-                condition = "WEATHER";
+                condition = "UNKNOWN";
         }
         
-        var weatherLabel = View.findDrawableById("WeatherLabel") as Text;
+        var weatherLabel = View.findDrawableById("WeatherLabel2") as Text;
         weatherLabel.setText(condition);
     }
 
@@ -331,9 +463,9 @@ class Segment34View extends WatchUi.WatchFace {
             var stIterator = Toybox.SensorHistory.getStressHistory({:period => 1});
             var bb = bbIterator.next();
             var st = stIterator.next();
-            var barTop = 91;
-            var fromEdge = 10;
-            var barWidth = 3;
+            var barTop = 110;
+            var fromEdge = 8;
+            var barWidth = 6;
             var bbAdjustment = 0;
             if(dc.getHeight() == 240) {
                 barTop = 81;
@@ -347,48 +479,31 @@ class Segment34View extends WatchUi.WatchFace {
                 bbAdjustment = -1;
             }
             if(bb != null) {
-                batt = Math.round(bb.data * 0.80);
+                batt = Math.round(bb.data * 1.25);
                 dc.setColor(0x00AAFF, -1);
-                dc.fillRectangle(dc.getWidth() - fromEdge - barWidth - bbAdjustment, barTop + (80 - batt), barWidth, batt);
+                dc.fillRectangle(dc.getWidth() - fromEdge - barWidth - bbAdjustment, barTop + (125 - batt), barWidth, batt);
             }
             if(st != null) {
-                stress = Math.round(st.data * 0.80);
+                stress = Math.round(st.data * 1.25);
                 dc.setColor(0xFFAA00, -1);
-                dc.fillRectangle(fromEdge, barTop + (80 - stress), barWidth, stress);
+                dc.fillRectangle(fromEdge, barTop + (125 - stress), barWidth, stress);
             }
         }
     }
 
     hidden function setTraining(dc) as Void {
-        var TTRDesc = View.findDrawableById("TTRDesc") as Text;
         var TTRLabel = View.findDrawableById("TTRLabel") as Text;
-        var TTRReady = View.findDrawableById("TTRReady") as Text;
 
         if(ActivityMonitor.getInfo().timeToRecovery == null || ActivityMonitor.getInfo().timeToRecovery == 0) {
-            TTRReady.setText("FULLY\nRECOVERED");
-            TTRLabel.setText("");
-            TTRDesc.setText("");
+            TTRLabel.setText("0");
         } else { 
-            TTRReady.setText("");
-            TTRDesc.setText("HOURS TO\nRECOVERY");
-            if(dc.getHeight() == 240) {
-                TTRDesc.setText("HRS TO\nRECOV.");
-            }
-
-            var ttr = ActivityMonitor.getInfo().timeToRecovery.format("%03d");
+            var ttr = ActivityMonitor.getInfo().timeToRecovery.format("%01d");
             TTRLabel.setText(ttr);
-        }
-        
-        var ActiveDesc = View.findDrawableById("ActiveDesc") as Text;
-        ActiveDesc.setText("WEEKLY\nACTIVE MIN");
-
-        if(dc.getHeight() == 240) {
-            ActiveDesc.setText("WEEKLY\nMIN");
         }
 
         var ActiveLabel = View.findDrawableById("ActiveLabel") as Text;
         if(ActivityMonitor.getInfo().activeMinutesWeek != null) {
-            var active = ActivityMonitor.getInfo().activeMinutesWeek.total.format("%03d");
+            var active = ActivityMonitor.getInfo().activeMinutesWeek.total.format("%01d");
             ActiveLabel.setText(active);
         }
 
