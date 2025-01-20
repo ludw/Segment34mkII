@@ -2,7 +2,7 @@
     <label id="MoonLabel" x="center" y="15" font="@Fonts.id_moon" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
     
     
-    <label id="WeatherLabel1" x="center" y="50" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" text="-10C, g10, 10H TSR" />
+    <label id="WeatherLabel1" x="center" y="50" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
     <label id="WeatherLabel2" x="center" y="80" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
 
     <label id="TimeBg" x="center" y="110" font="@Fonts.id_segments125" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x0c292f" text="#####" />

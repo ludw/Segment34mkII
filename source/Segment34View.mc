@@ -265,6 +265,7 @@ class Segment34View extends WatchUi.WatchFace {
         var weather = Weather.getCurrentConditions();
         var condition;
         var perp = "";
+        if (weather == null) { return; }
         if(weather.condition == null) { return; }
 
         if(weather has :precipitationChance) {
