@@ -1,5 +1,5 @@
-# Segment34
-A watchface for Garmin Fenix 6 with a 34 Segment display
+# Segment34 MkII
+A watchface for Garmin watches with a 34 Segment display
 
 ![Screenshot of the watchface](screenshot.png "Screenshot")
 
