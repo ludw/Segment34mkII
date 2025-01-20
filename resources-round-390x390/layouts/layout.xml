@@ -7,7 +7,7 @@
 
     <label id="TimeBg" x="center" y="110" font="@Fonts.id_segments125" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x0c292f" text="#####" />
     <label id="TimeLabel" x="center" y="110" font="@Fonts.id_segments125" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xfbcb77" />
-    <bitmap id="gradient" x="center" y="110" filename="../../resources/drawables/gradient.png" />
+    <bitmap id="gradient" x="0" y="110" filename="../../resources/drawables/gradient.png" />
 
     <label id="DateLabel" x="17" y="245" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xfbcb77" />
     <label id="NotifLabel" x="317" y="245" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x00AAFF" />

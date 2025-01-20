@@ -35,11 +35,12 @@ class Segment34View extends WatchUi.WatchFace {
     function onUpdate(dc as Dc) as Void {
         var clockTime = System.getClockTime();
         var now = Time.now().value();
-        var canBurnIn=System.getDeviceSettings().requiresBurnInProtection;
 
+        var canBurnIn=System.getDeviceSettings().requiresBurnInProtection;
         if(isSleeping and canBurnIn) {
             toggleNonEssentials(false);
-        } else {
+        }
+        if(!isSleeping and canBurnIn) {
             toggleNonEssentials(true);
         }
     
@@ -82,13 +83,14 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function toggleNonEssentials(visible){
-        if(visible) {
-            (View.findDrawableById("TimeBg") as Text).setColor(0x0c292f);
-            (View.findDrawableById("TTRBg") as Text).setColor(0x0e333c);
-            (View.findDrawableById("HRBg") as Text).setColor(0x0e333c);
-            (View.findDrawableById("ActiveBg") as Text).setColor(0x0e333c);
-            (View.findDrawableById("StepBg") as Text).setColor(0x0e333c);
 
+        (View.findDrawableById("TimeBg") as Text).setVisible(visible);
+        (View.findDrawableById("TTRBg") as Text).setVisible(visible);
+        (View.findDrawableById("HRBg") as Text).setVisible(visible);
+        (View.findDrawableById("ActiveBg") as Text).setVisible(visible);
+        (View.findDrawableById("StepBg") as Text).setVisible(visible);
+
+        if(visible) {
             (View.findDrawableById("TTRDesc") as Text).setColor(0x55AAAA);
             (View.findDrawableById("HRDesc") as Text).setColor(0x55AAAA);
             (View.findDrawableById("ActiveDesc") as Text).setColor(0x55AAAA);
@@ -106,12 +108,8 @@ class Segment34View extends WatchUi.WatchFace {
             (View.findDrawableById("BattBg") as Text).setColor(0xAAAAAA);
             (View.findDrawableById("BattLabel") as Text).setColor(Graphics.COLOR_WHITE);
         } else {
-            (View.findDrawableById("TimeBg") as Text).setColor(0x091d21);
-            (View.findDrawableById("TTRBg") as Text).setColor(0x091d21);
-            (View.findDrawableById("HRBg") as Text).setColor(0x091d21);
-            (View.findDrawableById("ActiveBg") as Text).setColor(0x091d21);
-            (View.findDrawableById("StepBg") as Text).setColor(0x091d21);
-
+            var gradient = View.findDrawableById("gradient") as Drawable;
+            gradient.setLocation(Math.rand() % 10, 110 - Math.rand() % 10);
             (View.findDrawableById("TTRDesc") as Text).setColor(0x0e333c);
             (View.findDrawableById("HRDesc") as Text).setColor(0x0e333c);
             (View.findDrawableById("ActiveDesc") as Text).setColor(0x0e333c);
@@ -123,6 +121,7 @@ class Segment34View extends WatchUi.WatchFace {
             (View.findDrawableById("WeatherLabel1") as Text).setColor(Graphics.COLOR_DK_GRAY);
             (View.findDrawableById("WeatherLabel2") as Text).setColor(Graphics.COLOR_DK_GRAY);
             (View.findDrawableById("TTRLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
+            (View.findDrawableById("HRLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
             (View.findDrawableById("ActiveLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
             (View.findDrawableById("StepLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
 
@@ -504,6 +503,9 @@ class Segment34View extends WatchUi.WatchFace {
             var fromEdge = 8;
             var barWidth = 4;
             var bbAdjustment = 0;
+            if(isSleeping) {
+                fromEdge = 4;
+            }
             if(dc.getHeight() == 240) {
                 barTop = 81;
                 fromEdge = 6;
