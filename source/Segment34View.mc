@@ -87,34 +87,47 @@ class Segment34View extends WatchUi.WatchFace {
             (View.findDrawableById("TTRBg") as Text).setColor(0x0e333c);
             (View.findDrawableById("HRBg") as Text).setColor(0x0e333c);
             (View.findDrawableById("ActiveBg") as Text).setColor(0x0e333c);
+            (View.findDrawableById("StepBg") as Text).setColor(0x0e333c);
+
+            (View.findDrawableById("TTRDesc") as Text).setColor(0x55AAAA);
+            (View.findDrawableById("HRDesc") as Text).setColor(0x55AAAA);
+            (View.findDrawableById("ActiveDesc") as Text).setColor(0x55AAAA);
 
             (View.findDrawableById("TimeLabel") as Text).setColor(0xfbcb77);
             (View.findDrawableById("DateLabel") as Text).setColor(0xfbcb77);
             (View.findDrawableById("NotifLabel") as Text).setColor(0x00AAFF);
-            (View.findDrawableById("SecondsLabel") as Text).setColor(0xfbcb77);
             (View.findDrawableById("MoonLabel") as Text).setColor(Graphics.COLOR_WHITE);
             (View.findDrawableById("WeatherLabel1") as Text).setColor(Graphics.COLOR_WHITE);
             (View.findDrawableById("WeatherLabel2") as Text).setColor(Graphics.COLOR_WHITE);
             (View.findDrawableById("TTRLabel") as Text).setColor(Graphics.COLOR_WHITE);
             (View.findDrawableById("ActiveLabel") as Text).setColor(Graphics.COLOR_WHITE);
             (View.findDrawableById("StepLabel") as Text).setColor(Graphics.COLOR_WHITE);
+
+            (View.findDrawableById("BattBg") as Text).setColor(0xAAAAAA);
+            (View.findDrawableById("BattLabel") as Text).setColor(Graphics.COLOR_WHITE);
         } else {
             (View.findDrawableById("TimeBg") as Text).setColor(0x091d21);
             (View.findDrawableById("TTRBg") as Text).setColor(0x091d21);
             (View.findDrawableById("HRBg") as Text).setColor(0x091d21);
             (View.findDrawableById("ActiveBg") as Text).setColor(0x091d21);
+            (View.findDrawableById("StepBg") as Text).setColor(0x091d21);
 
-            (View.findDrawableById("TimeLabel") as Text).setColor(0xc19c5c);
-            (View.findDrawableById("DateLabel") as Text).setColor(0xc19c5c);
+            (View.findDrawableById("TTRDesc") as Text).setColor(0x0e333c);
+            (View.findDrawableById("HRDesc") as Text).setColor(0x0e333c);
+            (View.findDrawableById("ActiveDesc") as Text).setColor(0x0e333c);
+
+            (View.findDrawableById("TimeLabel") as Text).setColor(0xd2a767);
+            (View.findDrawableById("DateLabel") as Text).setColor(0xa78553);
             (View.findDrawableById("NotifLabel") as Text).setColor(0x017bbb);
-            (View.findDrawableById("SecondsLabel") as Text).setColor(0xc19c5c);
             (View.findDrawableById("MoonLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
             (View.findDrawableById("WeatherLabel1") as Text).setColor(Graphics.COLOR_DK_GRAY);
             (View.findDrawableById("WeatherLabel2") as Text).setColor(Graphics.COLOR_DK_GRAY);
-            (View.findDrawableById("TTRLabel") as Text).setColor(Graphics.COLOR_LT_GRAY);
-            (View.findDrawableById("HRLabel") as Text).setColor(Graphics.COLOR_LT_GRAY);
-            (View.findDrawableById("ActiveLabel") as Text).setColor(Graphics.COLOR_LT_GRAY);
-            (View.findDrawableById("StepLabel") as Text).setColor(Graphics.COLOR_LT_GRAY);
+            (View.findDrawableById("TTRLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
+            (View.findDrawableById("ActiveLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
+            (View.findDrawableById("StepLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
+
+            (View.findDrawableById("BattBg") as Text).setColor(0x555555);
+            (View.findDrawableById("BattLabel") as Text).setColor(0x777777);
         }
         
     }
@@ -173,12 +186,18 @@ class Segment34View extends WatchUi.WatchFace {
         if(sample != null) {
             hrLabel.setText(sample.format("%01d"));
             hrLabel.setColor(Graphics.COLOR_WHITE);
+            if(isSleeping) {
+                hrLabel.setColor(Graphics.COLOR_DK_GRAY);
+            }
         } else if (ActivityMonitor has :getHeartRateHistory) {
             // Falling back to historical HR from ActivityMonitor
             var hist = ActivityMonitor.getHeartRateHistory(1, /* newestFirst */ true).next();
             if ((hist != null) && (hist.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)) {
                 hrLabel.setText(hist.heartRate.format("%01d"));
                 hrLabel.setColor(0x55AAAA);
+                if(isSleeping) {
+                    hrLabel.setColor(Graphics.COLOR_DK_GRAY);
+                }
             }
         }
 
@@ -310,16 +329,16 @@ class Segment34View extends WatchUi.WatchFace {
                 condition = "HEAVY SNOW" + perp;
                 break;
             case Weather.CONDITION_LIGHT_RAIN_SNOW:
-                condition = "LIGHT RAIN SNOW";
+                condition = "LIGHT RAIN & SNOW";
                 break;
             case Weather.CONDITION_HEAVY_RAIN_SNOW:
-                condition = "HEAVY RAIN SNOW";
+                condition = "HEAVY RAIN & SNOW";
                 break;
             case Weather.CONDITION_CLOUDY:
                 condition = "CLOUDY";
                 break;
             case Weather.CONDITION_RAIN_SNOW:
-                condition = "RAIN SNOW" + perp;
+                condition = "RAIN & SNOW" + perp;
                 break;
             case Weather.CONDITION_PARTLY_CLEAR:
                 condition = "PARTLY CLEAR";
@@ -388,7 +407,7 @@ class Segment34View extends WatchUi.WatchFace {
                 condition = "CHC OF SNOW";
                 break;
             case Weather.CONDITION_CHANCE_OF_RAIN_SNOW:
-                condition = "CHC OF RAIN SNOW";
+                condition = "CHC OF RAIN & SNOW";
                 break;
             case Weather.CONDITION_CLOUDY_CHANCE_OF_RAIN:
                 condition = "CLOUDY CHC RAIN";
@@ -397,7 +416,7 @@ class Segment34View extends WatchUi.WatchFace {
                 condition = "CLOUDY CHC SNOW";
                 break;
             case Weather.CONDITION_CLOUDY_CHANCE_OF_RAIN_SNOW:
-                condition = "CLOUDY RAIN SNOW";
+                condition = "CLOUDY RAIN & SNOW";
                 break;
             case Weather.CONDITION_FLURRIES:
                 condition = "FLURRIES";
@@ -409,7 +428,7 @@ class Segment34View extends WatchUi.WatchFace {
                 condition = "SLEET" + perp;
                 break;
             case Weather.CONDITION_ICE_SNOW:
-                condition = "ICE SNOW";
+                condition = "ICE & SNOW";
                 break;
             case Weather.CONDITION_THIN_CLOUDS:
                 condition = "THIN CLOUDS";
@@ -482,7 +501,7 @@ class Segment34View extends WatchUi.WatchFace {
             var st = stIterator.next();
             var barTop = 110;
             var fromEdge = 8;
-            var barWidth = 6;
+            var barWidth = 4;
             var bbAdjustment = 0;
             if(dc.getHeight() == 240) {
                 barTop = 81;
@@ -498,11 +517,17 @@ class Segment34View extends WatchUi.WatchFace {
             if(bb != null) {
                 batt = Math.round(bb.data * 1.25);
                 dc.setColor(0x00AAFF, -1);
+                if(isSleeping) {
+                    dc.setColor(0x046fa8, -1);
+                }
                 dc.fillRectangle(dc.getWidth() - fromEdge - barWidth - bbAdjustment, barTop + (125 - batt), barWidth, batt);
             }
             if(st != null) {
                 stress = Math.round(st.data * 1.25);
                 dc.setColor(0xFFAA00, -1);
+                if(isSleeping) {
+                    dc.setColor(0xa8721c, -1);
+                }
                 dc.fillRectangle(fromEdge, barTop + (125 - stress), barWidth, stress);
             }
         }
