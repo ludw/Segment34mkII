@@ -3,7 +3,7 @@ common lineHeight=20 base=20 scaleW=204 scaleH=20 pages=1
 page id=0 file="led.png"
 chars count=11
 char id=48 x=0 y=0 width=14 height=20 xoffset=2 yoffset=0 xadvance=18 page=0
-char id=49 x=18 y=0 width=8 height=20 xoffset=2 yoffset=0 xadvance=12 page=0
+char id=49 x=18 y=0 width=8 height=20 xoffset=5 yoffset=0 xadvance=18 page=0
 char id=50 x=30 y=0 width=14 height=20 xoffset=2 yoffset=0 xadvance=18 page=0
 char id=51 x=48 y=0 width=14 height=20 xoffset=2 yoffset=0 xadvance=18 page=0
 char id=52 x=66 y=0 width=14 height=20 xoffset=2 yoffset=0 xadvance=18 page=0

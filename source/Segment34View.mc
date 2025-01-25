@@ -15,6 +15,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     private var isSleeping = false;
     private var lastUpdate = null;
+    private var dimOnSleep = false;
 
     function initialize() {
         WatchFace.initialize();
@@ -37,18 +38,20 @@ class Segment34View extends WatchUi.WatchFace {
         var now = Time.now().value();
 
         var canBurnIn=System.getDeviceSettings().requiresBurnInProtection;
+        if(canBurnIn) {
+            dimOnSleep = true;
+        }
         if(isSleeping and canBurnIn) {
-            toggleNonEssentials(false);
+            toggleNonEssentials(false, dc);
         }
         if(!isSleeping and canBurnIn) {
-            toggleNonEssentials(true);
+            toggleNonEssentials(true, dc);
         }
     
         setSeconds(dc);
 
         if(clockTime.sec % 2 == 0) {
             setHR(dc);
-            setHRIcons(dc);
             setNotif(dc);
         }
 
@@ -63,7 +66,7 @@ class Segment34View extends WatchUi.WatchFace {
         setMoon(dc);
         setWeather(dc);
         setWeatherLabel();
-        //setSunUpDown(dc);
+        setSunUpDown(dc);
         setDate(dc);
         setStep(dc);
         setTraining(dc);
@@ -82,8 +85,7 @@ class Segment34View extends WatchUi.WatchFace {
         System.println("Power budget exceeded");
     }
 
-    hidden function toggleNonEssentials(visible){
-
+    hidden function toggleNonEssentials(visible, dc){
         (View.findDrawableById("TimeBg") as Text).setVisible(visible);
         (View.findDrawableById("TTRBg") as Text).setVisible(visible);
         (View.findDrawableById("HRBg") as Text).setVisible(visible);
@@ -99,6 +101,10 @@ class Segment34View extends WatchUi.WatchFace {
             (View.findDrawableById("DateLabel") as Text).setColor(0xfbcb77);
             (View.findDrawableById("NotifLabel") as Text).setColor(0x00AAFF);
             (View.findDrawableById("MoonLabel") as Text).setColor(Graphics.COLOR_WHITE);
+            (View.findDrawableById("Dusk") as Text).setColor(0x005555);
+            (View.findDrawableById("Dawn") as Text).setColor(0x005555);
+            (View.findDrawableById("SunUpLabel") as Text).setColor(0xAAAAAA);
+            (View.findDrawableById("SunDownLabel") as Text).setColor(0xAAAAAA);
             (View.findDrawableById("WeatherLabel1") as Text).setColor(Graphics.COLOR_WHITE);
             (View.findDrawableById("WeatherLabel2") as Text).setColor(Graphics.COLOR_WHITE);
             (View.findDrawableById("TTRLabel") as Text).setColor(Graphics.COLOR_WHITE);
@@ -109,15 +115,23 @@ class Segment34View extends WatchUi.WatchFace {
             (View.findDrawableById("BattLabel") as Text).setColor(Graphics.COLOR_WHITE);
         } else {
             var gradient = View.findDrawableById("gradient") as Drawable;
-            gradient.setLocation(Math.rand() % 10, 110 - Math.rand() % 10);
+            var basey = 110;
+            if(dc.getHeight() == 454) {
+                basey = 145;
+            }
+            gradient.setLocation(Math.rand() % 10, basey - Math.rand() % 10);
             (View.findDrawableById("TTRDesc") as Text).setColor(0x0e333c);
             (View.findDrawableById("HRDesc") as Text).setColor(0x0e333c);
             (View.findDrawableById("ActiveDesc") as Text).setColor(0x0e333c);
 
-            (View.findDrawableById("TimeLabel") as Text).setColor(0xd2a767);
-            (View.findDrawableById("DateLabel") as Text).setColor(0xa78553);
-            (View.findDrawableById("NotifLabel") as Text).setColor(0x017bbb);
+            (View.findDrawableById("TimeLabel") as Text).setColor(0xbe975e);
+            (View.findDrawableById("DateLabel") as Text).setColor(0xa98753);
+            (View.findDrawableById("NotifLabel") as Text).setColor(0x0567a1);
             (View.findDrawableById("MoonLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
+            (View.findDrawableById("Dusk") as Text).setColor(0x0e333c);
+            (View.findDrawableById("Dawn") as Text).setColor(0x0e333c);
+            (View.findDrawableById("SunUpLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
+            (View.findDrawableById("SunDownLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
             (View.findDrawableById("WeatherLabel1") as Text).setColor(Graphics.COLOR_DK_GRAY);
             (View.findDrawableById("WeatherLabel2") as Text).setColor(Graphics.COLOR_DK_GRAY);
             (View.findDrawableById("TTRLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
@@ -153,21 +167,6 @@ class Segment34View extends WatchUi.WatchFace {
         timelabel.setText(timeString);
     }
 
-
-    hidden function setHRIcons(dc) as Void {
-        /*var hrIconW = View.findDrawableById("HRIconW") as Text;
-        var hrIconR = View.findDrawableById("HRIconR") as Text;
-
-        if (isSleeping) {
-            hrIconR.setText("h");
-            hrIconW.setText("H");
-        } else {
-            hrIconR.setText("H");
-            hrIconW.setText("h");
-        }
-        */
-    }
-
     hidden function setMoon(dc) as Void {
         var now = Time.now();
         var today = Time.Gregorian.info(now, Time.FORMAT_SHORT);
@@ -178,14 +177,14 @@ class Segment34View extends WatchUi.WatchFace {
     
     hidden function setHR(dc) as Void {
         var hrLabel = View.findDrawableById("HRLabel") as Text;
-        
+
         // Try to retrieve live HR from Activity::Info
         var activityInfo = Activity.getActivityInfo();
         var sample = activityInfo.currentHeartRate;
         if(sample != null) {
             hrLabel.setText(sample.format("%01d"));
             hrLabel.setColor(Graphics.COLOR_WHITE);
-            if(isSleeping) {
+            if(isSleeping and dimOnSleep) {
                 hrLabel.setColor(Graphics.COLOR_DK_GRAY);
             }
         } else if (ActivityMonitor has :getHeartRateHistory) {
@@ -194,7 +193,7 @@ class Segment34View extends WatchUi.WatchFace {
             if ((hist != null) && (hist.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)) {
                 hrLabel.setText(hist.heartRate.format("%01d"));
                 hrLabel.setColor(0x55AAAA);
-                if(isSleeping) {
+                if(isSleeping and dimOnSleep) {
                     hrLabel.setColor(Graphics.COLOR_DK_GRAY);
                 }
             }
@@ -442,21 +441,29 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setSunUpDown(dc) as Void {
-        /*var weather = Weather.getCurrentConditions();
+        var weather = Weather.getCurrentConditions();
         var sunUpLabel = View.findDrawableById("SunUpLabel") as Text;
         var sunDownLabel = View.findDrawableById("SunDownLabel") as Text;
+        var dawnLabel = View.findDrawableById("Dawn") as Text;
+        var duskLabel = View.findDrawableById("Dusk") as Text;
         var now = Time.now();
         if(weather == null) {
+            dawnLabel.setText("");
+            duskLabel.setText("");
             return;
         }
         var loc = weather.observationLocationPosition;
         if(loc == null) {
+            dawnLabel.setText("");
+            duskLabel.setText("");
             return;
         }
+        dawnLabel.setText("DAWN:");
+        duskLabel.setText("DUSK:");
         var sunrise = Time.Gregorian.info(Weather.getSunrise(loc, now), Time.FORMAT_SHORT);
         var sunset = Time.Gregorian.info(Weather.getSunset(loc, now), Time.FORMAT_SHORT);
-        sunUpLabel.setText(sunrise.hour.format(INTEGER_FORMAT));
-        sunDownLabel.setText(sunset.hour.format(INTEGER_FORMAT));*/
+        sunUpLabel.setText(Lang.format("$1$:$2$", [sunrise.hour.format("%02d"), sunrise.min.format("%02d")]));
+        sunDownLabel.setText(Lang.format("$1$:$2$", [sunset.hour.format("%02d"), sunset.min.format("%02d")]));
     }
 
     hidden function setNotif(dc) as Void {
@@ -502,50 +509,98 @@ class Segment34View extends WatchUi.WatchFace {
             var barTop = 110;
             var fromEdge = 8;
             var barWidth = 4;
+            var barHeight = 125;
             var bbAdjustment = 0;
-            if(isSleeping) {
-                fromEdge = 4;
-            }
-            if(dc.getHeight() == 240) {
-                barTop = 81;
-                fromEdge = 6;
-                barWidth = 2;
+
+            if(dc.getHeight() == 260) {
+                barTop = 77;
+                fromEdge = 10;
+                barWidth = 3;
+                barHeight = 80;
                 bbAdjustment = 1;
             }
-            if(dc.getHeight() == 280) {
-                fromEdge = 14;
+            if(dc.getHeight() == 360) {
+                barTop = 103;
+                fromEdge = 4;
                 barWidth = 4;
+                barHeight = 125;
                 bbAdjustment = -1;
-            }
-            if(bb != null) {
-                batt = Math.round(bb.data * 1.25);
-                dc.setColor(0x00AAFF, -1);
                 if(isSleeping) {
+                    fromEdge = 0;
+                }
+            }
+            if(dc.getHeight() == 390) {
+                barTop = 111;
+                fromEdge = 8;
+                barWidth = 4;
+                barHeight = 125;
+                bbAdjustment = 0;
+                if(isSleeping) {
+                    fromEdge = 4;
+                }
+            }
+            if(dc.getHeight() == 416) {
+                barTop = 122;
+                fromEdge = 15;
+                barWidth = 4;
+                barHeight = 125;
+                bbAdjustment = 0;
+                if(isSleeping) {
+                    fromEdge = 10;
+                }
+            }
+            if(dc.getHeight() == 454) {
+                barTop = 146;
+                fromEdge = 12;
+                barWidth = 4;
+                barHeight = 145;
+                bbAdjustment = 0;
+                if(isSleeping) {
+                    fromEdge = 8;
+                }
+            }
+
+            if(bb != null) {
+                batt = Math.round(bb.data * (barHeight / 100.0));
+                dc.setColor(0x00AAFF, -1);
+                if(isSleeping and dimOnSleep) {
                     dc.setColor(0x046fa8, -1);
                 }
-                dc.fillRectangle(dc.getWidth() - fromEdge - barWidth - bbAdjustment, barTop + (125 - batt), barWidth, batt);
+                dc.fillRectangle(dc.getWidth() - fromEdge - barWidth - bbAdjustment, barTop + (barHeight - batt), barWidth, batt);
             }
             if(st != null) {
-                stress = Math.round(st.data * 1.25);
+                stress = Math.round(st.data * (barHeight / 100.0));
                 dc.setColor(0xFFAA00, -1);
-                if(isSleeping) {
+                if(isSleeping and dimOnSleep) {
                     dc.setColor(0xa8721c, -1);
                 }
-                dc.fillRectangle(fromEdge, barTop + (125 - stress), barWidth, stress);
+                dc.fillRectangle(fromEdge, barTop + (barHeight - stress), barWidth, stress);
             }
         }
     }
 
     hidden function setTraining(dc) as Void {
         var TTRLabel = View.findDrawableById("TTRLabel") as Text;
-
-        if(ActivityMonitor.getInfo().timeToRecovery == null || ActivityMonitor.getInfo().timeToRecovery == 0) {
-            TTRLabel.setText("0");
-        } else { 
-            var ttr = ActivityMonitor.getInfo().timeToRecovery.format("%01d");
-            TTRLabel.setText(ttr);
+        var TTRDesc = View.findDrawableById("TTRDesc") as Text;
+        if(ActivityMonitor.getInfo() has :timeToRecovery) {
+            if(ActivityMonitor.getInfo().timeToRecovery == null || ActivityMonitor.getInfo().timeToRecovery == 0) {
+               TTRLabel.setText("0");
+            } else {
+                var ttr = ActivityMonitor.getInfo().timeToRecovery.format("%01d");
+                TTRLabel.setText(ttr);
+            }
+        } else {
+            // Let's do floors instead then
+            var floors = "0";
+            if(ActivityMonitor.getInfo() has :floorsClimbed) {
+                if(ActivityMonitor.getInfo().floorsClimbed != null) {
+                    floors = ActivityMonitor.getInfo().floorsClimbed.format("%01d");
+                }
+            }
+            TTRDesc.setText("FLOORS:");
+            TTRLabel.setText(floors);
         }
-
+        
         var ActiveLabel = View.findDrawableById("ActiveLabel") as Text;
         if(ActivityMonitor.getInfo().activeMinutesWeek != null) {
             var active = ActivityMonitor.getInfo().activeMinutesWeek.total.format("%01d");
