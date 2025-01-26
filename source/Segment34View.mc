@@ -521,8 +521,8 @@ class Segment34View extends WatchUi.WatchFace {
             }
             if(dc.getHeight() == 360) {
                 barTop = 103;
-                fromEdge = 4;
-                barWidth = 4;
+                fromEdge = 3;
+                barWidth = 3;
                 barHeight = 125;
                 bbAdjustment = -1;
                 if(isSleeping) {
