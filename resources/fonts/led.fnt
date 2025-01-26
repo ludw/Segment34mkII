@@ -44,6 +44,7 @@ char id=44 x=656 y=0 width=5 height=20 xoffset=2 yoffset=0 xadvance=9 page=0
 char id=40 x=665 y=0 width=5 height=20 xoffset=2 yoffset=0 xadvance=9 page=0
 char id=41 x=674 y=0 width=5 height=20 xoffset=2 yoffset=0 xadvance=9 page=0
 char id=32 x=170 y=0 width=5 height=20 xoffset=2 yoffset=0 xadvance=9 page=0
+char id=46 x=656 y=0 width=2 height=20 xoffset=2 yoffset=0 xadvance=6 page=0
 
 char id=97 x=686 y=0 width=14 height=20 xoffset=2 yoffset=0 xadvance=18 page=0
 char id=98 x=791 y=0 width=14 height=20 xoffset=2 yoffset=0 xadvance=18 page=0

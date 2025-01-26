@@ -1,0 +1,61 @@
+<settings>
+    <setting propertyKey="@Properties.windUnit" title="Wind speed unit">
+        <settingConfig type="list">
+            <listEntry value="0">m/s</listEntry>
+            <listEntry value="1">km/h</listEntry>
+            <listEntry value="2">mph</listEntry>
+            <listEntry value="3">knots</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.showFeelsLike" title="Show 'Feels Like' temperature">
+        <settingConfig type="boolean" />
+    </setting>
+
+    <setting propertyKey="@Properties.showNotificationCount" title="Show Notification Count">
+        <settingConfig type="boolean" />
+    </setting>
+
+    <setting propertyKey="@Properties.leftValueShows" title="Left value shows:">
+        <settingConfig type="list">
+            <listEntry value="0">Active min / week</listEntry>
+            <listEntry value="1">Active min / day</listEntry>
+            <listEntry value="2">distance (km) / day</listEntry>
+            <listEntry value="3">distance (miles) / day</listEntry>
+            <listEntry value="4">floors climbed / day</listEntry>
+            <listEntry value="5">meters climbed / day</listEntry>
+            <listEntry value="6">Time to Recovery (h)</listEntry>
+            <listEntry value="7">VO2 Max Running</listEntry>
+            <listEntry value="8">VO2 Max Cycling</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.middleValueShows" title="Middle value shows:">
+        <settingConfig type="list">
+            <listEntry value="0">Heart Rate</listEntry>
+            <listEntry value="1">Respiration Rate</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.rightValueShows" title="Right value shows:">
+        <settingConfig type="list">
+            <listEntry value="0">Active min / week</listEntry>
+            <listEntry value="1">Active min / day</listEntry>
+            <listEntry value="2">distance (km) / day</listEntry>
+            <listEntry value="3">distance (miles) / day</listEntry>
+            <listEntry value="4">floors climbed / day</listEntry>
+            <listEntry value="5">meters climbed / day</listEntry>
+            <listEntry value="6">Time to Recovery (h)</listEntry>
+            <listEntry value="7">VO2 Max Running</listEntry>
+            <listEntry value="8">VO2 Max Cycling</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.bottomValueShows" title="Bottom value shows:">
+        <settingConfig type="list">
+            <listEntry value="0">steps / day</listEntry>
+            <listEntry value="1">distance (meter) / day</listEntry>
+            <listEntry value="2">calories (kcal) / day</listEntry>
+        </settingConfig>
+    </setting>
+</settings>

@@ -177,25 +177,44 @@ class Segment34View extends WatchUi.WatchFace {
     
     hidden function setHR(dc) as Void {
         var hrLabel = View.findDrawableById("HRLabel") as Text;
+        var hrDesc = View.findDrawableById("HRDesc") as Text;
+        var middleValueShows = Application.Properties.getValue("middleValueShows");
 
-        // Try to retrieve live HR from Activity::Info
-        var activityInfo = Activity.getActivityInfo();
-        var sample = activityInfo.currentHeartRate;
-        if(sample != null) {
-            hrLabel.setText(sample.format("%01d"));
-            hrLabel.setColor(Graphics.COLOR_WHITE);
-            if(isSleeping and dimOnSleep) {
-                hrLabel.setColor(Graphics.COLOR_DK_GRAY);
-            }
-        } else if (ActivityMonitor has :getHeartRateHistory) {
-            // Falling back to historical HR from ActivityMonitor
-            var hist = ActivityMonitor.getHeartRateHistory(1, /* newestFirst */ true).next();
-            if ((hist != null) && (hist.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)) {
-                hrLabel.setText(hist.heartRate.format("%01d"));
-                hrLabel.setColor(0x55AAAA);
+        if(middleValueShows == 0) {
+            hrDesc.setText("HEART RATE:");
+
+            // Try to retrieve live HR from Activity::Info
+            var activityInfo = Activity.getActivityInfo();
+            var sample = activityInfo.currentHeartRate;
+            if(sample != null) {
+                hrLabel.setText(sample.format("%01d"));
+                hrLabel.setColor(Graphics.COLOR_WHITE);
                 if(isSleeping and dimOnSleep) {
                     hrLabel.setColor(Graphics.COLOR_DK_GRAY);
                 }
+            } else if (ActivityMonitor has :getHeartRateHistory) {
+                // Falling back to historical HR from ActivityMonitor
+                var hist = ActivityMonitor.getHeartRateHistory(1, /* newestFirst */ true).next();
+                if ((hist != null) && (hist.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)) {
+                    hrLabel.setText(hist.heartRate.format("%01d"));
+                    hrLabel.setColor(0x55AAAA);
+                    if(isSleeping and dimOnSleep) {
+                        hrLabel.setColor(Graphics.COLOR_DK_GRAY);
+                    }
+                }
+            }
+        } else if (middleValueShows == 1) {
+            hrDesc.setText("RESP RATE:");
+            if(ActivityMonitor.getInfo() has :respirationRate) {
+                if(ActivityMonitor.getInfo().respirationRate != null) {
+                    hrLabel.setText(ActivityMonitor.getInfo().respirationRate.format("%01d"));
+                    hrLabel.setColor(Graphics.COLOR_WHITE);
+                    if(isSleeping and dimOnSleep) {
+                        hrLabel.setColor(Graphics.COLOR_DK_GRAY);
+                    }
+                }
+            } else {
+                hrLabel.setText("");
             }
         }
 
@@ -224,6 +243,7 @@ class Segment34View extends WatchUi.WatchFace {
         var windspeed = "";
         var bearing = "";
         var fl = "";
+        var weatherText = "";
         if (weather == null) { return; }
         if (weather.condition == null) { return; }
 
@@ -237,26 +257,57 @@ class Segment34View extends WatchUi.WatchFace {
                 temp = ((tempVal * 9/5) + 32).format("%01d");
                 tempUnit = "F";
             }
+            weatherText = Lang.format("$1$$2$", [temp, tempUnit]);
         }
         
         if(weather.windSpeed != null) {
-            windspeed = weather.windSpeed.format(INTEGER_FORMAT);
+            var windUnit = Application.Properties.getValue("windUnit");
+            var windspeed_mps = weather.windSpeed;
+            if(windUnit == 0) { // m/s
+                windspeed = Math.round(windspeed_mps).format("%01d");
+            } else if (windUnit == 1) { // km/h
+                var windspeed_kmh = Math.round(windspeed_mps * 3.6);
+                windspeed = windspeed_kmh.format("%01d");
+            } else if (windUnit == 2) { // mph
+                var windspeed_mph = Math.round(windspeed_mps * 2.237);
+                windspeed = windspeed_mph.format("%01d");
+            } else if (windUnit == 3) { // knots
+                var windspeed_kt = Math.round(windspeed_mps * 1.944);
+                windspeed = windspeed_kt.format("%01d");
+            }
         }
 
         if(weather.windBearing != null) {
             bearing = ((Math.round((weather.windBearing.toFloat() + 180) / 45.0).toNumber() % 8) + 97).toChar().toString();
         }
 
-        if(weather.feelsLikeTemperature != null) {
-            var fltemp = weather.feelsLikeTemperature;
-            if(tempUnitSetting != System.UNIT_METRIC) {
-                fltemp = ((fltemp * 9/5) + 32);
+        if(windspeed.length() > 0 and bearing.length() > 0) {
+            if(weatherText.length() == 0) {
+                weatherText = windspeed;
+            } else {
+                weatherText = Lang.format("$1$, $2$$3$", [weatherText, bearing, windspeed]);
             }
-            fl = Lang.format("FL: $1$$2$", [fltemp.format(INTEGER_FORMAT), tempUnit]);
+        }
+
+        var showFeelsLike = Application.Properties.getValue("showFeelsLike");
+        if(showFeelsLike) {
+            if(weather.feelsLikeTemperature != null) {
+                var fltemp = weather.feelsLikeTemperature;
+                if(tempUnitSetting != System.UNIT_METRIC) {
+                    fltemp = ((fltemp * 9/5) + 32);
+                }
+                fl = Lang.format("FL: $1$$2$", [fltemp.format(INTEGER_FORMAT), tempUnit]);
+            }
+
+            if(weatherText.length() == 0) {
+                weatherText = fl;
+            } else {
+                weatherText = Lang.format("$1$, $2$", [weatherText, fl]);
+            }
         }
         
         var weatherLabel = View.findDrawableById("WeatherLabel1") as Text;
-        weatherLabel.setText(Lang.format("$1$$2$, $3$$4$, $5$", [temp, tempUnit, bearing, windspeed, fl]));
+        weatherLabel.setText(weatherText);
     }
 
     hidden function setWeatherLabel() as Void {
@@ -468,12 +519,20 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function setNotif(dc) as Void {
         var value = "";
-        var sample = System.getDeviceSettings().notificationCount;
-        if(sample > 0) {
-            value = sample.format("%01d");
-        }
         var notifLabel = View.findDrawableById("NotifLabel") as Text;
-        notifLabel.setText(value);
+
+        var showNotificationCount = Application.Properties.getValue("showNotificationCount");
+        if(showNotificationCount) {
+            var sample = System.getDeviceSettings().notificationCount;
+            if(sample > 0) {
+                value = sample.format("%01d");
+            }
+
+            notifLabel.setText(value);
+        } else {
+            notifLabel.setText("");
+        }
+        
     }
 
     hidden function setDate(dc) as Void {
@@ -492,8 +551,24 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function setStep(dc) as Void {
         var stepLabel = View.findDrawableById("StepLabel") as Text;
-        var stepCount = ActivityMonitor.getInfo().steps.format("%05d");
-        stepLabel.setText(stepCount);
+        var val = "";
+        var bottomValueShows = Application.Properties.getValue("bottomValueShows");
+
+        if(bottomValueShows == 0) {
+            if(ActivityMonitor.getInfo().steps != null) {
+                val = ActivityMonitor.getInfo().steps.format("%05d");
+            }
+        } else if(bottomValueShows == 1) {
+            if(ActivityMonitor.getInfo().distance != null) {
+                val = (ActivityMonitor.getInfo().distance / 100).format("%05d");
+            }
+        } else if(bottomValueShows == 2) {
+            if(ActivityMonitor.getInfo().calories != null) {
+                val = ActivityMonitor.getInfo().calories.format("%05d");
+            }   
+        }
+        
+        stepLabel.setText(val);
     }
 
     hidden function setStressAndBodyBattery(dc) as Void {
@@ -580,33 +655,105 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setTraining(dc) as Void {
-        var TTRLabel = View.findDrawableById("TTRLabel") as Text;
         var TTRDesc = View.findDrawableById("TTRDesc") as Text;
-        if(ActivityMonitor.getInfo() has :timeToRecovery) {
-            if(ActivityMonitor.getInfo().timeToRecovery == null || ActivityMonitor.getInfo().timeToRecovery == 0) {
-               TTRLabel.setText("0");
-            } else {
-                var ttr = ActivityMonitor.getInfo().timeToRecovery.format("%01d");
-                TTRLabel.setText(ttr);
-            }
-        } else {
-            // Let's do floors instead then
-            var floors = "0";
-            if(ActivityMonitor.getInfo() has :floorsClimbed) {
-                if(ActivityMonitor.getInfo().floorsClimbed != null) {
-                    floors = ActivityMonitor.getInfo().floorsClimbed.format("%01d");
+        var TTRLabel = View.findDrawableById("TTRLabel") as Text;
+        var leftValueShows = Application.Properties.getValue("leftValueShows");
+        TTRDesc.setText(getComplicationDesc(leftValueShows));
+        TTRLabel.setText(getComplicationValue(leftValueShows));
+        
+        var ActiveDesc = View.findDrawableById("ActiveDesc") as Text;
+        var ActiveLabel = View.findDrawableById("ActiveLabel") as Text;
+        var rightValueShows = Application.Properties.getValue("rightValueShows");
+        ActiveDesc.setText(getComplicationDesc(rightValueShows));
+        ActiveLabel.setText(getComplicationValue(rightValueShows));
+    }
+
+    function getComplicationValue(complicationType) as String {
+        var val = "";
+
+        if(complicationType == 0) { // Active min / week
+            if(ActivityMonitor.getInfo() has :activeMinutesWeek) {
+                if(ActivityMonitor.getInfo().activeMinutesWeek != null) {
+                    val = ActivityMonitor.getInfo().activeMinutesWeek.total.format("%01d");
                 }
             }
-            TTRDesc.setText("FLOORS:");
-            TTRLabel.setText(floors);
+        } else if(complicationType == 1) { // Active min / day
+            if(ActivityMonitor.getInfo() has :activeMinutesWeek) {
+                if(ActivityMonitor.getInfo().activeMinutesDay != null) {
+                    val = ActivityMonitor.getInfo().activeMinutesDay.total.format("%01d");
+                }
+            }
+        } else if(complicationType == 2) { // distance (km) / day
+            if(ActivityMonitor.getInfo() has :distance) {
+                if(ActivityMonitor.getInfo().distance != null) {
+                    val = (ActivityMonitor.getInfo().distance / 100000).format("%01d");
+                }
+            }
+        } else if(complicationType == 3) { // distance (miles) / day
+            if(ActivityMonitor.getInfo() has :distance) {
+                if(ActivityMonitor.getInfo().distance != null) {
+                    val = (ActivityMonitor.getInfo().distance / 160900).format("%01d");
+                }
+            }
+        } else if(complicationType == 4) { // floors climbed / day
+            if(ActivityMonitor.getInfo() has :floorsClimbed) {
+                if(ActivityMonitor.getInfo().floorsClimbed != null) {
+                    val = ActivityMonitor.getInfo().floorsClimbed.format("%01d");
+                }
+            }
+        } else if(complicationType == 5) { // meters climbed / day
+            if(ActivityMonitor.getInfo() has :metersClimbed) {
+                if(ActivityMonitor.getInfo().metersClimbed != null) {
+                    val = ActivityMonitor.getInfo().metersClimbed.format("%01d");
+                }
+            }
+        } else if(complicationType == 6) { // Time to Recovery (h)
+            if(ActivityMonitor.getInfo() has :timeToRecovery) {
+                if(ActivityMonitor.getInfo().timeToRecovery != null) {
+                    val = ActivityMonitor.getInfo().timeToRecovery.format("%01d");
+                }
+            }
+        } else if(complicationType == 7) { // VO2 Max Running
+            var profile = UserProfile.getProfile();
+            if(profile has :vo2maxRunning) {
+                if(profile.vo2maxRunning != null) {
+                    val = profile.vo2maxRunning.format("%01d");
+                }
+            }
+        } else if(complicationType == 8) { // VO2 Max Cycling
+            var profile = UserProfile.getProfile();
+            if(profile has :vo2maxCycling) {
+                if(profile.vo2maxCycling != null) {
+                    val = profile.vo2maxCycling.format("%01d");
+                }
+            }
         }
-        
-        var ActiveLabel = View.findDrawableById("ActiveLabel") as Text;
-        if(ActivityMonitor.getInfo().activeMinutesWeek != null) {
-            var active = ActivityMonitor.getInfo().activeMinutesWeek.total.format("%01d");
-            ActiveLabel.setText(active);
-        }
+        return val;
+    }
 
+    function getComplicationDesc(complicationType) as String {
+        var desc = "";
+
+        if(complicationType == 0) { // Active min / week
+            desc = "WEEKLY ACT MIN:";
+        } else if(complicationType == 1) { // Active min / day
+           desc = "DAILY MIN:";
+        } else if(complicationType == 2) { // distance (km) / day
+            desc = "KM TODAY:";
+        } else if(complicationType == 3) { // distance (miles) / day
+            desc = "MILES TODAY:";
+        } else if(complicationType == 4) { // floors climbed / day
+            desc = "FLOORS:";
+        } else if(complicationType == 5) { // meters climbed / day
+            desc = "M CLIMBED:";
+        } else if(complicationType == 6) { // Time to Recovery (h)
+            desc = "RECOV. HRS:";
+        } else if(complicationType == 7) { // VO2 Max Running
+            desc = "VO2 MAX:";
+        } else if(complicationType == 8) { // VO2 Max Cycling
+            desc = "VO2 MAX:";
+        }
+        return desc;
     }
 
     // Called when this View is removed from the screen. Save the
