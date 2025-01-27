@@ -27,13 +27,23 @@
             <listEntry value="6">Time to Recovery (h)</listEntry>
             <listEntry value="7">VO2 Max Running</listEntry>
             <listEntry value="8">VO2 Max Cycling</listEntry>
+            <listEntry value="9">Respiration Rate</listEntry>
         </settingConfig>
     </setting>
 
     <setting propertyKey="@Properties.middleValueShows" title="Middle value shows:">
         <settingConfig type="list">
-            <listEntry value="0">Heart Rate</listEntry>
-            <listEntry value="1">Respiration Rate</listEntry>
+            <listEntry value="0">Active min / week</listEntry>
+            <listEntry value="1">Active min / day</listEntry>
+            <listEntry value="2">distance (km) / day</listEntry>
+            <listEntry value="3">distance (miles) / day</listEntry>
+            <listEntry value="4">floors climbed / day</listEntry>
+            <listEntry value="5">meters climbed / day</listEntry>
+            <listEntry value="6">Time to Recovery (h)</listEntry>
+            <listEntry value="7">VO2 Max Running</listEntry>
+            <listEntry value="8">VO2 Max Cycling</listEntry>
+            <listEntry value="9">Respiration Rate</listEntry>
+            <listEntry value="10">Heart Rate</listEntry>
         </settingConfig>
     </setting>
 
@@ -48,6 +58,7 @@
             <listEntry value="6">Time to Recovery (h)</listEntry>
             <listEntry value="7">VO2 Max Running</listEntry>
             <listEntry value="8">VO2 Max Cycling</listEntry>
+            <listEntry value="9">Respiration Rate</listEntry>
         </settingConfig>
     </setting>
 
@@ -56,6 +67,7 @@
             <listEntry value="0">steps / day</listEntry>
             <listEntry value="1">distance (meter) / day</listEntry>
             <listEntry value="2">calories (kcal) / day</listEntry>
+            <listEntry value="3">wheelchair pushes / day</listEntry>
         </settingConfig>
     </setting>
 </settings>

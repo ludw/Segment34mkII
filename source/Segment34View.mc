@@ -211,7 +211,7 @@ class Segment34View extends WatchUi.WatchFace {
         var hrDesc = View.findDrawableById("HRDesc") as Text;
         var middleValueShows = Application.Properties.getValue("middleValueShows");
 
-        if(middleValueShows == 0) {
+        if(middleValueShows == 10) {
             hrDesc.setText("HEART RATE:");
 
             // Try to retrieve live HR from Activity::Info
@@ -234,18 +234,13 @@ class Segment34View extends WatchUi.WatchFace {
                     }
                 }
             }
-        } else if (middleValueShows == 1) {
-            hrDesc.setText("RESP RATE:");
-            if(ActivityMonitor.getInfo() has :respirationRate) {
-                if(ActivityMonitor.getInfo().respirationRate != null) {
-                    hrLabel.setText(ActivityMonitor.getInfo().respirationRate.format("%01d"));
-                    hrLabel.setColor(Graphics.COLOR_WHITE);
-                    if(isSleeping and dimOnSleep) {
-                        hrLabel.setColor(Graphics.COLOR_DK_GRAY);
-                    }
-                }
-            } else {
-                hrLabel.setText("");
+        } else {
+            hrDesc.setText(getComplicationDesc(middleValueShows));
+            hrLabel.setText(getComplicationValue(middleValueShows));
+
+            hrLabel.setColor(Graphics.COLOR_WHITE);
+            if(isSleeping and dimOnSleep) {
+                hrLabel.setColor(Graphics.COLOR_DK_GRAY);
             }
         }
 
@@ -597,6 +592,13 @@ class Segment34View extends WatchUi.WatchFace {
             if(ActivityMonitor.getInfo().calories != null) {
                 val = ActivityMonitor.getInfo().calories.format("%05d");
             }   
+        } else if(bottomValueShows == 3) {
+            if(ActivityMonitor.getInfo() has :pushes) {
+                if(ActivityMonitor.getInfo().pushes != null) {
+                    val = ActivityMonitor.getInfo().pushes.format("%05d");
+                } 
+            }
+              
         }
         
         stepLabel.setText(val);
@@ -758,6 +760,12 @@ class Segment34View extends WatchUi.WatchFace {
                     val = profile.vo2maxCycling.format("%01d");
                 }
             }
+        } else if(complicationType == 9) { // Respiration rate
+            if(ActivityMonitor.getInfo() has :respirationRate) {
+                if(ActivityMonitor.getInfo().respirationRate != null) {
+                    val = ActivityMonitor.getInfo().respirationRate.format("%01d");
+                }
+            }
         }
         return val;
     }
@@ -783,6 +791,8 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "VO2 MAX:";
         } else if(complicationType == 8) { // VO2 Max Cycling
             desc = "VO2 MAX:";
+        } else if(complicationType == 9) { // Respiration rate
+            desc = "RESP RATE:";
         }
         return desc;
     }
