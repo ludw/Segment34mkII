@@ -16,6 +16,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var isSleeping = false;
     private var lastUpdate = null;
     private var dimOnSleep = false;
+    private var previousEssentialsVis = null;
 
     function initialize() {
         WatchFace.initialize();
@@ -47,22 +48,30 @@ class Segment34View extends WatchUi.WatchFace {
         if(!isSleeping and canBurnIn) {
             toggleNonEssentials(true, dc);
         }
-    
+
         setSeconds(dc);
 
-        if(clockTime.sec % 2 == 0) {
-            setHR(dc);
-            setNotif(dc);
+        if(isSleeping) {
+            if(clockTime.sec % 30 == 0) {
+                setHR(dc);
+                setNotif(dc);
+            }
+        } else {
+            if(clockTime.sec % 3 == 0) {
+                setHR(dc);
+                setNotif(dc);
+            }
         }
 
         if(lastUpdate != null && now - lastUpdate < 30 && clockTime.sec % 60 != 0) {
-            View.onUpdate(dc);
-            setStressAndBodyBattery(dc);
+            if(!isSleeping) {
+                View.onUpdate(dc);
+                setStressAndBodyBattery(dc);
+            }
             return;
         }
 
         setClock(dc);
-
         setMoon(dc);
         setWeather(dc);
         setWeatherLabel();
@@ -85,7 +94,28 @@ class Segment34View extends WatchUi.WatchFace {
         System.println("Power budget exceeded");
     }
 
+    // Called when this View is removed from the screen. Save the
+    // state of this View here. This includes freeing resources from
+    // memory.
+    function onHide() as Void {
+    }
+
+    // The user has just looked at their watch. Timers and animations may be started here.
+    function onExitSleep() as Void {
+        isSleeping = false;
+    }
+
+    // Terminate any active timers and prepare for slow updates.
+    function onEnterSleep() as Void {
+        isSleeping = true;
+        lastUpdate = null;
+    }
+
     hidden function toggleNonEssentials(visible, dc){
+        if(previousEssentialsVis == visible) {
+            return;
+        }
+
         (View.findDrawableById("TimeBg") as Text).setVisible(visible);
         (View.findDrawableById("TTRBg") as Text).setVisible(visible);
         (View.findDrawableById("HRBg") as Text).setVisible(visible);
@@ -142,7 +172,8 @@ class Segment34View extends WatchUi.WatchFace {
             (View.findDrawableById("BattBg") as Text).setColor(0x555555);
             (View.findDrawableById("BattLabel") as Text).setColor(0x777777);
         }
-        
+
+        previousEssentialsVis = visible;
     }
     
     hidden function setSeconds(dc) as Void {
@@ -754,22 +785,6 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "VO2 MAX:";
         }
         return desc;
-    }
-
-    // Called when this View is removed from the screen. Save the
-    // state of this View here. This includes freeing resources from
-    // memory.
-    function onHide() as Void {
-    }
-
-    // The user has just looked at their watch. Timers and animations may be started here.
-    function onExitSleep() as Void {
-        isSleeping = false;
-    }
-
-    // Terminate any active timers and prepare for slow updates.
-    function onEnterSleep() as Void {
-        isSleeping = true;
     }
 
     hidden function day_name(day_of_week) {
