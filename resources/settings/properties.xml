@@ -2,6 +2,7 @@
     <property id="windUnit" type="number">0</property>
     <property id="showFeelsLike" type="boolean">true</property>
     <property id="showNotificationCount" type="boolean">true</property>
+    <property id="showStressAndBodyBattery" type="boolean">true</property>
     <property id="leftValueShows" type="number">6</property>
     <property id="middleValueShows" type="number">10</property>
     <property id="rightValueShows" type="number">0</property>

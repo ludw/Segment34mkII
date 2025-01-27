@@ -8,6 +8,7 @@ import Toybox.Weather;
 import Toybox.Time;
 import Toybox.Math;
 import Toybox.SensorHistory;
+import Toybox.Position;
 
 const INTEGER_FORMAT = "%d";
 
@@ -57,7 +58,7 @@ class Segment34View extends WatchUi.WatchFace {
                 setNotif(dc);
             }
         } else {
-            if(clockTime.sec % 3 == 0) {
+            if(clockTime.sec % 2 == 0) {
                 setHR(dc);
                 setNotif(dc);
             }
@@ -109,6 +110,7 @@ class Segment34View extends WatchUi.WatchFace {
     function onEnterSleep() as Void {
         isSleeping = true;
         lastUpdate = null;
+        WatchUi.requestUpdate();
     }
 
     hidden function toggleNonEssentials(visible, dc){
@@ -121,6 +123,7 @@ class Segment34View extends WatchUi.WatchFace {
         (View.findDrawableById("HRBg") as Text).setVisible(visible);
         (View.findDrawableById("ActiveBg") as Text).setVisible(visible);
         (View.findDrawableById("StepBg") as Text).setVisible(visible);
+        (View.findDrawableById("SecondsLabel") as Text).setVisible(visible);
 
         if(visible) {
             (View.findDrawableById("TTRDesc") as Text).setColor(0x55AAAA);
@@ -154,7 +157,7 @@ class Segment34View extends WatchUi.WatchFace {
             (View.findDrawableById("HRDesc") as Text).setColor(0x0e333c);
             (View.findDrawableById("ActiveDesc") as Text).setColor(0x0e333c);
 
-            (View.findDrawableById("TimeLabel") as Text).setColor(0xbe975e);
+            (View.findDrawableById("TimeLabel") as Text).setColor(0xa98753);
             (View.findDrawableById("DateLabel") as Text).setColor(0xa98753);
             (View.findDrawableById("NotifLabel") as Text).setColor(0x0567a1);
             (View.findDrawableById("MoonLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
@@ -177,11 +180,11 @@ class Segment34View extends WatchUi.WatchFace {
     }
     
     hidden function setSeconds(dc) as Void {
-        var clockTime = System.getClockTime();
         var secLabel = View.findDrawableById("SecondsLabel") as Text;
-        if(isSleeping) {
+        if(isSleeping and lastUpdate == null) {
             secLabel.setText("");
         } else {
+            var clockTime = System.getClockTime();
             var secString = Lang.format("$1$", [clockTime.sec.format("%02d")]);
             secLabel.setText(secString);
         }
@@ -599,17 +602,13 @@ class Segment34View extends WatchUi.WatchFace {
                 } 
             }  
         } else if(bottomValueShows == 4) { // Altitude (m)
-            if(ActivityMonitor.getInfo() has :altitude) {
-                if(ActivityMonitor.getInfo().altitude != null) {
-                    val = ActivityMonitor.getInfo().altitude.format("%05d");
-                } 
-            }  
+            if(Position.getInfo().altitude != null and Position.getInfo().accuracy != Position.QUALITY_NOT_AVAILABLE) {
+                val = Position.getInfo().altitude.format("%05d");
+            }
         } else if(bottomValueShows == 5) { // Altitude (ft)
-            if(ActivityMonitor.getInfo() has :altitude) {
-                if(ActivityMonitor.getInfo().altitude != null) {
-                    val = (ActivityMonitor.getInfo().altitude) * 3.281 .format("%05d");
-                } 
-            }  
+            if(Position.getInfo().altitude != null and Position.getInfo().accuracy != Position.QUALITY_NOT_AVAILABLE) {
+                val = (Position.getInfo().altitude * 3.281).format("%05d");
+            }
         }
         
         stepLabel.setText(val);
@@ -618,6 +617,8 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function setStressAndBodyBattery(dc) as Void {
         var batt = 0;
         var stress = 0;
+        var showStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery");
+        if(!showStressAndBodyBattery) { return; }
 
         if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
             // Set up the method with parameters
@@ -784,10 +785,8 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 12) { // Altitude (m)
-            if(ActivityMonitor.getInfo() has :altitude) {
-                if(ActivityMonitor.getInfo().altitude != null) {
-                    val = ActivityMonitor.getInfo().altitude.format("%01d");
-                }
+            if(Position.getInfo().altitude != null and Position.getInfo().accuracy != Position.QUALITY_NOT_AVAILABLE) {
+                val = Position.getInfo().altitude.format("%01d");
             }
         }
         return val;

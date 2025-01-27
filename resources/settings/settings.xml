@@ -16,6 +16,10 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.showStressAndBodyBattery" title="Show Stress (orange) and Body Battery (blue) bars">
+        <settingConfig type="boolean" />
+    </setting>
+
     <setting propertyKey="@Properties.leftValueShows" title="Left value shows:">
         <settingConfig type="list">
             <listEntry value="0">Active min / week</listEntry>
