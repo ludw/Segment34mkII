@@ -597,8 +597,19 @@ class Segment34View extends WatchUi.WatchFace {
                 if(ActivityMonitor.getInfo().pushes != null) {
                     val = ActivityMonitor.getInfo().pushes.format("%05d");
                 } 
-            }
-              
+            }  
+        } else if(bottomValueShows == 4) { // Altitude (m)
+            if(ActivityMonitor.getInfo() has :altitude) {
+                if(ActivityMonitor.getInfo().altitude != null) {
+                    val = ActivityMonitor.getInfo().altitude.format("%05d");
+                } 
+            }  
+        } else if(bottomValueShows == 5) { // Altitude (ft)
+            if(ActivityMonitor.getInfo() has :altitude) {
+                if(ActivityMonitor.getInfo().altitude != null) {
+                    val = (ActivityMonitor.getInfo().altitude) * 3.281 .format("%05d");
+                } 
+            }  
         }
         
         stepLabel.setText(val);
@@ -772,6 +783,12 @@ class Segment34View extends WatchUi.WatchFace {
                     val = ActivityMonitor.getInfo().calories.format("%01d");
                 }
             }
+        } else if(complicationType == 12) { // Altitude (m)
+            if(ActivityMonitor.getInfo() has :altitude) {
+                if(ActivityMonitor.getInfo().altitude != null) {
+                    val = ActivityMonitor.getInfo().altitude.format("%01d");
+                }
+            }
         }
         return val;
     }
@@ -801,6 +818,8 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "RESP RATE:";
         } else if(complicationType == 11) { // Calories / day
             desc = "CALORIES:";
+        } else if(complicationType == 12) { // Altitude (m)
+            desc = "ALTITUDE:";
         }
         return desc;
     }

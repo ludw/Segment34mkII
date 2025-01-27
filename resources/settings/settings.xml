@@ -62,6 +62,7 @@
             <listEntry value="8">VO2 Max Cycling</listEntry>
             <listEntry value="9">Respiration Rate</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
+            <listEntry value="12">Altitude (m)</listEntry>
         </settingConfig>
     </setting>
 
@@ -71,6 +72,8 @@
             <listEntry value="1">distance (meter) / day</listEntry>
             <listEntry value="2">calories (kcal) / day</listEntry>
             <listEntry value="3">wheelchair pushes / day</listEntry>
+            <listEntry value="4">Altitude (m)</listEntry>
+            <listEntry value="5">Altitude (ft)</listEntry>
         </settingConfig>
     </setting>
 </settings>

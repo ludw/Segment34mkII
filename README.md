@@ -5,20 +5,23 @@ A watchface for Garmin watches with a 34 Segment display
 
 The watchface features the following:
 
- - Time displayed with a 34 segment display
- - Phase of the moon with graphic display
- - Heartrate
- - Weather (conditions, temperature and windspeed)
- - Date, week number
- - Notification count
- - Time to recovery
- - Active minutes per week
- - Steps
- - Battery days remaining
- 
- The watchface have no settings screen and is currently not published to the IQ Connect store.
+- Time displayed with a 34 segment display
+- Phase of the moon with graphic display
+- Heartrate or Respiration rate
+- Weather (conditions, temperature and windspeed)
+- Sunrise/Sunset
+- Date
+- Notification count
+- Configurable: Active minutes / Distance / Floors / Time to Recovery / VO2 Max
+- Configurable: Steps / Calories / Distance
+- Battery days remaining (or percentage on some watches)
+- Always on mode
+- Settings in the Garmin app
+
+## IQ Store Listing
+https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 
 ## Builds
- There are pre-made builds for compatible watches in the builds folder.
+ There are some pre-made builds in the builds folder.
 
  Connect your watch via usb and transfer the Segment34.prg file to the GARMIN/Apps folder on the watch. 
