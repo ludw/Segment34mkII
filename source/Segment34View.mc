@@ -766,6 +766,12 @@ class Segment34View extends WatchUi.WatchFace {
                     val = ActivityMonitor.getInfo().respirationRate.format("%01d");
                 }
             }
+        } else if(complicationType == 11) { // Calories
+            if(ActivityMonitor.getInfo() has :calories) {
+                if(ActivityMonitor.getInfo().calories != null) {
+                    val = ActivityMonitor.getInfo().calories.format("%01d");
+                }
+            }
         }
         return val;
     }
@@ -793,6 +799,8 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "VO2 MAX:";
         } else if(complicationType == 9) { // Respiration rate
             desc = "RESP RATE:";
+        } else if(complicationType == 11) { // Calories / day
+            desc = "CALORIES:";
         }
         return desc;
     }

@@ -28,6 +28,7 @@
             <listEntry value="7">VO2 Max Running</listEntry>
             <listEntry value="8">VO2 Max Cycling</listEntry>
             <listEntry value="9">Respiration Rate</listEntry>
+            <listEntry value="11">Calories (kcal) / day</listEntry>
         </settingConfig>
     </setting>
 
@@ -44,6 +45,7 @@
             <listEntry value="8">VO2 Max Cycling</listEntry>
             <listEntry value="9">Respiration Rate</listEntry>
             <listEntry value="10">Heart Rate</listEntry>
+            <listEntry value="11">Calories (kcal) / day</listEntry>
         </settingConfig>
     </setting>
 
@@ -59,6 +61,7 @@
             <listEntry value="7">VO2 Max Running</listEntry>
             <listEntry value="8">VO2 Max Cycling</listEntry>
             <listEntry value="9">Respiration Rate</listEntry>
+            <listEntry value="11">Calories (kcal) / day</listEntry>
         </settingConfig>
     </setting>
 
