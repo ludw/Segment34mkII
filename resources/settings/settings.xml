@@ -24,6 +24,10 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.batteryAsPercentage" title="Display battery as percentage instead of days">
+        <settingConfig type="boolean" />
+    </setting>
+
     <setting propertyKey="@Properties.leftValueShows" title="Left value shows:">
         <settingConfig type="list">
             <listEntry value="0">Active min / week</listEntry>

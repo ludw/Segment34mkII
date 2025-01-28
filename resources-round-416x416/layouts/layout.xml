@@ -2,7 +2,6 @@
     <label id="MoonLabel" x="center" y="17" font="@Fonts.id_moon" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
     <label id="Dawn" x="184" y="15" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x005555" text="DAWN:" />
     <label id="SunUpLabel" x="184" y="25" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xAAAAAA" />
-
     <label id="Dusk" x="233" y="15" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x005555" text="DUSK:" />
     <label id="SunDownLabel" x="231" y="25" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xAAAAAA" />
 

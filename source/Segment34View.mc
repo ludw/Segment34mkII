@@ -257,8 +257,15 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function setBatt(dc) as Void {
         var battLabel = View.findDrawableById("BattLabel") as Text;
         var sample = System.getSystemStats().battery;
-        var value = Lang.format("$1$", [sample.format("%03d")]);
-        if(System.getSystemStats() has :batteryInDays) {
+        var value = "";
+        if(sample < 100) {
+            value = Lang.format("$1$%", [sample.format("%d")]);
+        } else {
+            value = Lang.format("$1$", [sample.format("%d")]);
+        }
+        
+        var batteryAsPercentage = Application.Properties.getValue("batteryAsPercentage");
+        if(System.getSystemStats() has :batteryInDays and !batteryAsPercentage) {
             if (System.getSystemStats().batteryInDays != null and System.getSystemStats().batteryInDays != 0){
                 sample = System.getSystemStats().batteryInDays;
                 value = Lang.format("$1$D", [sample.format("%01d")]);
