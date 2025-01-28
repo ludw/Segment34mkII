@@ -282,7 +282,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             visible = false;
         }
-        
+
         battBg.setVisible(visible);
         battLabel.setText(value);
     }
@@ -624,12 +624,20 @@ class Segment34View extends WatchUi.WatchFace {
                 } 
             }  
         } else if(bottomValueShows == 4) { // Altitude (m)
-            if(Position.getInfo().altitude != null and Position.getInfo().accuracy != Position.QUALITY_NOT_AVAILABLE) {
-                val = Position.getInfo().altitude.format("%05d");
+            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
+                var elvIterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
+                var elv = elvIterator.next();
+                if(elv != null) {
+                    val = elv.data.format("%05d");
+                }
             }
         } else if(bottomValueShows == 5) { // Altitude (ft)
-            if(Position.getInfo().altitude != null and Position.getInfo().accuracy != Position.QUALITY_NOT_AVAILABLE) {
-                val = (Position.getInfo().altitude * 3.281).format("%05d");
+            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
+                var elvIterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
+                var elv = elvIterator.next();
+                if(elv != null) {
+                    val = (elv.data * 3.28084).format("%05d");
+                }
             }
         }
         
@@ -814,8 +822,12 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 12) { // Altitude (m)
-            if(Position.getInfo().altitude != null and Position.getInfo().accuracy != Position.QUALITY_NOT_AVAILABLE) {
-                val = Position.getInfo().altitude.format("%01d");
+            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
+                var elvIterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
+                var elv = elvIterator.next();
+                if(elv != null) {
+                    val = elv.data.format("%01d");
+                }
             }
         } else if(complicationType == 13) { // Stress
             if(ActivityMonitor.getInfo() has :stressScore) {
@@ -830,8 +842,12 @@ class Segment34View extends WatchUi.WatchFace {
                 val = bb.data.format("%01d");
             }
         } else if(complicationType == 15) { // Altitude (ft)
-            if(Position.getInfo().altitude != null and Position.getInfo().accuracy != Position.QUALITY_NOT_AVAILABLE) {
-                val = (Position.getInfo().altitude * 3.281).format("%01d");
+            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
+                var elvIterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
+                var elv = elvIterator.next();
+                if(elv != null) {
+                    val = (elv.data * 3.28084).format("%01d");
+                }
             }
         } else if(complicationType == 16) { // UTC time
             var now = Time.now();
