@@ -1,0 +1,35 @@
+<layout id="WatchFace">
+    <label id="MoonLabel" x="center" y="12" font="@Fonts.id_moon" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+    <label id="Dawn" x="120" y="13" font="@Fonts.id_xsmol" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x005555" text="DAWN:" />
+    <label id="SunUpLabel" x="120" y="23" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xAAAAAA" />
+     <label id="Dusk" x="160" y="13" font="@Fonts.id_xsmol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x005555" text="DUSK:" />
+    <label id="SunDownLabel" x="160" y="23" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xAAAAAA" />
+
+    <label id="WeatherLabel1" x="center" y="40" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+    <label id="WeatherLabel2" x="center" y="60" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+
+    <label id="TimeBg" x="center" y="82" font="@Fonts.id_segments80wide" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x005555" text="#####" />
+    <label id="TimeLabel" x="center" y="82" font="@Fonts.id_segments80wide" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFF00" />
+
+    <label id="DateLabel" x="25" y="170" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xFFFF00" />
+    <label id="NotifLabel" x="220" y="170" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x00AAFF" />
+    <label id="SecondsLabel" x="258" y="170" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xFFFF00" />
+
+    <label id="TTRDesc" x="32" y="193" font="@Fonts.id_xsmol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x55AAAA" text="RECOV. HRS:" />
+    <label id="TTRBg" x="101" y="203" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x005555" text="####" />
+    <label id="TTRLabel" x="101" y="203" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xFFFFFF" />
+   
+    <label id="HRDesc" x="114" y="193" font="@Fonts.id_xsmol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x55AAAA" text="HEART RATE:" />
+    <label id="HRBg" x="165" y="203" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x005555" text="###" />
+    <label id="HRLabel" x="165" y="203" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xFFFFFF" />
+
+    <label id="ActiveDesc" x="178" y="193" font="@Fonts.id_xsmol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x55AAAA" text="WEEKLY ACT MIN:" />
+    <label id="ActiveBg" x="247" y="203" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x005555" text="####" />
+    <label id="ActiveLabel" x="247" y="203" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xFFFFFF" />
+    
+    <label id="StepBg" x="center" y="235" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x005555" text="#####" />
+    <label id="StepLabel" x="center" y="235" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+    
+    <label id="BattBg" x="141" y="259" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xAAAAAA" text="B" />
+    <label id="BattLabel" x="center" y="265" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+</layout>
