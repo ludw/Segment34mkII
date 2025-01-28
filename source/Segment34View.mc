@@ -819,6 +819,14 @@ class Segment34View extends WatchUi.WatchFace {
                 var bb = bbIterator.next();
                 val = bb.data.format("%01d");
             }
+        } else if(complicationType == 15) { // Altitude (ft)
+            if(Position.getInfo().altitude != null and Position.getInfo().accuracy != Position.QUALITY_NOT_AVAILABLE) {
+                val = (Position.getInfo().altitude * 3.281).format("%01d");
+            }
+        } else if(complicationType == 16) { // UTC time
+            var now = Time.now();
+            var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_MEDIUM);
+            val = Lang.format("$1$$2$", [utc.hour.format("%02d"), utc.min.format("%02d")]);
         }
         return val;
     }
@@ -854,6 +862,10 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "STRESS:";
         } else if(complicationType == 14) { // Body battery
             desc = "BODY BATT:";
+        } else if(complicationType == 15) { // Altitude (ft)
+            desc = "ALTITUDE:";
+        } else if(complicationType == 16) { // UTC time
+            desc = "UTC TIME:";
         }
         return desc;
     }

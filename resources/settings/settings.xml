@@ -41,8 +41,11 @@
             <listEntry value="8">VO2 Max Cycling</listEntry>
             <listEntry value="9">Respiration Rate</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
+            <listEntry value="12">Altitude (m)</listEntry>
+            <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="13">Stress score</listEntry>
             <listEntry value="14">Body battery</listEntry>
+            <listEntry value="16">UTC Time</listEntry>
         </settingConfig>
     </setting>
 
@@ -79,8 +82,10 @@
             <listEntry value="9">Respiration Rate</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
             <listEntry value="12">Altitude (m)</listEntry>
+            <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="13">Stress score</listEntry>
             <listEntry value="14">Body battery</listEntry>
+            <listEntry value="16">UTC Time</listEntry>
         </settingConfig>
     </setting>
 
