@@ -1,4 +1,5 @@
 <properties>
+    <property id="colorTheme" type="number">0</property>
     <property id="windUnit" type="number">0</property>
     <property id="showFeelsLike" type="boolean">true</property>
     <property id="showNotificationCount" type="boolean">true</property>

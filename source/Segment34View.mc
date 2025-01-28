@@ -39,14 +39,14 @@ class Segment34View extends WatchUi.WatchFace {
         var clockTime = System.getClockTime();
         var now = Time.now().value();
 
-        var canBurnIn=System.getDeviceSettings().requiresBurnInProtection;
+        var canBurnIn = System.getDeviceSettings().requiresBurnInProtection;
         if(canBurnIn) {
             dimOnSleep = true;
         }
         if(isSleeping and canBurnIn) {
             toggleNonEssentials(false, dc);
         }
-        if(!isSleeping and canBurnIn) {
+        if(!isSleeping) {
             toggleNonEssentials(true, dc);
         }
 
@@ -126,18 +126,25 @@ class Segment34View extends WatchUi.WatchFace {
         (View.findDrawableById("SecondsLabel") as Text).setVisible(visible);
 
         if(visible) {
-            (View.findDrawableById("TTRDesc") as Text).setColor(0x55AAAA);
-            (View.findDrawableById("HRDesc") as Text).setColor(0x55AAAA);
-            (View.findDrawableById("ActiveDesc") as Text).setColor(0x55AAAA);
+            (View.findDrawableById("TimeBg") as Text).setColor(getColor("timeBg"));
+            (View.findDrawableById("TTRBg") as Text).setColor(getColor("fieldBg"));
+            (View.findDrawableById("HRBg") as Text).setColor(getColor("fieldBg"));
+            (View.findDrawableById("ActiveBg") as Text).setColor(getColor("fieldBg"));
+            (View.findDrawableById("StepBg") as Text).setColor(getColor("fieldBg"));
 
-            (View.findDrawableById("TimeLabel") as Text).setColor(0xfbcb77);
-            (View.findDrawableById("DateLabel") as Text).setColor(0xfbcb77);
-            (View.findDrawableById("NotifLabel") as Text).setColor(0x00AAFF);
+            (View.findDrawableById("TTRDesc") as Text).setColor(getColor("fieldLabel"));
+            (View.findDrawableById("HRDesc") as Text).setColor(getColor("fieldLabel"));
+            (View.findDrawableById("ActiveDesc") as Text).setColor(getColor("fieldLabel"));
+
+            (View.findDrawableById("TimeLabel") as Text).setColor(getColor("timeDisplay"));
+            (View.findDrawableById("DateLabel") as Text).setColor(getColor("timeDisplay"));
+            (View.findDrawableById("SecondsLabel") as Text).setColor(getColor("timeDisplay"));
+            (View.findDrawableById("NotifLabel") as Text).setColor(getColor("notifications"));
             (View.findDrawableById("MoonLabel") as Text).setColor(Graphics.COLOR_WHITE);
-            (View.findDrawableById("Dusk") as Text).setColor(0x005555);
-            (View.findDrawableById("Dawn") as Text).setColor(0x005555);
-            (View.findDrawableById("SunUpLabel") as Text).setColor(0xAAAAAA);
-            (View.findDrawableById("SunDownLabel") as Text).setColor(0xAAAAAA);
+            (View.findDrawableById("Dusk") as Text).setColor(getColor("dawnDuskLabel"));
+            (View.findDrawableById("Dawn") as Text).setColor(getColor("dawnDuskLabel"));
+            (View.findDrawableById("SunUpLabel") as Text).setColor(getColor("dawnDuskValue"));
+            (View.findDrawableById("SunDownLabel") as Text).setColor(getColor("dawnDuskValue"));
             (View.findDrawableById("WeatherLabel1") as Text).setColor(Graphics.COLOR_WHITE);
             (View.findDrawableById("WeatherLabel2") as Text).setColor(Graphics.COLOR_WHITE);
             (View.findDrawableById("TTRLabel") as Text).setColor(Graphics.COLOR_WHITE);
@@ -153,16 +160,16 @@ class Segment34View extends WatchUi.WatchFace {
                 basey = 145;
             }
             gradient.setLocation(Math.rand() % 10, basey - Math.rand() % 10);
-            (View.findDrawableById("TTRDesc") as Text).setColor(0x0e333c);
-            (View.findDrawableById("HRDesc") as Text).setColor(0x0e333c);
-            (View.findDrawableById("ActiveDesc") as Text).setColor(0x0e333c);
+            (View.findDrawableById("TTRDesc") as Text).setColor(getColor("fieldLabelDim"));
+            (View.findDrawableById("HRDesc") as Text).setColor(getColor("fieldLabelDim"));
+            (View.findDrawableById("ActiveDesc") as Text).setColor(getColor("fieldLabelDim"));
 
-            (View.findDrawableById("TimeLabel") as Text).setColor(0xa98753);
-            (View.findDrawableById("DateLabel") as Text).setColor(0xa98753);
-            (View.findDrawableById("NotifLabel") as Text).setColor(0x0567a1);
+            (View.findDrawableById("TimeLabel") as Text).setColor(getColor("timeDisplayDim"));
+            (View.findDrawableById("DateLabel") as Text).setColor(getColor("timeDisplayDim"));
+            (View.findDrawableById("NotifLabel") as Text).setColor(getColor("notificationsDim"));
             (View.findDrawableById("MoonLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
-            (View.findDrawableById("Dusk") as Text).setColor(0x0e333c);
-            (View.findDrawableById("Dawn") as Text).setColor(0x0e333c);
+            (View.findDrawableById("Dusk") as Text).setColor(getColor("fieldLabelDim"));
+            (View.findDrawableById("Dawn") as Text).setColor(getColor("fieldLabelDim"));
             (View.findDrawableById("SunUpLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
             (View.findDrawableById("SunDownLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
             (View.findDrawableById("WeatherLabel1") as Text).setColor(Graphics.COLOR_DK_GRAY);
@@ -179,6 +186,144 @@ class Segment34View extends WatchUi.WatchFace {
         previousEssentialsVis = visible;
     }
     
+    hidden function getColor(colorName) as Graphics.ColorType {
+        var amoled = System.getDeviceSettings().requiresBurnInProtection;
+        var colorTheme = Application.Properties.getValue("colorTheme");
+
+        if(colorTheme == 0) {
+            switch(colorName) {
+                case "fieldBg":
+                    if(amoled) {
+                        return 0x0e333c;
+                    }
+                    return 0x005555;
+                case "fieldLabel":
+                    return 0x55AAAA;
+                case "fieldLabelDim":
+                    return 0x0e333c;
+                case "timeBg":
+                    if(amoled) {
+                        return 0x0d333c;
+                    }
+                    return 0x005555;
+                case "timeDisplay":
+                    if(amoled) {
+                        return 0xfbcb77;
+                    }
+                    return 0xFFFF00;
+                case "timeDisplayDim":
+                    return 0xa98753;
+                case "dawnDuskLabel":
+                    return 0x005555;
+                case "dawnDuskValue":
+                    if(amoled) {
+                        return 0xFFFFFF;
+                    }
+                    return 0xAAAAAA;
+                case "notifications":
+                    return 0x00AAFF;
+                case "notificationsDim":
+                    return 0x0567a1;
+                case "stress":
+                    return 0xFFAA00;
+                case "stressDim":
+                    return 0xa8721c;
+                case "bodybattery":
+                    return 0x00AAFF;
+                case "bodybatteryDim":
+                    return 0x046fa8;
+            }
+        } else if(colorTheme == 1) {
+            switch(colorName) {
+                case "fieldBg":
+                    if(amoled) {
+                        return 0x0e333c;
+                    }
+                    return 0x005555;
+                case "fieldLabel":
+                    return 0x55AAAA;
+                case "fieldLabelDim":
+                    return 0x0e333c;
+                case "timeBg":
+                    if(amoled) {
+                        return 0x0f3b46;
+                    }
+                    return 0x005555;
+                case "timeDisplay":
+                    if(amoled) {
+                        return 0xf988f2;
+                    }
+                    return 0xFF55FF;
+                case "timeDisplayDim":
+                    return 0xa95399;
+                case "dawnDuskLabel":
+                    return 0x005555;
+                case "dawnDuskValue":
+                    if(amoled) {
+                        return 0xFFFFFF;
+                    }
+                    return 0xAAAAAA;
+                case "notifications":
+                    return 0x00FFAA;
+                case "notificationsDim":
+                    return 0x0ea36f;
+                case "stress":
+                    return 0xFF55AA;
+                case "stressDim":
+                    return 0xaf3c78;
+                case "bodybattery":
+                    return 0x00FFAA;
+                case "bodybatteryDim":
+                    return 0x0ea36f;
+            }
+        } else if(colorTheme == 2) {
+            switch(colorName) {
+                case "fieldBg":
+                    if(amoled) {
+                        return 0x0f2246;
+                    }
+                    return 0x0055AA;
+                case "fieldLabel":
+                    return 0x55AAAA;
+                case "fieldLabelDim":
+                    return 0x0e333c;
+                case "timeBg":
+                    if(amoled) {
+                        return 0x0f2246;
+                    }
+                    return 0x0055AA;
+                case "timeDisplay":
+                    if(amoled) {
+                        return 0x89efd2;
+                    }
+                    return 0x00FFFF;
+                case "timeDisplayDim":
+                    return 0x5ca28f;
+                case "dawnDuskLabel":
+                    return 0x005555;
+                case "dawnDuskValue":
+                    if(amoled) {
+                        return 0xFFFFFF;
+                    }
+                    return 0xAAAAAA;
+                case "notifications":
+                    return 0x00AAFF;
+                case "notificationsDim":
+                    return 0x0567a1;
+                case "stress":
+                    return 0x00FFAA;
+                case "stressDim":
+                    return 0x0ea36f;
+                case "bodybattery":
+                    return 0x00AAFF;
+                case "bodybatteryDim":
+                    return 0x0567a1;
+            }
+        }
+
+        return Graphics.COLOR_WHITE;
+    }
+
     hidden function setSeconds(dc) as Void {
         var secLabel = View.findDrawableById("SecondsLabel") as Text;
         var showSeconds = Application.Properties.getValue("showSeconds");
@@ -719,17 +864,17 @@ class Segment34View extends WatchUi.WatchFace {
 
             if(bb != null) {
                 batt = Math.round(bb.data * (barHeight / 100.0));
-                dc.setColor(0x00AAFF, -1);
+                dc.setColor(getColor("bodybattery"), -1);
                 if(isSleeping and dimOnSleep) {
-                    dc.setColor(0x046fa8, -1);
+                    dc.setColor(getColor("bodybatteryDim"), -1);
                 }
                 dc.fillRectangle(dc.getWidth() - fromEdge - barWidth - bbAdjustment, barTop + (barHeight - batt), barWidth, batt);
             }
             if(st != null) {
                 stress = Math.round(st.data * (barHeight / 100.0));
-                dc.setColor(0xFFAA00, -1);
+                dc.setColor(getColor("stress"), -1);
                 if(isSleeping and dimOnSleep) {
-                    dc.setColor(0xa8721c, -1);
+                    dc.setColor(getColor("stressDim"), -1);
                 }
                 dc.fillRectangle(fromEdge, barTop + (barHeight - stress), barWidth, stress);
             }

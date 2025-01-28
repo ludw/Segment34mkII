@@ -1,4 +1,12 @@
 <settings>
+
+    <setting propertyKey="@Properties.colorTheme" title="Color Theme">
+        <settingConfig type="list">
+            <listEntry value="0">Yellow on turquiose</listEntry>
+            <listEntry value="1">Hot pink</listEntry>
+            <listEntry value="2">Blueish green</listEntry>
+        </settingConfig>
+    </setting>
     <setting propertyKey="@Properties.windUnit" title="Wind speed unit">
         <settingConfig type="list">
             <listEntry value="0">m/s</listEntry>
