@@ -1,9 +1,10 @@
 <layout id="WatchFace">
-    <label id="MoonLabel" x="center" y="15" font="@Fonts.id_moon" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
-    <label id="Dawn" x="155" y="15" font="@Fonts.id_xsmol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x005555" text="DAWN:" />
-    <label id="Dusk" x="238" y="15" font="@Fonts.id_xsmol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x005555" text="DUSK:" />
-    <label id="SunUpLabel" x="155" y="25" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xAAAAAA" />
-    <label id="SunDownLabel" x="238" y="25" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xAAAAAA" />
+    <label id="MoonLabel" x="center" y="17" font="@Fonts.id_moon" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+    <label id="Dawn" x="184" y="15" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x005555" text="DAWN:" />
+    <label id="SunUpLabel" x="184" y="25" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xAAAAAA" />
+
+    <label id="Dusk" x="233" y="15" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x005555" text="DUSK:" />
+    <label id="SunDownLabel" x="231" y="25" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xAAAAAA" />
 
     <label id="WeatherLabel1" x="center" y="52" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
     <label id="WeatherLabel2" x="center" y="87" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />

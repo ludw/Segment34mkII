@@ -16,6 +16,10 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.showSeconds" title="Show Seconds">
+        <settingConfig type="boolean" />
+    </setting>
+
     <setting propertyKey="@Properties.showStressAndBodyBattery" title="Show Stress (orange) and Body Battery (blue) bars">
         <settingConfig type="boolean" />
     </setting>
@@ -33,6 +37,8 @@
             <listEntry value="8">VO2 Max Cycling</listEntry>
             <listEntry value="9">Respiration Rate</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
+            <listEntry value="13">Stress score</listEntry>
+            <listEntry value="14">Body battery</listEntry>
         </settingConfig>
     </setting>
 
@@ -50,6 +56,8 @@
             <listEntry value="9">Respiration Rate</listEntry>
             <listEntry value="10">Heart Rate</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
+            <listEntry value="13">Stress score</listEntry>
+            <listEntry value="14">Body battery</listEntry>
         </settingConfig>
     </setting>
 
@@ -67,6 +75,8 @@
             <listEntry value="9">Respiration Rate</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
             <listEntry value="12">Altitude (m)</listEntry>
+            <listEntry value="13">Stress score</listEntry>
+            <listEntry value="14">Body battery</listEntry>
         </settingConfig>
     </setting>
 

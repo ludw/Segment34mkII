@@ -181,12 +181,15 @@ class Segment34View extends WatchUi.WatchFace {
     
     hidden function setSeconds(dc) as Void {
         var secLabel = View.findDrawableById("SecondsLabel") as Text;
+        var showSeconds = Application.Properties.getValue("showSeconds");
         if(isSleeping and lastUpdate == null) {
             secLabel.setText("");
         } else {
-            var clockTime = System.getClockTime();
-            var secString = Lang.format("$1$", [clockTime.sec.format("%02d")]);
-            secLabel.setText(secString);
+            if(showSeconds) {
+                var clockTime = System.getClockTime();
+                var secString = Lang.format("$1$", [clockTime.sec.format("%02d")]);
+                secLabel.setText(secString);
+            }
         }
     }
 
@@ -562,7 +565,6 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             notifLabel.setText("");
         }
-        
     }
 
     hidden function setDate(dc) as Void {
@@ -789,6 +791,18 @@ class Segment34View extends WatchUi.WatchFace {
             if(Position.getInfo().altitude != null and Position.getInfo().accuracy != Position.QUALITY_NOT_AVAILABLE) {
                 val = Position.getInfo().altitude.format("%01d");
             }
+        } else if(complicationType == 13) { // Stress
+            if(ActivityMonitor.getInfo() has :stressScore) {
+                if(ActivityMonitor.getInfo().stressScore != null) {
+                    val = ActivityMonitor.getInfo().stressScore.format("%01d");
+                }
+            }
+        } else if(complicationType == 14) { // Body battery
+            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getBodyBatteryHistory)) {
+                var bbIterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});
+                var bb = bbIterator.next();
+                val = bb.data.format("%01d");
+            }
         }
         return val;
     }
@@ -797,7 +811,7 @@ class Segment34View extends WatchUi.WatchFace {
         var desc = "";
 
         if(complicationType == 0) { // Active min / week
-            desc = "WEEKLY ACT MIN:";
+            desc = "WEEKLY MIN:";
         } else if(complicationType == 1) { // Active min / day
            desc = "DAILY MIN:";
         } else if(complicationType == 2) { // distance (km) / day
@@ -820,6 +834,10 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "CALORIES:";
         } else if(complicationType == 12) { // Altitude (m)
             desc = "ALTITUDE:";
+        } else if(complicationType == 13) { // Stress
+            desc = "STRESS:";
+        } else if(complicationType == 14) { // Body battery
+            desc = "BODY BATT:";
         }
         return desc;
     }
