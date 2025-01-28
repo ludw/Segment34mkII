@@ -4,7 +4,7 @@
     <property id="showNotificationCount" type="boolean">true</property>
     <property id="showSeconds" type="boolean">true</property>
     <property id="showStressAndBodyBattery" type="boolean">true</property>
-    <property id="batteryAsPercentage" type="boolean">false</property>
+    <property id="batteryVariant" type="number">0</property>
     <property id="leftValueShows" type="number">6</property>
     <property id="middleValueShows" type="number">10</property>
     <property id="rightValueShows" type="number">0</property>

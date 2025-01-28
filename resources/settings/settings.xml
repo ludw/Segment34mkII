@@ -24,10 +24,6 @@
         <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.batteryAsPercentage" title="Display battery as percentage instead of days">
-        <settingConfig type="boolean" />
-    </setting>
-
     <setting propertyKey="@Properties.leftValueShows" title="Left value shows:">
         <settingConfig type="list">
             <listEntry value="0">Active min / week</listEntry>
@@ -97,6 +93,14 @@
             <listEntry value="3">wheelchair pushes / day</listEntry>
             <listEntry value="4">Altitude (m)</listEntry>
             <listEntry value="5">Altitude (ft)</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.batteryVariant" title="Battery display">
+        <settingConfig type="list">
+            <listEntry value="0">Remaining days (if available, otherwise percentage)</listEntry>
+            <listEntry value="1">Percentage remaining</listEntry>
+            <listEntry value="2">Hidden</listEntry>
         </settingConfig>
     </setting>
 </settings>
