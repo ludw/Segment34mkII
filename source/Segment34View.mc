@@ -189,6 +189,8 @@ class Segment34View extends WatchUi.WatchFace {
                 var clockTime = System.getClockTime();
                 var secString = Lang.format("$1$", [clockTime.sec.format("%02d")]);
                 secLabel.setText(secString);
+            } else {
+                secLabel.setText("");
             }
         }
     }
