@@ -195,6 +195,7 @@ class Segment34View extends WatchUi.WatchFace {
         var hour = clockTime.hour;
         if(!System.getDeviceSettings().is24Hour) {
             hour = hour % 12;
+            if(hour == 0) { hour = 12; }
         }
         var timeString = Lang.format("$1$:$2$", [hour.format("%02d"), clockTime.min.format("%02d")]);
         var timelabel = View.findDrawableById("TimeLabel") as Text;
