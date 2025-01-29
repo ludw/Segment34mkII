@@ -16,8 +16,10 @@ class Segment34View extends WatchUi.WatchFace {
 
     private var isSleeping = false;
     private var lastUpdate = null;
-    private var dimOnSleep = false;
+    private var canBurnIn = false;
     private var previousEssentialsVis = null;
+    private var batt = 0;
+    private var stress = 0;
 
     function initialize() {
         WatchFace.initialize();
@@ -38,57 +40,48 @@ class Segment34View extends WatchUi.WatchFace {
     function onUpdate(dc as Dc) as Void {
         var clockTime = System.getClockTime();
         var now = Time.now().value();
+        var updateEverything = false;
 
-        var canBurnIn = System.getDeviceSettings().requiresBurnInProtection;
-        if(canBurnIn) {
-            dimOnSleep = true;
-        }
-        if(isSleeping and canBurnIn) {
-            toggleNonEssentials(false, dc);
-        }
-        if(!isSleeping) {
-            toggleNonEssentials(true, dc);
+        if(lastUpdate == null or now - lastUpdate > 30 or clockTime.sec % 60 == 0) {
+            updateEverything = true;
+            canBurnIn = System.getDeviceSettings().requiresBurnInProtection;
         }
 
-        setSeconds(dc);
+        toggleNonEssentials(!isSleeping, dc);
 
-        if(isSleeping) {
-            if(clockTime.sec % 30 == 0) {
-                setHR(dc);
-                setNotif(dc);
-            }
-        } else {
-            if(clockTime.sec % 2 == 0) {
-                setHR(dc);
-                setNotif(dc);
-            }
-        }
-
-        if(lastUpdate != null && now - lastUpdate < 30 && clockTime.sec % 60 != 0) {
-            if(!isSleeping) {
-                View.onUpdate(dc);
-                setStressAndBodyBattery(dc);
-            }
+        if(!isSleeping && !updateEverything) {
+            setSeconds(dc);
+            setHR(dc);
+            View.onUpdate(dc);
+            drawStressAndBodyBattery(dc);
             return;
         }
 
-        setClock(dc);
-        setMoon(dc);
-        setWeather(dc);
-        setWeatherLabel();
-        setSunUpDown(dc);
-        setDate(dc);
-        setStep(dc);
-        setTraining(dc);
-        setBatt(dc);
+        if(updateEverything) {
+            setNotif(dc);
+            setClock(dc);
+            setMoon(dc);
+            setWeather(dc);
+            setWeatherLabel();
+            setSunUpDown(dc);
+            setDate(dc);
+            setStep(dc);
+            setTraining(dc);
+            setBatt(dc);
+            updateStressAndBodyBatteryData();
 
-        View.onUpdate(dc);
-        setStressAndBodyBattery(dc);
-        
-        lastUpdate = now;
+            View.onUpdate(dc);
+            drawStressAndBodyBattery(dc);
+            lastUpdate = now;
+        }
     }
 
     function onPartialUpdate(dc) {
+    }
+
+    function onSettingsChanged() {
+        lastUpdate = null;
+        previousEssentialsVis = null;
     }
 
     function onPowerBudgetExceeded() {
@@ -104,7 +97,6 @@ class Segment34View extends WatchUi.WatchFace {
     // The user has just looked at their watch. Timers and animations may be started here.
     function onExitSleep() as Void {
         isSleeping = false;
-        previousEssentialsVis = null;
     }
 
     // Terminate any active timers and prepare for slow updates.
@@ -119,14 +111,16 @@ class Segment34View extends WatchUi.WatchFace {
             return;
         }
 
-        (View.findDrawableById("TimeBg") as Text).setVisible(visible);
-        (View.findDrawableById("TTRBg") as Text).setVisible(visible);
-        (View.findDrawableById("HRBg") as Text).setVisible(visible);
-        (View.findDrawableById("ActiveBg") as Text).setVisible(visible);
-        (View.findDrawableById("StepBg") as Text).setVisible(visible);
         (View.findDrawableById("SecondsLabel") as Text).setVisible(visible);
+        (View.findDrawableById("HRLabel") as Text).setVisible(visible);
 
         if(visible) {
+            (View.findDrawableById("TimeBg") as Text).setVisible(true);
+            (View.findDrawableById("TTRBg") as Text).setVisible(true);
+            (View.findDrawableById("HRBg") as Text).setVisible(true);
+            (View.findDrawableById("ActiveBg") as Text).setVisible(true);
+            (View.findDrawableById("StepBg") as Text).setVisible(true);
+
             (View.findDrawableById("TimeBg") as Text).setColor(getColor("timeBg"));
             (View.findDrawableById("TTRBg") as Text).setColor(getColor("fieldBg"));
             (View.findDrawableById("HRBg") as Text).setColor(getColor("fieldBg"));
@@ -155,33 +149,42 @@ class Segment34View extends WatchUi.WatchFace {
             (View.findDrawableById("BattBg") as Text).setColor(0xAAAAAA);
             (View.findDrawableById("BattLabel") as Text).setColor(Graphics.COLOR_WHITE);
         } else {
-            var gradient = View.findDrawableById("gradient") as Drawable;
-            var basey = 110;
-            if(dc.getHeight() == 454) {
-                basey = 145;
+            if(canBurnIn) {
+                var gradient = View.findDrawableById("gradient") as Drawable;
+                var basey = 110;
+                if(dc.getHeight() == 454) {
+                    basey = 145;
+                }
+                gradient.setLocation(Math.rand() % 10, basey - Math.rand() % 10);
+
+                (View.findDrawableById("TimeBg") as Text).setVisible(false);
+                (View.findDrawableById("TTRBg") as Text).setVisible(false);
+                (View.findDrawableById("HRBg") as Text).setVisible(false);
+                (View.findDrawableById("ActiveBg") as Text).setVisible(false);
+                (View.findDrawableById("StepBg") as Text).setVisible(false);
+
+                (View.findDrawableById("TTRDesc") as Text).setColor(getColor("fieldLabelDim"));
+                (View.findDrawableById("HRDesc") as Text).setColor(getColor("fieldLabelDim"));
+                (View.findDrawableById("ActiveDesc") as Text).setColor(getColor("fieldLabelDim"));
+
+                (View.findDrawableById("TimeLabel") as Text).setColor(getColor("timeDisplayDim"));
+                (View.findDrawableById("DateLabel") as Text).setColor(getColor("timeDisplayDim"));
+                (View.findDrawableById("NotifLabel") as Text).setColor(getColor("notificationsDim"));
+                (View.findDrawableById("MoonLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
+                (View.findDrawableById("Dusk") as Text).setColor(getColor("fieldLabelDim"));
+                (View.findDrawableById("Dawn") as Text).setColor(getColor("fieldLabelDim"));
+                (View.findDrawableById("SunUpLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
+                (View.findDrawableById("SunDownLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
+                (View.findDrawableById("WeatherLabel1") as Text).setColor(Graphics.COLOR_DK_GRAY);
+                (View.findDrawableById("WeatherLabel2") as Text).setColor(Graphics.COLOR_DK_GRAY);
+                (View.findDrawableById("TTRLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
+                (View.findDrawableById("HRLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
+                (View.findDrawableById("ActiveLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
+                (View.findDrawableById("StepLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
+
+                (View.findDrawableById("BattBg") as Text).setColor(0x555555);
+                (View.findDrawableById("BattLabel") as Text).setColor(0x777777);
             }
-            gradient.setLocation(Math.rand() % 10, basey - Math.rand() % 10);
-            (View.findDrawableById("TTRDesc") as Text).setColor(getColor("fieldLabelDim"));
-            (View.findDrawableById("HRDesc") as Text).setColor(getColor("fieldLabelDim"));
-            (View.findDrawableById("ActiveDesc") as Text).setColor(getColor("fieldLabelDim"));
-
-            (View.findDrawableById("TimeLabel") as Text).setColor(getColor("timeDisplayDim"));
-            (View.findDrawableById("DateLabel") as Text).setColor(getColor("timeDisplayDim"));
-            (View.findDrawableById("NotifLabel") as Text).setColor(getColor("notificationsDim"));
-            (View.findDrawableById("MoonLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
-            (View.findDrawableById("Dusk") as Text).setColor(getColor("fieldLabelDim"));
-            (View.findDrawableById("Dawn") as Text).setColor(getColor("fieldLabelDim"));
-            (View.findDrawableById("SunUpLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
-            (View.findDrawableById("SunDownLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
-            (View.findDrawableById("WeatherLabel1") as Text).setColor(Graphics.COLOR_DK_GRAY);
-            (View.findDrawableById("WeatherLabel2") as Text).setColor(Graphics.COLOR_DK_GRAY);
-            (View.findDrawableById("TTRLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
-            (View.findDrawableById("HRLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
-            (View.findDrawableById("ActiveLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
-            (View.findDrawableById("StepLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
-
-            (View.findDrawableById("BattBg") as Text).setColor(0x555555);
-            (View.findDrawableById("BattLabel") as Text).setColor(0x777777);
         }
 
         previousEssentialsVis = visible;
@@ -332,16 +335,13 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function setSeconds(dc) as Void {
         var secLabel = View.findDrawableById("SecondsLabel") as Text;
         var showSeconds = Application.Properties.getValue("showSeconds");
-        if(isSleeping and lastUpdate == null) {
-            secLabel.setText("");
+
+        if(showSeconds) {
+            var clockTime = System.getClockTime();
+            var secString = Lang.format("$1$", [clockTime.sec.format("%02d")]);
+            secLabel.setText(secString);
         } else {
-            if(showSeconds) {
-                var clockTime = System.getClockTime();
-                var secString = Lang.format("$1$", [clockTime.sec.format("%02d")]);
-                secLabel.setText(secString);
-            } else {
-                secLabel.setText("");
-            }
+            secLabel.setText("");
         }
     }
 
@@ -381,18 +381,12 @@ class Segment34View extends WatchUi.WatchFace {
             if(sample != null) {
                 hrLabel.setText(sample.format("%01d"));
                 hrLabel.setColor(Graphics.COLOR_WHITE);
-                if(isSleeping and dimOnSleep) {
-                    hrLabel.setColor(Graphics.COLOR_DK_GRAY);
-                }
             } else if (ActivityMonitor has :getHeartRateHistory) {
                 // Falling back to historical HR from ActivityMonitor
                 var hist = ActivityMonitor.getHeartRateHistory(1, /* newestFirst */ true).next();
                 if ((hist != null) && (hist.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)) {
                     hrLabel.setText(hist.heartRate.format("%01d"));
                     hrLabel.setColor(0x55AAAA);
-                    if(isSleeping and dimOnSleep) {
-                        hrLabel.setColor(Graphics.COLOR_DK_GRAY);
-                    }
                 }
             }
         } else {
@@ -400,7 +394,7 @@ class Segment34View extends WatchUi.WatchFace {
             hrLabel.setText(getComplicationValue(middleValueShows));
 
             hrLabel.setColor(Graphics.COLOR_WHITE);
-            if(isSleeping and dimOnSleep) {
+            if(isSleeping and canBurnIn) {
                 hrLabel.setColor(Graphics.COLOR_DK_GRAY);
             }
         }
@@ -797,18 +791,30 @@ class Segment34View extends WatchUi.WatchFace {
         stepLabel.setText(val);
     }
 
-    hidden function setStressAndBodyBattery(dc) as Void {
-        var batt = 0;
-        var stress = 0;
+    hidden function updateStressAndBodyBatteryData() as Void {
         var showStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery");
         if(!showStressAndBodyBattery) { return; }
 
         if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
-            // Set up the method with parameters
             var bbIterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});
             var stIterator = Toybox.SensorHistory.getStressHistory({:period => 1});
             var bb = bbIterator.next();
             var st = stIterator.next();
+
+            if(bb != null) {
+                batt = bb.data;
+            }
+            if(st != null) {
+                stress = st.data;
+            }
+        }
+    }
+
+    hidden function drawStressAndBodyBattery(dc) as Void {
+        var showStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery");
+        if(!showStressAndBodyBattery) { return; }
+
+        if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
             var barTop = 110;
             var fromEdge = 8;
             var barWidth = 4;
@@ -870,22 +876,20 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
 
-            if(bb != null) {
-                batt = Math.round(bb.data * (barHeight / 100.0));
-                dc.setColor(getColor("bodybattery"), -1);
-                if(isSleeping and dimOnSleep) {
-                    dc.setColor(getColor("bodybatteryDim"), -1);
-                }
-                dc.fillRectangle(dc.getWidth() - fromEdge - barWidth - bbAdjustment, barTop + (barHeight - batt), barWidth, batt);
+            var battBar = Math.round(batt * (barHeight / 100.0));
+            dc.setColor(getColor("bodybattery"), -1);
+            if(isSleeping and canBurnIn) {
+                dc.setColor(getColor("bodybatteryDim"), -1);
             }
-            if(st != null) {
-                stress = Math.round(st.data * (barHeight / 100.0));
-                dc.setColor(getColor("stress"), -1);
-                if(isSleeping and dimOnSleep) {
-                    dc.setColor(getColor("stressDim"), -1);
-                }
-                dc.fillRectangle(fromEdge, barTop + (barHeight - stress), barWidth, stress);
+            dc.fillRectangle(dc.getWidth() - fromEdge - barWidth - bbAdjustment, barTop + (barHeight - battBar), barWidth, battBar);
+        
+            var stressBar = Math.round(stress * (barHeight / 100.0));
+            dc.setColor(getColor("stress"), -1);
+            if(isSleeping and canBurnIn) {
+                dc.setColor(getColor("stressDim"), -1);
             }
+            dc.fillRectangle(fromEdge, barTop + (barHeight - stressBar), barWidth, stressBar);
+            
         }
     }
 
