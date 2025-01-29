@@ -1,12 +1,29 @@
 <settings>
 
-    <setting propertyKey="@Properties.colorTheme" title="Color Theme">
+    <setting propertyKey="@Properties.colorTheme" title="Color Theme (EXPERIMENTAL)">
         <settingConfig type="list">
             <listEntry value="0">Yellow on turquiose</listEntry>
             <listEntry value="1">Hot pink</listEntry>
             <listEntry value="2">Blueish green</listEntry>
         </settingConfig>
     </setting>
+        
+    <setting propertyKey="@Properties.hourFormat" title="Time format (12/24h)">
+        <settingConfig type="list">
+            <listEntry value="0">Auto - Use system setting</listEntry>
+            <listEntry value="1">24h</listEntry>
+            <listEntry value="2">12h</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.tempUnit" title="Temperature unit">
+        <settingConfig type="list">
+            <listEntry value="0">Auto - Use system setting</listEntry>
+            <listEntry value="1">C</listEntry>
+            <listEntry value="2">F</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.windUnit" title="Wind speed unit">
         <settingConfig type="list">
             <listEntry value="0">m/s</listEntry>

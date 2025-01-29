@@ -137,8 +137,8 @@ class Segment34View extends WatchUi.WatchFace {
             (View.findDrawableById("ActiveDesc") as Text).setColor(getColor("fieldLabel"));
 
             (View.findDrawableById("TimeLabel") as Text).setColor(getColor("timeDisplay"));
-            (View.findDrawableById("DateLabel") as Text).setColor(getColor("timeDisplay"));
-            (View.findDrawableById("SecondsLabel") as Text).setColor(getColor("timeDisplay"));
+            (View.findDrawableById("DateLabel") as Text).setColor(getColor("dateDisplay"));
+            (View.findDrawableById("SecondsLabel") as Text).setColor(getColor("dateDisplay"));
             (View.findDrawableById("NotifLabel") as Text).setColor(getColor("notifications"));
             (View.findDrawableById("MoonLabel") as Text).setColor(Graphics.COLOR_WHITE);
             (View.findDrawableById("Dusk") as Text).setColor(getColor("dawnDuskLabel"));
@@ -189,7 +189,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getColor(colorName) as Graphics.ColorType {
         var amoled = System.getDeviceSettings().requiresBurnInProtection;
         var colorTheme = Application.Properties.getValue("colorTheme");
-
+        
         if(colorTheme == 0) {
             switch(colorName) {
                 case "fieldBg":
@@ -207,6 +207,7 @@ class Segment34View extends WatchUi.WatchFace {
                     }
                     return 0x005555;
                 case "timeDisplay":
+                case "dateDisplay":
                     if(amoled) {
                         return 0xfbcb77;
                     }
@@ -239,25 +240,27 @@ class Segment34View extends WatchUi.WatchFace {
                     if(amoled) {
                         return 0x0e333c;
                     }
-                    return 0x005555;
+                    return 0x550000;
                 case "fieldLabel":
-                    return 0x55AAAA;
+                    return 0xAA55AA;
                 case "fieldLabelDim":
                     return 0x0e333c;
                 case "timeBg":
                     if(amoled) {
                         return 0x0f3b46;
                     }
-                    return 0x005555;
+                    return 0x550000;
                 case "timeDisplay":
                     if(amoled) {
                         return 0xf988f2;
                     }
-                    return 0xFF55FF;
+                    return 0xFF00FF;
+                case "dateDisplay":
+                    return 0xFF55AA;
                 case "timeDisplayDim":
                     return 0xa95399;
                 case "dawnDuskLabel":
-                    return 0x005555;
+                    return 0x550055;
                 case "dawnDuskValue":
                     if(amoled) {
                         return 0xFFFFFF;
@@ -293,6 +296,7 @@ class Segment34View extends WatchUi.WatchFace {
                     }
                     return 0x0055AA;
                 case "timeDisplay":
+                case "dateDisplay":
                     if(amoled) {
                         return 0x89efd2;
                     }
@@ -342,8 +346,10 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function setClock(dc) as Void {
         var clockTime = System.getClockTime();
+        var hourFormat = Application.Properties.getValue("hourFormat");
         var hour = clockTime.hour;
-        if(!System.getDeviceSettings().is24Hour) {
+
+        if((!System.getDeviceSettings().is24Hour and hourFormat == 0) or hourFormat == 2) {
             hour = hour % 12;
             if(hour == 0) { hour = 12; }
         }
@@ -411,7 +417,7 @@ class Segment34View extends WatchUi.WatchFace {
 
         if(batteryVariant == 0) {
             if(System.getSystemStats() has :batteryInDays) {
-                if (System.getSystemStats().batteryInDays != null and System.getSystemStats().batteryInDays != 0){
+                if (System.getSystemStats().batteryInDays != null){
                     sample = System.getSystemStats().batteryInDays;
                     value = Lang.format("$1$D", [sample.format("%01d")]);
                 }
@@ -435,6 +441,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function setWeather(dc) as Void {
         var weather = Weather.getCurrentConditions();
         var tempUnitSetting = System.getDeviceSettings().temperatureUnits;
+        var tempUnitAppSetting = Application.Properties.getValue("tempUnit");
         var temp = "";
         var tempUnit = "";
         var windspeed = "";
@@ -447,7 +454,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(weather.temperature != null) {
             var tempVal = weather.temperature;
 
-            if(tempUnitSetting == System.UNIT_METRIC) {
+            if((tempUnitSetting == System.UNIT_METRIC and tempUnitAppSetting == 0) or tempUnitAppSetting == 1) {
                 temp = tempVal.format("%01d");
                 tempUnit = "C";
             } else {
@@ -490,7 +497,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(showFeelsLike) {
             if(weather.feelsLikeTemperature != null) {
                 var fltemp = weather.feelsLikeTemperature;
-                if(tempUnitSetting != System.UNIT_METRIC) {
+                if((tempUnitSetting == System.UNIT_METRIC and tempUnitAppSetting == 0) or tempUnitAppSetting == 1) {
                     fltemp = ((fltemp * 9/5) + 32);
                 }
                 fl = Lang.format("FL: $1$$2$", [fltemp.format(INTEGER_FORMAT), tempUnit]);
@@ -772,7 +779,7 @@ class Segment34View extends WatchUi.WatchFace {
             if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
                 var elvIterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
                 var elv = elvIterator.next();
-                if(elv != null) {
+                if(elv != null and elv.data != null) {
                     val = elv.data.format("%05d");
                 }
             }
@@ -780,7 +787,7 @@ class Segment34View extends WatchUi.WatchFace {
             if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
                 var elvIterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
                 var elv = elvIterator.next();
-                if(elv != null) {
+                if(elv != null and elv.data != null) {
                     val = (elv.data * 3.28084).format("%05d");
                 }
             }
@@ -970,7 +977,7 @@ class Segment34View extends WatchUi.WatchFace {
             if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
                 var elvIterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
                 var elv = elvIterator.next();
-                if(elv != null) {
+                if(elv != null and elv.data != null) {
                     val = elv.data.format("%01d");
                 }
             }
@@ -990,7 +997,7 @@ class Segment34View extends WatchUi.WatchFace {
             if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
                 var elvIterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
                 var elv = elvIterator.next();
-                if(elv != null) {
+                if(elv != null and elv.data != null) {
                     val = (elv.data * 3.28084).format("%01d");
                 }
             }
