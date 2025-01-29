@@ -33,4 +33,6 @@
     
     <label id="BattBg" x="center" y="399" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xAAAAAA" text="B" />
     <label id="BattLabel" x="center" y="405" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+
+    <bitmap id="aodPattern" x="0" y="120" filename="../../resources/drawables/aod.png" />
 </layout>

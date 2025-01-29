@@ -1,8 +1,8 @@
 <layout id="WatchFace">
     <label id="MoonLabel" x="center" y="12" font="@Fonts.id_moon" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
-    <label id="Dawn" x="130" y="12" font="@Fonts.id_xsmol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x005555" text="DAWN:" />
+    <label id="Dawn" x="160" y="12" font="@Fonts.id_xsmol" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x005555" text="DAWN:" />
+    <label id="SunUpLabel" x="160" y="22" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xAAAAAA" />
     <label id="Dusk" x="200" y="12" font="@Fonts.id_xsmol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x005555" text="DUSK:" />
-    <label id="SunUpLabel" x="130" y="22" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xAAAAAA" />
     <label id="SunDownLabel" x="200" y="22" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xAAAAAA" />
     
     <label id="WeatherLabel1" x="center" y="42" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
@@ -33,4 +33,6 @@
     
     <label id="BattBg" x="181" y="343" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xAAAAAA" text="B" />
     <label id="BattLabel" x="center" y="349" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+    
+    <bitmap id="aodPattern" x="0" y="102" filename="../../resources/drawables/aod.png" />
 </layout>

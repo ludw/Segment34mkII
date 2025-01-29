@@ -58,20 +58,27 @@ class Segment34View extends WatchUi.WatchFace {
         }
 
         if(updateEverything) {
-            setNotif(dc);
             setClock(dc);
-            setMoon(dc);
-            setWeather(dc);
-            setWeatherLabel();
-            setSunUpDown(dc);
-            setDate(dc);
-            setStep(dc);
-            setTraining(dc);
-            setBatt(dc);
-            updateStressAndBodyBatteryData();
 
+            if(!isSleeping or !canBurnIn) {
+                setNotif(dc);
+                setMoon(dc);
+                setWeather(dc);
+                setWeatherLabel();
+                setSunUpDown(dc);
+                setDate(dc);
+                setStep(dc);
+                setTraining(dc);
+                setBatt(dc);
+                updateStressAndBodyBatteryData();
+            }
+            
             View.onUpdate(dc);
-            drawStressAndBodyBattery(dc);
+
+            if(!isSleeping or !canBurnIn) {
+                drawStressAndBodyBattery(dc);
+            }
+            
             lastUpdate = now;
         }
     }
@@ -111,16 +118,34 @@ class Segment34View extends WatchUi.WatchFace {
             return;
         }
 
+        var hideInAOD = (visible or !canBurnIn);
+
         (View.findDrawableById("SecondsLabel") as Text).setVisible(visible);
         (View.findDrawableById("HRLabel") as Text).setVisible(visible);
 
-        if(visible) {
-            (View.findDrawableById("TimeBg") as Text).setVisible(true);
-            (View.findDrawableById("TTRBg") as Text).setVisible(true);
-            (View.findDrawableById("HRBg") as Text).setVisible(true);
-            (View.findDrawableById("ActiveBg") as Text).setVisible(true);
-            (View.findDrawableById("StepBg") as Text).setVisible(true);
+        (View.findDrawableById("TimeBg") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("TTRBg") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("HRBg") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("ActiveBg") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("TTRDesc") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("HRDesc") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("ActiveDesc") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("MoonLabel") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("Dusk") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("Dawn") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("SunUpLabel") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("SunDownLabel") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("WeatherLabel1") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("WeatherLabel2") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("TTRLabel") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("ActiveLabel") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("WeatherLabel2") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("StepBg") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("StepLabel") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("BattBg") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("BattLabel") as Text).setVisible(hideInAOD);
 
+        if(visible) {
             (View.findDrawableById("TimeBg") as Text).setColor(getColor("timeBg"));
             (View.findDrawableById("TTRBg") as Text).setColor(getColor("fieldBg"));
             (View.findDrawableById("HRBg") as Text).setColor(getColor("fieldBg"));
@@ -148,42 +173,24 @@ class Segment34View extends WatchUi.WatchFace {
 
             (View.findDrawableById("BattBg") as Text).setColor(0xAAAAAA);
             (View.findDrawableById("BattLabel") as Text).setColor(Graphics.COLOR_WHITE);
+
+            if(canBurnIn) {
+                (View.findDrawableById("aodPattern") as Text).setVisible(false);
+            }
         } else {
             if(canBurnIn) {
-                var gradient = View.findDrawableById("gradient") as Drawable;
-                var basey = 110;
-                if(dc.getHeight() == 454) {
-                    basey = 145;
-                }
-                gradient.setLocation(Math.rand() % 10, basey - Math.rand() % 10);
-
-                (View.findDrawableById("TimeBg") as Text).setVisible(false);
-                (View.findDrawableById("TTRBg") as Text).setVisible(false);
-                (View.findDrawableById("HRBg") as Text).setVisible(false);
-                (View.findDrawableById("ActiveBg") as Text).setVisible(false);
-                (View.findDrawableById("StepBg") as Text).setVisible(false);
-
-                (View.findDrawableById("TTRDesc") as Text).setColor(getColor("fieldLabelDim"));
-                (View.findDrawableById("HRDesc") as Text).setColor(getColor("fieldLabelDim"));
-                (View.findDrawableById("ActiveDesc") as Text).setColor(getColor("fieldLabelDim"));
-
+                dc.setAntiAlias(false);
+                
                 (View.findDrawableById("TimeLabel") as Text).setColor(getColor("timeDisplayDim"));
                 (View.findDrawableById("DateLabel") as Text).setColor(getColor("timeDisplayDim"));
                 (View.findDrawableById("NotifLabel") as Text).setColor(getColor("notificationsDim"));
-                (View.findDrawableById("MoonLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
-                (View.findDrawableById("Dusk") as Text).setColor(getColor("fieldLabelDim"));
-                (View.findDrawableById("Dawn") as Text).setColor(getColor("fieldLabelDim"));
-                (View.findDrawableById("SunUpLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
-                (View.findDrawableById("SunDownLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
-                (View.findDrawableById("WeatherLabel1") as Text).setColor(Graphics.COLOR_DK_GRAY);
-                (View.findDrawableById("WeatherLabel2") as Text).setColor(Graphics.COLOR_DK_GRAY);
-                (View.findDrawableById("TTRLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
-                (View.findDrawableById("HRLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
-                (View.findDrawableById("ActiveLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
-                (View.findDrawableById("StepLabel") as Text).setColor(Graphics.COLOR_DK_GRAY);
+                (View.findDrawableById("aodPattern") as Text).setVisible(true);
 
-                (View.findDrawableById("BattBg") as Text).setColor(0x555555);
-                (View.findDrawableById("BattLabel") as Text).setColor(0x777777);
+                var clockTime = System.getClockTime();
+                var aodPattern = View.findDrawableById("aodPattern") as Drawable;
+                var gradient = View.findDrawableById("gradient") as Drawable;
+                aodPattern.setLocation(clockTime.min % 2, aodPattern.locY);
+                gradient.setLocation(clockTime.min % 2 + 1, gradient.locY);
             }
         }
 
@@ -203,8 +210,6 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0x005555;
                 case "fieldLabel":
                     return 0x55AAAA;
-                case "fieldLabelDim":
-                    return 0x0e333c;
                 case "timeBg":
                     if(amoled) {
                         return 0x0d333c;
@@ -231,12 +236,8 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0x0567a1;
                 case "stress":
                     return 0xFFAA00;
-                case "stressDim":
-                    return 0xa8721c;
                 case "bodybattery":
                     return 0x00AAFF;
-                case "bodybatteryDim":
-                    return 0x046fa8;
             }
         } else if(colorTheme == 1) {
             switch(colorName) {
@@ -247,8 +248,6 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0x550000;
                 case "fieldLabel":
                     return 0xAA55AA;
-                case "fieldLabelDim":
-                    return 0x0e333c;
                 case "timeBg":
                     if(amoled) {
                         return 0x0f3b46;
@@ -276,12 +275,8 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0x0ea36f;
                 case "stress":
                     return 0xFF55AA;
-                case "stressDim":
-                    return 0xaf3c78;
                 case "bodybattery":
                     return 0x00FFAA;
-                case "bodybatteryDim":
-                    return 0x0ea36f;
             }
         } else if(colorTheme == 2) {
             switch(colorName) {
@@ -292,8 +287,6 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0x0055AA;
                 case "fieldLabel":
                     return 0x55AAAA;
-                case "fieldLabelDim":
-                    return 0x0e333c;
                 case "timeBg":
                     if(amoled) {
                         return 0x0f2246;
@@ -320,12 +313,8 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0x0567a1;
                 case "stress":
                     return 0x00FFAA;
-                case "stressDim":
-                    return 0x0ea36f;
                 case "bodybattery":
                     return 0x00AAFF;
-                case "bodybatteryDim":
-                    return 0x0567a1;
             }
         }
 
@@ -408,7 +397,7 @@ class Segment34View extends WatchUi.WatchFace {
         var sample = System.getSystemStats().battery;
         var value = "";
         var batteryVariant = Application.Properties.getValue("batteryVariant");
-        var visible = true;
+        var visible = !isSleeping;
 
         if(batteryVariant == 0) {
             if(System.getSystemStats() has :batteryInDays) {
@@ -878,16 +867,10 @@ class Segment34View extends WatchUi.WatchFace {
 
             var battBar = Math.round(batt * (barHeight / 100.0));
             dc.setColor(getColor("bodybattery"), -1);
-            if(isSleeping and canBurnIn) {
-                dc.setColor(getColor("bodybatteryDim"), -1);
-            }
             dc.fillRectangle(dc.getWidth() - fromEdge - barWidth - bbAdjustment, barTop + (barHeight - battBar), barWidth, battBar);
         
             var stressBar = Math.round(stress * (barHeight / 100.0));
             dc.setColor(getColor("stress"), -1);
-            if(isSleeping and canBurnIn) {
-                dc.setColor(getColor("stressDim"), -1);
-            }
             dc.fillRectangle(fromEdge, barTop + (barHeight - stressBar), barWidth, stressBar);
             
         }
