@@ -104,6 +104,7 @@ class Segment34View extends WatchUi.WatchFace {
     // The user has just looked at their watch. Timers and animations may be started here.
     function onExitSleep() as Void {
         isSleeping = false;
+        previousEssentialsVis = null;
     }
 
     // Terminate any active timers and prepare for slow updates.
