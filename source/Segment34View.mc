@@ -498,7 +498,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(showFeelsLike) {
             if(weather.feelsLikeTemperature != null) {
                 var fltemp = weather.feelsLikeTemperature;
-                if((tempUnitSetting == System.UNIT_METRIC and tempUnitAppSetting == 0) or tempUnitAppSetting == 1) {
+                if((tempUnitSetting != System.UNIT_METRIC and tempUnitAppSetting == 0) or tempUnitAppSetting == 2) {
                     fltemp = ((fltemp * 9/5) + 32);
                 }
                 fl = Lang.format("FL: $1$$2$", [fltemp.format(INTEGER_FORMAT), tempUnit]);
