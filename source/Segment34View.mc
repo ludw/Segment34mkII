@@ -991,7 +991,9 @@ class Segment34View extends WatchUi.WatchFace {
             if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getBodyBatteryHistory)) {
                 var bbIterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});
                 var bb = bbIterator.next();
-                val = bb.data.format("%01d");
+                if(bb != null) {
+                    val = bb.data.format("%01d");
+                }
             }
         } else if(complicationType == 15) { // Altitude (ft)
             if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
