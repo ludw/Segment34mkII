@@ -60,6 +60,7 @@
             <listEntry value="11">calories (kcal) / day</listEntry>
             <listEntry value="12">Altitude (m)</listEntry>
             <listEntry value="15">Altitude (ft)</listEntry>
+            <listEntry value="25">Training status</listEntry>
         </settingConfig>
     </setting>
 
@@ -69,8 +70,10 @@
             <listEntry value="1">Active min / day</listEntry>
             <listEntry value="2">distance (km) / day</listEntry>
             <listEntry value="3">distance (miles) / day</listEntry>
-            <listEntry value="21">distance (km) / week</listEntry>
-            <listEntry value="22">distance (miles) / week</listEntry>
+            <listEntry value="21">run distance (km) / week</listEntry>
+            <listEntry value="22">run distance (miles) / week</listEntry>
+            <listEntry value="23">bike distance (km) / week</listEntry>
+            <listEntry value="24">bike distance (miles) / week</listEntry>
             <listEntry value="4">floors climbed / day</listEntry>
             <listEntry value="5">meters climbed / day</listEntry>
             <listEntry value="6">Time to Recovery (h)</listEntry>
@@ -92,8 +95,10 @@
             <listEntry value="1">Active min / day</listEntry>
             <listEntry value="2">distance (km) / day</listEntry>
             <listEntry value="3">distance (miles) / day</listEntry>
-            <listEntry value="21">distance (km) / week</listEntry>
-            <listEntry value="22">distance (miles) / week</listEntry>
+            <listEntry value="21">run distance (km) / week</listEntry>
+            <listEntry value="22">run distance (miles) / week</listEntry>
+            <listEntry value="23">bike distance (km) / week</listEntry>
+            <listEntry value="24">bike distance (miles) / week</listEntry>
             <listEntry value="4">floors climbed / day</listEntry>
             <listEntry value="5">meters climbed / day</listEntry>
             <listEntry value="6">Time to Recovery (h)</listEntry>
@@ -113,8 +118,10 @@
             <listEntry value="1">Active min / day</listEntry>
             <listEntry value="2">distance (km) / day</listEntry>
             <listEntry value="3">distance (miles) / day</listEntry>
-            <listEntry value="21">distance (km) / week</listEntry>
-            <listEntry value="22">distance (miles) / week</listEntry>
+            <listEntry value="21">run distance (km) / week</listEntry>
+            <listEntry value="22">run distance (miles) / week</listEntry>
+            <listEntry value="23">bike distance (km) / week</listEntry>
+            <listEntry value="24">bike distance (miles) / week</listEntry>
             <listEntry value="4">floors climbed / day</listEntry>
             <listEntry value="5">meters climbed / day</listEntry>
             <listEntry value="6">Time to Recovery (h)</listEntry>
@@ -134,8 +141,10 @@
         <settingConfig type="list">
             <listEntry value="17">steps / day</listEntry>
             <listEntry value="18">distance (meter) / day</listEntry>
-            <listEntry value="21">distance (km) / week</listEntry>
-            <listEntry value="22">distance (miles) / week</listEntry>
+            <listEntry value="21">run distance (km) / week</listEntry>
+            <listEntry value="22">run distance (miles) / week</listEntry>
+            <listEntry value="23">bike distance (km) / week</listEntry>
+            <listEntry value="24">bike distance (miles) / week</listEntry>
             <listEntry value="11">calories (kcal) / day</listEntry>
             <listEntry value="19">wheelchair pushes / day</listEntry>
             <listEntry value="12">Altitude (m)</listEntry>

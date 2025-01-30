@@ -9,6 +9,7 @@ import Toybox.Time;
 import Toybox.Math;
 import Toybox.SensorHistory;
 import Toybox.Position;
+import Toybox.Complications;
 
 const INTEGER_FORMAT = "%d";
 
@@ -1118,12 +1119,45 @@ class Segment34View extends WatchUi.WatchFace {
             }  
         } else if(complicationType == 20) { // Weather condition
             val = getWeatherCondition();
-        } else if(complicationType == 21) { // Weekly distance (km)
-            var distanceKm = getWeeklyDistance() / 100000.0;
-            val = distanceKm < 10 ? distanceKm.format("%.1f") : distanceKm.format(numberFormat);
-        } else if(complicationType == 22) { // Weekly distance (miles)
-            var distanceMiles = getWeeklyDistance() / 160900.0;
-            val = distanceMiles < 10 ? distanceMiles.format("%.1f") : distanceMiles.format(numberFormat);
+        } else if(complicationType == 21) { // Weekly run distance (km)
+            if (Toybox has :Complications) {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
+                if (complication != null && complication.value != null) {
+                    var distanceKm = complication.value / 1000.0;  // Convert meters to km
+                    val = distanceKm < 10 ? distanceKm.format("%.1f") : distanceKm.format(numberFormat);
+                }
+            }
+        } else if(complicationType == 22) { // Weekly run distance (miles)
+            if (Toybox has :Complications) {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
+                if (complication != null && complication.value != null) {
+                    var distanceMiles = complication.value * 0.000621371;  // Convert meters to miles
+                    val = distanceMiles < 10 ? distanceMiles.format("%.1f") : distanceMiles.format(numberFormat);
+                }
+            }
+        } else if(complicationType == 23) { // Weekly bike distance (km)
+            if (Toybox has :Complications) {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
+                if (complication != null && complication.value != null) {
+                    var distanceKm = complication.value / 1000.0;  // Convert meters to km
+                    val = distanceKm < 10 ? distanceKm.format("%.1f") : distanceKm.format(numberFormat);
+                }
+            }
+        } else if(complicationType == 24) { // Weekly bike distance (miles)
+            if (Toybox has :Complications) {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
+                if (complication != null && complication.value != null) {
+                    var distanceMiles = complication.value * 0.000621371;  // Convert meters to miles
+                    val = distanceMiles < 10 ? distanceMiles.format("%.1f") : distanceMiles.format(numberFormat);
+                }
+            }
+        } else if(complicationType == 25) { // Training status
+            if (Toybox has :Complications) {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_TRAINING_STATUS));
+                if (complication != null && complication.value != null) {
+                    val = complication.value.toUpper();
+                }
+            }
         }
 
         return val;
@@ -1172,10 +1206,16 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "PUSHES:";
         } else if(complicationType == 20) { // Weather condition
             desc = "";
-        } else if(complicationType == 21) { // Weekly distance (km)
-            desc = "WEEKLY KM:";
-        } else if(complicationType == 22) { // Weekly distance (miles)
-            desc = "WEEKLY MI:";
+        } else if(complicationType == 21) { // Weekly run distance (km)
+            desc = "W RUN KM:";
+        } else if(complicationType == 22) { // Weekly run distance (miles)
+            desc = "W RUN MI:";
+        } else if(complicationType == 23) { // Weekly bike distance (km)
+            desc = "W BIKE KM:";
+        } else if(complicationType == 24) { // Weekly bike distance (miles)
+            desc = "W BIKE MI:";
+        } else if(complicationType == 25) { // Training status
+            desc = "TRAINING:";
         }
         return desc;
     }
@@ -1194,27 +1234,6 @@ class Segment34View extends WatchUi.WatchFace {
             unit = "PUSHES";
         }
         return unit;
-    }
-
-    function getWeeklyDistance() as Number {
-        var weeklyDistance = 0;
-        if(ActivityMonitor.getInfo() has :distance) {
-            var history = ActivityMonitor.getHistory();
-            if (history != null) {
-                // Only take up to 6 previous days from history
-                var daysToCount = history.size() < 6 ? history.size() : 6;
-                for (var i = 0; i < daysToCount; i++) {
-                    if (history[i].distance != null) {
-                        weeklyDistance += history[i].distance;
-                    }
-                }
-            }
-            // Add today's distance
-            if(ActivityMonitor.getInfo().distance != null) {
-                weeklyDistance += ActivityMonitor.getInfo().distance;
-            }
-        }
-        return weeklyDistance;
     }
 
     hidden function day_name(day_of_week) {
