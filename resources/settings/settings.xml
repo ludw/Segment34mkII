@@ -48,6 +48,17 @@
     <setting propertyKey="@Properties.showStressAndBodyBattery" title="Show Stress (orange) and Body Battery (blue) bars">
         <settingConfig type="boolean" />
     </setting>
+    
+    <setting propertyKey="@Properties.weatherLine2Shows" title="Line above clock shows:">
+        <settingConfig type="list">
+            <listEntry value="20">Weather conditions</listEntry>
+            <listEntry value="17">steps / day</listEntry>
+            <listEntry value="19">wheelchair pushes / day</listEntry>
+            <listEntry value="11">calories (kcal) / day</listEntry>
+            <listEntry value="12">Altitude (m)</listEntry>
+            <listEntry value="15">Altitude (ft)</listEntry>
+        </settingConfig>
+    </setting>
 
     <setting propertyKey="@Properties.leftValueShows" title="Left value shows:">
         <settingConfig type="list">

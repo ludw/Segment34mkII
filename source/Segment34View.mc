@@ -500,11 +500,21 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setWeatherLabel() as Void {
+        var weatherLabel = View.findDrawableById("WeatherLabel2") as Text;
+        var weatherLine2Shows = Application.Properties.getValue("weatherLine2Shows");
+        var unit = getComplicationUnit(weatherLine2Shows);
+        if (unit != "") {
+            unit = Lang.format(" $1$", [unit]);
+        }
+        weatherLabel.setText(Lang.format("$1$$2$", [getComplicationValue(weatherLine2Shows), unit]));
+    }
+
+    hidden function getWeatherCondition() as String {
         var weather = Weather.getCurrentConditions();
         var condition;
         var perp = "";
-        if (weather == null) { return; }
-        if(weather.condition == null) { return; }
+        if (weather == null) { return ""; }
+        if(weather.condition == null) { return ""; }
 
         if(weather has :precipitationChance) {
             if(weather.precipitationChance != null) {
@@ -675,9 +685,8 @@ class Segment34View extends WatchUi.WatchFace {
             default:
                 condition = "UNKNOWN";
         }
-        
-        var weatherLabel = View.findDrawableById("WeatherLabel2") as Text;
-        weatherLabel.setText(condition);
+
+        return condition;
     }
 
     hidden function setSunUpDown(dc) as Void {
@@ -980,6 +989,8 @@ class Segment34View extends WatchUi.WatchFace {
                     val = ActivityMonitor.getInfo().pushes.format("%05d");
                 } 
             }  
+        } else if(complicationType == 20) { // Weather condition
+            val = getWeatherCondition();
         }
 
         return val;
@@ -1028,6 +1039,22 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "PUSHES:";
         }
         return desc;
+    }
+
+    function getComplicationUnit(complicationType) as String {
+        var unit = "";
+        if(complicationType == 11) { // Calories / day
+            unit = "KCAL";
+        } else if(complicationType == 12) { // Altitude (m)
+            unit = "M";
+        } else if(complicationType == 15) { // Altitude (ft)
+            unit = "FT";
+        } else if(complicationType == 17) { // Steps / day
+            unit = "STEPS";
+        } else if(complicationType == 19) { // Wheelchair pushes
+            unit = "PUSHES";
+        }
+        return unit;
     }
 
     hidden function day_name(day_of_week) {
