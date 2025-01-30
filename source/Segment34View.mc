@@ -316,7 +316,7 @@ class Segment34View extends WatchUi.WatchFace {
                 case "notifications":
                     return 0x00AAFF;
                 case "stress":
-                    return 0x00FFAA;
+                    return 0xFFAA00;
                 case "bodybattery":
                     return 0x00AAFF;
                 case "HRActive":
