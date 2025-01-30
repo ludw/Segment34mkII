@@ -11,7 +11,9 @@
     <label id="TimeBg" x="center" y="120" font="@Fonts.id_segments125" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x0c292f" text="#####" />
     <label id="TimeLabel" x="center" y="120" font="@Fonts.id_segments125" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xfbcb77" />
     <bitmap id="gradient" x="center" y="120" filename="../../resources/drawables/gradient.png" />
+    <bitmap id="aodPattern" x="0" y="120" filename="../../resources/drawables/aod.png" />
 
+    <label id="AODDateLabel" x="center" y="260" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xfbcb77" />
     <label id="DateLabel" x="31" y="260" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xfbcb77" />
     <label id="NotifLabel" x="331" y="260" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x00AAFF" />
     <label id="SecondsLabel" x="385" y="260" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xfbcb77" />
@@ -33,6 +35,4 @@
     
     <label id="BattBg" x="center" y="399" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xAAAAAA" text="B" />
     <label id="BattLabel" x="center" y="405" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
-
-    <bitmap id="aodPattern" x="0" y="120" filename="../../resources/drawables/aod.png" />
 </layout>

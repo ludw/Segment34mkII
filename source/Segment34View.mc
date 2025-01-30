@@ -89,6 +89,7 @@ class Segment34View extends WatchUi.WatchFace {
     function onSettingsChanged() {
         lastUpdate = null;
         previousEssentialsVis = null;
+        WatchUi.requestUpdate();
     }
 
     function onPowerBudgetExceeded() {
@@ -116,11 +117,17 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function toggleNonEssentials(visible, dc){
         if(!visible and canBurnIn) {
             dc.setAntiAlias(false);
-            (View.findDrawableById("aodPattern") as Text).setVisible(true);
 
             var clockTime = System.getClockTime();
             var aodPattern = View.findDrawableById("aodPattern") as Drawable;
+            var AODDateLabel = View.findDrawableById("AODDateLabel") as Text;
+            (View.findDrawableById("gradient") as Text).setVisible(false);
+
+            aodPattern.setVisible(true);
+            AODDateLabel.setVisible(true);
             aodPattern.setLocation(clockTime.min % 2, aodPattern.locY);
+            AODDateLabel.setLocation(Math.floor(dc.getWidth() / 2) - 1 + clockTime.min % 3, AODDateLabel.locY);
+            AODDateLabel.setColor(getColor("dateDisplayDim"));
         }
 
         if(previousEssentialsVis == visible) {
@@ -132,6 +139,7 @@ class Segment34View extends WatchUi.WatchFace {
         (View.findDrawableById("SecondsLabel") as Text).setVisible(visible);
         (View.findDrawableById("HRLabel") as Text).setVisible(visible);
 
+        (View.findDrawableById("DateLabel") as Text).setVisible(hideInAOD);
         (View.findDrawableById("TimeBg") as Text).setVisible(hideInAOD);
         (View.findDrawableById("TTRBg") as Text).setVisible(hideInAOD);
         (View.findDrawableById("HRBg") as Text).setVisible(hideInAOD);
@@ -152,9 +160,8 @@ class Segment34View extends WatchUi.WatchFace {
         (View.findDrawableById("WeatherLabel2") as Text).setVisible(hideInAOD);
         (View.findDrawableById("StepBg") as Text).setVisible(hideInAOD);
         (View.findDrawableById("StepLabel") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("BattBg") as Text).setVisible(hideInAOD);
         (View.findDrawableById("BattLabel") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("gradient") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("BattBg") as Text).setVisible(hideInAOD);
 
         if(visible) {
             (View.findDrawableById("TimeBg") as Text).setColor(getColor("timeBg"));
@@ -187,6 +194,8 @@ class Segment34View extends WatchUi.WatchFace {
 
             if(canBurnIn) {
                 (View.findDrawableById("aodPattern") as Text).setVisible(false);
+                (View.findDrawableById("AODDateLabel") as Text).setVisible(false);
+                (View.findDrawableById("gradient") as Text).setVisible(true);
             }
         }
 
@@ -217,7 +226,7 @@ class Segment34View extends WatchUi.WatchFace {
                         return 0xfbcb77;
                     }
                     return 0xFFFF00;
-                case "timeDisplayDim":
+                case "dateDisplayDim":
                     return 0xa98753;
                 case "dawnDuskLabel":
                     return 0x005555;
@@ -228,8 +237,6 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0xAAAAAA;
                 case "notifications":
                     return 0x00AAFF;
-                case "notificationsDim":
-                    return 0x0567a1;
                 case "stress":
                     return 0xFFAA00;
                 case "bodybattery":
@@ -241,25 +248,25 @@ class Segment34View extends WatchUi.WatchFace {
                     if(amoled) {
                         return 0x0e333c;
                     }
-                    return 0x550000;
+                    return 0x005555;
                 case "fieldLabel":
                     return 0xAA55AA;
                 case "timeBg":
                     if(amoled) {
                         return 0x0f3b46;
                     }
-                    return 0x550000;
+                    return 0x005555;
                 case "timeDisplay":
                     if(amoled) {
                         return 0xf988f2;
                     }
-                    return 0xFF00FF;
+                    return 0xFF55AA;
                 case "dateDisplay":
                     return 0xFF55AA;
-                case "timeDisplayDim":
+                case "dateDisplayDim":
                     return 0xa95399;
                 case "dawnDuskLabel":
-                    return 0x550055;
+                    return 0xAA55AA;
                 case "dawnDuskValue":
                     if(amoled) {
                         return 0xFFFFFF;
@@ -267,8 +274,6 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0xAAAAAA;
                 case "notifications":
                     return 0x00FFAA;
-                case "notificationsDim":
-                    return 0x0ea36f;
                 case "stress":
                     return 0xFF55AA;
                 case "bodybattery":
@@ -294,7 +299,7 @@ class Segment34View extends WatchUi.WatchFace {
                         return 0x89efd2;
                     }
                     return 0x00FFFF;
-                case "timeDisplayDim":
+                case "dateDisplayDim":
                     return 0x5ca28f;
                 case "dawnDuskLabel":
                     return 0x005555;
@@ -305,8 +310,6 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0xAAAAAA;
                 case "notifications":
                     return 0x00AAFF;
-                case "notificationsDim":
-                    return 0x0567a1;
                 case "stress":
                     return 0x00FFAA;
                 case "bodybattery":
@@ -399,7 +402,7 @@ class Segment34View extends WatchUi.WatchFace {
             if(System.getSystemStats() has :batteryInDays) {
                 if (System.getSystemStats().batteryInDays != null){
                     sample = System.getSystemStats().batteryInDays;
-                    value = Lang.format("$1$D", [sample]);
+                    value = Lang.format("$1$D", [sample.format("%d")]);
                 }
             } else {
                 batteryVariant = 1;
@@ -407,11 +410,11 @@ class Segment34View extends WatchUi.WatchFace {
         }
         if(batteryVariant == 1) {
             if(sample < 100) {
-               value = Lang.format("$1$%", [sample.format("%d")]);
+                value = Lang.format("$1$%", [sample.format("%d")]);
             } else {
                 value = Lang.format("$1$", [sample.format("%d")]);
             }
-        } else {
+        } else if(batteryVariant == 2) {
             visible = false;
         }
 
@@ -731,6 +734,12 @@ class Segment34View extends WatchUi.WatchFace {
             today.year
         ]).toUpper();
         dateLabel.setText(value);
+
+        if(canBurnIn) {
+            var AODDateLabel = View.findDrawableById("AODDateLabel") as Text;
+            AODDateLabel.setText(value);
+        }
+        
     }
 
     hidden function setStep(dc) as Void {
