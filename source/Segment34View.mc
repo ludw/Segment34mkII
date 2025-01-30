@@ -202,7 +202,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getColor(colorName) as Graphics.ColorType {
         var amoled = System.getDeviceSettings().requiresBurnInProtection;
         var colorTheme = Application.Properties.getValue("colorTheme");
-        
+
         if(colorTheme == 0) {
             switch(colorName) {
                 case "fieldBg":
@@ -238,6 +238,10 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0xFFAA00;
                 case "bodybattery":
                     return 0x00AAFF;
+                case "HRActive":
+                    return 0xFFFFFF;
+                case "HRInactive":
+                    return 0x55AAAA;
             }
         } else if(colorTheme == 1) {
             switch(colorName) {
@@ -275,6 +279,10 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0xFF55AA;
                 case "bodybattery":
                     return 0x00FFAA;
+                case "HRActive":
+                    return 0xFFFFFF;
+                case "HRInactive":
+                    return 0x55AAAA;
             }
         } else if(colorTheme == 2) {
             switch(colorName) {
@@ -311,6 +319,87 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0x00FFAA;
                 case "bodybattery":
                     return 0x00AAFF;
+                case "HRActive":
+                    return 0xFFFFFF;
+                case "HRInactive":
+                    return 0x55AAAA;
+            }
+        } else if(colorTheme == 3) {
+            switch(colorName) {
+                case "fieldBg":
+                    if(amoled) {
+                        return 0x0d3c12;
+                    }
+                    return 0x005500;
+                case "fieldLabel":
+                    return 0x00AA55;
+                case "timeBg":
+                    if(amoled) {
+                        return 0x0d3c12;
+                    }
+                    return 0x005500;
+                case "timeDisplay":
+                case "dateDisplay":
+                    if(amoled) {
+                        return 0x46d102;
+                    }
+                    return 0x00FF00;
+                case "dateDisplayDim":
+                    return 0x5ca28f;
+                case "dawnDuskLabel":
+                    return 0x00AA55;
+                case "dawnDuskValue":
+                    if(amoled) {
+                        return 0xFFFFFF;
+                    }
+                    return 0xAAAAAA;
+                case "notifications":
+                    return 0x00AAFF;
+                case "stress":
+                    return 0x55FF00;
+                case "bodybattery":
+                    return 0x00AAFF;
+                case "HRActive":
+                    return 0xFFFFFF;
+                case "HRInactive":
+                    return 0x55FF55;
+            }
+        } else if (colorTheme == 4) {
+             switch(colorName) {
+                case "fieldBg":
+                    if(amoled) {
+                        return 0x0e333c;
+                    }
+                    return 0x005555;
+                case "fieldLabel":
+                    return 0x55AAAA;
+                case "timeBg":
+                    if(amoled) {
+                        return 0x0d333c;
+                    }
+                    return 0x005555;
+                case "timeDisplay":
+                case "dateDisplay":
+                    return 0xFFFFFF;
+                case "dateDisplayDim":
+                    return 0xa98753;
+                case "dawnDuskLabel":
+                    return 0x005555;
+                case "dawnDuskValue":
+                    if(amoled) {
+                        return 0xFFFFFF;
+                    }
+                    return 0xAAAAAA;
+                case "notifications":
+                    return 0xAAAAAA;
+                case "stress":
+                    return 0xFFFFFF;
+                case "bodybattery":
+                    return 0xAAAAAA;
+                case "HRActive":
+                    return 0xFFFFFF;
+                case "HRInactive":
+                    return 0x55AAAA;
             }
         }
 
@@ -369,13 +458,13 @@ class Segment34View extends WatchUi.WatchFace {
             var sample = activityInfo.currentHeartRate;
             if(sample != null) {
                 hrLabel.setText(sample.format("%01d"));
-                hrLabel.setColor(Graphics.COLOR_WHITE);
+                hrLabel.setColor(getColor("HRActive"));
             } else if (ActivityMonitor has :getHeartRateHistory) {
                 // Falling back to historical HR from ActivityMonitor
                 var hist = ActivityMonitor.getHeartRateHistory(1, /* newestFirst */ true).next();
                 if ((hist != null) && (hist.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)) {
                     hrLabel.setText(hist.heartRate.format("%01d"));
-                    hrLabel.setColor(0x55AAAA);
+                    hrLabel.setColor(getColor("HRInactive"));
                 }
             }
         } else {
@@ -503,7 +592,7 @@ class Segment34View extends WatchUi.WatchFace {
         var weatherLabel = View.findDrawableById("WeatherLabel2") as Text;
         var weatherLine2Shows = Application.Properties.getValue("weatherLine2Shows");
         var unit = getComplicationUnit(weatherLine2Shows);
-        if (unit != "") {
+        if (unit.length() > 0) {
             unit = Lang.format(" $1$", [unit]);
         }
         weatherLabel.setText(Lang.format("$1$$2$", [getComplicationValue(weatherLine2Shows), unit]));
