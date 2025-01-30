@@ -32,6 +32,7 @@
             <listEntry value="1">km/h</listEntry>
             <listEntry value="2">mph</listEntry>
             <listEntry value="3">knots</listEntry>
+            <listEntry value="4">beufort</listEntry>
         </settingConfig>
     </setting>
 

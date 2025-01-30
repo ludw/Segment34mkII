@@ -552,6 +552,34 @@ class Segment34View extends WatchUi.WatchFace {
             } else if (windUnit == 3) { // knots
                 var windspeed_kt = Math.round(windspeed_mps * 1.944);
                 windspeed = windspeed_kt.format("%01d");
+            } else if(windUnit == 4) { // beufort
+                if (windspeed_mps < 0.5f) {
+                    windspeed = "0";  // Calm
+                } else if (windspeed_mps < 1.5f) {
+                    windspeed = "1";  // Light air
+                } else if (windspeed_mps < 3.3f) {
+                    windspeed = "2";  // Light breeze
+                } else if (windspeed_mps < 5.5f) {
+                    windspeed = "3";  // Gentle breeze
+                } else if (windspeed_mps < 7.9f) {
+                    windspeed = "4";  // Moderate breeze
+                } else if (windspeed_mps < 10.7f) {
+                    windspeed = "5";  // Fresh breeze
+                } else if (windspeed_mps < 13.8f) {
+                    windspeed = "6";  // Strong breeze
+                } else if (windspeed_mps < 17.1f) {
+                    windspeed = "7";  // Near gale
+                } else if (windspeed_mps < 20.7f) {
+                    windspeed = "8";  // Gale
+                } else if (windspeed_mps < 24.4f) {
+                    windspeed = "9";  // Strong gale
+                } else if (windspeed_mps < 28.4f) {
+                    windspeed = "10";  // Storm
+                } else if (windspeed_mps < 32.6f) {
+                    windspeed = "11";  // Violent storm
+                } else {
+                    windspeed = "12";  // Hurricane force
+                }
             }
         }
 
