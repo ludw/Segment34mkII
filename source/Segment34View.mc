@@ -169,11 +169,9 @@ class Segment34View extends WatchUi.WatchFace {
             (View.findDrawableById("HRBg") as Text).setColor(getColor("fieldBg"));
             (View.findDrawableById("ActiveBg") as Text).setColor(getColor("fieldBg"));
             (View.findDrawableById("StepBg") as Text).setColor(getColor("fieldBg"));
-
             (View.findDrawableById("TTRDesc") as Text).setColor(getColor("fieldLabel"));
             (View.findDrawableById("HRDesc") as Text).setColor(getColor("fieldLabel"));
             (View.findDrawableById("ActiveDesc") as Text).setColor(getColor("fieldLabel"));
-
             (View.findDrawableById("TimeLabel") as Text).setColor(getColor("timeDisplay"));
             (View.findDrawableById("DateLabel") as Text).setColor(getColor("dateDisplay"));
             (View.findDrawableById("SecondsLabel") as Text).setColor(getColor("dateDisplay"));
@@ -188,7 +186,6 @@ class Segment34View extends WatchUi.WatchFace {
             (View.findDrawableById("TTRLabel") as Text).setColor(Graphics.COLOR_WHITE);
             (View.findDrawableById("ActiveLabel") as Text).setColor(Graphics.COLOR_WHITE);
             (View.findDrawableById("StepLabel") as Text).setColor(Graphics.COLOR_WHITE);
-
             (View.findDrawableById("BattBg") as Text).setColor(0xAAAAAA);
             (View.findDrawableById("BattLabel") as Text).setColor(Graphics.COLOR_WHITE);
 
@@ -335,16 +332,20 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function setClock(dc) as Void {
         var clockTime = System.getClockTime();
-        var hourFormat = Application.Properties.getValue("hourFormat");
-        var hour = clockTime.hour;
+        var hour = formatHour(clockTime.hour);
 
+        var timeString = Lang.format("$1$:$2$", [hour.format("%02d"), clockTime.min.format("%02d")]);
+        var timelabel = View.findDrawableById("TimeLabel") as Text;
+        timelabel.setText(timeString);
+    }
+
+    hidden function formatHour(hour) as Number {
+        var hourFormat = Application.Properties.getValue("hourFormat");
         if((!System.getDeviceSettings().is24Hour and hourFormat == 0) or hourFormat == 2) {
             hour = hour % 12;
             if(hour == 0) { hour = 12; }
         }
-        var timeString = Lang.format("$1$:$2$", [hour.format("%02d"), clockTime.min.format("%02d")]);
-        var timelabel = View.findDrawableById("TimeLabel") as Text;
-        timelabel.setText(timeString);
+        return hour;
     }
 
     hidden function setMoon(dc) as Void {
@@ -701,8 +702,10 @@ class Segment34View extends WatchUi.WatchFace {
         duskLabel.setText("DUSK:");
         var sunrise = Time.Gregorian.info(Weather.getSunrise(loc, now), Time.FORMAT_SHORT);
         var sunset = Time.Gregorian.info(Weather.getSunset(loc, now), Time.FORMAT_SHORT);
-        sunUpLabel.setText(Lang.format("$1$:$2$", [sunrise.hour.format("%02d"), sunrise.min.format("%02d")]));
-        sunDownLabel.setText(Lang.format("$1$:$2$", [sunset.hour.format("%02d"), sunset.min.format("%02d")]));
+        var sunriseHour = formatHour(sunrise.hour);
+        var sunsetHour = formatHour(sunset.hour);
+        sunUpLabel.setText(Lang.format("$1$:$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]));
+        sunDownLabel.setText(Lang.format("$1$:$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]));
     }
 
     hidden function setNotif(dc) as Void {
