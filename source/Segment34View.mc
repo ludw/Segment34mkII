@@ -1116,6 +1116,12 @@ class Segment34View extends WatchUi.WatchFace {
             }  
         } else if(complicationType == 20) { // Weather condition
             val = getWeatherCondition();
+        } else if(complicationType == 21) { // Weekly distance (km)
+            var distanceKm = getWeeklyDistance() / 100000.0;
+            val = distanceKm < 10 ? distanceKm.format("%.1f") : distanceKm.format("%d");
+        } else if(complicationType == 22) { // Weekly distance (miles)
+            var distanceMiles = getWeeklyDistance() / 160900.0;
+            val = distanceMiles < 10 ? distanceMiles.format("%.1f") : distanceMiles.format("%d");
         }
 
         return val;
@@ -1162,6 +1168,12 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "M TODAY:";
         } else if(complicationType == 19) { // Wheelchair pushes
             desc = "PUSHES:";
+        } else if(complicationType == 20) { // Weather condition
+            desc = "";
+        } else if(complicationType == 21) { // Weekly distance (km)
+            desc = "WEEKLY KM:";
+        } else if(complicationType == 22) { // Weekly distance (miles)
+            desc = "WEEKLY MI:";
         }
         return desc;
     }
@@ -1180,6 +1192,27 @@ class Segment34View extends WatchUi.WatchFace {
             unit = "PUSHES";
         }
         return unit;
+    }
+
+    function getWeeklyDistance() as Number {
+        var weeklyDistance = 0;
+        if(ActivityMonitor.getInfo() has :distance) {
+            var history = ActivityMonitor.getHistory();
+            if (history != null) {
+                // Only take up to 6 previous days from history
+                var daysToCount = history.size() < 6 ? history.size() : 6;
+                for (var i = 0; i < daysToCount; i++) {
+                    if (history[i].distance != null) {
+                        weeklyDistance += history[i].distance;
+                    }
+                }
+            }
+            // Add today's distance
+            if(ActivityMonitor.getInfo().distance != null) {
+                weeklyDistance += ActivityMonitor.getInfo().distance;
+            }
+        }
+        return weeklyDistance;
     }
 
     hidden function day_name(day_of_week) {

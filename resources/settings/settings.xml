@@ -69,6 +69,8 @@
             <listEntry value="1">Active min / day</listEntry>
             <listEntry value="2">distance (km) / day</listEntry>
             <listEntry value="3">distance (miles) / day</listEntry>
+            <listEntry value="21">distance (km) / week</listEntry>
+            <listEntry value="22">distance (miles) / week</listEntry>
             <listEntry value="4">floors climbed / day</listEntry>
             <listEntry value="5">meters climbed / day</listEntry>
             <listEntry value="6">Time to Recovery (h)</listEntry>
@@ -90,6 +92,8 @@
             <listEntry value="1">Active min / day</listEntry>
             <listEntry value="2">distance (km) / day</listEntry>
             <listEntry value="3">distance (miles) / day</listEntry>
+            <listEntry value="21">distance (km) / week</listEntry>
+            <listEntry value="22">distance (miles) / week</listEntry>
             <listEntry value="4">floors climbed / day</listEntry>
             <listEntry value="5">meters climbed / day</listEntry>
             <listEntry value="6">Time to Recovery (h)</listEntry>
@@ -109,6 +113,8 @@
             <listEntry value="1">Active min / day</listEntry>
             <listEntry value="2">distance (km) / day</listEntry>
             <listEntry value="3">distance (miles) / day</listEntry>
+            <listEntry value="21">distance (km) / week</listEntry>
+            <listEntry value="22">distance (miles) / week</listEntry>
             <listEntry value="4">floors climbed / day</listEntry>
             <listEntry value="5">meters climbed / day</listEntry>
             <listEntry value="6">Time to Recovery (h)</listEntry>
