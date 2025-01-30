@@ -747,46 +747,8 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function setStep(dc) as Void {
         var stepLabel = View.findDrawableById("StepLabel") as Text;
-        var val = "";
         var bottomValueShows = Application.Properties.getValue("bottomValueShows");
-
-        if(bottomValueShows == 0) {
-            if(ActivityMonitor.getInfo().steps != null) {
-                val = ActivityMonitor.getInfo().steps.format("%05d");
-            }
-        } else if(bottomValueShows == 1) {
-            if(ActivityMonitor.getInfo().distance != null) {
-                val = (ActivityMonitor.getInfo().distance / 100).format("%05d");
-            }
-        } else if(bottomValueShows == 2) {
-            if(ActivityMonitor.getInfo().calories != null) {
-                val = ActivityMonitor.getInfo().calories.format("%05d");
-            }   
-        } else if(bottomValueShows == 3) {
-            if(ActivityMonitor.getInfo() has :pushes) {
-                if(ActivityMonitor.getInfo().pushes != null) {
-                    val = ActivityMonitor.getInfo().pushes.format("%05d");
-                } 
-            }  
-        } else if(bottomValueShows == 4) { // Altitude (m)
-            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
-                var elvIterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
-                var elv = elvIterator.next();
-                if(elv != null and elv.data != null) {
-                    val = elv.data.format("%05d");
-                }
-            }
-        } else if(bottomValueShows == 5) { // Altitude (ft)
-            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
-                var elvIterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
-                var elv = elvIterator.next();
-                if(elv != null and elv.data != null) {
-                    val = (elv.data * 3.28084).format("%05d");
-                }
-            }
-        }
-        
-        stepLabel.setText(val);
+        stepLabel.setText(getComplicationValue(bottomValueShows));
     }
 
     hidden function updateStressAndBodyBatteryData() as Void {
@@ -1004,7 +966,22 @@ class Segment34View extends WatchUi.WatchFace {
             var now = Time.now();
             var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_MEDIUM);
             val = Lang.format("$1$$2$", [utc.hour.format("%02d"), utc.min.format("%02d")]);
+        } else if(complicationType == 17) { // Steps / day
+            if(ActivityMonitor.getInfo().steps != null) {
+                val = ActivityMonitor.getInfo().steps.format("%05d");
+            }
+        } else if(complicationType == 18) { // Distance (m) / day
+            if(ActivityMonitor.getInfo().distance != null) {
+                val = (ActivityMonitor.getInfo().distance / 100).format("%05d");
+            }
+        } else if(complicationType == 19) { // Wheelchair pushes
+            if(ActivityMonitor.getInfo() has :pushes) {
+                if(ActivityMonitor.getInfo().pushes != null) {
+                    val = ActivityMonitor.getInfo().pushes.format("%05d");
+                } 
+            }  
         }
+
         return val;
     }
 
@@ -1043,6 +1020,12 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "ALTITUDE:";
         } else if(complicationType == 16) { // UTC time
             desc = "UTC TIME:";
+        } else if(complicationType == 17) { // Steps / day
+            desc = "STEPS:";
+        } else if(complicationType == 18) { // Distance (m) / day
+            desc = "M TODAY:";
+        } else if(complicationType == 19) { // Wheelchair pushes
+            desc = "PUSHES:";
         }
         return desc;
     }

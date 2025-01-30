@@ -31,4 +31,3 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 - More color options
 - Configurability for weather line 2
 - Larger battery icon
-- 12/24h for dawn/dusk
