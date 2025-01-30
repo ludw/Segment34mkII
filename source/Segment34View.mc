@@ -486,7 +486,7 @@ class Segment34View extends WatchUi.WatchFace {
         var sample = System.getSystemStats().battery;
         var value = "";
         var batteryVariant = Application.Properties.getValue("batteryVariant");
-        var visible = !isSleeping;
+        var visible = (!isSleeping or !canBurnIn);
 
         if(batteryVariant == 0) {
             if(System.getSystemStats() has :batteryInDays) {
@@ -845,8 +845,8 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function setStep(dc) as Void {
         var stepLabel = View.findDrawableById("StepLabel") as Text;
-        var bottomValueShows = Application.Properties.getValue("bottomValueShows");
-        stepLabel.setText(getComplicationValue(bottomValueShows));
+        var bottomFieldShows = Application.Properties.getValue("bottomFieldShows");
+        stepLabel.setText(getComplicationValue(bottomFieldShows));
     }
 
     hidden function updateStressAndBodyBatteryData() as Void {
