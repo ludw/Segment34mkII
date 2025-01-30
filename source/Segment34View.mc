@@ -186,7 +186,7 @@ class Segment34View extends WatchUi.WatchFace {
             (View.findDrawableById("TTRLabel") as Text).setColor(Graphics.COLOR_WHITE);
             (View.findDrawableById("ActiveLabel") as Text).setColor(Graphics.COLOR_WHITE);
             (View.findDrawableById("StepLabel") as Text).setColor(Graphics.COLOR_WHITE);
-            (View.findDrawableById("BattBg") as Text).setColor(0xAAAAAA);
+            (View.findDrawableById("BattBg") as Text).setColor(0x555555);
             (View.findDrawableById("BattLabel") as Text).setColor(Graphics.COLOR_WHITE);
 
             if(canBurnIn) {
@@ -259,7 +259,7 @@ class Segment34View extends WatchUi.WatchFace {
                     }
                     return 0xFF55AA;
                 case "dateDisplay":
-                    return 0xFF55AA;
+                    return 0xFFFFFF;
                 case "dateDisplayDim":
                     return 0xa95399;
                 case "dawnDuskLabel":
@@ -270,7 +270,7 @@ class Segment34View extends WatchUi.WatchFace {
                     }
                     return 0xAAAAAA;
                 case "notifications":
-                    return 0x00FFAA;
+                    return 0xFF55AA;
                 case "stress":
                     return 0xFF55AA;
                 case "bodybattery":
