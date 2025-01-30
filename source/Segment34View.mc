@@ -1013,13 +1013,15 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 2) { // distance (km) / day
             if(ActivityMonitor.getInfo() has :distance) {
                 if(ActivityMonitor.getInfo().distance != null) {
-                    val = (ActivityMonitor.getInfo().distance / 100000).format(numberFormat);
+                    var distanceKm = ActivityMonitor.getInfo().distance / 100000.0;
+                    val = distanceKm < 10 ? distanceKm.format("%.1f") : distanceKm.format(numberFormat);
                 }
             }
         } else if(complicationType == 3) { // distance (miles) / day
             if(ActivityMonitor.getInfo() has :distance) {
                 if(ActivityMonitor.getInfo().distance != null) {
-                    val = (ActivityMonitor.getInfo().distance / 160900).format(numberFormat);
+                    var distanceMiles = ActivityMonitor.getInfo().distance / 160900.0;
+                    val = distanceMiles < 10 ? distanceMiles.format("%.1f") : distanceMiles.format(numberFormat);
                 }
             }
         } else if(complicationType == 4) { // floors climbed / day
@@ -1118,10 +1120,10 @@ class Segment34View extends WatchUi.WatchFace {
             val = getWeatherCondition();
         } else if(complicationType == 21) { // Weekly distance (km)
             var distanceKm = getWeeklyDistance() / 100000.0;
-            val = distanceKm < 10 ? distanceKm.format("%.1f") : distanceKm.format("%d");
+            val = distanceKm < 10 ? distanceKm.format("%.1f") : distanceKm.format(numberFormat);
         } else if(complicationType == 22) { // Weekly distance (miles)
             var distanceMiles = getWeeklyDistance() / 160900.0;
-            val = distanceMiles < 10 ? distanceMiles.format("%.1f") : distanceMiles.format("%d");
+            val = distanceMiles < 10 ? distanceMiles.format("%.1f") : distanceMiles.format(numberFormat);
         }
 
         return val;
