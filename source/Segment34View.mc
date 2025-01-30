@@ -114,6 +114,15 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function toggleNonEssentials(visible, dc){
+        if(!visible and canBurnIn) {
+            dc.setAntiAlias(false);
+            (View.findDrawableById("aodPattern") as Text).setVisible(true);
+
+            var clockTime = System.getClockTime();
+            var aodPattern = View.findDrawableById("aodPattern") as Drawable;
+            aodPattern.setLocation(clockTime.min % 2, aodPattern.locY);
+        }
+
         if(previousEssentialsVis == visible) {
             return;
         }
@@ -137,6 +146,7 @@ class Segment34View extends WatchUi.WatchFace {
         (View.findDrawableById("SunDownLabel") as Text).setVisible(hideInAOD);
         (View.findDrawableById("WeatherLabel1") as Text).setVisible(hideInAOD);
         (View.findDrawableById("WeatherLabel2") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("NotifLabel") as Text).setVisible(hideInAOD);
         (View.findDrawableById("TTRLabel") as Text).setVisible(hideInAOD);
         (View.findDrawableById("ActiveLabel") as Text).setVisible(hideInAOD);
         (View.findDrawableById("WeatherLabel2") as Text).setVisible(hideInAOD);
@@ -144,6 +154,7 @@ class Segment34View extends WatchUi.WatchFace {
         (View.findDrawableById("StepLabel") as Text).setVisible(hideInAOD);
         (View.findDrawableById("BattBg") as Text).setVisible(hideInAOD);
         (View.findDrawableById("BattLabel") as Text).setVisible(hideInAOD);
+        (View.findDrawableById("gradient") as Text).setVisible(hideInAOD);
 
         if(visible) {
             (View.findDrawableById("TimeBg") as Text).setColor(getColor("timeBg"));
@@ -176,21 +187,6 @@ class Segment34View extends WatchUi.WatchFace {
 
             if(canBurnIn) {
                 (View.findDrawableById("aodPattern") as Text).setVisible(false);
-            }
-        } else {
-            if(canBurnIn) {
-                dc.setAntiAlias(false);
-                
-                (View.findDrawableById("TimeLabel") as Text).setColor(getColor("timeDisplayDim"));
-                (View.findDrawableById("DateLabel") as Text).setColor(getColor("timeDisplayDim"));
-                (View.findDrawableById("NotifLabel") as Text).setColor(getColor("notificationsDim"));
-                (View.findDrawableById("aodPattern") as Text).setVisible(true);
-
-                var clockTime = System.getClockTime();
-                var aodPattern = View.findDrawableById("aodPattern") as Drawable;
-                var gradient = View.findDrawableById("gradient") as Drawable;
-                aodPattern.setLocation(clockTime.min % 2, aodPattern.locY);
-                gradient.setLocation(clockTime.min % 2 + 1, gradient.locY);
             }
         }
 
@@ -403,12 +399,13 @@ class Segment34View extends WatchUi.WatchFace {
             if(System.getSystemStats() has :batteryInDays) {
                 if (System.getSystemStats().batteryInDays != null){
                     sample = System.getSystemStats().batteryInDays;
-                    value = Lang.format("$1$D", [sample.format("%01d")]);
+                    value = Lang.format("$1$D", [sample]);
                 }
             } else {
                 batteryVariant = 1;
             }
-        } else if(batteryVariant == 1) {
+        }
+        if(batteryVariant == 1) {
             if(sample < 100) {
                value = Lang.format("$1$%", [sample.format("%d")]);
             } else {
@@ -979,7 +976,7 @@ class Segment34View extends WatchUi.WatchFace {
             if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getBodyBatteryHistory)) {
                 var bbIterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});
                 var bb = bbIterator.next();
-                if(bb != null) {
+                if(bb != null and bb.data != null) {
                     val = bb.data.format("%01d");
                 }
             }
