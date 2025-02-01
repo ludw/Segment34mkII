@@ -871,7 +871,16 @@ class Segment34View extends WatchUi.WatchFace {
 
         if(canBurnIn) {
             var AODDateLabel = View.findDrawableById("AODDateLabel") as Text;
-            AODDateLabel.setText(value);
+            var aodFieldShows = Application.Properties.getValue("aodFieldShows");
+            if(aodFieldShows == -1) {
+                AODDateLabel.setText(value);
+            } else {
+                var unit = getComplicationUnit(aodFieldShows);
+                if (unit.length() > 0) {
+                    unit = Lang.format(" $1$", [unit]);
+                }
+                AODDateLabel.setText(Lang.format("$1$$2$", [getComplicationValue(aodFieldShows), unit]));
+            }
         }
         
     }
@@ -1230,6 +1239,10 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "W BIKE MI:";
         } else if(complicationType == 25) { // Training status
             desc = "TRAINING:";
+        } else if(complicationType == 26) { // Barometric pressure (hPA)
+            desc = "PRESSURE:";
+        } else if(complicationType == 27) { // Weight kg
+            desc = "WEIGHT:";
         }
         return desc;
     }
