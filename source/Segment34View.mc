@@ -501,7 +501,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(batteryVariant == 0) {
             if(System.getSystemStats() has :batteryInDays) {
                 if (System.getSystemStats().batteryInDays != null){
-                    sample = System.getSystemStats().batteryInDays;
+                    sample = Math.round(System.getSystemStats().batteryInDays);
                     value = Lang.format("$1$D", [sample.format("%d")]);
                 }
             } else {
@@ -1229,17 +1229,22 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 26) { // Barometric pressure (hPA)
-            if (Toybox has :Complications) {
-                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_SEA_LEVEL_PRESSURE));
-                if (complication != null && complication.value != null) {
-                    val = (complication.value / 100.0).format(numberFormat);
-                }
+            var info = Activity.getActivityInfo();
+            if (info has :rawAmbientPressure && info.rawAmbientPressure != null) {
+                val = (info.rawAmbientPressure / 100.0).format(numberFormat);
             }
         } else if(complicationType == 27) { // Weight kg
             var profile = UserProfile.getProfile();
             if(profile has :weight) {
                 if(profile.weight != null) {
                     val = (profile.weight / 1000.0).format("%.1f");
+                }
+            }
+        } else if(complicationType == 28) { // Weight lbs
+            var profile = UserProfile.getProfile();
+            if(profile has :weight) {
+                if(profile.weight != null) {
+                    val = (profile.weight * 0.00220462).format(numberFormat);
                 }
             }
         }
@@ -1303,6 +1308,8 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 26) { // Barometric pressure (hPA)
             desc = "PRESSURE:";
         } else if(complicationType == 27) { // Weight kg
+            desc = "WEIGHT:";
+        } else if(complicationType == 28) { // Weight lbs
             desc = "WEIGHT:";
         }
         return desc;

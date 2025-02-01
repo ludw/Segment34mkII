@@ -99,6 +99,7 @@
             <listEntry value="16">UTC Time</listEntry>
             <listEntry value="26">Barometric Pressure (hPA)</listEntry>
             <listEntry value="27">Weight (kg)</listEntry>
+            <listEntry value="28">Weight (lbs)</listEntry>
         </settingConfig>
     </setting>
 
@@ -149,6 +150,7 @@
             <listEntry value="16">UTC Time</listEntry>
             <listEntry value="26">Barometric Pressure (hPA)</listEntry>
             <listEntry value="27">Weight (kg)</listEntry>
+            <listEntry value="28">Weight (lbs)</listEntry>
         </settingConfig>
     </setting>
 
