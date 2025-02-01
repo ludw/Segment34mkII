@@ -60,14 +60,14 @@ class Segment34View extends WatchUi.WatchFace {
 
         if(updateEverything) {
             setClock(dc);
-
+            setDate(dc);
             if(!isSleeping or !canBurnIn) {
+                setHR(dc);
                 setNotif(dc);
                 setMoon(dc);
                 setWeather(dc);
                 setWeatherLabel();
                 setSunUpDown(dc);
-                setDate(dc);
                 setStep(dc);
                 setTraining(dc);
                 setBatt(dc);
@@ -121,12 +121,13 @@ class Segment34View extends WatchUi.WatchFace {
 
             var clockTime = System.getClockTime();
             var aodPattern = View.findDrawableById("aodPattern") as Drawable;
+            var gradient = View.findDrawableById("gradient") as Drawable;
             var AODDateLabel = View.findDrawableById("AODDateLabel") as Text;
-            (View.findDrawableById("gradient") as Text).setVisible(false);
 
             aodPattern.setVisible(true);
             AODDateLabel.setVisible(true);
             aodPattern.setLocation(clockTime.min % 2, aodPattern.locY);
+            gradient.setLocation(clockTime.min % 2 - 1, gradient.locY);
             AODDateLabel.setLocation(Math.floor(dc.getWidth() / 2) - 1 + clockTime.min % 3, AODDateLabel.locY);
             AODDateLabel.setColor(getColor("dateDisplayDim"));
         }
@@ -138,8 +139,8 @@ class Segment34View extends WatchUi.WatchFace {
         var hideInAOD = (visible or !canBurnIn);
 
         (View.findDrawableById("SecondsLabel") as Text).setVisible(visible);
-        (View.findDrawableById("HRLabel") as Text).setVisible(visible);
 
+        (View.findDrawableById("HRLabel") as Text).setVisible(hideInAOD);
         (View.findDrawableById("DateLabel") as Text).setVisible(hideInAOD);
         (View.findDrawableById("TimeBg") as Text).setVisible(hideInAOD);
         (View.findDrawableById("TTRBg") as Text).setVisible(hideInAOD);
@@ -193,7 +194,6 @@ class Segment34View extends WatchUi.WatchFace {
             if(canBurnIn) {
                 (View.findDrawableById("aodPattern") as Text).setVisible(false);
                 (View.findDrawableById("AODDateLabel") as Text).setVisible(false);
-                (View.findDrawableById("gradient") as Text).setVisible(true);
             }
         }
 
@@ -1156,6 +1156,20 @@ class Segment34View extends WatchUi.WatchFace {
                 var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_TRAINING_STATUS));
                 if (complication != null && complication.value != null) {
                     val = complication.value.toUpper();
+                }
+            }
+        } else if(complicationType == 26) { // Barometric pressure (hPA)
+            if (Toybox has :Complications) {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_SEA_LEVEL_PRESSURE));
+                if (complication != null && complication.value != null) {
+                    val = (complication.value / 100.0).format(numberFormat);
+                }
+            }
+        } else if(complicationType == 27) { // Weight kg
+            var profile = UserProfile.getProfile();
+            if(profile has :weight) {
+                if(profile.weight != null) {
+                    val = (profile.weight / 1000.0).format("%.1f");
                 }
             }
         }
