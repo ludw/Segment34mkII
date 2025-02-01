@@ -204,7 +204,7 @@ class Segment34View extends WatchUi.WatchFace {
         var amoled = System.getDeviceSettings().requiresBurnInProtection;
         var colorTheme = Application.Properties.getValue("colorTheme");
 
-        if(colorTheme == 0) {
+        if(colorTheme == 0) { // Yellow on turquiose
             switch(colorName) {
                 case "fieldBg":
                     if(amoled) {
@@ -244,7 +244,7 @@ class Segment34View extends WatchUi.WatchFace {
                 case "HRInactive":
                     return 0x55AAAA;
             }
-        } else if(colorTheme == 1) {
+        } else if(colorTheme == 1) { // Hot pink
             switch(colorName) {
                 case "fieldBg":
                     if(amoled) {
@@ -285,7 +285,7 @@ class Segment34View extends WatchUi.WatchFace {
                 case "HRInactive":
                     return 0x55AAAA;
             }
-        } else if(colorTheme == 2) {
+        } else if(colorTheme == 2) { // Blueish green
             switch(colorName) {
                 case "fieldBg":
                     if(amoled) {
@@ -325,24 +325,24 @@ class Segment34View extends WatchUi.WatchFace {
                 case "HRInactive":
                     return 0x55AAAA;
             }
-        } else if(colorTheme == 3) {
+        } else if(colorTheme == 3) { // Very green
             switch(colorName) {
                 case "fieldBg":
                     if(amoled) {
-                        return 0x0d3c12;
+                        return 0x1d3c22;
                     }
                     return 0x005500;
                 case "fieldLabel":
                     return 0x00AA55;
                 case "timeBg":
                     if(amoled) {
-                        return 0x0d3c12;
+                        return 0x1d3c22;
                     }
                     return 0x005500;
                 case "timeDisplay":
                 case "dateDisplay":
                     if(amoled) {
-                        return 0x46d102;
+                        return 0x96e0ac;
                     }
                     return 0x00FF00;
                 case "dateDisplayDim":
@@ -357,15 +357,24 @@ class Segment34View extends WatchUi.WatchFace {
                 case "notifications":
                     return 0x00AAFF;
                 case "stress":
-                    return 0x55FF00;
+                    if(amoled) {
+                        return 0xffc884;
+                    }
+                    return 0xFFAA00;
                 case "bodybattery":
+                    if(amoled) {
+                        return 0x59b9fe;
+                    }
                     return 0x00AAFF;
                 case "HRActive":
                     return 0xFFFFFF;
                 case "HRInactive":
+                    if(amoled) {
+                        return 0x96e0ac;
+                    }
                     return 0x55FF55;
             }
-        } else if (colorTheme == 4) {
+        } else if (colorTheme == 4) { // White
              switch(colorName) {
                 case "fieldBg":
                     if(amoled) {

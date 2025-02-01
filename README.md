@@ -28,7 +28,5 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 
  ## TODO
 - Race predictions?
-- Date options
 - week number
 - Always show battery
-- Bigger battery icon on Venu 2S

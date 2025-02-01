@@ -30,9 +30,9 @@
     <label id="ActiveBg" x="311" y="280" font="@Fonts.id_led_big" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x0e333c" text="####" />
     <label id="ActiveLabel" x="311" y="280" font="@Fonts.id_led_big" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xFFFFFF" />
     
-    <label id="StepBg" x="center" y="316" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x0e333c" text="#####" />
-    <label id="StepLabel" x="center" y="316" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+    <label id="StepBg" x="center" y="315" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x0e333c" text="#####" />
+    <label id="StepLabel" x="center" y="315" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
     
-    <label id="BattBg" x="181" y="343" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xAAAAAA" text="B" />
-    <label id="BattLabel" x="center" y="349" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+    <label id="BattBg" x="180" y="340" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x555555" text="" />
+    <label id="BattLabel" x="center" y="343" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
 </layout>
