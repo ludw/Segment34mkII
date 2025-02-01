@@ -860,20 +860,65 @@ class Segment34View extends WatchUi.WatchFace {
         var dateLabel = View.findDrawableById("DateLabel") as Text;
         var now = Time.now();
         var today = Time.Gregorian.info(now, Time.FORMAT_SHORT);
+        var dateFormat = Application.Properties.getValue("dateFormat");
+        var value = "";
 
-        var value = Lang.format("$1$, $2$ $3$ $4$" , [
-            day_name(today.day_of_week),
-            today.day,
-            month_name(today.month),
-            today.year
-        ]).toUpper();
-        dateLabel.setText(value);
+        switch(dateFormat) {
+            case 0: // Default: THU, 14 MAR 2024
+                value = Lang.format("$1$, $2$ $3$ $4$", [
+                    day_name(today.day_of_week),
+                    today.day,
+                    month_name(today.month),
+                    today.year
+                ]);
+                break;
+            case 1: // ISO: 2024-03-14
+                value = Lang.format("$1$-$2$-$3$", [
+                    today.year,
+                    today.month.format("%02d"),
+                    today.day.format("%02d")
+                ]);
+                break;
+            case 2: // US: 03/14/2024
+                value = Lang.format("$1$/$2$/$3$", [
+                    today.month.format("%02d"),
+                    today.day.format("%02d"),
+                    today.year
+                ]);
+                break;
+            case 3: // EU: 14.03.2024
+                value = Lang.format("$1$.$2$.$3$", [
+                    today.day.format("%02d"),
+                    today.month.format("%02d"),
+                    today.year
+                ]);
+                break;
+            case 4: // THU, 14 MAR (Week number)
+                value = Lang.format("$1$, $2$ $3$ (W$4$)", [
+                    day_name(today.day_of_week),
+                    today.day,
+                    month_name(today.month),
+                    iso_week_number(today.year, today.month, today.day)
+                ]);
+                break;
+            case 5: // THU, 14 MAR 2024 (Week number)
+                value = Lang.format("$1$, $2$ $3$ $4$ (W$5$)", [
+                    day_name(today.day_of_week),
+                    today.day,
+                    month_name(today.month),
+                    today.year,
+                    iso_week_number(today.year, today.month, today.day)
+                ]);
+                break;
+        }
+        
+        dateLabel.setText(value.toUpper());
 
         if(canBurnIn) {
             var AODDateLabel = View.findDrawableById("AODDateLabel") as Text;
             var aodFieldShows = Application.Properties.getValue("aodFieldShows");
             if(aodFieldShows == -1) {
-                AODDateLabel.setText(value);
+                AODDateLabel.setText(value.toUpper());
             } else {
                 var unit = getComplicationUnit(aodFieldShows);
                 if (unit.length() > 0) {
@@ -882,7 +927,6 @@ class Segment34View extends WatchUi.WatchFace {
                 AODDateLabel.setText(Lang.format("$1$$2$", [getComplicationValue(aodFieldShows), unit]));
             }
         }
-        
     }
 
     hidden function setStep(dc) as Void {
@@ -1073,7 +1117,15 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 11) { // Calories
-            if(ActivityMonitor.getInfo() has :calories) {
+            var useComplication = false;
+            if (Toybox has :Complications) {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_CALORIES));
+                if (complication != null && complication.value != null) {
+                    val = complication.value.format(numberFormat);
+                    useComplication = true;
+                }
+            }
+            if (!useComplication && ActivityMonitor.getInfo() has :calories) {
                 if(ActivityMonitor.getInfo().calories != null) {
                     val = ActivityMonitor.getInfo().calories.format(numberFormat);
                 }

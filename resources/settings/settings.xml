@@ -64,6 +64,17 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.dateFormat" title="Date format">
+        <settingConfig type="list">
+            <listEntry value="0">WEEKDAY, DD MONTH YYYY</listEntry>
+            <listEntry value="1">YYYY-MM-DD</listEntry>
+            <listEntry value="2">MM/DD/YYYY</listEntry>
+            <listEntry value="3">DD.MM.YYYY</listEntry> 
+            <listEntry value="4">WEEKDAY, DD MONTH (Week)</listEntry>
+            <listEntry value="5">WEEKDAY, DD MONTH YYYY (Week)</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.leftValueShows" title="Left value shows:">
         <settingConfig type="list">
             <listEntry value="0">Active min / week</listEntry>
@@ -111,8 +122,6 @@
             <listEntry value="11">Calories (kcal) / day</listEntry>
             <listEntry value="13">Stress score</listEntry>
             <listEntry value="14">Body battery</listEntry>
-            <listEntry value="26">Barometric Pressure (hPA)</listEntry>
-            <listEntry value="27">Weight (kg)</listEntry>
         </settingConfig>
     </setting>
 

@@ -14,4 +14,5 @@
     <property id="rightValueShows" type="number">0</property>
     <property id="bottomFieldShows" type="number">17</property>
     <property id="aodFieldShows" type="number">-1</property>
+    <property id="dateFormat" type="number">0</property>
 </properties>

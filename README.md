@@ -27,14 +27,8 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
  Connect your watch via usb and transfer the Segment34.prg file to the GARMIN/Apps folder on the watch. 
 
  ## TODO
-- Barometric pressure
-
-- Calories through complications
 - Race predictions?
-- Weight
 - Date options
 - week number
 - Always show battery
-- HR options, show on sleep
-- Always on less bright
 - Bigger battery icon on Venu 2S
