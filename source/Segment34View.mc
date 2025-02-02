@@ -329,14 +329,14 @@ class Segment34View extends WatchUi.WatchFace {
             switch(colorName) {
                 case "fieldBg":
                     if(amoled) {
-                        return 0x1d3c22;
+                        return 0x152b19;
                     }
                     return 0x005500;
                 case "fieldLabel":
                     return 0x00AA55;
                 case "timeBg":
                     if(amoled) {
-                        return 0x1d3c22;
+                        return 0x152b19;
                     }
                     return 0x005500;
                 case "timeDisplay":
