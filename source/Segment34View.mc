@@ -1220,7 +1220,7 @@ class Segment34View extends WatchUi.WatchFace {
                     val = complication.value.toUpper();
                 }
             }
-        } else if(complicationType == 26) { // Barometric pressure (hPA)
+        } else if(complicationType == 26) { // Raw Barometric pressure (hPA)
             var info = Activity.getActivityInfo();
             if (info has :rawAmbientPressure && info.rawAmbientPressure != null) {
                 val = (info.rawAmbientPressure / 100.0).format(numberFormat);
@@ -1245,6 +1245,11 @@ class Segment34View extends WatchUi.WatchFace {
                 if (complication != null && complication.value != null) {
                     val = complication.value.format(numberFormat);
                 }
+            }
+        } else if(complicationType == 30) { // Sea level pressure (hPA)
+            var info = Activity.getActivityInfo();
+            if (info has :meanSeaLevelPressure && info.meanSeaLevelPressure != null) {
+                val = (info.meanSeaLevelPressure / 100.0).format(numberFormat);
             }
         }
 
@@ -1312,6 +1317,8 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "WEIGHT:";
         } else if(complicationType == 29) { // Act Calories / day
             desc = "ACT CAL:";
+        } else if(complicationType == 30) { // Sea level pressure (hPA)
+            desc = "PRESSURE:";
         }
         return desc;
     }
