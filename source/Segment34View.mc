@@ -1126,15 +1126,7 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 11) { // Calories
-            var useComplication = false;
-            if (Toybox has :Complications) {
-                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_CALORIES));
-                if (complication != null && complication.value != null) {
-                    val = complication.value.format(numberFormat);
-                    useComplication = true;
-                }
-            }
-            if (!useComplication && ActivityMonitor.getInfo() has :calories) {
+            if (ActivityMonitor.getInfo() has :calories) {
                 if(ActivityMonitor.getInfo().calories != null) {
                     val = ActivityMonitor.getInfo().calories.format(numberFormat);
                 }
@@ -1247,6 +1239,13 @@ class Segment34View extends WatchUi.WatchFace {
                     val = (profile.weight * 0.00220462).format(numberFormat);
                 }
             }
+        } else if(complicationType == 29) { // Act Calories
+            if (Toybox has :Complications) {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_CALORIES));
+                if (complication != null && complication.value != null) {
+                    val = complication.value.format(numberFormat);
+                }
+            }
         }
 
         return val;
@@ -1311,6 +1310,8 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "WEIGHT:";
         } else if(complicationType == 28) { // Weight lbs
             desc = "WEIGHT:";
+        } else if(complicationType == 29) { // Act Calories / day
+            desc = "ACT CAL:";
         }
         return desc;
     }
@@ -1327,6 +1328,8 @@ class Segment34View extends WatchUi.WatchFace {
             unit = "STEPS";
         } else if(complicationType == 19) { // Wheelchair pushes
             unit = "PUSHES";
+        } else if(complicationType == 29) { // Active calories / day
+            unit = "KCAL";
         }
         return unit;
     }
