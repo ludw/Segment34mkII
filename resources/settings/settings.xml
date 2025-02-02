@@ -126,6 +126,8 @@
             <listEntry value="29">Active calories (kcal) / day</listEntry>
             <listEntry value="13">Stress score</listEntry>
             <listEntry value="14">Body battery</listEntry>
+            <listEntry value="27">Weight (kg)</listEntry>
+            <listEntry value="28">Weight (lbs)</listEntry>
         </settingConfig>
     </setting>
 
