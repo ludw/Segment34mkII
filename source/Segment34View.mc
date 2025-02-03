@@ -203,7 +203,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getColor(colorName) as Graphics.ColorType {
         var amoled = System.getDeviceSettings().requiresBurnInProtection;
         var colorTheme = Application.Properties.getValue("colorTheme");
-
+        colorTheme = 6;
         if(colorTheme == 0) { // Yellow on turquiose
             switch(colorName) {
                 case "fieldBg":
@@ -410,6 +410,96 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0xFFFFFF;
                 case "HRInactive":
                     return 0x55AAAA;
+            }
+        } else if (colorTheme == 5) { // Orange
+             switch(colorName) {
+                case "fieldBg":
+                    if(amoled) {
+                        return 0x1b263d;
+                    }
+                    return 0x5500AA;
+                case "fieldLabel":
+                    return 0xFFAAAA;
+                case "timeBg":
+                    if(amoled) {
+                        return 0x1b263d;
+                    }
+                    return 0x5500AA;
+                case "timeDisplay":
+                    if(amoled) {
+                        return 0xff9161;
+                    }
+                    return 0xFF5500;
+                case "dateDisplay":
+                    if(amoled) {
+                        return 0xffb383;
+                    }
+                    return 0xFFAAAA;
+                case "dateDisplayDim":
+                    return 0xaa6e56;
+                case "dawnDuskLabel":
+                    return 0xFFAAAA;
+                case "dawnDuskValue":
+                    if(amoled) {
+                        return 0xFFFFFF;
+                    }
+                    return 0xAAAAAA;
+                case "notifications":
+                    return 0xFFFFFF;
+                case "stress":
+                    return 0xFF5555;
+                case "bodybattery":
+                    return 0x00AAFF;
+                case "HRActive":
+                    return 0xFFFFFF;
+                case "HRInactive":
+                    if(amoled) {
+                        return 0x7878aa;
+                    }
+                    return 0x5555AA;
+            }
+        }  else if (colorTheme == 6) { // Gloom Red
+             switch(colorName) {
+                case "fieldBg":
+                    if(amoled) {
+                        return 0xb1072c;
+                    }
+                    return 0xAA0000;
+                case "fieldLabel":
+                    return 0xFFAAAA;
+                case "timeBg":
+                    if(amoled) {
+                        return 0xb1072c;
+                    }
+                    return 0xAA0000;
+                case "timeDisplay":
+                case "dateDisplay":
+                    if(amoled) {
+                        return 0x6e0113;
+                    }
+                    return 0x000000;
+                case "dateDisplayDim":
+                    return 0xaa6e56;
+                case "dawnDuskLabel":
+                    return 0xFFAAAA;
+                case "dawnDuskValue":
+                    if(amoled) {
+                        return 0xFFFFFF;
+                    }
+                    return 0xAAAAAA;
+                case "notifications":
+                    return 0xFFFFFF;
+                case "stress":
+                    return 0xFF5555;
+                case "bodybattery":
+                    return 0x00AAFF;
+                case "HRActive":
+                    return 0xFFFFFF;
+                case "HRInactive":
+                    if(amoled) {
+                        return 0x7878aa;
+                    }
+                    return 0x5555AA;
             }
         }
 
@@ -1289,10 +1379,29 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 29) { // Act Calories
-            if (Toybox has :Complications) {
-                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_CALORIES));
-                if (complication != null && complication.value != null) {
-                    val = complication.value.format(numberFormat);
+            var today = Time.Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
+            var profile = UserProfile.getProfile();
+            
+            if (profile has :weight && profile has :height && profile has :birthYear) {
+                var age = today.year - profile.birthYear;
+                var weight = profile.weight / 1000.0;
+                var restCalories = 0;
+                
+                if (profile.gender == UserProfile.GENDER_MALE) {
+                    restCalories = 5.2 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
+                } else {
+                    restCalories = -197.6 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
+                }
+                
+                // Calculate rest calories for the current time of day
+                restCalories = Math.round((today.hour * 60 + today.min) * restCalories / 1440).toNumber();
+                
+                // Get total calories and subtract rest calories
+                if (ActivityMonitor.getInfo() has :calories && ActivityMonitor.getInfo().calories != null) {
+                    var activeCalories = ActivityMonitor.getInfo().calories - restCalories;
+                    if (activeCalories > 0) {
+                        val = activeCalories.format(numberFormat);
+                    }
                 }
             }
         } else if(complicationType == 30) { // Sea level pressure (hPA)
