@@ -203,7 +203,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getColor(colorName) as Graphics.ColorType {
         var amoled = System.getDeviceSettings().requiresBurnInProtection;
         var colorTheme = Application.Properties.getValue("colorTheme");
-        colorTheme = 6;
+        
         if(colorTheme == 0) { // Yellow on turquiose
             switch(colorName) {
                 case "fieldBg":
@@ -458,48 +458,45 @@ class Segment34View extends WatchUi.WatchFace {
                     }
                     return 0x5555AA;
             }
-        }  else if (colorTheme == 6) { // Gloom Red
+        }  else if (colorTheme == 6) { // Red & White
              switch(colorName) {
                 case "fieldBg":
                     if(amoled) {
-                        return 0xb1072c;
+                        return 0x550000;
                     }
                     return 0xAA0000;
                 case "fieldLabel":
-                    return 0xFFAAAA;
+                    return 0xFF0000;
                 case "timeBg":
                     if(amoled) {
-                        return 0xb1072c;
+                        return 0x550000;
                     }
                     return 0xAA0000;
                 case "timeDisplay":
                 case "dateDisplay":
                     if(amoled) {
-                        return 0x6e0113;
+                        return 0xffffff;
                     }
-                    return 0x000000;
+                    return 0xFFFFFF;
                 case "dateDisplayDim":
-                    return 0xaa6e56;
+                    return 0xAA0000;
                 case "dawnDuskLabel":
-                    return 0xFFAAAA;
+                    return 0xAA0000;
                 case "dawnDuskValue":
                     if(amoled) {
                         return 0xFFFFFF;
                     }
                     return 0xAAAAAA;
                 case "notifications":
-                    return 0xFFFFFF;
+                    return 0xFF0000;
                 case "stress":
-                    return 0xFF5555;
+                    return 0xAA0000;
                 case "bodybattery":
                     return 0x00AAFF;
                 case "HRActive":
                     return 0xFFFFFF;
                 case "HRInactive":
-                    if(amoled) {
-                        return 0x7878aa;
-                    }
-                    return 0x5555AA;
+                    return 0xFF0000;
             }
         }
 
@@ -744,18 +741,20 @@ class Segment34View extends WatchUi.WatchFace {
         if (weather has :precipitationChance &&
             weather.precipitationChance != null &&
             weather.precipitationChance instanceof Number) {
-            perp = Lang.format(" ($1$%)", [weather.precipitationChance.format("%02d")]);
+            if(weather.precipitationChance > 0) {
+                perp = Lang.format(" ($1$%)", [weather.precipitationChance.format("%02d")]);
+            }
         }
 
         switch(weather.condition) {
             case Weather.CONDITION_CLEAR:
-                condition = "CLEAR";
+                condition = "CLEAR" + perp;
                 break;
             case Weather.CONDITION_PARTLY_CLOUDY:
-                condition = "PARTLY CLOUDY";
+                condition = "PARTLY CLOUDY" + perp;
                 break;
             case Weather.CONDITION_MOSTLY_CLOUDY:
-                condition = "MOSTLY CLOUDY";
+                condition = "MOSTLY CLOUDY" + perp;
                 break;
             case Weather.CONDITION_RAIN:
                 condition = "RAIN" + perp;
@@ -764,19 +763,19 @@ class Segment34View extends WatchUi.WatchFace {
                 condition = "SNOW" + perp;
                 break;
             case Weather.CONDITION_WINDY:
-                condition = "WINDY";
+                condition = "WINDY" + perp;
                 break;
             case Weather.CONDITION_THUNDERSTORMS:
-                condition = "THUNDERSTORMS";
+                condition = "THUNDERSTORMS" + perp;
                 break;
             case Weather.CONDITION_WINTRY_MIX:
-                condition = "WINTRY MIX";
+                condition = "WINTRY MIX" + perp;
                 break;
             case Weather.CONDITION_FOG:
-                condition = "FOG";
+                condition = "FOG" + perp;
                 break;
             case Weather.CONDITION_HAZY:
-                condition = "HAZY";
+                condition = "HAZY" + perp;
                 break;
             case Weather.CONDITION_HAIL:
                 condition = "HAIL" + perp;
@@ -809,16 +808,16 @@ class Segment34View extends WatchUi.WatchFace {
                 condition = "HEAVY RAIN & SNOW";
                 break;
             case Weather.CONDITION_CLOUDY:
-                condition = "CLOUDY";
+                condition = "CLOUDY" + perp;
                 break;
             case Weather.CONDITION_RAIN_SNOW:
                 condition = "RAIN & SNOW" + perp;
                 break;
             case Weather.CONDITION_PARTLY_CLEAR:
-                condition = "PARTLY CLEAR";
+                condition = "PARTLY CLEAR" + perp;
                 break;
             case Weather.CONDITION_MOSTLY_CLEAR:
-                condition = "MOSTLY CLEAR";
+                condition = "MOSTLY CLEAR" + perp;
                 break;
             case Weather.CONDITION_LIGHT_SHOWERS:
                 condition = "LIGHT SHOWERS" + perp;
@@ -836,49 +835,49 @@ class Segment34View extends WatchUi.WatchFace {
                 condition = "CHC THUNDERSTORMS";
                 break;
             case Weather.CONDITION_MIST:
-                condition = "MIST";
+                condition = "MIST" + perp;
                 break;
             case Weather.CONDITION_DUST:
-                condition = "DUST";
+                condition = "DUST" + perp;
                 break;
             case Weather.CONDITION_DRIZZLE:
-                condition = "DRIZZLE";
+                condition = "DRIZZLE" + perp;
                 break;
             case Weather.CONDITION_TORNADO:
-                condition = "TORNADO";
+                condition = "TORNADO" + perp;
                 break;
             case Weather.CONDITION_SMOKE:
-                condition = "SMOKE";
+                condition = "SMOKE" + perp;
                 break;
             case Weather.CONDITION_ICE:
-                condition = "ICE";
+                condition = "ICE" + perp;
                 break;
             case Weather.CONDITION_SAND:
-                condition = "SAND";
+                condition = "SAND" + perp;
                 break;
             case Weather.CONDITION_SQUALL:
-                condition = "SQUALL";
+                condition = "SQUALL" + perp;
                 break;
             case Weather.CONDITION_SANDSTORM:
-                condition = "SANDSTORM";
+                condition = "SANDSTORM" + perp;
                 break;
             case Weather.CONDITION_VOLCANIC_ASH:
-                condition = "VOLCANIC ASH";
+                condition = "VOLCANIC ASH" + perp;
                 break;
             case Weather.CONDITION_HAZE:
-                condition = "HAZE";
+                condition = "HAZE" + perp;
                 break;
             case Weather.CONDITION_FAIR:
-                condition = "FAIR";
+                condition = "FAIR" + perp;
                 break;
             case Weather.CONDITION_HURRICANE:
-                condition = "HURRICANE";
+                condition = "HURRICANE" + perp;
                 break;
             case Weather.CONDITION_TROPICAL_STORM:
-                condition = "TROPICAL STORM";
+                condition = "TROPICAL STORM" + perp;
                 break;
             case Weather.CONDITION_CHANCE_OF_SNOW:
-                condition = "CHC OF SNOW";
+                condition = "CHC OF SNOW" + perp;
                 break;
             case Weather.CONDITION_CHANCE_OF_RAIN_SNOW:
                 condition = "CHC OF RAIN & SNOW";
@@ -893,7 +892,7 @@ class Segment34View extends WatchUi.WatchFace {
                 condition = "CLOUDY RAIN & SNOW";
                 break;
             case Weather.CONDITION_FLURRIES:
-                condition = "FLURRIES";
+                condition = "FLURRIES" + perp;
                 break;
             case Weather.CONDITION_FREEZING_RAIN:
                 condition = "FREEZING RAIN" + perp;
@@ -902,10 +901,10 @@ class Segment34View extends WatchUi.WatchFace {
                 condition = "SLEET" + perp;
                 break;
             case Weather.CONDITION_ICE_SNOW:
-                condition = "ICE & SNOW";
+                condition = "ICE & SNOW" + perp;
                 break;
             case Weather.CONDITION_THIN_CLOUDS:
-                condition = "THIN CLOUDS";
+                condition = "THIN CLOUDS" + perp;
                 break;
             default:
                 condition = "UNKNOWN";
