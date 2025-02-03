@@ -203,7 +203,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getColor(colorName) as Graphics.ColorType {
         var amoled = System.getDeviceSettings().requiresBurnInProtection;
         var colorTheme = Application.Properties.getValue("colorTheme");
-        
+
         if(colorTheme == 0) { // Yellow on turquiose
             switch(colorName) {
                 case "fieldBg":
@@ -1378,7 +1378,7 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 29) { // Act Calories
-            var today = Time.Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
+            var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
             var profile = UserProfile.getProfile();
             
             if (profile has :weight && profile has :height && profile has :birthYear) {
@@ -1408,6 +1408,10 @@ class Segment34View extends WatchUi.WatchFace {
             if (info has :meanSeaLevelPressure && info.meanSeaLevelPressure != null) {
                 val = (info.meanSeaLevelPressure / 100.0).format(numberFormat);
             }
+        } else if(complicationType == 31) { // Week number
+            var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+            var weekNumber = iso_week_number(today.year, today.month, today.day);
+            val = weekNumber.format(numberFormat);
         }
 
         return val;
@@ -1476,6 +1480,8 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "ACT CAL:";
         } else if(complicationType == 30) { // Sea level pressure (hPA)
             desc = "PRESSURE:";
+        } else if(complicationType == 31) { // Week number
+            desc = "WEEK:";
         }
         return desc;
     }

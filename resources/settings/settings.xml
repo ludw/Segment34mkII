@@ -104,6 +104,7 @@
             <listEntry value="30">Barometric Pressure, sea level (hPA)</listEntry>
             <listEntry value="27">Weight (kg)</listEntry>
             <listEntry value="28">Weight (lbs)</listEntry>
+            <listEntry value="31">Week number</listEntry>
         </settingConfig>
     </setting>
 
@@ -130,6 +131,7 @@
             <listEntry value="14">Body battery</listEntry>
             <listEntry value="27">Weight (kg)</listEntry>
             <listEntry value="28">Weight (lbs)</listEntry>
+            <listEntry value="31">Week number</listEntry>
         </settingConfig>
     </setting>
 
@@ -160,6 +162,7 @@
             <listEntry value="30">Barometric Pressure, sea level (hPA)</listEntry>
             <listEntry value="27">Weight (kg)</listEntry>
             <listEntry value="28">Weight (lbs)</listEntry>
+            <listEntry value="31">Week number</listEntry>
         </settingConfig>
     </setting>
 
