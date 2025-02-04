@@ -29,15 +29,19 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 
  Connect your watch via usb and transfer the Segment34.prg file to the GARMIN/Apps folder on the watch. 
 
- ## TODO
+ ## TODO / Things people have asked for
 - 240x240 support
 - Option to always show seconds
 - Race predictions
 - Total weekly distance (irregardless of activity type)
-- More color options (let me know if you have any suggestions)
-- Barometric pressure in bar
+- More color options (blue?, more white variants)
+- Barometric pressure in bar and mmHG
 - Open widgets when pressing fields
 - A little color to the bars in White theme
 - Goal completion
 - Swimming distance, endurance score?
-
+- Look into solar intensity
+- Localization
+- Date format: WEEKDAY, DD MONTH
+- Always on as the only thing shown
+- Move indicator

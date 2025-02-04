@@ -3,12 +3,14 @@
     <setting propertyKey="@Properties.colorTheme" title="Color Theme">
         <settingConfig type="list">
             <listEntry value="0">Yellow on turquiose</listEntry>
+            <listEntry value="8">Yellow on blue</listEntry>
             <listEntry value="1">Hot pink</listEntry>
             <listEntry value="2">Blueish green</listEntry>
             <listEntry value="3">Very green</listEntry>
-            <listEntry value="4">White</listEntry>
             <listEntry value="5">Peachy Orange</listEntry>
-            <listEntry value="6">Red and White</listEntry>
+            <listEntry value="4">White on turquiose</listEntry>
+            <listEntry value="6">White on red</listEntry>
+            <listEntry value="7">White on blue</listEntry>
         </settingConfig>
     </setting>
         

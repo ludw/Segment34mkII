@@ -374,7 +374,7 @@ class Segment34View extends WatchUi.WatchFace {
                     }
                     return 0x55FF55;
             }
-        } else if (colorTheme == 4) { // White
+        } else if (colorTheme == 4) { // White on turquiose
              switch(colorName) {
                 case "fieldBg":
                     if(amoled) {
@@ -392,7 +392,7 @@ class Segment34View extends WatchUi.WatchFace {
                 case "dateDisplay":
                     return 0xFFFFFF;
                 case "dateDisplayDim":
-                    return 0xa98753;
+                    return 0x114a5a;
                 case "dawnDuskLabel":
                     return 0x005555;
                 case "dawnDuskValue":
@@ -403,9 +403,9 @@ class Segment34View extends WatchUi.WatchFace {
                 case "notifications":
                     return 0xAAAAAA;
                 case "stress":
-                    return 0xFFFFFF;
+                    return 0xFFAA55;
                 case "bodybattery":
-                    return 0xAAAAAA;
+                    return 0x55AAFF;
                 case "HRActive":
                     return 0xFFFFFF;
                 case "HRInactive":
@@ -458,7 +458,7 @@ class Segment34View extends WatchUi.WatchFace {
                     }
                     return 0x5555AA;
             }
-        }  else if (colorTheme == 6) { // Red & White
+        } else if (colorTheme == 6) { // Red & White
              switch(colorName) {
                 case "fieldBg":
                     if(amoled) {
@@ -497,6 +497,86 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0xFFFFFF;
                 case "HRInactive":
                     return 0xFF0000;
+            } 
+        } else if (colorTheme == 7) { // White on Blue
+             switch(colorName) {
+                case "fieldBg":
+                    if(amoled) {
+                        return 0x0b2051;
+                    }
+                    return 0x0055AA;
+                case "fieldLabel":
+                    return 0x0055AA;
+                case "timeBg":
+                    if(amoled) {
+                        return 0x0b2051;
+                    }
+                    return 0x0055AA;
+                case "timeDisplay":
+                case "dateDisplay":
+                    if(amoled) {
+                        return 0xffffff;
+                    }
+                    return 0xFFFFFF;
+                case "dateDisplayDim":
+                    return 0x0055AA;
+                case "dawnDuskLabel":
+                    return 0x0055AA;
+                case "dawnDuskValue":
+                    if(amoled) {
+                        return 0xFFFFFF;
+                    }
+                    return 0xAAAAAA;
+                case "notifications":
+                    return 0x55AAFF;
+                case "stress":
+                    return 0xFFAA55;
+                case "bodybattery":
+                    return 0x55AAFF;
+                case "HRActive":
+                    return 0xFFFFFF;
+                case "HRInactive":
+                    return 0x0055ff;
+            }
+        } else if (colorTheme == 8) { // Yellow on Blue
+             switch(colorName) {
+                case "fieldBg":
+                    if(amoled) {
+                        return 0x0b2051;
+                    }
+                    return 0x0055AA;
+                case "fieldLabel":
+                    return 0x0055AA;
+                case "timeBg":
+                    if(amoled) {
+                        return 0x0b2051;
+                    }
+                    return 0x0055AA;
+                case "timeDisplay":
+                case "dateDisplay":
+                    if(amoled) {
+                        return 0xfbcb77;
+                    }
+                    return 0xFFFF00;
+                case "dateDisplayDim":
+                    return 0xa98753;
+                case "dawnDuskLabel":
+                    return 0x0055AA;
+                case "dawnDuskValue":
+                    if(amoled) {
+                        return 0xFFFFFF;
+                    }
+                    return 0xAAAAAA;
+                case "notifications":
+                    return 0x55AAFF;
+                case "stress":
+                    return 0xFFAA55;
+                case "bodybattery":
+                    return 0x55AAFF;
+                case "HRActive":
+                    return 0xFFFFFF;
+                case "HRInactive":
+                    return 0x0055ff;
             }
         }
 
