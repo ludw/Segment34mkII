@@ -1587,6 +1587,10 @@ class Segment34View extends WatchUi.WatchFace {
         var phase = ((days_since_new_moon / lunar_cycle) * 100).toNumber() % 100;
         var into_cycle = (phase / 100.0) * lunar_cycle;
 
+        if(time.month == 5 and time.day == 4) {
+            return "8"; // That's no moon!
+        }
+
         if (into_cycle < 3) { // 2+1
             return "0";
         } else if (into_cycle < 6) { // 4
