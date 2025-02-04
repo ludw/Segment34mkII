@@ -1092,6 +1092,13 @@ class Segment34View extends WatchUi.WatchFace {
                     iso_week_number(today.year, today.month, today.day)
                 ]);
                 break;
+            case 6: // WEEKDAY, DD MONTH
+                value = Lang.format("$1$, $2$ $3$", [
+                    day_name(today.day_of_week),
+                    today.day,
+                    month_name(today.month)
+                ]);
+                break;
         }
         
         dateLabel.setText(value.toUpper());

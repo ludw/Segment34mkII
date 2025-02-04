@@ -71,6 +71,7 @@
     <setting propertyKey="@Properties.dateFormat" title="Date format">
         <settingConfig type="list">
             <listEntry value="0">WEEKDAY, DD MONTH YYYY</listEntry>
+            <listEntry value="6">WEEKDAY, DD MONTH</listEntry>
             <listEntry value="1">YYYY-MM-DD</listEntry>
             <listEntry value="2">MM/DD/YYYY</listEntry>
             <listEntry value="3">DD.MM.YYYY</listEntry> 
