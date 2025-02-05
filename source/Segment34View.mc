@@ -51,6 +51,8 @@ class Segment34View extends WatchUi.WatchFace {
     private var dBattBg = null;
     private var dHrLabel = null;
 
+    private var propColorTheme = null;
+
     function initialize() {
         WatchFace.initialize();
     }
@@ -59,6 +61,7 @@ class Segment34View extends WatchUi.WatchFace {
     function onLayout(dc as Dc) as Void {
         setLayout(Rez.Layouts.WatchFace(dc));
         cacheDrawables(dc);
+        cacheProps();
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -82,7 +85,9 @@ class Segment34View extends WatchUi.WatchFace {
 
         if(!isSleeping && !updateEverything) {
             setSeconds(dc);
-            setHR(dc);
+            if(clockTime.sec % 2 == 0) {
+                setHR(dc);
+            }
             View.onUpdate(dc);
             drawStressAndBodyBattery(dc);
             return;
@@ -177,6 +182,10 @@ class Segment34View extends WatchUi.WatchFace {
         
     }
 
+    hidden function cacheProps() as Void {
+        propColorTheme = Application.Properties.getValue("colorTheme");
+    }
+
     hidden function toggleNonEssentials(visible, dc){
         if(!visible and canBurnIn) {
             dc.setAntiAlias(false);
@@ -259,9 +268,8 @@ class Segment34View extends WatchUi.WatchFace {
     
     hidden function getColor(colorName) as Graphics.ColorType {
         var amoled = System.getDeviceSettings().requiresBurnInProtection;
-        var colorTheme = Application.Properties.getValue("colorTheme");
         
-        if(colorTheme == 0) { // Yellow on turquiose
+        if(propColorTheme == 0) { // Yellow on turquiose
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x0e333c; }
                 return 0x005555;
@@ -291,7 +299,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("HRInactive")) {
                 return 0x55AAAA;
             }
-        } else if(colorTheme == 1) { // Hot pink
+        } else if(propColorTheme == 1) { // Hot pink
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x0e333c; }
                 return 0x005555;
@@ -323,7 +331,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("HRInactive")) {
                 return 0x55AAAA;
             }
-        } else if(colorTheme == 2) { // Blueish green
+        } else if(propColorTheme == 2) { // Blueish green
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x0f2246; }
                 return 0x0055AA;
@@ -353,7 +361,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("HRInactive")) {
                 return 0x55AAAA;
             }
-        } else if(colorTheme == 3) { // Very green
+        } else if(propColorTheme == 3) { // Very green
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x152b19; }
                 return 0x005500;
@@ -386,7 +394,7 @@ class Segment34View extends WatchUi.WatchFace {
                 if(amoled) { return 0x96e0ac; }
                 return 0x55FF55;
             }
-        } else if(colorTheme == 4) { // White on turquoise
+        } else if(propColorTheme == 4) { // White on turquoise
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x0e333c; }
                 return 0x005555;
@@ -415,7 +423,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("HRInactive")) {
                 return 0x55AAAA;
             }
-        } else if(colorTheme == 5) { // Orange
+        } else if(propColorTheme == 5) { // Orange
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x1b263d; }
                 return 0x5500AA;
@@ -449,7 +457,7 @@ class Segment34View extends WatchUi.WatchFace {
                 if(amoled) { return 0x7878aa; }
                 return 0x5555AA;
             }
-        } else if(colorTheme == 6) { // Red & White
+        } else if(propColorTheme == 6) { // Red & White
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x550000; }
                 return 0xAA0000;
@@ -479,7 +487,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("HRInactive")) {
                 return 0xFF0000;
             }
-        } else if(colorTheme == 7) { // White on Blue
+        } else if(propColorTheme == 7) { // White on Blue
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x0b2051; }
                 return 0x0055AA;
@@ -509,7 +517,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("HRInactive")) {
                 return 0x0055ff;
             }
-        } else if(colorTheme == 8) { // Yellow on Blue
+        } else if(propColorTheme == 8) { // Yellow on Blue
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x0b2051; }
                 return 0x0055AA;
