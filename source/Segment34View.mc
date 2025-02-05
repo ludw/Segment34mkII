@@ -1210,26 +1210,14 @@ class Segment34View extends WatchUi.WatchFace {
             if(ActivityMonitor.getInfo() has :distance) {
                 if(ActivityMonitor.getInfo().distance != null) {
                     var distanceKm = ActivityMonitor.getInfo().distance / 100000.0;
-                    if (width == 3) {
-                        // For width of 3, show one decimal if < 10 (e.g., "9.9" or "999")
-                        val = distanceKm < 10 ? distanceKm.format("%.1f") : distanceKm.format("%d");
-                    } else {
-                        // For width of 4 or more, show one decimal if < 100 (e.g., "99.9" or "100")
-                        val = distanceKm < 100 ? distanceKm.format("%.1f") : distanceKm.format("%d");
-                    }
+                    val = formatDistanceByWidth(distanceKm, width);
                 }
             }
         } else if(complicationType == 3) { // distance (miles) / day
             if(ActivityMonitor.getInfo() has :distance) {
                 if(ActivityMonitor.getInfo().distance != null) {
                     var distanceMiles = ActivityMonitor.getInfo().distance / 160900.0;
-                    if (width == 3) {
-                        // For width of 3, show one decimal if < 10 (e.g., "9.9" or "999")
-                        val = distanceMiles < 10 ? distanceMiles.format("%.1f") : distanceMiles.format("%d");
-                    } else {
-                        // For width of 4 or more, show one decimal if < 100 (e.g., "99.9" or "100")
-                        val = distanceMiles < 100 ? distanceMiles.format("%.1f") : distanceMiles.format("%d");
-                    }
+                    val = formatDistanceByWidth(distanceMiles, width);
                 }
             }
         } else if(complicationType == 4) { // floors climbed / day
@@ -1331,13 +1319,7 @@ class Segment34View extends WatchUi.WatchFace {
                 var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
                 if (complication != null && complication.value != null) {
                     var distanceKm = complication.value / 1000.0;  // Convert meters to km
-                    if (width == 3) {
-                        // For width of 3, show one decimal if < 10 (e.g., "9.9" or "999")
-                        val = distanceKm < 10 ? distanceKm.format("%.1f") : distanceKm.format("%d");
-                    } else {
-                        // For width of 4 or more, show one decimal if < 100 (e.g., "99.9" or "100")
-                        val = distanceKm < 100 ? distanceKm.format("%.1f") : distanceKm.format("%d");
-                    }
+                    val = formatDistanceByWidth(distanceKm, width);
                 }
             }
         } else if(complicationType == 22) { // Weekly run distance (miles)
@@ -1345,13 +1327,7 @@ class Segment34View extends WatchUi.WatchFace {
                 var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
                 if (complication != null && complication.value != null) {
                     var distanceMiles = complication.value * 0.000621371;  // Convert meters to miles
-                    if (width == 3) {
-                        // For width of 3, show one decimal if < 10 (e.g., "9.9" or "999")
-                        val = distanceMiles < 10 ? distanceMiles.format("%.1f") : distanceMiles.format("%d");
-                    } else {
-                        // For width of 4 or more, show one decimal if < 100 (e.g., "99.9" or "100")
-                        val = distanceMiles < 100 ? distanceMiles.format("%.1f") : distanceMiles.format("%d");
-                    }
+                    val = formatDistanceByWidth(distanceMiles, width);
                 }
             }
         } else if(complicationType == 23) { // Weekly bike distance (km)
@@ -1359,13 +1335,7 @@ class Segment34View extends WatchUi.WatchFace {
                 var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
                 if (complication != null && complication.value != null) {
                     var distanceKm = complication.value / 1000.0;  // Convert meters to km
-                    if (width == 3) {
-                        // For width of 3, show one decimal if < 10 (e.g., "9.9" or "999")
-                        val = distanceKm < 10 ? distanceKm.format("%.1f") : distanceKm.format("%d");
-                    } else {
-                        // For width of 4 or more, show one decimal if < 100 (e.g., "99.9" or "100")
-                        val = distanceKm < 100 ? distanceKm.format("%.1f") : distanceKm.format("%d");
-                    }
+                    val = formatDistanceByWidth(distanceKm, width);
                 }
             }
         } else if(complicationType == 24) { // Weekly bike distance (miles)
@@ -1373,13 +1343,7 @@ class Segment34View extends WatchUi.WatchFace {
                 var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
                 if (complication != null && complication.value != null) {
                     var distanceMiles = complication.value * 0.000621371;  // Convert meters to miles
-                    if (width == 3) {
-                        // For width of 3, show one decimal if < 10 (e.g., "9.9" or "999")
-                        val = distanceMiles < 10 ? distanceMiles.format("%.1f") : distanceMiles.format("%d");
-                    } else {
-                        // For width of 4 or more, show one decimal if < 100 (e.g., "99.9" or "100")
-                        val = distanceMiles < 100 ? distanceMiles.format("%.1f") : distanceMiles.format("%d");
-                    }
+                    val = formatDistanceByWidth(distanceMiles, width);
                 }
             }
         } else if(complicationType == 25) { // Training status
@@ -1450,22 +1414,10 @@ class Segment34View extends WatchUi.WatchFace {
             val = weekNumber.format(numberFormat);
         } else if(complicationType == 32) { // Weekly distance (km)
             var weeklyDistance = getWeeklyDistance() / 100000.0;  // Convert to km
-            if (width == 3) {
-                // For width of 3, show one decimal if < 10 (e.g., "9.9" or "999")
-                val = weeklyDistance < 10 ? weeklyDistance.format("%.1f") : weeklyDistance.format("%d");
-            } else {
-                // For width of 4 or more, show one decimal if < 100 (e.g., "99.9" or "100")
-                val = weeklyDistance < 100 ? weeklyDistance.format("%.1f") : weeklyDistance.format("%d");
-            }
+            val = formatDistanceByWidth(weeklyDistance, width);
         } else if(complicationType == 33) { // Weekly distance (miles)
             var weeklyDistance = getWeeklyDistance() * 0.00000621371;  // Convert to miles
-            if (width == 3) {
-                // For width of 3, show one decimal if < 10 (e.g., "9.9" or "999")
-                val = weeklyDistance < 10 ? weeklyDistance.format("%.1f") : weeklyDistance.format("%d");
-            } else {
-                // For width of 4 or more, show one decimal if < 100 (e.g., "99.9" or "100")
-                val = weeklyDistance < 100 ? weeklyDistance.format("%.1f") : weeklyDistance.format("%d");
-            }
+            val = formatDistanceByWidth(weeklyDistance, width);
         }
 
         return val;
@@ -1690,6 +1642,16 @@ class Segment34View extends WatchUi.WatchFace {
             return "0";
         }
 
+    }
+
+    hidden function formatDistanceByWidth(distance as Float, width as Number) as String {
+        if (width == 3) {
+            return distance < 10 ? distance.format("%.1f") : distance.format("%d");
+        } else if (width == 4) {
+            return distance < 100 ? distance.format("%.1f") : distance.format("%d");
+        } else {  // width == 5
+            return distance < 1000 ? distance.format("%05.1f") : distance.format("%05d");
+        }
     }
 
 }
