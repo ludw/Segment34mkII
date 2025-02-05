@@ -52,6 +52,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var dHrLabel = null;
 
     private var propColorTheme = null;
+    private var propBatteryVariant = null;
 
     function initialize() {
         WatchFace.initialize();
@@ -184,6 +185,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function cacheProps() as Void {
         propColorTheme = Application.Properties.getValue("colorTheme");
+        propBatteryVariant = Application.Properties.getValue("batteryVariant");
     }
 
     hidden function toggleNonEssentials(visible, dc){
@@ -204,7 +206,8 @@ class Segment34View extends WatchUi.WatchFace {
         }
 
         var hideInAOD = (visible or !canBurnIn);
-
+        var hideBattery = (hideInAOD && propBatteryVariant != 2);  
+         
         dSecondsLabel.setVisible(visible);
         dHrLabel.setVisible(hideInAOD);
         dDateLabel.setVisible(hideInAOD);
@@ -228,8 +231,9 @@ class Segment34View extends WatchUi.WatchFace {
         dWeatherLabel2.setVisible(hideInAOD);
         dStepBg.setVisible(hideInAOD);
         dStepLabel.setVisible(hideInAOD);
-        dBattLabel.setVisible(hideInAOD);
-        dBattBg.setVisible(hideInAOD);
+
+        dBattLabel.setVisible(hideBattery);
+        dBattBg.setVisible(hideBattery);
 
         if(visible) {
             dTimeBg.setColor(getColor("timeBg"));
@@ -626,29 +630,26 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setBatt(dc) as Void {
-        var sample = System.getSystemStats().battery;
+        var visible = (!isSleeping or !canBurnIn) && propBatteryVariant != 2;  // Only show if not in AOD and battery is not hidden
         var value = "";
-        var batteryVariant = Application.Properties.getValue("batteryVariant");
-        var visible = (!isSleeping or !canBurnIn);
 
-        if(batteryVariant == 0) {
+        if(propBatteryVariant == 0) {
             if(System.getSystemStats() has :batteryInDays) {
                 if (System.getSystemStats().batteryInDays != null){
-                    sample = Math.round(System.getSystemStats().batteryInDays);
+                    var sample = Math.round(System.getSystemStats().batteryInDays);
                     value = Lang.format("$1$D", [sample.format("%d")]);
                 }
             } else {
-                batteryVariant = 1;
+                propBatteryVariant = 1;  // Fall back to percentage if days not available
             }
         }
-        if(batteryVariant == 1) {
+        if(propBatteryVariant == 1) {
+            var sample = System.getSystemStats().battery;
             if(sample < 100) {
                 value = Lang.format("$1$%", [sample.format("%d")]);
             } else {
                 value = Lang.format("$1$", [sample.format("%d")]);
             }
-        } else if(batteryVariant == 2) {
-            visible = false;
         }
 
         dBattBg.setVisible(visible);
