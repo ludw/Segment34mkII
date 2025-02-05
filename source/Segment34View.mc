@@ -22,6 +22,35 @@ class Segment34View extends WatchUi.WatchFace {
     private var batt = 0;
     private var stress = 0;
 
+    private var dSecondsLabel = null;
+    private var dAodPattern = null;
+    private var dGradient = null;
+    private var dAodDateLabel = null;
+    private var dTimeLabel = null;
+    private var dDateLabel = null;
+    private var dTimeBg = null;
+    private var dTtrBg = null;
+    private var dHrBg = null;
+    private var dActiveBg = null;
+    private var dTtrDesc = null;
+    private var dHrDesc = null;
+    private var dActiveDesc = null;
+    private var dMoonLabel = null;
+    private var dDusk = null;
+    private var dDawn = null;
+    private var dSunUpLabel = null;
+    private var dSunDownLabel = null;
+    private var dWeatherLabel1 = null;
+    private var dWeatherLabel2 = null;
+    private var dNotifLabel = null;
+    private var dTtrLabel = null;
+    private var dActiveLabel = null;
+    private var dStepBg = null;
+    private var dStepLabel = null;
+    private var dBattLabel = null;
+    private var dBattBg = null;
+    private var dHrLabel = null;
+
     function initialize() {
         WatchFace.initialize();
     }
@@ -29,6 +58,7 @@ class Segment34View extends WatchUi.WatchFace {
     // Load your resources here
     function onLayout(dc as Dc) as Void {
         setLayout(Rez.Layouts.WatchFace(dc));
+        cacheDrawables(dc);
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -115,21 +145,49 @@ class Segment34View extends WatchUi.WatchFace {
         WatchUi.requestUpdate();
     }
 
+    hidden function cacheDrawables(dc) as Void {
+        dSecondsLabel = View.findDrawableById("SecondsLabel") as Text;
+        dAodPattern = View.findDrawableById("aodPattern") as Drawable;
+        dGradient = View.findDrawableById("gradient") as Drawable;
+        dAodDateLabel = View.findDrawableById("AODDateLabel") as Text;
+        dTimeLabel = View.findDrawableById("TimeLabel") as Text;
+        dDateLabel = View.findDrawableById("DateLabel") as Text;
+        dTimeBg = View.findDrawableById("TimeBg") as Text;
+        dTtrBg = View.findDrawableById("TTRBg") as Text;
+        dHrBg = View.findDrawableById("HRBg") as Text;
+        dActiveBg = View.findDrawableById("ActiveBg") as Text;
+        dTtrDesc = View.findDrawableById("TTRDesc") as Text;
+        dHrDesc = View.findDrawableById("HRDesc") as Text;
+        dActiveDesc = View.findDrawableById("ActiveDesc") as Text;
+        dMoonLabel = View.findDrawableById("MoonLabel") as Text;
+        dDusk = View.findDrawableById("Dusk") as Text;
+        dDawn = View.findDrawableById("Dawn") as Text;
+        dSunUpLabel = View.findDrawableById("SunUpLabel") as Text;
+        dSunDownLabel = View.findDrawableById("SunDownLabel") as Text;
+        dWeatherLabel1 = View.findDrawableById("WeatherLabel1") as Text;
+        dWeatherLabel2 = View.findDrawableById("WeatherLabel2") as Text;
+        dNotifLabel = View.findDrawableById("NotifLabel") as Text;
+        dTtrLabel = View.findDrawableById("TTRLabel") as Text;
+        dActiveLabel = View.findDrawableById("ActiveLabel") as Text;
+        dStepBg = View.findDrawableById("StepBg") as Text;
+        dStepLabel = View.findDrawableById("StepLabel") as Text;
+        dBattLabel = View.findDrawableById("BattLabel") as Text;
+        dBattBg = View.findDrawableById("BattBg") as Text;
+        dHrLabel = View.findDrawableById("HRLabel") as Text;
+        
+    }
+
     hidden function toggleNonEssentials(visible, dc){
         if(!visible and canBurnIn) {
             dc.setAntiAlias(false);
 
             var clockTime = System.getClockTime();
-            var aodPattern = View.findDrawableById("aodPattern") as Drawable;
-            var gradient = View.findDrawableById("gradient") as Drawable;
-            var AODDateLabel = View.findDrawableById("AODDateLabel") as Text;
-
-            aodPattern.setVisible(true);
-            AODDateLabel.setVisible(true);
-            aodPattern.setLocation(clockTime.min % 2, aodPattern.locY);
-            gradient.setLocation(clockTime.min % 2 - 1, gradient.locY);
-            AODDateLabel.setLocation(Math.floor(dc.getWidth() / 2) - 1 + clockTime.min % 3, AODDateLabel.locY);
-            AODDateLabel.setColor(getColor("dateDisplayDim"));
+            dAodPattern.setVisible(true);
+            dAodDateLabel.setVisible(true);
+            dAodPattern.setLocation(clockTime.min % 2, dAodPattern.locY);
+            dGradient.setLocation(clockTime.min % 2 - 1, dGradient.locY);
+            dAodDateLabel.setLocation(Math.floor(dc.getWidth() / 2) - 1 + clockTime.min % 3, dAodDateLabel.locY);
+            dAodDateLabel.setColor(getColor("dateDisplayDim"));
         }
 
         if(previousEssentialsVis == visible) {
@@ -138,62 +196,61 @@ class Segment34View extends WatchUi.WatchFace {
 
         var hideInAOD = (visible or !canBurnIn);
 
-        (View.findDrawableById("SecondsLabel") as Text).setVisible(visible);
-
-        (View.findDrawableById("HRLabel") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("DateLabel") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("TimeBg") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("TTRBg") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("HRBg") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("ActiveBg") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("TTRDesc") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("HRDesc") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("ActiveDesc") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("MoonLabel") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("Dusk") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("Dawn") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("SunUpLabel") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("SunDownLabel") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("WeatherLabel1") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("WeatherLabel2") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("NotifLabel") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("TTRLabel") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("ActiveLabel") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("WeatherLabel2") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("StepBg") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("StepLabel") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("BattLabel") as Text).setVisible(hideInAOD);
-        (View.findDrawableById("BattBg") as Text).setVisible(hideInAOD);
+        dSecondsLabel.setVisible(visible);
+        dHrLabel.setVisible(hideInAOD);
+        dDateLabel.setVisible(hideInAOD);
+        dTimeBg.setVisible(hideInAOD);
+        dTtrBg.setVisible(hideInAOD);
+        dHrBg.setVisible(hideInAOD);
+        dActiveBg.setVisible(hideInAOD);
+        dTtrDesc.setVisible(hideInAOD);
+        dHrDesc.setVisible(hideInAOD);
+        dActiveDesc.setVisible(hideInAOD);
+        dMoonLabel.setVisible(hideInAOD);
+        dDusk.setVisible(hideInAOD);
+        dDawn.setVisible(hideInAOD);
+        dSunUpLabel.setVisible(hideInAOD);
+        dSunDownLabel.setVisible(hideInAOD);
+        dWeatherLabel1.setVisible(hideInAOD);
+        dWeatherLabel2.setVisible(hideInAOD);
+        dNotifLabel.setVisible(hideInAOD);
+        dTtrLabel.setVisible(hideInAOD);
+        dActiveLabel.setVisible(hideInAOD);
+        dWeatherLabel2.setVisible(hideInAOD);
+        dStepBg.setVisible(hideInAOD);
+        dStepLabel.setVisible(hideInAOD);
+        dBattLabel.setVisible(hideInAOD);
+        dBattBg.setVisible(hideInAOD);
 
         if(visible) {
-            (View.findDrawableById("TimeBg") as Text).setColor(getColor("timeBg"));
-            (View.findDrawableById("TTRBg") as Text).setColor(getColor("fieldBg"));
-            (View.findDrawableById("HRBg") as Text).setColor(getColor("fieldBg"));
-            (View.findDrawableById("ActiveBg") as Text).setColor(getColor("fieldBg"));
-            (View.findDrawableById("StepBg") as Text).setColor(getColor("fieldBg"));
-            (View.findDrawableById("TTRDesc") as Text).setColor(getColor("fieldLabel"));
-            (View.findDrawableById("HRDesc") as Text).setColor(getColor("fieldLabel"));
-            (View.findDrawableById("ActiveDesc") as Text).setColor(getColor("fieldLabel"));
-            (View.findDrawableById("TimeLabel") as Text).setColor(getColor("timeDisplay"));
-            (View.findDrawableById("DateLabel") as Text).setColor(getColor("dateDisplay"));
-            (View.findDrawableById("SecondsLabel") as Text).setColor(getColor("dateDisplay"));
-            (View.findDrawableById("NotifLabel") as Text).setColor(getColor("notifications"));
-            (View.findDrawableById("MoonLabel") as Text).setColor(Graphics.COLOR_WHITE);
-            (View.findDrawableById("Dusk") as Text).setColor(getColor("dawnDuskLabel"));
-            (View.findDrawableById("Dawn") as Text).setColor(getColor("dawnDuskLabel"));
-            (View.findDrawableById("SunUpLabel") as Text).setColor(getColor("dawnDuskValue"));
-            (View.findDrawableById("SunDownLabel") as Text).setColor(getColor("dawnDuskValue"));
-            (View.findDrawableById("WeatherLabel1") as Text).setColor(Graphics.COLOR_WHITE);
-            (View.findDrawableById("WeatherLabel2") as Text).setColor(Graphics.COLOR_WHITE);
-            (View.findDrawableById("TTRLabel") as Text).setColor(Graphics.COLOR_WHITE);
-            (View.findDrawableById("ActiveLabel") as Text).setColor(Graphics.COLOR_WHITE);
-            (View.findDrawableById("StepLabel") as Text).setColor(Graphics.COLOR_WHITE);
-            (View.findDrawableById("BattBg") as Text).setColor(0x555555);
-            (View.findDrawableById("BattLabel") as Text).setColor(Graphics.COLOR_WHITE);
+            dTimeBg.setColor(getColor("timeBg"));
+            dTtrBg.setColor(getColor("fieldBg"));
+            dHrBg.setColor(getColor("fieldBg"));
+            dActiveBg.setColor(getColor("fieldBg"));
+            dStepBg.setColor(getColor("fieldBg"));
+            dTtrDesc.setColor(getColor("fieldLabel"));
+            dHrDesc.setColor(getColor("fieldLabel"));
+            dActiveDesc.setColor(getColor("fieldLabel"));
+            dTimeLabel.setColor(getColor("timeDisplay"));
+            dDateLabel.setColor(getColor("dateDisplay"));
+            dSecondsLabel.setColor(getColor("dateDisplay"));
+            dNotifLabel.setColor(getColor("notifications"));
+            dMoonLabel.setColor(Graphics.COLOR_WHITE);
+            dDusk.setColor(getColor("dawnDuskLabel"));
+            dDawn.setColor(getColor("dawnDuskLabel"));
+            dSunUpLabel.setColor(getColor("dawnDuskValue"));
+            dSunDownLabel.setColor(getColor("dawnDuskValue"));
+            dWeatherLabel1.setColor(Graphics.COLOR_WHITE);
+            dWeatherLabel2.setColor(Graphics.COLOR_WHITE);
+            dTtrLabel.setColor(Graphics.COLOR_WHITE);
+            dActiveLabel.setColor(Graphics.COLOR_WHITE);
+            dStepLabel.setColor(Graphics.COLOR_WHITE);
+            dBattBg.setColor(0x555555);
+            dBattLabel.setColor(Graphics.COLOR_WHITE);
 
             if(canBurnIn) {
-                (View.findDrawableById("aodPattern") as Text).setVisible(false);
-                (View.findDrawableById("AODDateLabel") as Text).setVisible(false);
+                dAodPattern.setVisible(false);
+                dAodDateLabel.setVisible(false);
             }
         }
 
@@ -584,15 +641,14 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setSeconds(dc) as Void {
-        var secLabel = View.findDrawableById("SecondsLabel") as Text;
         var showSeconds = Application.Properties.getValue("showSeconds");
 
         if(showSeconds) {
             var clockTime = System.getClockTime();
             var secString = Lang.format("$1$", [clockTime.sec.format("%02d")]);
-            secLabel.setText(secString);
+            dSecondsLabel.setText(secString);
         } else {
-            secLabel.setText("");
+            dSecondsLabel.setText("");
         }
     }
 
@@ -601,8 +657,7 @@ class Segment34View extends WatchUi.WatchFace {
         var hour = formatHour(clockTime.hour);
 
         var timeString = Lang.format("$1$:$2$", [hour.format("%02d"), clockTime.min.format("%02d")]);
-        var timelabel = View.findDrawableById("TimeLabel") as Text;
-        timelabel.setText(timeString);
+        dTimeLabel.setText(timeString);
     }
 
     hidden function formatHour(hour) as Number {
@@ -618,30 +673,27 @@ class Segment34View extends WatchUi.WatchFace {
         var now = Time.now();
         var today = Time.Gregorian.info(now, Time.FORMAT_SHORT);
         var moonVal = moon_phase(today);
-        var moonLabel = View.findDrawableById("MoonLabel") as Text;
-        moonLabel.setText(moonVal);
+        dMoonLabel.setText(moonVal);
     }
     
     hidden function setHR(dc) as Void {
-        var hrLabel = View.findDrawableById("HRLabel") as Text;
-        var hrDesc = View.findDrawableById("HRDesc") as Text;
         var middleValueShows = Application.Properties.getValue("middleValueShows");
 
         if(middleValueShows == 10) {
-            hrDesc.setText("HEART RATE:");
+            dHrDesc.setText("HEART RATE:");
 
             // Try to retrieve live HR from Activity::Info
             var activityInfo = Activity.getActivityInfo();
             var sample = activityInfo.currentHeartRate;
             if(sample != null) {
-                hrLabel.setText(sample.format("%01d"));
-                hrLabel.setColor(getColor("HRActive"));
+                dHrLabel.setText(sample.format("%01d"));
+                dHrLabel.setColor(getColor("HRActive"));
             } else if (ActivityMonitor has :getHeartRateHistory) {
                 // Falling back to historical HR from ActivityMonitor
                 var hist = ActivityMonitor.getHeartRateHistory(1, /* newestFirst */ true).next();
                 if ((hist != null) && (hist.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)) {
-                    hrLabel.setText(hist.heartRate.format("%01d"));
-                    hrLabel.setColor(getColor("HRInactive"));
+                    dHrLabel.setText(hist.heartRate.format("%01d"));
+                    dHrLabel.setColor(getColor("HRInactive"));
                 }
             }
         } else {
@@ -649,21 +701,19 @@ class Segment34View extends WatchUi.WatchFace {
             if(dc.getWidth() > 450) {
                 width = 4;
             }
-            hrDesc.setText(getComplicationDesc(middleValueShows));
-            hrLabel.setText(getComplicationValue(middleValueShows, width));
+            dHrDesc.setText(getComplicationDesc(middleValueShows));
+            dHrLabel.setText(getComplicationValue(middleValueShows, width));
 
-            hrLabel.setColor(Graphics.COLOR_WHITE);
+            dHrLabel.setColor(Graphics.COLOR_WHITE);
             if(isSleeping and canBurnIn) {
-                hrLabel.setColor(Graphics.COLOR_DK_GRAY);
+                dHrLabel.setColor(Graphics.COLOR_DK_GRAY);
             }
         }
 
-        hrLabel.draw(dc);
+        dHrLabel.draw(dc);
     }
 
     hidden function setBatt(dc) as Void {
-        var battLabel = View.findDrawableById("BattLabel") as Text;
-        var battBg = View.findDrawableById("BattBg") as Text;
         var sample = System.getSystemStats().battery;
         var value = "";
         var batteryVariant = Application.Properties.getValue("batteryVariant");
@@ -689,8 +739,8 @@ class Segment34View extends WatchUi.WatchFace {
             visible = false;
         }
 
-        battBg.setVisible(visible);
-        battLabel.setText(value);
+        dBattBg.setVisible(visible);
+        dBattLabel.setText(value);
     }
 
     hidden function setWeather(dc) as Void {
@@ -793,18 +843,16 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
         
-        var weatherLabel = View.findDrawableById("WeatherLabel1") as Text;
-        weatherLabel.setText(weatherText);
+        dWeatherLabel1.setText(weatherText);
     }
 
     hidden function setWeatherLabel() as Void {
-        var weatherLabel = View.findDrawableById("WeatherLabel2") as Text;
         var weatherLine2Shows = Application.Properties.getValue("weatherLine2Shows");
         var unit = getComplicationUnit(weatherLine2Shows);
         if (unit.length() > 0) {
             unit = Lang.format(" $1$", [unit]);
         }
-        weatherLabel.setText(Lang.format("$1$$2$", [getComplicationValue(weatherLine2Shows, 10), unit]));
+        dWeatherLabel2.setText(Lang.format("$1$$2$", [getComplicationValue(weatherLine2Shows, 10), unit]));
     }
 
     hidden function getWeatherCondition() as String {
@@ -995,35 +1043,30 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function setSunUpDown(dc) as Void {
         var weather = Weather.getCurrentConditions();
-        var sunUpLabel = View.findDrawableById("SunUpLabel") as Text;
-        var sunDownLabel = View.findDrawableById("SunDownLabel") as Text;
-        var dawnLabel = View.findDrawableById("Dawn") as Text;
-        var duskLabel = View.findDrawableById("Dusk") as Text;
         var now = Time.now();
         if(weather == null) {
-            dawnLabel.setText("");
-            duskLabel.setText("");
+            dDawn.setText("");
+            dDusk.setText("");
             return;
         }
         var loc = weather.observationLocationPosition;
         if(loc == null) {
-            dawnLabel.setText("");
-            duskLabel.setText("");
+            dDawn.setText("");
+            dDusk.setText("");
             return;
         }
-        dawnLabel.setText("DAWN:");
-        duskLabel.setText("DUSK:");
+        dDawn.setText("DAWN:");
+        dDusk.setText("DUSK:");
         var sunrise = Time.Gregorian.info(Weather.getSunrise(loc, now), Time.FORMAT_SHORT);
         var sunset = Time.Gregorian.info(Weather.getSunset(loc, now), Time.FORMAT_SHORT);
         var sunriseHour = formatHour(sunrise.hour);
         var sunsetHour = formatHour(sunset.hour);
-        sunUpLabel.setText(Lang.format("$1$:$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]));
-        sunDownLabel.setText(Lang.format("$1$:$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]));
+        dSunUpLabel.setText(Lang.format("$1$:$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]));
+        dSunDownLabel.setText(Lang.format("$1$:$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]));
     }
 
     hidden function setNotif(dc) as Void {
         var value = "";
-        var notifLabel = View.findDrawableById("NotifLabel") as Text;
 
         var showNotificationCount = Application.Properties.getValue("showNotificationCount");
         if(showNotificationCount) {
@@ -1032,14 +1075,13 @@ class Segment34View extends WatchUi.WatchFace {
                 value = sample.format("%01d");
             }
 
-            notifLabel.setText(value);
+            dNotifLabel.setText(value);
         } else {
-            notifLabel.setText("");
+            dNotifLabel.setText("");
         }
     }
 
     hidden function setDate(dc) as Void {
-        var dateLabel = View.findDrawableById("DateLabel") as Text;
         var now = Time.now();
         var today = Time.Gregorian.info(now, Time.FORMAT_SHORT);
         var dateFormat = Application.Properties.getValue("dateFormat");
@@ -1101,27 +1143,25 @@ class Segment34View extends WatchUi.WatchFace {
                 break;
         }
         
-        dateLabel.setText(value.toUpper());
+        dDateLabel.setText(value.toUpper());
 
         if(canBurnIn) {
-            var AODDateLabel = View.findDrawableById("AODDateLabel") as Text;
             var aodFieldShows = Application.Properties.getValue("aodFieldShows");
             if(aodFieldShows == -1) {
-                AODDateLabel.setText(value.toUpper());
+                dAodDateLabel.setText(value.toUpper());
             } else {
                 var unit = getComplicationUnit(aodFieldShows);
                 if (unit.length() > 0) {
                     unit = Lang.format(" $1$", [unit]);
                 }
-                AODDateLabel.setText(Lang.format("$1$$2$", [getComplicationValue(aodFieldShows, 10), unit]));
+                dAodDateLabel.setText(Lang.format("$1$$2$", [getComplicationValue(aodFieldShows, 10), unit]));
             }
         }
     }
 
     hidden function setStep(dc) as Void {
-        var stepLabel = View.findDrawableById("StepLabel") as Text;
         var bottomFieldShows = Application.Properties.getValue("bottomFieldShows");
-        stepLabel.setText(getComplicationValueWithFormat(bottomFieldShows, "%05d", 5));
+        dStepLabel.setText(getComplicationValueWithFormat(bottomFieldShows, "%05d", 5));
     }
 
     hidden function updateStressAndBodyBatteryData() as Void {
@@ -1221,21 +1261,17 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setTraining(dc) as Void {
-        var TTRDesc = View.findDrawableById("TTRDesc") as Text;
-        var TTRLabel = View.findDrawableById("TTRLabel") as Text;
         var leftValueShows = Application.Properties.getValue("leftValueShows");
         var leftWidth = 3;
         if(dc.getWidth() > 450) {
             leftWidth = 4;
         }
-        TTRDesc.setText(getComplicationDesc(leftValueShows));
-        TTRLabel.setText(getComplicationValue(leftValueShows, leftWidth));
+        dTtrDesc.setText(getComplicationDesc(leftValueShows));
+        dTtrLabel.setText(getComplicationValue(leftValueShows, leftWidth));
         
-        var ActiveDesc = View.findDrawableById("ActiveDesc") as Text;
-        var ActiveLabel = View.findDrawableById("ActiveLabel") as Text;
         var rightValueShows = Application.Properties.getValue("rightValueShows");
-        ActiveDesc.setText(getComplicationDesc(rightValueShows));
-        ActiveLabel.setText(getComplicationValue(rightValueShows, 4));
+        dActiveDesc.setText(getComplicationDesc(rightValueShows));
+        dActiveLabel.setText(getComplicationValue(rightValueShows, 4));
     }
 
     function getComplicationValue(complicationType as Number, width as Number) as String {
