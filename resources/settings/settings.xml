@@ -56,160 +56,164 @@
         <settingConfig type="boolean" />
     </setting>
     
-    <setting propertyKey="@Properties.weatherLine2Shows" title="Line above clock shows:  [*] means limited device support">
-        <settingConfig type="list">
-            <listEntry value="20">Weather conditions</listEntry>
-            <listEntry value="17">Steps / day</listEntry>
-            <listEntry value="19">Wheelchair pushes / day [*]</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="12">Altitude (m)</listEntry>
-            <listEntry value="15">Altitude (ft)</listEntry>
-            <listEntry value="25">Training status [*]</listEntry>
-        </settingConfig>
-    </setting>
+    <group id="dataFields" title="Data fields" description="(Values marked with * only work on some devices)">
+        <setting propertyKey="@Properties.weatherLine2Shows" title="Line above clock shows:">
+            <settingConfig type="list">
+                <listEntry value="20">Weather conditions</listEntry>
+                <listEntry value="17">Steps / day</listEntry>
+                <listEntry value="19">Wheelchair pushes / day *</listEntry>
+                <listEntry value="11">Calories (kcal) / day</listEntry>
+                <listEntry value="12">Altitude (m)</listEntry>
+                <listEntry value="15">Altitude (ft)</listEntry>
+                <listEntry value="25">Training status *</listEntry>
+            </settingConfig>
+        </setting>
 
-    <setting propertyKey="@Properties.dateFormat" title="Date format">
-        <settingConfig type="list">
-            <listEntry value="0">WEEKDAY, DD MONTH YYYY</listEntry>
-            <listEntry value="6">WEEKDAY, DD MONTH</listEntry>
-            <listEntry value="1">YYYY-MM-DD</listEntry>
-            <listEntry value="2">MM/DD/YYYY</listEntry>
-            <listEntry value="3">DD.MM.YYYY</listEntry> 
-            <listEntry value="4">WEEKDAY, DD MONTH (Week)</listEntry>
-            <listEntry value="5">WEEKDAY, DD MONTH YYYY (Week)</listEntry>
-        </settingConfig>
-    </setting>
+        <setting propertyKey="@Properties.dateFormat" title="Date format">
+            <settingConfig type="list">
+                <listEntry value="0">WEEKDAY, DD MONTH YYYY</listEntry>
+                <listEntry value="6">WEEKDAY, DD MONTH</listEntry>
+                <listEntry value="1">YYYY-MM-DD</listEntry>
+                <listEntry value="2">MM/DD/YYYY</listEntry>
+                <listEntry value="3">DD.MM.YYYY</listEntry> 
+                <listEntry value="4">WEEKDAY, DD MONTH (Week)</listEntry>
+                <listEntry value="5">WEEKDAY, DD MONTH YYYY (Week)</listEntry>
+            </settingConfig>
+        </setting>
 
-    <setting propertyKey="@Properties.leftValueShows" title="Left value shows: [*] means limited device support">
-        <settingConfig type="list">
-            <listEntry value="0">Active min / week</listEntry>
-            <listEntry value="1">Active min / day</listEntry>
-            <listEntry value="2">Distance (km) / day</listEntry>
-            <listEntry value="3">Distance (miles) / day</listEntry>
-            <listEntry value="21">Run distance (km) / week [*]</listEntry>
-            <listEntry value="22">Run distance (miles) / week [*]</listEntry>
-            <listEntry value="23">Bike distance (km) / week [*]</listEntry>
-            <listEntry value="24">Bike distance (miles) / week [*]</listEntry>
-            <listEntry value="32">Weekly total distance (km)</listEntry>
-            <listEntry value="33">Weekly total distance (miles)</listEntry>
-            <listEntry value="4">Floors climbed / day</listEntry>
-            <listEntry value="5">Meters climbed / day</listEntry>
-            <listEntry value="6">Time to Recovery (h) [*]</listEntry>
-            <listEntry value="7">VO2 Max Running</listEntry>
-            <listEntry value="8">VO2 Max Cycling</listEntry>
-            <listEntry value="9">Respiration Rate</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="29">Active calories (kcal) / day</listEntry>
-            <listEntry value="12">Altitude (m)</listEntry>
-            <listEntry value="15">Altitude (ft)</listEntry>
-            <listEntry value="13">Stress score</listEntry>
-            <listEntry value="14">Body battery</listEntry>
-            <listEntry value="16">UTC Time</listEntry>
-            <listEntry value="26">Barometric Pressure, raw (hPA)</listEntry>
-            <listEntry value="30">Barometric Pressure, sea level (hPA)</listEntry>
-            <listEntry value="27">Weight (kg)</listEntry>
-            <listEntry value="28">Weight (lbs)</listEntry>
-            <listEntry value="31">Week number</listEntry>
-        </settingConfig>
-    </setting>
 
-    <setting propertyKey="@Properties.middleValueShows" title="Middle value shows: [*] means limited device support">
-        <settingConfig type="list">
-            <listEntry value="0">Active min / week</listEntry>
-            <listEntry value="1">Active min / day</listEntry>
-            <listEntry value="2">Distance (km) / day</listEntry>
-            <listEntry value="3">Distance (miles) / day</listEntry>
-            <listEntry value="21">Run distance (km) / week [*]</listEntry>
-            <listEntry value="22">Run distance (miles) / week [*]</listEntry>
-            <listEntry value="23">Bike distance (km) / week [*]</listEntry>
-            <listEntry value="24">Bike distance (miles) / week [*]</listEntry>
-            <listEntry value="32">Weekly total distance (km)</listEntry>
-            <listEntry value="33">Weekly total distance (miles)</listEntry>
-            <listEntry value="4">Floors climbed / day</listEntry>
-            <listEntry value="5">Meters climbed / day</listEntry>
-            <listEntry value="6">Time to Recovery (h)</listEntry>
-            <listEntry value="7">VO2 Max Running</listEntry>
-            <listEntry value="8">VO2 Max Cycling</listEntry>
-            <listEntry value="9">Respiration Rate</listEntry>
-            <listEntry value="10">Heart Rate</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="29">Active calories (kcal) / day</listEntry>
-            <listEntry value="13">Stress score</listEntry>
-            <listEntry value="14">Body battery</listEntry>
-            <listEntry value="27">Weight (kg)</listEntry>
-            <listEntry value="28">Weight (lbs)</listEntry>
-            <listEntry value="31">Week number</listEntry>
-        </settingConfig>
-    </setting>
 
-    <setting propertyKey="@Properties.rightValueShows" title="Right value shows: [*] means limited device support">
-        <settingConfig type="list">
-            <listEntry value="0">Active min / week</listEntry>
-            <listEntry value="1">Active min / day</listEntry>
-            <listEntry value="2">Distance (km) / day</listEntry>
-            <listEntry value="3">Distance (miles) / day</listEntry>
-            <listEntry value="21">Run distance (km) / week [*]</listEntry>
-            <listEntry value="22">Run distance (miles) / week [*]</listEntry>
-            <listEntry value="23">Bike distance (km) / week [*]</listEntry>
-            <listEntry value="24">Bike distance (miles) / week [*]</listEntry>
-            <listEntry value="32">Weekly total distance (km)</listEntry>
-            <listEntry value="33">Weekly total distance (miles)</listEntry>
-            <listEntry value="4">Floors climbed / day</listEntry>
-            <listEntry value="5">Meters climbed / day</listEntry>
-            <listEntry value="6">Time to Recovery (h)</listEntry>
-            <listEntry value="7">VO2 Max Running</listEntry>
-            <listEntry value="8">VO2 Max Cycling</listEntry>
-            <listEntry value="9">Respiration Rate</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="29">Active calories (kcal) / day</listEntry>
-            <listEntry value="12">Altitude (m)</listEntry>
-            <listEntry value="15">Altitude (ft)</listEntry>
-            <listEntry value="13">Stress score</listEntry>
-            <listEntry value="14">Body battery</listEntry>
-            <listEntry value="16">UTC Time</listEntry>
-            <listEntry value="26">Barometric Pressure, raw (hPA)</listEntry>
-            <listEntry value="30">Barometric Pressure, sea level (hPA)</listEntry>
-            <listEntry value="27">Weight (kg)</listEntry>
-            <listEntry value="28">Weight (lbs)</listEntry>
-            <listEntry value="31">Week number</listEntry>
-        </settingConfig>
-    </setting>
+        <setting propertyKey="@Properties.leftValueShows" title="Left value:">
+            <settingConfig type="list">
+                <listEntry value="0">Active min / week</listEntry>
+                <listEntry value="1">Active min / day</listEntry>
+                <listEntry value="2">Distance (km) / day</listEntry>
+                <listEntry value="3">Distance (miles) / day</listEntry>
+                <listEntry value="21">Run distance (km) / week *</listEntry>
+                <listEntry value="22">Run distance (miles) / week *</listEntry>
+                <listEntry value="23">Bike distance (km) / week *</listEntry>
+                <listEntry value="24">Bike distance (miles) / week *</listEntry>
+                <listEntry value="32">Total distance past 7 days (km)</listEntry>
+                <listEntry value="33">Total distance past 7 days (miles)</listEntry>
+                <listEntry value="4">Floors climbed / day</listEntry>
+                <listEntry value="5">Meters climbed / day</listEntry>
+                <listEntry value="6">Time to Recovery (h) *</listEntry>
+                <listEntry value="7">VO2 Max Running</listEntry>
+                <listEntry value="8">VO2 Max Cycling</listEntry>
+                <listEntry value="9">Respiration Rate</listEntry>
+                <listEntry value="11">Calories (kcal) / day</listEntry>
+                <listEntry value="29">Active calories (kcal) / day</listEntry>
+                <listEntry value="12">Altitude (m)</listEntry>
+                <listEntry value="15">Altitude (ft)</listEntry>
+                <listEntry value="13">Stress score</listEntry>
+                <listEntry value="14">Body battery</listEntry>
+                <listEntry value="16">UTC Time</listEntry>
+                <listEntry value="26">Barometric Pressure, raw (hPA)</listEntry>
+                <listEntry value="30">Barometric Pressure, sea level (hPA)</listEntry>
+                <listEntry value="27">Weight (kg)</listEntry>
+                <listEntry value="28">Weight (lbs)</listEntry>
+                <listEntry value="31">Week number</listEntry>
+            </settingConfig>
+        </setting>
 
-    <setting propertyKey="@Properties.bottomFieldShows" title="Bottom value shows: [*] means limited device support">
-        <settingConfig type="list">
-            <listEntry value="17">Steps / day</listEntry>
-            <listEntry value="18">Distance (meter) / day</listEntry>
-            <listEntry value="21">Run distance (km) / week [*]</listEntry>
-            <listEntry value="22">Run distance (miles) / week [*]</listEntry>
-            <listEntry value="23">Bike distance (km) / week [*]</listEntry>
-            <listEntry value="24">Bike distance (miles) / week [*]</listEntry>
-            <listEntry value="32">Weekly total distance (km)</listEntry>
-            <listEntry value="33">Weekly total distance (miles)</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="29">Active calories (kcal) / day</listEntry>
-            <listEntry value="19">Wheelchair pushes / day</listEntry>
-            <listEntry value="12">Altitude (m)</listEntry>
-            <listEntry value="15">Altitude (ft)</listEntry>
-        </settingConfig>
-    </setting>
+        <setting propertyKey="@Properties.middleValueShows" title="Middle value:">
+            <settingConfig type="list">
+                <listEntry value="0">Active min / week</listEntry>
+                <listEntry value="1">Active min / day</listEntry>
+                <listEntry value="2">Distance (km) / day</listEntry>
+                <listEntry value="3">Distance (miles) / day</listEntry>
+                <listEntry value="21">Run distance (km) / week *</listEntry>
+                <listEntry value="22">Run distance (miles) / week *</listEntry>
+                <listEntry value="23">Bike distance (km) / week *</listEntry>
+                <listEntry value="24">Bike distance (miles) / week *</listEntry>
+                <listEntry value="32">Total distance past 7 days (km)</listEntry>
+                <listEntry value="33">Total distance past 7 days (miles)</listEntry>
+                <listEntry value="4">Floors climbed / day</listEntry>
+                <listEntry value="5">Meters climbed / day</listEntry>
+                <listEntry value="6">Time to Recovery (h)</listEntry>
+                <listEntry value="7">VO2 Max Running</listEntry>
+                <listEntry value="8">VO2 Max Cycling</listEntry>
+                <listEntry value="9">Respiration Rate</listEntry>
+                <listEntry value="10">Heart Rate</listEntry>
+                <listEntry value="11">Calories (kcal) / day</listEntry>
+                <listEntry value="29">Active calories (kcal) / day</listEntry>
+                <listEntry value="13">Stress score</listEntry>
+                <listEntry value="14">Body battery</listEntry>
+                <listEntry value="27">Weight (kg)</listEntry>
+                <listEntry value="28">Weight (lbs)</listEntry>
+                <listEntry value="31">Week number</listEntry>
+            </settingConfig>
+        </setting>
 
-    <setting propertyKey="@Properties.batteryVariant" title="Battery display: [*] means limited device support">
+        <setting propertyKey="@Properties.rightValueShows" title="Right value:">
+            <settingConfig type="list">
+                <listEntry value="0">Active min / week</listEntry>
+                <listEntry value="1">Active min / day</listEntry>
+                <listEntry value="2">Distance (km) / day</listEntry>
+                <listEntry value="3">Distance (miles) / day</listEntry>
+                <listEntry value="21">Run distance (km) / week *</listEntry>
+                <listEntry value="22">Run distance (miles) / week *</listEntry>
+                <listEntry value="23">Bike distance (km) / week *</listEntry>
+                <listEntry value="24">Bike distance (miles) / week *</listEntry>
+                <listEntry value="32">Total distance past 7 days (km)</listEntry>
+                <listEntry value="33">Total distance past 7 days (miles)</listEntry>
+                <listEntry value="4">Floors climbed / day</listEntry>
+                <listEntry value="5">Meters climbed / day</listEntry>
+                <listEntry value="6">Time to Recovery (h)</listEntry>
+                <listEntry value="7">VO2 Max Running</listEntry>
+                <listEntry value="8">VO2 Max Cycling</listEntry>
+                <listEntry value="9">Respiration Rate</listEntry>
+                <listEntry value="11">Calories (kcal) / day</listEntry>
+                <listEntry value="29">Active calories (kcal) / day</listEntry>
+                <listEntry value="12">Altitude (m)</listEntry>
+                <listEntry value="15">Altitude (ft)</listEntry>
+                <listEntry value="13">Stress score</listEntry>
+                <listEntry value="14">Body battery</listEntry>
+                <listEntry value="16">UTC Time</listEntry>
+                <listEntry value="26">Barometric Pressure, raw (hPA)</listEntry>
+                <listEntry value="30">Barometric Pressure, sea level (hPA)</listEntry>
+                <listEntry value="27">Weight (kg)</listEntry>
+                <listEntry value="28">Weight (lbs)</listEntry>
+                <listEntry value="31">Week number</listEntry>
+            </settingConfig>
+        </setting>
+
+        <setting propertyKey="@Properties.bottomFieldShows" title="Bottom value:">
+            <settingConfig type="list">
+                <listEntry value="17">Steps / day</listEntry>
+                <listEntry value="18">Distance (meter) / day</listEntry>
+                <listEntry value="21">Run distance (km) / week *</listEntry>
+                <listEntry value="22">Run distance (miles) / week *</listEntry>
+                <listEntry value="23">Bike distance (km) / week *</listEntry>
+                <listEntry value="24">Bike distance (miles) / week *</listEntry>
+                <listEntry value="32">Total distance past 7 days (km)</listEntry>
+                <listEntry value="33">Total distance past 7 days (miles)</listEntry>
+                <listEntry value="11">Calories (kcal) / day</listEntry>
+                <listEntry value="29">Active calories (kcal) / day</listEntry>
+                <listEntry value="19">Wheelchair pushes / day</listEntry>
+                <listEntry value="12">Altitude (m)</listEntry>
+                <listEntry value="15">Altitude (ft)</listEntry>
+            </settingConfig>
+        </setting>
+    </group>
+
+    <setting propertyKey="@Properties.batteryVariant" title="Battery display:">
         <settingConfig type="list">
-            <listEntry value="0">Remaining days [*]</listEntry>
+            <listEntry value="0">Remaining days *</listEntry>
             <listEntry value="1">Percentage remaining</listEntry>
             <listEntry value="2">Hidden</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.aodFieldShows" title="Always On Shows: [*] means limited device support">
+    <setting propertyKey="@Properties.aodFieldShows" title="Always On (below clock):">
         <settingConfig type="list">
             <listEntry value="-1">Date</listEntry>
             <listEntry value="20">Weather conditions</listEntry>
             <listEntry value="17">Steps / day</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
             <listEntry value="29">Active calories (kcal) / day</listEntry>
-            <listEntry value="19">Wheelchair pushes / day [*]</listEntry>
-            <listEntry value="25">Training status [*]</listEntry>
+            <listEntry value="19">Wheelchair pushes / day *</listEntry>
+            <listEntry value="25">Training status *</listEntry>
         </settingConfig>
     </setting>
 
