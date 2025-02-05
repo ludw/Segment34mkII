@@ -260,380 +260,284 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getColor(colorName) as Graphics.ColorType {
         var amoled = System.getDeviceSettings().requiresBurnInProtection;
         var colorTheme = Application.Properties.getValue("colorTheme");
-
+        
         if(colorTheme == 0) { // Yellow on turquiose
-            switch(colorName) {
-                case "fieldBg":
-                    if(amoled) {
-                        return 0x0e333c;
-                    }
-                    return 0x005555;
-                case "fieldLabel":
-                    return 0x55AAAA;
-                case "timeBg":
-                    if(amoled) {
-                        return 0x0d333c;
-                    }
-                    return 0x005555;
-                case "timeDisplay":
-                case "dateDisplay":
-                    if(amoled) {
-                        return 0xfbcb77;
-                    }
-                    return 0xFFFF00;
-                case "dateDisplayDim":
-                    return 0xa98753;
-                case "dawnDuskLabel":
-                    return 0x005555;
-                case "dawnDuskValue":
-                    if(amoled) {
-                        return 0xFFFFFF;
-                    }
-                    return 0xAAAAAA;
-                case "notifications":
-                    return 0x00AAFF;
-                case "stress":
-                    return 0xFFAA00;
-                case "bodybattery":
-                    return 0x00AAFF;
-                case "HRActive":
-                    return 0xFFFFFF;
-                case "HRInactive":
-                    return 0x55AAAA;
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x0e333c; }
+                return 0x005555;
+            } else if(colorName.equals("fieldLabel")) {
+                return 0x55AAAA;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x0d333c; }
+                return 0x005555;
+            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
+                if(amoled) { return 0xfbcb77; }
+                return 0xFFFF00;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0xa98753;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                return 0x005555;
+            } else if(colorName.equals("dawnDuskValue")) {
+                if(amoled) { return 0xFFFFFF; }
+                return 0xAAAAAA;
+            } else if(colorName.equals("notifications")) {
+                return 0x00AAFF;
+            } else if(colorName.equals("stress")) {
+                return 0xFFAA00;
+            } else if(colorName.equals("bodybattery")) {
+                return 0x00AAFF;
+            } else if(colorName.equals("HRActive")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("HRInactive")) {
+                return 0x55AAAA;
             }
         } else if(colorTheme == 1) { // Hot pink
-            switch(colorName) {
-                case "fieldBg":
-                    if(amoled) {
-                        return 0x0e333c;
-                    }
-                    return 0x005555;
-                case "fieldLabel":
-                    return 0xAA55AA;
-                case "timeBg":
-                    if(amoled) {
-                        return 0x0f3b46;
-                    }
-                    return 0x005555;
-                case "timeDisplay":
-                    if(amoled) {
-                        return 0xf988f2;
-                    }
-                    return 0xFF55AA;
-                case "dateDisplay":
-                    return 0xFFFFFF;
-                case "dateDisplayDim":
-                    return 0xa95399;
-                case "dawnDuskLabel":
-                    return 0xAA55AA;
-                case "dawnDuskValue":
-                    if(amoled) {
-                        return 0xFFFFFF;
-                    }
-                    return 0xAAAAAA;
-                case "notifications":
-                    return 0xFF55AA;
-                case "stress":
-                    return 0xFF55AA;
-                case "bodybattery":
-                    return 0x00FFAA;
-                case "HRActive":
-                    return 0xFFFFFF;
-                case "HRInactive":
-                    return 0x55AAAA;
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x0e333c; }
+                return 0x005555;
+            } else if(colorName.equals("fieldLabel")) {
+                return 0xAA55AA;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x0f3b46; }
+                return 0x005555;
+            } else if(colorName.equals("timeDisplay")) {
+                if(amoled) { return 0xf988f2; }
+                return 0xFF55AA;
+            } else if(colorName.equals("dateDisplay")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0xa95399;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                return 0xAA55AA;
+            } else if(colorName.equals("dawnDuskValue")) {
+                if(amoled) { return 0xFFFFFF; }
+                return 0xAAAAAA;
+            } else if(colorName.equals("notifications")) {
+                return 0xFF55AA;
+            } else if(colorName.equals("stress")) {
+                return 0xFF55AA;
+            } else if(colorName.equals("bodybattery")) {
+                return 0x00FFAA;
+            } else if(colorName.equals("HRActive")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("HRInactive")) {
+                return 0x55AAAA;
             }
         } else if(colorTheme == 2) { // Blueish green
-            switch(colorName) {
-                case "fieldBg":
-                    if(amoled) {
-                        return 0x0f2246;
-                    }
-                    return 0x0055AA;
-                case "fieldLabel":
-                    return 0x55AAAA;
-                case "timeBg":
-                    if(amoled) {
-                        return 0x0f2246;
-                    }
-                    return 0x0055AA;
-                case "timeDisplay":
-                case "dateDisplay":
-                    if(amoled) {
-                        return 0x89efd2;
-                    }
-                    return 0x00FFFF;
-                case "dateDisplayDim":
-                    return 0x5ca28f;
-                case "dawnDuskLabel":
-                    return 0x005555;
-                case "dawnDuskValue":
-                    if(amoled) {
-                        return 0xFFFFFF;
-                    }
-                    return 0xAAAAAA;
-                case "notifications":
-                    return 0x00AAFF;
-                case "stress":
-                    return 0xFFAA00;
-                case "bodybattery":
-                    return 0x00AAFF;
-                case "HRActive":
-                    return 0xFFFFFF;
-                case "HRInactive":
-                    return 0x55AAAA;
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x0f2246; }
+                return 0x0055AA;
+            } else if(colorName.equals("fieldLabel")) {
+                return 0x55AAAA;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x0f2246; }
+                return 0x0055AA;
+            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
+                if(amoled) { return 0x89efd2; }
+                return 0x00FFFF;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0x5ca28f;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                return 0x005555;
+            } else if(colorName.equals("dawnDuskValue")) {
+                if(amoled) { return 0xFFFFFF; }
+                return 0xAAAAAA;
+            } else if(colorName.equals("notifications")) {
+                return 0x00AAFF;
+            } else if(colorName.equals("stress")) {
+                return 0xFFAA00;
+            } else if(colorName.equals("bodybattery")) {
+                return 0x00AAFF;
+            } else if(colorName.equals("HRActive")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("HRInactive")) {
+                return 0x55AAAA;
             }
         } else if(colorTheme == 3) { // Very green
-            switch(colorName) {
-                case "fieldBg":
-                    if(amoled) {
-                        return 0x152b19;
-                    }
-                    return 0x005500;
-                case "fieldLabel":
-                    return 0x00AA55;
-                case "timeBg":
-                    if(amoled) {
-                        return 0x152b19;
-                    }
-                    return 0x005500;
-                case "timeDisplay":
-                case "dateDisplay":
-                    if(amoled) {
-                        return 0x96e0ac;
-                    }
-                    return 0x00FF00;
-                case "dateDisplayDim":
-                    return 0x5ca28f;
-                case "dawnDuskLabel":
-                    return 0x00AA55;
-                case "dawnDuskValue":
-                    if(amoled) {
-                        return 0xFFFFFF;
-                    }
-                    return 0xAAAAAA;
-                case "notifications":
-                    return 0x00AAFF;
-                case "stress":
-                    if(amoled) {
-                        return 0xffc884;
-                    }
-                    return 0xFFAA00;
-                case "bodybattery":
-                    if(amoled) {
-                        return 0x59b9fe;
-                    }
-                    return 0x00AAFF;
-                case "HRActive":
-                    return 0xFFFFFF;
-                case "HRInactive":
-                    if(amoled) {
-                        return 0x96e0ac;
-                    }
-                    return 0x55FF55;
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x152b19; }
+                return 0x005500;
+            } else if(colorName.equals("fieldLabel")) {
+                return 0x00AA55;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x152b19; }
+                return 0x005500;
+            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
+                if(amoled) { return 0x96e0ac; }
+                return 0x00FF00;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0x5ca28f;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                return 0x00AA55;
+            } else if(colorName.equals("dawnDuskValue")) {
+                if(amoled) { return 0xFFFFFF; }
+                return 0xAAAAAA;
+            } else if(colorName.equals("notifications")) {
+                return 0x00AAFF;
+            } else if(colorName.equals("stress")) {
+                if(amoled) { return 0xffc884; }
+                return 0xFFAA00;
+            } else if(colorName.equals("bodybattery")) {
+                if(amoled) { return 0x59b9fe; }
+                return 0x00AAFF;
+            } else if(colorName.equals("HRActive")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("HRInactive")) {
+                if(amoled) { return 0x96e0ac; }
+                return 0x55FF55;
             }
-        } else if (colorTheme == 4) { // White on turquiose
-             switch(colorName) {
-                case "fieldBg":
-                    if(amoled) {
-                        return 0x0e333c;
-                    }
-                    return 0x005555;
-                case "fieldLabel":
-                    return 0x55AAAA;
-                case "timeBg":
-                    if(amoled) {
-                        return 0x0d333c;
-                    }
-                    return 0x005555;
-                case "timeDisplay":
-                case "dateDisplay":
-                    return 0xFFFFFF;
-                case "dateDisplayDim":
-                    return 0x114a5a;
-                case "dawnDuskLabel":
-                    return 0x005555;
-                case "dawnDuskValue":
-                    if(amoled) {
-                        return 0xFFFFFF;
-                    }
-                    return 0xAAAAAA;
-                case "notifications":
-                    return 0xAAAAAA;
-                case "stress":
-                    return 0xFFAA55;
-                case "bodybattery":
-                    return 0x55AAFF;
-                case "HRActive":
-                    return 0xFFFFFF;
-                case "HRInactive":
-                    return 0x55AAAA;
+        } else if(colorTheme == 4) { // White on turquoise
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x0e333c; }
+                return 0x005555;
+            } else if(colorName.equals("fieldLabel")) {
+                return 0x55AAAA;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x0d333c; }
+                return 0x005555;
+            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0x114a5a;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                return 0x005555;
+            } else if(colorName.equals("dawnDuskValue")) {
+                if(amoled) { return 0xFFFFFF; }
+                return 0xAAAAAA;
+            } else if(colorName.equals("notifications")) {
+                return 0xAAAAAA;
+            } else if(colorName.equals("stress")) {
+                return 0xFFAA55;
+            } else if(colorName.equals("bodybattery")) {
+                return 0x55AAFF;
+            } else if(colorName.equals("HRActive")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("HRInactive")) {
+                return 0x55AAAA;
             }
-        } else if (colorTheme == 5) { // Orange
-             switch(colorName) {
-                case "fieldBg":
-                    if(amoled) {
-                        return 0x1b263d;
-                    }
-                    return 0x5500AA;
-                case "fieldLabel":
-                    return 0xFFAAAA;
-                case "timeBg":
-                    if(amoled) {
-                        return 0x1b263d;
-                    }
-                    return 0x5500AA;
-                case "timeDisplay":
-                    if(amoled) {
-                        return 0xff9161;
-                    }
-                    return 0xFF5500;
-                case "dateDisplay":
-                    if(amoled) {
-                        return 0xffb383;
-                    }
-                    return 0xFFAAAA;
-                case "dateDisplayDim":
-                    return 0xaa6e56;
-                case "dawnDuskLabel":
-                    return 0xFFAAAA;
-                case "dawnDuskValue":
-                    if(amoled) {
-                        return 0xFFFFFF;
-                    }
-                    return 0xAAAAAA;
-                case "notifications":
-                    return 0xFFFFFF;
-                case "stress":
-                    return 0xFF5555;
-                case "bodybattery":
-                    return 0x00AAFF;
-                case "HRActive":
-                    return 0xFFFFFF;
-                case "HRInactive":
-                    if(amoled) {
-                        return 0x7878aa;
-                    }
-                    return 0x5555AA;
+        } else if(colorTheme == 5) { // Orange
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x1b263d; }
+                return 0x5500AA;
+            } else if(colorName.equals("fieldLabel")) {
+                return 0xFFAAAA;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x1b263d; }
+                return 0x5500AA;
+            } else if(colorName.equals("timeDisplay")) {
+                if(amoled) { return 0xff9161; }
+                return 0xFF5500;
+            } else if(colorName.equals("dateDisplay")) {
+                if(amoled) { return 0xffb383; }
+                return 0xFFAAAA;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0xaa6e56;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                return 0xFFAAAA;
+            } else if(colorName.equals("dawnDuskValue")) {
+                if(amoled) { return 0xFFFFFF; }
+                return 0xAAAAAA;
+            } else if(colorName.equals("notifications")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("stress")) {
+                return 0xFF5555;
+            } else if(colorName.equals("bodybattery")) {
+                return 0x00AAFF;
+            } else if(colorName.equals("HRActive")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("HRInactive")) {
+                if(amoled) { return 0x7878aa; }
+                return 0x5555AA;
             }
-        } else if (colorTheme == 6) { // Red & White
-             switch(colorName) {
-                case "fieldBg":
-                    if(amoled) {
-                        return 0x550000;
-                    }
-                    return 0xAA0000;
-                case "fieldLabel":
-                    return 0xFF0000;
-                case "timeBg":
-                    if(amoled) {
-                        return 0x550000;
-                    }
-                    return 0xAA0000;
-                case "timeDisplay":
-                case "dateDisplay":
-                    if(amoled) {
-                        return 0xffffff;
-                    }
-                    return 0xFFFFFF;
-                case "dateDisplayDim":
-                    return 0xAA0000;
-                case "dawnDuskLabel":
-                    return 0xAA0000;
-                case "dawnDuskValue":
-                    if(amoled) {
-                        return 0xFFFFFF;
-                    }
-                    return 0xAAAAAA;
-                case "notifications":
-                    return 0xFF0000;
-                case "stress":
-                    return 0xAA0000;
-                case "bodybattery":
-                    return 0x00AAFF;
-                case "HRActive":
-                    return 0xFFFFFF;
-                case "HRInactive":
-                    return 0xFF0000;
-            } 
-        } else if (colorTheme == 7) { // White on Blue
-             switch(colorName) {
-                case "fieldBg":
-                    if(amoled) {
-                        return 0x0b2051;
-                    }
-                    return 0x0055AA;
-                case "fieldLabel":
-                    return 0x0055AA;
-                case "timeBg":
-                    if(amoled) {
-                        return 0x0b2051;
-                    }
-                    return 0x0055AA;
-                case "timeDisplay":
-                case "dateDisplay":
-                    if(amoled) {
-                        return 0xffffff;
-                    }
-                    return 0xFFFFFF;
-                case "dateDisplayDim":
-                    return 0x0055AA;
-                case "dawnDuskLabel":
-                    return 0x0055AA;
-                case "dawnDuskValue":
-                    if(amoled) {
-                        return 0xFFFFFF;
-                    }
-                    return 0xAAAAAA;
-                case "notifications":
-                    return 0x55AAFF;
-                case "stress":
-                    return 0xFFAA55;
-                case "bodybattery":
-                    return 0x55AAFF;
-                case "HRActive":
-                    return 0xFFFFFF;
-                case "HRInactive":
-                    return 0x0055ff;
+        } else if(colorTheme == 6) { // Red & White
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x550000; }
+                return 0xAA0000;
+            } else if(colorName.equals("fieldLabel")) {
+                return 0xFF0000;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x550000; }
+                return 0xAA0000;
+            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
+                if(amoled) { return 0xffffff; }
+                return 0xFFFFFF;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0xAA0000;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                return 0xAA0000;
+            } else if(colorName.equals("dawnDuskValue")) {
+                if(amoled) { return 0xFFFFFF; }
+                return 0xAAAAAA;
+            } else if(colorName.equals("notifications")) {
+                return 0xFF0000;
+            } else if(colorName.equals("stress")) {
+                return 0xAA0000;
+            } else if(colorName.equals("bodybattery")) {
+                return 0x00AAFF;
+            } else if(colorName.equals("HRActive")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("HRInactive")) {
+                return 0xFF0000;
             }
-        } else if (colorTheme == 8) { // Yellow on Blue
-             switch(colorName) {
-                case "fieldBg":
-                    if(amoled) {
-                        return 0x0b2051;
-                    }
-                    return 0x0055AA;
-                case "fieldLabel":
-                    return 0x0055AA;
-                case "timeBg":
-                    if(amoled) {
-                        return 0x0b2051;
-                    }
-                    return 0x0055AA;
-                case "timeDisplay":
-                case "dateDisplay":
-                    if(amoled) {
-                        return 0xfbcb77;
-                    }
-                    return 0xFFFF00;
-                case "dateDisplayDim":
-                    return 0xa98753;
-                case "dawnDuskLabel":
-                    return 0x0055AA;
-                case "dawnDuskValue":
-                    if(amoled) {
-                        return 0xFFFFFF;
-                    }
-                    return 0xAAAAAA;
-                case "notifications":
-                    return 0x55AAFF;
-                case "stress":
-                    return 0xFFAA55;
-                case "bodybattery":
-                    return 0x55AAFF;
-                case "HRActive":
-                    return 0xFFFFFF;
-                case "HRInactive":
-                    return 0x0055ff;
+        } else if(colorTheme == 7) { // White on Blue
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x0b2051; }
+                return 0x0055AA;
+            } else if(colorName.equals("fieldLabel")) {
+                return 0x0055AA;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x0b2051; }
+                return 0x0055AA;
+            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
+                if(amoled) { return 0xffffff; }
+                return 0xFFFFFF;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0x0055AA;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                return 0x0055AA;
+            } else if(colorName.equals("dawnDuskValue")) {
+                if(amoled) { return 0xFFFFFF; }
+                return 0xAAAAAA;
+            } else if(colorName.equals("notifications")) {
+                return 0x55AAFF;
+            } else if(colorName.equals("stress")) {
+                return 0xFFAA55;
+            } else if(colorName.equals("bodybattery")) {
+                return 0x55AAFF;
+            } else if(colorName.equals("HRActive")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("HRInactive")) {
+                return 0x0055ff;
+            }
+        } else if(colorTheme == 8) { // Yellow on Blue
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x0b2051; }
+                return 0x0055AA;
+            } else if(colorName.equals("fieldLabel")) {
+                return 0x0055AA;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x0b2051; }
+                return 0x0055AA;
+            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
+                if(amoled) { return 0xfbcb77; }
+                return 0xFFFF00;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0xa98753;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                return 0x0055AA;
+            } else if(colorName.equals("dawnDuskValue")) {
+                if(amoled) { return 0xFFFFFF; }
+                return 0xAAAAAA;
+            } else if(colorName.equals("notifications")) {
+                return 0x55AAFF;
+            } else if(colorName.equals("stress")) {
+                return 0xFFAA55;
+            } else if(colorName.equals("bodybattery")) {
+                return 0x55AAFF;
+            } else if(colorName.equals("HRActive")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("HRInactive")) {
+                return 0x0055ff;
             }
         }
 
