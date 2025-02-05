@@ -207,7 +207,7 @@ class Segment34View extends WatchUi.WatchFace {
 
         var hideInAOD = (visible or !canBurnIn);
         var hideBattery = (hideInAOD && propBatteryVariant != 2);  
-         
+
         dSecondsLabel.setVisible(visible);
         dHrLabel.setVisible(hideInAOD);
         dDateLabel.setVisible(hideInAOD);
@@ -1448,6 +1448,24 @@ class Segment34View extends WatchUi.WatchFace {
             var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
             var weekNumber = iso_week_number(today.year, today.month, today.day);
             val = weekNumber.format(numberFormat);
+        } else if(complicationType == 32) { // Weekly distance (km)
+            var weeklyDistance = getWeeklyDistance() / 100000.0;  // Convert to km
+            if (width == 3) {
+                // For width of 3, show one decimal if < 10 (e.g., "9.9" or "999")
+                val = weeklyDistance < 10 ? weeklyDistance.format("%.1f") : weeklyDistance.format("%d");
+            } else {
+                // For width of 4 or more, show one decimal if < 100 (e.g., "99.9" or "100")
+                val = weeklyDistance < 100 ? weeklyDistance.format("%.1f") : weeklyDistance.format("%d");
+            }
+        } else if(complicationType == 33) { // Weekly distance (miles)
+            var weeklyDistance = getWeeklyDistance() * 0.00000621371;  // Convert to miles
+            if (width == 3) {
+                // For width of 3, show one decimal if < 10 (e.g., "9.9" or "999")
+                val = weeklyDistance < 10 ? weeklyDistance.format("%.1f") : weeklyDistance.format("%d");
+            } else {
+                // For width of 4 or more, show one decimal if < 100 (e.g., "99.9" or "100")
+                val = weeklyDistance < 100 ? weeklyDistance.format("%.1f") : weeklyDistance.format("%d");
+            }
         }
 
         return val;
@@ -1518,6 +1536,10 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "PRESSURE:";
         } else if(complicationType == 31) { // Week number
             desc = "WEEK:";
+        } else if(complicationType == 32) { // Weekly distance (km)
+            desc = "WEEKLY KM:";
+        } else if(complicationType == 33) { // Weekly distance (miles)
+            desc = "WEEKLY MI:";
         }
         return desc;
     }
@@ -1538,6 +1560,27 @@ class Segment34View extends WatchUi.WatchFace {
             unit = "KCAL";
         }
         return unit;
+    }
+
+    function getWeeklyDistance() as Number {
+        var weeklyDistance = 0;
+        if(ActivityMonitor.getInfo() has :distance) {
+            var history = ActivityMonitor.getHistory();
+            if (history != null) {
+                // Only take up to 6 previous days from history
+                var daysToCount = history.size() < 6 ? history.size() : 6;
+                for (var i = 0; i < daysToCount; i++) {
+                    if (history[i].distance != null) {
+                        weeklyDistance += history[i].distance;
+                    }
+                }
+            }
+            // Add today's distance
+            if(ActivityMonitor.getInfo().distance != null) {
+                weeklyDistance += ActivityMonitor.getInfo().distance;
+            }
+        }
+        return weeklyDistance;
     }
 
     hidden function day_name(day_of_week) {
