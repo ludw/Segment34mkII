@@ -562,7 +562,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("fieldLabel")) {
                 return 0xFF5500;
             } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0xaa5500; }
+                if(amoled) { return 0x7d3f01; }
                 return 0xaa5500;
             } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
                 if(amoled) { return 0xffffff; }
