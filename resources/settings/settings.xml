@@ -56,7 +56,7 @@
         <settingConfig type="boolean" />
     </setting>
     
-    <group id="dataFields" title="Data fields" description="(Values marked with * only work on some devices)">
+    <group id="dataFields" title="Data fields (*: limited device support)" description="">
         <setting propertyKey="@Properties.weatherLine2Shows" title="Line above clock shows:">
             <settingConfig type="list">
                 <listEntry value="20">Weather conditions</listEntry>

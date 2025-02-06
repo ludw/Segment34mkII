@@ -126,6 +126,7 @@ class Segment34View extends WatchUi.WatchFace {
     function onSettingsChanged() {
         lastUpdate = null;
         previousEssentialsVis = null;
+        cacheProps();
         WatchUi.requestUpdate();
     }
 
@@ -142,6 +143,9 @@ class Segment34View extends WatchUi.WatchFace {
     // The user has just looked at their watch. Timers and animations may be started here.
     function onExitSleep() as Void {
         isSleeping = false;
+        lastUpdate = null;
+        cacheProps();
+        WatchUi.requestUpdate();
     }
 
     // Terminate any active timers and prepare for slow updates.
