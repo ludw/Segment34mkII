@@ -1350,41 +1350,61 @@ class Segment34View extends WatchUi.WatchFace {
             val = getWeatherCondition();
         } else if(complicationType == 21) { // Weekly run distance (km)
             if (Toybox has :Complications) {
-                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
-                if (complication != null && complication.value != null) {
-                    var distanceKm = complication.value / 1000.0;  // Convert meters to km
-                    val = formatDistanceByWidth(distanceKm, width);
+                try {
+                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
+                    if (complication != null && complication.value != null) {
+                        var distanceKm = complication.value / 1000.0;  // Convert meters to km
+                        val = formatDistanceByWidth(distanceKm, width);
+                    }
+                } catch(e) {
+                    // Complication not found
                 }
             }
         } else if(complicationType == 22) { // Weekly run distance (miles)
             if (Toybox has :Complications) {
-                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
-                if (complication != null && complication.value != null) {
-                    var distanceMiles = complication.value * 0.000621371;  // Convert meters to miles
-                    val = formatDistanceByWidth(distanceMiles, width);
+                try {
+                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
+                    if (complication != null && complication.value != null) {
+                        var distanceMiles = complication.value * 0.000621371;  // Convert meters to miles
+                        val = formatDistanceByWidth(distanceMiles, width);
+                    }
+                } catch(e) {
+                    // Complication not found
                 }
             }
         } else if(complicationType == 23) { // Weekly bike distance (km)
             if (Toybox has :Complications) {
-                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
-                if (complication != null && complication.value != null) {
-                    var distanceKm = complication.value / 1000.0;  // Convert meters to km
-                    val = formatDistanceByWidth(distanceKm, width);
+                try {
+                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
+                    if (complication != null && complication.value != null) {
+                        var distanceKm = complication.value / 1000.0;  // Convert meters to km
+                        val = formatDistanceByWidth(distanceKm, width);
+                    }
+                } catch(e) {
+                    // Complication not found
                 }
             }
         } else if(complicationType == 24) { // Weekly bike distance (miles)
             if (Toybox has :Complications) {
-                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
-                if (complication != null && complication.value != null) {
-                    var distanceMiles = complication.value * 0.000621371;  // Convert meters to miles
-                    val = formatDistanceByWidth(distanceMiles, width);
+                try {
+                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
+                    if (complication != null && complication.value != null) {
+                        var distanceMiles = complication.value * 0.000621371;  // Convert meters to miles
+                        val = formatDistanceByWidth(distanceMiles, width);
+                    }
+                } catch(e) {
+                    // Complication not found
                 }
             }
         } else if(complicationType == 25) { // Training status
             if (Toybox has :Complications) {
-                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_TRAINING_STATUS));
-                if (complication != null && complication.value != null) {
-                    val = complication.value.toUpper();
+                try {
+                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_TRAINING_STATUS));
+                    if (complication != null && complication.value != null) {
+                        val = complication.value.toUpper();
+                    }
+                } catch(e) {
+                    // Complication not found
                 }
             }
         } else if(complicationType == 26) { // Raw Barometric pressure (hPA)
