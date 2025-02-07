@@ -517,7 +517,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("notifications")) {
                 return 0x55AAFF;
             } else if(colorName.equals("stress")) {
-                return 0xFFAA55;
+                return 0xFFAA00;
             } else if(colorName.equals("bodybattery")) {
                 return 0x55AAFF;
             } else if(colorName.equals("HRActive")) {
@@ -547,7 +547,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("notifications")) {
                 return 0x55AAFF;
             } else if(colorName.equals("stress")) {
-                return 0xFFAA55;
+                return 0xFFAA00;
             } else if(colorName.equals("bodybattery")) {
                 return 0x55AAFF;
             } else if(colorName.equals("HRActive")) {
@@ -577,7 +577,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("notifications")) {
                 return 0x00AAFF;
             } else if(colorName.equals("stress")) {
-                return 0xFF5500;
+                return 0xFFAA00;
             } else if(colorName.equals("bodybattery")) {
                 return 0x00AAFF;
             } else if(colorName.equals("HRActive")) {
@@ -1141,6 +1141,13 @@ class Segment34View extends WatchUi.WatchFace {
             var barHeight = 125;
             var bbAdjustment = 0;
 
+            if(dc.getHeight() == 240) {
+                barTop = 68;
+                fromEdge = 5;
+                barWidth = 3;
+                barHeight = 80;
+                bbAdjustment = 1;
+            }
             if(dc.getHeight() == 260) {
                 barTop = 77;
                 fromEdge = 10;
