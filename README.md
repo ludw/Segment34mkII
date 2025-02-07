@@ -30,7 +30,6 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
  Connect your watch via usb and transfer the Segment34.prg file to the GARMIN/Apps folder on the watch. 
 
  ## TODO / Things people have asked for
-- 240x240 support
 - Option to always show seconds
 - Race predictions
 - Barometric pressure in bar and mmHG
