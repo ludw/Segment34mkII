@@ -195,12 +195,10 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function toggleNonEssentials(visible, dc){
         if(!visible and canBurnIn) {
             dc.setAntiAlias(false);
-
             var clockTime = System.getClockTime();
             dAodPattern.setVisible(true);
             dAodDateLabel.setVisible(true);
             dAodPattern.setLocation(clockTime.min % 2, dAodPattern.locY);
-            dGradient.setLocation(clockTime.min % 2 - 1, dGradient.locY);
             dAodDateLabel.setLocation(Math.floor(dc.getWidth() / 2) - 1 + clockTime.min % 3, dAodDateLabel.locY);
             dAodDateLabel.setColor(getColor("dateDisplayDim"));
         }
@@ -235,6 +233,7 @@ class Segment34View extends WatchUi.WatchFace {
         dWeatherLabel2.setVisible(hideInAOD);
         dStepBg.setVisible(hideInAOD);
         dStepLabel.setVisible(hideInAOD);
+        dGradient.setVisible(hideInAOD);
 
         dBattLabel.setVisible(hideBattery);
         dBattBg.setVisible(hideBattery);
