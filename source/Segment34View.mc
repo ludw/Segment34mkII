@@ -654,9 +654,6 @@ class Segment34View extends WatchUi.WatchFace {
             dHrLabel.setText(getComplicationValue(middleValueShows, width));
 
             dHrLabel.setColor(Graphics.COLOR_WHITE);
-            if(isSleeping and canBurnIn) {
-                dHrLabel.setColor(Graphics.COLOR_DK_GRAY);
-            }
         }
 
         dHrLabel.draw(dc);
@@ -1478,8 +1475,22 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 33) { // Weekly distance (miles)
             var weeklyDistance = getWeeklyDistance() * 0.00000621371;  // Convert to miles
             val = formatDistanceByWidth(weeklyDistance, width);
+        } else if(complicationType == 34) { // Battery percentage
+            var battery = System.getSystemStats().battery;
+            val = Lang.format("$1$", [battery.format("%d")]);
+        } else if(complicationType == 35) { // Battery days remaining
+            if(System.getSystemStats() has :batteryInDays) {
+                if (System.getSystemStats().batteryInDays != null){
+                    var sample = Math.round(System.getSystemStats().batteryInDays);
+                    val = Lang.format("$1$", [sample.format(numberFormat)]);
+                }
+            }
+        } else if(complicationType == 36) { // Notification count
+            var notifCount = System.getDeviceSettings().notificationCount;
+            if(notifCount != null) {
+                val = notifCount.format(numberFormat);
+            }
         }
-
         return val;
     }
 
@@ -1552,6 +1563,12 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "WEEKLY KM:";
         } else if(complicationType == 33) { // Weekly distance (miles)
             desc = "WEEKLY MI:";
+        } else if(complicationType == 34) { // Battery percentage
+            desc = "BATTERY %:";
+        } else if(complicationType == 35) { // Battery days remaining
+            desc = "BATT DAYS:";
+        } else if(complicationType == 36) { // Notification count
+            desc = "NOTIFS:";
         }
         return desc;
     }

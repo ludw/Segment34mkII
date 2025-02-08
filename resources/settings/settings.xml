@@ -114,6 +114,9 @@
                 <listEntry value="27">Weight (kg)</listEntry>
                 <listEntry value="28">Weight (lbs)</listEntry>
                 <listEntry value="31">Week number</listEntry>
+                <listEntry value="34">Battery percentage</listEntry>
+                <listEntry value="35">Battery days remaining *</listEntry>
+                <listEntry value="36">Notification count</listEntry>
             </settingConfig>
         </setting>
 
@@ -143,6 +146,9 @@
                 <listEntry value="27">Weight (kg)</listEntry>
                 <listEntry value="28">Weight (lbs)</listEntry>
                 <listEntry value="31">Week number</listEntry>
+                <listEntry value="34">Battery percentage</listEntry>
+                <listEntry value="35">Battery days remaining *</listEntry>
+                <listEntry value="36">Notification count</listEntry>
             </settingConfig>
         </setting>
 
@@ -176,6 +182,9 @@
                 <listEntry value="27">Weight (kg)</listEntry>
                 <listEntry value="28">Weight (lbs)</listEntry>
                 <listEntry value="31">Week number</listEntry>
+                <listEntry value="34">Battery percentage</listEntry>
+                <listEntry value="35">Battery days remaining *</listEntry>
+                <listEntry value="36">Notification count</listEntry>
             </settingConfig>
         </setting>
 
