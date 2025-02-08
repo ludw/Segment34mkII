@@ -196,6 +196,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(!visible and canBurnIn) {
             dc.setAntiAlias(false);
             var clockTime = System.getClockTime();
+            dGradient.setVisible(false);
             dAodPattern.setVisible(true);
             dAodDateLabel.setVisible(true);
             dAodPattern.setLocation(clockTime.min % 2, dAodPattern.locY);
@@ -233,7 +234,6 @@ class Segment34View extends WatchUi.WatchFace {
         dWeatherLabel2.setVisible(hideInAOD);
         dStepBg.setVisible(hideInAOD);
         dStepLabel.setVisible(hideInAOD);
-        dGradient.setVisible(hideInAOD);
 
         dBattLabel.setVisible(hideBattery);
         dBattBg.setVisible(hideBattery);
@@ -267,6 +267,7 @@ class Segment34View extends WatchUi.WatchFace {
             if(canBurnIn) {
                 dAodPattern.setVisible(false);
                 dAodDateLabel.setVisible(false);
+                dGradient.setVisible(true);
             }
         }
 

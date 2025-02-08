@@ -39,6 +39,4 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 - Localization
 - Always on as the only thing shown
 - Move indicator
-- Secondary notification placement
-- Battery as field option
-- Flickering in AOD
+- Secondary timezone with minute offset
