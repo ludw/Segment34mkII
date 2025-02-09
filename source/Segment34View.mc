@@ -21,6 +21,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var previousEssentialsVis = null;
     private var batt = 0;
     private var stress = 0;
+    private var weatherCondition = null;
 
     private var dSecondsLabel = null;
     private var dAodPattern = null;
@@ -53,6 +54,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     private var propColorTheme = null;
     private var propBatteryVariant = null;
+    private var propShowSeconds = null;
 
     function initialize() {
         WatchFace.initialize();
@@ -69,6 +71,7 @@ class Segment34View extends WatchUi.WatchFace {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() as Void {
+        updateWeather();
     }
 
     // Update the view
@@ -76,21 +79,33 @@ class Segment34View extends WatchUi.WatchFace {
         var clockTime = System.getClockTime();
         var now = Time.now().value();
         var updateEverything = false;
+        var doUpdate = false;
 
         if(lastUpdate == null or now - lastUpdate > 30 or clockTime.sec % 60 == 0) {
             updateEverything = true;
             canBurnIn = System.getDeviceSettings().requiresBurnInProtection;
+            lastUpdate = now;
+
+            if(clockTime.min % 5 == 0) {
+                updateWeather();
+            }
         }
 
         toggleNonEssentials(!isSleeping, dc);
 
         if(!isSleeping && !updateEverything) {
-            setSeconds(dc);
+            if(propShowSeconds) {
+                setSeconds(dc);
+                doUpdate = true;
+            }
             if(clockTime.sec % 2 == 0) {
                 setHR(dc);
+                doUpdate = true;
             }
-            View.onUpdate(dc);
-            drawStressAndBodyBattery(dc);
+            if(doUpdate) {
+                View.onUpdate(dc);
+                drawStressAndBodyBattery(dc);
+            }
             return;
         }
 
@@ -98,6 +113,7 @@ class Segment34View extends WatchUi.WatchFace {
             setClock(dc);
             setDate(dc);
             if(!isSleeping or !canBurnIn) {
+                setSeconds(dc);
                 setHR(dc);
                 setNotif(dc);
                 setMoon(dc);
@@ -115,8 +131,6 @@ class Segment34View extends WatchUi.WatchFace {
             if(!isSleeping or !canBurnIn) {
                 drawStressAndBodyBattery(dc);
             }
-            
-            lastUpdate = now;
         }
     }
 
@@ -190,6 +204,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function cacheProps() as Void {
         propColorTheme = Application.Properties.getValue("colorTheme");
         propBatteryVariant = Application.Properties.getValue("batteryVariant");
+        propShowSeconds = Application.Properties.getValue("showSeconds");
     }
 
     hidden function toggleNonEssentials(visible, dc){
@@ -211,7 +226,7 @@ class Segment34View extends WatchUi.WatchFace {
         var hideInAOD = (visible or !canBurnIn);
         var hideBattery = (hideInAOD && propBatteryVariant != 2);  
 
-        dSecondsLabel.setVisible(visible);
+        dSecondsLabel.setVisible(visible && propShowSeconds);
         dHrLabel.setVisible(hideInAOD);
         dDateLabel.setVisible(hideInAOD);
         dTimeBg.setVisible(hideInAOD);
@@ -591,15 +606,9 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setSeconds(dc) as Void {
-        var showSeconds = Application.Properties.getValue("showSeconds");
-
-        if(showSeconds) {
-            var clockTime = System.getClockTime();
-            var secString = Lang.format("$1$", [clockTime.sec.format("%02d")]);
-            dSecondsLabel.setText(secString);
-        } else {
-            dSecondsLabel.setText("");
-        }
+        var clockTime = System.getClockTime();
+        var secString = Lang.format("$1$", [clockTime.sec.format("%02d")]);
+        dSecondsLabel.setText(secString);
     }
 
     hidden function setClock(dc) as Void {
@@ -687,8 +696,11 @@ class Segment34View extends WatchUi.WatchFace {
         dBattLabel.setText(value);
     }
 
+    hidden function updateWeather() as Void {
+        weatherCondition = Weather.getCurrentConditions();
+    }
+
     hidden function setWeather(dc) as Void {
-        var weather = Weather.getCurrentConditions();
         var tempUnitSetting = System.getDeviceSettings().temperatureUnits;
         var tempUnitAppSetting = Application.Properties.getValue("tempUnit");
         var temp = "";
@@ -697,11 +709,11 @@ class Segment34View extends WatchUi.WatchFace {
         var bearing = "";
         var fl = "";
         var weatherText = "";
-        if (weather == null) { return; }
-        if (weather.condition == null) { return; }
+        if (weatherCondition == null) { return; }
+        if (weatherCondition.condition == null) { return; }
 
-        if(weather.temperature != null) {
-            var tempVal = weather.temperature;
+        if(weatherCondition.temperature != null) {
+            var tempVal = weatherCondition.temperature;
 
             if((tempUnitSetting == System.UNIT_METRIC and tempUnitAppSetting == 0) or tempUnitAppSetting == 1) {
                 temp = tempVal.format("%01d");
@@ -713,9 +725,9 @@ class Segment34View extends WatchUi.WatchFace {
             weatherText = Lang.format("$1$$2$", [temp, tempUnit]);
         }
         
-        if(weather.windSpeed != null) {
+        if(weatherCondition.windSpeed != null) {
             var windUnit = Application.Properties.getValue("windUnit");
-            var windspeed_mps = weather.windSpeed;
+            var windspeed_mps = weatherCondition.windSpeed;
             if(windUnit == 0) { // m/s
                 windspeed = Math.round(windspeed_mps).format("%01d");
             } else if (windUnit == 1) { // km/h
@@ -758,8 +770,8 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
 
-        if(weather.windBearing != null) {
-            bearing = ((Math.round((weather.windBearing.toFloat() + 180) / 45.0).toNumber() % 8) + 97).toChar().toString();
+        if(weatherCondition.windBearing != null) {
+            bearing = ((Math.round((weatherCondition.windBearing.toFloat() + 180) / 45.0).toNumber() % 8) + 97).toChar().toString();
         }
 
         if(windspeed.length() > 0 and bearing.length() > 0) {
@@ -772,8 +784,8 @@ class Segment34View extends WatchUi.WatchFace {
 
         var showFeelsLike = Application.Properties.getValue("showFeelsLike");
         if(showFeelsLike) {
-            if(weather.feelsLikeTemperature != null) {
-                var fltemp = weather.feelsLikeTemperature;
+            if(weatherCondition.feelsLikeTemperature != null) {
+                var fltemp = weatherCondition.feelsLikeTemperature;
                 if((tempUnitSetting != System.UNIT_METRIC and tempUnitAppSetting == 0) or tempUnitAppSetting == 2) {
                     fltemp = ((fltemp * 9/5) + 32);
                 }
@@ -800,25 +812,24 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getWeatherCondition() as String {
-        var weather = Weather.getCurrentConditions();
         var condition;
         var perp = "";
 
         // Early return if no weather data
-        if (weather == null || weather.condition == null) {
+        if (weatherCondition == null || weatherCondition.condition == null) {
             return "";
         }
 
         // Safely check precipitation chance
-        if (weather has :precipitationChance &&
-            weather.precipitationChance != null &&
-            weather.precipitationChance instanceof Number) {
-            if(weather.precipitationChance > 0) {
-                perp = Lang.format(" ($1$%)", [weather.precipitationChance.format("%02d")]);
+        if (weatherCondition has :precipitationChance &&
+            weatherCondition.precipitationChance != null &&
+            weatherCondition.precipitationChance instanceof Number) {
+            if(weatherCondition.precipitationChance > 0) {
+                perp = Lang.format(" ($1$%)", [weatherCondition.precipitationChance.format("%02d")]);
             }
         }
 
-        switch(weather.condition) {
+        switch(weatherCondition.condition) {
             case Weather.CONDITION_CLEAR:
                 condition = "CLEAR" + perp;
                 break;
@@ -986,14 +997,13 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setSunUpDown(dc) as Void {
-        var weather = Weather.getCurrentConditions();
         var now = Time.now();
-        if(weather == null) {
+        if(weatherCondition == null) {
             dDawn.setText("");
             dDusk.setText("");
             return;
         }
-        var loc = weather.observationLocationPosition;
+        var loc = weatherCondition.observationLocationPosition;
         if(loc == null) {
             dDawn.setText("");
             dDusk.setText("");
