@@ -55,6 +55,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var propColorTheme = null;
     private var propBatteryVariant = null;
     private var propShowSeconds = null;
+    private var propMiddleValueShows = null;
 
     function initialize() {
         WatchFace.initialize();
@@ -98,7 +99,7 @@ class Segment34View extends WatchUi.WatchFace {
                 setSeconds(dc);
                 doUpdate = true;
             }
-            if(clockTime.sec % 2 == 0) {
+            if(clockTime.sec % 5 == 0 and propMiddleValueShows == 10) {
                 setHR(dc);
                 doUpdate = true;
             }
@@ -135,6 +136,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     function onPartialUpdate(dc) {
+
     }
 
     function onSettingsChanged() {
@@ -205,6 +207,7 @@ class Segment34View extends WatchUi.WatchFace {
         propColorTheme = Application.Properties.getValue("colorTheme");
         propBatteryVariant = Application.Properties.getValue("batteryVariant");
         propShowSeconds = Application.Properties.getValue("showSeconds");
+        propMiddleValueShows = Application.Properties.getValue("middleValueShows");
     }
 
     hidden function toggleNonEssentials(visible, dc){
@@ -636,9 +639,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
     
     hidden function setHR(dc) as Void {
-        var middleValueShows = Application.Properties.getValue("middleValueShows");
-
-        if(middleValueShows == 10) {
+        if(propMiddleValueShows == 10) {
             dHrDesc.setText("HEART RATE:");
 
             // Try to retrieve live HR from Activity::Info
@@ -660,8 +661,8 @@ class Segment34View extends WatchUi.WatchFace {
             if(dc.getWidth() > 450) {
                 width = 4;
             }
-            dHrDesc.setText(getComplicationDesc(middleValueShows));
-            dHrLabel.setText(getComplicationValue(middleValueShows, width));
+            dHrDesc.setText(getComplicationDesc(propMiddleValueShows));
+            dHrLabel.setText(getComplicationValue(propMiddleValueShows, width));
 
             dHrLabel.setColor(Graphics.COLOR_WHITE);
         }
