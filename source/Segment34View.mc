@@ -1231,9 +1231,13 @@ class Segment34View extends WatchUi.WatchFace {
         dTtrDesc.setText(getComplicationDesc(leftValueShows));
         dTtrLabel.setText(getComplicationValue(leftValueShows, leftWidth));
         
+        var rightWidth = 4;
+        if(dc.getWidth() == 240) {
+            rightWidth = 3;
+        }
         var rightValueShows = Application.Properties.getValue("rightValueShows");
         dActiveDesc.setText(getComplicationDesc(rightValueShows));
-        dActiveLabel.setText(getComplicationValue(rightValueShows, 4));
+        dActiveLabel.setText(getComplicationValue(rightValueShows, rightWidth));
     }
 
     function getComplicationValue(complicationType as Number, width as Number) as String {
@@ -1425,7 +1429,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 26) { // Raw Barometric pressure (hPA)
             var info = Activity.getActivityInfo();
             if (info has :rawAmbientPressure && info.rawAmbientPressure != null) {
-                val = (info.rawAmbientPressure / 100.0).format(numberFormat);
+                val = formatPressure(info.rawAmbientPressure / 100.0, numberFormat);
             }
         } else if(complicationType == 27) { // Weight kg
             var profile = UserProfile.getProfile();
@@ -1475,7 +1479,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 30) { // Sea level pressure (hPA)
             var info = Activity.getActivityInfo();
             if (info has :meanSeaLevelPressure && info.meanSeaLevelPressure != null) {
-                val = (info.meanSeaLevelPressure / 100.0).format(numberFormat);
+                val = formatPressure(info.meanSeaLevelPressure / 100.0, numberFormat);
             }
         } else if(complicationType == 31) { // Week number
             var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
@@ -1741,6 +1745,21 @@ class Segment34View extends WatchUi.WatchFace {
         } else {  // width == 5
             return distance < 1000 ? distance.format("%05.1f") : distance.format("%05d");
         }
+    }
+
+    function formatPressure(pressureHpa as Float, numberFormat as String) as String {
+        var pressureUnit = Application.Properties.getValue("pressureUnit");
+        var val = "";
+
+        if (pressureUnit == 0) { // hPA
+            val = pressureHpa.format(numberFormat);
+        } else if (pressureUnit == 1) { // mmHG
+            val = (pressureHpa * 0.750062).format(numberFormat);
+        } else if (pressureUnit == 2) { // inHG
+            val = (pressureHpa * 0.02953).format("%.1f");
+        }
+
+        return val;
     }
 
 }
