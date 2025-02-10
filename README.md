@@ -32,7 +32,6 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
  ## TODO / Things people have asked for
 - Option to always show seconds
 - Race predictions
-- Barometric pressure in bar and mmHG
 - Open widgets when pressing fields
 - Goal completion
 - Look into solar intensity
