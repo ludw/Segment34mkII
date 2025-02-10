@@ -64,7 +64,15 @@
     <setting propertyKey="@Properties.showStressAndBodyBattery" title="Show Stress (orange) and Body Battery (blue) bars">
         <settingConfig type="boolean" />
     </setting>
-    
+
+    <setting propertyKey="@Properties.showSunriseSunset" title="Show Sunrise and Sunset">
+        <settingConfig type="boolean" />
+    </setting>
+
+    <setting propertyKey="@Properties.showMoonPhase" title="Show Moon Phase">
+        <settingConfig type="boolean" />
+    </setting>
+
     <group id="dataFields" title="Data fields (*: limited device support)" description="">
         <setting propertyKey="@Properties.weatherLine2Shows" title="Line above clock shows:">
             <settingConfig type="list">

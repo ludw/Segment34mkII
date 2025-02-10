@@ -80,7 +80,6 @@ class Segment34View extends WatchUi.WatchFace {
         var clockTime = System.getClockTime();
         var now = Time.now().value();
         var updateEverything = false;
-        var doUpdate = false;
 
         if(lastUpdate == null or now - lastUpdate > 30 or clockTime.sec % 60 == 0) {
             updateEverything = true;
@@ -97,16 +96,13 @@ class Segment34View extends WatchUi.WatchFace {
         if(!isSleeping && !updateEverything) {
             if(propShowSeconds) {
                 setSeconds(dc);
-                doUpdate = true;
             }
             if(clockTime.sec % 5 == 0 and propMiddleValueShows == 10) {
                 setHR(dc);
-                doUpdate = true;
             }
-            if(doUpdate) {
-                View.onUpdate(dc);
-                drawStressAndBodyBattery(dc);
-            }
+
+            View.onUpdate(dc);
+            drawStressAndBodyBattery(dc);
             return;
         }
 
@@ -632,10 +628,15 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setMoon(dc) as Void {
-        var now = Time.now();
-        var today = Time.Gregorian.info(now, Time.FORMAT_SHORT);
-        var moonVal = moon_phase(today);
-        dMoonLabel.setText(moonVal);
+        var showMoonPhase = Application.Properties.getValue("showMoonPhase");
+        if(showMoonPhase) {
+            var now = Time.now();
+            var today = Time.Gregorian.info(now, Time.FORMAT_SHORT);
+            var moonVal = moon_phase(today);
+            dMoonLabel.setText(moonVal);
+        } else {
+            dMoonLabel.setText("");
+        }
     }
     
     hidden function setHR(dc) as Void {
@@ -998,8 +999,10 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setSunUpDown(dc) as Void {
+        var showSunriseSunset = Application.Properties.getValue("showSunriseSunset");
+
         var now = Time.now();
-        if(weatherCondition == null) {
+        if(weatherCondition == null or !showSunriseSunset) {
             dDawn.setText("");
             dDusk.setText("");
             return;

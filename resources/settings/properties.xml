@@ -8,6 +8,8 @@
     <property id="showNotificationCount" type="boolean">true</property>
     <property id="showSeconds" type="boolean">true</property>
     <property id="showStressAndBodyBattery" type="boolean">true</property>
+    <property id="showSunriseSunset" type="boolean">true</property>
+    <property id="showMoonPhase" type="boolean">true</property>
     <property id="batteryVariant" type="number">0</property>
     <property id="weatherLine2Shows" type="number">20</property>
     <property id="leftValueShows" type="number">6</property>
