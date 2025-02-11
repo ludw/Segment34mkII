@@ -57,7 +57,11 @@
         <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.showSeconds" title="Show Seconds">
+    <setting propertyKey="@Properties.showSeconds" title="Show Seconds in Active mode">
+        <settingConfig type="boolean" />
+    </setting>
+
+    <setting propertyKey="@Properties.alwaysShowSeconds" title="Show seconds in Inactive mode (MIP screens only)">
         <settingConfig type="boolean" />
     </setting>
 
@@ -72,6 +76,7 @@
     <setting propertyKey="@Properties.showMoonPhase" title="Show Moon Phase">
         <settingConfig type="boolean" />
     </setting>
+
 
     <group id="dataFields" title="Data fields (*: limited device support)" description="">
         <setting propertyKey="@Properties.weatherLine2Shows" title="Line above clock shows:">

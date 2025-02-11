@@ -16,13 +16,16 @@ const INTEGER_FORMAT = "%d";
 class Segment34View extends WatchUi.WatchFace {
 
     private var isSleeping = false;
+    private var doesPartialUpdate = false;
     private var lastUpdate = null;
     private var canBurnIn = false;
+    private var screenHeight = 0;
     private var previousEssentialsVis = null;
     private var batt = 0;
     private var stress = 0;
     private var weatherCondition = null;
 
+    private var secondsFont = null;
     private var dSecondsLabel = null;
     private var dAodPattern = null;
     private var dGradient = null;
@@ -56,6 +59,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var propBatteryVariant = null;
     private var propShowSeconds = null;
     private var propMiddleValueShows = null;
+    private var propAlwaysShowSeconds = null;
 
     function initialize() {
         WatchFace.initialize();
@@ -80,6 +84,11 @@ class Segment34View extends WatchUi.WatchFace {
         var clockTime = System.getClockTime();
         var now = Time.now().value();
         var updateEverything = false;
+
+        if(doesPartialUpdate) {
+            dc.clearClip();
+            doesPartialUpdate = false;
+        }
 
         if(lastUpdate == null or now - lastUpdate > 30 or clockTime.sec % 60 == 0) {
             updateEverything = true;
@@ -127,7 +136,42 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     function onPartialUpdate(dc) {
+        if(canBurnIn) { return; }
+        if(!propAlwaysShowSeconds) { return; }
+        doesPartialUpdate = true;
 
+        var clockTime = System.getClockTime();
+        var secString = Lang.format("$1$", [clockTime.sec.format("%02d")]);
+
+        var clipX = 0;
+        var clipY = 0;
+        var clipWidth = 0;
+        var clipHeight = 0;
+
+        if(screenHeight == 240) {
+            clipX = 205;
+            clipY = 157;
+            clipWidth = 24;
+            clipHeight = 20;
+        } else if(screenHeight == 260) {
+            clipX = 220;
+            clipY = 162;
+            clipWidth = 24;
+            clipHeight = 20;
+        } else if(screenHeight == 280) {
+            clipX = 235;
+            clipY = 170;
+            clipWidth = 24;
+            clipHeight = 20;
+        } else if(screenHeight > 280) {
+            return;
+        }
+
+        dc.setClip(clipX, clipY, clipWidth, clipHeight);
+        dc.setColor(0x000000, 0x000000);
+        dc.clear();
+        dc.setColor(getColor("dateDisplay"), Graphics.COLOR_TRANSPARENT);
+        dc.drawText(clipX, clipY, secondsFont, secString, Graphics.TEXT_JUSTIFY_LEFT);
     }
 
     function onSettingsChanged() {
@@ -163,6 +207,11 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function cacheDrawables(dc) as Void {
+        screenHeight = dc.getHeight();
+        if(screenHeight == 240 or screenHeight == 260 or screenHeight == 280) {
+            secondsFont = Application.loadResource( Rez.Fonts.id_led_small );
+        }
+
         dSecondsLabel = View.findDrawableById("SecondsLabel") as Text;
         dAodPattern = View.findDrawableById("aodPattern") as Drawable;
         dGradient = View.findDrawableById("gradient") as Drawable;
@@ -199,6 +248,7 @@ class Segment34View extends WatchUi.WatchFace {
         propBatteryVariant = Application.Properties.getValue("batteryVariant");
         propShowSeconds = Application.Properties.getValue("showSeconds");
         propMiddleValueShows = Application.Properties.getValue("middleValueShows");
+        propAlwaysShowSeconds = Application.Properties.getValue("alwaysShowSeconds");
     }
 
     hidden function toggleNonEssentials(visible, dc){
@@ -220,7 +270,12 @@ class Segment34View extends WatchUi.WatchFace {
         var hideInAOD = (visible or !canBurnIn);
         var hideBattery = (hideInAOD && propBatteryVariant != 2);  
 
-        dSecondsLabel.setVisible(visible && propShowSeconds);
+        if(propAlwaysShowSeconds and propShowSeconds and !canBurnIn) {
+            dSecondsLabel.setVisible(true);
+        } else {
+            dSecondsLabel.setVisible(visible && propShowSeconds);
+        }
+
         dHrLabel.setVisible(hideInAOD);
         dDateLabel.setVisible(hideInAOD);
         dTimeBg.setVisible(hideInAOD);
@@ -1147,28 +1202,28 @@ class Segment34View extends WatchUi.WatchFace {
             var barHeight = 125;
             var bbAdjustment = 0;
 
-            if(dc.getHeight() == 240) {
+            if(screenHeight == 240) {
                 barTop = 72;
                 fromEdge = 5;
                 barWidth = 3;
                 barHeight = 80;
                 bbAdjustment = 1;
             }
-            if(dc.getHeight() == 260) {
+            if(screenHeight == 260) {
                 barTop = 77;
                 fromEdge = 10;
                 barWidth = 3;
                 barHeight = 80;
                 bbAdjustment = 1;
             }
-            if(dc.getHeight() == 280) {
+            if(screenHeight == 280) {
                 barTop = 83;
                 fromEdge = 14;
                 barWidth = 3;
                 barHeight = 80;
                 bbAdjustment = -1;
             }
-            if(dc.getHeight() == 360) {
+            if(screenHeight == 360) {
                 barTop = 103;
                 fromEdge = 3;
                 barWidth = 3;
@@ -1178,7 +1233,7 @@ class Segment34View extends WatchUi.WatchFace {
                     fromEdge = 0;
                 }
             }
-            if(dc.getHeight() == 390) {
+            if(screenHeight == 390) {
                 barTop = 111;
                 fromEdge = 8;
                 barWidth = 4;
@@ -1188,7 +1243,7 @@ class Segment34View extends WatchUi.WatchFace {
                     fromEdge = 4;
                 }
             }
-            if(dc.getHeight() == 416) {
+            if(screenHeight == 416) {
                 barTop = 122;
                 fromEdge = 15;
                 barWidth = 4;
@@ -1198,7 +1253,7 @@ class Segment34View extends WatchUi.WatchFace {
                     fromEdge = 10;
                 }
             }
-            if(dc.getHeight() == 454) {
+            if(screenHeight == 454) {
                 barTop = 146;
                 fromEdge = 12;
                 barWidth = 4;
