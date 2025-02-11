@@ -100,10 +100,6 @@ class Segment34View extends WatchUi.WatchFace {
             if(clockTime.sec % 5 == 0 and propMiddleValueShows == 10) {
                 setHR(dc);
             }
-
-            View.onUpdate(dc);
-            drawStressAndBodyBattery(dc);
-            return;
         }
 
         if(updateEverything) {
@@ -122,12 +118,11 @@ class Segment34View extends WatchUi.WatchFace {
                 setBatt(dc);
                 updateStressAndBodyBatteryData();
             }
-            
-            View.onUpdate(dc);
+        }
 
-            if(!isSleeping or !canBurnIn) {
-                drawStressAndBodyBattery(dc);
-            }
+        View.onUpdate(dc);
+        if(!isSleeping or !canBurnIn) {
+            drawStressAndBodyBattery(dc);
         }
     }
 
