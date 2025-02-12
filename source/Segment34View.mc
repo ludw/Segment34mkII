@@ -800,12 +800,12 @@ class Segment34View extends WatchUi.WatchFace {
             }
         } else if(propColorTheme == 13) { // Black on white
             if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0xAAAAAA; }
+                if(amoled) { return 0xCCCCCC; }
                 return 0xAAAAAA;
             } else if(colorName.equals("fieldLabel")) {
                 return 0x000000;
             } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0xAAAAAA; }
+                if(amoled) { return 0xCCCCCC; }
                 return 0xFFFFFF;
             } else if(colorName.equals("timeDisplay")) {
                 if(amoled) {
