@@ -1,5 +1,5 @@
 <layout id="WatchFace">
-    <drawable id="background" visible="false" />
+    <drawable id="background" />
     <label id="MoonLabel" x="center" y="17" font="@Fonts.id_moon" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
     <label id="Dawn" x="184" y="13" font="@Fonts.id_storre" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x005555" text="DAWN:" />
     <label id="SunUpLabel" x="184" y="25" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xAAAAAA" />
