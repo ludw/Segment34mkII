@@ -883,7 +883,11 @@ class Segment34View extends WatchUi.WatchFace {
     
     hidden function setHR(dc) as Void {
         if(propMiddleValueShows == 10) {
-            dHrDesc.setText("HEART RATE:");
+            if(screenHeight == 280) {
+                dHrDesc.setText("HR:");
+            } else {
+                dHrDesc.setText("HEART RATE:");
+            }
 
             // Try to retrieve live HR from Activity::Info
             var activityInfo = Activity.getActivityInfo();
