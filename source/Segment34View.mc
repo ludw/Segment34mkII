@@ -1149,6 +1149,30 @@ class Segment34View extends WatchUi.WatchFace {
                     month_name(today.month)
                 ]);
                 break;
+            case 7: // WEEKDAY, YYYY-MM-DD
+                value = Lang.format("$1$, $2$-$3$-$4$", [
+                    day_name(today.day_of_week),
+                    today.year,
+                    today.month.format("%02d"),
+                    today.day.format("%02d")
+                ]);
+                break;
+            case 8: // WEEKDAY, MM/DD/YYYY
+                value = Lang.format("$1$, $2$/$3$/$4$", [
+                    day_name(today.day_of_week),
+                    today.month.format("%02d"),
+                    today.day.format("%02d"),
+                    today.year
+                ]);
+                break;
+            case 9: // WEEKDAY, DD.MM.YYYY
+                value = Lang.format("$1$, $2$.$3$.$4$", [
+                    day_name(today.day_of_week),
+                    today.day.format("%02d"),
+                    today.month.format("%02d"),
+                    today.year
+                ]);
+                break;
         }
         
         dDateLabel.setText(value.toUpper());

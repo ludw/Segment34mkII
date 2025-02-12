@@ -98,6 +98,9 @@
                 <listEntry value="1">YYYY-MM-DD</listEntry>
                 <listEntry value="2">MM/DD/YYYY</listEntry>
                 <listEntry value="3">DD.MM.YYYY</listEntry> 
+                <listEntry value="7">WEEKDAY, YYYY-MM-DD</listEntry>
+                <listEntry value="8">WEEKDAY, MM/DD/YYYY</listEntry>
+                <listEntry value="9">WEEKDAY, DD.MM.YYYY</listEntry> 
                 <listEntry value="4">WEEKDAY, DD MONTH (Week)</listEntry>
                 <listEntry value="5">WEEKDAY, DD MONTH YYYY (Week)</listEntry>
             </settingConfig>
