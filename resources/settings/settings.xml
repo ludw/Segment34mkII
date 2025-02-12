@@ -18,39 +18,13 @@
             <listEntry value="13">Black on white (not recommended for AMOLED)</listEntry>
         </settingConfig>
     </setting>
-        
-    <setting propertyKey="@Properties.hourFormat" title="Time format (12/24h)">
-        <settingConfig type="list">
-            <listEntry value="0">Auto - Use system setting</listEntry>
-            <listEntry value="1">24h</listEntry>
-            <listEntry value="2">12h</listEntry>
-        </settingConfig>
+
+    <setting propertyKey="@Properties.showClockBg" title="Show clock background">
+        <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.tempUnit" title="Temperature unit">
-        <settingConfig type="list">
-            <listEntry value="0">Auto - Use system setting</listEntry>
-            <listEntry value="1">C</listEntry>
-            <listEntry value="2">F</listEntry>
-        </settingConfig>
-    </setting>
-
-    <setting propertyKey="@Properties.windUnit" title="Wind speed unit">
-        <settingConfig type="list">
-            <listEntry value="0">m/s</listEntry>
-            <listEntry value="1">km/h</listEntry>
-            <listEntry value="2">mph</listEntry>
-            <listEntry value="3">knots</listEntry>
-            <listEntry value="4">beufort</listEntry>
-        </settingConfig>
-    </setting>
-
-    <setting propertyKey="@Properties.pressureUnit" title="Pressure unit">
-        <settingConfig type="list">
-            <listEntry value="0">hPA</listEntry>
-            <listEntry value="1">mmHG</listEntry>
-            <listEntry value="2">inHG</listEntry>
-        </settingConfig>
+    <setting propertyKey="@Properties.showDataBg" title="Show data fields background">
+        <settingConfig type="boolean" />
     </setting>
 
     <setting propertyKey="@Properties.showFeelsLike" title="Show 'Feels Like' temperature">
@@ -81,17 +55,20 @@
         <settingConfig type="boolean" />
     </setting>
 
-
-    <group id="dataFields" title="Data fields (*: limited device support)" description="">
-        <setting propertyKey="@Properties.weatherLine2Shows" title="Line above clock shows:">
+    <setting propertyKey="@Properties.batteryVariant" title="Battery display:">
             <settingConfig type="list">
-                <listEntry value="20">Weather conditions</listEntry>
-                <listEntry value="17">Steps / day</listEntry>
-                <listEntry value="19">Wheelchair pushes / day *</listEntry>
-                <listEntry value="11">Calories (kcal) / day</listEntry>
-                <listEntry value="12">Altitude (m)</listEntry>
-                <listEntry value="15">Altitude (ft)</listEntry>
-                <listEntry value="25">Training status *</listEntry>
+                <listEntry value="0">Remaining days *</listEntry>
+                <listEntry value="1">Percentage remaining</listEntry>
+                <listEntry value="2">Hidden</listEntry>
+            </settingConfig>
+    </setting>
+
+    <group id="unitsGroup" title="Units" description="">
+        <setting propertyKey="@Properties.hourFormat" title="Time format (12/24h)">
+            <settingConfig type="list">
+                <listEntry value="0">Auto - Use system setting</listEntry>
+                <listEntry value="1">24h</listEntry>
+                <listEntry value="2">12h</listEntry>
             </settingConfig>
         </setting>
 
@@ -110,7 +87,45 @@
             </settingConfig>
         </setting>
 
+        <setting propertyKey="@Properties.tempUnit" title="Temperature unit">
+            <settingConfig type="list">
+                <listEntry value="0">Auto - Use system setting</listEntry>
+                <listEntry value="1">C</listEntry>
+                <listEntry value="2">F</listEntry>
+            </settingConfig>
+        </setting>
 
+        <setting propertyKey="@Properties.windUnit" title="Wind speed unit">
+            <settingConfig type="list">
+                <listEntry value="0">m/s</listEntry>
+                <listEntry value="1">km/h</listEntry>
+                <listEntry value="2">mph</listEntry>
+                <listEntry value="3">knots</listEntry>
+                <listEntry value="4">beufort</listEntry>
+            </settingConfig>
+        </setting>
+
+        <setting propertyKey="@Properties.pressureUnit" title="Pressure unit">
+            <settingConfig type="list">
+                <listEntry value="0">hPA</listEntry>
+                <listEntry value="1">mmHG</listEntry>
+                <listEntry value="2">inHG</listEntry>
+            </settingConfig>
+        </setting>
+    </group>
+
+    <group id="dataFields" title="Data fields (*: limited device support)" description="">
+        <setting propertyKey="@Properties.weatherLine2Shows" title="Line above clock shows:">
+            <settingConfig type="list">
+                <listEntry value="20">Weather conditions</listEntry>
+                <listEntry value="17">Steps / day</listEntry>
+                <listEntry value="19">Wheelchair pushes / day *</listEntry>
+                <listEntry value="11">Calories (kcal) / day</listEntry>
+                <listEntry value="12">Altitude (m)</listEntry>
+                <listEntry value="15">Altitude (ft)</listEntry>
+                <listEntry value="25">Training status *</listEntry>
+            </settingConfig>
+        </setting>
 
         <setting propertyKey="@Properties.leftValueShows" title="Left value:">
             <settingConfig type="list">
@@ -233,26 +248,18 @@
                 <listEntry value="15">Altitude (ft)</listEntry>
             </settingConfig>
         </setting>
+
+        <setting propertyKey="@Properties.aodFieldShows" title="Always On (below clock):">
+            <settingConfig type="list">
+                <listEntry value="-1">Date</listEntry>
+                <listEntry value="20">Weather conditions</listEntry>
+                <listEntry value="17">Steps / day</listEntry>
+                <listEntry value="11">Calories (kcal) / day</listEntry>
+                <listEntry value="29">Active calories (kcal) / day</listEntry>
+                <listEntry value="19">Wheelchair pushes / day *</listEntry>
+                <listEntry value="25">Training status *</listEntry>
+            </settingConfig>
+        </setting>
     </group>
-
-    <setting propertyKey="@Properties.batteryVariant" title="Battery display:">
-        <settingConfig type="list">
-            <listEntry value="0">Remaining days *</listEntry>
-            <listEntry value="1">Percentage remaining</listEntry>
-            <listEntry value="2">Hidden</listEntry>
-        </settingConfig>
-    </setting>
-
-    <setting propertyKey="@Properties.aodFieldShows" title="Always On (below clock):">
-        <settingConfig type="list">
-            <listEntry value="-1">Date</listEntry>
-            <listEntry value="20">Weather conditions</listEntry>
-            <listEntry value="17">Steps / day</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="29">Active calories (kcal) / day</listEntry>
-            <listEntry value="19">Wheelchair pushes / day *</listEntry>
-            <listEntry value="25">Training status *</listEntry>
-        </settingConfig>
-    </setting>
 
 </settings>

@@ -10,6 +10,8 @@
     <property id="showStressAndBodyBattery" type="boolean">true</property>
     <property id="showSunriseSunset" type="boolean">true</property>
     <property id="showMoonPhase" type="boolean">true</property>
+    <property id="showClockBg" type="boolean">true</property>
+    <property id="showDataBg" type="boolean">true</property>
     <property id="alwaysShowSeconds" type="boolean">true</property>
     <property id="batteryVariant" type="number">0</property>
     <property id="weatherLine2Shows" type="number">20</property>

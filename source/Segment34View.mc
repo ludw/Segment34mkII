@@ -61,6 +61,8 @@ class Segment34View extends WatchUi.WatchFace {
     private var propShowSeconds = null;
     private var propMiddleValueShows = null;
     private var propAlwaysShowSeconds = null;
+    private var propShowClockBg = null;
+    private var propShowDataBg = null;
 
     function initialize() {
         WatchFace.initialize();
@@ -101,7 +103,7 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
 
-        toggleNonEssentials(!isSleeping, dc);
+        toggleNonEssentials(dc);
 
         if(!isSleeping && !updateEverything) {
             if(propShowSeconds) {
@@ -169,7 +171,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
 
         dc.setClip(clipX, clipY, clipWidth, clipHeight);
-        dc.setColor(0x000000, 0x000000);
+        dc.setColor(getColor("background"), getColor("background"));
         dc.clear();
         dc.setColor(getColor("dateDisplay"), Graphics.COLOR_TRANSPARENT);
         dc.drawText(clipX, clipY, secondsFont, secString, Graphics.TEXT_JUSTIFY_LEFT);
@@ -179,6 +181,7 @@ class Segment34View extends WatchUi.WatchFace {
         lastUpdate = null;
         previousEssentialsVis = null;
         cacheProps();
+        WatchUi.requestUpdate();
     }
 
     function onPowerBudgetExceeded() {
@@ -250,10 +253,13 @@ class Segment34View extends WatchUi.WatchFace {
         propShowSeconds = Application.Properties.getValue("showSeconds");
         propMiddleValueShows = Application.Properties.getValue("middleValueShows");
         propAlwaysShowSeconds = Application.Properties.getValue("alwaysShowSeconds");
+        propShowClockBg = Application.Properties.getValue("showClockBg");
+        propShowDataBg = Application.Properties.getValue("showDataBg");
     }
 
-    hidden function toggleNonEssentials(visible, dc){
-        if(!visible and canBurnIn) {
+    hidden function toggleNonEssentials(dc){
+        var awake = !isSleeping;
+        if(isSleeping and canBurnIn) {
             dc.setAntiAlias(false);
             var clockTime = System.getClockTime();
             dGradient.setVisible(false);
@@ -265,25 +271,21 @@ class Segment34View extends WatchUi.WatchFace {
             dbackground.setVisible(false);
         }
 
-        if(previousEssentialsVis == visible) {
+        if(previousEssentialsVis == awake) {
             return;
         }
 
-        var hideInAOD = (visible or !canBurnIn);
+        var hideInAOD = (awake or !canBurnIn);
         var hideBattery = (hideInAOD && propBatteryVariant != 2);  
 
         if(propAlwaysShowSeconds and propShowSeconds and !canBurnIn) {
             dSecondsLabel.setVisible(true);
         } else {
-            dSecondsLabel.setVisible(visible && propShowSeconds);
+            dSecondsLabel.setVisible(awake && propShowSeconds);
         }
 
         dHrLabel.setVisible(hideInAOD);
         dDateLabel.setVisible(hideInAOD);
-        dTimeBg.setVisible(hideInAOD);
-        dTtrBg.setVisible(hideInAOD);
-        dHrBg.setVisible(hideInAOD);
-        dActiveBg.setVisible(hideInAOD);
         dTtrDesc.setVisible(hideInAOD);
         dHrDesc.setVisible(hideInAOD);
         dActiveDesc.setVisible(hideInAOD);
@@ -298,15 +300,20 @@ class Segment34View extends WatchUi.WatchFace {
         dTtrLabel.setVisible(hideInAOD);
         dActiveLabel.setVisible(hideInAOD);
         dWeatherLabel2.setVisible(hideInAOD);
-        dStepBg.setVisible(hideInAOD);
         dStepLabel.setVisible(hideInAOD);
 
+        dTimeBg.setVisible(hideInAOD and propShowClockBg);
+        dTtrBg.setVisible(hideInAOD and propShowDataBg);
+        dHrBg.setVisible(hideInAOD and propShowDataBg);
+        dActiveBg.setVisible(hideInAOD and propShowDataBg);
+        dStepBg.setVisible(hideInAOD and propShowDataBg);
+        
         dBattLabel.setVisible(hideBattery);
         dBattBg.setVisible(hideBattery);
 
         dTimeLabel.setColor(getColor("timeDisplay"));
 
-        if(visible) {
+        if(awake) {
             if(getColor("background") == 0xFFFFFF) {
                 dbackground.setVisible(true);
             } else {
@@ -349,7 +356,7 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
 
-        previousEssentialsVis = visible;
+        previousEssentialsVis = awake;
     }
     
     hidden function getColor(colorName) as Graphics.ColorType {
@@ -762,7 +769,7 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0xFFFFFF;
             } else if(colorName.equals("timeBg")) {
                 if(amoled) { return 0x333333; }
-                return 0x000000;
+                return 0x555555;
             } else if(colorName.equals("timeDisplay")) {
                 if(amoled) {
                     if(isSleeping) {
@@ -805,7 +812,7 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0x000000;
             } else if(colorName.equals("timeBg")) {
                 if(amoled) { return 0xCCCCCC; }
-                return 0xFFFFFF;
+                return 0xAAAAAA;
             } else if(colorName.equals("timeDisplay")) {
                 if(amoled) {
                     if(isSleeping) {
@@ -832,9 +839,9 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("bodybattery")) {
                 return 0x55AAFF;
             } else if(colorName.equals("HRActive")) {
-                return 0xFFFFFF;
+                return 0x000000;
             } else if(colorName.equals("HRInactive")) {
-                return 0xAAAAAA;
+                return 0x555555;
             } else if(colorName.equals("background")) {
                 return 0xFFFFFF;
             } else if(colorName.equals("valueDisplay")) {
@@ -910,7 +917,7 @@ class Segment34View extends WatchUi.WatchFace {
             dHrDesc.setText(getComplicationDesc(propMiddleValueShows));
             dHrLabel.setText(getComplicationValue(propMiddleValueShows, width));
 
-            dHrLabel.setColor(Graphics.COLOR_WHITE);
+            dHrLabel.setColor(getColor("valueDisplay"));
         }
 
         dHrLabel.draw(dc);
