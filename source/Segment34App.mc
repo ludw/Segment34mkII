@@ -3,7 +3,9 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 
 class Segment34App extends Application.AppBase {
-
+    
+    var mView;
+    
     function initialize() {
         AppBase.initialize();
     }
@@ -18,7 +20,14 @@ class Segment34App extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() {
-        return [ new Segment34View() ] ;
+        mView = new Segment34View();
+		onSettingsChanged();
+		return [ mView ];
+    }
+
+    function onSettingsChanged() as Void {
+        mView.onSettingsChanged();
+        WatchUi.requestUpdate();
     }
 
 }

@@ -179,7 +179,6 @@ class Segment34View extends WatchUi.WatchFace {
         lastUpdate = null;
         previousEssentialsVis = null;
         cacheProps();
-        WatchUi.requestUpdate();
     }
 
     function onPowerBudgetExceeded() {
