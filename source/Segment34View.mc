@@ -331,7 +331,7 @@ class Segment34View extends WatchUi.WatchFace {
             dDateLabel.setColor(getColor("dateDisplay"));
             dSecondsLabel.setColor(getColor("dateDisplay"));
             dNotifLabel.setColor(getColor("notifications"));
-            dMoonLabel.setColor(getColor("valueDisplay"));
+            dMoonLabel.setColor(getColor("moonDisplay"));
             dDusk.setColor(getColor("dawnDuskLabel"));
             dDawn.setColor(getColor("dawnDuskLabel"));
             dSunUpLabel.setColor(getColor("dawnDuskValue"));
@@ -804,31 +804,42 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("valueDisplay")) {
                 return 0xFFFFFF;
             }
-        } else if(propColorTheme == 13) { // Black on white
+        } else if(propColorTheme == 13 or propColorTheme == 14 or propColorTheme == 15 or propColorTheme == 16) { // Black on white
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0xCCCCCC; }
                 return 0xAAAAAA;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0x000000;
+            } else if(colorName.equals("fieldLabel") or colorName.equals("dawnDuskLabel")) {
+                if(propColorTheme == 13) { // Black on white
+                    return 0x000000;
+                } else if(propColorTheme == 14) { // Red on white
+                    return 0xAA0000;
+                } else if(propColorTheme == 15) { // Blue on white
+                    return 0x0000AA;
+                } else if(propColorTheme == 16) { // Green on white
+                    return 0x00AA00;
+                }
             } else if(colorName.equals("timeBg")) {
                 if(amoled) { return 0xCCCCCC; }
                 return 0xAAAAAA;
             } else if(colorName.equals("timeDisplay")) {
-                if(amoled) {
-                    if(isSleeping) {
-                        return 0xAAAAAA;
-                    } else {
-                        return 0x000000;
-                    }
+                if(propColorTheme == 13) { // Black on white
+                    if(amoled and isSleeping) { return 0xAAAAAA; }
+                    return 0x000000;
+                } else if(propColorTheme == 14) { // Red on white
+                    if(amoled and isSleeping) { return 0xAA5555; }
+                    return 0xAA0000;
+                } else if(propColorTheme == 15) { // Blue on white
+                    if(amoled and isSleeping) { return 0x5555AA; }
+                    return 0x0000AA;
+                } else if(propColorTheme == 16) { // Green on white
+                    if(amoled and isSleeping) { return 0x55AA55; }
+                    return 0x00AA00;
                 }
-                return 0x000000;
             } else if(colorName.equals("dateDisplay")) {
                 if(amoled) { return 0x000000; }
                 return 0x000000;
             } else if(colorName.equals("dateDisplayDim")) {
                 return 0x555555;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0x000000;
             } else if(colorName.equals("dawnDuskValue")) {
                 if(amoled) { return 0x000000; }
                 return 0x000000;
@@ -846,6 +857,8 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0xFFFFFF;
             } else if(colorName.equals("valueDisplay")) {
                 return 0x000000;
+            } else if(colorName.equals("moonDisplay")) {
+                return 0x555555;
             }
         }
 

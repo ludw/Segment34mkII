@@ -16,6 +16,9 @@
             <listEntry value="9">White on orange</listEntry>
             <listEntry value="12">White on black</listEntry>
             <listEntry value="13">Black on white (not recommended for AMOLED)</listEntry>
+            <listEntry value="14">Red on white (not recommended for AMOLED)</listEntry>
+            <listEntry value="15">Blue on white (not recommended for AMOLED)</listEntry>
+            <listEntry value="16">Green on white (not recommended for AMOLED)</listEntry>
         </settingConfig>
     </setting>
 
