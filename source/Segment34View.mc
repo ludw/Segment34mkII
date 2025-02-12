@@ -649,6 +649,73 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("HRInactive")) {
                 return 0xFFAA00;
             }
+        } else if(propColorTheme == 10) { // Blue
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x191b33; }
+                return 0x555555;
+            } else if(colorName.equals("fieldLabel")) {
+                return 0x0055AA;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x191b33; }
+                return 0x000055;
+            } else if(colorName.equals("timeDisplay")) {
+                if(amoled) { return 0x3495d4; }
+                return 0x0055AA;
+            } else if(colorName.equals("dateDisplay")) {
+                if(amoled) { return 0xffffff; }
+                return 0xFFFFFF;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0x0055AA;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                return 0x0055AA;
+            } else if(colorName.equals("dawnDuskValue")) {
+                if(amoled) { return 0xFFFFFF; }
+                return 0xAAAAAA;
+            } else if(colorName.equals("notifications")) {
+                return 0x55AAFF;
+            } else if(colorName.equals("stress")) {
+                return 0xFFAA00;
+            } else if(colorName.equals("bodybattery")) {
+                return 0x55AAFF;
+            } else if(colorName.equals("HRActive")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("HRInactive")) {
+                if(amoled) { return 0x0055AA; }
+                return 0x55AAFF;
+            }
+        } else if(propColorTheme == 11) { // Orange
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x333333; }
+                return 0x555555;
+            } else if(colorName.equals("fieldLabel")) {
+                return 0xFFAA00;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x333333; }
+                return 0x555555;
+            } else if(colorName.equals("timeDisplay")) {
+                if(amoled) { return 0xff7600; }
+                return 0xFFAA00;
+            } else if(colorName.equals("dateDisplay")) {
+                if(amoled) { return 0xffffff; }
+                return 0xFFFFFF;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0x555555;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                return 0xFFAA00;
+            } else if(colorName.equals("dawnDuskValue")) {
+                if(amoled) { return 0xFFFFFF; }
+                return 0xAAAAAA;
+            } else if(colorName.equals("notifications")) {
+                return 0x55AAFF;
+            } else if(colorName.equals("stress")) {
+                return 0xFFAA00;
+            } else if(colorName.equals("bodybattery")) {
+                return 0x55AAFF;
+            } else if(colorName.equals("HRActive")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("HRInactive")) {
+                return 0xFFAA00;
+            }
         }
 
         return Graphics.COLOR_WHITE;
