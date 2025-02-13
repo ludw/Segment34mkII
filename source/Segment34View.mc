@@ -360,7 +360,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
     
     hidden function getColor(colorName) as Graphics.ColorType {
-        var amoled = System.getDeviceSettings().requiresBurnInProtection;
+        var amoled = canBurnIn;
         
         if(propColorTheme == 0) { // Yellow on turquiose
             if(colorName.equals("fieldBg")) {
@@ -2052,6 +2052,49 @@ class Segment34View extends WatchUi.WatchFace {
         }
 
         return val;
+    }
+
+}
+
+
+class Segment34Delegate extends WatchUi.WatchFaceDelegate {
+    var screenW = null;
+    var screenH = null;
+
+    public function initialize() {
+        WatchFaceDelegate.initialize();
+        screenW = System.getDeviceSettings().screenWidth;
+        screenH = System.getDeviceSettings().screenHeight;
+    }
+
+	public function onPress(clickEvent as WatchUi.ClickEvent) {
+		var coords = clickEvent.getCoordinates();
+        var x = coords[0];
+        var y = coords[1];
+        System.println("X: " + coords[0] + ", Y: " + coords[1]);
+
+        if(y < screenH / 3) {
+            handlePress("pressToOpenTop");
+        } else if (y < (screenH / 3) * 2) {
+            handlePress("pressToOpenMiddle");
+        } else if (x < screenW / 3) {
+            handlePress("pressToOpenBottomLeft");
+        } else if (x < (screenW / 3) * 2) {
+            handlePress("pressToOpenBottomCenter");
+        } else {
+            handlePress("pressToOpenBottomRight");
+        }
+
+        return true;
+    }
+
+    function handlePress(areaSetting as String) {
+        var cID = Application.Properties.getValue(areaSetting) as Complications.Type;
+        if(cID != null and cID != 0) {
+            try {
+                Complications.exitTo(new Id(cID));
+            } catch (e) {}
+        }
     }
 
 }

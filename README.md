@@ -30,12 +30,18 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
  Connect your watch via usb and transfer the Segment34.prg file to the GARMIN/Apps folder on the watch. 
 
  ## TODO / Things people have asked for
-- Option to always show seconds
-- Race predictions
-- Open widgets when pressing fields
-- Goal completion
+- Goal completion marker
+- Secondary timezone
+- Move HR to other data fields
+- Battery, different color when low
+- Next alarm
+- Ambient temperature
+- Option to hide the middle field (maybe: making the left and right field wider in this case)
+- Maybe: open glances when pressing the data fields. I can't test this on my own watch so a bit annoying to implement. 
+
+Lower priority:
 - Look into solar intensity
-- Localization
 - Always on as the only thing shown
 - Move indicator
-- Secondary timezone with minute offset
+- Race predictions
+- Localization
