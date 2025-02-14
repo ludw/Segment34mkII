@@ -64,6 +64,8 @@ class Segment34View extends WatchUi.WatchFace {
     private var propAlwaysShowSeconds = null;
     private var propShowClockBg = null;
     private var propShowDataBg = null;
+    private var propAodFieldShows = null;
+    private var propBottomFieldShows = null;
 
     function initialize() {
         WatchFace.initialize();
@@ -253,6 +255,8 @@ class Segment34View extends WatchUi.WatchFace {
         propAlwaysShowSeconds = Application.Properties.getValue("alwaysShowSeconds");
         propShowClockBg = Application.Properties.getValue("showClockBg");
         propShowDataBg = Application.Properties.getValue("showDataBg");
+        propAodFieldShows = Application.Properties.getValue("aodFieldShows");
+        propBottomFieldShows = Application.Properties.getValue("bottomFieldShows");
 
         var fontVariant = Application.Properties.getValue("smallFontVariant");
         if(fontVariant == 0) {
@@ -270,7 +274,11 @@ class Segment34View extends WatchUi.WatchFace {
             var clockTime = System.getClockTime();
             dGradient.setVisible(false);
             dAodPattern.setVisible(true);
-            dAodDateLabel.setVisible(true);
+            if(propAodFieldShows != -2) {
+                dAodDateLabel.setVisible(true);
+            } else {
+                dAodDateLabel.setVisible(false);
+            }
             dAodPattern.setLocation(clockTime.min % 2, dAodPattern.locY);
             dAodDateLabel.setLocation(Math.floor(dc.getWidth() / 2) - 1 + clockTime.min % 3, dAodDateLabel.locY);
             dAodDateLabel.setColor(getColor("dateDisplayDim"));
@@ -290,7 +298,22 @@ class Segment34View extends WatchUi.WatchFace {
             dSecondsLabel.setVisible(awake && propShowSeconds);
         }
 
-        dHrLabel.setVisible(hideInAOD);
+        if(propBottomFieldShows == -2) {
+            dStepLabel.setVisible(false);
+            dStepBg.setVisible(false);
+        } else {
+            dStepLabel.setVisible(hideInAOD);
+            dStepBg.setVisible(hideInAOD and propShowDataBg);
+        }
+
+        if(propMiddleValueShows == -2) {
+            dHrLabel.setVisible(false);
+            dHrBg.setVisible(false);
+        } else {
+            dHrLabel.setVisible(hideInAOD);
+            dHrBg.setVisible(hideInAOD and propShowDataBg);
+        }
+        
         dDateLabel.setVisible(hideInAOD);
         dTtrDesc.setVisible(hideInAOD);
         dHrDesc.setVisible(hideInAOD);
@@ -306,13 +329,10 @@ class Segment34View extends WatchUi.WatchFace {
         dTtrLabel.setVisible(hideInAOD);
         dActiveLabel.setVisible(hideInAOD);
         dWeatherLabel2.setVisible(hideInAOD);
-        dStepLabel.setVisible(hideInAOD);
 
         dTimeBg.setVisible(hideInAOD and propShowClockBg);
         dTtrBg.setVisible(hideInAOD and propShowDataBg);
-        dHrBg.setVisible(hideInAOD and propShowDataBg);
         dActiveBg.setVisible(hideInAOD and propShowDataBg);
-        dStepBg.setVisible(hideInAOD and propShowDataBg);
         
         dBattLabel.setVisible(hideBattery);
         dBattBg.setVisible(hideBattery);
@@ -1284,12 +1304,16 @@ class Segment34View extends WatchUi.WatchFace {
         if(weatherCondition == null or !showSunriseSunset) {
             dDawn.setText("");
             dDusk.setText("");
+            dSunUpLabel.setText("");
+            dSunDownLabel.setText("");
             return;
         }
         var loc = weatherCondition.observationLocationPosition;
         if(loc == null) {
             dDawn.setText("");
             dDusk.setText("");
+            dSunUpLabel.setText("");
+            dSunDownLabel.setText("");
             return;
         }
         dDawn.setText("DAWN:");
@@ -1407,22 +1431,20 @@ class Segment34View extends WatchUi.WatchFace {
         dDateLabel.setText(value.toUpper());
 
         if(canBurnIn) {
-            var aodFieldShows = Application.Properties.getValue("aodFieldShows");
-            if(aodFieldShows == -1) {
+            if(propAodFieldShows == -1) {
                 dAodDateLabel.setText(value.toUpper());
             } else {
-                var unit = getComplicationUnit(aodFieldShows);
+                var unit = getComplicationUnit(propAodFieldShows);
                 if (unit.length() > 0) {
                     unit = Lang.format(" $1$", [unit]);
                 }
-                dAodDateLabel.setText(Lang.format("$1$$2$", [getComplicationValue(aodFieldShows, 10), unit]));
+                dAodDateLabel.setText(Lang.format("$1$$2$", [getComplicationValue(propAodFieldShows, 10), unit]));
             }
         }
     }
 
     hidden function setStep(dc) as Void {
-        var bottomFieldShows = Application.Properties.getValue("bottomFieldShows");
-        dStepLabel.setText(getComplicationValueWithFormat(bottomFieldShows, "%05d", 5));
+        dStepLabel.setText(getComplicationValueWithFormat(propBottomFieldShows, "%05d", 5));
     }
 
     hidden function updateStressAndBodyBatteryData() as Void {

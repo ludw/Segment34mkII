@@ -64,14 +64,6 @@
                 <listEntry value="1">Higher contrast</listEntry>
             </settingConfig>
     </setting>
-    
-    <setting propertyKey="@Properties.batteryVariant" title="Battery display:">
-            <settingConfig type="list">
-                <listEntry value="0">Remaining days *</listEntry>
-                <listEntry value="1">Percentage remaining</listEntry>
-                <listEntry value="2">Hidden</listEntry>
-            </settingConfig>
-    </setting>
 
     <setting propertyKey="@Properties.hourFormat" title="Time format (12/24h)">
         <settingConfig type="list">
@@ -173,6 +165,7 @@
 
     <setting propertyKey="@Properties.middleValueShows" title="Middle value:">
         <settingConfig type="list">
+            <listEntry value="-2">Hidden</listEntry>
             <listEntry value="0">Active min / week</listEntry>
             <listEntry value="1">Active min / day</listEntry>
             <listEntry value="2">Distance (km) / day</listEntry>
@@ -241,6 +234,7 @@
 
     <setting propertyKey="@Properties.bottomFieldShows" title="Bottom value:">
         <settingConfig type="list">
+            <listEntry value="-2">Hidden</listEntry>
             <listEntry value="17">Steps / day</listEntry>
             <listEntry value="18">Distance (meter) / day</listEntry>
             <listEntry value="21">Run distance (km) / week *</listEntry>
@@ -257,8 +251,17 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.batteryVariant" title="Battery display:">
+            <settingConfig type="list">
+                <listEntry value="0">Remaining days *</listEntry>
+                <listEntry value="1">Percentage remaining</listEntry>
+                <listEntry value="2">Hidden</listEntry>
+            </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.aodFieldShows" title="Always On (below clock):">
         <settingConfig type="list">
+            <listEntry value="-2">Hidden</listEntry>
             <listEntry value="-1">Date</listEntry>
             <listEntry value="20">Weather conditions</listEntry>
             <listEntry value="17">Steps / day</listEntry>
