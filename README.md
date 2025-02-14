@@ -53,3 +53,4 @@ Lower priority:
 ## Change log
 2025-02-14
 - Option to make the small dot matrix font more readable
+- Options to hide steps, bottom middle field, AOD field
