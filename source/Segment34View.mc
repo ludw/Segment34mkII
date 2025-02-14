@@ -25,7 +25,8 @@ class Segment34View extends WatchUi.WatchFace {
     private var stress = 0;
     private var weatherCondition = null;
 
-    private var secondsFont = null;
+    private var ledSmallFont = null;
+
     private var dbackground = null;
     private var dSecondsLabel = null;
     private var dAodPattern = null;
@@ -174,7 +175,7 @@ class Segment34View extends WatchUi.WatchFace {
         dc.setColor(getColor("background"), getColor("background"));
         dc.clear();
         dc.setColor(getColor("dateDisplay"), Graphics.COLOR_TRANSPARENT);
-        dc.drawText(clipX, clipY, secondsFont, secString, Graphics.TEXT_JUSTIFY_LEFT);
+        dc.drawText(clipX, clipY, ledSmallFont, secString, Graphics.TEXT_JUSTIFY_LEFT);
     }
 
     function onSettingsChanged() {
@@ -211,9 +212,6 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function cacheDrawables(dc) as Void {
         screenHeight = dc.getHeight();
-        if(screenHeight == 240 or screenHeight == 260 or screenHeight == 280) {
-            secondsFont = Application.loadResource( Rez.Fonts.id_led_small );
-        }
 
         dbackground = View.findDrawableById("background") as Drawable;
         dSecondsLabel = View.findDrawableById("SecondsLabel") as Text;
@@ -255,6 +253,14 @@ class Segment34View extends WatchUi.WatchFace {
         propAlwaysShowSeconds = Application.Properties.getValue("alwaysShowSeconds");
         propShowClockBg = Application.Properties.getValue("showClockBg");
         propShowDataBg = Application.Properties.getValue("showDataBg");
+
+        var fontVariant = Application.Properties.getValue("smallFontVariant");
+        if(fontVariant == 0) {
+            ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small );
+        } else {
+            ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small_readable );
+        }
+        
     }
 
     hidden function toggleNonEssentials(dc){
@@ -343,6 +349,14 @@ class Segment34View extends WatchUi.WatchFace {
             dStepLabel.setColor(getColor("valueDisplay"));
             dBattBg.setColor(0x555555);
             dBattLabel.setColor(getColor("valueDisplay"));
+
+            if(screenHeight == 240 or screenHeight == 260 or screenHeight == 280) {
+                dDateLabel.setFont(ledSmallFont);
+                dSecondsLabel.setFont(ledSmallFont);
+                dNotifLabel.setFont(ledSmallFont);
+                dWeatherLabel1.setFont(ledSmallFont);
+                dWeatherLabel2.setFont(ledSmallFont);
+            }
 
             if(canBurnIn) {
                 dAodPattern.setVisible(false);
@@ -2071,7 +2085,6 @@ class Segment34Delegate extends WatchUi.WatchFaceDelegate {
 		var coords = clickEvent.getCoordinates();
         var x = coords[0];
         var y = coords[1];
-        System.println("X: " + coords[0] + ", Y: " + coords[1]);
 
         if(y < screenH / 3) {
             handlePress("pressToOpenTop");

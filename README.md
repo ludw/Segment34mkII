@@ -35,9 +35,12 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 - Move HR to other data fields
 - Battery, different color when low
 - Next alarm
+- DND
 - Ambient temperature
 - Option to hide the middle field (maybe: making the left and right field wider in this case)
-- Maybe: open glances when pressing the data fields. I can't test this on my own watch so a bit annoying to implement. 
+- Align Date center when no notifications or seconds.
+- Option to align AOD date field left
+- Color themes: gray + orange. orange + green
 
 Lower priority:
 - Look into solar intensity
@@ -45,3 +48,8 @@ Lower priority:
 - Move indicator
 - Race predictions
 - Localization
+
+
+## Change log
+2025-02-14
+- Option to make the small dot matrix font more readable

@@ -58,6 +58,13 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.smallFontVariant" title="Small dot matrix font variant:">
+            <settingConfig type="list">
+                <listEntry value="0">Default</listEntry>
+                <listEntry value="1">Higher contrast</listEntry>
+            </settingConfig>
+    </setting>
+    
     <setting propertyKey="@Properties.batteryVariant" title="Battery display:">
             <settingConfig type="list">
                 <listEntry value="0">Remaining days *</listEntry>
