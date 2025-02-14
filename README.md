@@ -37,7 +37,6 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 - Next alarm
 - DND
 - Ambient temperature
-- Option to hide the middle field (maybe: making the left and right field wider in this case)
 - Align Date center when no notifications or seconds.
 - Option to align AOD date field left
 - Color themes: gray + orange. orange + green
@@ -51,6 +50,7 @@ Lower priority:
 
 
 ## Change log
-2025-02-14
+2025-02-14, v1.14.0
 - Option to make the small dot matrix font more readable
 - Options to hide steps, bottom middle field, AOD field
+- One more color theme: orange on white

@@ -838,7 +838,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("valueDisplay")) {
                 return 0xFFFFFF;
             }
-        } else if(propColorTheme == 13 or propColorTheme == 14 or propColorTheme == 15 or propColorTheme == 16) { // Black on white
+        } else if(propColorTheme == 13 or propColorTheme == 14 or propColorTheme == 15 or propColorTheme == 16 or propColorTheme == 17) { // on white
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0xCCCCCC; }
                 return 0xAAAAAA;
@@ -851,6 +851,8 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0x0000AA;
                 } else if(propColorTheme == 16) { // Green on white
                     return 0x00AA00;
+                } else if(propColorTheme == 17) { // Orange on white
+                    return 0x555555;
                 }
             } else if(colorName.equals("timeBg")) {
                 if(amoled) { return 0xCCCCCC; }
@@ -868,6 +870,9 @@ class Segment34View extends WatchUi.WatchFace {
                 } else if(propColorTheme == 16) { // Green on white
                     if(amoled and isSleeping) { return 0x55AA55; }
                     return 0x00AA00;
+                } else if(propColorTheme == 17) { // Orange on white
+                    if(amoled and isSleeping) { return 0xff7600; }
+                    return 0xFF5500;
                 }
             } else if(colorName.equals("dateDisplay")) {
                 if(amoled) { return 0x000000; }
@@ -876,10 +881,11 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0x555555;
             } else if(colorName.equals("dawnDuskValue")) {
                 if(amoled) { return 0x000000; }
-                return 0x000000;
+                return 0x555555;
             } else if(colorName.equals("notifications")) {
                 return 0x000000;
             } else if(colorName.equals("stress")) {
+                if(propColorTheme == 17) { return 0xFF5500; }
                 return 0xFFAA00;
             } else if(colorName.equals("bodybattery")) {
                 return 0x55AAFF;
