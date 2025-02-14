@@ -50,6 +50,9 @@ Lower priority:
 
 
 ## Change log
+2025-02-14, v1.14.1
+- Added font option with lines instead of dots
+
 2025-02-14, v1.14.0
 - Option to make the small dot matrix font more readable
 - Options to hide steps, bottom middle field, AOD field

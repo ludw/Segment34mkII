@@ -261,8 +261,10 @@ class Segment34View extends WatchUi.WatchFace {
         var fontVariant = Application.Properties.getValue("smallFontVariant");
         if(fontVariant == 0) {
             ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small );
-        } else {
+        } else if(fontVariant == 1) {
             ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small_readable );
+        } else {
+            ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small_lines );
         }
         
     }

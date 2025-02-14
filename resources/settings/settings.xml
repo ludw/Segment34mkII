@@ -61,8 +61,9 @@
 
     <setting propertyKey="@Properties.smallFontVariant" title="Small dot matrix font variant:">
             <settingConfig type="list">
-                <listEntry value="0">Default</listEntry>
-                <listEntry value="1">Higher contrast</listEntry>
+                <listEntry value="0">Dots</listEntry>
+                <listEntry value="1">Blended</listEntry>
+                <listEntry value="2">Lines (highest contrast)</listEntry>
             </settingConfig>
     </setting>
 

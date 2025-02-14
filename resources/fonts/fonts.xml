@@ -9,6 +9,7 @@
     <font id="id_led" filename="led.fnt" antialias="false" />
     <font id="id_led_small" filename="led_small.fnt" antialias="false" />
     <font id="id_led_small_readable" filename="led_small_readable.fnt" antialias="true" />
+    <font id="id_led_small_lines" filename="led_small_lines.fnt" antialias="false" />
     <font id="id_led_big" filename="led_big.fnt" antialias="false" filter="0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ,() #." />
     <font id="id_smol" filename="smol.fnt" antialias="false" />
     <font id="id_xsmol" filename="xsmol.fnt" antialias="false" />
