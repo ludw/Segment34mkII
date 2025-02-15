@@ -32,14 +32,12 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
  ## TODO / Things people have asked for
 - Goal completion marker
 - Secondary timezone
-- Move HR to other data fields
 - Battery, different color when low
+- Battery bar instead of numbers
 - Next alarm
 - DND
-- Ambient temperature
 - Align Date center when no notifications or seconds.
 - Option to align AOD date field left
-- Color themes: gray + orange. orange + green
 
 Lower priority:
 - Always on as the only thing shown
@@ -54,6 +52,7 @@ Lower priority:
 - Added Solar intensity and sensor temperature
 - HR can be in any field
 - Differnt color for live HR vs last historic value replaced with different labels (Live HR vs Last HR)
+- One more color theme: orange and green
 
 2025-02-14, v1.14.1
 - Added font option with lines instead of dots
