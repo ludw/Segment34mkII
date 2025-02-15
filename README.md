@@ -52,6 +52,8 @@ Lower priority:
 2025-02-15
 - Added more things to open with press to open
 - Added Solar intensity and sensor temperature
+- HR can be in any field
+- Differnt color for live HR vs last historic value replaced with different labels (Live HR vs Last HR)
 
 2025-02-14, v1.14.1
 - Added font option with lines instead of dots

@@ -148,6 +148,7 @@
             <listEntry value="7">VO2 Max Running</listEntry>
             <listEntry value="8">VO2 Max Cycling</listEntry>
             <listEntry value="9">Respiration Rate</listEntry>
+            <listEntry value="10">Heart Rate</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
             <listEntry value="29">Active calories (kcal) / day</listEntry>
             <listEntry value="12">Altitude (m)</listEntry>
@@ -221,6 +222,7 @@
             <listEntry value="7">VO2 Max Running</listEntry>
             <listEntry value="8">VO2 Max Cycling</listEntry>
             <listEntry value="9">Respiration Rate</listEntry>
+            <listEntry value="10">Heart Rate</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
             <listEntry value="29">Active calories (kcal) / day</listEntry>
             <listEntry value="12">Altitude (m)</listEntry>

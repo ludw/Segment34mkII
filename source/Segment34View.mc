@@ -60,7 +60,9 @@ class Segment34View extends WatchUi.WatchFace {
     private var propColorTheme = null;
     private var propBatteryVariant = null;
     private var propShowSeconds = null;
+    private var propLeftValueShows = null;
     private var propMiddleValueShows = null;
+    private var propRightValueShows = null;
     private var propAlwaysShowSeconds = null;
     private var propShowClockBg = null;
     private var propShowDataBg = null;
@@ -112,8 +114,8 @@ class Segment34View extends WatchUi.WatchFace {
             if(propShowSeconds) {
                 setSeconds(dc);
             }
-            if(clockTime.sec % 5 == 0 and propMiddleValueShows == 10) {
-                setHR(dc);
+            if(clockTime.sec % 5 == 0 and (propLeftValueShows == 10 or propMiddleValueShows == 10 or propRightValueShows == 10)) {
+                setBottomFields(dc);
             }
         }
 
@@ -122,14 +124,13 @@ class Segment34View extends WatchUi.WatchFace {
             setDate(dc);
             if(!isSleeping or !canBurnIn) {
                 setSeconds(dc);
-                setHR(dc);
+                setBottomFields(dc);
                 setNotif(dc);
                 setMoon(dc);
                 setWeather(dc);
                 setWeatherLabel();
                 setSunUpDown(dc);
                 setStep(dc);
-                setTraining(dc);
                 setBatt(dc);
                 updateStressAndBodyBatteryData();
             }
@@ -251,11 +252,13 @@ class Segment34View extends WatchUi.WatchFace {
         propColorTheme = Application.Properties.getValue("colorTheme");
         propBatteryVariant = Application.Properties.getValue("batteryVariant");
         propShowSeconds = Application.Properties.getValue("showSeconds");
-        propMiddleValueShows = Application.Properties.getValue("middleValueShows");
         propAlwaysShowSeconds = Application.Properties.getValue("alwaysShowSeconds");
         propShowClockBg = Application.Properties.getValue("showClockBg");
         propShowDataBg = Application.Properties.getValue("showDataBg");
         propAodFieldShows = Application.Properties.getValue("aodFieldShows");
+        propLeftValueShows = Application.Properties.getValue("leftValueShows");
+        propMiddleValueShows = Application.Properties.getValue("middleValueShows");
+        propRightValueShows = Application.Properties.getValue("rightValueShows");
         propBottomFieldShows = Application.Properties.getValue("bottomFieldShows");
 
         var fontVariant = Application.Properties.getValue("smallFontVariant");
@@ -354,6 +357,7 @@ class Segment34View extends WatchUi.WatchFace {
             dActiveBg.setColor(getColor("fieldBg"));
             dStepBg.setColor(getColor("fieldBg"));
             dTtrDesc.setColor(getColor("fieldLabel"));
+            dHrLabel.setColor(getColor("valueDisplay"));
             dHrDesc.setColor(getColor("fieldLabel"));
             dActiveDesc.setColor(getColor("fieldLabel"));
             dDateLabel.setColor(getColor("dateDisplay"));
@@ -423,10 +427,6 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0xFFAA00;
             } else if(colorName.equals("bodybattery")) {
                 return 0x00AAFF;
-            } else if(colorName.equals("HRActive")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("HRInactive")) {
-                return 0x55AAAA;
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
@@ -457,10 +457,6 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0xFF55AA;
             } else if(colorName.equals("bodybattery")) {
                 return 0x00FFAA;
-            } else if(colorName.equals("HRActive")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("HRInactive")) {
-                return 0x55AAAA;
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
@@ -489,10 +485,6 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0xFFAA00;
             } else if(colorName.equals("bodybattery")) {
                 return 0x00AAFF;
-            } else if(colorName.equals("HRActive")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("HRInactive")) {
-                return 0x55AAAA;
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
@@ -523,11 +515,6 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("bodybattery")) {
                 if(amoled) { return 0x59b9fe; }
                 return 0x00AAFF;
-            } else if(colorName.equals("HRActive")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("HRInactive")) {
-                if(amoled) { return 0x96e0ac; }
-                return 0x55FF55;
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
@@ -555,10 +542,6 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0xFFAA55;
             } else if(colorName.equals("bodybattery")) {
                 return 0x55AAFF;
-            } else if(colorName.equals("HRActive")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("HRInactive")) {
-                return 0x55AAAA;
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
@@ -590,11 +573,6 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0xFF5555;
             } else if(colorName.equals("bodybattery")) {
                 return 0x00AAFF;
-            } else if(colorName.equals("HRActive")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("HRInactive")) {
-                if(amoled) { return 0x7878aa; }
-                return 0x5555AA;
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
@@ -623,10 +601,6 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0xAA0000;
             } else if(colorName.equals("bodybattery")) {
                 return 0x00AAFF;
-            } else if(colorName.equals("HRActive")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("HRInactive")) {
-                return 0xFF0000;
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
@@ -655,10 +629,6 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0xFFAA00;
             } else if(colorName.equals("bodybattery")) {
                 return 0x55AAFF;
-            } else if(colorName.equals("HRActive")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("HRInactive")) {
-                return 0x0055ff;
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
@@ -687,10 +657,6 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0xFFAA00;
             } else if(colorName.equals("bodybattery")) {
                 return 0x55AAFF;
-            } else if(colorName.equals("HRActive")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("HRInactive")) {
-                return 0x0055ff;
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
@@ -719,10 +685,6 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0xFFAA00;
             } else if(colorName.equals("bodybattery")) {
                 return 0x00AAFF;
-            } else if(colorName.equals("HRActive")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("HRInactive")) {
-                return 0xFFAA00;
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
@@ -753,11 +715,6 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("stress")) {
                 return 0xFFAA00;
             } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("HRActive")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("HRInactive")) {
-                if(amoled) { return 0x0055AA; }
                 return 0x55AAFF;
             } else if(colorName.equals("background")) {
                 return 0x000000;
@@ -790,10 +747,6 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0xFFAA00;
             } else if(colorName.equals("bodybattery")) {
                 return 0x55AAFF;
-            } else if(colorName.equals("HRActive")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("HRInactive")) {
-                return 0xFFAA00;
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
@@ -831,10 +784,6 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0xFFAA00;
             } else if(colorName.equals("bodybattery")) {
                 return 0x55AAFF;
-            } else if(colorName.equals("HRActive")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("HRInactive")) {
-                return 0xAAAAAA;
             } else if(colorName.equals("background")) {
                 return 0x000000;
             } else if(colorName.equals("valueDisplay")) {
@@ -891,10 +840,6 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0xFFAA00;
             } else if(colorName.equals("bodybattery")) {
                 return 0x55AAFF;
-            } else if(colorName.equals("HRActive")) {
-                return 0x000000;
-            } else if(colorName.equals("HRInactive")) {
-                return 0x555555;
             } else if(colorName.equals("background")) {
                 return 0xFFFFFF;
             } else if(colorName.equals("valueDisplay")) {
@@ -929,11 +874,6 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("bodybattery")) {
                 if(amoled) { return 0x59b9fe; }
                 return 0x00AAFF;
-            } else if(colorName.equals("HRActive")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("HRInactive")) {
-                if(amoled) { return 0x96e0ac; }
-                return 0x55FF55;
             } else if(colorName.equals("background")) {
                 return 0x000000;
             } else if(colorName.equals("valueDisplay")) {
@@ -976,42 +916,6 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             dMoonLabel.setText("");
         }
-    }
-    
-    hidden function setHR(dc) as Void {
-        if(propMiddleValueShows == 10) {
-            if(screenHeight == 280) {
-                dHrDesc.setText("HR:");
-            } else {
-                dHrDesc.setText("HEART RATE:");
-            }
-
-            // Try to retrieve live HR from Activity::Info
-            var activityInfo = Activity.getActivityInfo();
-            var sample = activityInfo.currentHeartRate;
-            if(sample != null) {
-                dHrLabel.setText(sample.format("%01d"));
-                dHrLabel.setColor(getColor("HRActive"));
-            } else if (ActivityMonitor has :getHeartRateHistory) {
-                // Falling back to historical HR from ActivityMonitor
-                var hist = ActivityMonitor.getHeartRateHistory(1, /* newestFirst */ true).next();
-                if ((hist != null) && (hist.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)) {
-                    dHrLabel.setText(hist.heartRate.format("%01d"));
-                    dHrLabel.setColor(getColor("HRInactive"));
-                }
-            }
-        } else {
-            var width = 3;
-            if(dc.getWidth() > 450) {
-                width = 4;
-            }
-            dHrDesc.setText(getComplicationDesc(propMiddleValueShows));
-            dHrLabel.setText(getComplicationValue(propMiddleValueShows, width));
-
-            dHrLabel.setColor(getColor("valueDisplay"));
-        }
-
-        dHrLabel.draw(dc);
     }
 
     hidden function setBatt(dc) as Void {
@@ -1602,22 +1506,27 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function setTraining(dc) as Void {
-        var leftValueShows = Application.Properties.getValue("leftValueShows");
+    hidden function setBottomFields(dc) as Void {
         var leftWidth = 3;
         if(dc.getWidth() > 450) {
             leftWidth = 4;
         }
-        dTtrDesc.setText(getComplicationDesc(leftValueShows));
-        dTtrLabel.setText(getComplicationValue(leftValueShows, leftWidth));
+        dTtrDesc.setText(getComplicationDesc(propLeftValueShows));
+        dTtrLabel.setText(getComplicationValue(propLeftValueShows, leftWidth));
         
+        var midWidth = 3;
+        if(dc.getWidth() > 450) {
+            midWidth = 4;
+        }
+        dHrDesc.setText(getComplicationDesc(propMiddleValueShows));
+        dHrLabel.setText(getComplicationValue(propMiddleValueShows, midWidth));
+
         var rightWidth = 4;
         if(dc.getWidth() == 240) {
             rightWidth = 3;
         }
-        var rightValueShows = Application.Properties.getValue("rightValueShows");
-        dActiveDesc.setText(getComplicationDesc(rightValueShows));
-        dActiveLabel.setText(getComplicationValue(rightValueShows, rightWidth));
+        dActiveDesc.setText(getComplicationDesc(propRightValueShows));
+        dActiveLabel.setText(getComplicationValue(propRightValueShows, rightWidth));
     }
 
     function getComplicationValue(complicationType as Number, width as Number) as String {
@@ -1689,6 +1598,19 @@ class Segment34View extends WatchUi.WatchFace {
             if(ActivityMonitor.getInfo() has :respirationRate) {
                 if(ActivityMonitor.getInfo().respirationRate != null) {
                     val = ActivityMonitor.getInfo().respirationRate.format(numberFormat);
+                }
+            }
+        } else if(complicationType == 10) {
+            // Try to retrieve live HR from Activity::Info
+            var activityInfo = Activity.getActivityInfo();
+            var sample = activityInfo.currentHeartRate;
+            if(sample != null) {
+                val = sample.format("%01d");
+            } else if (ActivityMonitor has :getHeartRateHistory) {
+                // Falling back to historical HR from ActivityMonitor
+                var hist = ActivityMonitor.getHeartRateHistory(1, /* newestFirst */ true).next();
+                if ((hist != null) && (hist.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)) {
+                    val = hist.heartRate.format("%01d");
                 }
             }
         } else if(complicationType == 11) { // Calories
@@ -1933,6 +1855,14 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "VO2 MAX:";
         } else if(complicationType == 9) { // Respiration rate
             desc = "RESP RATE:";
+        } else if(complicationType == 10) { // HR
+            var activityInfo = Activity.getActivityInfo();
+            var sample = activityInfo.currentHeartRate;
+            if(sample == null) {
+                desc = "LAST HR:";
+            } else {
+                desc = "LIVE HR:";
+            }
         } else if(complicationType == 11) { // Calories / day
             desc = "CALORIES:";
         } else if(complicationType == 12) { // Altitude (m)
