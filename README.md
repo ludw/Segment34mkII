@@ -42,7 +42,6 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 - Color themes: gray + orange. orange + green
 
 Lower priority:
-- Look into solar intensity
 - Always on as the only thing shown
 - Move indicator
 - Race predictions
@@ -52,6 +51,7 @@ Lower priority:
 ## Change log
 2025-02-15
 - Added more things to open with press to open
+- Added Solar intensity and sensor temperature
 
 2025-02-14, v1.14.1
 - Added font option with lines instead of dots

@@ -902,8 +902,44 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("moonDisplay")) {
                 return 0x555555;
             }
+        } else if(propColorTheme == 18) { // green & orange
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x152b19; }
+                return 0x005500;
+            } else if(colorName.equals("fieldLabel")) {
+                return 0x00AA55;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x152b19; }
+                return 0x005500;
+            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
+                if(amoled) { return 0xff7600; }
+                return 0xFFAA00;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0x5ca28f;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                return 0x00AA55;
+            } else if(colorName.equals("dawnDuskValue")) {
+                if(amoled) { return 0xFFFFFF; }
+                return 0xAAAAAA;
+            } else if(colorName.equals("notifications")) {
+                return 0x55FF55;
+            } else if(colorName.equals("stress")) {
+                if(amoled) { return 0xff7600; }
+                return 0xFFAA00;
+            } else if(colorName.equals("bodybattery")) {
+                if(amoled) { return 0x59b9fe; }
+                return 0x00AAFF;
+            } else if(colorName.equals("HRActive")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("HRInactive")) {
+                if(amoled) { return 0x96e0ac; }
+                return 0x55FF55;
+            } else if(colorName.equals("background")) {
+                return 0x000000;
+            } else if(colorName.equals("valueDisplay")) {
+                return 0x55FF55;
+            }
         }
-
         return Graphics.COLOR_WHITE;
     }
 
@@ -1009,28 +1045,39 @@ class Segment34View extends WatchUi.WatchFace {
         weatherCondition = Weather.getCurrentConditions();
     }
 
-    hidden function setWeather(dc) as Void {
+    hidden function formatTemperature(temp as Number, unit as String) as Number {
+        if(unit.equals("C")) {
+            return temp;
+        } else {
+            return ((temp * 9/5) + 32);
+        }
+    }
+
+    hidden function getTempUnit() as String {
         var tempUnitSetting = System.getDeviceSettings().temperatureUnits;
         var tempUnitAppSetting = Application.Properties.getValue("tempUnit");
+        
+        if((tempUnitSetting == System.UNIT_METRIC and tempUnitAppSetting == 0) or tempUnitAppSetting == 1) {
+            return "C";
+        } else {
+            return "F";
+        }
+    }
+
+    hidden function setWeather(dc) as Void {
+        if (weatherCondition == null) { return; }
+        if (weatherCondition.condition == null) { return; }
+        
+        var tempUnit = getTempUnit();
         var temp = "";
-        var tempUnit = "";
         var windspeed = "";
         var bearing = "";
         var fl = "";
         var weatherText = "";
-        if (weatherCondition == null) { return; }
-        if (weatherCondition.condition == null) { return; }
 
         if(weatherCondition.temperature != null) {
             var tempVal = weatherCondition.temperature;
-
-            if((tempUnitSetting == System.UNIT_METRIC and tempUnitAppSetting == 0) or tempUnitAppSetting == 1) {
-                temp = tempVal.format("%01d");
-                tempUnit = "C";
-            } else {
-                temp = ((tempVal * 9/5) + 32).format("%01d");
-                tempUnit = "F";
-            }
+            temp = formatTemperature(tempVal, tempUnit).format("%01d");
             weatherText = Lang.format("$1$$2$", [temp, tempUnit]);
         }
         
@@ -1094,10 +1141,7 @@ class Segment34View extends WatchUi.WatchFace {
         var showFeelsLike = Application.Properties.getValue("showFeelsLike");
         if(showFeelsLike) {
             if(weatherCondition.feelsLikeTemperature != null) {
-                var fltemp = weatherCondition.feelsLikeTemperature;
-                if((tempUnitSetting != System.UNIT_METRIC and tempUnitAppSetting == 0) or tempUnitAppSetting == 2) {
-                    fltemp = ((fltemp * 9/5) + 32);
-                }
+                var fltemp = formatTemperature(weatherCondition.feelsLikeTemperature, tempUnit);
                 fl = Lang.format("FL: $1$$2$", [fltemp.format(INTEGER_FORMAT), tempUnit]);
             }
 
@@ -1842,6 +1886,26 @@ class Segment34View extends WatchUi.WatchFace {
             if(notifCount != null) {
                 val = notifCount.format(numberFormat);
             }
+        } else if(complicationType == 37) { // Solar intensity
+            if (Toybox has :Complications) {
+                try {
+                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_SOLAR_INPUT));
+                    if (complication != null && complication.value != null) {
+                        val = complication.value.format(numberFormat);
+                    }
+                } catch(e) {
+                    // Complication not found
+                }
+            }
+        } else if(complicationType == 38) { // Sensor temperature
+            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getTemperatureHistory)) {
+                var tempIterator = Toybox.SensorHistory.getTemperatureHistory({:period => 1});
+                var temp = tempIterator.next();
+                if(temp != null and temp.data != null) {
+                    var tempUnit = getTempUnit();
+                    val = Lang.format("$1$$2$", [formatTemperature(temp.data, tempUnit).format(numberFormat), tempUnit]);
+                }
+            }
         }
         return val;
     }
@@ -1921,6 +1985,10 @@ class Segment34View extends WatchUi.WatchFace {
             desc = "BATT DAYS:";
         } else if(complicationType == 36) { // Notification count
             desc = "NOTIFS:";
+        } else if(complicationType == 37) { // Solar intensity
+            desc = "SOLAR INT:";
+        } else if(complicationType == 38) { // Sensor temp
+            desc = "TEMP:";
         }
         return desc;
     }
