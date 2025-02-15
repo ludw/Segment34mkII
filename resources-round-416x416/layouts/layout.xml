@@ -2,9 +2,9 @@
     <drawable id="background" />
     <label id="MoonLabel" x="center" y="17" font="@Fonts.id_moon" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
     <label id="Dawn" x="184" y="13" font="@Fonts.id_storre" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x005555" text="DAWN:" />
-    <label id="SunUpLabel" x="184" y="25" font="@Fonts.id_led_small_readable" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xAAAAAA" />
+    <label id="SunUpLabel" x="184" y="25" font="@Fonts.id_led_small_lines" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xAAAAAA" />
     <label id="Dusk" x="233" y="12" font="@Fonts.id_storre" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x005555" text="DUSK:" />
-    <label id="SunDownLabel" x="231" y="25" font="@Fonts.id_led_small_readable" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xAAAAAA" />
+    <label id="SunDownLabel" x="231" y="25" font="@Fonts.id_led_small_lines" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xAAAAAA" />
 
     <label id="WeatherLabel1" x="center" y="52" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
     <label id="WeatherLabel2" x="center" y="87" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
@@ -35,5 +35,5 @@
     <label id="StepLabel" x="center" y="352" font="@Fonts.id_led_big" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
     
     <label id="BattBg" x="210" y="391" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x555555" text="C" />
-    <label id="BattLabel" x="center" y="395" font="@Fonts.id_led_small_readable" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+    <label id="BattLabel" x="center" y="395" font="@Fonts.id_led_small_lines" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
 </layout>

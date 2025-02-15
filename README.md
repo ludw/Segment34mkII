@@ -44,9 +44,14 @@ Lower priority:
 - Move indicator
 - Race predictions
 - Localization
+- Option for left/right alignment of values
 
 
 ## Change log
+2025-02-15, v1.15.2
+- New green camo color theme
+- More visible sunset/sunrise/battery
+
 2025-02-15, v1.15.1
 - Color tweaks for orange and green
 

@@ -883,6 +883,45 @@ class Segment34View extends WatchUi.WatchFace {
                 if(amoled) { return 0x55FF55; }
                 return 0x00FF00;
             }
+        } else if(propColorTheme == 19) { // green camo
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x152b19; }
+                return 0x005500;
+            } else if(colorName.equals("fieldLabel")) {
+                if(amoled) { return 0xa8aa6c; }
+                return 0xAAAA00;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x152b19; }
+                return 0x005500;
+            } else if(colorName.equals("timeDisplay")) {
+                if(amoled) { return 0x889f4a; }
+                return 0xAAAA55;
+            } else if (colorName.equals("dateDisplay")) {
+                if(amoled) { return 0x889f4a; }
+                return 0xAAAA55;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0x546a36;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                if(amoled) { return 0xa8aa6c; }
+                return 0xAAAA00;
+            } else if(colorName.equals("dawnDuskValue")) {
+                return 0x55AA55;
+            } else if(colorName.equals("notifications")) {
+                return 0x00FF55;
+            } else if(colorName.equals("stress")) {
+                if(amoled) { return 0x889f4a; }
+                return 0xAAAA55;
+            } else if(colorName.equals("bodybattery")) {
+                return 0x55AA55;
+            } else if(colorName.equals("background")) {
+                return 0x000000;
+            } else if(colorName.equals("valueDisplay")) {
+                if(amoled) { return 0x55AA55; }
+                return 0x55AA55;
+            } else if(colorName.equals("moonDisplay")) {
+                if(amoled) { return 0xe3efd2; }
+                return 0xFFFFFF;
+            }
         }
         return Graphics.COLOR_WHITE;
     }
