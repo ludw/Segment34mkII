@@ -47,7 +47,7 @@ Lower priority:
 
 
 ## Change log
-2025-02-15
+2025-02-15, v1.15.0
 - Added more things to open with press to open
 - Added Solar intensity and sensor temperature
 - HR can be in any field
