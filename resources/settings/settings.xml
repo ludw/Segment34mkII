@@ -281,15 +281,20 @@
             <listEntry value="2">Steps</listEntry>
             <listEntry value="3">Calories</listEntry>
             <listEntry value="4">Floors climbed</listEntry>
+            <listEntry value="5">Intensiy minutes</listEntry>
             <listEntry value="8">Weather</listEntry>
             <listEntry value="12">Calendar</listEntry>
             <listEntry value="13">Sunrise</listEntry>
             <listEntry value="15">Altitude</listEntry>
             <listEntry value="17">Notifications</listEntry>
             <listEntry value="18">Heart rate</listEntry>
+            <listEntry value="19">Weekly Run distance</listEntry>
+            <listEntry value="20">Weekly Bike distance</listEntry>
             <listEntry value="21">Recovery time</listEntry>
             <listEntry value="22">Stress</listEntry>
             <listEntry value="23">Body battery</listEntry>
+            <listEntry value="26">Training status</listEntry>
+            <listEntry value="27">Race predictor 5k</listEntry>
             <listEntry value="35">Pulse OX</listEntry>
         </settingConfig>
     </setting>
@@ -301,15 +306,20 @@
             <listEntry value="2">Steps</listEntry>
             <listEntry value="3">Calories</listEntry>
             <listEntry value="4">Floors climbed</listEntry>
+            <listEntry value="5">Intensiy minutes</listEntry>
             <listEntry value="8">Weather</listEntry>
             <listEntry value="12">Calendar</listEntry>
             <listEntry value="13">Sunrise</listEntry>
             <listEntry value="15">Altitude</listEntry>
             <listEntry value="17">Notifications</listEntry>
             <listEntry value="18">Heart rate</listEntry>
+            <listEntry value="19">Weekly Run distance</listEntry>
+            <listEntry value="20">Weekly Bike distance</listEntry>
             <listEntry value="21">Recovery time</listEntry>
             <listEntry value="22">Stress</listEntry>
             <listEntry value="23">Body battery</listEntry>
+            <listEntry value="26">Training status</listEntry>
+            <listEntry value="27">Race predictor 5k</listEntry>
             <listEntry value="35">Pulse OX</listEntry>
         </settingConfig>
     </setting>
@@ -321,15 +331,20 @@
             <listEntry value="2">Steps</listEntry>
             <listEntry value="3">Calories</listEntry>
             <listEntry value="4">Floors climbed</listEntry>
+            <listEntry value="5">Intensiy minutes</listEntry>
             <listEntry value="8">Weather</listEntry>
             <listEntry value="12">Calendar</listEntry>
             <listEntry value="13">Sunrise</listEntry>
             <listEntry value="15">Altitude</listEntry>
             <listEntry value="17">Notifications</listEntry>
             <listEntry value="18">Heart rate</listEntry>
+            <listEntry value="19">Weekly Run distance</listEntry>
+            <listEntry value="20">Weekly Bike distance</listEntry>
             <listEntry value="21">Recovery time</listEntry>
             <listEntry value="22">Stress</listEntry>
             <listEntry value="23">Body battery</listEntry>
+            <listEntry value="26">Training status</listEntry>
+            <listEntry value="27">Race predictor 5k</listEntry>
             <listEntry value="35">Pulse OX</listEntry>
         </settingConfig>
     </setting>
@@ -341,15 +356,20 @@
             <listEntry value="2">Steps</listEntry>
             <listEntry value="3">Calories</listEntry>
             <listEntry value="4">Floors climbed</listEntry>
+            <listEntry value="5">Intensiy minutes</listEntry>
             <listEntry value="8">Weather</listEntry>
             <listEntry value="12">Calendar</listEntry>
             <listEntry value="13">Sunrise</listEntry>
             <listEntry value="15">Altitude</listEntry>
             <listEntry value="17">Notifications</listEntry>
             <listEntry value="18">Heart rate</listEntry>
+            <listEntry value="19">Weekly Run distance</listEntry>
+            <listEntry value="20">Weekly Bike distance</listEntry>
             <listEntry value="21">Recovery time</listEntry>
             <listEntry value="22">Stress</listEntry>
             <listEntry value="23">Body battery</listEntry>
+            <listEntry value="26">Training status</listEntry>
+            <listEntry value="27">Race predictor 5k</listEntry>
             <listEntry value="35">Pulse OX</listEntry>
         </settingConfig>
     </setting>
@@ -361,15 +381,20 @@
             <listEntry value="2">Steps</listEntry>
             <listEntry value="3">Calories</listEntry>
             <listEntry value="4">Floors climbed</listEntry>
+            <listEntry value="5">Intensiy minutes</listEntry>
             <listEntry value="8">Weather</listEntry>
             <listEntry value="12">Calendar</listEntry>
             <listEntry value="13">Sunrise</listEntry>
             <listEntry value="15">Altitude</listEntry>
             <listEntry value="17">Notifications</listEntry>
             <listEntry value="18">Heart rate</listEntry>
+            <listEntry value="19">Weekly Run distance</listEntry>
+            <listEntry value="20">Weekly Bike distance</listEntry>
             <listEntry value="21">Recovery time</listEntry>
             <listEntry value="22">Stress</listEntry>
             <listEntry value="23">Body battery</listEntry>
+            <listEntry value="26">Training status</listEntry>
+            <listEntry value="27">Race predictor 5k</listEntry>
             <listEntry value="35">Pulse OX</listEntry>
         </settingConfig>
     </setting>
