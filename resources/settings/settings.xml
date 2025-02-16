@@ -271,7 +271,7 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.leftValueShows" title="Left value:">
+    <setting propertyKey="@Properties.leftValueShows" title="Bottom Left value:">
         <settingConfig type="list">
             <listEntry value="0">Active min / week</listEntry>
             <listEntry value="1">Active min / day</listEntry>
@@ -313,7 +313,7 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.middleValueShows" title="Middle value:">
+    <setting propertyKey="@Properties.middleValueShows" title="Bottom Middle value:">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
             <listEntry value="0">Active min / week</listEntry>
@@ -352,7 +352,7 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.rightValueShows" title="Right value:">
+    <setting propertyKey="@Properties.rightValueShows" title="Bottom Right value:">
         <settingConfig type="list">
             <listEntry value="0">Active min / week</listEntry>
             <listEntry value="1">Active min / day</listEntry>
@@ -394,7 +394,7 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.bottomFieldShows" title="Bottom value:">
+    <setting propertyKey="@Properties.bottomFieldShows" title="Bottom 5 digit value:">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
             <listEntry value="17">Steps / day</listEntry>

@@ -49,6 +49,9 @@ Lower priority:
 
 
 ## Change log
+2025-02-16 v1.16.1
+- Stress value should work better now
+
 2025-02-16 v1.16.0
 - Alernative timezones
 - Sunset/Sunrise fields configurable

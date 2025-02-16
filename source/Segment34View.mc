@@ -1671,9 +1671,11 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 13) { // Stress
-            if(ActivityMonitor.getInfo() has :stressScore) {
-                if(ActivityMonitor.getInfo().stressScore != null) {
-                    val = ActivityMonitor.getInfo().stressScore.format(numberFormat);
+            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getStressHistory)) {
+                var stIterator = Toybox.SensorHistory.getStressHistory({:period => 1});
+                var st = stIterator.next();
+                if(st != null and st.data != null) {
+                    val = st.data.format(numberFormat);
                 }
             }
         } else if(complicationType == 14) { // Body battery
