@@ -38,6 +38,7 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 - DND
 - Align Date center when no notifications or seconds.
 - Option to align AOD date field left
+- Font options (dots/lines) for medium led font
 
 Lower priority:
 - Always on as the only thing shown
@@ -48,6 +49,9 @@ Lower priority:
 
 
 ## Change log
+2025-02-16, v1.15.3
+- Color tweaks for green camo on MIP
+
 2025-02-15, v1.15.2
 - New green camo color theme
 - More visible sunset/sunrise/battery
