@@ -31,14 +31,15 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 
  ## TODO / Things people have asked for
 - Goal completion marker
-- Secondary timezone
 - Battery, different color when low
 - Battery bar instead of numbers
-- Next alarm
+- Number of alarms
 - DND
 - Align Date center when no notifications or seconds.
 - Option to align AOD date field left
 - Font options (dots/lines) for medium led font
+- Weather line 1 customizations: Humidity, High/low, Percipitation
+- Weather line 2 customizations: Without percipitation
 
 Lower priority:
 - Always on as the only thing shown
