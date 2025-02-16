@@ -47,3 +47,4 @@ char id=104 x=800 y=0 width=20 height=27 xoffset=2 yoffset=0 xadvance=24 page=0
 char id=35 x=820 y=0 width=20 height=27 xoffset=2 yoffset=0 xadvance=24 page=0
 char id=32 x=840 y=0 width=20 height=27 xoffset=2 yoffset=0 xadvance=24 page=0
 char id=46 x=860 y=0 width=7 height=27 xoffset=6 yoffset=0 xadvance=24 page=0
+char id=58 x=868 y=0 width=3 height=27 xoffset=10 yoffset=0 xadvance=24 page=0

@@ -49,6 +49,11 @@ Lower priority:
 
 
 ## Change log
+2025-02-16 v1.16.0
+- Alernative timezones
+- Sunset/Sunrise fields configurable
+- Labels more adaptive to available space
+
 2025-02-16, v1.15.3
 - Color tweaks for green camo on MIP
 

@@ -9,6 +9,8 @@
     <property id="showSeconds" type="boolean">true</property>
     <property id="showStressAndBodyBattery" type="boolean">true</property>
     <property id="showSunriseSunset" type="boolean">true</property>
+    <property id="sunriseFieldShows" type="number">39</property>
+    <property id="sunsetFieldShows" type="number">40</property>
     <property id="showMoonPhase" type="boolean">true</property>
     <property id="showClockBg" type="boolean">true</property>
     <property id="showDataBg" type="boolean">true</property>
@@ -22,6 +24,10 @@
     <property id="aodFieldShows" type="number">-1</property>
     <property id="dateFormat" type="number">0</property>
     <property id="smallFontVariant" type="number">0</property>
+    <property id="tzOffset1" type="number">0</property>
+    <property id="tzOffset2" type="number">0</property>
+    <property id="tzName1" type="string">UTC TIME</property>
+    <property id="tzName2" type="string">TZ2</property>
     <property id="pressToOpenTop" type="number">0</property>
     <property id="pressToOpenMiddle" type="number">0</property>
     <property id="pressToOpenBottomLeft" type="number">0</property>

@@ -1299,32 +1299,24 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setSunUpDown(dc) as Void {
-        var showSunriseSunset = Application.Properties.getValue("showSunriseSunset");
+        var sunriseFieldShows = Application.Properties.getValue("sunriseFieldShows");
+        var sunsetFieldShows = Application.Properties.getValue("sunsetFieldShows");
 
-        var now = Time.now();
-        if(weatherCondition == null or !showSunriseSunset) {
+        if(sunriseFieldShows == -2) {
             dDawn.setText("");
-            dDusk.setText("");
             dSunUpLabel.setText("");
-            dSunDownLabel.setText("");
-            return;
+        } else {
+            dDawn.setText(getComplicationDesc(sunriseFieldShows, 1));
+            dSunUpLabel.setText(getComplicationValue(sunriseFieldShows, 5));
         }
-        var loc = weatherCondition.observationLocationPosition;
-        if(loc == null) {
-            dDawn.setText("");
+
+        if(sunsetFieldShows == -2) {
             dDusk.setText("");
-            dSunUpLabel.setText("");
             dSunDownLabel.setText("");
-            return;
+        } else {
+            dDusk.setText(getComplicationDesc(sunsetFieldShows, 1));
+            dSunDownLabel.setText(getComplicationValue(sunsetFieldShows, 5));
         }
-        dDawn.setText("DAWN:");
-        dDusk.setText("DUSK:");
-        var sunrise = Time.Gregorian.info(Weather.getSunrise(loc, now), Time.FORMAT_SHORT);
-        var sunset = Time.Gregorian.info(Weather.getSunset(loc, now), Time.FORMAT_SHORT);
-        var sunriseHour = formatHour(sunrise.hour);
-        var sunsetHour = formatHour(sunset.hour);
-        dSunUpLabel.setText(Lang.format("$1$:$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]));
-        dSunDownLabel.setText(Lang.format("$1$:$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]));
     }
 
     hidden function setNotif(dc) as Void {
@@ -1553,24 +1545,30 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function setBottomFields(dc) as Void {
         var leftWidth = 3;
+        var leftLabelSize = 2;
         if(dc.getWidth() > 450) {
             leftWidth = 4;
+            leftLabelSize = 3;
         }
-        dTtrDesc.setText(getComplicationDesc(propLeftValueShows));
+        dTtrDesc.setText(getComplicationDesc(propLeftValueShows, leftLabelSize));
         dTtrLabel.setText(getComplicationValue(propLeftValueShows, leftWidth));
         
         var midWidth = 3;
+        var midLabelSize = 2;
         if(dc.getWidth() > 450) {
             midWidth = 4;
+            midLabelSize = 3;
         }
-        dHrDesc.setText(getComplicationDesc(propMiddleValueShows));
+        dHrDesc.setText(getComplicationDesc(propMiddleValueShows, midLabelSize));
         dHrLabel.setText(getComplicationValue(propMiddleValueShows, midWidth));
 
         var rightWidth = 4;
+        var rightLabelSize = 3;
         if(dc.getWidth() == 240) {
             rightWidth = 3;
+            midLabelSize = 2;
         }
-        dActiveDesc.setText(getComplicationDesc(propRightValueShows));
+        dActiveDesc.setText(getComplicationDesc(propRightValueShows, rightLabelSize));
         dActiveLabel.setText(getComplicationValue(propRightValueShows, rightWidth));
     }
 
@@ -1694,10 +1692,18 @@ class Segment34View extends WatchUi.WatchFace {
                     val = (elv.data * 3.28084).format(numberFormat);
                 }
             }
-        } else if(complicationType == 16) { // UTC time
+        } else if(complicationType == 16) { // Alt TZ 1
+            var offset = Application.Properties.getValue("tzOffset1");
             var now = Time.now();
             var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_MEDIUM);
-            val = Lang.format("$1$$2$", [utc.hour.format("%02d"), utc.min.format("%02d")]);
+            var min = utc.min + (offset % 60);
+            var hour = (utc.hour + Math.floor(offset / 60)) % 24;
+            hour = formatHour(hour);
+            if(width < 5) {
+                val = Lang.format("$1$$2$", [hour.format("%02d"), min.format("%02d")]);
+            } else {
+                val = Lang.format("$1$:$2$", [hour.format("%02d"), min.format("%02d")]);
+            }
         } else if(complicationType == 17) { // Steps / day
             if(ActivityMonitor.getInfo().steps != null) {
                 val = ActivityMonitor.getInfo().steps.format(numberFormat);
@@ -1873,97 +1879,218 @@ class Segment34View extends WatchUi.WatchFace {
                     val = Lang.format("$1$$2$", [formatTemperature(temp.data, tempUnit).format(numberFormat), tempUnit]);
                 }
             }
+        } else if(complicationType == 39) { // Sunrise
+            var now = Time.now();
+            if(weatherCondition != null) {
+                var loc = weatherCondition.observationLocationPosition;
+                if(loc != null) {
+                    var sunrise = Time.Gregorian.info(Weather.getSunrise(loc, now), Time.FORMAT_SHORT);
+                    var sunriseHour = formatHour(sunrise.hour);
+                    if(width < 5) {
+                        val = Lang.format("$1$$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]);
+                    } else {
+                        val = Lang.format("$1$:$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]);
+                    }
+                }
+            }
+        } else if(complicationType == 40) { // Sunset
+            var now = Time.now();
+            if(weatherCondition != null) {
+                var loc = weatherCondition.observationLocationPosition;
+                if(loc != null) {
+                    var sunset = Time.Gregorian.info(Weather.getSunset(loc, now), Time.FORMAT_SHORT);
+                    var sunsetHour = formatHour(sunset.hour);
+                    if(width < 5) {
+                        val = Lang.format("$1$$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]);
+                    } else {
+                        val = Lang.format("$1$:$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]);
+                    }
+                }
+            }
+        } else if(complicationType == 41) { // Alt TZ 2
+            var offset = Application.Properties.getValue("tzOffset2");
+            var now = Time.now();
+            var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_MEDIUM);
+            var min = utc.min + (offset % 60);
+            var hour = (utc.hour + Math.floor(offset / 60)) % 24;
+            hour = formatHour(hour);
+            if(width < 5) {
+                val = Lang.format("$1$$2$", [hour.format("%02d"), min.format("%02d")]);
+            } else {
+                val = Lang.format("$1$:$2$", [hour.format("%02d"), min.format("%02d")]);
+            }
         }
         return val;
     }
 
-    function getComplicationDesc(complicationType) as String {
+    function getComplicationDesc(complicationType, labelSize as Number) as String {
+        // labelSize 1 = short
+        // labelSize 2 = mid
+        // labelSize 3 = long
         var desc = "";
 
         if(complicationType == 0) { // Active min / week
-            desc = "WEEKLY MIN:";
+            if(labelSize == 1) { desc = "W MIN:"; }
+            if(labelSize == 2) { desc = "WEEK MIN:"; }
+            if(labelSize == 3) { desc = "WEEK ACT MIN:"; }
         } else if(complicationType == 1) { // Active min / day
-           desc = "DAILY MIN:";
+            if(labelSize == 1) { desc = "D MIN:"; }
+            if(labelSize == 2) { desc = "MIN TODAY:"; }
+            if(labelSize == 3) { desc = "DAY ACT MIN:"; }      
         } else if(complicationType == 2) { // distance (km) / day
-            desc = "KM TODAY:";
+            if(labelSize == 1) { desc = "D KM:"; }
+            if(labelSize == 2) { desc = "KM TODAY:"; }
+            if(labelSize == 3) { desc = "KM TODAY:"; }
         } else if(complicationType == 3) { // distance (miles) / day
-            desc = "MILES TODAY:";
+            if(labelSize == 1) { desc = "D MI:"; }
+            if(labelSize == 2) { desc = "MI TODAY:"; }
+            if(labelSize == 3) { desc = "MILES TODAY:"; }
         } else if(complicationType == 4) { // floors climbed / day
-            desc = "FLOORS:";
+            if(labelSize == 1) { desc = "FLRS:"; }
+            if(labelSize == 2) { desc = "FLOORS:"; }
+            if(labelSize == 3) { desc = "FLOORS:"; }
         } else if(complicationType == 5) { // meters climbed / day
-            desc = "M CLIMBED:";
+            if(labelSize == 1) { desc = "CLIMB:"; }
+            if(labelSize == 2) { desc = "M CLIMBED:"; }
+            if(labelSize == 3) { desc = "M CLIMBED:"; }
         } else if(complicationType == 6) { // Time to Recovery (h)
-            desc = "RECOV. HRS:";
+            if(labelSize == 1) { desc = "RECOV:"; }
+            if(labelSize == 2) { desc = "RECOV HRS:"; }
+            if(labelSize == 3) { desc = "RECOVERY HRS:"; }
         } else if(complicationType == 7) { // VO2 Max Running
-            desc = "VO2 MAX:";
+            if(labelSize == 1) { desc = "V02:"; }
+            if(labelSize == 2) { desc = "V02 MAX:"; }
+            if(labelSize == 3) { desc = "RUN V02 MAX:"; }
         } else if(complicationType == 8) { // VO2 Max Cycling
-            desc = "VO2 MAX:";
+            if(labelSize == 1) { desc = "V02:"; }
+            if(labelSize == 2) { desc = "V02 MAX:"; }
+            if(labelSize == 3) { desc = "BIKE V02 MAX:"; }
         } else if(complicationType == 9) { // Respiration rate
-            desc = "RESP RATE:";
+            if(labelSize == 1) { desc = "RESP:"; }
+            if(labelSize == 2) { desc = "RESP RATE:"; }
+            if(labelSize == 3) { desc = "RESP. RATE:"; }
         } else if(complicationType == 10) { // HR
             var activityInfo = Activity.getActivityInfo();
             var sample = activityInfo.currentHeartRate;
             if(sample == null) {
-                desc = "LAST HR:";
+                if(labelSize == 1) { desc = "HR:"; }
+                if(labelSize == 2) { desc = "LAST HR:"; }
+                if(labelSize == 3) { desc = "LAST HR:"; }
             } else {
-                desc = "LIVE HR:";
+                if(labelSize == 1) { desc = "HR:"; }
+                if(labelSize == 2) { desc = "LIVE HR:"; }
+                if(labelSize == 3) { desc = "LIVE HR:"; }
             }
         } else if(complicationType == 11) { // Calories / day
-            desc = "CALORIES:";
+            if(labelSize == 1) { desc = "CAL:"; }
+            if(labelSize == 2) { desc = "CALORIES:"; }
+            if(labelSize == 3) { desc = "DLY CALORIES:"; }
         } else if(complicationType == 12) { // Altitude (m)
-            desc = "ALTITUDE:";
+            if(labelSize == 1) { desc = "ALT:"; }
+            if(labelSize == 2) { desc = "ALTITUDE:"; }
+            if(labelSize == 3) { desc = "ALTITUDE M:"; }
         } else if(complicationType == 13) { // Stress
-            desc = "STRESS:";
+            if(labelSize == 1) { desc = "STRSS:"; }
+            if(labelSize == 2) { desc = "STRESS:"; }
+            if(labelSize == 3) { desc = "STRESS:"; }
         } else if(complicationType == 14) { // Body battery
-            desc = "BODY BATT:";
+            if(labelSize == 1) { desc = "B BAT:"; }
+            if(labelSize == 2) { desc = "BODY BATT:"; }
+            if(labelSize == 3) { desc = "BODY BATTERY:"; }
         } else if(complicationType == 15) { // Altitude (ft)
-            desc = "ALTITUDE:";
-        } else if(complicationType == 16) { // UTC time
-            desc = "UTC TIME:";
+            if(labelSize == 1) { desc = "ALT:"; }
+            if(labelSize == 2) { desc = "ALTITUDE:"; }
+            if(labelSize == 3) { desc = "ALTITUDE FT:"; }
+        } else if(complicationType == 16) { // Alt TZ 1:
+            var name = Application.Properties.getValue("tzName1");
+            desc = Lang.format("$1$:", [name.toUpper()]);
         } else if(complicationType == 17) { // Steps / day
-            desc = "STEPS:";
+            if(labelSize == 1) { desc = "STEPS:"; }
+            if(labelSize == 2) { desc = "STEPS:"; }
+            if(labelSize == 3) { desc = "STEPS:"; }
         } else if(complicationType == 18) { // Distance (m) / day
-            desc = "M TODAY:";
+            if(labelSize == 1) { desc = "DIST:"; }
+            if(labelSize == 2) { desc = "M TODAY:"; }
+            if(labelSize == 3) { desc = "METERS TODAY:"; }
         } else if(complicationType == 19) { // Wheelchair pushes
             desc = "PUSHES:";
         } else if(complicationType == 20) { // Weather condition
             desc = "";
         } else if(complicationType == 21) { // Weekly run distance (km)
-            desc = "W RUN KM:";
+            if(labelSize == 1) { desc = "W KM:"; }
+            if(labelSize == 2) { desc = "W RUN KM:"; }
+            if(labelSize == 3) { desc = "WEEK RUN KM:"; }
         } else if(complicationType == 22) { // Weekly run distance (miles)
-            desc = "W RUN MI:";
+            if(labelSize == 1) { desc = "W MI:"; }
+            if(labelSize == 2) { desc = "W RUN MI:"; }
+            if(labelSize == 3) { desc = "WEEK RUN MI:"; }
         } else if(complicationType == 23) { // Weekly bike distance (km)
-            desc = "W BIKE KM:";
+            if(labelSize == 1) { desc = "W KM:"; }
+            if(labelSize == 2) { desc = "W BIKE KM:"; }
+            if(labelSize == 3) { desc = "WEEK BIKE KM:"; }
         } else if(complicationType == 24) { // Weekly bike distance (miles)
-            desc = "W BIKE MI:";
+            if(labelSize == 1) { desc = "W MI:"; }
+            if(labelSize == 2) { desc = "W BIKE MI:"; }
+            if(labelSize == 3) { desc = "WEEK BIKE MI:"; }
         } else if(complicationType == 25) { // Training status
             desc = "TRAINING:";
         } else if(complicationType == 26) { // Barometric pressure (hPA)
             desc = "PRESSURE:";
         } else if(complicationType == 27) { // Weight kg
-            desc = "WEIGHT:";
+            if(labelSize == 1) { desc = "KG:"; }
+            if(labelSize == 2) { desc = "WEIGHT:"; }
+            if(labelSize == 3) { desc = "WEIGHT KG:"; }
         } else if(complicationType == 28) { // Weight lbs
-            desc = "WEIGHT:";
+            if(labelSize == 1) { desc = "LBS:"; }
+            if(labelSize == 2) { desc = "WEIGHT:"; }
+            if(labelSize == 3) { desc = "WEIGHT KG:"; }
         } else if(complicationType == 29) { // Act Calories / day
-            desc = "ACT CAL:";
+            if(labelSize == 1) { desc = "A CAL:"; }
+            if(labelSize == 2) { desc = "ACT. CAL:"; }
+            if(labelSize == 3) { desc = "ACT. CALORIES:"; }
         } else if(complicationType == 30) { // Sea level pressure (hPA)
             desc = "PRESSURE:";
         } else if(complicationType == 31) { // Week number
             desc = "WEEK:";
         } else if(complicationType == 32) { // Weekly distance (km)
-            desc = "WEEKLY KM:";
+            if(labelSize == 1) { desc = "W KM:"; }
+            if(labelSize == 2) { desc = "WEEK KM:"; }
+            if(labelSize == 3) { desc = "WEEK DIST KM:"; }
         } else if(complicationType == 33) { // Weekly distance (miles)
-            desc = "WEEKLY MI:";
+            if(labelSize == 1) { desc = "W MI:"; }
+            if(labelSize == 2) { desc = "WEEK MI:"; }
+            if(labelSize == 3) { desc = "WEEKLY MILES:"; }
         } else if(complicationType == 34) { // Battery percentage
-            desc = "BATTERY %:";
+            if(labelSize == 1) { desc = "BATT:"; }
+            if(labelSize == 2) { desc = "BATT %:"; }
+            if(labelSize == 3) { desc = "BATTERY %:"; }
         } else if(complicationType == 35) { // Battery days remaining
-            desc = "BATT DAYS:";
+            if(labelSize == 1) { desc = "BATT D:"; }
+            if(labelSize == 2) { desc = "BATT DAYS:"; }
+            if(labelSize == 3) { desc = "BATTERY DAYS:"; }
         } else if(complicationType == 36) { // Notification count
-            desc = "NOTIFS:";
+            if(labelSize == 1) { desc = "NOTIFS:"; }
+            if(labelSize == 2) { desc = "NOTIFS:"; }
+            if(labelSize == 3) { desc = "NOTIFICATIONS:"; }
         } else if(complicationType == 37) { // Solar intensity
-            desc = "SOLAR INT:";
+            if(labelSize == 1) { desc = "SUN:"; }
+            if(labelSize == 2) { desc = "SUN INT:"; }
+            if(labelSize == 3) { desc = "SUN INTENSITY:"; }
         } else if(complicationType == 38) { // Sensor temp
-            desc = "TEMP:";
+            if(labelSize == 1) { desc = "TEMP:"; }
+            if(labelSize == 2) { desc = "TEMP:"; }
+            if(labelSize == 3) { desc = "SENSOR TEMP:"; }
+        } else if(complicationType == 39) { // Sunrise
+            if(labelSize == 1) { desc = "DAWN:"; }
+            if(labelSize == 2) { desc = "SUNRISE:"; }
+            if(labelSize == 3) { desc = "SUNRISE:"; }
+        } else if(complicationType == 40) { // Sunset
+            if(labelSize == 1) { desc = "DUSK:"; }
+            if(labelSize == 2) { desc = "SUNSET:"; }
+            if(labelSize == 3) { desc = "SUNSET:"; }
+        } else if(complicationType == 41) { // Alt TZ 2:
+            var name = Application.Properties.getValue("tzName2");
+            desc = Lang.format("$1$:", [name.toUpper()]);
         }
         return desc;
     }

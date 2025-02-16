@@ -53,12 +53,60 @@
         <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.showSunriseSunset" title="Show Sunrise and Sunset">
+    <setting propertyKey="@Properties.showMoonPhase" title="Show Moon Phase">
         <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.showMoonPhase" title="Show Moon Phase">
-        <settingConfig type="boolean" />
+    <setting propertyKey="@Properties.sunriseFieldShows" title="Sunrise field shows:">
+            <settingConfig type="list">
+                <listEntry value="-2">Hidden</listEntry>
+                <listEntry value="39">Sunrise time</listEntry>
+                <listEntry value="40">Sunset time</listEntry>
+                <listEntry value="4">Floors climbed / day</listEntry>
+                <listEntry value="5">Meters climbed / day</listEntry>
+                <listEntry value="6">Time to Recovery (h)</listEntry>
+                <listEntry value="7">VO2 Max Running</listEntry>
+                <listEntry value="8">VO2 Max Cycling</listEntry>
+                <listEntry value="9">Respiration Rate</listEntry>
+                <listEntry value="13">Stress score</listEntry>
+                <listEntry value="14">Body battery</listEntry>
+                <listEntry value="16">Alternative Timezone 1</listEntry>
+                <listEntry value="41">Alternative Timezone 2</listEntry>
+                <listEntry value="27">Weight (kg)</listEntry>
+                <listEntry value="28">Weight (lbs)</listEntry>
+                <listEntry value="31">Week number</listEntry>
+                <listEntry value="34">Battery percentage</listEntry>
+                <listEntry value="35">Battery days remaining *</listEntry>
+                <listEntry value="36">Notification count</listEntry>
+                <listEntry value="37">Solar intensity</listEntry>
+                <listEntry value="38">Sensor temperature</listEntry>
+            </settingConfig>
+    </setting>
+
+        <setting propertyKey="@Properties.sunsetFieldShows" title="Sunset field shows:">
+            <settingConfig type="list">
+                <listEntry value="-2">Hidden</listEntry>
+                <listEntry value="39">Sunrise time</listEntry>
+                <listEntry value="40">Sunset time</listEntry>                
+                <listEntry value="4">Floors climbed / day</listEntry>
+                <listEntry value="5">Meters climbed / day</listEntry>
+                <listEntry value="6">Time to Recovery (h)</listEntry>
+                <listEntry value="7">VO2 Max Running</listEntry>
+                <listEntry value="8">VO2 Max Cycling</listEntry>
+                <listEntry value="9">Respiration Rate</listEntry>
+                <listEntry value="13">Stress score</listEntry>
+                <listEntry value="14">Body battery</listEntry>
+                <listEntry value="16">Alternative Timezone 1</listEntry>
+                <listEntry value="41">Alternative Timezone 2</listEntry>
+                <listEntry value="27">Weight (kg)</listEntry>
+                <listEntry value="28">Weight (lbs)</listEntry>
+                <listEntry value="31">Week number</listEntry>
+                <listEntry value="34">Battery percentage</listEntry>
+                <listEntry value="35">Battery days remaining *</listEntry>
+                <listEntry value="36">Notification count</listEntry>
+                <listEntry value="37">Solar intensity</listEntry>
+                <listEntry value="38">Sensor temperature</listEntry>
+            </settingConfig>
     </setting>
 
     <setting propertyKey="@Properties.smallFontVariant" title="Small dot matrix font variant:">
@@ -89,6 +137,98 @@
             <listEntry value="9">WEEKDAY, DD.MM.YYYY</listEntry> 
             <listEntry value="4">WEEKDAY, DD MONTH (Week)</listEntry>
             <listEntry value="5">WEEKDAY, DD MONTH YYYY (Week)</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.tzName1" title="Alternative Timezone 1 label">
+        <settingConfig type="alphaNumeric" />
+    </setting>
+    <setting propertyKey="@Properties.tzOffset1" title="Alternative Timezone 1 offset">
+        <settingConfig type="list">
+            <listEntry value="-720">UTC-12:00</listEntry>
+            <listEntry value="-660">UTC-11:00</listEntry>
+            <listEntry value="-600">UTC-10:00</listEntry>
+            <listEntry value="-570">UTC-09:30</listEntry>
+            <listEntry value="-540">UTC-09:00</listEntry>
+            <listEntry value="-480">UTC-08:00</listEntry>
+            <listEntry value="-420">UTC-07:00</listEntry>
+            <listEntry value="-360">UTC-06:00</listEntry>
+            <listEntry value="-300">UTC-05:00</listEntry>
+            <listEntry value="-240">UTC-04:00</listEntry>
+            <listEntry value="-210">UTC-03:30</listEntry>
+            <listEntry value="-180">UTC-03:00</listEntry>
+            <listEntry value="-120">UTC-02:00</listEntry>
+            <listEntry value="-60">UTC-01:00</listEntry>
+            <listEntry value="0">UTC+0</listEntry>
+            <listEntry value="60">UTC+01:00</listEntry>
+            <listEntry value="120">UTC+02:00</listEntry>
+            <listEntry value="180">UTC+03:00</listEntry>
+            <listEntry value="210">UTC+03:30</listEntry>
+            <listEntry value="240">UTC+04:00</listEntry>
+            <listEntry value="270">UTC+04:30</listEntry>
+            <listEntry value="300">UTC+05:00</listEntry>
+            <listEntry value="330">UTC+05:30</listEntry>
+            <listEntry value="345">UTC+05:45</listEntry>
+            <listEntry value="360">UTC+06:00</listEntry>
+            <listEntry value="390">UTC+06:30</listEntry>
+            <listEntry value="420">UTC+07:00</listEntry>
+            <listEntry value="480">UTC+08:00</listEntry>
+            <listEntry value="525">UTC+08:45</listEntry>
+            <listEntry value="540">UTC+09:00</listEntry>
+            <listEntry value="570">UTC+09:30</listEntry>
+            <listEntry value="600">UTC+10:00</listEntry>
+            <listEntry value="630">UTC+10:30</listEntry>
+            <listEntry value="660">UTC+11:00</listEntry>
+            <listEntry value="720">UTC+12:00</listEntry>
+            <listEntry value="765">UTC+12:45</listEntry>
+            <listEntry value="780">UTC+13:00</listEntry>
+            <listEntry value="840">UTC+14:00</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.tzName2" title="Alternative Timezone 2 label">
+        <settingConfig type="alphaNumeric" />
+    </setting>
+   <setting propertyKey="@Properties.tzOffset2" title="Alternative Timezone 2 offset">
+        <settingConfig type="list">
+            <listEntry value="-720">UTC-12:00</listEntry>
+            <listEntry value="-660">UTC-11:00</listEntry>
+            <listEntry value="-600">UTC-10:00</listEntry>
+            <listEntry value="-570">UTC-09:30</listEntry>
+            <listEntry value="-540">UTC-09:00</listEntry>
+            <listEntry value="-480">UTC-08:00</listEntry>
+            <listEntry value="-420">UTC-07:00</listEntry>
+            <listEntry value="-360">UTC-06:00</listEntry>
+            <listEntry value="-300">UTC-05:00</listEntry>
+            <listEntry value="-240">UTC-04:00</listEntry>
+            <listEntry value="-210">UTC-03:30</listEntry>
+            <listEntry value="-180">UTC-03:00</listEntry>
+            <listEntry value="-120">UTC-02:00</listEntry>
+            <listEntry value="-60">UTC-01:00</listEntry>
+            <listEntry value="0">UTC+0</listEntry>
+            <listEntry value="60">UTC+01:00</listEntry>
+            <listEntry value="120">UTC+02:00</listEntry>
+            <listEntry value="180">UTC+03:00</listEntry>
+            <listEntry value="210">UTC+03:30</listEntry>
+            <listEntry value="240">UTC+04:00</listEntry>
+            <listEntry value="270">UTC+04:30</listEntry>
+            <listEntry value="300">UTC+05:00</listEntry>
+            <listEntry value="330">UTC+05:30</listEntry>
+            <listEntry value="345">UTC+05:45</listEntry>
+            <listEntry value="360">UTC+06:00</listEntry>
+            <listEntry value="390">UTC+06:30</listEntry>
+            <listEntry value="420">UTC+07:00</listEntry>
+            <listEntry value="480">UTC+08:00</listEntry>
+            <listEntry value="525">UTC+08:45</listEntry>
+            <listEntry value="540">UTC+09:00</listEntry>
+            <listEntry value="570">UTC+09:30</listEntry>
+            <listEntry value="600">UTC+10:00</listEntry>
+            <listEntry value="630">UTC+10:30</listEntry>
+            <listEntry value="660">UTC+11:00</listEntry>
+            <listEntry value="720">UTC+12:00</listEntry>
+            <listEntry value="765">UTC+12:45</listEntry>
+            <listEntry value="780">UTC+13:00</listEntry>
+            <listEntry value="840">UTC+14:00</listEntry>
         </settingConfig>
     </setting>
 
@@ -156,7 +296,10 @@
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="13">Stress score</listEntry>
             <listEntry value="14">Body battery</listEntry>
-            <listEntry value="16">UTC Time</listEntry>
+            <listEntry value="39">Sunrise time</listEntry>
+            <listEntry value="40">Sunset time</listEntry>   
+            <listEntry value="16">Alternative Timezone 1</listEntry>
+            <listEntry value="41">Alternative Timezone 2</listEntry>
             <listEntry value="26">Barometric Pressure, raw</listEntry>
             <listEntry value="30">Barometric Pressure, sea level</listEntry>
             <listEntry value="27">Weight (kg)</listEntry>
@@ -194,6 +337,10 @@
             <listEntry value="29">Active calories (kcal) / day</listEntry>
             <listEntry value="13">Stress score</listEntry>
             <listEntry value="14">Body battery</listEntry>
+            <listEntry value="39">Sunrise time</listEntry>
+            <listEntry value="40">Sunset time</listEntry>   
+            <listEntry value="16">Alternative Timezone 1</listEntry>
+            <listEntry value="41">Alternative Timezone 2</listEntry>
             <listEntry value="27">Weight (kg)</listEntry>
             <listEntry value="28">Weight (lbs)</listEntry>
             <listEntry value="31">Week number</listEntry>
@@ -230,7 +377,10 @@
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="13">Stress score</listEntry>
             <listEntry value="14">Body battery</listEntry>
-            <listEntry value="16">UTC Time</listEntry>
+            <listEntry value="39">Sunrise time</listEntry>
+            <listEntry value="40">Sunset time</listEntry>   
+            <listEntry value="16">Alternative Timezone 1</listEntry>
+            <listEntry value="41">Alternative Timezone 2</listEntry>
             <listEntry value="26">Barometric Pressure, raw</listEntry>
             <listEntry value="30">Barometric Pressure, sea level</listEntry>
             <listEntry value="27">Weight (kg)</listEntry>
@@ -260,6 +410,8 @@
             <listEntry value="19">Wheelchair pushes / day</listEntry>
             <listEntry value="12">Altitude (m)</listEntry>
             <listEntry value="15">Altitude (ft)</listEntry>
+            <listEntry value="16">Alternative Timezone 1</listEntry>
+            <listEntry value="41">Alternative Timezone 2</listEntry>
         </settingConfig>
     </setting>
 
@@ -281,6 +433,8 @@
             <listEntry value="29">Active calories (kcal) / day</listEntry>
             <listEntry value="19">Wheelchair pushes / day *</listEntry>
             <listEntry value="25">Training status *</listEntry>
+            <listEntry value="16">Alternative Timezone 1</listEntry>
+            <listEntry value="41">Alternative Timezone 2</listEntry>
         </settingConfig>
     </setting>
 
