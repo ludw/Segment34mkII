@@ -33,10 +33,6 @@
         <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.showFeelsLike" title="Show 'Feels Like' temperature">
-        <settingConfig type="boolean" />
-    </setting>
-
     <setting propertyKey="@Properties.showNotificationCount" title="Show Notification Count">
         <settingConfig type="boolean" />
     </setting>
@@ -80,6 +76,9 @@
                 <listEntry value="36">Notification count</listEntry>
                 <listEntry value="37">Solar intensity</listEntry>
                 <listEntry value="38">Sensor temperature</listEntry>
+                <listEntry value="42">Alarms (count)</listEntry>
+                <listEntry value="43">Weather: Daily high temperature</listEntry>
+                <listEntry value="44">Weather: Daily low temperature</listEntry>
             </settingConfig>
     </setting>
 
@@ -106,6 +105,9 @@
                 <listEntry value="36">Notification count</listEntry>
                 <listEntry value="37">Solar intensity</listEntry>
                 <listEntry value="38">Sensor temperature</listEntry>
+                <listEntry value="42">Alarms (count)</listEntry>
+                <listEntry value="43">Weather: Daily high temperature</listEntry>
+                <listEntry value="44">Weather: Daily low temperature</listEntry>
             </settingConfig>
     </setting>
 
@@ -259,9 +261,33 @@
     </setting>
 
 
-    <setting propertyKey="@Properties.weatherLine2Shows" title="Line above clock shows:">
+    <setting propertyKey="@Properties.weatherLine1Shows" title="Line 1 above clock shows:">
         <settingConfig type="list">
-            <listEntry value="20">Weather conditions</listEntry>
+            <listEntry value="45">Temperature, Wind, Feels like</listEntry>
+            <listEntry value="46">Temperature, Wind</listEntry>
+            <listEntry value="47">Temperature, Wind, Humidity</listEntry>
+            <listEntry value="48">Temperature, Wind, High/Low</listEntry>
+            <listEntry value="49">Temperature, Wind, Precipitation chance (if above 0%)</listEntry>
+            <listEntry value="20">Weather conditions, Precipitation chance (if above 0%)</listEntry>
+            <listEntry value="50">Weather conditions</listEntry>
+            <listEntry value="17">Steps / day</listEntry>
+            <listEntry value="19">Wheelchair pushes / day *</listEntry>
+            <listEntry value="11">Calories (kcal) / day</listEntry>
+            <listEntry value="12">Altitude (m)</listEntry>
+            <listEntry value="15">Altitude (ft)</listEntry>
+            <listEntry value="25">Training status *</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.weatherLine2Shows" title="Line 2 above clock shows:">
+        <settingConfig type="list">
+            <listEntry value="45">Temperature, Wind, Feels like</listEntry>
+            <listEntry value="46">Temperature, Wind</listEntry>
+            <listEntry value="47">Temperature, Wind, Humidity</listEntry>
+            <listEntry value="48">Temperature, Wind, High/Low</listEntry>
+            <listEntry value="49">Temperature, Wind, Percipitation chance</listEntry>
+            <listEntry value="20">Weather conditions + Percipitation chance</listEntry>
+            <listEntry value="50">Weather conditions</listEntry>
             <listEntry value="17">Steps / day</listEntry>
             <listEntry value="19">Wheelchair pushes / day *</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
@@ -310,6 +336,9 @@
             <listEntry value="36">Notification count</listEntry>
             <listEntry value="37">Solar intensity</listEntry>
             <listEntry value="38">Sensor temperature</listEntry>
+            <listEntry value="42">Alarms (count)</listEntry>
+            <listEntry value="43">Weather: Daily high temperature</listEntry>
+            <listEntry value="44">Weather: Daily low temperature</listEntry>
         </settingConfig>
     </setting>
 
@@ -349,6 +378,9 @@
             <listEntry value="36">Notification count</listEntry>
             <listEntry value="37">Solar intensity</listEntry>
             <listEntry value="38">Sensor temperature</listEntry>
+            <listEntry value="42">Alarms (count)</listEntry>
+            <listEntry value="43">Weather: Daily high temperature</listEntry>
+            <listEntry value="44">Weather: Daily low temperature</listEntry>
         </settingConfig>
     </setting>
 
@@ -391,6 +423,9 @@
             <listEntry value="36">Notification count</listEntry>
             <listEntry value="37">Solar intensity</listEntry>
             <listEntry value="38">Sensor temperature</listEntry>
+            <listEntry value="42">Alarms (count)</listEntry>
+            <listEntry value="43">Weather: Daily high temperature</listEntry>
+            <listEntry value="44">Weather: Daily low temperature</listEntry>
         </settingConfig>
     </setting>
 

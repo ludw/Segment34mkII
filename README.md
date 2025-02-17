@@ -33,13 +33,10 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 - Goal completion marker
 - Battery, different color when low
 - Battery bar instead of numbers
-- Number of alarms
 - DND
 - Align Date center when no notifications or seconds.
 - Option to align AOD date field left
 - Font options (dots/lines) for medium led font
-- Weather line 1 customizations: Humidity, High/low, Percipitation
-- Weather line 2 customizations: Without percipitation
 
 Lower priority:
 - Always on as the only thing shown
@@ -50,6 +47,11 @@ Lower priority:
 
 
 ## Change log
+2025-02-17 v1.17.0
+- Weather line 1 and 2 is now customizable
+- Alarm count as field value
+- High / Low temp as field value
+
 2025-02-16 v1.16.1
 - Stress value should work better now
 

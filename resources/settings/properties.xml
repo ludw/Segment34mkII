@@ -4,7 +4,6 @@
     <property id="tempUnit" type="number">0</property>
     <property id="windUnit" type="number">0</property>
     <property id="pressureUnit" type="number">0</property>
-    <property id="showFeelsLike" type="boolean">true</property>
     <property id="showNotificationCount" type="boolean">true</property>
     <property id="showSeconds" type="boolean">true</property>
     <property id="showStressAndBodyBattery" type="boolean">true</property>
@@ -16,6 +15,7 @@
     <property id="showDataBg" type="boolean">true</property>
     <property id="alwaysShowSeconds" type="boolean">true</property>
     <property id="batteryVariant" type="number">0</property>
+    <property id="weatherLine1Shows" type="number">45</property>
     <property id="weatherLine2Shows" type="number">20</property>
     <property id="leftValueShows" type="number">6</property>
     <property id="middleValueShows" type="number">10</property>

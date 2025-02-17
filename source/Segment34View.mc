@@ -1014,94 +1014,12 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setWeather(dc) as Void {
-        if (weatherCondition == null) { return; }
-        if (weatherCondition.condition == null) { return; }
-        
-        var tempUnit = getTempUnit();
-        var temp = "";
-        var windspeed = "";
-        var bearing = "";
-        var fl = "";
-        var weatherText = "";
-
-        if(weatherCondition.temperature != null) {
-            var tempVal = weatherCondition.temperature;
-            temp = formatTemperature(tempVal, tempUnit).format("%01d");
-            weatherText = Lang.format("$1$$2$", [temp, tempUnit]);
+        var weatherLine1Shows = Application.Properties.getValue("weatherLine1Shows");
+        var unit = getComplicationUnit(weatherLine1Shows);
+        if (unit.length() > 0) {
+            unit = Lang.format(" $1$", [unit]);
         }
-        
-        if(weatherCondition.windSpeed != null) {
-            var windUnit = Application.Properties.getValue("windUnit");
-            var windspeed_mps = weatherCondition.windSpeed;
-            if(windUnit == 0) { // m/s
-                windspeed = Math.round(windspeed_mps).format("%01d");
-            } else if (windUnit == 1) { // km/h
-                var windspeed_kmh = Math.round(windspeed_mps * 3.6);
-                windspeed = windspeed_kmh.format("%01d");
-            } else if (windUnit == 2) { // mph
-                var windspeed_mph = Math.round(windspeed_mps * 2.237);
-                windspeed = windspeed_mph.format("%01d");
-            } else if (windUnit == 3) { // knots
-                var windspeed_kt = Math.round(windspeed_mps * 1.944);
-                windspeed = windspeed_kt.format("%01d");
-            } else if(windUnit == 4) { // beufort
-                if (windspeed_mps < 0.5f) {
-                    windspeed = "0";  // Calm
-                } else if (windspeed_mps < 1.5f) {
-                    windspeed = "1";  // Light air
-                } else if (windspeed_mps < 3.3f) {
-                    windspeed = "2";  // Light breeze
-                } else if (windspeed_mps < 5.5f) {
-                    windspeed = "3";  // Gentle breeze
-                } else if (windspeed_mps < 7.9f) {
-                    windspeed = "4";  // Moderate breeze
-                } else if (windspeed_mps < 10.7f) {
-                    windspeed = "5";  // Fresh breeze
-                } else if (windspeed_mps < 13.8f) {
-                    windspeed = "6";  // Strong breeze
-                } else if (windspeed_mps < 17.1f) {
-                    windspeed = "7";  // Near gale
-                } else if (windspeed_mps < 20.7f) {
-                    windspeed = "8";  // Gale
-                } else if (windspeed_mps < 24.4f) {
-                    windspeed = "9";  // Strong gale
-                } else if (windspeed_mps < 28.4f) {
-                    windspeed = "10";  // Storm
-                } else if (windspeed_mps < 32.6f) {
-                    windspeed = "11";  // Violent storm
-                } else {
-                    windspeed = "12";  // Hurricane force
-                }
-            }
-        }
-
-        if(weatherCondition.windBearing != null) {
-            bearing = ((Math.round((weatherCondition.windBearing.toFloat() + 180) / 45.0).toNumber() % 8) + 97).toChar().toString();
-        }
-
-        if(windspeed.length() > 0 and bearing.length() > 0) {
-            if(weatherText.length() == 0) {
-                weatherText = windspeed;
-            } else {
-                weatherText = Lang.format("$1$, $2$$3$", [weatherText, bearing, windspeed]);
-            }
-        }
-
-        var showFeelsLike = Application.Properties.getValue("showFeelsLike");
-        if(showFeelsLike) {
-            if(weatherCondition.feelsLikeTemperature != null) {
-                var fltemp = formatTemperature(weatherCondition.feelsLikeTemperature, tempUnit);
-                fl = Lang.format("FL: $1$$2$", [fltemp.format(INTEGER_FORMAT), tempUnit]);
-            }
-
-            if(weatherText.length() == 0) {
-                weatherText = fl;
-            } else {
-                weatherText = Lang.format("$1$, $2$", [weatherText, fl]);
-            }
-        }
-        
-        dWeatherLabel1.setText(weatherText);
+        dWeatherLabel1.setText(Lang.format("$1$$2$", [getComplicationValue(weatherLine1Shows, 10), unit]));
     }
 
     hidden function setWeatherLabel() as Void {
@@ -1113,7 +1031,7 @@ class Segment34View extends WatchUi.WatchFace {
         dWeatherLabel2.setText(Lang.format("$1$$2$", [getComplicationValue(weatherLine2Shows, 10), unit]));
     }
 
-    hidden function getWeatherCondition() as String {
+    hidden function getWeatherCondition(includePrecipitation as Boolean) as String {
         var condition;
         var perp = "";
 
@@ -1123,11 +1041,13 @@ class Segment34View extends WatchUi.WatchFace {
         }
 
         // Safely check precipitation chance
-        if (weatherCondition has :precipitationChance &&
-            weatherCondition.precipitationChance != null &&
-            weatherCondition.precipitationChance instanceof Number) {
-            if(weatherCondition.precipitationChance > 0) {
-                perp = Lang.format(" ($1$%)", [weatherCondition.precipitationChance.format("%02d")]);
+        if(includePrecipitation) {
+            if (weatherCondition has :precipitationChance &&
+                weatherCondition.precipitationChance != null &&
+                weatherCondition.precipitationChance instanceof Number) {
+                if(weatherCondition.precipitationChance > 0) {
+                    perp = Lang.format(" ($1$%)", [weatherCondition.precipitationChance.format("%02d")]);
+                }
             }
         }
 
@@ -1721,7 +1641,7 @@ class Segment34View extends WatchUi.WatchFace {
                 } 
             }  
         } else if(complicationType == 20) { // Weather condition
-            val = getWeatherCondition();
+            val = getWeatherCondition(true);
         } else if(complicationType == 21) { // Weekly run distance (km)
             if (Toybox has :Complications) {
                 try {
@@ -1921,7 +1841,50 @@ class Segment34View extends WatchUi.WatchFace {
             } else {
                 val = Lang.format("$1$:$2$", [hour.format("%02d"), min.format("%02d")]);
             }
+        } else if(complicationType == 42) { // Alarms
+            val = System.getDeviceSettings().alarmCount.format(numberFormat);
+        } else if(complicationType == 43) { // High temp
+            if(weatherCondition != null and weatherCondition.highTemperature != null) {
+                var tempVal = weatherCondition.highTemperature;
+                var tempUnit = getTempUnit();
+                var temp = formatTemperature(tempVal, tempUnit).format("%01d");
+                val = Lang.format("$1$$2$", [temp, tempUnit]);
+            }
+        } else if(complicationType == 44) { // Low temp
+            if(weatherCondition != null and weatherCondition.lowTemperature != null) {
+                var tempVal = weatherCondition.lowTemperature;
+                var tempUnit = getTempUnit();
+                var temp = formatTemperature(tempVal, tempUnit).format("%01d");
+                val = Lang.format("$1$$2$", [temp, tempUnit]);
+            }
+        } else if(complicationType == 45) { // Temperature, Wind, Feels like
+            var temp = getTemperature();
+            var wind = getWind();
+            var feelsLike = getFeelsLike();
+            val = join([temp, wind, feelsLike]);
+        } else if(complicationType == 46) { // Temperature, Wind
+            var temp = getTemperature();
+            var wind = getWind();
+            val = join([temp, wind]);
+        } else if(complicationType == 47) { // Temperature, Wind, Humidity
+            var temp = getTemperature();
+            var wind = getWind();
+            var humidity = getHumidity();
+            val = join([temp, wind, humidity]);
+        } else if(complicationType == 48) { // Temperature, Wind, High/Low
+            var temp = getTemperature();
+            var wind = getWind();
+            var highlow = getHighLow();
+            val = join([temp, wind, highlow]);
+        } else if(complicationType == 49) { // Temperature, Wind, Precipitation chance
+            var temp = getTemperature();
+            var wind = getWind();
+            var precip = getPrecip();
+            val = join([temp, wind, precip]);
+        } else if(complicationType == 50) { // Weather condition without precipitation
+            val = getWeatherCondition(false);
         }
+
         return val;
     }
 
@@ -2093,6 +2056,18 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 41) { // Alt TZ 2:
             var name = Application.Properties.getValue("tzName2");
             desc = Lang.format("$1$:", [name.toUpper()]);
+        } else if(complicationType == 42) {
+            if(labelSize == 1) { desc = "ALARM:"; }
+            if(labelSize == 2) { desc = "ALARMS:"; }
+            if(labelSize == 3) { desc = "ALARMS:"; }
+        } else if(complicationType == 43) {
+            if(labelSize == 1) { desc = "HIGH:"; }
+            if(labelSize == 2) { desc = "DAILY HIGH:"; }
+            if(labelSize == 3) { desc = "DAILY HIGH:"; }
+        } else if(complicationType == 44) {
+            if(labelSize == 1) { desc = "LOW:"; }
+            if(labelSize == 2) { desc = "DAILY LOW:"; }
+            if(labelSize == 3) { desc = "DAILY LOW:"; }
         }
         return desc;
     }
@@ -2113,6 +2088,124 @@ class Segment34View extends WatchUi.WatchFace {
             unit = "KCAL";
         }
         return unit;
+    }
+
+    function join(array as Array<String>) as String {
+        var ret = "";
+        for(var i=0; i<array.size(); i++) {
+            if(ret.equals("")) {
+                ret = array[i];
+            } else {
+                ret = ret + ", " + array[i];
+            }
+        }
+        return ret;
+    }
+
+    function getTemperature() as String {
+        if(weatherCondition.temperature != null) {
+            var tempUnit = getTempUnit();
+            var tempVal = weatherCondition.temperature;
+            var temp = formatTemperature(tempVal, tempUnit).format("%01d");
+            return Lang.format("$1$$2$", [temp, tempUnit]);
+        }
+        return "";
+    }
+
+    function getWind() as String {
+        var windspeed = "";
+        var bearing = "";
+
+        if(weatherCondition.windSpeed != null) {
+            var windUnit = Application.Properties.getValue("windUnit");
+            var windspeed_mps = weatherCondition.windSpeed;
+            if(windUnit == 0) { // m/s
+                windspeed = Math.round(windspeed_mps).format("%01d");
+            } else if (windUnit == 1) { // km/h
+                var windspeed_kmh = Math.round(windspeed_mps * 3.6);
+                windspeed = windspeed_kmh.format("%01d");
+            } else if (windUnit == 2) { // mph
+                var windspeed_mph = Math.round(windspeed_mps * 2.237);
+                windspeed = windspeed_mph.format("%01d");
+            } else if (windUnit == 3) { // knots
+                var windspeed_kt = Math.round(windspeed_mps * 1.944);
+                windspeed = windspeed_kt.format("%01d");
+            } else if(windUnit == 4) { // beufort
+                if (windspeed_mps < 0.5f) {
+                    windspeed = "0";  // Calm
+                } else if (windspeed_mps < 1.5f) {
+                    windspeed = "1";  // Light air
+                } else if (windspeed_mps < 3.3f) {
+                    windspeed = "2";  // Light breeze
+                } else if (windspeed_mps < 5.5f) {
+                    windspeed = "3";  // Gentle breeze
+                } else if (windspeed_mps < 7.9f) {
+                    windspeed = "4";  // Moderate breeze
+                } else if (windspeed_mps < 10.7f) {
+                    windspeed = "5";  // Fresh breeze
+                } else if (windspeed_mps < 13.8f) {
+                    windspeed = "6";  // Strong breeze
+                } else if (windspeed_mps < 17.1f) {
+                    windspeed = "7";  // Near gale
+                } else if (windspeed_mps < 20.7f) {
+                    windspeed = "8";  // Gale
+                } else if (windspeed_mps < 24.4f) {
+                    windspeed = "9";  // Strong gale
+                } else if (windspeed_mps < 28.4f) {
+                    windspeed = "10";  // Storm
+                } else if (windspeed_mps < 32.6f) {
+                    windspeed = "11";  // Violent storm
+                } else {
+                    windspeed = "12";  // Hurricane force
+                }
+            }
+        }
+
+        if(weatherCondition.windBearing != null) {
+            bearing = ((Math.round((weatherCondition.windBearing.toFloat() + 180) / 45.0).toNumber() % 8) + 97).toChar().toString();
+        }
+
+        return Lang.format("$1$$2$", [bearing, windspeed]);
+    }
+
+    function getFeelsLike() as String {
+        var fl = "";
+        var tempUnit = getTempUnit();
+        if(weatherCondition.feelsLikeTemperature != null) {
+            var fltemp = formatTemperature(weatherCondition.feelsLikeTemperature, tempUnit);
+            fl = Lang.format("FL:$1$$2$", [fltemp.format(INTEGER_FORMAT), tempUnit]);
+        }
+
+        return fl;
+    }
+
+    function getHumidity() as String {
+        var ret = "";
+        if(weatherCondition.relativeHumidity != null) {
+            ret = Lang.format("$1$%", [weatherCondition.relativeHumidity]);
+        }
+        return ret;
+    }
+
+    function getHighLow() as String {
+        var ret = "";
+        if(weatherCondition.highTemperature != null or weatherCondition.lowTemperature != null) {
+            var tempUnit = getTempUnit();
+            var high = formatTemperature(weatherCondition.highTemperature, tempUnit);
+            var low = formatTemperature(weatherCondition.lowTemperature, tempUnit);
+            ret = Lang.format("$1$$2$/$3$$2$", [high.format(INTEGER_FORMAT), tempUnit, low.format(INTEGER_FORMAT)]);
+        }
+        return ret;
+    }
+
+    function getPrecip() as String {
+        var ret = "";
+        if(weatherCondition.precipitationChance != null) {
+            if(weatherCondition.precipitationChance > 0) {
+                ret = Lang.format("$1$%", [weatherCondition.precipitationChance.format("%d")]);
+            }
+        }
+        return ret;
     }
 
     function getWeeklyDistance() as Number {
