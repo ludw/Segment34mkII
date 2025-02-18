@@ -105,7 +105,7 @@ class Segment34View extends WatchUi.WatchFace {
             canBurnIn = System.getDeviceSettings().requiresBurnInProtection;
             lastUpdate = now;
 
-            if(clockTime.min % 5 == 0) {
+            if(clockTime.min % 5 == 0 or weatherCondition == null) {
                 updateWeather();
             }
         }
