@@ -46,11 +46,9 @@ Lower priority:
 
 
 ## Change log
-2025-02-18 v1.17.2
+2025-02-18 v1.17.1
 - Text alignment options for date and AOD line
 - Hidden as option for most fields
-
-2025-02-18 v1.17.1
 - Fixed issue with secondary timezone sometimes showing negative hours
 
 2025-02-17 v1.17.0
