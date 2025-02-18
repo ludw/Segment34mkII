@@ -263,6 +263,7 @@
 
     <setting propertyKey="@Properties.weatherLine1Shows" title="Line 1 above clock shows:">
         <settingConfig type="list">
+            <listEntry value="-2">Hidden</listEntry>
             <listEntry value="45">Temperature, Wind, Feels like</listEntry>
             <listEntry value="46">Temperature, Wind</listEntry>
             <listEntry value="47">Temperature, Wind, Humidity</listEntry>
@@ -283,6 +284,7 @@
 
     <setting propertyKey="@Properties.weatherLine2Shows" title="Line 2 above clock shows:">
         <settingConfig type="list">
+            <listEntry value="-2">Hidden</listEntry>
             <listEntry value="45">Temperature, Wind, Feels like</listEntry>
             <listEntry value="46">Temperature, Wind</listEntry>
             <listEntry value="47">Temperature, Wind, Humidity</listEntry>
@@ -303,6 +305,7 @@
 
     <setting propertyKey="@Properties.leftValueShows" title="Bottom Left value:">
         <settingConfig type="list">
+            <listEntry value="-2">Hidden</listEntry>
             <listEntry value="0">Active min / week</listEntry>
             <listEntry value="1">Active min / day</listEntry>
             <listEntry value="2">Distance (km) / day</listEntry>
@@ -390,6 +393,7 @@
 
     <setting propertyKey="@Properties.rightValueShows" title="Bottom Right value:">
         <settingConfig type="list">
+            <listEntry value="-2">Hidden</listEntry>
             <listEntry value="0">Active min / week</listEntry>
             <listEntry value="1">Active min / day</listEntry>
             <listEntry value="2">Distance (km) / day</listEntry>

@@ -303,24 +303,12 @@ class Segment34View extends WatchUi.WatchFace {
             dSecondsLabel.setVisible(awake && propShowSeconds);
         }
 
-        if(propBottomFieldShows == -2) {
-            dStepLabel.setVisible(false);
-            dStepBg.setVisible(false);
-        } else {
-            dStepLabel.setVisible(hideInAOD);
-            dStepBg.setVisible(hideInAOD and propShowDataBg);
-        }
-
-        if(propMiddleValueShows == -2) {
-            dHrLabel.setVisible(false);
-            dHrBg.setVisible(false);
-        } else {
-            dHrLabel.setVisible(hideInAOD);
-            dHrBg.setVisible(hideInAOD and propShowDataBg);
-        }
+        setVisibility3(propLeftValueShows, dTtrDesc, dTtrLabel, dTtrBg);
+        setVisibility3(propMiddleValueShows, dHrDesc, dHrLabel, dHrBg);
+        setVisibility3(propRightValueShows, dActiveDesc, dActiveLabel, dActiveBg);
+        setVisibility2(propBottomFieldShows, dStepLabel, dStepBg);
         
         dDateLabel.setVisible(hideInAOD);
-        dTtrDesc.setVisible(hideInAOD);
         dHrDesc.setVisible(hideInAOD);
         dActiveDesc.setVisible(hideInAOD);
         dMoonLabel.setVisible(hideInAOD);
@@ -331,18 +319,36 @@ class Segment34View extends WatchUi.WatchFace {
         dWeatherLabel1.setVisible(hideInAOD);
         dWeatherLabel2.setVisible(hideInAOD);
         dNotifLabel.setVisible(hideInAOD);
-        dTtrLabel.setVisible(hideInAOD);
-        dActiveLabel.setVisible(hideInAOD);
         dWeatherLabel2.setVisible(hideInAOD);
-
         dTimeBg.setVisible(hideInAOD and propShowClockBg);
-        dTtrBg.setVisible(hideInAOD and propShowDataBg);
-        dActiveBg.setVisible(hideInAOD and propShowDataBg);
-        
         dBattLabel.setVisible(hideBattery);
         dBattBg.setVisible(hideBattery);
-
         dTimeLabel.setColor(getColor("timeDisplay"));
+        
+        dTimeBg.setColor(getColor("timeBg"));
+        dTtrBg.setColor(getColor("fieldBg"));
+        dHrBg.setColor(getColor("fieldBg"));
+        dActiveBg.setColor(getColor("fieldBg"));
+        dStepBg.setColor(getColor("fieldBg"));
+        dTtrDesc.setColor(getColor("fieldLabel"));
+        dHrLabel.setColor(getColor("valueDisplay"));
+        dHrDesc.setColor(getColor("fieldLabel"));
+        dActiveDesc.setColor(getColor("fieldLabel"));
+        dDateLabel.setColor(getColor("dateDisplay"));
+        dSecondsLabel.setColor(getColor("dateDisplay"));
+        dNotifLabel.setColor(getColor("notifications"));
+        dMoonLabel.setColor(getColor("moonDisplay"));
+        dDusk.setColor(getColor("dawnDuskLabel"));
+        dDawn.setColor(getColor("dawnDuskLabel"));
+        dSunUpLabel.setColor(getColor("dawnDuskValue"));
+        dSunDownLabel.setColor(getColor("dawnDuskValue"));
+        dWeatherLabel1.setColor(getColor("valueDisplay"));
+        dWeatherLabel2.setColor(getColor("valueDisplay"));
+        dTtrLabel.setColor(getColor("valueDisplay"));
+        dActiveLabel.setColor(getColor("valueDisplay"));
+        dStepLabel.setColor(getColor("valueDisplay"));
+        dBattBg.setColor(0x555555);
+        dBattLabel.setColor(getColor("valueDisplay"));
 
         if(awake) {
             if(getColor("background") == 0xFFFFFF) {
@@ -350,31 +356,6 @@ class Segment34View extends WatchUi.WatchFace {
             } else {
                 dbackground.setVisible(false);
             }
-            
-            dTimeBg.setColor(getColor("timeBg"));
-            dTtrBg.setColor(getColor("fieldBg"));
-            dHrBg.setColor(getColor("fieldBg"));
-            dActiveBg.setColor(getColor("fieldBg"));
-            dStepBg.setColor(getColor("fieldBg"));
-            dTtrDesc.setColor(getColor("fieldLabel"));
-            dHrLabel.setColor(getColor("valueDisplay"));
-            dHrDesc.setColor(getColor("fieldLabel"));
-            dActiveDesc.setColor(getColor("fieldLabel"));
-            dDateLabel.setColor(getColor("dateDisplay"));
-            dSecondsLabel.setColor(getColor("dateDisplay"));
-            dNotifLabel.setColor(getColor("notifications"));
-            dMoonLabel.setColor(getColor("moonDisplay"));
-            dDusk.setColor(getColor("dawnDuskLabel"));
-            dDawn.setColor(getColor("dawnDuskLabel"));
-            dSunUpLabel.setColor(getColor("dawnDuskValue"));
-            dSunDownLabel.setColor(getColor("dawnDuskValue"));
-            dWeatherLabel1.setColor(getColor("valueDisplay"));
-            dWeatherLabel2.setColor(getColor("valueDisplay"));
-            dTtrLabel.setColor(getColor("valueDisplay"));
-            dActiveLabel.setColor(getColor("valueDisplay"));
-            dStepLabel.setColor(getColor("valueDisplay"));
-            dBattBg.setColor(0x555555);
-            dBattLabel.setColor(getColor("valueDisplay"));
 
             if(screenHeight == 240 or screenHeight == 260 or screenHeight == 280) {
                 dDateLabel.setFont(ledSmallFont);
@@ -397,6 +378,30 @@ class Segment34View extends WatchUi.WatchFace {
         }
 
         previousEssentialsVis = awake;
+    }
+
+    hidden function setVisibility2(setting as Number, label as Text, bg as Text) {
+        var hideInAOD = (!isSleeping or !canBurnIn);
+        if(setting == -2) {
+            label.setVisible(false);
+            bg.setVisible(false);
+        } else {
+            label.setVisible(hideInAOD);
+            bg.setVisible(hideInAOD and propShowDataBg);
+        }
+    }
+
+    hidden function setVisibility3(setting as Number, desc as Text, label as Text, bg as Text) {
+        var hideInAOD = (!isSleeping or !canBurnIn);
+        if(setting == -2) {
+            desc.setVisible(false);
+            label.setVisible(false);
+            bg.setVisible(false);
+        } else {
+            desc.setVisible(hideInAOD);
+            label.setVisible(hideInAOD);
+            bg.setVisible(hideInAOD and propShowDataBg);
+        }
     }
     
     hidden function getColor(colorName) as Graphics.ColorType {
