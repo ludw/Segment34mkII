@@ -34,14 +34,11 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 - Battery, different color when low
 - Battery bar instead of numbers
 - DND
-- Align Date center when no notifications or seconds.
-- Option to align AOD date field left
 - Font options (dots/lines) for medium led font
 - Pressure trend
 - GPS Coordinates
 
 Lower priority:
-- Always on as the only thing shown
 - Move indicator
 - Race predictions
 - Localization
@@ -49,6 +46,10 @@ Lower priority:
 
 
 ## Change log
+2025-02-18 v1.17.2
+- Text alignment options for date and AOD line
+- Hidden as option for most fields
+
 2025-02-18 v1.17.1
 - Fixed issue with secondary timezone sometimes showing negative hours
 

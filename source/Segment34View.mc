@@ -68,6 +68,8 @@ class Segment34View extends WatchUi.WatchFace {
     private var propShowDataBg = null;
     private var propAodFieldShows = null;
     private var propBottomFieldShows = null;
+    private var propAodAlignment = null;
+    private var propDateAlignment = null;
 
     function initialize() {
         WatchFace.initialize();
@@ -260,6 +262,8 @@ class Segment34View extends WatchUi.WatchFace {
         propMiddleValueShows = Application.Properties.getValue("middleValueShows");
         propRightValueShows = Application.Properties.getValue("rightValueShows");
         propBottomFieldShows = Application.Properties.getValue("bottomFieldShows");
+        propAodAlignment = Application.Properties.getValue("aodAlignment");
+        propDateAlignment = Application.Properties.getValue("dateAlignment");
 
         var fontVariant = Application.Properties.getValue("smallFontVariant");
         if(fontVariant == 0) {
@@ -285,7 +289,7 @@ class Segment34View extends WatchUi.WatchFace {
                 dAodDateLabel.setVisible(false);
             }
             dAodPattern.setLocation(clockTime.min % 2, dAodPattern.locY);
-            dAodDateLabel.setLocation(Math.floor(dc.getWidth() / 2) - 1 + clockTime.min % 3, dAodDateLabel.locY);
+            setAlignment(propAodAlignment, dAodDateLabel, (clockTime.min % 3) - 1);
             dAodDateLabel.setColor(getColor("dateDisplayDim"));
             dbackground.setVisible(false);
         }
@@ -308,6 +312,8 @@ class Segment34View extends WatchUi.WatchFace {
         setVisibility3(propRightValueShows, dActiveDesc, dActiveLabel, dActiveBg);
         setVisibility2(propBottomFieldShows, dStepLabel, dStepBg);
         
+        setAlignment(propDateAlignment, dDateLabel, 0);
+
         dDateLabel.setVisible(hideInAOD);
         dHrDesc.setVisible(hideInAOD);
         dActiveDesc.setVisible(hideInAOD);
@@ -401,6 +407,25 @@ class Segment34View extends WatchUi.WatchFace {
             desc.setVisible(hideInAOD);
             label.setVisible(hideInAOD);
             bg.setVisible(hideInAOD and propShowDataBg);
+        }
+    }
+
+    hidden function setAlignment(setting as Number, label as Text, offset as Number) {
+        var x = 0;
+        if(screenHeight == 240) { x = 10; }
+        if(screenHeight == 260) { x = 16; }
+        if(screenHeight == 280) { x = 25; }
+        if(screenHeight == 360) { x = 15; }
+        if(screenHeight == 390) { x = 17; }
+        if(screenHeight == 416) { x = 31; }
+        if(screenHeight == 454) { x = 23; }
+
+        if(setting == 0) { // Left align
+            label.setJustification(Graphics.TEXT_JUSTIFY_LEFT);
+            label.setLocation(x + offset, label.locY);
+        } else { // Center align
+            label.setJustification(Graphics.TEXT_JUSTIFY_CENTER);
+            label.setLocation(Math.floor(screenHeight / 2) + offset, label.locY);
         }
     }
     

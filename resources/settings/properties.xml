@@ -22,6 +22,8 @@
     <property id="rightValueShows" type="number">0</property>
     <property id="bottomFieldShows" type="number">17</property>
     <property id="aodFieldShows" type="number">-1</property>
+    <property id="aodAlignment" type="number">0</property>
+    <property id="dateAlignment" type="number">0</property>
     <property id="dateFormat" type="number">0</property>
     <property id="smallFontVariant" type="number">0</property>
     <property id="tzOffset1" type="number">0</property>
