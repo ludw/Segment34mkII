@@ -1620,6 +1620,9 @@ class Segment34View extends WatchUi.WatchFace {
             var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_MEDIUM);
             var min = utc.min + (offset % 60);
             var hour = (utc.hour + Math.floor(offset / 60)) % 24;
+            if(hour < 0) {
+                hour += 24;
+            }
             hour = formatHour(hour);
             if(width < 5) {
                 val = Lang.format("$1$$2$", [hour.format("%02d"), min.format("%02d")]);
@@ -1835,6 +1838,9 @@ class Segment34View extends WatchUi.WatchFace {
             var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_MEDIUM);
             var min = utc.min + (offset % 60);
             var hour = (utc.hour + Math.floor(offset / 60)) % 24;
+            if(hour < 0) {
+                hour += 24;
+            }
             hour = formatHour(hour);
             if(width < 5) {
                 val = Lang.format("$1$$2$", [hour.format("%02d"), min.format("%02d")]);
@@ -1883,6 +1889,16 @@ class Segment34View extends WatchUi.WatchFace {
             val = join([temp, wind, precip]);
         } else if(complicationType == 50) { // Weather condition without precipitation
             val = getWeatherCondition(false);
+        } else if(complicationType == 51) { // Temperature, Humidity, High/Low
+            var temp = getTemperature();
+            var humidity = getHumidity();
+            var highlow = getHighLow();
+            val = join([temp, humidity, highlow]);
+        } else if(complicationType == 52) { // Temperature, Percipitation chance, High/Low
+            var temp = getTemperature();
+            var precip = getPrecip();
+            var highlow = getHighLow();
+            val = join([temp, precip, highlow]);
         }
 
         return val;
