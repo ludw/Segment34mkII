@@ -79,6 +79,8 @@
                 <listEntry value="42">Alarms (count)</listEntry>
                 <listEntry value="43">Weather: Daily high temperature</listEntry>
                 <listEntry value="44">Weather: Daily low temperature</listEntry>
+                <listEntry value="53">Weather: Temperature</listEntry>
+                <listEntry value="54">Weather: Chance of Precipitation</listEntry>
             </settingConfig>
     </setting>
 
@@ -108,6 +110,8 @@
                 <listEntry value="42">Alarms (count)</listEntry>
                 <listEntry value="43">Weather: Daily high temperature</listEntry>
                 <listEntry value="44">Weather: Daily low temperature</listEntry>
+                <listEntry value="53">Weather: Temperature</listEntry>
+                <listEntry value="54">Weather: Chance of Precipitation</listEntry>
             </settingConfig>
     </setting>
 
@@ -346,6 +350,8 @@
             <listEntry value="42">Alarms (count)</listEntry>
             <listEntry value="43">Weather: Daily high temperature</listEntry>
             <listEntry value="44">Weather: Daily low temperature</listEntry>
+            <listEntry value="53">Weather: Temperature</listEntry>
+            <listEntry value="54">Weather: Chance of Precipitation</listEntry>
         </settingConfig>
     </setting>
 
@@ -388,6 +394,8 @@
             <listEntry value="42">Alarms (count)</listEntry>
             <listEntry value="43">Weather: Daily high temperature</listEntry>
             <listEntry value="44">Weather: Daily low temperature</listEntry>
+            <listEntry value="53">Weather: Temperature</listEntry>
+            <listEntry value="54">Weather: Chance of Precipitation</listEntry>
         </settingConfig>
     </setting>
 
@@ -434,6 +442,8 @@
             <listEntry value="42">Alarms (count)</listEntry>
             <listEntry value="43">Weather: Daily high temperature</listEntry>
             <listEntry value="44">Weather: Daily low temperature</listEntry>
+            <listEntry value="53">Weather: Temperature</listEntry>
+            <listEntry value="54">Weather: Chance of Precipitation</listEntry>
         </settingConfig>
     </setting>
 

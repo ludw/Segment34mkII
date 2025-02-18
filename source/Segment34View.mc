@@ -1929,6 +1929,11 @@ class Segment34View extends WatchUi.WatchFace {
             var precip = getPrecip();
             var highlow = getHighLow();
             val = join([temp, precip, highlow]);
+        } else if(complicationType == 53) { // Temperature
+            val = getTemperature();
+        } else if(complicationType == 54) { // Precipitation chance
+            val = getPrecip();
+            if(width == 3 and val.equals("100%")) { val = "100"; }
         }
 
         return val;
@@ -2114,6 +2119,14 @@ class Segment34View extends WatchUi.WatchFace {
             if(labelSize == 1) { desc = "LOW:"; }
             if(labelSize == 2) { desc = "DAILY LOW:"; }
             if(labelSize == 3) { desc = "DAILY LOW:"; }
+        } else if(complicationType == 53) {
+            if(labelSize == 1) { desc = "TEMP:"; }
+            if(labelSize == 2) { desc = "TEMP:"; }
+            if(labelSize == 3) { desc = "TEMPERATURE:"; }
+        } else if(complicationType == 54) {
+            if(labelSize == 1) { desc = "PRECIP:"; }
+            if(labelSize == 2) { desc = "PRECIP:"; }
+            if(labelSize == 3) { desc = "PRECIPITATION:"; }
         }
         return desc;
     }
