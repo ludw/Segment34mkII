@@ -2149,7 +2149,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     function getTemperature() as String {
-        if(weatherCondition.temperature != null) {
+        if(weatherCondition != null and weatherCondition.temperature != null) {
             var tempUnit = getTempUnit();
             var tempVal = weatherCondition.temperature;
             var temp = formatTemperature(tempVal, tempUnit).format("%01d");
