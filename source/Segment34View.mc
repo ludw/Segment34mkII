@@ -24,10 +24,9 @@ class Segment34View extends WatchUi.WatchFace {
     private var batt = 0;
     private var stress = 0;
     private var weatherCondition = null;
-
+    private var nightMode = false;
     private var ledSmallFont = null;
     private var ledMidFont = null;
-
     private var dbackground = null;
     private var dSecondsLabel = null;
     private var dAodPattern = null;
@@ -61,6 +60,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var dIcon2 = null;
 
     private var propColorTheme = null;
+    private var propNightColorTheme = null;
     private var propBatteryVariant = null;
     private var propShowSeconds = null;
     private var propLeftValueShows = null;
@@ -113,6 +113,13 @@ class Segment34View extends WatchUi.WatchFace {
 
             if(clockTime.min % 5 == 0 or weatherCondition == null) {
                 updateWeather();
+            }
+
+            if (updateNightMode())
+            {
+                lastUpdate = null;
+                previousEssentialsVis = null;
+                WatchUi.requestUpdate();
             }
         }
 
@@ -194,6 +201,7 @@ class Segment34View extends WatchUi.WatchFace {
         lastUpdate = null;
         previousEssentialsVis = null;
         cacheProps();
+        updateNightMode();
         WatchUi.requestUpdate();
     }
 
@@ -212,6 +220,7 @@ class Segment34View extends WatchUi.WatchFace {
         isSleeping = false;
         lastUpdate = null;
         cacheProps();
+        updateNightMode();
         WatchUi.requestUpdate();
     }
 
@@ -260,6 +269,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function cacheProps() as Void {
         propColorTheme = Application.Properties.getValue("colorTheme");
+        propNightColorTheme = Application.Properties.getValue("nightColorTheme");
         propBatteryVariant = Application.Properties.getValue("batteryVariant");
         propShowSeconds = Application.Properties.getValue("showSeconds");
         propAlwaysShowSeconds = Application.Properties.getValue("alwaysShowSeconds");
@@ -320,7 +330,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
 
         var hideInAOD = (awake or !canBurnIn);
-        var hideBattery = (hideInAOD && propBatteryVariant != 2);  
+        var hideBattery = (hideInAOD && propBatteryVariant != 2);
 
         if(propAlwaysShowSeconds and propShowSeconds and !canBurnIn) {
             dSecondsLabel.setVisible(true);
@@ -332,7 +342,7 @@ class Segment34View extends WatchUi.WatchFace {
         setVisibility3(propMiddleValueShows, dHrDesc, dHrLabel, dHrBg);
         setVisibility3(propRightValueShows, dActiveDesc, dActiveLabel, dActiveBg);
         setVisibility2(propBottomFieldShows, dStepLabel, dStepBg);
-        
+
         setAlignment(propDateAlignment, dDateLabel, 0);
         alignNotification(propDateAlignment);
 
@@ -352,7 +362,7 @@ class Segment34View extends WatchUi.WatchFace {
         dBattLabel.setVisible(hideBattery);
         dBattBg.setVisible(hideBattery);
         dTimeLabel.setColor(getColor("timeDisplay"));
-        
+
         dTimeBg.setColor(getColor("timeBg"));
         dTtrBg.setColor(getColor("fieldBg"));
         dHrBg.setColor(getColor("fieldBg"));
@@ -492,8 +502,14 @@ class Segment34View extends WatchUi.WatchFace {
     
     hidden function getColor(colorName) as Graphics.ColorType {
         var amoled = canBurnIn;
-        
-        if(propColorTheme == 0) { // Yellow on turquiose
+
+        var themeToUse = propColorTheme;
+        if (propNightColorTheme != -1 && nightMode)
+        {
+            themeToUse = propNightColorTheme;
+        }
+
+        if(themeToUse == 0) { // Yellow on turquiose
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x0e333c; }
                 return 0x005555;
@@ -521,7 +537,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
-        } else if(propColorTheme == 1) { // Hot pink
+        } else if(themeToUse == 1) { // Hot pink
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x0e333c; }
                 return 0x005555;
@@ -551,7 +567,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
-        } else if(propColorTheme == 2) { // Blueish green
+        } else if(themeToUse == 2) { // Blueish green
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x0f2246; }
                 return 0x0055AA;
@@ -579,7 +595,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
-        } else if(propColorTheme == 3) { // Very green
+        } else if(themeToUse == 3) { // Very green
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x152b19; }
                 return 0x005500;
@@ -609,7 +625,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
-        } else if(propColorTheme == 4) { // White on turquoise
+        } else if(themeToUse == 4) { // White on turquoise
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x0e333c; }
                 return 0x005555;
@@ -636,7 +652,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
-        } else if(propColorTheme == 5) { // Orange
+        } else if(themeToUse == 5) { // Orange
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x1b263d; }
                 return 0x5500AA;
@@ -667,7 +683,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
-        } else if(propColorTheme == 6) { // Red & White
+        } else if(themeToUse == 6) { // Red & White
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x550000; }
                 return 0xAA0000;
@@ -695,7 +711,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
-        } else if(propColorTheme == 7) { // White on Blue
+        } else if(themeToUse == 7) { // White on Blue
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x0b2051; }
                 return 0x0055AA;
@@ -723,7 +739,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
-        } else if(propColorTheme == 8) { // Yellow on Blue
+        } else if(themeToUse == 8) { // Yellow on Blue
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x0b2051; }
                 return 0x0055AA;
@@ -751,7 +767,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
-        } else if(propColorTheme == 9) { // White & Orange
+        } else if(themeToUse == 9) { // White & Orange
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x58250b; }
                 return 0xaa5500;
@@ -779,7 +795,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
-        } else if(propColorTheme == 10) { // Blue
+        } else if(themeToUse == 10) { // Blue
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x191b33; }
                 return 0x555555;
@@ -810,7 +826,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
-        } else if(propColorTheme == 11) { // Orange
+        } else if(themeToUse == 11) { // Orange
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x333333; }
                 return 0x555555;
@@ -841,7 +857,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("background")) {
                 return 0x000000;
             }
-        } else if(propColorTheme == 12) { // White on black
+        } else if(themeToUse == 12) { // White on black
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x333333; }
                 return 0x555555;
@@ -880,39 +896,39 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("valueDisplay")) {
                 return 0xFFFFFF;
             }
-        } else if(propColorTheme == 13 or propColorTheme == 14 or propColorTheme == 15 or propColorTheme == 16 or propColorTheme == 17) { // on white
+        } else if(themeToUse == 13 or themeToUse == 14 or themeToUse == 15 or themeToUse == 16 or themeToUse == 17) { // on white
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0xCCCCCC; }
                 return 0xAAAAAA;
             } else if(colorName.equals("fieldLabel") or colorName.equals("dawnDuskLabel")) {
-                if(propColorTheme == 13) { // Black on white
+                if(themeToUse == 13) { // Black on white
                     return 0x000000;
-                } else if(propColorTheme == 14) { // Red on white
+                } else if(themeToUse == 14) { // Red on white
                     return 0xAA0000;
-                } else if(propColorTheme == 15) { // Blue on white
+                } else if(themeToUse == 15) { // Blue on white
                     return 0x0000AA;
-                } else if(propColorTheme == 16) { // Green on white
+                } else if(themeToUse == 16) { // Green on white
                     return 0x00AA00;
-                } else if(propColorTheme == 17) { // Orange on white
+                } else if(themeToUse == 17) { // Orange on white
                     return 0x555555;
                 }
             } else if(colorName.equals("timeBg")) {
                 if(amoled) { return 0xCCCCCC; }
                 return 0xAAAAAA;
             } else if(colorName.equals("timeDisplay")) {
-                if(propColorTheme == 13) { // Black on white
+                if(themeToUse == 13) { // Black on white
                     if(amoled and isSleeping) { return 0xAAAAAA; }
                     return 0x000000;
-                } else if(propColorTheme == 14) { // Red on white
+                } else if(themeToUse == 14) { // Red on white
                     if(amoled and isSleeping) { return 0xAA5555; }
                     return 0xAA0000;
-                } else if(propColorTheme == 15) { // Blue on white
+                } else if(themeToUse == 15) { // Blue on white
                     if(amoled and isSleeping) { return 0x5555AA; }
                     return 0x0000AA;
-                } else if(propColorTheme == 16) { // Green on white
+                } else if(themeToUse == 16) { // Green on white
                     if(amoled and isSleeping) { return 0x55AA55; }
                     return 0x00AA00;
-                } else if(propColorTheme == 17) { // Orange on white
+                } else if(themeToUse == 17) { // Orange on white
                     if(amoled and isSleeping) { return 0xff7600; }
                     return 0xFF5500;
                 }
@@ -927,7 +943,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("notifications")) {
                 return 0x000000;
             } else if(colorName.equals("stress")) {
-                if(propColorTheme == 17) { return 0xFF5500; }
+                if(themeToUse == 17) { return 0xFF5500; }
                 return 0xFFAA00;
             } else if(colorName.equals("bodybattery")) {
                 return 0x55AAFF;
@@ -938,7 +954,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("moonDisplay")) {
                 return 0x555555;
             }
-        } else if(propColorTheme == 18) { // green & orange
+        } else if(themeToUse == 18) { // green & orange
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x152b19; }
                 return 0x005500;
@@ -974,7 +990,7 @@ class Segment34View extends WatchUi.WatchFace {
                 if(amoled) { return 0x55FF55; }
                 return 0x00FF00;
             }
-        } else if(propColorTheme == 19) { // green camo
+        } else if(themeToUse == 19) { // green camo
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0x152b19; }
                 return 0x005500;
@@ -1128,7 +1144,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getTempUnit() as String {
         var tempUnitSetting = System.getDeviceSettings().temperatureUnits;
         var tempUnitAppSetting = Application.Properties.getValue("tempUnit");
-        
+
         if((tempUnitSetting == System.UNIT_METRIC and tempUnitAppSetting == 0) or tempUnitAppSetting == 1) {
             return "C";
         } else {
@@ -1514,7 +1530,7 @@ class Segment34View extends WatchUi.WatchFace {
                 ]);
                 break;
         }
-        
+
         dDateLabel.setText(value.toUpper());
 
         if(canBurnIn) {
@@ -1532,6 +1548,37 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function setStep(dc) as Void {
         dStepLabel.setText(getComplicationValueWithFormat(propBottomFieldShows, "%05d", 5));
+    }
+
+    hidden function updateNightMode() as Boolean {
+        var oldNightMode = nightMode;
+
+        if (propNightColorTheme == -1 || propNightColorTheme == propColorTheme) {
+            nightMode = false;
+            return (oldNightMode != nightMode);
+        }
+
+        var profile = UserProfile.getProfile();
+        if ((profile has :wakeTime) == false || (profile has :sleepTime) == false) {
+            nightMode = false;
+            return (oldNightMode != nightMode);
+        }
+
+        var wakeTime = profile.wakeTime;
+        var sleepTime = profile.sleepTime;
+
+        if (wakeTime == null || sleepTime == null)
+        {
+            nightMode = false;
+            return (oldNightMode != nightMode);
+        }
+
+        var now = Time.now(); // Moment
+        var todayMidnight = Time.today(); // Moment
+        var nowAsTimeSinceMidnight = now.subtract(todayMidnight) as Duration; // Duration
+
+        nightMode = (nowAsTimeSinceMidnight.greaterThan(sleepTime) || nowAsTimeSinceMidnight.lessThan(wakeTime));
+        return (oldNightMode != nightMode);
     }
 
     hidden function updateStressAndBodyBatteryData() as Void {
@@ -1629,11 +1676,11 @@ class Segment34View extends WatchUi.WatchFace {
             var battBar = Math.round(batt * (barHeight / 100.0));
             dc.setColor(getColor("bodybattery"), -1);
             dc.fillRectangle(dc.getWidth() - fromEdge - barWidth - bbAdjustment, barTop + (barHeight - battBar), barWidth, battBar);
-        
+
             var stressBar = Math.round(stress * (barHeight / 100.0));
             dc.setColor(getColor("stress"), -1);
             dc.fillRectangle(fromEdge, barTop + (barHeight - stressBar), barWidth, stressBar);
-            
+
         }
     }
 
@@ -1646,7 +1693,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
         dTtrDesc.setText(getComplicationDesc(propLeftValueShows, leftLabelSize));
         dTtrLabel.setText(getComplicationValue(propLeftValueShows, leftWidth));
-        
+
         var midWidth = 3;
         var midLabelSize = 2;
         if(dc.getWidth() > 450) {
@@ -1803,8 +1850,8 @@ class Segment34View extends WatchUi.WatchFace {
             if(ActivityMonitor.getInfo() has :pushes) {
                 if(ActivityMonitor.getInfo().pushes != null) {
                     val = ActivityMonitor.getInfo().pushes.format(numberFormat);
-                } 
-            }  
+                }
+            }
         } else if(complicationType == 20) { // Weather condition
             val = getWeatherCondition(true);
         } else if(complicationType == 21) { // Weekly run distance (km)
@@ -1893,21 +1940,21 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 29) { // Act Calories
             var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
             var profile = UserProfile.getProfile();
-            
+
             if (profile has :weight && profile has :height && profile has :birthYear) {
                 var age = today.year - profile.birthYear;
                 var weight = profile.weight / 1000.0;
                 var restCalories = 0;
-                
+
                 if (profile.gender == UserProfile.GENDER_MALE) {
                     restCalories = 5.2 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
                 } else {
                     restCalories = -197.6 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
                 }
-                
+
                 // Calculate rest calories for the current time of day
                 restCalories = Math.round((today.hour * 60 + today.min) * restCalories / 1440).toNumber();
-                
+
                 // Get total calories and subtract rest calories
                 if (ActivityMonitor.getInfo() has :calories && ActivityMonitor.getInfo().calories != null) {
                     var activeCalories = ActivityMonitor.getInfo().calories - restCalories;
@@ -2072,7 +2119,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 1) { // Active min / day
             if(labelSize == 1) { desc = "D MIN:"; }
             if(labelSize == 2) { desc = "MIN TODAY:"; }
-            if(labelSize == 3) { desc = "DAY ACT MIN:"; }      
+            if(labelSize == 3) { desc = "DAY ACT MIN:"; }
         } else if(complicationType == 2) { // distance (km) / day
             if(labelSize == 1) { desc = "D KM:"; }
             if(labelSize == 2) { desc = "KM TODAY:"; }
@@ -2494,16 +2541,16 @@ class Segment34View extends WatchUi.WatchFace {
             return week_of_year;
     	}
 	}
-	
-	
+
+
 	hidden function julian_day(year, month, day) {
     	var a = (14 - month) / 12;
     	var y = (year + 4800 - a);
     	var m = (month + 12 * a - 3);
     	return day + ((153 * m + 2) / 5) + (365 * y) + (y / 4) - (y / 100) + (y / 400) - 32045;
 	}
-	
-	
+
+
 	hidden function is_leap_year(year) {
     	if (year % 4 != 0) {
         	return false;

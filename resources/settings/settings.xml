@@ -25,6 +25,32 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.nightColorTheme" title="Night Color Theme">
+        <settingConfig type="list">
+            <listEntry value="-1">No change</listEntry>
+            <listEntry value="0">Yellow on turquiose</listEntry>
+            <listEntry value="8">Yellow on blue</listEntry>
+            <listEntry value="1">Hot pink</listEntry>
+            <listEntry value="10">Blue</listEntry>
+            <listEntry value="2">Blueish green</listEntry>
+            <listEntry value="3">Green</listEntry>
+            <listEntry value="19">Green camo</listEntry>
+            <listEntry value="18">Green and Orange</listEntry>
+            <listEntry value="11">Orange</listEntry>
+            <listEntry value="5">Peachy Orange</listEntry>
+            <listEntry value="4">White on turquiose</listEntry>
+            <listEntry value="6">White on red</listEntry>
+            <listEntry value="7">White on blue</listEntry>
+            <listEntry value="9">White on orange</listEntry>
+            <listEntry value="12">White on black</listEntry>
+            <listEntry value="13">Black on white (not recommended for AMOLED)</listEntry>
+            <listEntry value="14">Red on white (not recommended for AMOLED)</listEntry>
+            <listEntry value="15">Blue on white (not recommended for AMOLED)</listEntry>
+            <listEntry value="16">Green on white (not recommended for AMOLED)</listEntry>
+            <listEntry value="17">Orange on white (not recommended for AMOLED)</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.showClockBg" title="Show clock background">
         <settingConfig type="boolean" />
     </setting>
@@ -88,7 +114,7 @@
             <settingConfig type="list">
                 <listEntry value="-2">Hidden</listEntry>
                 <listEntry value="39">Sunrise time</listEntry>
-                <listEntry value="40">Sunset time</listEntry>                
+                <listEntry value="40">Sunset time</listEntry>
                 <listEntry value="4">Floors climbed / day</listEntry>
                 <listEntry value="5">Meters climbed / day</listEntry>
                 <listEntry value="6">Time to Recovery (h)</listEntry>
@@ -141,10 +167,10 @@
             <listEntry value="6">WEEKDAY, DD MONTH</listEntry>
             <listEntry value="1">YYYY-MM-DD</listEntry>
             <listEntry value="2">MM/DD/YYYY</listEntry>
-            <listEntry value="3">DD.MM.YYYY</listEntry> 
+            <listEntry value="3">DD.MM.YYYY</listEntry>
             <listEntry value="7">WEEKDAY, YYYY-MM-DD</listEntry>
             <listEntry value="8">WEEKDAY, MM/DD/YYYY</listEntry>
-            <listEntry value="9">WEEKDAY, DD.MM.YYYY</listEntry> 
+            <listEntry value="9">WEEKDAY, DD.MM.YYYY</listEntry>
             <listEntry value="4">WEEKDAY, DD MONTH (Week)</listEntry>
             <listEntry value="5">WEEKDAY, DD MONTH YYYY (Week)</listEntry>
         </settingConfig>
@@ -338,7 +364,7 @@
             <listEntry value="13">Stress score</listEntry>
             <listEntry value="14">Body battery</listEntry>
             <listEntry value="39">Sunrise time</listEntry>
-            <listEntry value="40">Sunset time</listEntry>   
+            <listEntry value="40">Sunset time</listEntry>
             <listEntry value="16">Alternative Timezone 1</listEntry>
             <listEntry value="41">Alternative Timezone 2</listEntry>
             <listEntry value="26">Barometric Pressure, raw</listEntry>
@@ -384,7 +410,7 @@
             <listEntry value="13">Stress score</listEntry>
             <listEntry value="14">Body battery</listEntry>
             <listEntry value="39">Sunrise time</listEntry>
-            <listEntry value="40">Sunset time</listEntry>   
+            <listEntry value="40">Sunset time</listEntry>
             <listEntry value="16">Alternative Timezone 1</listEntry>
             <listEntry value="41">Alternative Timezone 2</listEntry>
             <listEntry value="27">Weight (kg)</listEntry>
@@ -430,7 +456,7 @@
             <listEntry value="13">Stress score</listEntry>
             <listEntry value="14">Body battery</listEntry>
             <listEntry value="39">Sunrise time</listEntry>
-            <listEntry value="40">Sunset time</listEntry>   
+            <listEntry value="40">Sunset time</listEntry>
             <listEntry value="16">Alternative Timezone 1</listEntry>
             <listEntry value="41">Alternative Timezone 2</listEntry>
             <listEntry value="26">Barometric Pressure, raw</listEntry>
