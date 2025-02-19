@@ -61,3 +61,5 @@ char id=38 x=553 y=0 width=9 height=13 xoffset=2 yoffset=0 xadvance=12 page=0
 char id=35 x=563 y=0 width=9 height=13 xoffset=2 yoffset=0 xadvance=12 page=0
 char id=47 x=573 y=0 width=9 height=13 xoffset=2 yoffset=0 xadvance=12 page=0
 char id=92 x=583 y=0 width=9 height=13 xoffset=2 yoffset=0 xadvance=12 page=0
+char id=123 x=9 y=0 width=1 height=13 xoffset=0 yoffset=0 xadvance=1 page=0
+char id=124 x=14 y=0 width=1 height=13 xoffset=0 yoffset=0 xadvance=1 page=0

@@ -36,6 +36,8 @@ char id=32 x=205 y=0 width=5 height=8 xoffset=0 yoffset=0 xadvance=6 page=0
 char id=97 x=231 y=0 width=3 height=8 xoffset=0 yoffset=0 xadvance=4 page=0
 char id=98 x=236 y=0 width=2 height=8 xoffset=0 yoffset=0 xadvance=3 page=0
 char id=99 x=240 y=0 width=3 height=8 xoffset=0 yoffset=0 xadvance=4 page=0
+char id=123 x=209 y=0 width=1 height=8 xoffset=0 yoffset=0 xadvance=1 page=0
+char id=124 x=210 y=0 width=1 height=8 xoffset=0 yoffset=0 xadvance=1 page=0
 
 char id=33 x=0 y=8 width=1 height=8 xoffset=0 yoffset=0 xadvance=2 page=0
 char id=34 x=7 y=8 width=4 height=8 xoffset=0 yoffset=0 xadvance=5 page=0

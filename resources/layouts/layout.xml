@@ -31,6 +31,6 @@
     <label id="StepBg" x="center" y="220" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x005555" text="#####" />
     <label id="StepLabel" x="center" y="220" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
     
-    <label id="BattBg" x="130" y="242" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xAAAAAA" text="B" />
+    <label id="BattBg" x="131" y="242" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xAAAAAA" text="B" />
     <label id="BattLabel" x="center" y="248" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
 </layout>
