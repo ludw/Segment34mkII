@@ -31,6 +31,6 @@
     <label id="StepBg" x="75" y="216" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x005555" text="#####" />
     <label id="StepLabel" x="75" y="216" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xFFFFFF" />
     
-    <label id="BattBg" x="145" y="213" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xAAAAAA" text="B" />
-    <label id="BattLabel" x="150" y="219" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xFFFFFF" />
+    <label id="BattBg" x="143" y="213" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xAAAAAA" text="B" />
+    <label id="BattLabel" x="146" y="219" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xFFFFFF" />
 </layout>

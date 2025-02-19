@@ -472,6 +472,7 @@
             <settingConfig type="list">
                 <listEntry value="0">Remaining days *</listEntry>
                 <listEntry value="1">Percentage remaining</listEntry>
+                <listEntry value="3">Bar</listEntry>
                 <listEntry value="2">Hidden</listEntry>
             </settingConfig>
     </setting>

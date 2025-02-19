@@ -354,7 +354,13 @@ class Segment34View extends WatchUi.WatchFace {
         dActiveLabel.setColor(getColor("valueDisplay"));
         dStepLabel.setColor(getColor("valueDisplay"));
         dBattBg.setColor(0x555555);
-        dBattLabel.setColor(getColor("valueDisplay"));
+        
+        if(System.getSystemStats().battery > 15) {
+            dBattLabel.setColor(getColor("valueDisplay"));
+        } else {
+            dBattLabel.setColor(getColor("lowBatt"));
+        }
+        
 
         if(awake) {
             if(getColor("background") == 0xFFFFFF) {
@@ -955,6 +961,10 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0xFFFFFF;
             }
         }
+
+        if(colorName.equals("lowBatt")) {
+            return 0xFF0000;
+        }
         return Graphics.COLOR_WHITE;
     }
 
@@ -1001,7 +1011,7 @@ class Segment34View extends WatchUi.WatchFace {
             if(System.getSystemStats() has :batteryInDays) {
                 if (System.getSystemStats().batteryInDays != null){
                     var sample = Math.round(System.getSystemStats().batteryInDays);
-                    value = Lang.format("$1$D", [sample.format("%d")]);
+                    value = Lang.format("$1$D", [sample.format("%0d")]);
                 }
             } else {
                 propBatteryVariant = 1;  // Fall back to percentage if days not available
@@ -1013,6 +1023,24 @@ class Segment34View extends WatchUi.WatchFace {
                 value = Lang.format("$1$%", [sample.format("%d")]);
             } else {
                 value = Lang.format("$1$", [sample.format("%d")]);
+            }
+        } else if(propBatteryVariant == 3) {
+            var sample = 0;
+            var max = 0;
+            if(screenHeight > 280) {
+                sample = Math.round(System.getSystemStats().battery / 100.0 * 35);
+                max = 35;
+            } else {
+                sample = Math.round(System.getSystemStats().battery / 100.0 * 20);
+                max = 20;
+            }
+            
+            for(var i = 0; i < sample; i++) {
+                value += "|";
+            }
+
+            for(var i = 0; i < max-sample; i++) {
+                value += "{"; // rendered as 1px space to always fill the same number of px
             }
         }
 

@@ -46,6 +46,10 @@ Lower priority:
 
 
 ## Change log
+2025-02-19 v1.17.3
+- Battery bar
+- Battery turns red below 15%
+
 2025-02-18 v1.17.2
 - Temperature and precipitation as field values
 
