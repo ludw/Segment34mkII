@@ -46,6 +46,9 @@ Lower priority:
 
 
 ## Change log
+2025-02-20 v1.17.4
+- Fixed crash
+
 2025-02-19 v1.17.3
 - Battery bar
 - Battery turns red below 15%
