@@ -7,6 +7,8 @@
     <font id="id_segments145" filename="segments145.fnt" antialias="false" filter="#1234567890:" />
     <font id="id_icons" filename="icons.fnt" antialias="false" filter="hH01234567BC" />
     <font id="id_led" filename="led.fnt" antialias="false" />
+    <font id="id_led_inbetween" filename="led_inbetween.fnt" antialias="true" />
+    <font id="id_led_lines" filename="led_lines.fnt" antialias="false" />
     <font id="id_led_small" filename="led_small.fnt" antialias="false" />
     <font id="id_led_small_readable" filename="led_small_readable.fnt" antialias="true" />
     <font id="id_led_small_lines" filename="led_small_lines.fnt" antialias="false" />

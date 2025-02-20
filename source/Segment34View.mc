@@ -26,6 +26,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var weatherCondition = null;
 
     private var ledSmallFont = null;
+    private var ledMidFont = null;
 
     private var dbackground = null;
     private var dSecondsLabel = null;
@@ -273,6 +274,14 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small_lines );
         }
+
+        if(fontVariant == 0) {
+            ledMidFont = Application.loadResource( Rez.Fonts.id_led );
+        } else if(fontVariant == 1) {
+            ledMidFont = Application.loadResource( Rez.Fonts.id_led_inbetween );
+        } else {
+            ledMidFont = Application.loadResource( Rez.Fonts.id_led_lines );
+        }
         
     }
 
@@ -292,6 +301,8 @@ class Segment34View extends WatchUi.WatchFace {
             setAlignment(propAodAlignment, dAodDateLabel, (clockTime.min % 3) - 1);
             dAodDateLabel.setColor(getColor("dateDisplayDim"));
             dbackground.setVisible(false);
+        } else {
+            dc.setAntiAlias(true);
         }
 
         if(previousEssentialsVis == awake) {
@@ -375,6 +386,13 @@ class Segment34View extends WatchUi.WatchFace {
                 dNotifLabel.setFont(ledSmallFont);
                 dWeatherLabel1.setFont(ledSmallFont);
                 dWeatherLabel2.setFont(ledSmallFont);
+            } else {
+                dDateLabel.setFont(ledMidFont);
+                dAodDateLabel.setFont(ledMidFont);
+                dSecondsLabel.setFont(ledMidFont);
+                dNotifLabel.setFont(ledMidFont);
+                dWeatherLabel1.setFont(ledMidFont);
+                dWeatherLabel2.setFont(ledMidFont);
             }
 
             if(canBurnIn) {

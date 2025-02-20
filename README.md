@@ -31,8 +31,6 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 
  ## TODO / Things people have asked for
 - Goal completion marker
-- Battery, different color when low
-- Battery bar instead of numbers
 - DND
 - Font options (dots/lines) for medium led font
 - Pressure trend
@@ -46,6 +44,9 @@ Lower priority:
 
 
 ## Change log
+2025-02-20 v1.18.0
+- Font options for amoled watches as well
+
 2025-02-20 v1.17.4
 - Fixed crash
 
