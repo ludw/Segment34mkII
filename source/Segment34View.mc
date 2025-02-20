@@ -2203,7 +2203,7 @@ class Segment34View extends WatchUi.WatchFace {
         var windspeed = "";
         var bearing = "";
 
-        if(weatherCondition.windSpeed != null) {
+        if(weatherCondition != null and weatherCondition.windSpeed != null) {
             var windUnit = Application.Properties.getValue("windUnit");
             var windspeed_mps = weatherCondition.windSpeed;
             if(windUnit == 0) { // m/s
@@ -2248,7 +2248,7 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
 
-        if(weatherCondition.windBearing != null) {
+        if(weatherCondition != null and weatherCondition.windBearing != null) {
             bearing = ((Math.round((weatherCondition.windBearing.toFloat() + 180) / 45.0).toNumber() % 8) + 97).toChar().toString();
         }
 
@@ -2258,7 +2258,7 @@ class Segment34View extends WatchUi.WatchFace {
     function getFeelsLike() as String {
         var fl = "";
         var tempUnit = getTempUnit();
-        if(weatherCondition.feelsLikeTemperature != null) {
+        if(weatherCondition != null and weatherCondition.feelsLikeTemperature != null) {
             var fltemp = formatTemperature(weatherCondition.feelsLikeTemperature, tempUnit);
             fl = Lang.format("FL:$1$$2$", [fltemp.format(INTEGER_FORMAT), tempUnit]);
         }
@@ -2268,7 +2268,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     function getHumidity() as String {
         var ret = "";
-        if(weatherCondition.relativeHumidity != null) {
+        if(weatherCondition != null and weatherCondition.relativeHumidity != null) {
             ret = Lang.format("$1$%", [weatherCondition.relativeHumidity]);
         }
         return ret;
@@ -2276,18 +2276,20 @@ class Segment34View extends WatchUi.WatchFace {
 
     function getHighLow() as String {
         var ret = "";
-        if(weatherCondition.highTemperature != null or weatherCondition.lowTemperature != null) {
-            var tempUnit = getTempUnit();
-            var high = formatTemperature(weatherCondition.highTemperature, tempUnit);
-            var low = formatTemperature(weatherCondition.lowTemperature, tempUnit);
-            ret = Lang.format("$1$$2$/$3$$2$", [high.format(INTEGER_FORMAT), tempUnit, low.format(INTEGER_FORMAT)]);
+        if(weatherCondition != null) {
+            if(weatherCondition.highTemperature != null or weatherCondition.lowTemperature != null) {
+                var tempUnit = getTempUnit();
+                var high = formatTemperature(weatherCondition.highTemperature, tempUnit);
+                var low = formatTemperature(weatherCondition.lowTemperature, tempUnit);
+                ret = Lang.format("$1$$2$/$3$$2$", [high.format(INTEGER_FORMAT), tempUnit, low.format(INTEGER_FORMAT)]);
+            }
         }
         return ret;
     }
 
     function getPrecip() as String {
         var ret = "";
-        if(weatherCondition.precipitationChance != null) {
+        if(weatherCondition != null and weatherCondition.precipitationChance != null) {
             if(weatherCondition.precipitationChance > 0) {
                 ret = Lang.format("$1$%", [weatherCondition.precipitationChance.format("%d")]);
             }
