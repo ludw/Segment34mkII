@@ -1725,19 +1725,7 @@ class Segment34View extends WatchUi.WatchFace {
             }
         } else if(complicationType == 16) { // Alt TZ 1
             var offset = Application.Properties.getValue("tzOffset1");
-            var now = Time.now();
-            var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_MEDIUM);
-            var min = utc.min + (offset % 60);
-            var hour = (utc.hour + Math.floor(offset / 60)) % 24;
-            if(hour < 0) {
-                hour += 24;
-            }
-            hour = formatHour(hour);
-            if(width < 5) {
-                val = Lang.format("$1$$2$", [hour.format("%02d"), min.format("%02d")]);
-            } else {
-                val = Lang.format("$1$:$2$", [hour.format("%02d"), min.format("%02d")]);
-            }
+            val = secondaryTimezone(offset, width);
         } else if(complicationType == 17) { // Steps / day
             if(ActivityMonitor.getInfo().steps != null) {
                 val = ActivityMonitor.getInfo().steps.format(numberFormat);
@@ -1943,19 +1931,7 @@ class Segment34View extends WatchUi.WatchFace {
             }
         } else if(complicationType == 41) { // Alt TZ 2
             var offset = Application.Properties.getValue("tzOffset2");
-            var now = Time.now();
-            var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_MEDIUM);
-            var min = utc.min + (offset % 60);
-            var hour = (utc.hour + Math.floor(offset / 60)) % 24;
-            if(hour < 0) {
-                hour += 24;
-            }
-            hour = formatHour(hour);
-            if(width < 5) {
-                val = Lang.format("$1$$2$", [hour.format("%02d"), min.format("%02d")]);
-            } else {
-                val = Lang.format("$1$:$2$", [hour.format("%02d"), min.format("%02d")]);
-            }
+            val = secondaryTimezone(offset, width);
         } else if(complicationType == 42) { // Alarms
             val = System.getDeviceSettings().alarmCount.format(numberFormat);
         } else if(complicationType == 43) { // High temp
@@ -2367,6 +2343,38 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
         return weeklyDistance;
+    }
+
+    hidden function secondaryTimezone(offset, width) {
+        var val = "";
+        var now = Time.now();
+        var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_MEDIUM);
+        var min = utc.min + (offset % 60);
+        var hour = (utc.hour + Math.floor(offset / 60)) % 24;
+
+        if(min > 59) {
+            min -= 60;
+            hour += 1;
+        }
+
+        if(min < 0) {
+            min += 60;
+            hour -= 1;
+        }
+
+        if(hour < 0) {
+            hour += 24;
+        }
+        if(hour > 23) {
+            hour -= 24;
+        }
+        hour = formatHour(hour);
+        if(width < 5) {
+            val = Lang.format("$1$$2$", [hour.format("%02d"), min.format("%02d")]);
+        } else {
+            val = Lang.format("$1$:$2$", [hour.format("%02d"), min.format("%02d")]);
+        }
+        return val;
     }
 
     hidden function day_name(day_of_week) {

@@ -42,6 +42,9 @@ Lower priority:
 
 
 ## Change log
+2025-02-23 v1.20.1
+- Fixed bug with Alt TZ
+
 2025-02-23 v1.20.0
 - Changed defaults in settings to a better non-configured experience
 
