@@ -30,6 +30,8 @@
     <property id="tzOffset2" type="number">0</property>
     <property id="tzName1" type="string">UTC TIME</property>
     <property id="tzName2" type="string">TZ2</property>
+    <property id="icon1" type="number">-2</property>
+    <property id="icon2" type="number">-2</property>
     <property id="pressToOpenTop" type="number">0</property>
     <property id="pressToOpenMiddle" type="number">0</property>
     <property id="pressToOpenBottomLeft" type="number">0</property>

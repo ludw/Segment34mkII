@@ -73,6 +73,8 @@ class Segment34View extends WatchUi.WatchFace {
     private var propBottomFieldShows = null;
     private var propAodAlignment = null;
     private var propDateAlignment = null;
+    private var propIcon1 = null;
+    private var propIcon2 = null;
 
     function initialize() {
         WatchFace.initialize();
@@ -137,7 +139,7 @@ class Segment34View extends WatchUi.WatchFace {
                 setSunUpDown(dc);
                 setStep(dc);
                 setBatt(dc);
-                setICons(dc);
+                setIcons(dc);
                 updateStressAndBodyBatteryData();
             }
         }
@@ -269,6 +271,8 @@ class Segment34View extends WatchUi.WatchFace {
         propBottomFieldShows = Application.Properties.getValue("bottomFieldShows");
         propAodAlignment = Application.Properties.getValue("aodAlignment");
         propDateAlignment = Application.Properties.getValue("dateAlignment");
+        propIcon1 = Application.Properties.getValue("icon1");
+        propIcon2 = Application.Properties.getValue("icon2");
 
         var fontVariant = Application.Properties.getValue("smallFontVariant");
         if(fontVariant == 0) {
@@ -1335,19 +1339,28 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function setICons(dc) as Void {
-        var alarms = System.getDeviceSettings().alarmCount;
-        var dnd = System.getDeviceSettings().doNotDisturb;
-        if(alarms > 0) {
-            dIcon1.setText("A");
-        } else {
-            dIcon1.setText("");
+    hidden function setIcons(dc) as Void {
+        dIcon1.setText(getIconState(propIcon1));
+        dIcon2.setText(getIconState(propIcon2));
+    }
+
+    hidden function getIconState(setting as Number) as String {
+        if(setting == 1) {
+            var alarms = System.getDeviceSettings().alarmCount;
+            if(alarms > 0) {
+                return "A";
+            } else {
+                return "";
+            }
+        } else if(setting == 2) {
+            var dnd = System.getDeviceSettings().doNotDisturb;
+            if(dnd) {
+                return "D";
+            } else {
+                return "";
+            }
         }
-        if(dnd) {
-            dIcon2.setText("D");
-        } else {
-            dIcon2.setText("");
-        }
+        return "";
     }
 
     hidden function setDate(dc) as Void {
