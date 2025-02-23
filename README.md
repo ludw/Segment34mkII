@@ -42,6 +42,9 @@ Lower priority:
 
 
 ## Change log
+2025-02-23 v1.20.0
+- Changed defaults in settings to a better non-configured experience
+
 2025-02-23 v1.19.0
 - Added option for press to open (Date)
 - Added icons for Alarm and DND (has to be configured in settings)
