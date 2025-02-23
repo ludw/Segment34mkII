@@ -514,6 +514,7 @@
             <listEntry value="3">Calories</listEntry>
             <listEntry value="4">Floors climbed</listEntry>
             <listEntry value="5">Intensiy minutes</listEntry>
+            <listEntry value="6">Date</listEntry>
             <listEntry value="8">Weather</listEntry>
             <listEntry value="12">Calendar</listEntry>
             <listEntry value="13">Sunrise</listEntry>
@@ -540,6 +541,7 @@
             <listEntry value="3">Calories</listEntry>
             <listEntry value="4">Floors climbed</listEntry>
             <listEntry value="5">Intensiy minutes</listEntry>
+            <listEntry value="6">Date</listEntry>
             <listEntry value="8">Weather</listEntry>
             <listEntry value="12">Calendar</listEntry>
             <listEntry value="13">Sunrise</listEntry>
@@ -566,6 +568,7 @@
             <listEntry value="3">Calories</listEntry>
             <listEntry value="4">Floors climbed</listEntry>
             <listEntry value="5">Intensiy minutes</listEntry>
+            <listEntry value="6">Date</listEntry>
             <listEntry value="8">Weather</listEntry>
             <listEntry value="12">Calendar</listEntry>
             <listEntry value="13">Sunrise</listEntry>
@@ -592,6 +595,7 @@
             <listEntry value="3">Calories</listEntry>
             <listEntry value="4">Floors climbed</listEntry>
             <listEntry value="5">Intensiy minutes</listEntry>
+            <listEntry value="6">Date</listEntry>
             <listEntry value="8">Weather</listEntry>
             <listEntry value="12">Calendar</listEntry>
             <listEntry value="13">Sunrise</listEntry>
@@ -618,6 +622,7 @@
             <listEntry value="3">Calories</listEntry>
             <listEntry value="4">Floors climbed</listEntry>
             <listEntry value="5">Intensiy minutes</listEntry>
+            <listEntry value="6">Date</listEntry>
             <listEntry value="8">Weather</listEntry>
             <listEntry value="12">Calendar</listEntry>
             <listEntry value="13">Sunrise</listEntry>

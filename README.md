@@ -43,6 +43,10 @@ Lower priority:
 
 
 ## Change log
+2025-02-23 v1.19.0
+- Added option for press to open (Date)
+- Added icons for Alarm and DND (has to be configured in settings)
+
 2025-02-20 v1.18.0
 - Font options for amoled watches as well
 
