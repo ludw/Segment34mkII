@@ -13,10 +13,10 @@
     <property id="showMoonPhase" type="boolean">true</property>
     <property id="showClockBg" type="boolean">true</property>
     <property id="showDataBg" type="boolean">true</property>
-    <property id="alwaysShowSeconds" type="boolean">true</property>
-    <property id="batteryVariant" type="number">0</property>
-    <property id="weatherLine1Shows" type="number">45</property>
-    <property id="weatherLine2Shows" type="number">20</property>
+    <property id="alwaysShowSeconds" type="boolean">false</property>
+    <property id="batteryVariant" type="number">3</property>
+    <property id="weatherLine1Shows" type="number">49</property>
+    <property id="weatherLine2Shows" type="number">50</property>
     <property id="leftValueShows" type="number">6</property>
     <property id="middleValueShows" type="number">10</property>
     <property id="rightValueShows" type="number">0</property>
@@ -25,13 +25,13 @@
     <property id="aodAlignment" type="number">0</property>
     <property id="dateAlignment" type="number">0</property>
     <property id="dateFormat" type="number">0</property>
-    <property id="smallFontVariant" type="number">0</property>
+    <property id="smallFontVariant" type="number">2</property>
     <property id="tzOffset1" type="number">0</property>
     <property id="tzOffset2" type="number">0</property>
     <property id="tzName1" type="string">UTC TIME</property>
     <property id="tzName2" type="string">TZ2</property>
-    <property id="icon1" type="number">-2</property>
-    <property id="icon2" type="number">-2</property>
+    <property id="icon1" type="number">1</property>
+    <property id="icon2" type="number">2</property>
     <property id="pressToOpenTop" type="number">0</property>
     <property id="pressToOpenMiddle" type="number">0</property>
     <property id="pressToOpenBottomLeft" type="number">0</property>
