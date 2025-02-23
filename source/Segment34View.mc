@@ -57,6 +57,8 @@ class Segment34View extends WatchUi.WatchFace {
     private var dBattLabel = null;
     private var dBattBg = null;
     private var dHrLabel = null;
+    private var dIcon1 = null;
+    private var dIcon2 = null;
 
     private var propColorTheme = null;
     private var propBatteryVariant = null;
@@ -135,6 +137,7 @@ class Segment34View extends WatchUi.WatchFace {
                 setSunUpDown(dc);
                 setStep(dc);
                 setBatt(dc);
+                setICons(dc);
                 updateStressAndBodyBatteryData();
             }
         }
@@ -248,7 +251,8 @@ class Segment34View extends WatchUi.WatchFace {
         dBattLabel = View.findDrawableById("BattLabel") as Text;
         dBattBg = View.findDrawableById("BattBg") as Text;
         dHrLabel = View.findDrawableById("HRLabel") as Text;
-        
+        dIcon1 = View.findDrawableById("Icon1") as Text;
+        dIcon2 = View.findDrawableById("Icon2") as Text;
     }
 
     hidden function cacheProps() as Void {
@@ -1328,6 +1332,21 @@ class Segment34View extends WatchUi.WatchFace {
             dNotifLabel.setText(value);
         } else {
             dNotifLabel.setText("");
+        }
+    }
+
+    hidden function setICons(dc) as Void {
+        var alarms = System.getDeviceSettings().alarmCount;
+        var dnd = System.getDeviceSettings().doNotDisturb;
+        if(alarms > 0) {
+            dIcon1.setText("A");
+        } else {
+            dIcon1.setText("");
+        }
+        if(dnd) {
+            dIcon2.setText("D");
+        } else {
+            dIcon2.setText("");
         }
     }
 

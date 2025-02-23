@@ -34,6 +34,9 @@
     <label id="StepBg" x="center" y="330" font="@Fonts.id_led_big" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x0e333c" text="#####" />
     <label id="StepLabel" x="center" y="330" font="@Fonts.id_led_big" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
 
+    <label id="Icon1" x="105" y="332" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xFFFFFF" text="A" />
+    <label id="Icon2" x="265" y="332" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xFFFFFF" text="D" />
+
     <label id="BattBg" x="197" y="367" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x555555" text="C" />
     <label id="BattLabel" x="center" y="371" font="@Fonts.id_led_small_lines" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
 </layout>

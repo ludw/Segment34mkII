@@ -32,7 +32,6 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
  ## TODO / Things people have asked for
 - Goal completion marker
 - DND
-- Font options (dots/lines) for medium led font
 - Pressure trend
 - GPS Coordinates
 
