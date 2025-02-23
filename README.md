@@ -31,7 +31,6 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 
  ## TODO / Things people have asked for
 - Goal completion marker
-- DND
 - Pressure trend
 - GPS Coordinates
 
@@ -46,6 +45,7 @@ Lower priority:
 2025-02-23 v1.19.0
 - Added option for press to open (Date)
 - Added icons for Alarm and DND (has to be configured in settings)
+- Settings changes should apply better
 
 2025-02-20 v1.18.0
 - Font options for amoled watches as well

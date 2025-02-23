@@ -380,14 +380,15 @@ class Segment34View extends WatchUi.WatchFace {
             dBattLabel.setColor(getColor("lowBatt"));
         }
         
-
-        if(awake) {
+        if(hideInAOD) {
             if(getColor("background") == 0xFFFFFF) {
                 dbackground.setVisible(true);
             } else {
                 dbackground.setVisible(false);
             }
-
+        }
+        
+        if(awake) {
             if(screenHeight == 240 or screenHeight == 260 or screenHeight == 280) {
                 dDateLabel.setFont(ledSmallFont);
                 dSecondsLabel.setFont(ledSmallFont);
