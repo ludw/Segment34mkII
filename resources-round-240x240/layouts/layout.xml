@@ -6,6 +6,9 @@
     <label id="Dusk" x="140" y="5" font="@Fonts.id_xsmol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x005555" text="DUSK:" />
     <label id="SunDownLabel" x="140" y="15" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xAAAAAA" />
 
+    <label id="Icon1" x="63" y="4" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xFFFFFF" text="A" />
+    <label id="Icon2" x="162" y="4" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xFFFFFF" text="D" />
+
     <label id="WeatherLabel1" x="center" y="30" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
     <label id="WeatherLabel2" x="center" y="51" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
 
@@ -30,7 +33,7 @@
     
     <label id="StepBg" x="75" y="216" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x005555" text="#####" />
     <label id="StepLabel" x="75" y="216" font="@Fonts.id_led_small" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xFFFFFF" />
-    
+
     <label id="BattBg" x="143" y="213" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xAAAAAA" text="B" />
     <label id="BattLabel" x="146" y="219" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xFFFFFF" />
 </layout>

@@ -29,6 +29,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var nightMode = false;
 
     private var ledSmallFont = null;
+    private var ledMidFont = null;
 
     private var dbackground = null;
     private var dSecondsLabel = null;
@@ -59,6 +60,8 @@ class Segment34View extends WatchUi.WatchFace {
     private var dBattLabel = null;
     private var dBattBg = null;
     private var dHrLabel = null;
+    private var dIcon1 = null;
+    private var dIcon2 = null;
 
     private var propColorTheme = null;
     private var propNightColorTheme = null;
@@ -74,6 +77,8 @@ class Segment34View extends WatchUi.WatchFace {
     private var propBottomFieldShows = null;
     private var propAodAlignment = null;
     private var propDateAlignment = null;
+    private var propIcon1 = null;
+    private var propIcon2 = null;
 
     function initialize() {
         WatchFace.initialize();
@@ -145,6 +150,7 @@ class Segment34View extends WatchUi.WatchFace {
                 setSunUpDown(dc);
                 setStep(dc);
                 setBatt(dc);
+                setIcons(dc);
                 updateStressAndBodyBatteryData();
             }
         }
@@ -261,6 +267,8 @@ class Segment34View extends WatchUi.WatchFace {
         dBattBg = View.findDrawableById("BattBg") as Text;
         dHrLabel = View.findDrawableById("HRLabel") as Text;
 
+        dIcon1 = View.findDrawableById("Icon1") as Text;
+        dIcon2 = View.findDrawableById("Icon2") as Text;
     }
 
     hidden function cacheProps() as Void {
@@ -278,6 +286,8 @@ class Segment34View extends WatchUi.WatchFace {
         propBottomFieldShows = Application.Properties.getValue("bottomFieldShows");
         propAodAlignment = Application.Properties.getValue("aodAlignment");
         propDateAlignment = Application.Properties.getValue("dateAlignment");
+        propIcon1 = Application.Properties.getValue("icon1");
+        propIcon2 = Application.Properties.getValue("icon2");
 
         var fontVariant = Application.Properties.getValue("smallFontVariant");
         if(fontVariant == 0) {
@@ -306,6 +316,8 @@ class Segment34View extends WatchUi.WatchFace {
             setAlignment(propAodAlignment, dAodDateLabel, (clockTime.min % 3) - 1);
             dAodDateLabel.setColor(getColor("dateDisplayDim"));
             dbackground.setVisible(false);
+        } else {
+            dc.setAntiAlias(true);
         }
 
         if(previousEssentialsVis == awake) {
@@ -368,27 +380,35 @@ class Segment34View extends WatchUi.WatchFace {
         dActiveLabel.setColor(getColor("valueDisplay"));
         dStepLabel.setColor(getColor("valueDisplay"));
         dBattBg.setColor(0x555555);
-        
+
         if(System.getSystemStats().battery > 15) {
             dBattLabel.setColor(getColor("valueDisplay"));
         } else {
             dBattLabel.setColor(getColor("lowBatt"));
         }
-        
 
-        if(awake) {
+        if(hideInAOD) {
             if(getColor("background") == 0xFFFFFF) {
                 dbackground.setVisible(true);
             } else {
                 dbackground.setVisible(false);
             }
+        }
 
+        if(awake) {
             if(screenHeight == 240 or screenHeight == 260 or screenHeight == 280) {
                 dDateLabel.setFont(ledSmallFont);
                 dSecondsLabel.setFont(ledSmallFont);
                 dNotifLabel.setFont(ledSmallFont);
                 dWeatherLabel1.setFont(ledSmallFont);
                 dWeatherLabel2.setFont(ledSmallFont);
+            } else {
+                dDateLabel.setFont(ledMidFont);
+                dAodDateLabel.setFont(ledMidFont);
+                dSecondsLabel.setFont(ledMidFont);
+                dNotifLabel.setFont(ledMidFont);
+                dWeatherLabel1.setFont(ledMidFont);
+                dWeatherLabel2.setFont(ledMidFont);
             }
 
             if(canBurnIn) {
@@ -1054,7 +1074,7 @@ class Segment34View extends WatchUi.WatchFace {
                 sample = Math.round(System.getSystemStats().battery / 100.0 * 20);
                 max = 20;
             }
-            
+
             for(var i = 0; i < sample; i++) {
                 value += "|";
             }
@@ -1331,6 +1351,30 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             dNotifLabel.setText("");
         }
+    }
+
+    hidden function setIcons(dc) as Void {
+        dIcon1.setText(getIconState(propIcon1));
+        dIcon2.setText(getIconState(propIcon2));
+    }
+
+    hidden function getIconState(setting as Number) as String {
+        if(setting == 1) {
+            var alarms = System.getDeviceSettings().alarmCount;
+            if(alarms > 0) {
+                return "A";
+            } else {
+                return "";
+            }
+        } else if(setting == 2) {
+            var dnd = System.getDeviceSettings().doNotDisturb;
+            if(dnd) {
+                return "D";
+            } else {
+                return "";
+            }
+        }
+        return "";
     }
 
     hidden function setDate(dc) as Void {
@@ -1725,19 +1769,7 @@ class Segment34View extends WatchUi.WatchFace {
             }
         } else if(complicationType == 16) { // Alt TZ 1
             var offset = Application.Properties.getValue("tzOffset1");
-            var now = Time.now();
-            var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_MEDIUM);
-            var min = utc.min + (offset % 60);
-            var hour = (utc.hour + Math.floor(offset / 60)) % 24;
-            if(hour < 0) {
-                hour += 24;
-            }
-            hour = formatHour(hour);
-            if(width < 5) {
-                val = Lang.format("$1$$2$", [hour.format("%02d"), min.format("%02d")]);
-            } else {
-                val = Lang.format("$1$:$2$", [hour.format("%02d"), min.format("%02d")]);
-            }
+            val = secondaryTimezone(offset, width);
         } else if(complicationType == 17) { // Steps / day
             if(ActivityMonitor.getInfo().steps != null) {
                 val = ActivityMonitor.getInfo().steps.format(numberFormat);
@@ -1943,19 +1975,7 @@ class Segment34View extends WatchUi.WatchFace {
             }
         } else if(complicationType == 41) { // Alt TZ 2
             var offset = Application.Properties.getValue("tzOffset2");
-            var now = Time.now();
-            var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_MEDIUM);
-            var min = utc.min + (offset % 60);
-            var hour = (utc.hour + Math.floor(offset / 60)) % 24;
-            if(hour < 0) {
-                hour += 24;
-            }
-            hour = formatHour(hour);
-            if(width < 5) {
-                val = Lang.format("$1$$2$", [hour.format("%02d"), min.format("%02d")]);
-            } else {
-                val = Lang.format("$1$:$2$", [hour.format("%02d"), min.format("%02d")]);
-            }
+            val = secondaryTimezone(offset, width);
         } else if(complicationType == 42) { // Alarms
             val = System.getDeviceSettings().alarmCount.format(numberFormat);
         } else if(complicationType == 43) { // High temp
@@ -2367,6 +2387,38 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
         return weeklyDistance;
+    }
+
+    hidden function secondaryTimezone(offset, width) {
+        var val = "";
+        var now = Time.now();
+        var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_MEDIUM);
+        var min = utc.min + (offset % 60);
+        var hour = (utc.hour + Math.floor(offset / 60)) % 24;
+
+        if(min > 59) {
+            min -= 60;
+            hour += 1;
+        }
+
+        if(min < 0) {
+            min += 60;
+            hour -= 1;
+        }
+
+        if(hour < 0) {
+            hour += 24;
+        }
+        if(hour > 23) {
+            hour -= 24;
+        }
+        hour = formatHour(hour);
+        if(width < 5) {
+            val = Lang.format("$1$$2$", [hour.format("%02d"), min.format("%02d")]);
+        } else {
+            val = Lang.format("$1$:$2$", [hour.format("%02d"), min.format("%02d")]);
+        }
+        return val;
     }
 
     hidden function day_name(day_of_week) {
