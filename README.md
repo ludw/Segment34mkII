@@ -33,6 +33,7 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 - Goal completion marker
 - Pressure trend
 - GPS Coordinates
+- Move notification number when date is centered
 
 Lower priority:
 - Move indicator
