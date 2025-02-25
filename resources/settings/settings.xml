@@ -450,6 +450,7 @@
     <setting propertyKey="@Properties.bottomFieldShows" title="Bottom 5 digit value:">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
+            <listEntry value="10">Heart Rate</listEntry>
             <listEntry value="17">Steps / day</listEntry>
             <listEntry value="18">Distance (meter) / day</listEntry>
             <listEntry value="21">Run distance (km) / week *</listEntry>
