@@ -76,6 +76,10 @@ class Segment34View extends WatchUi.WatchFace {
     private var propIcon1 = null;
     private var propIcon2 = null;
 
+    // At class level
+    private const DAY_NAMES = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    private const MONTH_NAMES = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
     function initialize() {
         WatchFace.initialize();
     }
@@ -274,6 +278,14 @@ class Segment34View extends WatchUi.WatchFace {
         propIcon1 = Application.Properties.getValue("icon1");
         propIcon2 = Application.Properties.getValue("icon2");
 
+        // Release previous font resources if they exist
+        if (ledSmallFont != null) {
+            ledSmallFont = null;
+        }
+        if (ledMidFont != null) {
+            ledMidFont = null;
+        }
+        
         var fontVariant = Application.Properties.getValue("smallFontVariant");
         if(fontVariant == 0) {
             ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small );
@@ -2404,34 +2416,11 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function day_name(day_of_week) {
-        var names = [
-            "SUN",
-            "MON",
-            "TUE",
-            "WED",
-            "THU",
-            "FRI",
-            "SAT",
-        ];
-        return names[day_of_week - 1];
+        return DAY_NAMES[day_of_week - 1];
     }
 
     hidden function month_name(month) {
-        var names = [
-            "JAN",
-            "FEB",
-            "MAR",
-            "APR",
-            "MAY",
-            "JUN",
-            "JUL",
-            "AUG",
-            "SEP",
-            "OCT",
-            "NOV",
-            "DEC"
-        ];
-        return names[month - 1];
+        return MONTH_NAMES[month - 1];
     }
 
     hidden function iso_week_number(year, month, day) {
