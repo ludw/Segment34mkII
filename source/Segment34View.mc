@@ -339,6 +339,7 @@ class Segment34View extends WatchUi.WatchFace {
         setVisibility2(propBottomFieldShows, dStepLabel, dStepBg);
 
         setAlignment(propDateAlignment, dDateLabel, 0);
+        alignNotification(propDateAlignment);
 
         dDateLabel.setVisible(hideInAOD);
         dHrDesc.setVisible(hideInAOD);
@@ -466,6 +467,32 @@ class Segment34View extends WatchUi.WatchFace {
         } else { // Center align
             label.setJustification(Graphics.TEXT_JUSTIFY_CENTER);
             label.setLocation(Math.floor(screenHeight / 2) + offset, label.locY);
+        }
+    }
+
+
+    hidden function alignNotification(setting as Number) {
+        var x = 0;
+        if(setting == 1) { // Date is centered, left align notif
+            if(screenHeight == 240) { x = 10; }
+            if(screenHeight == 260) { x = 16; }
+            if(screenHeight == 280) { x = 25; }
+            if(screenHeight == 360) { x = 15; }
+            if(screenHeight == 390) { x = 17; }
+            if(screenHeight == 416) { x = 31; }
+            if(screenHeight == 454) { x = 23; }
+            dNotifLabel.setJustification(Graphics.TEXT_JUSTIFY_LEFT);
+            dNotifLabel.setLocation(x, dNotifLabel.locY);
+        } else { // Date is left aligned, put notif after
+            if(screenHeight == 240) { x = 195; }
+            if(screenHeight == 260) { x = 210; }
+            if(screenHeight == 280) { x = 220; }
+            if(screenHeight == 360) { x = 297; }
+            if(screenHeight == 390) { x = 317; }
+            if(screenHeight == 416) { x = 331; }
+            if(screenHeight == 454) { x = 379; }
+            dNotifLabel.setJustification(Graphics.TEXT_JUSTIFY_RIGHT);
+            dNotifLabel.setLocation(x, dNotifLabel.locY);
         }
     }
 
