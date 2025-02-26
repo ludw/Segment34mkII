@@ -2485,30 +2485,48 @@ class Segment34View extends WatchUi.WatchFace {
         var lunar_cycle = 29.53;
         var phase = ((days_since_new_moon / lunar_cycle) * 100).toNumber() % 100;
         var into_cycle = (phase / 100.0) * lunar_cycle;
+        var hemisphere = Application.Properties.getValue("hemisphere");
 
         if(time.month == 5 and time.day == 4) {
             return "8"; // That's no moon!
         }
 
-        if (into_cycle < 3) { // 2+1
-            return "0";
-        } else if (into_cycle < 6) { // 4
-            return "1";
-        } else if (into_cycle < 10) { // 4
-            return "2";
-        } else if (into_cycle < 14) { // 4
-            return "3";
-        } else if (into_cycle < 18) { // 4
-            return "4";
-        } else if (into_cycle < 22) { // 4
-            return "5";
-        } else if (into_cycle < 26) { // 4
-            return "6";
-        } else if (into_cycle < 29) { // 3
-            return "7";
-        } else {
-            return "0";
-        }
+       var moonPhase;
+            if (into_cycle < 3) { // 2+1
+                moonPhase = 0;
+            } else if (into_cycle < 6) { // 4
+                moonPhase = 1;
+            } else if (into_cycle < 10) { // 4
+                moonPhase = 2;
+            } else if (into_cycle < 14) { // 4
+                moonPhase = 3;
+            } else if (into_cycle < 18) { // 4
+                moonPhase = 4;
+            } else if (into_cycle < 22) { // 4
+                moonPhase = 5;
+            } else if (into_cycle < 26) { // 4
+                moonPhase = 6;
+            } else if (into_cycle < 29) { // 3
+                moonPhase = 7;
+            } else {
+                moonPhase = 0;
+            }
+
+        // If hemisphere is 1 (southern), invert the phase index
+       if (hemisphere == 1) {
+            switch (moonPhase.toString()) {
+                case "1": moonPhase = 7; break; // waxing crescent ↔ waning crescent
+                case "2": moonPhase = 6; break; // first quarter ↔ last quarter
+                case "3": moonPhase = 5; break; // waxing gibbous ↔ waning gibbous
+                case "4": moonPhase = 4; break; // full moon remains unchanged
+                case "5": moonPhase = 3; break; // waning gibbous ↔ waxing gibbous
+                case "6": moonPhase = 2; break; // last quarter ↔ first quarter
+                case "7": moonPhase = 1; break; // waning crescent ↔ waxing crescent
+                // "0" (new) and "4" (full) remain unchanged
+            }
+}
+
+        return moonPhase.toString();
 
     }
 
