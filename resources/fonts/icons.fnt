@@ -18,4 +18,6 @@ char id=66 x=132 y=0 width=28 height=20 xoffset=0 yoffset=0 xadvance=28 page=0
 char id=67 x=161 y=0 width=46 height=22 xoffset=0 yoffset=0 xadvance=46 page=0
 
 char id=65 x=209 y=0 width=21 height=22 xoffset=0 yoffset=0 xadvance=19 page=0
-char id=68 x=230 y=0 width=17 height=22 xoffset=0 yoffset=0 xadvance=19 page=0
+char id=68 x=230 y=0 width=16 height=22 xoffset=0 yoffset=0 xadvance=19 page=0
+char id=76 x=246 y=0 width=9 height=22 xoffset=5 yoffset=0 xadvance=19 page=0
+char id=77 x=256 y=0 width=9 height=22 xoffset=5 yoffset=0 xadvance=19 page=0
