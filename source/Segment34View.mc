@@ -1386,6 +1386,20 @@ class Segment34View extends WatchUi.WatchFace {
             } else {
                 return "";
             }
+        } else if(setting == 3) {
+            var bl = System.getDeviceSettings().phoneConnected;
+            if(bl) {
+                return "L";
+            } else {
+                return "M";
+            }
+        } else if(setting == 4) {
+            var bl = System.getDeviceSettings().phoneConnected;
+            if(bl) {
+                return "";
+            } else {
+                return "M";
+            }
         }
         return "";
     }

@@ -482,6 +482,8 @@
                 <listEntry value="-2">Hidden</listEntry>
                 <listEntry value="1">Alarm</listEntry>
                 <listEntry value="2">Do Not Disturb</listEntry>
+                <listEntry value="3">Bluetooth (on/off)</listEntry>
+                <listEntry value="4">Bluetooth (just when off)</listEntry>
             </settingConfig>
     </setting>
 
@@ -490,6 +492,8 @@
                 <listEntry value="-2">Hidden</listEntry>
                 <listEntry value="1">Alarm</listEntry>
                 <listEntry value="2">Do Not Disturb</listEntry>
+                <listEntry value="3">Bluetooth (on/off)</listEntry>
+                <listEntry value="4">Bluetooth (just when off)</listEntry>
             </settingConfig>
     </setting>
 

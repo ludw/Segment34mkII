@@ -33,6 +33,7 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 - Goal completion marker
 - Pressure trend
 - GPS Coordinates
+- Bluetooth icons
 
 Lower priority:
 - Move indicator
@@ -42,6 +43,9 @@ Lower priority:
 
 
 ## Change log
+2025-02-27 v1.20.4
+- Added bluetooth icon as option
+
 2025-02-25 v1.20.3
 - Fixed issue with notification number overlapping date
 
