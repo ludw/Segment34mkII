@@ -484,6 +484,7 @@
                 <listEntry value="2">Do Not Disturb</listEntry>
                 <listEntry value="3">Bluetooth (on/off)</listEntry>
                 <listEntry value="4">Bluetooth (just when off)</listEntry>
+                <listEntry value="5">Move Bar</listEntry>
             </settingConfig>
     </setting>
 
@@ -494,6 +495,7 @@
                 <listEntry value="2">Do Not Disturb</listEntry>
                 <listEntry value="3">Bluetooth (on/off)</listEntry>
                 <listEntry value="4">Bluetooth (just when off)</listEntry>
+                <listEntry value="5">Move Bar</listEntry>
             </settingConfig>
     </setting>
 

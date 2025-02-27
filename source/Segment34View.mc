@@ -1102,7 +1102,17 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function updateWeather() as Void {
-        weatherCondition = Weather.getCurrentConditions();
+        if(Weather.getCurrentConditions != null) {
+            weatherCondition = Weather.getCurrentConditions();
+        }
+
+        var now = Time.now().value();
+        // Clear cached weather if older than 3 hours
+        if(weatherCondition != null 
+           and weatherCondition.observationTime != null 
+           and (now - weatherCondition.observationTime.value() > 3600 * 3)) {
+            weatherCondition = null;
+        }
     }
 
     hidden function formatTemperature(temp as Number, unit as String) as Number {
@@ -1372,34 +1382,47 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getIconState(setting as Number) as String {
-        if(setting == 1) {
+        if(setting == 1) { // Alarm
             var alarms = System.getDeviceSettings().alarmCount;
             if(alarms > 0) {
                 return "A";
             } else {
                 return "";
             }
-        } else if(setting == 2) {
+        } else if(setting == 2) { // DND
             var dnd = System.getDeviceSettings().doNotDisturb;
             if(dnd) {
                 return "D";
             } else {
                 return "";
             }
-        } else if(setting == 3) {
+        } else if(setting == 3) { // Bluetooth (on / off)
             var bl = System.getDeviceSettings().phoneConnected;
             if(bl) {
                 return "L";
             } else {
                 return "M";
             }
-        } else if(setting == 4) {
+        } else if(setting == 4) { // Bluetooth (just off)
             var bl = System.getDeviceSettings().phoneConnected;
             if(bl) {
                 return "";
             } else {
                 return "M";
             }
+        } else if(setting == 5) { // Move bar
+            var mov = 0;
+            if(ActivityMonitor.getInfo() has :moveBarLevel) {
+                if(ActivityMonitor.getInfo().moveBarLevel != null) {
+                    mov = ActivityMonitor.getInfo().moveBarLevel;
+                }
+            }
+            if(mov == 0) { return ""; }
+            if(mov == 1) { return "N"; }
+            if(mov == 2) { return "O"; }
+            if(mov == 3) { return "P"; }
+            if(mov == 4) { return "Q"; }
+            if(mov == 5) { return "R"; }
         }
         return "";
     }
