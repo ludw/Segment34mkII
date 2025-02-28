@@ -43,6 +43,7 @@ Lower priority:
 ## Change log
 2025-02-27 v1.20.5
 - Added Move Bar as icon option
+- Cache weather when offline
 
 2025-02-27 v1.20.4
 - Added bluetooth icon as option
