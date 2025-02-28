@@ -122,7 +122,12 @@
                 <listEntry value="2">Lines (highest contrast)</listEntry>
             </settingConfig>
     </setting>
-
+    <setting propertyKey="@Properties.hemisphere" title="Hemisphere (for Moon icon)">
+            <settingConfig type="list">
+                <listEntry value="0">Northern</listEntry>
+                <listEntry value="1">Southern</listEntry>
+            </settingConfig>
+        </setting>
     <setting propertyKey="@Properties.hourFormat" title="Time format (12/24h)">
         <settingConfig type="list">
             <listEntry value="0">Auto - Use system setting</listEntry>
@@ -130,7 +135,6 @@
             <listEntry value="2">12h</listEntry>
         </settingConfig>
     </setting>
-
     <setting propertyKey="@Properties.dateFormat" title="Date format">
         <settingConfig type="list">
             <listEntry value="0">WEEKDAY, DD MONTH YYYY</listEntry>
