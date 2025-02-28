@@ -41,6 +41,9 @@ Lower priority:
 
 
 ## Change log
+2025-02-28 v1.20.6
+- Device support for Enduro added
+
 2025-02-27 v1.20.5
 - Added Move Bar as icon option
 - Cache weather when offline
