@@ -13,6 +13,155 @@ import Toybox.Complications;
 
 const INTEGER_FORMAT = "%d";
 
+/* Indexes for the colors in the following array */
+enum {
+    labelFieldBg,
+    labelFieldLabel,
+    labelTimeBg,
+    labelTimeDisplay,
+    labelDateDisplay,
+    labelDateDisplayDim,
+    labelDawnDuskLabel,
+    labelDawnDuskValue,
+    labelNotifications,
+    labelStress,
+    labelBodybattery,
+    labelBackground,
+    labelValueDisplay,
+    labelMoonDisplay,
+    labelLowBatt
+};
+
+/*
+    For each theme, one MIP profile, one amoled profile.
+    The color we want is at the row : 
+     - MIP    --> 2*propColorTheme
+     - Amoled --> 2*propColorTheme + 1
+    Then at the index based on the color name (which is now an enum)
+*/
+const var labelToColor = [
+ /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
+ /*  [0] Yellow on turquoise MIP */      [ 0x005555, 0x55AAAA,   0x005555, 0xFFFF00,    0xFFFF00,    0xa98753,       0x005555,      0xAAAAAA,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [0] Yellow on turquoise AMOLED */   [ 0x0e333c, 0x55AAAA,   0x0d333c, 0xfbcb77,    0xfbcb77,    0xa98753,       0x005555,      0xFFFFFF,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [1] Hot pink            MIP */      [ 0x005555, 0xAA55AA,   0x005555, 0xFF55AA,    0xFFFFFF,    0xa95399,       0xAA55AA,      0xAAAAAA,      0xFF55AA,      0xFF55AA, 0x00FFAA,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [1] Hot pink            AMOLED */   [ 0x0e333c, 0xAA55AA,   0x0f3b46, 0xf988f2,    0xFFFFFF,    0xa95399,       0xAA55AA,      0xFFFFFF,      0xFF55AA,      0xFF55AA, 0x00FFAA,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [2] Blueish green       MIP */      [ 0x0055AA, 0x55AAAA,   0x0055AA, 0x00FFFF,    0x00FFFF,    0x5ca28f,       0x005555,      0xAAAAAA,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [2] Blueish green       AMOLED */   [ 0x0f2246, 0x55AAAA,   0x0f2246, 0x89efd2,    0x89efd2,    0x5ca28f,       0x005555,      0xFFFFFF,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [3] Very green          MIP */      [ 0x005500, 0x00AA55,   0x005500, 0x00FF00,    0x00FF00,    0x5ca28f,       0x00AA55,      0xAAAAAA,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [3] Very green          AMOLED */   [ 0x152b19, 0x00AA55,   0x152b19, 0x96e0ac,    0x96e0ac,    0x5ca28f,       0x00AA55,      0xFFFFFF,      0x00AAFF,      0xffc884, 0x59b9fe,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+
+ /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
+ /*  [4] White on turquoise  MIP */      [ 0x005555, 0x55AAAA,   0x005555, 0xFFFFFF,    0xFFFFFF,    0x114a5a,       0x005555,      0xAAAAAA,      0xAAAAAA,      0xFFAA55, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [4] White on turquoise  AMOLED */   [ 0x0e333c, 0x55AAAA,   0x0d333c, 0xFFFFFF,    0xFFFFFF,    0x114a5a,       0x005555,      0xFFFFFF,      0xAAAAAA,      0xFFAA55, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [5] Orange              MIP */      [ 0x5500AA, 0xFFAAAA,   0x5500AA, 0xFF5500,    0xFFAAAA,    0xaa6e56,       0xFFAAAA,      0xAAAAAA,      0xFFFFFF,      0xFF5555, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [5] Orange              AMOLED */   [ 0x1b263d, 0xFFAAAA,   0x1b263d, 0xff9161,    0xffb383,    0xaa6e56,       0xFFAAAA,      0xFFFFFF,      0xFFFFFF,      0xFF5555, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [6] Red & White         MIP */      [ 0xAA0000, 0xFF0000,   0xAA0000, 0xFFFFFF,    0xFFFFFF,    0xAA0000,       0xAA0000,      0xAAAAAA,      0xFF0000,      0xAA0000, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [6] Red & White         AMOLED */   [ 0x550000, 0xFF0000,   0x550000, 0xffffff,    0xffffff,    0xAA0000,       0xAA0000,      0xFFFFFF,      0xFF0000,      0xAA0000, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [7] White on Blue       MIP */      [ 0x0055AA, 0x0055AA,   0x0055AA, 0xFFFFFF,    0xFFFFFF,    0x0055AA,       0x0055AA,      0xAAAAAA,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [7] White on Blue       AMOLED */   [ 0x0b2051, 0x0055AA,   0x0b2051, 0xffffff,    0xffffff,    0x0055AA,       0x0055AA,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+
+ /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
+ /*  [8] Yellow on Blue      MIP */      [ 0x0055AA, 0x0055AA,   0x0055AA, 0xFFFF00,    0xFFFF00,    0xa98753,       0x0055AA,      0xAAAAAA,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [8] Yellow on Blue      AMOLED */   [ 0x0b2051, 0x0055AA,   0x0b2051, 0xfbcb77,    0xfbcb77,    0xa98753,       0x0055AA,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [9] White & Orange      MIP */      [ 0xaa5500, 0xFF5500,   0xaa5500, 0xFFFFFF,    0xFFFFFF,    0xAA5500,       0xFF5500,      0xAAAAAA,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [9] White & Orange      AMOLED */   [ 0x58250b, 0xFF5500,   0x7d3f01, 0xffffff,    0xffffff,    0xAA5500,       0xFF5500,      0xFFFFFF,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [10] Blue                MIP */      [ 0x555555, 0x0055AA,   0x000055, 0x0055AA,    0xFFFFFF,    0x0055AA,       0x0055AA,      0xAAAAAA,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [10] Blue                AMOLED */   [ 0x191b33, 0x0055AA,   0x191b33, 0x3495d4,    0xffffff,    0x0055AA,       0x0055AA,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [11] Orange              MIP */      [ 0x555555, 0xFFAA00,   0x555555, 0xFFAA00,    0xFFFFFF,    0x555555,       0xFFAA00,      0xAAAAAA,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [11] Orange              AMOLED */   [ 0x333333, 0xFFAA00,   0x333333, 0xff7600,    0xffffff,    0x555555,       0xFFAA00,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+
+ /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
+ /* [12] White on black      MIP */      [ 0x555555, 0xFFFFFF,   0x555555, 0xFFFFFF,    0xFFFFFF,    0x555555,       0xFFFFFF,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   0xFFFFFF,                 Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [12] White on black      AMOLED */   [ 0x333333, 0xFFFFFF,   0x333333, 0xFFFFFF,    0xFFFFFF,    0x555555,       0xFFFFFF,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   0xFFFFFF,                 Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [13] Black on White      MIP */      [ 0xAAAAAA, 0x000000,   0xAAAAAA, 0x000000,    0x000000,    0x555555,       0x000000,      0x555555,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [13] Black on White      AMOLED */   [ 0xCCCCCC, 0x000000,   0xCCCCCC, 0x000000,    0x000000,    0x555555,       0x000000,      0x000000,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [14] Red on White        MIP */      [ 0xAAAAAA, 0xAA0000,   0xAAAAAA, 0xAA0000,    0x000000,    0x555555,       0xAA0000,      0x555555,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [14] Red on White        AMOLED */   [ 0xCCCCCC, 0xAA0000,   0xCCCCCC, 0xAA0000,    0x000000,    0x555555,       0xAA0000,      0x000000,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [15] Blue on White       MIP */      [ 0xAAAAAA, 0x0000AA,   0xAAAAAA, 0x0000AA,    0x000000,    0x555555,       0x0000AA,      0x555555,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [15] Blue on White       AMOLED */   [ 0xCCCCCC, 0x0000AA,   0xCCCCCC, 0x0000AA,    0x000000,    0x555555,       0x0000AA,      0x000000,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+
+ /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
+ /* [16] Green on White      MIP */      [ 0xAAAAAA, 0x00AA00,   0xAAAAAA, 0x00AA00,    0x000000,    0x555555,       0x00AA00,      0x555555,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [16] Green on White      AMOLED */   [ 0xCCCCCC, 0x00AA00,   0xCCCCCC, 0x00AA00,    0x000000,    0x555555,       0x00AA00,      0x000000,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [17] Orange on White     MIP */      [ 0xAAAAAA, 0x555555,   0xAAAAAA, 0xFF5500,    0x000000,    0x555555,       0x555555,      0x555555,      0x000000,      0xFF5500, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [17] Orange on White     AMOLED */   [ 0xCCCCCC, 0x555555,   0xCCCCCC, 0xFF5500,    0x000000,    0x555555,       0x555555,      0x000000,      0x000000,      0xFF5500, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [18] Green & Orange      MIP */      [ 0x005500, 0xFF5500,   0x005500, 0xFF5500,    0x00FF00,    0x5ca28f,       0xFF5500,      0xAAAAAA,      0x55FF55,      0xFF5500, 0x00AAFF,    0x000000,   0x00FF00,                 Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [18] Green & Orange      AMOLED */   [ 0x152b19, 0xFF5500,   0x152b19, 0xff7600,    0x55FF55,    0x5ca28f,       0xFF5500,      0xFFFFFF,      0x55FF55,      0xff7600, 0x59b9fe,    0x000000,   0x55FF55,                 Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [19] Green Camo          MIP */      [ 0x005500, 0xAAAA00,   0x005500, 0xAAAA55,    0xAAAA55,    0x546a36,       0xAAAA00,      0x00FF00,      0x00FF55,      0xAAAA55, 0x00FF00,    0x000000,   0x00FF00,                 0xFFFFFF,             0xFF0000 ],
+ /* [19] Green Camo          AMOLED */   [ 0x152b19, 0xa8aa6c,   0x152b19, 0x889f4a,    0x889f4a,    0x546a36,       0xa8aa6c,      0x55AA55,      0x00FF55,      0x889f4a, 0x55AA55,    0x000000,   0x55AA55,                 0xe3efd2,             0xFF0000 ],
+
+ /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
+ /* [20] Red on Black        MIP */      [ 0x555555, 0xFF0000,   0x555555, 0xFF0000,    0xFFFFFF,    0x555555,       0xFF0000,      0xFFFFFF,      0x55AAFF,      0xFF5555, 0x55AAFF,    0x000000,   0xFFFFFF,                 0xFFFFFF,             0xFF0000 ],
+ /* [20] Red on Black        AMOLED */   [ 0x282828, 0xFF0000,   0x282828, 0xFF0000,    0xFFFFFF,    0x555555,       0xFF0000,      0xFFFFFF,      0x55AAFF,      0xFF5555, 0x55AAFF,    0x000000,   0xFFFFFF,                 0xe3efd2,             0xFF0000 ]
+];
+
+/* Indexes for the following array */
+enum {
+    shortDesc,
+    midDesc,
+    longDesc,
+    unitDesc
+};
+
+const var complicationToDesc = [
+    /* short,     mid,           long,              unit     */
+    ["W MIN:",    "WEEK MIN:",   "WEEK ACT MIN:",   ""       ], //  [0] Active min / week
+    ["D MIN:",    "MIN TODAY:",  "DAY ACT MIN:",    ""       ], //  [1] Active min / day
+    ["D KM:",     "KM TODAY:",   "KM TODAY:",       ""       ], //  [2] distance (km) / day
+    ["D MI:",     "MI TODAY:",   "MILES TODAY:",    ""       ], //  [3] distance (miles) / day
+    ["FLRS:",     "FLOORS:",     "FLOORS:",         ""       ], //  [4] floors climbed / day
+    ["CLIMB:",    "M CLIMBED:",  "M CLIMBED:",      ""       ], //  [5] meters climbed / day
+    ["RECOV:",    "RECOV HRS:",  "RECOVERY HRS:",   ""       ], //  [6] Time to Recovery (h)
+    ["V02:",      "V02 MAX:",    "RUN V02 MAX:",    ""       ], //  [7] VO2 Max Running
+    ["V02:",      "V02 MAX:",    "BIKE V02 MAX:",   ""       ], //  [8] VO2 Max Cycling
+    ["RESP:",     "RESP RATE:",  "RESP. RATE:",     ""       ], //  [9] Respiration rate
+    [ null,       null,          null,              ""       ], // [10] HR, done in function
+    ["CAL:",      "CALORIES:",   "DLY CALORIES:",   "KCAL"   ], // [11] Calories / day
+    ["ALT:",      "ALTITUDE:",   "ALTITUDE M:",     "M"      ], // [12] Altitude (m)
+    ["STRSS:",    "STRESS:",     "STRESS:",         ""       ], // [13] Stress
+    ["B BAT:",    "BODY BATT:",  "BODY BATTERY:",   ""       ], // [14] Body battery
+    ["ALT:",      "ALTITUDE:",   "ALTITUDE FT:",    "FT"     ], // [15] Altitude (ft)
+    [ null,       null,          null,              ""       ], // [16] Alt TZ 1, done in function
+    ["STEPS:",    "STEPS:",      "STEPS:",          "STEPS"  ], // [17] Steps / day
+    ["DIST:",     "M TODAY:",    "METERS TODAY:",   ""       ], // [18] Distance (m) / day
+    ["PUSHES:",   "PUSHES:",     "PUSHES:",         "PUSHES" ], // [19] Wheelchair pushes
+    ["",          "",            "",                ""       ], // [20] Weather condition
+    ["W KM:",     "W RUN KM:",   "WEEK RUN KM:",    ""       ], // [21] Weekly run distance (km)
+    ["W MI:",     "W RUN MI:",   "WEEK RUN MI:",    ""       ], // [22] Weekly run distance (miles)
+    ["W KM:",     "W BIKE KM:",  "WEEK BIKE KM:",   ""       ], // [23] Weekly bike distance (km)
+    ["W MI:",     "W BIKE MI:",  "WEEK BIKE MI:",   ""       ], // [24] Weekly bike distance (miles)
+    ["TRAINING:", "TRAINING:",   "TRAINING:",       ""       ], // [25] Training status
+    ["PRESSURE:", "PRESSURE:",   "PRESSURE:",       ""       ], // [26] Barometric pressure (hPA)
+    ["KG:",       "WEIGHT:",     "WEIGHT KG:",      ""       ], // [27] Weight kg
+    ["LBS:",      "WEIGHT:",     "WEIGHT KG:",      ""       ], // [28] Weight lbs
+    ["A CAL:",    "ACT. CAL:",   "ACT. CALORIES:",  "KCAL"   ], // [29] Act Calories / day
+    ["PRESSURE:", "PRESSURE:",   "PRESSURE:",       ""       ], // [30] Sea level pressure (hPA)
+    ["WEEK:",     "WEEK:",       "WEEK:",           ""       ], // [31] Week number
+    ["W KM:",     "WEEK KM:",    "WEEK DIST KM:",   ""       ], // [32] Weekly distance (km)
+    ["W MI:",     "WEEK MI:",    "WEEKLY MILES:",   ""       ], // [33] Weekly distance (miles)
+    ["BATT:",     "BATT %:",     "BATTERY %:",      ""       ], // [34] Battery percentage
+    ["BATT D:",   "BATT DAYS:",  "BATTERY DAYS:",   ""       ], // [35] Battery days remaining
+    ["NOTIFS:",   "NOTIFS:",     "NOTIFICATIONS:",  ""       ], // [36] Notification count
+    ["SUN:",      "SUN INT:",    "SUN INTENSITY:",  ""       ], // [37] Solar intensity
+    ["TEMP:",     "TEMP:",       "SENSOR TEMP:",    ""       ], // [38] Sensor temp
+    ["DAWN:",     "SUNRISE:",    "SUNRISE:",        ""       ], // [39] Sunrise
+    ["DUSK:",     "SUNSET:",     "SUNSET:",         ""       ], // [40] Sunset
+    [ null,       null,          null,              ""       ], // [41] Alt TZ 2:
+    ["ALARM:",    "ALARMS:",     "ALARMS:",         ""       ], // [42] Alarms
+    ["HIGH:",     "DAILY HIGH:", "DAILY HIGH:",     ""       ], // [43] Daily high temp
+    ["LOW:",      "DAILY LOW:",  "DAILY LOW:",      ""       ], // [44] Daily low temp
+    [ null,       null,           null,             ""       ], // [45] empty for offset 45
+    [ null,       null,           null,             ""       ], // [46] empty for offset 46
+    [ null,       null,           null,             ""       ], // [47] empty for offset 47
+    [ null,       null,           null,             ""       ], // [48] empty for offset 48
+    [ null,       null,           null,             ""       ], // [49] empty for offset 49
+    [ null,       null,           null,             ""       ], // [50] empty for offset 50
+    [ null,       null,           null,             ""       ], // [51] empty for offset 51
+    [ null,       null,           null,             ""       ], // [52] empty for offset 52
+    ["TEMP:",     "TEMP:",        "TEMPERATURE:",   ""       ], // [53] Temperature
+    ["PRECIP:",   "PRECIP:",      "PRECIPITATION:", ""       ]  // [54] Precipitation
+];
+
 class Segment34View extends WatchUi.WatchFace {
 
     private var isSleeping = false;
@@ -188,9 +337,9 @@ class Segment34View extends WatchUi.WatchFace {
         }
 
         dc.setClip(clipX, clipY, clipWidth, clipHeight);
-        dc.setColor(getColor("background"), getColor("background"));
+        dc.setColor(getColor(labelBackground), getColor(labelBackground));
         dc.clear();
-        dc.setColor(getColor("dateDisplay"), Graphics.COLOR_TRANSPARENT);
+        dc.setColor(getColor(labelDateDisplay), Graphics.COLOR_TRANSPARENT);
         dc.drawText(clipX, clipY, ledSmallFont, secString, Graphics.TEXT_JUSTIFY_LEFT);
     }
 
@@ -316,7 +465,7 @@ class Segment34View extends WatchUi.WatchFace {
             }
             dAodPattern.setLocation(clockTime.min % 2, dAodPattern.locY);
             setAlignment(propAodAlignment, dAodDateLabel, (clockTime.min % 3) - 1);
-            dAodDateLabel.setColor(getColor("dateDisplayDim"));
+            dAodDateLabel.setColor(getColor(labelDateDisplayDim));
             dbackground.setVisible(false);
         } else {
             dc.setAntiAlias(true);
@@ -358,40 +507,40 @@ class Segment34View extends WatchUi.WatchFace {
         dTimeBg.setVisible(hideInAOD and propShowClockBg);
         dBattLabel.setVisible(hideBattery);
         dBattBg.setVisible(hideBattery);
-        dTimeLabel.setColor(getColor("timeDisplay"));
-
-        dTimeBg.setColor(getColor("timeBg"));
-        dTtrBg.setColor(getColor("fieldBg"));
-        dHrBg.setColor(getColor("fieldBg"));
-        dActiveBg.setColor(getColor("fieldBg"));
-        dStepBg.setColor(getColor("fieldBg"));
-        dTtrDesc.setColor(getColor("fieldLabel"));
-        dHrLabel.setColor(getColor("valueDisplay"));
-        dHrDesc.setColor(getColor("fieldLabel"));
-        dActiveDesc.setColor(getColor("fieldLabel"));
-        dDateLabel.setColor(getColor("dateDisplay"));
-        dSecondsLabel.setColor(getColor("dateDisplay"));
-        dNotifLabel.setColor(getColor("notifications"));
-        dMoonLabel.setColor(getColor("moonDisplay"));
-        dDusk.setColor(getColor("dawnDuskLabel"));
-        dDawn.setColor(getColor("dawnDuskLabel"));
-        dSunUpLabel.setColor(getColor("dawnDuskValue"));
-        dSunDownLabel.setColor(getColor("dawnDuskValue"));
-        dWeatherLabel1.setColor(getColor("valueDisplay"));
-        dWeatherLabel2.setColor(getColor("valueDisplay"));
-        dTtrLabel.setColor(getColor("valueDisplay"));
-        dActiveLabel.setColor(getColor("valueDisplay"));
-        dStepLabel.setColor(getColor("valueDisplay"));
+        dTimeLabel.setColor(getColor(labelTimeDisplay));
+        
+        dTimeBg.setColor(getColor(labelTimeBg));
+        dTtrBg.setColor(getColor(labelFieldBg));
+        dHrBg.setColor(getColor(labelFieldBg));
+        dActiveBg.setColor(getColor(labelFieldBg));
+        dStepBg.setColor(getColor(labelFieldBg));
+        dTtrDesc.setColor(getColor(labelFieldLabel));
+        dHrLabel.setColor(getColor(labelValueDisplay));
+        dHrDesc.setColor(getColor(labelFieldLabel));
+        dActiveDesc.setColor(getColor(labelFieldLabel));
+        dDateLabel.setColor(getColor(labelDateDisplay));
+        dSecondsLabel.setColor(getColor(labelDateDisplay));
+        dNotifLabel.setColor(getColor(labelNotifications));
+        dMoonLabel.setColor(getColor(labelMoonDisplay));
+        dDusk.setColor(getColor(labelDawnDuskLabel));
+        dDawn.setColor(getColor(labelDawnDuskLabel));
+        dSunUpLabel.setColor(getColor(labelDawnDuskValue));
+        dSunDownLabel.setColor(getColor(labelDawnDuskValue));
+        dWeatherLabel1.setColor(getColor(labelValueDisplay));
+        dWeatherLabel2.setColor(getColor(labelValueDisplay));
+        dTtrLabel.setColor(getColor(labelValueDisplay));
+        dActiveLabel.setColor(getColor(labelValueDisplay));
+        dStepLabel.setColor(getColor(labelValueDisplay));
         dBattBg.setColor(0x555555);
         
         if(System.getSystemStats().battery > 15) {
-            dBattLabel.setColor(getColor("valueDisplay"));
+            dBattLabel.setColor(getColor(labelValueDisplay));
         } else {
-            dBattLabel.setColor(getColor("lowBatt"));
+            dBattLabel.setColor(getColor(labelLowBatt));
         }
         
         if(hideInAOD) {
-            if(getColor("background") == 0xFFFFFF) {
+            if(getColor(labelBackground) == 0xFFFFFF) {
                 dbackground.setVisible(true);
             } else {
                 dbackground.setVisible(false);
@@ -418,7 +567,7 @@ class Segment34View extends WatchUi.WatchFace {
                 dAodPattern.setVisible(false);
                 dAodDateLabel.setVisible(false);
 
-                if(getColor("background") == 0xFFFFFF) {
+                if(getColor(labelBackground) == 0xFFFFFF) {
                     dGradient.setVisible(false);
                 } else {
                     dGradient.setVisible(true);
@@ -498,571 +647,23 @@ class Segment34View extends WatchUi.WatchFace {
     }
     
     hidden function getColor(colorName) as Graphics.ColorType {
-        var amoled = canBurnIn;
-
+        /* Check whether we are AMOLED or MIP */ 
+        var amoled = canBurnIn ?    1   :   0;
         var themeToUse = propColorTheme;
         if (propNightColorTheme != -1 && nightMode) {
             themeToUse = propNightColorTheme;
         }
 
-        if(themeToUse == 0) { // Yellow on turquiose
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x0e333c; }
-                return 0x005555;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0x55AAAA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x0d333c; }
-                return 0x005555;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xfbcb77; }
-                return 0xFFFF00;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0xa98753;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0x005555;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(themeToUse == 1) { // Hot pink
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x0e333c; }
-                return 0x005555;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xAA55AA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x0f3b46; }
-                return 0x005555;
-            } else if(colorName.equals("timeDisplay")) {
-                if(amoled) { return 0xf988f2; }
-                return 0xFF55AA;
-            } else if(colorName.equals("dateDisplay")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0xa95399;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xAA55AA;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0xFF55AA;
-            } else if(colorName.equals("stress")) {
-                return 0xFF55AA;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x00FFAA;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(themeToUse == 2) { // Blueish green
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x0f2246; }
-                return 0x0055AA;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0x55AAAA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x0f2246; }
-                return 0x0055AA;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                if(amoled) { return 0x89efd2; }
-                return 0x00FFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x5ca28f;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0x005555;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(themeToUse == 3) { // Very green
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x152b19; }
-                return 0x005500;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0x00AA55;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x152b19; }
-                return 0x005500;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                if(amoled) { return 0x96e0ac; }
-                return 0x00FF00;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x5ca28f;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0x00AA55;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("stress")) {
-                if(amoled) { return 0xffc884; }
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                if(amoled) { return 0x59b9fe; }
-                return 0x00AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(themeToUse == 4) { // White on turquoise
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x0e333c; }
-                return 0x005555;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0x55AAAA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x0d333c; }
-                return 0x005555;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x114a5a;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0x005555;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0xAAAAAA;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA55;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(themeToUse == 5) { // Orange
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x1b263d; }
-                return 0x5500AA;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xFFAAAA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x1b263d; }
-                return 0x5500AA;
-            } else if(colorName.equals("timeDisplay")) {
-                if(amoled) { return 0xff9161; }
-                return 0xFF5500;
-            } else if(colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xffb383; }
-                return 0xFFAAAA;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0xaa6e56;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xFFAAAA;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFF5555;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(themeToUse == 6) { // Red & White
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x550000; }
-                return 0xAA0000;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xFF0000;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x550000; }
-                return 0xAA0000;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xffffff; }
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0xAA0000;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xAA0000;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0xFF0000;
-            } else if(colorName.equals("stress")) {
-                return 0xAA0000;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(themeToUse == 7) { // White on Blue
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x0b2051; }
-                return 0x0055AA;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0x0055AA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x0b2051; }
-                return 0x0055AA;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xffffff; }
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x0055AA;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0x0055AA;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(themeToUse == 8) { // Yellow on Blue
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x0b2051; }
-                return 0x0055AA;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0x0055AA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x0b2051; }
-                return 0x0055AA;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xfbcb77; }
-                return 0xFFFF00;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0xa98753;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0x0055AA;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(themeToUse == 9) { // White & Orange
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x58250b; }
-                return 0xaa5500;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xFF5500;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x7d3f01; }
-                return 0xaa5500;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xffffff; }
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0xAA5500;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xFF5500;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(themeToUse == 10) { // Blue
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x191b33; }
-                return 0x555555;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0x0055AA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x191b33; }
-                return 0x000055;
-            } else if(colorName.equals("timeDisplay")) {
-                if(amoled) { return 0x3495d4; }
-                return 0x0055AA;
-            } else if(colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xffffff; }
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x0055AA;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0x0055AA;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(themeToUse == 11) { // Orange
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x333333; }
-                return 0x555555;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x333333; }
-                return 0x555555;
-            } else if(colorName.equals("timeDisplay")) {
-                if(amoled) { return 0xff7600; }
-                return 0xFFAA00;
-            } else if(colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xffffff; }
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x555555;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(themeToUse == 12) { // White on black
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x333333; }
-                return 0x555555;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x333333; }
-                return 0x555555;
-            } else if(colorName.equals("timeDisplay")) {
-                if(amoled) {
-                    if(isSleeping) {
-                        return 0xAAAAAA;
-                    } else {
-                        return 0xFFFFFF;
-                    }
-                }
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x555555;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xFFFFFF;
-            } else if(colorName.equals("notifications")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            } else if(colorName.equals("valueDisplay")) {
-                return 0xFFFFFF;
-            }
-        } else if(themeToUse == 13 or themeToUse == 14 or themeToUse == 15 or themeToUse == 16 or themeToUse == 17) { // on white
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0xCCCCCC; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("fieldLabel") or colorName.equals("dawnDuskLabel")) {
-                if(themeToUse == 13) { // Black on white
-                    return 0x000000;
-                } else if(themeToUse == 14) { // Red on white
-                    return 0xAA0000;
-                } else if(themeToUse == 15) { // Blue on white
-                    return 0x0000AA;
-                } else if(themeToUse == 16) { // Green on white
-                    return 0x00AA00;
-                } else if(themeToUse == 17) { // Orange on white
-                    return 0x555555;
-                }
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0xCCCCCC; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("timeDisplay")) {
-                if(themeToUse == 13) { // Black on white
-                    if(amoled and isSleeping) { return 0xAAAAAA; }
-                    return 0x000000;
-                } else if(themeToUse == 14) { // Red on white
-                    if(amoled and isSleeping) { return 0xAA5555; }
-                    return 0xAA0000;
-                } else if(themeToUse == 15) { // Blue on white
-                    if(amoled and isSleeping) { return 0x5555AA; }
-                    return 0x0000AA;
-                } else if(themeToUse == 16) { // Green on white
-                    if(amoled and isSleeping) { return 0x55AA55; }
-                    return 0x00AA00;
-                } else if(themeToUse == 17) { // Orange on white
-                    if(amoled and isSleeping) { return 0xff7600; }
-                    return 0xFF5500;
-                }
-            } else if(colorName.equals("dateDisplay")) {
-                if(amoled) { return 0x000000; }
-                return 0x000000;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x555555;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0x000000; }
-                return 0x555555;
-            } else if(colorName.equals("notifications")) {
-                return 0x000000;
-            } else if(colorName.equals("stress")) {
-                if(themeToUse == 17) { return 0xFF5500; }
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("valueDisplay")) {
-                return 0x000000;
-            } else if(colorName.equals("moonDisplay")) {
-                return 0x555555;
-            }
-        } else if(themeToUse == 18) { // green & orange
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x152b19; }
-                return 0x005500;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xFF5500;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x152b19; }
-                return 0x005500;
-            } else if(colorName.equals("timeDisplay")) {
-                if(amoled) { return 0xff7600; }
-                return 0xFF5500;
-            } else if (colorName.equals("dateDisplay")) {
-                if(amoled) { return 0x55FF55; }
-                return 0x00FF00;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x5ca28f;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xFF5500;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x55FF55;
-            } else if(colorName.equals("stress")) {
-                if(amoled) { return 0xff7600; }
-                return 0xFF5500;
-            } else if(colorName.equals("bodybattery")) {
-                if(amoled) { return 0x59b9fe; }
-                return 0x00AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            } else if(colorName.equals("valueDisplay")) {
-                if(amoled) { return 0x55FF55; }
-                return 0x00FF00;
-            }
-        } else if(themeToUse == 19) { // green camo
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x152b19; }
-                return 0x005500;
-            } else if(colorName.equals("fieldLabel")) {
-                if(amoled) { return 0xa8aa6c; }
-                return 0xAAAA00;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x152b19; }
-                return 0x005500;
-            } else if(colorName.equals("timeDisplay")) {
-                if(amoled) { return 0x889f4a; }
-                return 0xAAAA55;
-            } else if (colorName.equals("dateDisplay")) {
-                if(amoled) { return 0x889f4a; }
-                return 0xAAAA55;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x546a36;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                if(amoled) { return 0xa8aa6c; }
-                return 0xAAAA00;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0x55AA55; }
-                return 0x00FF00;
-            } else if(colorName.equals("notifications")) {
-                return 0x00FF55;
-            } else if(colorName.equals("stress")) {
-                if(amoled) { return 0x889f4a; }
-                return 0xAAAA55;
-            } else if(colorName.equals("bodybattery")) {
-                if(amoled) { return 0x55AA55; }
-                return 0x00FF00;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            } else if(colorName.equals("valueDisplay")) {
-                if(amoled) { return 0x55AA55; }
-                return 0x00FF00;
-            } else if(colorName.equals("moonDisplay")) {
-                if(amoled) { return 0xe3efd2; }
-                return 0xFFFFFF;
-            }
-        } else if(themeToUse == 20) { // red on black
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x282828; }
-                return 0x555555;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xFF0000;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x282828; }
-                return 0x555555;
-            } else if(colorName.equals("timeDisplay")) {
-                return 0xFF0000;
-            } else if(colorName.equals("dateDisplay")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x555555;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xFF0000;
-            } else if(colorName.equals("dawnDuskValue")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("notifications")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFF5555;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            } else if(colorName.equals("valueDisplay")) {
-                return 0xFFFFFF;
-            }
+        var color = labelToColor[2*themeToUse + amoled][colorName];
+
+        /* Handle special cases */
+        if(colorName == labelTimeDisplay && isSleeping && amoled) {
+            /* Use color offset   12,       13,       14,       15,       16,       17 */
+            var arraySleeping = [ 0xAAAAAA, 0xAAAAAA, 0xAA5555, 0x5555AA, 0x55AA55, 0xff7600 ];
+            color = arraySleeping[themeToUse - 12];
         }
 
-        if(colorName.equals("lowBatt")) {
-            return 0xFF0000;
-        }
-        return Graphics.COLOR_WHITE;
+        return color;
     }
 
     hidden function setSeconds(dc) as Void {
@@ -1699,11 +1300,11 @@ class Segment34View extends WatchUi.WatchFace {
             }
 
             var battBar = Math.round(batt * (barHeight / 100.0));
-            dc.setColor(getColor("bodybattery"), -1);
+            dc.setColor(getColor(labelBodybattery), -1);
             dc.fillRectangle(dc.getWidth() - fromEdge - barWidth - bbAdjustment, barTop + (barHeight - battBar), barWidth, battBar);
 
             var stressBar = Math.round(stress * (barHeight / 100.0));
-            dc.setColor(getColor("stress"), -1);
+            dc.setColor(getColor(labelStress), -1);
             dc.fillRectangle(fromEdge, barTop + (barHeight - stressBar), barWidth, stressBar);
 
         }
@@ -2132,213 +1733,40 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     function getComplicationDesc(complicationType, labelSize as Number) as String {
-        // labelSize 1 = short
-        // labelSize 2 = mid
-        // labelSize 3 = long
-        var desc = "";
+        /* Handle special cases or return from the array */
+        var desc = complicationToDesc[complicationType][labelSize - 1];
 
-        if(complicationType == 0) { // Active min / week
-            if(labelSize == 1) { desc = "W MIN:"; }
-            if(labelSize == 2) { desc = "WEEK MIN:"; }
-            if(labelSize == 3) { desc = "WEEK ACT MIN:"; }
-        } else if(complicationType == 1) { // Active min / day
-            if(labelSize == 1) { desc = "D MIN:"; }
-            if(labelSize == 2) { desc = "MIN TODAY:"; }
-            if(labelSize == 3) { desc = "DAY ACT MIN:"; }
-        } else if(complicationType == 2) { // distance (km) / day
-            if(labelSize == 1) { desc = "D KM:"; }
-            if(labelSize == 2) { desc = "KM TODAY:"; }
-            if(labelSize == 3) { desc = "KM TODAY:"; }
-        } else if(complicationType == 3) { // distance (miles) / day
-            if(labelSize == 1) { desc = "D MI:"; }
-            if(labelSize == 2) { desc = "MI TODAY:"; }
-            if(labelSize == 3) { desc = "MILES TODAY:"; }
-        } else if(complicationType == 4) { // floors climbed / day
-            if(labelSize == 1) { desc = "FLRS:"; }
-            if(labelSize == 2) { desc = "FLOORS:"; }
-            if(labelSize == 3) { desc = "FLOORS:"; }
-        } else if(complicationType == 5) { // meters climbed / day
-            if(labelSize == 1) { desc = "CLIMB:"; }
-            if(labelSize == 2) { desc = "M CLIMBED:"; }
-            if(labelSize == 3) { desc = "M CLIMBED:"; }
-        } else if(complicationType == 6) { // Time to Recovery (h)
-            if(labelSize == 1) { desc = "RECOV:"; }
-            if(labelSize == 2) { desc = "RECOV HRS:"; }
-            if(labelSize == 3) { desc = "RECOVERY HRS:"; }
-        } else if(complicationType == 7) { // VO2 Max Running
-            if(labelSize == 1) { desc = "V02:"; }
-            if(labelSize == 2) { desc = "V02 MAX:"; }
-            if(labelSize == 3) { desc = "RUN V02 MAX:"; }
-        } else if(complicationType == 8) { // VO2 Max Cycling
-            if(labelSize == 1) { desc = "V02:"; }
-            if(labelSize == 2) { desc = "V02 MAX:"; }
-            if(labelSize == 3) { desc = "BIKE V02 MAX:"; }
-        } else if(complicationType == 9) { // Respiration rate
-            if(labelSize == 1) { desc = "RESP:"; }
-            if(labelSize == 2) { desc = "RESP RATE:"; }
-            if(labelSize == 3) { desc = "RESP. RATE:"; }
-        } else if(complicationType == 10) { // HR
-            var activityInfo = Activity.getActivityInfo();
-            var sample = activityInfo.currentHeartRate;
-            if(sample == null) {
-                if(labelSize == 1) { desc = "HR:"; }
-                if(labelSize == 2) { desc = "LAST HR:"; }
-                if(labelSize == 3) { desc = "LAST HR:"; }
-            } else {
-                if(labelSize == 1) { desc = "HR:"; }
-                if(labelSize == 2) { desc = "LIVE HR:"; }
-                if(labelSize == 3) { desc = "LIVE HR:"; }
+        if (desc == null) {
+            switch (complicationType) {
+                case 10:
+                    if(Activity.getActivityInfo().currentHeartRate == null) {
+                        var hrDesc = [ "HR:", "LAST HR:", "LAST HR:" ];
+                        return hrDesc[labelSize - 1];
+                    } else {
+                        var hrDesc = [ "HR:", "LIVE HR:", "LIVE HR:" ];
+                        return hrDesc[labelSize - 1];
+                    }
+                    break;
+                case 16:
+                    var name = Application.Properties.getValue("tzName1");
+                    return Lang.format("$1$:", [name.toUpper()]);
+                    break;
+                case 41:
+                    var name = Application.Properties.getValue("tzName2");
+                    return Lang.format("$1$:", [name.toUpper()]);
+                    break;
+                default:
+                    return "";
+                    break;
             }
-        } else if(complicationType == 11) { // Calories / day
-            if(labelSize == 1) { desc = "CAL:"; }
-            if(labelSize == 2) { desc = "CALORIES:"; }
-            if(labelSize == 3) { desc = "DLY CALORIES:"; }
-        } else if(complicationType == 12) { // Altitude (m)
-            if(labelSize == 1) { desc = "ALT:"; }
-            if(labelSize == 2) { desc = "ALTITUDE:"; }
-            if(labelSize == 3) { desc = "ALTITUDE M:"; }
-        } else if(complicationType == 13) { // Stress
-            if(labelSize == 1) { desc = "STRSS:"; }
-            if(labelSize == 2) { desc = "STRESS:"; }
-            if(labelSize == 3) { desc = "STRESS:"; }
-        } else if(complicationType == 14) { // Body battery
-            if(labelSize == 1) { desc = "B BAT:"; }
-            if(labelSize == 2) { desc = "BODY BATT:"; }
-            if(labelSize == 3) { desc = "BODY BATTERY:"; }
-        } else if(complicationType == 15) { // Altitude (ft)
-            if(labelSize == 1) { desc = "ALT:"; }
-            if(labelSize == 2) { desc = "ALTITUDE:"; }
-            if(labelSize == 3) { desc = "ALTITUDE FT:"; }
-        } else if(complicationType == 16) { // Alt TZ 1:
-            var name = Application.Properties.getValue("tzName1");
-            desc = Lang.format("$1$:", [name.toUpper()]);
-        } else if(complicationType == 17) { // Steps / day
-            if(labelSize == 1) { desc = "STEPS:"; }
-            if(labelSize == 2) { desc = "STEPS:"; }
-            if(labelSize == 3) { desc = "STEPS:"; }
-        } else if(complicationType == 18) { // Distance (m) / day
-            if(labelSize == 1) { desc = "DIST:"; }
-            if(labelSize == 2) { desc = "M TODAY:"; }
-            if(labelSize == 3) { desc = "METERS TODAY:"; }
-        } else if(complicationType == 19) { // Wheelchair pushes
-            desc = "PUSHES:";
-        } else if(complicationType == 20) { // Weather condition
-            desc = "";
-        } else if(complicationType == 21) { // Weekly run distance (km)
-            if(labelSize == 1) { desc = "W KM:"; }
-            if(labelSize == 2) { desc = "W RUN KM:"; }
-            if(labelSize == 3) { desc = "WEEK RUN KM:"; }
-        } else if(complicationType == 22) { // Weekly run distance (miles)
-            if(labelSize == 1) { desc = "W MI:"; }
-            if(labelSize == 2) { desc = "W RUN MI:"; }
-            if(labelSize == 3) { desc = "WEEK RUN MI:"; }
-        } else if(complicationType == 23) { // Weekly bike distance (km)
-            if(labelSize == 1) { desc = "W KM:"; }
-            if(labelSize == 2) { desc = "W BIKE KM:"; }
-            if(labelSize == 3) { desc = "WEEK BIKE KM:"; }
-        } else if(complicationType == 24) { // Weekly bike distance (miles)
-            if(labelSize == 1) { desc = "W MI:"; }
-            if(labelSize == 2) { desc = "W BIKE MI:"; }
-            if(labelSize == 3) { desc = "WEEK BIKE MI:"; }
-        } else if(complicationType == 25) { // Training status
-            desc = "TRAINING:";
-        } else if(complicationType == 26) { // Barometric pressure (hPA)
-            desc = "PRESSURE:";
-        } else if(complicationType == 27) { // Weight kg
-            if(labelSize == 1) { desc = "KG:"; }
-            if(labelSize == 2) { desc = "WEIGHT:"; }
-            if(labelSize == 3) { desc = "WEIGHT KG:"; }
-        } else if(complicationType == 28) { // Weight lbs
-            if(labelSize == 1) { desc = "LBS:"; }
-            if(labelSize == 2) { desc = "WEIGHT:"; }
-            if(labelSize == 3) { desc = "WEIGHT KG:"; }
-        } else if(complicationType == 29) { // Act Calories / day
-            if(labelSize == 1) { desc = "A CAL:"; }
-            if(labelSize == 2) { desc = "ACT. CAL:"; }
-            if(labelSize == 3) { desc = "ACT. CALORIES:"; }
-        } else if(complicationType == 30) { // Sea level pressure (hPA)
-            desc = "PRESSURE:";
-        } else if(complicationType == 31) { // Week number
-            desc = "WEEK:";
-        } else if(complicationType == 32) { // Weekly distance (km)
-            if(labelSize == 1) { desc = "W KM:"; }
-            if(labelSize == 2) { desc = "WEEK KM:"; }
-            if(labelSize == 3) { desc = "WEEK DIST KM:"; }
-        } else if(complicationType == 33) { // Weekly distance (miles)
-            if(labelSize == 1) { desc = "W MI:"; }
-            if(labelSize == 2) { desc = "WEEK MI:"; }
-            if(labelSize == 3) { desc = "WEEKLY MILES:"; }
-        } else if(complicationType == 34) { // Battery percentage
-            if(labelSize == 1) { desc = "BATT:"; }
-            if(labelSize == 2) { desc = "BATT %:"; }
-            if(labelSize == 3) { desc = "BATTERY %:"; }
-        } else if(complicationType == 35) { // Battery days remaining
-            if(labelSize == 1) { desc = "BATT D:"; }
-            if(labelSize == 2) { desc = "BATT DAYS:"; }
-            if(labelSize == 3) { desc = "BATTERY DAYS:"; }
-        } else if(complicationType == 36) { // Notification count
-            if(labelSize == 1) { desc = "NOTIFS:"; }
-            if(labelSize == 2) { desc = "NOTIFS:"; }
-            if(labelSize == 3) { desc = "NOTIFICATIONS:"; }
-        } else if(complicationType == 37) { // Solar intensity
-            if(labelSize == 1) { desc = "SUN:"; }
-            if(labelSize == 2) { desc = "SUN INT:"; }
-            if(labelSize == 3) { desc = "SUN INTENSITY:"; }
-        } else if(complicationType == 38) { // Sensor temp
-            if(labelSize == 1) { desc = "TEMP:"; }
-            if(labelSize == 2) { desc = "TEMP:"; }
-            if(labelSize == 3) { desc = "SENSOR TEMP:"; }
-        } else if(complicationType == 39) { // Sunrise
-            if(labelSize == 1) { desc = "DAWN:"; }
-            if(labelSize == 2) { desc = "SUNRISE:"; }
-            if(labelSize == 3) { desc = "SUNRISE:"; }
-        } else if(complicationType == 40) { // Sunset
-            if(labelSize == 1) { desc = "DUSK:"; }
-            if(labelSize == 2) { desc = "SUNSET:"; }
-            if(labelSize == 3) { desc = "SUNSET:"; }
-        } else if(complicationType == 41) { // Alt TZ 2:
-            var name = Application.Properties.getValue("tzName2");
-            desc = Lang.format("$1$:", [name.toUpper()]);
-        } else if(complicationType == 42) {
-            if(labelSize == 1) { desc = "ALARM:"; }
-            if(labelSize == 2) { desc = "ALARMS:"; }
-            if(labelSize == 3) { desc = "ALARMS:"; }
-        } else if(complicationType == 43) {
-            if(labelSize == 1) { desc = "HIGH:"; }
-            if(labelSize == 2) { desc = "DAILY HIGH:"; }
-            if(labelSize == 3) { desc = "DAILY HIGH:"; }
-        } else if(complicationType == 44) {
-            if(labelSize == 1) { desc = "LOW:"; }
-            if(labelSize == 2) { desc = "DAILY LOW:"; }
-            if(labelSize == 3) { desc = "DAILY LOW:"; }
-        } else if(complicationType == 53) {
-            if(labelSize == 1) { desc = "TEMP:"; }
-            if(labelSize == 2) { desc = "TEMP:"; }
-            if(labelSize == 3) { desc = "TEMPERATURE:"; }
-        } else if(complicationType == 54) {
-            if(labelSize == 1) { desc = "PRECIP:"; }
-            if(labelSize == 2) { desc = "PRECIP:"; }
-            if(labelSize == 3) { desc = "PRECIPITATION:"; }
+        } else {
+            return desc;
         }
-        return desc;
     }
 
     function getComplicationUnit(complicationType) as String {
-        var unit = "";
-        if(complicationType == 11) { // Calories / day
-            unit = "KCAL";
-        } else if(complicationType == 12) { // Altitude (m)
-            unit = "M";
-        } else if(complicationType == 15) { // Altitude (ft)
-            unit = "FT";
-        } else if(complicationType == 17) { // Steps / day
-            unit = "STEPS";
-        } else if(complicationType == 19) { // Wheelchair pushes
-            unit = "PUSHES";
-        } else if(complicationType == 29) { // Active calories / day
-            unit = "KCAL";
-        }
-        return unit;
+        /* The index 3 is associated with the unit in the global array */
+        return complicationToDesc[complicationType][unitDesc];
     }
 
     function join(array as Array<String>) as String {
