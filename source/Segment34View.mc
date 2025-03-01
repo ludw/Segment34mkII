@@ -1102,16 +1102,16 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function updateWeather() as Void {
-        if(Weather.getCurrentConditions != null) {
-            weatherCondition = Weather.getCurrentConditions();
-        }
-
         var now = Time.now().value();
         // Clear cached weather if older than 3 hours
         if(weatherCondition != null 
            and weatherCondition.observationTime != null 
            and (now - weatherCondition.observationTime.value() > 3600 * 3)) {
             weatherCondition = null;
+        }
+
+        if(Weather.getCurrentConditions != null) {
+            weatherCondition = Weather.getCurrentConditions();
         }
     }
 
@@ -2380,9 +2380,7 @@ class Segment34View extends WatchUi.WatchFace {
     function getPrecip() as String {
         var ret = "";
         if(weatherCondition != null and weatherCondition.precipitationChance != null) {
-            if(weatherCondition.precipitationChance > 0) {
-                ret = Lang.format("$1$%", [weatherCondition.precipitationChance.format("%d")]);
-            }
+            ret = Lang.format("$1$%", [weatherCondition.precipitationChance.format("%d")]);
         }
         return ret;
     }

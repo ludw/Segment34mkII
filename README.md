@@ -41,6 +41,10 @@ Lower priority:
 
 
 ## Change log
+2025-02-28 v1.20.7
+- Fixed issue with precipitation chance being 0
+- Tweaked caching for weather data
+
 2025-02-28 v1.20.6
 - Device support for Enduro added
 
