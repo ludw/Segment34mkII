@@ -41,7 +41,7 @@ Lower priority:
 
 
 ## Change log
-2025-02-28 v1.20.7
+2025-03-01 v1.20.7
 - Fixed issue with precipitation chance being 0
 - Tweaked caching for weather data
 
