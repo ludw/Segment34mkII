@@ -75,6 +75,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var propDateAlignment = null;
     private var propIcon1 = null;
     private var propIcon2 = null;
+    private var propHemisphere = null;
 
     function initialize() {
         WatchFace.initialize();
@@ -273,6 +274,7 @@ class Segment34View extends WatchUi.WatchFace {
         propDateAlignment = Application.Properties.getValue("dateAlignment");
         propIcon1 = Application.Properties.getValue("icon1");
         propIcon2 = Application.Properties.getValue("icon2");
+        propHemisphere = Application.Properties.getValue("hemisphere");
 
         var fontVariant = Application.Properties.getValue("smallFontVariant");
         if(fontVariant == 0) {
@@ -2520,7 +2522,6 @@ class Segment34View extends WatchUi.WatchFace {
         var lunar_cycle = 29.53;
         var phase = ((days_since_new_moon / lunar_cycle) * 100).toNumber() % 100;
         var into_cycle = (phase / 100.0) * lunar_cycle;
-        var hemisphere = Application.Properties.getValue("hemisphere");
 
         if(time.month == 5 and time.day == 4) {
             return "8"; // That's no moon!
@@ -2548,18 +2549,9 @@ class Segment34View extends WatchUi.WatchFace {
             }
 
         // If hemisphere is 1 (southern), invert the phase index
-       if (hemisphere == 1) {
-            switch (moonPhase.toString()) {
-                case "1": moonPhase = 7; break; // waxing crescent ↔ waning crescent
-                case "2": moonPhase = 6; break; // first quarter ↔ last quarter
-                case "3": moonPhase = 5; break; // waxing gibbous ↔ waning gibbous
-                case "4": moonPhase = 4; break; // full moon remains unchanged
-                case "5": moonPhase = 3; break; // waning gibbous ↔ waxing gibbous
-                case "6": moonPhase = 2; break; // last quarter ↔ first quarter
-                case "7": moonPhase = 1; break; // waning crescent ↔ waxing crescent
-                // "0" (new) and "4" (full) remain unchanged
-            }
-}
+        if (propHemisphere == 1) {
+            moonPhase = (8 - moonPhase) % 8;
+        }
 
         return moonPhase.toString();
 

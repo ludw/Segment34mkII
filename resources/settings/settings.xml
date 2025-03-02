@@ -127,7 +127,7 @@
                 <listEntry value="0">Northern</listEntry>
                 <listEntry value="1">Southern</listEntry>
             </settingConfig>
-        </setting>
+    </setting>
     <setting propertyKey="@Properties.hourFormat" title="Time format (12/24h)">
         <settingConfig type="list">
             <listEntry value="0">Auto - Use system setting</listEntry>
