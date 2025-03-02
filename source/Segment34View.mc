@@ -1027,6 +1027,36 @@ class Segment34View extends WatchUi.WatchFace {
                 if(amoled) { return 0xe3efd2; }
                 return 0xFFFFFF;
             }
+        } else if(themeToUse == 20) { // red on black
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x282828; }
+                return 0x555555;
+            } else if(colorName.equals("fieldLabel")) {
+                return 0xFF0000;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x282828; }
+                return 0x555555;
+            } else if(colorName.equals("timeDisplay")) {
+                return 0xFF0000;
+            } else if(colorName.equals("dateDisplay")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0x555555;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                return 0xFF0000;
+            } else if(colorName.equals("dawnDuskValue")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("notifications")) {
+                return 0x55AAFF;
+            } else if(colorName.equals("stress")) {
+                return 0xFF5555;
+            } else if(colorName.equals("bodybattery")) {
+                return 0x55AAFF;
+            } else if(colorName.equals("background")) {
+                return 0x000000;
+            } else if(colorName.equals("valueDisplay")) {
+                return 0xFFFFFF;
+            }
         }
 
         if(colorName.equals("lowBatt")) {
