@@ -43,6 +43,7 @@ Lower priority:
 ## Change log
 2025-03-02 v1.20.8
 - Setting for hemisphere so the moon can be the right way around, thanks to BrunoCQ
+- Separate theme during sleep hours, thanks to jonathanjsimon
 
 2025-03-01 v1.20.7
 - Fixed issue with precipitation chance being 0

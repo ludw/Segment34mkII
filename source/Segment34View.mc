@@ -115,11 +115,8 @@ class Segment34View extends WatchUi.WatchFace {
                 updateWeather();
             }
 
-            if (updateNightMode())
-            {
-                lastUpdate = null;
+            if (updateNightMode()){
                 previousEssentialsVis = null;
-                WatchUi.requestUpdate();
             }
         }
 
@@ -504,8 +501,7 @@ class Segment34View extends WatchUi.WatchFace {
         var amoled = canBurnIn;
 
         var themeToUse = propColorTheme;
-        if (propNightColorTheme != -1 && nightMode)
-        {
+        if (propNightColorTheme != -1 && nightMode) {
             themeToUse = propNightColorTheme;
         }
 
@@ -1567,8 +1563,7 @@ class Segment34View extends WatchUi.WatchFace {
         var wakeTime = profile.wakeTime;
         var sleepTime = profile.sleepTime;
 
-        if (wakeTime == null || sleepTime == null)
-        {
+        if (wakeTime == null || sleepTime == null) {
             nightMode = false;
             return (oldNightMode != nightMode);
         }
