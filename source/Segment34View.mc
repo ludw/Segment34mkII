@@ -2527,26 +2527,26 @@ class Segment34View extends WatchUi.WatchFace {
             return "8"; // That's no moon!
         }
 
-       var moonPhase;
-            if (into_cycle < 3) { // 2+1
-                moonPhase = 0;
-            } else if (into_cycle < 6) { // 4
-                moonPhase = 1;
-            } else if (into_cycle < 10) { // 4
-                moonPhase = 2;
-            } else if (into_cycle < 14) { // 4
-                moonPhase = 3;
-            } else if (into_cycle < 18) { // 4
-                moonPhase = 4;
-            } else if (into_cycle < 22) { // 4
-                moonPhase = 5;
-            } else if (into_cycle < 26) { // 4
-                moonPhase = 6;
-            } else if (into_cycle < 29) { // 3
-                moonPhase = 7;
-            } else {
-                moonPhase = 0;
-            }
+        var moonPhase;
+        if (into_cycle < 3) { // 2+1
+            moonPhase = 0;
+        } else if (into_cycle < 6) { // 4
+            moonPhase = 1;
+        } else if (into_cycle < 10) { // 4
+            moonPhase = 2;
+        } else if (into_cycle < 14) { // 4
+            moonPhase = 3;
+        } else if (into_cycle < 18) { // 4
+            moonPhase = 4;
+        } else if (into_cycle < 22) { // 4
+            moonPhase = 5;
+        } else if (into_cycle < 26) { // 4
+            moonPhase = 6;
+        } else if (into_cycle < 29) { // 3
+            moonPhase = 7;
+        } else {
+            moonPhase = 0;
+        }
 
         // If hemisphere is 1 (southern), invert the phase index
         if (propHemisphere == 1) {
