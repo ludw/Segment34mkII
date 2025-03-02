@@ -19,6 +19,7 @@ enum {
     labelFieldLabel,
     labelTimeBg,
     labelTimeDisplay,
+    labelTimeDisplayDim,
     labelDateDisplay,
     labelDateDisplayDim,
     labelDawnDuskLabel,
@@ -40,59 +41,59 @@ enum {
     Then at the index based on the color name (which is now an enum)
 */
 const labelToColor = [
- /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
- /*  [0] Yellow on turquoise MIP */      [ 0x005555, 0x55AAAA,   0x005555, 0xFFFF00,    0xFFFF00,    0xa98753,       0x005555,      0xAAAAAA,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [0] Yellow on turquoise AMOLED */   [ 0x0e333c, 0x55AAAA,   0x0d333c, 0xfbcb77,    0xfbcb77,    0xa98753,       0x005555,      0xFFFFFF,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [1] Hot pink            MIP */      [ 0x005555, 0xAA55AA,   0x005555, 0xFF55AA,    0xFFFFFF,    0xa95399,       0xAA55AA,      0xAAAAAA,      0xFF55AA,      0xFF55AA, 0x00FFAA,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [1] Hot pink            AMOLED */   [ 0x0e333c, 0xAA55AA,   0x0f3b46, 0xf988f2,    0xFFFFFF,    0xa95399,       0xAA55AA,      0xFFFFFF,      0xFF55AA,      0xFF55AA, 0x00FFAA,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [2] Blueish green       MIP */      [ 0x0055AA, 0x55AAAA,   0x0055AA, 0x00FFFF,    0x00FFFF,    0x5ca28f,       0x005555,      0xAAAAAA,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [2] Blueish green       AMOLED */   [ 0x0f2246, 0x55AAAA,   0x0f2246, 0x89efd2,    0x89efd2,    0x5ca28f,       0x005555,      0xFFFFFF,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [3] Very green          MIP */      [ 0x005500, 0x00AA55,   0x005500, 0x00FF00,    0x00FF00,    0x5ca28f,       0x00AA55,      0xAAAAAA,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [3] Very green          AMOLED */   [ 0x152b19, 0x00AA55,   0x152b19, 0x96e0ac,    0x96e0ac,    0x5ca28f,       0x00AA55,      0xFFFFFF,      0x00AAFF,      0xffc884, 0x59b9fe,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, timeDisplayDim, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
+ /*  [0] Yellow on turquoise MIP */      [ 0x005555, 0x55AAAA,   0x005555, 0xFFFF00,    0xFFFF00,       0xFFFF00,    0xa98753,       0x005555,      0xAAAAAA,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [0] Yellow on turquoise AMOLED */   [ 0x0e333c, 0x55AAAA,   0x0d333c, 0xfbcb77,    0xfbcb77,       0xfbcb77,    0xa98753,       0x005555,      0xFFFFFF,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [1] Hot pink            MIP */      [ 0x005555, 0xAA55AA,   0x005555, 0xFF55AA,    0xFF55AA,       0xFFFFFF,    0xa95399,       0xAA55AA,      0xAAAAAA,      0xFF55AA,      0xFF55AA, 0x00FFAA,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [1] Hot pink            AMOLED */   [ 0x0e333c, 0xAA55AA,   0x0f3b46, 0xf988f2,    0xf988f2,       0xFFFFFF,    0xa95399,       0xAA55AA,      0xFFFFFF,      0xFF55AA,      0xFF55AA, 0x00FFAA,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [2] Blueish green       MIP */      [ 0x0055AA, 0x55AAAA,   0x0055AA, 0x00FFFF,    0x00FFFF,       0x00FFFF,    0x5ca28f,       0x005555,      0xAAAAAA,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [2] Blueish green       AMOLED */   [ 0x0f2246, 0x55AAAA,   0x0f2246, 0x89efd2,    0x89efd2,       0x89efd2,    0x5ca28f,       0x005555,      0xFFFFFF,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [3] Very green          MIP */      [ 0x005500, 0x00AA55,   0x005500, 0x00FF00,    0x00FF00,       0x00FF00,    0x5ca28f,       0x00AA55,      0xAAAAAA,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [3] Very green          AMOLED */   [ 0x152b19, 0x00AA55,   0x152b19, 0x96e0ac,    0x96e0ac,       0x96e0ac,    0x5ca28f,       0x00AA55,      0xFFFFFF,      0x00AAFF,      0xffc884, 0x59b9fe,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
 
- /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
- /*  [4] White on turquoise  MIP */      [ 0x005555, 0x55AAAA,   0x005555, 0xFFFFFF,    0xFFFFFF,    0x114a5a,       0x005555,      0xAAAAAA,      0xAAAAAA,      0xFFAA55, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [4] White on turquoise  AMOLED */   [ 0x0e333c, 0x55AAAA,   0x0d333c, 0xFFFFFF,    0xFFFFFF,    0x114a5a,       0x005555,      0xFFFFFF,      0xAAAAAA,      0xFFAA55, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [5] Orange              MIP */      [ 0x5500AA, 0xFFAAAA,   0x5500AA, 0xFF5500,    0xFFAAAA,    0xaa6e56,       0xFFAAAA,      0xAAAAAA,      0xFFFFFF,      0xFF5555, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [5] Orange              AMOLED */   [ 0x1b263d, 0xFFAAAA,   0x1b263d, 0xff9161,    0xffb383,    0xaa6e56,       0xFFAAAA,      0xFFFFFF,      0xFFFFFF,      0xFF5555, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [6] Red & White         MIP */      [ 0xAA0000, 0xFF0000,   0xAA0000, 0xFFFFFF,    0xFFFFFF,    0xAA0000,       0xAA0000,      0xAAAAAA,      0xFF0000,      0xAA0000, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [6] Red & White         AMOLED */   [ 0x550000, 0xFF0000,   0x550000, 0xffffff,    0xffffff,    0xAA0000,       0xAA0000,      0xFFFFFF,      0xFF0000,      0xAA0000, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [7] White on Blue       MIP */      [ 0x0055AA, 0x0055AA,   0x0055AA, 0xFFFFFF,    0xFFFFFF,    0x0055AA,       0x0055AA,      0xAAAAAA,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [7] White on Blue       AMOLED */   [ 0x0b2051, 0x0055AA,   0x0b2051, 0xffffff,    0xffffff,    0x0055AA,       0x0055AA,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, timeDisplayDim, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
+ /*  [4] White on turquoise  MIP */      [ 0x005555, 0x55AAAA,   0x005555, 0xFFFFFF,    0xFFFFFF,       0xFFFFFF,    0x114a5a,       0x005555,      0xAAAAAA,      0xAAAAAA,      0xFFAA55, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [4] White on turquoise  AMOLED */   [ 0x0e333c, 0x55AAAA,   0x0d333c, 0xFFFFFF,    0xFFFFFF,       0xFFFFFF,    0x114a5a,       0x005555,      0xFFFFFF,      0xAAAAAA,      0xFFAA55, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [5] Orange              MIP */      [ 0x5500AA, 0xFFAAAA,   0x5500AA, 0xFF5500,    0xFF5500,       0xFFAAAA,    0xaa6e56,       0xFFAAAA,      0xAAAAAA,      0xFFFFFF,      0xFF5555, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [5] Orange              AMOLED */   [ 0x1b263d, 0xFFAAAA,   0x1b263d, 0xff9161,    0xff9161,       0xffb383,    0xaa6e56,       0xFFAAAA,      0xFFFFFF,      0xFFFFFF,      0xFF5555, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [6] Red & White         MIP */      [ 0xAA0000, 0xFF0000,   0xAA0000, 0xFFFFFF,    0xFFFFFF,       0xFFFFFF,    0xAA0000,       0xAA0000,      0xAAAAAA,      0xFF0000,      0xAA0000, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [6] Red & White         AMOLED */   [ 0x550000, 0xFF0000,   0x550000, 0xffffff,    0xffffff,       0xffffff,    0xAA0000,       0xAA0000,      0xFFFFFF,      0xFF0000,      0xAA0000, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [7] White on Blue       MIP */      [ 0x0055AA, 0x0055AA,   0x0055AA, 0xFFFFFF,    0xFFFFFF,       0xFFFFFF,    0x0055AA,       0x0055AA,      0xAAAAAA,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [7] White on Blue       AMOLED */   [ 0x0b2051, 0x0055AA,   0x0b2051, 0xffffff,    0xffffff,       0xffffff,    0x0055AA,       0x0055AA,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
 
- /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
- /*  [8] Yellow on Blue      MIP */      [ 0x0055AA, 0x0055AA,   0x0055AA, 0xFFFF00,    0xFFFF00,    0xa98753,       0x0055AA,      0xAAAAAA,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [8] Yellow on Blue      AMOLED */   [ 0x0b2051, 0x0055AA,   0x0b2051, 0xfbcb77,    0xfbcb77,    0xa98753,       0x0055AA,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [9] White & Orange      MIP */      [ 0xaa5500, 0xFF5500,   0xaa5500, 0xFFFFFF,    0xFFFFFF,    0xAA5500,       0xFF5500,      0xAAAAAA,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /*  [9] White & Orange      AMOLED */   [ 0x58250b, 0xFF5500,   0x7d3f01, 0xffffff,    0xffffff,    0xAA5500,       0xFF5500,      0xFFFFFF,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /* [10] Blue                MIP */      [ 0x555555, 0x0055AA,   0x000055, 0x0055AA,    0xFFFFFF,    0x0055AA,       0x0055AA,      0xAAAAAA,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /* [10] Blue                AMOLED */   [ 0x191b33, 0x0055AA,   0x191b33, 0x3495d4,    0xffffff,    0x0055AA,       0x0055AA,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /* [11] Orange              MIP */      [ 0x555555, 0xFFAA00,   0x555555, 0xFFAA00,    0xFFFFFF,    0x555555,       0xFFAA00,      0xAAAAAA,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
- /* [11] Orange              AMOLED */   [ 0x333333, 0xFFAA00,   0x333333, 0xff7600,    0xffffff,    0x555555,       0xFFAA00,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, timeDisplayDim, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
+ /*  [8] Yellow on Blue      MIP */      [ 0x0055AA, 0x0055AA,   0x0055AA, 0xFFFF00,    0xFFFF00,       0xFFFF00,    0xa98753,       0x0055AA,      0xAAAAAA,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [8] Yellow on Blue      AMOLED */   [ 0x0b2051, 0x0055AA,   0x0b2051, 0xfbcb77,    0xfbcb77,       0xfbcb77,    0xa98753,       0x0055AA,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [9] White & Orange      MIP */      [ 0xaa5500, 0xFF5500,   0xaa5500, 0xFFFFFF,    0xFFFFFF,       0xFFFFFF,    0xAA5500,       0xFF5500,      0xAAAAAA,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /*  [9] White & Orange      AMOLED */   [ 0x58250b, 0xFF5500,   0x7d3f01, 0xffffff,    0xffffff,       0xffffff,    0xAA5500,       0xFF5500,      0xFFFFFF,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [10] Blue                MIP */      [ 0x555555, 0x0055AA,   0x000055, 0x0055AA,    0x0055AA,       0xFFFFFF,    0x0055AA,       0x0055AA,      0xAAAAAA,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [10] Blue                AMOLED */   [ 0x191b33, 0x0055AA,   0x191b33, 0x3495d4,    0x3495d4,       0xffffff,    0x0055AA,       0x0055AA,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [11] Orange              MIP */      [ 0x555555, 0xFFAA00,   0x555555, 0xFFAA00,    0xFFAA00,       0xFFFFFF,    0x555555,       0xFFAA00,      0xAAAAAA,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [11] Orange              AMOLED */   [ 0x333333, 0xFFAA00,   0x333333, 0xff7600,    0xff7600,       0xffffff,    0x555555,       0xFFAA00,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
 
- /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
- /* [12] White on black      MIP */      [ 0x555555, 0xFFFFFF,   0x555555, 0xFFFFFF,    0xFFFFFF,    0x555555,       0xFFFFFF,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   0xFFFFFF,                 Graphics.COLOR_WHITE, 0xFF0000 ],
- /* [12] White on black      AMOLED */   [ 0x333333, 0xFFFFFF,   0x333333, 0xFFFFFF,    0xFFFFFF,    0x555555,       0xFFFFFF,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   0xFFFFFF,                 Graphics.COLOR_WHITE, 0xFF0000 ],
- /* [13] Black on White      MIP */      [ 0xAAAAAA, 0x000000,   0xAAAAAA, 0x000000,    0x000000,    0x555555,       0x000000,      0x555555,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
- /* [13] Black on White      AMOLED */   [ 0xCCCCCC, 0x000000,   0xCCCCCC, 0x000000,    0x000000,    0x555555,       0x000000,      0x000000,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
- /* [14] Red on White        MIP */      [ 0xAAAAAA, 0xAA0000,   0xAAAAAA, 0xAA0000,    0x000000,    0x555555,       0xAA0000,      0x555555,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
- /* [14] Red on White        AMOLED */   [ 0xCCCCCC, 0xAA0000,   0xCCCCCC, 0xAA0000,    0x000000,    0x555555,       0xAA0000,      0x000000,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
- /* [15] Blue on White       MIP */      [ 0xAAAAAA, 0x0000AA,   0xAAAAAA, 0x0000AA,    0x000000,    0x555555,       0x0000AA,      0x555555,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
- /* [15] Blue on White       AMOLED */   [ 0xCCCCCC, 0x0000AA,   0xCCCCCC, 0x0000AA,    0x000000,    0x555555,       0x0000AA,      0x000000,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, timeDisplayDim, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
+ /* [12] White on black      MIP */      [ 0x555555, 0xFFFFFF,   0x555555, 0xFFFFFF,    0xFFFFFF,       0xFFFFFF,    0x555555,       0xFFFFFF,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   0xFFFFFF,                 Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [12] White on black      AMOLED */   [ 0x333333, 0xFFFFFF,   0x333333, 0xFFFFFF,    0xAAAAAA,       0xFFFFFF,    0x555555,       0xFFFFFF,      0xFFFFFF,      0x55AAFF,      0xFFAA00, 0x55AAFF,    0x000000,   0xFFFFFF,                 Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [13] Black on White      MIP */      [ 0xAAAAAA, 0x000000,   0xAAAAAA, 0x000000,    0x000000,       0x000000,    0x555555,       0x000000,      0x555555,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [13] Black on White      AMOLED */   [ 0xCCCCCC, 0x000000,   0xCCCCCC, 0x000000,    0xAAAAAA,       0x000000,    0x555555,       0x000000,      0x000000,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [14] Red on White        MIP */      [ 0xAAAAAA, 0xAA0000,   0xAAAAAA, 0xAA0000,    0xAA0000,       0x000000,    0x555555,       0xAA0000,      0x555555,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [14] Red on White        AMOLED */   [ 0xCCCCCC, 0xAA0000,   0xCCCCCC, 0xAA0000,    0xAA5555,       0x000000,    0x555555,       0xAA0000,      0x000000,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [15] Blue on White       MIP */      [ 0xAAAAAA, 0x0000AA,   0xAAAAAA, 0x0000AA,    0x0000AA,       0x000000,    0x555555,       0x0000AA,      0x555555,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [15] Blue on White       AMOLED */   [ 0xCCCCCC, 0x0000AA,   0xCCCCCC, 0x0000AA,    0x5555AA,       0x000000,    0x555555,       0x0000AA,      0x000000,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
 
- /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
- /* [16] Green on White      MIP */      [ 0xAAAAAA, 0x00AA00,   0xAAAAAA, 0x00AA00,    0x000000,    0x555555,       0x00AA00,      0x555555,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
- /* [16] Green on White      AMOLED */   [ 0xCCCCCC, 0x00AA00,   0xCCCCCC, 0x00AA00,    0x000000,    0x555555,       0x00AA00,      0x000000,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
- /* [17] Orange on White     MIP */      [ 0xAAAAAA, 0x555555,   0xAAAAAA, 0xFF5500,    0x000000,    0x555555,       0x555555,      0x555555,      0x000000,      0xFF5500, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
- /* [17] Orange on White     AMOLED */   [ 0xCCCCCC, 0x555555,   0xCCCCCC, 0xFF5500,    0x000000,    0x555555,       0x555555,      0x000000,      0x000000,      0xFF5500, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
- /* [18] Green & Orange      MIP */      [ 0x005500, 0xFF5500,   0x005500, 0xFF5500,    0x00FF00,    0x5ca28f,       0xFF5500,      0xAAAAAA,      0x55FF55,      0xFF5500, 0x00AAFF,    0x000000,   0x00FF00,                 Graphics.COLOR_WHITE, 0xFF0000 ],
- /* [18] Green & Orange      AMOLED */   [ 0x152b19, 0xFF5500,   0x152b19, 0xff7600,    0x55FF55,    0x5ca28f,       0xFF5500,      0xFFFFFF,      0x55FF55,      0xff7600, 0x59b9fe,    0x000000,   0x55FF55,                 Graphics.COLOR_WHITE, 0xFF0000 ],
- /* [19] Green Camo          MIP */      [ 0x005500, 0xAAAA00,   0x005500, 0xAAAA55,    0xAAAA55,    0x546a36,       0xAAAA00,      0x00FF00,      0x00FF55,      0xAAAA55, 0x00FF00,    0x000000,   0x00FF00,                 0xFFFFFF,             0xFF0000 ],
- /* [19] Green Camo          AMOLED */   [ 0x152b19, 0xa8aa6c,   0x152b19, 0x889f4a,    0x889f4a,    0x546a36,       0xa8aa6c,      0x55AA55,      0x00FF55,      0x889f4a, 0x55AA55,    0x000000,   0x55AA55,                 0xe3efd2,             0xFF0000 ],
+ /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, timeDisplayDim, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
+ /* [16] Green on White      MIP */      [ 0xAAAAAA, 0x00AA00,   0xAAAAAA, 0x00AA00,    0x00AA00,       0x000000,    0x555555,       0x00AA00,      0x555555,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [16] Green on White      AMOLED */   [ 0xCCCCCC, 0x00AA00,   0xCCCCCC, 0x00AA00,    0x55AA55,       0x000000,    0x555555,       0x00AA00,      0x000000,      0x000000,      0xFFAA00, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [17] Orange on White     MIP */      [ 0xAAAAAA, 0x555555,   0xAAAAAA, 0xFF5500,    0xFF5500,       0x000000,    0x555555,       0x555555,      0x555555,      0x000000,      0xFF5500, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [17] Orange on White     AMOLED */   [ 0xCCCCCC, 0x555555,   0xCCCCCC, 0xFF5500,    0xff7600,       0x000000,    0x555555,       0x555555,      0x000000,      0x000000,      0xFF5500, 0x55AAFF,    0xFFFFFF,   0x000000,                 0x555555,             0xFF0000 ],
+ /* [18] Green & Orange      MIP */      [ 0x005500, 0xFF5500,   0x005500, 0xFF5500,    0xFF5500,       0x00FF00,    0x5ca28f,       0xFF5500,      0xAAAAAA,      0x55FF55,      0xFF5500, 0x00AAFF,    0x000000,   0x00FF00,                 Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [18] Green & Orange      AMOLED */   [ 0x152b19, 0xFF5500,   0x152b19, 0xff7600,    0xff7600,       0x55FF55,    0x5ca28f,       0xFF5500,      0xFFFFFF,      0x55FF55,      0xff7600, 0x59b9fe,    0x000000,   0x55FF55,                 Graphics.COLOR_WHITE, 0xFF0000 ],
+ /* [19] Green Camo          MIP */      [ 0x005500, 0xAAAA00,   0x005500, 0xAAAA55,    0xAAAA55,       0xAAAA55,    0x546a36,       0xAAAA00,      0x00FF00,      0x00FF55,      0xAAAA55, 0x00FF00,    0x000000,   0x00FF00,                 0xFFFFFF,             0xFF0000 ],
+ /* [19] Green Camo          AMOLED */   [ 0x152b19, 0xa8aa6c,   0x152b19, 0x889f4a,    0x889f4a,       0x889f4a,    0x546a36,       0xa8aa6c,      0x55AA55,      0x00FF55,      0x889f4a, 0x55AA55,    0x000000,   0x55AA55,                 0xe3efd2,             0xFF0000 ],
 
- /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
- /* [20] Red on Black        MIP */      [ 0x555555, 0xFF0000,   0x555555, 0xFF0000,    0xFFFFFF,    0x555555,       0xFF0000,      0xFFFFFF,      0x55AAFF,      0xFF5555, 0x55AAFF,    0x000000,   0xFFFFFF,                 0xFFFFFF,             0xFF0000 ],
- /* [20] Red on Black        AMOLED */   [ 0x282828, 0xFF0000,   0x282828, 0xFF0000,    0xFFFFFF,    0x555555,       0xFF0000,      0xFFFFFF,      0x55AAFF,      0xFF5555, 0x55AAFF,    0x000000,   0xFFFFFF,                 0xe3efd2,             0xFF0000 ]
+ /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, timeDisplayDim, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
+ /* [20] Red on Black        MIP */      [ 0x555555, 0xFF0000,   0x555555, 0xFF0000,    0xFF0000,       0xFFFFFF,    0x555555,       0xFF0000,      0xFFFFFF,      0x55AAFF,      0xFF5555, 0x55AAFF,    0x000000,   0xFFFFFF,                 0xFFFFFF,             0xFF0000 ],
+ /* [20] Red on Black        AMOLED */   [ 0x282828, 0xFF0000,   0x282828, 0xFF0000,    0xFF0000,       0xFFFFFF,    0x555555,       0xFF0000,      0xFFFFFF,      0x55AAFF,      0xFF5555, 0x55AAFF,    0x000000,   0xFFFFFF,                 0xe3efd2,             0xFF0000 ],
 ];
 
 /* Indexes for the following array */
@@ -388,9 +389,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function cacheDrawables(dc) as Void {
-        /* Update all screen data */
-        screenHeight = dc.getHeight();
-
+        updateScreenData(dc);
 
         dbackground = View.findDrawableById("background") as Drawable;
         dSecondsLabel = View.findDrawableById("SecondsLabel") as Text;
@@ -424,20 +423,19 @@ class Segment34View extends WatchUi.WatchFace {
         dIcon1 = View.findDrawableById("Icon1") as Text;
         dIcon2 = View.findDrawableById("Icon2") as Text;
 
-        /* Setting index */
-        if      (screenHeight == 240) { screenIndex = screenHeight240; }
-        else if (screenHeight == 260) { screenIndex = screenHeight260; }
-        else if (screenHeight == 280) { screenIndex = screenHeight280; }
-        else if (screenHeight == 360) { screenIndex = screenHeight360; }
-        else if (screenHeight == 390) { screenIndex = screenHeight390; }
-        else if (screenHeight == 416) { screenIndex = screenHeight416; }
-        else if (screenHeight == 454) { screenIndex = screenHeight454; }
-        else                          { screenIndex = screenHeightDefault; }
+        /* Setting up fonts */
+        var font = ledSmallFont as Application.ResourceReferenceType;
 
-        clipX      = screenClipValues[screenIndex][0];
-        clipY      = screenClipValues[screenIndex][1];
-        clipWidth  = screenClipValues[screenIndex][2];
-        clipHeight = screenClipValues[screenIndex][3];
+        if(screenHeight > 280) {
+            font = ledMidFont;
+            dAodDateLabel.setFont(font);
+        }
+
+        dDateLabel.setFont    (font);
+        dSecondsLabel.setFont (font);
+        dNotifLabel.setFont   (font);
+        dWeatherLabel1.setFont(font);
+        dWeatherLabel2.setFont(font);
     }
 
     hidden function cacheProps() as Void {
@@ -471,19 +469,6 @@ class Segment34View extends WatchUi.WatchFace {
             ledMidFont = Application.loadResource( Rez.Fonts.id_led_lines );
         }
 
-        /* Setting up fonts */
-        var font = ledSmallFont;
-
-        if(screenHeight > 280) {
-            font = ledMidFont;
-            dAodDateLabel.setFont(ledMidFont);
-        }
-
-        dDateLabel.setFont(font);
-        dSecondsLabel.setFont(font);
-        dNotifLabel.setFont(font);
-        dWeatherLabel1.setFont(font);
-        dWeatherLabel2.setFont(font);
     }
 
     hidden function toggleNonEssentials(dc){
@@ -598,6 +583,26 @@ class Segment34View extends WatchUi.WatchFace {
         previousEssentialsVis = awake;
     }
 
+    hidden function updateScreenData(dc) as Void {
+        /* Update all screen data */
+        screenHeight = dc.getHeight();
+
+        /* Setting index */
+        if      (screenHeight == 240) { screenIndex = screenHeight240; }
+        else if (screenHeight == 260) { screenIndex = screenHeight260; }
+        else if (screenHeight == 280) { screenIndex = screenHeight280; }
+        else if (screenHeight == 360) { screenIndex = screenHeight360; }
+        else if (screenHeight == 390) { screenIndex = screenHeight390; }
+        else if (screenHeight == 416) { screenIndex = screenHeight416; }
+        else if (screenHeight == 454) { screenIndex = screenHeight454; }
+        else                          { screenIndex = screenHeightDefault; }
+
+        clipX      = screenClipValues[screenIndex][0];
+        clipY      = screenClipValues[screenIndex][1];
+        clipWidth  = screenClipValues[screenIndex][2];
+        clipHeight = screenClipValues[screenIndex][3];
+    }
+
     hidden function setVisibility2(setting as Number, label as Text, bg as Text) {
         var hideInAOD = (!isSleeping or !canBurnIn);
         if(setting == -2) {
@@ -638,8 +643,8 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     /* Screen notification alignement :    240px, 260px 280px, 360px, 390px, 416px, 454px, Default */
-    private const screenNotifLeft  = [ 10,    16,   25,    15,    17,    31,    23,    0 ];
-    private const screenNotifAfter = [ 195,   210,  220,   297,   317,   331,   379,   0 ];
+    private const screenNotifLeft  =     [ 10,    16,   25,    15,    17,    31,    23,    0 ];
+    private const screenNotifAfter =     [ 195,   210,  220,   297,   317,   331,   379,   0 ];
  
     hidden function alignNotification(setting as Number) {
         var x = 0;
@@ -669,9 +674,8 @@ class Segment34View extends WatchUi.WatchFace {
 
         /* Handle special cases */
         if(colorName == labelTimeDisplay && isSleeping && amoled) {
-            /* Use color offset   12,       13,       14,       15,       16,       17 */
-            var arraySleeping = [ 0xAAAAAA, 0xAAAAAA, 0xAA5555, 0x5555AA, 0x55AA55, 0xff7600 ];
-            color = arraySleeping[themeToUse - 12];
+            /* Get the dimmed version instead */
+            color = labelToColor[2*themeToUse + amoled][labelTimeDisplayDim];
         }
 
         return color;
