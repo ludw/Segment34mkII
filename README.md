@@ -41,7 +41,7 @@ Lower priority:
 
 
 ## Change log
-2025-03-02 v1.20.8
+2025-03-02 v1.21.0
 - Setting for hemisphere so the moon can be the right way around, thanks to BrunoCQ
 - Separate theme during sleep hours, thanks to jonathanjsimon
 
