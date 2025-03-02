@@ -30,7 +30,7 @@ enum {
     labelValueDisplay,
     labelMoonDisplay,
     labelLowBatt
-};
+}
 
 /*
     For each theme, one MIP profile, one amoled profile.
@@ -39,7 +39,7 @@ enum {
      - Amoled --> 2*propColorTheme + 1
     Then at the index based on the color name (which is now an enum)
 */
-const var labelToColor = [
+const labelToColor = [
  /*  [n] propColorTheme,                    fieldBg, fieldLabel, timeBg,   timeDisplay, dateDisplay, dateDisplayDim, dawnDuskLabel, dawnDuskValue, notifications, stress,   bodybattery, background, valueDisplay,             moonDisplay,          lowBatt */
  /*  [0] Yellow on turquoise MIP */      [ 0x005555, 0x55AAAA,   0x005555, 0xFFFF00,    0xFFFF00,    0xa98753,       0x005555,      0xAAAAAA,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
  /*  [0] Yellow on turquoise AMOLED */   [ 0x0e333c, 0x55AAAA,   0x0d333c, 0xfbcb77,    0xfbcb77,    0xa98753,       0x005555,      0xFFFFFF,      0x00AAFF,      0xFFAA00, 0x00AAFF,    0x000000,   Graphics.COLOR_WHITE,     Graphics.COLOR_WHITE, 0xFF0000 ],
@@ -101,9 +101,9 @@ enum {
     midDesc,
     longDesc,
     unitDesc
-};
+}
 
-const var complicationToDesc = [
+const complicationToDesc = [
     /* short,     mid,           long,              unit     */
     ["W MIN:",    "WEEK MIN:",   "WEEK ACT MIN:",   ""       ], //  [0] Active min / week
     ["D MIN:",    "MIN TODAY:",  "DAY ACT MIN:",    ""       ], //  [1] Active min / day
@@ -172,7 +172,7 @@ enum {
     screenHeight416,    /* 416px */
     screenHeight454,    /* 454px */
     screenHeightDefault
-};
+}
 
 class Segment34View extends WatchUi.WatchFace {
 
@@ -323,15 +323,15 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    private var screenClipValues = [
+    private const screenClipValues = [
         /* size         clipX, clipY, clipWidth, clipHeight */
         /* 240px */   [   205,   157,        24,        20 ],
         /* 260px */   [   220,   162,        24,        20 ],
         /* 280px */   [   235,   170,        24,        20 ],
-        /* 360px */   [     0,     0,         0,         0 ]
-        /* 390px */   [     0,     0,         0,         0 ]
-        /* 416px */   [     0,     0,         0,         0 ]
-        /* 454px */   [     0,     0,         0,         0 ]
+        /* 360px */   [     0,     0,         0,         0 ],
+        /* 390px */   [     0,     0,         0,         0 ],
+        /* 416px */   [     0,     0,         0,         0 ],
+        /* 454px */   [     0,     0,         0,         0 ],
         /* Default */ [     0,     0,         0,         0 ]
     ];
 
@@ -623,7 +623,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     /* Screen alignement values :           240px, 260px 280px, 360px, 390px, 416px, 454px, Default */
-    private const var screenAlignValues = [ 10,    16,   25,    15,    17,    31,    23,    0 ];
+    private const screenAlignValues = [ 10,    16,   25,    15,    17,    31,    23,    0 ];
 
     hidden function setAlignment(setting as Number, label as Text, offset as Number) {
         var x = screenAlignValues[screenIndex];
@@ -638,8 +638,8 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     /* Screen notification alignement :    240px, 260px 280px, 360px, 390px, 416px, 454px, Default */
-    private const var screenNotifLeft  = [ 10,    16,   25,    15,    17,    31,    23,    0 ];
-    private const var screenNotifAfter = [ 195,   210,  220,   297,   317,   331,   379,   0 ];
+    private const screenNotifLeft  = [ 10,    16,   25,    15,    17,    31,    23,    0 ];
+    private const screenNotifAfter = [ 195,   210,  220,   297,   317,   331,   379,   0 ];
  
     hidden function alignNotification(setting as Number) {
         var x = 0;
@@ -1237,7 +1237,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    private var stressAndBodyBatteryMeasures = [
+    private const stressAndBodyBatteryMeasures = [
         /* screenHeight, barTop, fromEdge, barWidth, barHeight, bbAdjustement, fromEdgeSleeping */
         /* 240px */    [  72,     5,       3,        80,        1,             5 ],
         /* 260px */    [  77,    10,       3,        80,        1,            10 ],
@@ -1247,18 +1247,18 @@ class Segment34View extends WatchUi.WatchFace {
         /* 416px */    [ 122,    15,       4,        125,       0,            10 ],
         /* 454px */    [ 146,    12,       4,        145,       0,             8 ],
         /* Default */  [ 110,     8,       4,        125,       0,             8 ]
-    ];
+    ] as Array<Array<Number>>;
 
     hidden function drawStressAndBodyBattery(dc) as Void {
         var showStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery");
         if(!showStressAndBodyBattery) { return; }
 
         if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
-            var barTop =       stressAndBodyBatteryMeasures[screenIndex][0];
-            var fromEdge =     stressAndBodyBatteryMeasures[screenIndex][1];
-            var barWidth =     stressAndBodyBatteryMeasures[screenIndex][2];
-            var barHeight =    stressAndBodyBatteryMeasures[screenIndex][3];
-            var bbAdjustment = stressAndBodyBatteryMeasures[screenIndex][4];
+            var barTop =       stressAndBodyBatteryMeasures[screenIndex][0] as Number;
+            var fromEdge =     stressAndBodyBatteryMeasures[screenIndex][1] as Number;
+            var barWidth =     stressAndBodyBatteryMeasures[screenIndex][2] as Number;
+            var barHeight =    stressAndBodyBatteryMeasures[screenIndex][3] as Number;
+            var bbAdjustment = stressAndBodyBatteryMeasures[screenIndex][4] as Number;
 
             /* Taking data from the last column instead */
             if (isSleeping) {
@@ -1703,6 +1703,7 @@ class Segment34View extends WatchUi.WatchFace {
         var desc = complicationToDesc[complicationType][labelSize - 1];
 
         if (desc == null) {
+            var name = "";
             switch (complicationType) {
                 case 10:
                     if(Activity.getActivityInfo().currentHeartRate == null) {
@@ -1712,18 +1713,14 @@ class Segment34View extends WatchUi.WatchFace {
                         var hrDesc = [ "HR:", "LIVE HR:", "LIVE HR:" ];
                         return hrDesc[labelSize - 1];
                     }
-                    break;
                 case 16:
-                    var name = Application.Properties.getValue("tzName1");
+                    name = Application.Properties.getValue("tzName1");
                     return Lang.format("$1$:", [name.toUpper()]);
-                    break;
                 case 41:
-                    var name = Application.Properties.getValue("tzName2");
+                    name = Application.Properties.getValue("tzName2");
                     return Lang.format("$1$:", [name.toUpper()]);
-                    break;
                 default:
                     return "";
-                    break;
             }
         } else {
             return desc;
