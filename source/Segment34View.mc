@@ -183,6 +183,10 @@ class Segment34View extends WatchUi.WatchFace {
 
     private var screenHeight = 0;
     private var screenIndex = screenHeightDefault;
+    private var clipX = 0;
+    private var clipY = 0;
+    private var clipWidth = 0;
+    private var clipHeight = 0;
 
     private var previousEssentialsVis = null;
     private var batt = 0;
@@ -342,11 +346,6 @@ class Segment34View extends WatchUi.WatchFace {
         /* No clipping for big screens */
         if(screenHeight > 280) { return; }
 
-        var clipX      = screenClipValues[screenIndex][0];
-        var clipY      = screenClipValues[screenIndex][1];
-        var clipWidth  = screenClipValues[screenIndex][2];
-        var clipHeight = screenClipValues[screenIndex][3];
-
         dc.setClip(clipX, clipY, clipWidth, clipHeight);
         dc.setColor(getColor(labelBackground), getColor(labelBackground));
         dc.clear();
@@ -435,6 +434,10 @@ class Segment34View extends WatchUi.WatchFace {
         else if (screenHeight == 454) { screenIndex = screenHeight454; }
         else                          { screenIndex = screenHeightDefault; }
 
+        clipX      = screenClipValues[screenIndex][0];
+        clipY      = screenClipValues[screenIndex][1];
+        clipWidth  = screenClipValues[screenIndex][2];
+        clipHeight = screenClipValues[screenIndex][3];
     }
 
     hidden function cacheProps() as Void {
