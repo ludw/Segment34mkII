@@ -2165,7 +2165,43 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 54) { // Precipitation chance
             val = getPrecip();
             if(width == 3 and val.equals("100%")) { val = "100"; }
-        }
+        } else if(complicationType == 55) { //Next Sun Event
+	    var now = Time.now();
+            if(weatherCondition != null) {
+                var loc = weatherCondition.observationLocationPosition;
+                if(loc != null) {
+		    var todayMidnight = Time.today(); // Moment
+        	    var nowAsTimeSinceMidnight = now.subtract(todayMidnight) as Duration; // Duration
+		    var sunrise = Weather.getSunrise(loc, now);
+                    var sunset = Weather.getSunset(loc, now);
+                    var nextSunEvent = null;
+
+                    var sunriseDuration = (sunrise).subtract(todayMidnight) as Duration;
+		    var sunsetDuration = (sunset).subtract(todayMidnight) as Duration;
+                    
+	            if(sunriseDuration.greaterThan(sunsetDuration)) { // Sunrise is after midnight
+		    	if(nowAsTimeSinceMidnight.greaterThan(sunsetDuration) and nowAsTimeSinceMidnight.lessThan(sunriseDuration)){
+			   nextSunEvent = sunrise;
+			}else{
+			   nextSunEvent = sunset;
+			}
+	            } else {
+	            	if(nowAsTimeSinceMidnight.greaterThan(sunsetDuration) || nowAsTimeSinceMidnight.lessThan(sunriseDuration)){
+                           nextSunEvent = sunrise;
+                        }else{
+			   nextSunEvent = sunset;
+			}
+		    }
+		    var nextSunEventWithFormat = Time.Gregorian.info(nextSunEvent, Time.FORMAT_SHORT);
+                    var nextSunEventWithFormatHour = formatHour(nextSunEventWithFormat.hour);
+                    if(width < 5) {
+                        val = Lang.format("$1$$2$", [nextSunEventWithFormatHour.format("%02d"), nextSunEventWithFormat.min.format("%02d")]);
+                    } else {
+                        val = Lang.format("$1$:$2$", [nextSunEventWithFormatHour.format("%02d"), nextSunEventWithFormat.min.format("%02d")]);
+                    }
+                }
+            }	
+	}
 
         return val;
     }
@@ -2356,7 +2392,10 @@ class Segment34View extends WatchUi.WatchFace {
             if(labelSize == 1) { desc = "PRECIP:"; }
             if(labelSize == 2) { desc = "PRECIP:"; }
             if(labelSize == 3) { desc = "PRECIPITATION:"; }
-        }
+        }  else if(complicationType == 55) { // Next Sun Event
+            if(labelSize == 1) { desc = "SUN:"; }
+            if(labelSize == 2) { desc = "NEXT SUN:"; }
+            if(labelSize == 3) { desc = "NEXT SUN EVENT:"; }
         return desc;
     }
 
