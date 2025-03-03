@@ -94,6 +94,7 @@
                 <listEntry value="-2">Hidden</listEntry>
                 <listEntry value="39">Sunrise time</listEntry>
                 <listEntry value="40">Sunset time</listEntry>
+                <listEntry value="55">Next Sun Event time</listEntry>
                 <listEntry value="4">Floors climbed / day</listEntry>
                 <listEntry value="5">Meters climbed / day</listEntry>
                 <listEntry value="6">Time to Recovery (h)</listEntry>
@@ -125,6 +126,7 @@
                 <listEntry value="-2">Hidden</listEntry>
                 <listEntry value="39">Sunrise time</listEntry>
                 <listEntry value="40">Sunset time</listEntry>
+                <listEntry value="55">Next Sun Event time</listEntry>
                 <listEntry value="4">Floors climbed / day</listEntry>
                 <listEntry value="5">Meters climbed / day</listEntry>
                 <listEntry value="6">Time to Recovery (h)</listEntry>
@@ -373,8 +375,7 @@
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="13">Stress score</listEntry>
             <listEntry value="14">Body battery</listEntry>
-            <listEntry value="39">Sunrise time</listEntry>
-            <listEntry value="40">Sunset time</listEntry>
+            <listEntry value="55">Next Sun Event time</listEntry>
             <listEntry value="16">Alternative Timezone 1</listEntry>
             <listEntry value="41">Alternative Timezone 2</listEntry>
             <listEntry value="26">Barometric Pressure, raw</listEntry>
@@ -419,8 +420,7 @@
             <listEntry value="29">Active calories (kcal) / day</listEntry>
             <listEntry value="13">Stress score</listEntry>
             <listEntry value="14">Body battery</listEntry>
-            <listEntry value="39">Sunrise time</listEntry>
-            <listEntry value="40">Sunset time</listEntry>
+            <listEntry value="55">Next Sun Event time</listEntry>
             <listEntry value="16">Alternative Timezone 1</listEntry>
             <listEntry value="41">Alternative Timezone 2</listEntry>
             <listEntry value="27">Weight (kg)</listEntry>
@@ -467,6 +467,7 @@
             <listEntry value="14">Body battery</listEntry>
             <listEntry value="39">Sunrise time</listEntry>
             <listEntry value="40">Sunset time</listEntry>
+            <listEntry value="55">Next Sun Event time</listEntry>
             <listEntry value="16">Alternative Timezone 1</listEntry>
             <listEntry value="41">Alternative Timezone 2</listEntry>
             <listEntry value="26">Barometric Pressure, raw</listEntry>
