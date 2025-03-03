@@ -41,6 +41,9 @@ Lower priority:
 
 
 ## Change log
+2025-03-03 v1.21.2
+- Options for when to activate night theme
+
 2025-03-02 v1.21.1
 - Added red on black color theme
 

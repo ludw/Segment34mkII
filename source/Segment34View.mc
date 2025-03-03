@@ -61,6 +61,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     private var propColorTheme = null;
     private var propNightColorTheme = null;
+    private var propNightThemeActivation = null;
     private var propBatteryVariant = null;
     private var propShowSeconds = null;
     private var propLeftValueShows = null;
@@ -267,6 +268,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function cacheProps() as Void {
         propColorTheme = Application.Properties.getValue("colorTheme");
         propNightColorTheme = Application.Properties.getValue("nightColorTheme");
+        propNightThemeActivation = Application.Properties.getValue("nightThemeActivation");
         propBatteryVariant = Application.Properties.getValue("batteryVariant");
         propShowSeconds = Application.Properties.getValue("showSeconds");
         propAlwaysShowSeconds = Application.Properties.getValue("alwaysShowSeconds");
@@ -1584,26 +1586,52 @@ class Segment34View extends WatchUi.WatchFace {
             return (oldNightMode != nightMode);
         }
 
-        var profile = UserProfile.getProfile();
-        if ((profile has :wakeTime) == false || (profile has :sleepTime) == false) {
-            nightMode = false;
-            return (oldNightMode != nightMode);
-        }
-
-        var wakeTime = profile.wakeTime;
-        var sleepTime = profile.sleepTime;
-
-        if (wakeTime == null || sleepTime == null) {
-            nightMode = false;
-            return (oldNightMode != nightMode);
-        }
-
         var now = Time.now(); // Moment
         var todayMidnight = Time.today(); // Moment
         var nowAsTimeSinceMidnight = now.subtract(todayMidnight) as Duration; // Duration
 
-        nightMode = (nowAsTimeSinceMidnight.greaterThan(sleepTime) || nowAsTimeSinceMidnight.lessThan(wakeTime));
-        return (oldNightMode != nightMode);
+        if(propNightThemeActivation == 0 or propNightThemeActivation == 1) {
+            var profile = UserProfile.getProfile();
+            if ((profile has :wakeTime) == false || (profile has :sleepTime) == false) {
+                nightMode = false;
+                return (oldNightMode != nightMode);
+            }
+
+            var wakeTime = profile.wakeTime;
+            var sleepTime = profile.sleepTime;
+
+            if (wakeTime == null || sleepTime == null) {
+                nightMode = false;
+                return (oldNightMode != nightMode);
+            }
+
+            if(propNightThemeActivation == 0) {
+                nightMode = (nowAsTimeSinceMidnight.greaterThan(sleepTime) || nowAsTimeSinceMidnight.lessThan(wakeTime));
+                return (oldNightMode != nightMode);
+            } else { // Start two hours before sleep time
+                var twoHours = new Time.Duration(7200);
+                sleepTime = sleepTime.subtract(twoHours);
+                nightMode = (nowAsTimeSinceMidnight.greaterThan(sleepTime) || nowAsTimeSinceMidnight.lessThan(wakeTime));
+                return (oldNightMode != nightMode);
+            }
+        }
+
+        // From Sunset to Sunrise
+        if(weatherCondition != null) {
+            var loc = weatherCondition.observationLocationPosition;
+            if(loc != null) {
+                var sunset = (Weather.getSunset(loc, now)).subtract(todayMidnight) as Duration;
+                var sunrise = (Weather.getSunrise(loc, now)).subtract(todayMidnight) as Duration;
+                if(sunrise.greaterThan(sunset)) { // Sunrise is after midnight
+                    nightMode = (nowAsTimeSinceMidnight.greaterThan(sunset) and nowAsTimeSinceMidnight.lessThan(sunrise));
+                } else {
+                    nightMode = (nowAsTimeSinceMidnight.greaterThan(sunset) || nowAsTimeSinceMidnight.lessThan(sunrise));
+                }
+                return (oldNightMode != nightMode);
+            }
+        }
+
+        return false;
     }
 
     hidden function updateStressAndBodyBatteryData() as Void {

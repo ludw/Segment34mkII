@@ -53,6 +53,14 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.nightThemeActivation" title="Activate Night Color Theme:">
+        <settingConfig type="list">
+            <listEntry value="0">During scheduled sleep hours</listEntry>
+            <listEntry value="1">2 hours before scheduled sleep hours</listEntry>
+            <listEntry value="2">From Sunset to Sunrise (requires weather data)</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.showClockBg" title="Show clock background">
         <settingConfig type="boolean" />
     </setting>
