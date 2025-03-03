@@ -77,6 +77,23 @@ class Segment34View extends WatchUi.WatchFace {
     private var propIcon1 = null;
     private var propIcon2 = null;
     private var propHemisphere = null;
+    private var propHourFormat = null;
+    private var propShowMoonPhase = null;
+    private var propTempUnit = null;
+    private var propWindUnit = null;
+    private var propPressureUnit = null;
+    private var propWeatherLine1Shows = null;
+    private var propWeatherLine2Shows = null;
+    private var propSunriseFieldShows = null;
+    private var propSunsetFieldShows = null;
+    private var propDateFormat = null;
+    private var propShowStressAndBodyBattery = null;
+    private var propShowNotificationCount = null;
+    private var propTzOffset1 = null;
+    private var propTzOffset2 = null;
+    private var propTzName1 = null;
+    private var propTzName2 = null;
+
 
     function initialize() {
         WatchFace.initialize();
@@ -284,6 +301,22 @@ class Segment34View extends WatchUi.WatchFace {
         propIcon1 = Application.Properties.getValue("icon1");
         propIcon2 = Application.Properties.getValue("icon2");
         propHemisphere = Application.Properties.getValue("hemisphere");
+        propHourFormat = Application.Properties.getValue("hourFormat");
+        propShowMoonPhase = Application.Properties.getValue("showMoonPhase");
+        propTempUnit = Application.Properties.getValue("tempUnit");
+        propWindUnit = Application.Properties.getValue("windUnit");
+        propPressureUnit = Application.Properties.getValue("pressureUnit");
+        propWeatherLine1Shows = Application.Properties.getValue("weatherLine1Shows");
+        propWeatherLine2Shows = Application.Properties.getValue("weatherLine2Shows");
+        propSunriseFieldShows = Application.Properties.getValue("sunriseFieldShows");
+        propSunsetFieldShows = Application.Properties.getValue("sunsetFieldShows");
+        propDateFormat = Application.Properties.getValue("dateFormat");
+        propShowStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery");
+        propShowNotificationCount = Application.Properties.getValue("showNotificationCount");
+        propTzOffset1 = Application.Properties.getValue("tzOffset1");
+        propTzOffset2 = Application.Properties.getValue("tzOffset2");
+        propTzName1 = Application.Properties.getValue("tzName1");
+        propTzName2 = Application.Properties.getValue("tzName2");
 
         var fontVariant = Application.Properties.getValue("smallFontVariant");
         if(fontVariant == 0) {
@@ -1081,8 +1114,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function formatHour(hour) as Number {
-        var hourFormat = Application.Properties.getValue("hourFormat");
-        if((!System.getDeviceSettings().is24Hour and hourFormat == 0) or hourFormat == 2) {
+        if((!System.getDeviceSettings().is24Hour and propHourFormat == 0) or propHourFormat == 2) {
             hour = hour % 12;
             if(hour == 0) { hour = 12; }
         }
@@ -1090,8 +1122,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setMoon(dc) as Void {
-        var showMoonPhase = Application.Properties.getValue("showMoonPhase");
-        if(showMoonPhase) {
+        if(propShowMoonPhase) {
             var now = Time.now();
             var today = Time.Gregorian.info(now, Time.FORMAT_SHORT);
             var moonVal = moonPhase(today);
@@ -1169,10 +1200,8 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getTempUnit() as String {
-        var tempUnitSetting = System.getDeviceSettings().temperatureUnits;
-        var tempUnitAppSetting = Application.Properties.getValue("tempUnit");
-
-        if((tempUnitSetting == System.UNIT_METRIC and tempUnitAppSetting == 0) or tempUnitAppSetting == 1) {
+        var temp_unit_setting = System.getDeviceSettings().temperatureUnits;
+        if((temp_unit_setting == System.UNIT_METRIC and propTempUnit == 0) or propTempUnit == 1) {
             return "C";
         } else {
             return "F";
@@ -1180,21 +1209,19 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setWeather(dc) as Void {
-        var weatherLine1Shows = Application.Properties.getValue("weatherLine1Shows");
-        var unit = getComplicationUnit(weatherLine1Shows);
+        var unit = getComplicationUnit(propWeatherLine1Shows);
         if (unit.length() > 0) {
             unit = Lang.format(" $1$", [unit]);
         }
-        dWeatherLabel1.setText(Lang.format("$1$$2$", [getComplicationValue(weatherLine1Shows, 10), unit]));
+        dWeatherLabel1.setText(Lang.format("$1$$2$", [getComplicationValue(propWeatherLine1Shows, 10), unit]));
     }
 
     hidden function setWeatherLabel() as Void {
-        var weatherLine2Shows = Application.Properties.getValue("weatherLine2Shows");
-        var unit = getComplicationUnit(weatherLine2Shows);
+        var unit = getComplicationUnit(propWeatherLine2Shows);
         if (unit.length() > 0) {
             unit = Lang.format(" $1$", [unit]);
         }
-        dWeatherLabel2.setText(Lang.format("$1$$2$", [getComplicationValue(weatherLine2Shows, 10), unit]));
+        dWeatherLabel2.setText(Lang.format("$1$$2$", [getComplicationValue(propWeatherLine2Shows, 10), unit]));
     }
 
     hidden function getWeatherCondition(includePrecipitation as Boolean) as String {
@@ -1385,31 +1412,27 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setSunUpDown(dc) as Void {
-        var sunriseFieldShows = Application.Properties.getValue("sunriseFieldShows");
-        var sunsetFieldShows = Application.Properties.getValue("sunsetFieldShows");
-
-        if(sunriseFieldShows == -2) {
+        if(propSunriseFieldShows == -2) {
             dDawn.setText("");
             dSunUpLabel.setText("");
         } else {
-            dDawn.setText(getComplicationDesc(sunriseFieldShows, 1));
-            dSunUpLabel.setText(getComplicationValue(sunriseFieldShows, 5));
+            dDawn.setText(getComplicationDesc(propSunriseFieldShows, 1));
+            dSunUpLabel.setText(getComplicationValue(propSunriseFieldShows, 5));
         }
 
-        if(sunsetFieldShows == -2) {
+        if(propSunsetFieldShows == -2) {
             dDusk.setText("");
             dSunDownLabel.setText("");
         } else {
-            dDusk.setText(getComplicationDesc(sunsetFieldShows, 1));
-            dSunDownLabel.setText(getComplicationValue(sunsetFieldShows, 5));
+            dDusk.setText(getComplicationDesc(propSunsetFieldShows, 1));
+            dSunDownLabel.setText(getComplicationValue(propSunsetFieldShows, 5));
         }
     }
 
     hidden function setNotif(dc) as Void {
         var value = "";
 
-        var showNotificationCount = Application.Properties.getValue("showNotificationCount");
-        if(showNotificationCount) {
+        if(propShowNotificationCount) {
             var sample = System.getDeviceSettings().notificationCount;
             if(sample > 0) {
                 value = sample.format("%01d");
@@ -1475,10 +1498,9 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function setDate(dc) as Void {
         var now = Time.now();
         var today = Time.Gregorian.info(now, Time.FORMAT_SHORT);
-        var dateFormat = Application.Properties.getValue("dateFormat");
         var value = "";
 
-        switch(dateFormat) {
+        switch(propDateFormat) {
             case 0: // Default: THU, 14 MAR 2024
                 value = Lang.format("$1$, $2$ $3$ $4$", [
                     dayName(today.day_of_week),
@@ -1634,8 +1656,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function updateStressAndBodyBatteryData() as Void {
-        var showStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery");
-        if(!showStressAndBodyBattery) { return; }
+        if(!propShowStressAndBodyBattery) { return; }
 
         if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
             var bb_iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});
@@ -1653,8 +1674,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function drawStressAndBodyBattery(dc) as Void {
-        var showStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery");
-        if(!showStressAndBodyBattery) { return; }
+        if(!propShowStressAndBodyBattery) { return; }
 
         if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
             var bar_top = 110;
@@ -1882,8 +1902,7 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 16) { // Alt TZ 1
-            var offset = Application.Properties.getValue("tzOffset1");
-            val = secondaryTimezone(offset, width);
+            val = secondaryTimezone(propTzOffset1, width);
         } else if(complicationType == 17) { // Steps / day
             if(ActivityMonitor.getInfo().steps != null) {
                 val = ActivityMonitor.getInfo().steps.format(numberFormat);
@@ -2088,8 +2107,7 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 41) { // Alt TZ 2
-            var offset = Application.Properties.getValue("tzOffset2");
-            val = secondaryTimezone(offset, width);
+            val = secondaryTimezone(propTzOffset2, width);
         } else if(complicationType == 42) { // Alarms
             val = System.getDeviceSettings().alarmCount.format(numberFormat);
         } else if(complicationType == 43) { // High temp
@@ -2231,8 +2249,7 @@ class Segment34View extends WatchUi.WatchFace {
             if(labelSize == 2) { desc = "ALTITUDE:"; }
             if(labelSize == 3) { desc = "ALTITUDE FT:"; }
         } else if(complicationType == 16) { // Alt TZ 1:
-            var name = Application.Properties.getValue("tzName1");
-            desc = Lang.format("$1$:", [name.toUpper()]);
+            desc = Lang.format("$1$:", [propTzName1.toUpper()]);
         } else if(complicationType == 17) { // Steps / day
             if(labelSize == 1) { desc = "STEPS:"; }
             if(labelSize == 2) { desc = "STEPS:"; }
@@ -2318,8 +2335,7 @@ class Segment34View extends WatchUi.WatchFace {
             if(labelSize == 2) { desc = "SUNSET:"; }
             if(labelSize == 3) { desc = "SUNSET:"; }
         } else if(complicationType == 41) { // Alt TZ 2:
-            var name = Application.Properties.getValue("tzName2");
-            desc = Lang.format("$1$:", [name.toUpper()]);
+            desc = Lang.format("$1$:", [propTzName2.toUpper()]);
         } else if(complicationType == 42) {
             if(labelSize == 1) { desc = "ALARM:"; }
             if(labelSize == 2) { desc = "ALARMS:"; }
@@ -2389,20 +2405,19 @@ class Segment34View extends WatchUi.WatchFace {
         var bearing = "";
 
         if(weatherCondition != null and weatherCondition.windSpeed != null) {
-            var wind_unit = Application.Properties.getValue("windUnit");
             var windspeed_mps = weatherCondition.windSpeed;
-            if(wind_unit == 0) { // m/s
+            if(propWindUnit == 0) { // m/s
                 windspeed = Math.round(windspeed_mps).format("%01d");
-            } else if (wind_unit == 1) { // km/h
+            } else if (propWindUnit == 1) { // km/h
                 var windspeed_kmh = Math.round(windspeed_mps * 3.6);
                 windspeed = windspeed_kmh.format("%01d");
-            } else if (wind_unit == 2) { // mph
+            } else if (propWindUnit == 2) { // mph
                 var windspeed_mph = Math.round(windspeed_mps * 2.237);
                 windspeed = windspeed_mph.format("%01d");
-            } else if (wind_unit == 3) { // knots
+            } else if (propWindUnit == 3) { // knots
                 var windspeed_kt = Math.round(windspeed_mps * 1.944);
                 windspeed = windspeed_kt.format("%01d");
-            } else if(wind_unit == 4) { // beufort
+            } else if(propWindUnit == 4) { // beufort
                 if (windspeed_mps < 0.5f) {
                     windspeed = "0";  // Calm
                 } else if (windspeed_mps < 1.5f) {
@@ -2661,14 +2676,13 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function formatPressure(pressureHpa as Float, numberFormat as String) as String {
-        var pressureUnit = Application.Properties.getValue("pressureUnit");
         var val = "";
 
-        if (pressureUnit == 0) { // hPA
+        if (propPressureUnit == 0) { // hPA
             val = pressureHpa.format(numberFormat);
-        } else if (pressureUnit == 1) { // mmHG
+        } else if (propPressureUnit == 1) { // mmHG
             val = (pressureHpa * 0.750062).format(numberFormat);
-        } else if (pressureUnit == 2) { // inHG
+        } else if (propPressureUnit == 2) { // inHG
             val = (pressureHpa * 0.02953).format("%.1f");
         }
 
