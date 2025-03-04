@@ -99,21 +99,16 @@ class Segment34View extends WatchUi.WatchFace {
         WatchFace.initialize();
     }
 
-    // Load your resources here
     function onLayout(dc as Dc) as Void {
         setLayout(Rez.Layouts.WatchFace(dc));
         cacheDrawables(dc);
         cacheProps();
     }
 
-    // Called when this View is brought to the foreground. Restore
-    // the state of this View and prepare it to be shown. This includes
-    // loading resources into memory.
     function onShow() as Void {
         updateWeather();
     }
 
-    // Update the view
     function onUpdate(dc as Dc) as Void {
         var clock_time = System.getClockTime();
         var now = Time.now().value();
@@ -224,13 +219,9 @@ class Segment34View extends WatchUi.WatchFace {
         System.println("Power budget exceeded");
     }
 
-    // Called when this View is removed from the screen. Save the
-    // state of this View here. This includes freeing resources from
-    // memory.
     function onHide() as Void {
     }
 
-    // The user has just looked at their watch. Timers and animations may be started here.
     function onExitSleep() as Void {
         isSleeping = false;
         lastUpdate = null;
@@ -239,7 +230,6 @@ class Segment34View extends WatchUi.WatchFace {
         WatchUi.requestUpdate();
     }
 
-    // Terminate any active timers and prepare for slow updates.
     function onEnterSleep() as Void {
         isSleeping = true;
         lastUpdate = null;
@@ -2580,48 +2570,48 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function isoWeekNumber(year, month, day) {
-    	var first_day_of_year = julianDay(year, 1, 1);
-    	var given_day_of_year = julianDay(year, month, day);
-    	var day_of_week = (first_day_of_year + 3) % 7;
-    	var week_of_year = (given_day_of_year - first_day_of_year + day_of_week + 4) / 7;
-    	if (week_of_year == 53) {
-			if (day_of_week == 6) {
-            	return week_of_year;
-        	} else if (day_of_week == 5 && isLeapYear(year)) {
-            	return week_of_year;
-        	} else {
-            	return 1;
-        	}
-    	}
-    	else if (week_of_year == 0) {
-       		first_day_of_year = julianDay(year - 1, 1, 1);
-        	day_of_week = (first_day_of_year + 3) % 7;
-			return (given_day_of_year - first_day_of_year + day_of_week + 4) / 7;
-    	}
-    	else {
+        var first_day_of_year = julianDay(year, 1, 1);
+        var given_day_of_year = julianDay(year, month, day);
+        var day_of_week = (first_day_of_year + 3) % 7;
+        var week_of_year = (given_day_of_year - first_day_of_year + day_of_week + 4) / 7;
+        if (week_of_year == 53) {
+            if (day_of_week == 6) {
+                return week_of_year;
+            } else if (day_of_week == 5 && isLeapYear(year)) {
+                return week_of_year;
+            } else {
+                return 1;
+            }
+        }
+        else if (week_of_year == 0) {
+            first_day_of_year = julianDay(year - 1, 1, 1);
+            day_of_week = (first_day_of_year + 3) % 7;
+            return (given_day_of_year - first_day_of_year + day_of_week + 4) / 7;
+        }
+        else {
             return week_of_year;
-    	}
-	}
+        }
+    }
 
 
-	hidden function julianDay(year, month, day) {
-    	var a = (14 - month) / 12;
-    	var y = (year + 4800 - a);
-    	var m = (month + 12 * a - 3);
-    	return day + ((153 * m + 2) / 5) + (365 * y) + (y / 4) - (y / 100) + (y / 400) - 32045;
-	}
+    hidden function julianDay(year, month, day) {
+        var a = (14 - month) / 12;
+        var y = (year + 4800 - a);
+        var m = (month + 12 * a - 3);
+        return day + ((153 * m + 2) / 5) + (365 * y) + (y / 4) - (y / 100) + (y / 400) - 32045;
+    }
 
 
-	hidden function isLeapYear(year) {
-    	if (year % 4 != 0) {
-        	return false;
-   		 } else if (year % 100 != 0) {
-        	return true;
-    	} else if (year % 400 == 0) {
+    hidden function isLeapYear(year) {
+        if (year % 4 != 0) {
+            return false;
+           } else if (year % 100 != 0) {
             return true;
-    	}
-		return false;
-	}
+        } else if (year % 400 == 0) {
+            return true;
+        }
+        return false;
+    }
 
     hidden function moonPhase(time) {
         var jd = julianDay(time.year, time.month, time.day);
@@ -2702,8 +2692,8 @@ class Segment34Delegate extends WatchUi.WatchFaceDelegate {
         screenH = System.getDeviceSettings().screenHeight;
     }
 
-	public function onPress(clickEvent as WatchUi.ClickEvent) {
-		var coords = clickEvent.getCoordinates();
+    public function onPress(clickEvent as WatchUi.ClickEvent) {
+        var coords = clickEvent.getCoordinates();
         var x = coords[0];
         var y = coords[1];
 
