@@ -30,12 +30,16 @@ Pull requests are welcome, but please follow the following guidelines:
 - Keep PRs small, don't do a lot of different changes at once.
 - Explain what you have changed and why.
 - Only submit code you have actually run and tested (on all supported screen sizes).
+- Remeber that watch faces has to be performant and memory efficient.
+  Changes that significantly increase memory use or degrade performance will be rejected.
 - For optimizations, please provide memory and profiler comparisons.
 - Try to keep the code in the same style as the rest of the project.
    - Indent with four spaces.
    - local variables with snake_case.
-   - function names with camelCase.
+   - function and global variables names with camelCase.
    - cache all properties.
+   - use comments only when they add value.
+     Explain things that look strange or values that has to be looked up to be understood.
 
 ## Builds
  There are some pre-made builds in the builds folder.
