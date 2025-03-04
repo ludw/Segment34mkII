@@ -24,6 +24,19 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 ## Buy me a coffee (if you want to)
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M51A1RGV)
 
+## Contributing (code)
+Pull requests are welcome, but please follow the following guidelines:
+- For larger changes, **please open an issue first** and discuss what you have in mind.
+- Keep PRs small, don't do a lot of different changes at once.
+- Explain what you have changed and why.
+- Only submit code you have actually run and tested (on all supported screen sizes).
+- For optimizations, please provide memory and profiler comparisons.
+- Try to keep the code in the same style as the rest of the project.
+   - Indent with four spaces.
+   - local variables with snake_case.
+   - function names with camelCase.
+   - cache all properties.
+
 ## Builds
  There are some pre-made builds in the builds folder.
 
