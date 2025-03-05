@@ -88,6 +88,9 @@ class Segment34View extends WatchUi.WatchFace {
     private var propSunsetFieldShows = null;
     private var propShowSunriseLabel = null;
     private var propShowSunsetLabel = null;
+    private var propShowLeftLabel = null;
+    private var propShowMiddleLabel = null;
+    private var propShowRightLabel = null;
     private var propDateFormat = null;
     private var propShowStressAndBodyBattery = null;
     private var propShowNotificationCount = null;
@@ -305,6 +308,9 @@ class Segment34View extends WatchUi.WatchFace {
 
         propShowSunriseLabel = Application.Properties.getValue("showSunriseLabel");
         propShowSunsetLabel = Application.Properties.getValue("showSunsetLabel");
+        propShowLeftLabel = Application.Properties.getValue("showLeftLabel");
+        propShowMiddleLabel = Application.Properties.getValue("showMiddleLabel");
+        propShowRightLabel = Application.Properties.getValue("showRightLabel");
 
         propDateFormat = Application.Properties.getValue("dateFormat");
         propShowStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery");
@@ -1763,7 +1769,12 @@ class Segment34View extends WatchUi.WatchFace {
             left_width = 4;
             left_label_size = 3;
         }
-        dTtrDesc.setText(getComplicationDesc(propLeftValueShows, left_label_size));
+
+        if(propShowLeftLabel) {
+            dTtrDesc.setText(getComplicationDesc(propLeftValueShows, left_label_size));
+        } else {
+            dTtrDesc.setText("");
+        }
         dTtrLabel.setText(getComplicationValue(propLeftValueShows, left_width));
 
         var mid_width = 3;
@@ -1772,7 +1783,11 @@ class Segment34View extends WatchUi.WatchFace {
             mid_width = 4;
             mid_label_size = 3;
         }
-        dHrDesc.setText(getComplicationDesc(propMiddleValueShows, mid_label_size));
+        if(propShowMiddleLabel) {
+            dHrDesc.setText(getComplicationDesc(propMiddleValueShows, mid_label_size));
+        } else {
+            dHrDesc.setText("");
+        }
         dHrLabel.setText(getComplicationValue(propMiddleValueShows, mid_width));
 
         var right_width = 4;
@@ -1781,7 +1796,11 @@ class Segment34View extends WatchUi.WatchFace {
             right_width = 3;
             right_label_size = 2;
         }
-        dActiveDesc.setText(getComplicationDesc(propRightValueShows, right_label_size));
+        if(propShowRightLabel) {
+            dActiveDesc.setText(getComplicationDesc(propRightValueShows, right_label_size));
+        } else {
+            dActiveDesc.setText("");
+        }
         dActiveLabel.setText(getComplicationValue(propRightValueShows, right_width));
     }
 
