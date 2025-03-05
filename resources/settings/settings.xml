@@ -89,6 +89,14 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.showSunriseLabel" title="Hide Sunrise Label">
+        <settingConfig type="boolean" />
+    </setting>
+
+    <setting propertyKey="@Properties.showSunsetLabel" title="Hide Sunset Label">
+        <settingConfig type="boolean" />
+    </setting>
+
     <setting propertyKey="@Properties.sunriseFieldShows" title="Sunrise field shows:">
             <settingConfig type="list">
                 <listEntry value="-2">Hidden</listEntry>

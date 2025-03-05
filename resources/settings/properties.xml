@@ -9,6 +9,8 @@
     <property id="showNotificationCount" type="boolean">true</property>
     <property id="showSeconds" type="boolean">true</property>
     <property id="showStressAndBodyBattery" type="boolean">true</property>
+    <property id="showSunriseLabel" type="boolean">true</property>
+    <property id="showSunsetLabel" type="boolean">true</property>
     <property id="showSunriseSunset" type="boolean">true</property>
     <property id="sunriseFieldShows" type="number">39</property>
     <property id="sunsetFieldShows" type="number">40</property>

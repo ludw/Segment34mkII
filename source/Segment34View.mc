@@ -86,6 +86,8 @@ class Segment34View extends WatchUi.WatchFace {
     private var propWeatherLine2Shows = null;
     private var propSunriseFieldShows = null;
     private var propSunsetFieldShows = null;
+    private var propShowSunriseLabel = null;
+    private var propShowSunsetLabel = null;
     private var propDateFormat = null;
     private var propShowStressAndBodyBattery = null;
     private var propShowNotificationCount = null;
@@ -300,6 +302,10 @@ class Segment34View extends WatchUi.WatchFace {
         propWeatherLine2Shows = Application.Properties.getValue("weatherLine2Shows");
         propSunriseFieldShows = Application.Properties.getValue("sunriseFieldShows");
         propSunsetFieldShows = Application.Properties.getValue("sunsetFieldShows");
+
+        propShowSunriseLabel = Application.Properties.getValue("showSunriseLabel");
+        propShowSunsetLabel = Application.Properties.getValue("showSunsetLabel");
+
         propDateFormat = Application.Properties.getValue("dateFormat");
         propShowStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery");
         propShowNotificationCount = Application.Properties.getValue("showNotificationCount");
@@ -1402,11 +1408,16 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setSunUpDown(dc) as Void {
+
         if(propSunriseFieldShows == -2) {
             dDawn.setText("");
             dSunUpLabel.setText("");
         } else {
-            dDawn.setText(getComplicationDesc(propSunriseFieldShows, 1));
+            if(propShowSunriseLabel) {
+                dDawn.setText(getComplicationDesc(propSunriseFieldShows, 1));
+            } else {
+                dDawn.setText("");
+            }
             dSunUpLabel.setText(getComplicationValue(propSunriseFieldShows, 5));
         }
 
@@ -1414,9 +1425,14 @@ class Segment34View extends WatchUi.WatchFace {
             dDusk.setText("");
             dSunDownLabel.setText("");
         } else {
-            dDusk.setText(getComplicationDesc(propSunsetFieldShows, 1));
+            if(propShowSunsetLabel) {
+                dDusk.setText(getComplicationDesc(propSunsetFieldShows, 1));
+            } else {
+                dDusk.setText("");
+            }
             dSunDownLabel.setText(getComplicationValue(propSunsetFieldShows, 5));
         }
+
     }
 
     hidden function setNotif(dc) as Void {
