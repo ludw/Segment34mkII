@@ -1836,8 +1836,9 @@ class Segment34View extends WatchUi.WatchFace {
             }
         } else if(complicationType == 9) { // Respiration rate
             if(ActivityMonitor.getInfo() has :respirationRate) {
-                if(ActivityMonitor.getInfo().respirationRate != null) {
-                    val = ActivityMonitor.getInfo().respirationRate.format(numberFormat);
+                var resp_rate = ActivityMonitor.getInfo().respirationRate;
+                if(resp_rate != null) {
+                    val = resp_rate.format(numberFormat);
                 }
             }
         } else if(complicationType == 10) {
