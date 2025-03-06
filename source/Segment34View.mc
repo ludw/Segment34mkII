@@ -2691,9 +2691,9 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function getNextSunEvent() as Array {
         var now = Time.now();
-        if(weatherCondition != null) {
+        if (weatherCondition != null) {
             var loc = weatherCondition.observationLocationPosition;
-            if(loc != null) {
+            if (loc != null) {
                 var nextSunEvent = null;
                 var sunrise = Weather.getSunrise(loc, now);
                 var sunset = Weather.getSunset(loc, now);
@@ -2711,7 +2711,7 @@ class Segment34View extends WatchUi.WatchFace {
                     if (sunrise.lessThan(sunset)) { 
                         nextSunEvent = sunrise;
                         isNight = true;
-                    }else{
+                    } else {
                         nextSunEvent = sunset;
                         isNight = false;
                     }

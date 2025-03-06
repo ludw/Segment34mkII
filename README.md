@@ -58,6 +58,10 @@ Lower priority:
 
 
 ## Change log
+2025-03-06 v1.21.3
+- New value: Next sun event (next sunset or sunrise), thanks to fganglberger
+- Possibly fixed a crash
+
 2025-03-03 v1.21.2
 - Options for when to activate night theme
 
