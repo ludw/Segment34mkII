@@ -1629,15 +1629,9 @@ class Segment34View extends WatchUi.WatchFace {
 
         // From Sunset to Sunrise
         if(weatherCondition != null) {
-            var loc = weatherCondition.observationLocationPosition;
-            if(loc != null) {
-                var sunset = (Weather.getSunset(loc, now)).subtract(todayMidnight) as Duration;
-                var sunrise = (Weather.getSunrise(loc, now)).subtract(todayMidnight) as Duration;
-                if(sunrise.greaterThan(sunset)) { // Sunrise is after midnight
-                    nightMode = (nowAsTimeSinceMidnight.greaterThan(sunset) and nowAsTimeSinceMidnight.lessThan(sunrise));
-                } else {
-                    nightMode = (nowAsTimeSinceMidnight.greaterThan(sunset) || nowAsTimeSinceMidnight.lessThan(sunrise));
-                }
+            var nextSunEventArray = getNextSunEvent();
+            if(nextSunEventArray != null && nextSunEventArray.size() == 2) { 
+                nightMode = nextSunEventArray[1];
                 return (oldNightMode != nightMode);
             }
         }
@@ -2156,37 +2150,14 @@ class Segment34View extends WatchUi.WatchFace {
             val = getPrecip();
             if(width == 3 and val.equals("100%")) { val = "100"; }
         } else if(complicationType == 55) { // Next Sun Event
-            var now = Time.now();
-            if(weatherCondition != null) {
-                var loc = weatherCondition.observationLocationPosition;
-                if(loc != null) {
-                    var nextSunEvent = null;
-                    var sunrise = Weather.getSunrise(loc, now);
-                    var sunset = Weather.getSunset(loc, now);
-                    
-                    if ((sunrise != null) && (sunset != null)) {
-                        if (sunrise.lessThan(now)) { 
-                            //if sunrise was already, take tomorrows
-                            sunrise = Weather.getSunrise(loc, Time.today().add(new Time.Duration(86401)));
-                        }
-                        if (sunset.lessThan(now)) { 
-                            //if sunset was already, take tomorrows
-                            sunset = Weather.getSunset(loc, Time.today().add(new Time.Duration(86401)));
-                        }
-                        if (sunrise.lessThan(sunset)) { 
-                            nextSunEvent = sunrise;
-                        }else{
-                            nextSunEvent = sunset;
-                        }
-                    }
-
-                    nextSunEvent = Time.Gregorian.info(nextSunEvent, Time.FORMAT_SHORT);
-                    var nextSunEventHour = formatHour(nextSunEvent.hour);
-                    if(width < 5) {
-                        val = Lang.format("$1$$2$", [nextSunEventHour.format("%02d"), nextSunEvent.min.format("%02d")]);
-                    } else {
-                        val = Lang.format("$1$:$2$", [nextSunEventHour.format("%02d"), nextSunEvent.min.format("%02d")]);
-                    }
+            var nextSunEventArray = getNextSunEvent();
+            if(nextSunEventArray != null && nextSunEventArray.size() == 2) { 
+                var nextSunEvent = Time.Gregorian.info(nextSunEventArray[0], Time.FORMAT_SHORT);
+                var nextSunEventHour = formatHour(nextSunEvent.hour);
+                if(width < 5) {
+                    val = Lang.format("$1$$2$", [nextSunEventHour.format("%02d"), nextSunEvent.min.format("%02d")]);
+                } else {
+                    val = Lang.format("$1$:$2$", [nextSunEventHour.format("%02d"), nextSunEvent.min.format("%02d")]);
                 }
             }
         }
@@ -2717,6 +2688,39 @@ class Segment34View extends WatchUi.WatchFace {
         return val;
     }
 
+    hidden function getNextSunEvent() as Array {
+        var now = Time.now();
+        if(weatherCondition != null) {
+            var loc = weatherCondition.observationLocationPosition;
+            if(loc != null) {
+                var nextSunEvent = null;
+                var sunrise = Weather.getSunrise(loc, now);
+                var sunset = Weather.getSunset(loc, now);
+                var isNight = false;
+
+                if ((sunrise != null) && (sunset != null)) {
+                    if (sunrise.lessThan(now)) { 
+                        //if sunrise was already, take tomorrows
+                        sunrise = Weather.getSunrise(loc, Time.today().add(new Time.Duration(86401)));
+                    }
+                    if (sunset.lessThan(now)) { 
+                        //if sunset was already, take tomorrows
+                        sunset = Weather.getSunset(loc, Time.today().add(new Time.Duration(86401)));
+                    }
+                    if (sunrise.lessThan(sunset)) { 
+                        nextSunEvent = sunrise;
+                        isNight = true;
+                    }else{
+                        nextSunEvent = sunset;
+                        isNight = false;
+                    }
+                    return [nextSunEvent, isNight];
+                }
+                
+            }
+        }
+        return [];
+    }
 }
 
 
