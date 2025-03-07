@@ -329,7 +329,7 @@ class Segment34View extends WatchUi.WatchFace {
         
     }
 
-    hidden function toggleNonEssentials(dc){
+    hidden function toggleNonEssentials(dc) as Void {
         var awake = !isSleeping;
         if(isSleeping and canBurnIn) {
             dc.setAntiAlias(false);
@@ -456,7 +456,7 @@ class Segment34View extends WatchUi.WatchFace {
         previousEssentialsVis = awake;
     }
 
-    hidden function setVisibility2(setting as Number, label as Text, bg as Text) {
+    hidden function setVisibility2(setting as Number, label as Text, bg as Text) as Void {
         var hide_In_aod = (!isSleeping or !canBurnIn);
         if(setting == -2) {
             label.setVisible(false);
@@ -467,7 +467,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function setVisibility3(setting as Number, desc as Text, label as Text, bg as Text) {
+    hidden function setVisibility3(setting as Number, desc as Text, label as Text, bg as Text) as Void {
         var hide_In_aod = (!isSleeping or !canBurnIn);
         if(setting == -2) {
             desc.setVisible(false);
@@ -480,7 +480,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function setAlignment(setting as Number, label as Text, offset as Number) {
+    hidden function setAlignment(setting as Number, label as Text, offset as Number) as Void {
         var x = 0;
         if(screenHeight == 240) { x = 10; }
         if(screenHeight == 260) { x = 16; }
@@ -499,7 +499,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function alignNotification(setting as Number) {
+    hidden function alignNotification(setting as Number) as Void {
         var x = 0;
         if(setting == 1) { // Date is centered, left align notif
             if(screenHeight == 240) { x = 10; }
@@ -2524,7 +2524,7 @@ class Segment34View extends WatchUi.WatchFace {
         return weekly_distance;
     }
 
-    hidden function secondaryTimezone(offset, width) {
+    hidden function secondaryTimezone(offset, width) as String {
         var val = "";
         var now = Time.now();
         var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_MEDIUM);
@@ -2556,7 +2556,7 @@ class Segment34View extends WatchUi.WatchFace {
         return val;
     }
 
-    hidden function dayName(day_of_week) {
+    hidden function dayName(day_of_week) as String {
         var names = [
             "SUN",
             "MON",
@@ -2569,7 +2569,7 @@ class Segment34View extends WatchUi.WatchFace {
         return names[day_of_week - 1];
     }
 
-    hidden function monthName(month) {
+    hidden function monthName(month) as String {
         var names = [
             "JAN",
             "FEB",
@@ -2587,7 +2587,7 @@ class Segment34View extends WatchUi.WatchFace {
         return names[month - 1];
     }
 
-    hidden function isoWeekNumber(year, month, day) {
+    hidden function isoWeekNumber(year, month, day) as Number {
         var first_day_of_year = julianDay(year, 1, 1);
         var given_day_of_year = julianDay(year, month, day);
         var day_of_week = (first_day_of_year + 3) % 7;
@@ -2612,7 +2612,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
 
-    hidden function julianDay(year, month, day) {
+    hidden function julianDay(year, month, day) as Number {
         var a = (14 - month) / 12;
         var y = (year + 4800 - a);
         var m = (month + 12 * a - 3);
@@ -2620,7 +2620,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
 
-    hidden function isLeapYear(year) {
+    hidden function isLeapYear(year) as Boolean {
         if (year % 4 != 0) {
             return false;
            } else if (year % 100 != 0) {
@@ -2631,7 +2631,7 @@ class Segment34View extends WatchUi.WatchFace {
         return false;
     }
 
-    hidden function moonPhase(time) {
+    hidden function moonPhase(time) as String {
         var jd = julianDay(time.year, time.month, time.day);
 
         var days_since_new_moon = jd - 2459966;
