@@ -2,6 +2,7 @@ info face="Segments 145" size=145 bold=0 italic=0 smooth=1 spacing=2,2
 common lineHeight=145 base=145 scaleW=804 scaleH=145 pages=1
 page id=0 file="segments145.png"
 chars count=11
+char id=32 x=0 y=0 width=0 height=145 xoffset=0 yoffset=0 xadvance=83 page=0
 char id=35 x=0 y=0 width=76 height=145 xoffset=3 yoffset=0 xadvance=83 page=0
 char id=49 x=78 y=0 width=76 height=145 xoffset=3 yoffset=0 xadvance=83 page=0
 char id=50 x=156 y=0 width=76 height=145 xoffset=3 yoffset=0 xadvance=83 page=0

@@ -78,6 +78,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var propIcon2 = null;
     private var propHemisphere = null;
     private var propHourFormat = null;
+    private var propZeropadHour = null;
     private var propShowMoonPhase = null;
     private var propTempUnit = null;
     private var propWindUnit = null;
@@ -292,6 +293,7 @@ class Segment34View extends WatchUi.WatchFace {
         propIcon2 = Application.Properties.getValue("icon2");
         propHemisphere = Application.Properties.getValue("hemisphere");
         propHourFormat = Application.Properties.getValue("hourFormat");
+        propZeropadHour = Application.Properties.getValue("zeropadHour");
         propShowMoonPhase = Application.Properties.getValue("showMoonPhase");
         propTempUnit = Application.Properties.getValue("tempUnit");
         propWindUnit = Application.Properties.getValue("windUnit");
@@ -1099,7 +1101,13 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function setClock(dc) as Void {
         var clock_time = System.getClockTime();
         var hour = formatHour(clock_time.hour);
-        var time_string = Lang.format("$1$:$2$", [hour.format("%02d"), clock_time.min.format("%02d")]);
+        var time_string = "";
+        if(propZeropadHour) {
+            time_string = Lang.format("$1$:$2$", [hour.format("%02d"), clock_time.min.format("%02d")]);
+        } else {
+            time_string = Lang.format("$1$:$2$", [hour.format("%2d"), clock_time.min.format("%02d")]);
+        }
+
         dTimeLabel.setText(time_string);
     }
 
@@ -2723,7 +2731,6 @@ class Segment34View extends WatchUi.WatchFace {
         return [];
     }
 }
-
 
 class Segment34Delegate extends WatchUi.WatchFaceDelegate {
     var screenW = null;

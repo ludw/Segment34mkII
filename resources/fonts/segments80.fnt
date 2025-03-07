@@ -2,6 +2,7 @@ info face="Segments 80" size=80 bold=0 italic=0 smooth=1 spacing=2,2
 common lineHeight=80 base=80 scaleW=503 scaleH=80 pages=1
 page id=0 file="segments80.png"
 chars count=11
+char id=32 x=0 y=0 width=0 height=80 xoffset=0 yoffset=0 xadvance=46 page=0
 char id=35 x=0 y=0 width=42 height=80 xoffset=2 yoffset=0 xadvance=46 page=0
 char id=49 x=42 y=0 width=42 height=80 xoffset=2 yoffset=0 xadvance=46 page=0
 char id=50 x=84 y=0 width=42 height=80 xoffset=2 yoffset=0 xadvance=46 page=0

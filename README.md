@@ -58,6 +58,9 @@ Lower priority:
 
 
 ## Change log
+2025-03-06 v1.21.4
+- Option to not zeropad hour on clock
+
 2025-03-06 v1.21.3
 - New value: Next sun event (next sunset or sunrise), thanks to fganglberger
 - Possibly fixed a crash

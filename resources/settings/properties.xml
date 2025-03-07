@@ -3,6 +3,7 @@
     <property id="nightColorTheme" type="number">-1</property>
     <property id="nightThemeActivation" type="number">0</property>
     <property id="hourFormat" type="number">0</property>
+    <property id="zeropadHour" type="boolean">true</property>
     <property id="tempUnit" type="number">0</property>
     <property id="windUnit" type="number">0</property>
     <property id="pressureUnit" type="number">0</property>
