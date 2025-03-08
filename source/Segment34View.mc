@@ -32,6 +32,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var dAodPattern = null;
     private var dGradient = null;
     private var dAodDateLabel = null;
+    private var dAodRightLabel = null;
     private var dTimeLabel = null;
     private var dDateLabel = null;
     private var dTimeBg = null;
@@ -71,6 +72,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var propShowClockBg = null;
     private var propShowDataBg = null;
     private var propAodFieldShows = null;
+    private var propAodRightFieldShows = null;
     private var propBottomFieldShows = null;
     private var propAodAlignment = null;
     private var propDateAlignment = null;
@@ -78,6 +80,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var propIcon2 = null;
     private var propHemisphere = null;
     private var propHourFormat = null;
+    private var propZeropadHour = null;
     private var propShowMoonPhase = null;
     private var propTempUnit = null;
     private var propWindUnit = null;
@@ -93,6 +96,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var propTzOffset2 = null;
     private var propTzName1 = null;
     private var propTzName2 = null;
+    private var propWeekOffset = null;
     private var propLabelVisibility = null;
 
     function initialize() {
@@ -244,6 +248,7 @@ class Segment34View extends WatchUi.WatchFace {
         dAodPattern = View.findDrawableById("aodPattern") as Drawable;
         dGradient = View.findDrawableById("gradient") as Drawable;
         dAodDateLabel = View.findDrawableById("AODDateLabel") as Text;
+        dAodRightLabel = View.findDrawableById("AODRightLabel") as Text;
         dTimeLabel = View.findDrawableById("TimeLabel") as Text;
         dDateLabel = View.findDrawableById("DateLabel") as Text;
         dTimeBg = View.findDrawableById("TimeBg") as Text;
@@ -282,6 +287,7 @@ class Segment34View extends WatchUi.WatchFace {
         propShowClockBg = Application.Properties.getValue("showClockBg");
         propShowDataBg = Application.Properties.getValue("showDataBg");
         propAodFieldShows = Application.Properties.getValue("aodFieldShows");
+        propAodRightFieldShows = Application.Properties.getValue("aodRightFieldShows");
         propLeftValueShows = Application.Properties.getValue("leftValueShows");
         propMiddleValueShows = Application.Properties.getValue("middleValueShows");
         propRightValueShows = Application.Properties.getValue("rightValueShows");
@@ -292,6 +298,7 @@ class Segment34View extends WatchUi.WatchFace {
         propIcon2 = Application.Properties.getValue("icon2");
         propHemisphere = Application.Properties.getValue("hemisphere");
         propHourFormat = Application.Properties.getValue("hourFormat");
+        propZeropadHour = Application.Properties.getValue("zeropadHour");
         propShowMoonPhase = Application.Properties.getValue("showMoonPhase");
         propTempUnit = Application.Properties.getValue("tempUnit");
         propWindUnit = Application.Properties.getValue("windUnit");
@@ -310,6 +317,7 @@ class Segment34View extends WatchUi.WatchFace {
         propTzOffset2 = Application.Properties.getValue("tzOffset2");
         propTzName1 = Application.Properties.getValue("tzName1");
         propTzName2 = Application.Properties.getValue("tzName2");
+        propWeekOffset = Application.Properties.getValue("weekOffset");
 
         var fontVariant = Application.Properties.getValue("smallFontVariant");
         if(fontVariant == 0) {
@@ -330,7 +338,7 @@ class Segment34View extends WatchUi.WatchFace {
         
     }
 
-    hidden function toggleNonEssentials(dc){
+    hidden function toggleNonEssentials(dc) as Void {
         var awake = !isSleeping;
         if(isSleeping and canBurnIn) {
             dc.setAntiAlias(false);
@@ -342,9 +350,16 @@ class Segment34View extends WatchUi.WatchFace {
             } else {
                 dAodDateLabel.setVisible(false);
             }
+            if(propAodRightFieldShows != -2) {
+                dAodRightLabel.setVisible(true);
+            } else {
+                dAodRightLabel.setVisible(false);
+            }
             dAodPattern.setLocation(clock_time.min % 2, dAodPattern.locY);
             setAlignment(propAodAlignment, dAodDateLabel, (clock_time.min % 3) - 1);
+            alignAODRightField((clock_time.min % 3) - 1);
             dAodDateLabel.setColor(getColor("dateDisplayDim"));
+            dAodRightLabel.setColor(getColor("dateDisplayDim"));
             dbackground.setVisible(false);
         } else {
             dc.setAntiAlias(true);
@@ -386,8 +401,10 @@ class Segment34View extends WatchUi.WatchFace {
         dTimeBg.setVisible(hide_In_aod and propShowClockBg);
         dBattLabel.setVisible(hide_battery);
         dBattBg.setVisible(hide_battery);
+        dIcon1.setVisible(hide_In_aod);
+        dIcon2.setVisible(hide_In_aod);
+        
         dTimeLabel.setColor(getColor("timeDisplay"));
-
         dTimeBg.setColor(getColor("timeBg"));
         dTtrBg.setColor(getColor("fieldBg"));
         dHrBg.setColor(getColor("fieldBg"));
@@ -436,6 +453,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else {
                 dDateLabel.setFont(ledMidFont);
                 dAodDateLabel.setFont(ledMidFont);
+                dAodRightLabel.setFont(ledMidFont);
                 dSecondsLabel.setFont(ledMidFont);
                 dNotifLabel.setFont(ledMidFont);
                 dWeatherLabel1.setFont(ledMidFont);
@@ -445,6 +463,7 @@ class Segment34View extends WatchUi.WatchFace {
             if(canBurnIn) {
                 dAodPattern.setVisible(false);
                 dAodDateLabel.setVisible(false);
+                dAodRightLabel.setVisible(false);
 
                 if(getColor("background") == 0xFFFFFF) {
                     dGradient.setVisible(false);
@@ -457,7 +476,7 @@ class Segment34View extends WatchUi.WatchFace {
         previousEssentialsVis = awake;
     }
 
-    hidden function setVisibility2(setting as Number, label as Text, bg as Text) {
+    hidden function setVisibility2(setting as Number, label as Text, bg as Text) as Void {
         var hide_In_aod = (!isSleeping or !canBurnIn);
         if(setting == -2) {
             label.setVisible(false);
@@ -468,7 +487,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function setVisibility3(setting as Number, desc as Text, label as Text, bg as Text) {
+    hidden function setVisibility3(setting as Number, desc as Text, label as Text, bg as Text) as Void {
         var hide_In_aod = (!isSleeping or !canBurnIn);
         if(setting == -2) {
             desc.setVisible(false);
@@ -481,7 +500,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function setAlignment(setting as Number, label as Text, offset as Number) {
+    hidden function setAlignment(setting as Number, label as Text, offset as Number) as Void {
         var x = 0;
         if(screenHeight == 240) { x = 10; }
         if(screenHeight == 260) { x = 16; }
@@ -500,7 +519,16 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function alignNotification(setting as Number) {
+    hidden function alignAODRightField(offset as Number) as Void {
+        var x = 0;
+        if(screenHeight == 360) { x = 345; }
+        if(screenHeight == 390) { x = 371; }
+        if(screenHeight == 416) { x = 385; }
+        if(screenHeight == 454) { x = 433; }
+
+        dAodRightLabel.setLocation(x + offset, dAodRightLabel.locY);
+    }
+    hidden function alignNotification(setting as Number) as Void {
         var x = 0;
         if(setting == 1) { // Date is centered, left align notif
             if(screenHeight == 240) { x = 10; }
@@ -920,7 +948,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("valueDisplay")) {
                 return 0xFFFFFF;
             }
-        } else if(theme_to_use == 13 or theme_to_use == 14 or theme_to_use == 15 or theme_to_use == 16 or theme_to_use == 17) { // on white
+        } else if(theme_to_use == 13 or theme_to_use == 14 or theme_to_use == 15 or theme_to_use == 16 or theme_to_use == 17 or theme_to_use == 21) { // on white
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0xCCCCCC; }
                 return 0xAAAAAA;
@@ -935,6 +963,8 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0x00AA00;
                 } else if(theme_to_use == 17) { // Orange on white
                     return 0x555555;
+                } else if(theme_to_use == 21) { // Purple on white
+                    return 0xAA00FF;
                 }
             } else if(colorName.equals("timeBg")) {
                 if(amoled) { return 0xCCCCCC; }
@@ -955,6 +985,8 @@ class Segment34View extends WatchUi.WatchFace {
                 } else if(theme_to_use == 17) { // Orange on white
                     if(amoled and isSleeping) { return 0xff7600; }
                     return 0xFF5500;
+                } else if(theme_to_use == 21) { // Purple on white
+                    return 0xAA00FF;
                 }
             } else if(colorName.equals("dateDisplay")) {
                 if(amoled) { return 0x000000; }
@@ -1085,6 +1117,39 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("valueDisplay")) {
                 return 0xFFFFFF;
             }
+        } else if(theme_to_use == 22) { // purple on black
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x282828; }
+                return 0x555555;
+            } else if(colorName.equals("fieldLabel")) {
+                                if(amoled) { return 0xAA55AA; }
+                return 0xAA00FF;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x282828; }
+                return 0x555555;
+            } else if(colorName.equals("timeDisplay")) {
+                if(amoled) { return 0xAA55AA; }
+                return 0xAA00FF;
+            } else if(colorName.equals("dateDisplay")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0x555555;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                if(amoled) { return 0xAA55AA; }
+                return 0xAA00FF;
+            } else if(colorName.equals("dawnDuskValue")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("notifications")) {
+                return 0x55AAFF;
+            } else if(colorName.equals("stress")) {
+                return 0xFFAA00;
+            } else if(colorName.equals("bodybattery")) {
+                return 0x55AAFF;
+            } else if(colorName.equals("background")) {
+                return 0x000000;
+            } else if(colorName.equals("valueDisplay")) {
+                return 0xFFFFFF;
+            }
         }
 
         if(colorName.equals("lowBatt")) {
@@ -1102,7 +1167,13 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function setClock(dc) as Void {
         var clock_time = System.getClockTime();
         var hour = formatHour(clock_time.hour);
-        var time_string = Lang.format("$1$:$2$", [hour.format("%02d"), clock_time.min.format("%02d")]);
+        var time_string = "";
+        if(propZeropadHour) {
+            time_string = Lang.format("$1$:$2$", [hour.format("%02d"), clock_time.min.format("%02d")]);
+        } else {
+            time_string = Lang.format("$1$:$2$", [hour.format("%2d"), clock_time.min.format("%02d")]);
+        }
+
         dTimeLabel.setText(time_string);
     }
 
@@ -1594,6 +1665,8 @@ class Segment34View extends WatchUi.WatchFace {
                 }
                 dAodDateLabel.setText(Lang.format("$1$$2$", [getComplicationValue(propAodFieldShows, 10), unit]));
             }
+
+            dAodRightLabel.setText(getComplicationValue(propAodRightFieldShows, 3));
         }
     }
 
@@ -1641,15 +1714,9 @@ class Segment34View extends WatchUi.WatchFace {
 
         // From Sunset to Sunrise
         if(weatherCondition != null) {
-            var loc = weatherCondition.observationLocationPosition;
-            if(loc != null) {
-                var sunset = (Weather.getSunset(loc, now)).subtract(todayMidnight) as Duration;
-                var sunrise = (Weather.getSunrise(loc, now)).subtract(todayMidnight) as Duration;
-                if(sunrise.greaterThan(sunset)) { // Sunrise is after midnight
-                    nightMode = (nowAsTimeSinceMidnight.greaterThan(sunset) and nowAsTimeSinceMidnight.lessThan(sunrise));
-                } else {
-                    nightMode = (nowAsTimeSinceMidnight.greaterThan(sunset) || nowAsTimeSinceMidnight.lessThan(sunrise));
-                }
+            var nextSunEventArray = getNextSunEvent();
+            if(nextSunEventArray != null && nextSunEventArray.size() == 2) { 
+                nightMode = nextSunEventArray[1];
                 return (oldNightMode != nightMode);
             }
         }
@@ -1859,8 +1926,9 @@ class Segment34View extends WatchUi.WatchFace {
             }
         } else if(complicationType == 9) { // Respiration rate
             if(ActivityMonitor.getInfo() has :respirationRate) {
-                if(ActivityMonitor.getInfo().respirationRate != null) {
-                    val = ActivityMonitor.getInfo().respirationRate.format(numberFormat);
+                var resp_rate = ActivityMonitor.getInfo().respirationRate;
+                if(resp_rate != null) {
+                    val = resp_rate.format(numberFormat);
                 }
             }
         } else if(complicationType == 10) {
@@ -2178,6 +2246,17 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 54) { // Precipitation chance
             val = getPrecip();
             if(width == 3 and val.equals("100%")) { val = "100"; }
+        } else if(complicationType == 55) { // Next Sun Event
+            var nextSunEventArray = getNextSunEvent();
+            if(nextSunEventArray != null && nextSunEventArray.size() == 2) { 
+                var nextSunEvent = Time.Gregorian.info(nextSunEventArray[0], Time.FORMAT_SHORT);
+                var nextSunEventHour = formatHour(nextSunEvent.hour);
+                if(width < 5) {
+                    val = Lang.format("$1$$2$", [nextSunEventHour.format("%02d"), nextSunEvent.min.format("%02d")]);
+                } else {
+                    val = Lang.format("$1$:$2$", [nextSunEventHour.format("%02d"), nextSunEvent.min.format("%02d")]);
+                }
+            }
         }
 
         return val;
@@ -2369,6 +2448,10 @@ class Segment34View extends WatchUi.WatchFace {
             if(labelSize == 1) { desc = "PRECIP:"; }
             if(labelSize == 2) { desc = "PRECIP:"; }
             if(labelSize == 3) { desc = "PRECIPITATION:"; }
+        } else if(complicationType == 55) {
+            if(labelSize == 1) { desc = "SUN:"; }
+            if(labelSize == 2) { desc = "NEXT SUN:"; }
+            if(labelSize == 3) { desc = "NEXT SUN EVENT:"; }
         }
         return desc;
     }
@@ -2529,7 +2612,7 @@ class Segment34View extends WatchUi.WatchFace {
         return weekly_distance;
     }
 
-    hidden function secondaryTimezone(offset, width) {
+    hidden function secondaryTimezone(offset, width) as String {
         var val = "";
         var now = Time.now();
         var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_MEDIUM);
@@ -2561,7 +2644,7 @@ class Segment34View extends WatchUi.WatchFace {
         return val;
     }
 
-    hidden function dayName(day_of_week) {
+    hidden function dayName(day_of_week) as String {
         var names = [
             "SUN",
             "MON",
@@ -2574,7 +2657,7 @@ class Segment34View extends WatchUi.WatchFace {
         return names[day_of_week - 1];
     }
 
-    hidden function monthName(month) {
+    hidden function monthName(month) as String {
         var names = [
             "JAN",
             "FEB",
@@ -2592,32 +2675,36 @@ class Segment34View extends WatchUi.WatchFace {
         return names[month - 1];
     }
 
-    hidden function isoWeekNumber(year, month, day) {
+    hidden function isoWeekNumber(year, month, day) as Number {
         var first_day_of_year = julianDay(year, 1, 1);
         var given_day_of_year = julianDay(year, month, day);
         var day_of_week = (first_day_of_year + 3) % 7;
         var week_of_year = (given_day_of_year - first_day_of_year + day_of_week + 4) / 7;
+        var ret = 0;
         if (week_of_year == 53) {
             if (day_of_week == 6) {
-                return week_of_year;
+                ret = week_of_year;
             } else if (day_of_week == 5 && isLeapYear(year)) {
-                return week_of_year;
+                ret = week_of_year;
             } else {
-                return 1;
+                ret = 1;
             }
-        }
-        else if (week_of_year == 0) {
+        } else if (week_of_year == 0) {
             first_day_of_year = julianDay(year - 1, 1, 1);
             day_of_week = (first_day_of_year + 3) % 7;
-            return (given_day_of_year - first_day_of_year + day_of_week + 4) / 7;
+            ret = (given_day_of_year - first_day_of_year + day_of_week + 4) / 7;
         }
         else {
-            return week_of_year;
+            ret = week_of_year;
         }
+        if(propWeekOffset != 0) {
+            ret = ret + propWeekOffset;
+        }
+        return ret;
     }
 
 
-    hidden function julianDay(year, month, day) {
+    hidden function julianDay(year, month, day) as Number {
         var a = (14 - month) / 12;
         var y = (year + 4800 - a);
         var m = (month + 12 * a - 3);
@@ -2625,7 +2712,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
 
-    hidden function isLeapYear(year) {
+    hidden function isLeapYear(year) as Boolean {
         if (year % 4 != 0) {
             return false;
            } else if (year % 100 != 0) {
@@ -2636,7 +2723,7 @@ class Segment34View extends WatchUi.WatchFace {
         return false;
     }
 
-    hidden function moonPhase(time) {
+    hidden function moonPhase(time) as String {
         var jd = julianDay(time.year, time.month, time.day);
 
         var days_since_new_moon = jd - 2459966;
@@ -2702,8 +2789,40 @@ class Segment34View extends WatchUi.WatchFace {
         return val;
     }
 
-}
+    hidden function getNextSunEvent() as Array {
+        var now = Time.now();
+        if (weatherCondition != null) {
+            var loc = weatherCondition.observationLocationPosition;
+            if (loc != null) {
+                var nextSunEvent = null;
+                var sunrise = Weather.getSunrise(loc, now);
+                var sunset = Weather.getSunset(loc, now);
+                var isNight = false;
 
+                if ((sunrise != null) && (sunset != null)) {
+                    if (sunrise.lessThan(now)) { 
+                        //if sunrise was already, take tomorrows
+                        sunrise = Weather.getSunrise(loc, Time.today().add(new Time.Duration(86401)));
+                    }
+                    if (sunset.lessThan(now)) { 
+                        //if sunset was already, take tomorrows
+                        sunset = Weather.getSunset(loc, Time.today().add(new Time.Duration(86401)));
+                    }
+                    if (sunrise.lessThan(sunset)) { 
+                        nextSunEvent = sunrise;
+                        isNight = true;
+                    } else {
+                        nextSunEvent = sunset;
+                        isNight = false;
+                    }
+                    return [nextSunEvent, isNight];
+                }
+                
+            }
+        }
+        return [];
+    }
+}
 
 class Segment34Delegate extends WatchUi.WatchFaceDelegate {
     var screenW = null;

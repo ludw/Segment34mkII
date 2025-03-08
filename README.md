@@ -49,15 +49,27 @@ Pull requests are welcome, but please follow the following guidelines:
  ## TODO / Things people have asked for
 - Goal completion marker
 - Pressure trend
-- GPS Coordinates
 
 Lower priority:
 - Race predictions
+- GPS Coordinates (tricky)
 - Localization
 - Option for left/right alignment of values
 
 
 ## Change log
+2025-03-08 v.1.22.0
+- Setting for week offset, adjusts the week number
+- Purple color themes
+- Added a second AOD field
+
+2025-03-06 v1.21.4
+- Option to not zeropad hour on clock
+
+2025-03-06 v1.21.3
+- New value: Next sun event (next sunset or sunrise), thanks to fganglberger
+- Possibly fixed a crash
+
 2025-03-03 v1.21.2
 - Options for when to activate night theme
 

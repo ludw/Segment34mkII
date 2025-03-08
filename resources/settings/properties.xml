@@ -3,6 +3,7 @@
     <property id="nightColorTheme" type="number">-1</property>
     <property id="nightThemeActivation" type="number">0</property>
     <property id="hourFormat" type="number">0</property>
+    <property id="zeropadHour" type="boolean">true</property>
     <property id="tempUnit" type="number">0</property>
     <property id="windUnit" type="number">0</property>
     <property id="pressureUnit" type="number">0</property>
@@ -24,6 +25,7 @@
     <property id="rightValueShows" type="number">0</property>
     <property id="bottomFieldShows" type="number">17</property>
     <property id="aodFieldShows" type="number">-1</property>
+    <property id="aodRightFieldShows" type="number">-2</property>
     <property id="aodAlignment" type="number">0</property>
     <property id="dateAlignment" type="number">0</property>
     <property id="dateFormat" type="number">0</property>
@@ -35,6 +37,7 @@
     <property id="tzName2" type="string">TZ2</property>
     <property id="icon1" type="number">1</property>
     <property id="icon2" type="number">2</property>
+    <property id="weekOffset" type="number">0</property>
     <property id="pressToOpenTop" type="number">0</property>
     <property id="pressToOpenMiddle" type="number">0</property>
     <property id="pressToOpenBottomLeft" type="number">0</property>
