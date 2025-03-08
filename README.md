@@ -58,6 +58,9 @@ Lower priority:
 
 
 ## Change log
+2025-03-08 v.1.22.1
+- Adjusted purple theme
+
 2025-03-08 v.1.22.0
 - Setting for week offset, adjusts the week number
 - Purple color themes
