@@ -93,8 +93,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var propTzOffset2 = null;
     private var propTzName1 = null;
     private var propTzName2 = null;
-
-    private var propLabelVisibility = null;  /*vds*/
+    private var propLabelVisibility = null;
 
     function initialize() {
         WatchFace.initialize();
@@ -1420,18 +1419,14 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             dDusk.setText(getComplicationDesc(propSunsetFieldShows, 1));
             dSunDownLabel.setText(getComplicationValue(propSunsetFieldShows, 5));
-        }
-
-        //supersede settings based on propLabelVisibility
-        if (propLabelVisibility == 0) {
-            dDawn.setVisible(true); //vds show all = 0
-            dDusk.setVisible(true); //vds show all = 0
-        } else if (propLabelVisibility == 1) {
-            dDawn.setVisible(false); //vds hide all = 1
-            dDusk.setVisible(false); //vds hide all = 1
-        } else if (propLabelVisibility == 1) {
-            dDawn.setVisible(false); //vds hide top 2
-            dDusk.setVisible(false); //vds hide top 2
+            // hide labels if so configured
+            if (propLabelVisibility == 1) {
+                dDawn.setVisible(false);
+                dDusk.setVisible(false);
+            } else if (propLabelVisibility == 2) {
+                dDawn.setVisible(false);
+                dDusk.setVisible(false);
+            }
         }
 
     }
@@ -1785,19 +1780,15 @@ class Segment34View extends WatchUi.WatchFace {
         dActiveDesc.setText(getComplicationDesc(propRightValueShows, right_label_size));
         dActiveLabel.setText(getComplicationValue(propRightValueShows, right_width));
 
-        //supersede settings based on propLabelVisibility
-        if (propLabelVisibility == 0) {
-            dTtrDesc.setVisible(true);    //vds show all = 0
-            dHrDesc.setVisible(true);     //vds show all = 0
-            dActiveDesc.setVisible(true); //vds show all = 0
-        } else if (propLabelVisibility == 1) {
-            dTtrDesc.setVisible(false);    //vds hide all = 1
-            dHrDesc.setVisible(false);     //vds hide all = 1
-            dActiveDesc.setVisible(false); //vds show all = 1
+        // hide labels if so configured
+       if (propLabelVisibility == 1) {
+            dTtrDesc.setVisible(false);
+            dHrDesc.setVisible(false);
+            dActiveDesc.setVisible(false);
         } else if (propLabelVisibility == 3) {
-            dTtrDesc.setVisible(false);    //vds hide bottom = 3
-            dHrDesc.setVisible(false);     //vds hide bottom = 3
-            dActiveDesc.setVisible(false); //vds show bottom = 3
+            dTtrDesc.setVisible(false);
+            dHrDesc.setVisible(false);
+            dActiveDesc.setVisible(false);
         }
     }
 
