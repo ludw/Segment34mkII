@@ -1119,18 +1119,21 @@ class Segment34View extends WatchUi.WatchFace {
                 if(amoled) { return 0x282828; }
                 return 0x555555;
             } else if(colorName.equals("fieldLabel")) {
-                return 0xAA55AA;
+                                if(amoled) { return 0xAA55AA; }
+                return 0xAA00FF;
             } else if(colorName.equals("timeBg")) {
                 if(amoled) { return 0x282828; }
                 return 0x555555;
             } else if(colorName.equals("timeDisplay")) {
-                return 0xAA55AA;
+                if(amoled) { return 0xAA55AA; }
+                return 0xAA00FF;
             } else if(colorName.equals("dateDisplay")) {
                 return 0xFFFFFF;
             } else if(colorName.equals("dateDisplayDim")) {
                 return 0x555555;
             } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xAA55AA;
+                if(amoled) { return 0xAA55AA; }
+                return 0xAA00FF;
             } else if(colorName.equals("dawnDuskValue")) {
                 return 0xFFFFFF;
             } else if(colorName.equals("notifications")) {
