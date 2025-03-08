@@ -18,6 +18,7 @@
     <label id="DateLabel" x="23" y="302" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xfbcb77" />
     <label id="NotifLabel" x="379" y="302" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x00AAFF" />
     <label id="SecondsLabel" x="433" y="302" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xfbcb77" />
+    <label id="AODRightLabel" x="433" y="302" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xfbcb77" />
 
     <label id="TTRDesc" x="60" y="340" font="@Fonts.id_storre" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x55AAAA" text="RECOVERY HRS:" />
     <label id="TTRBg" x="153" y="355" font="@Fonts.id_led_big" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x0e333c" text="####" />

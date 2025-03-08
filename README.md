@@ -59,9 +59,10 @@ Lower priority:
 
 
 ## Change log
-2025-03-08 v.1.21.5
+2025-03-08 v.1.22.0
 - Setting for week offset, adjusts the week number
 - Purple color themes
+- Added a second AOD field
 
 2025-03-06 v1.21.4
 - Option to not zeropad hour on clock

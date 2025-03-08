@@ -32,6 +32,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var dAodPattern = null;
     private var dGradient = null;
     private var dAodDateLabel = null;
+    private var dAodRightLabel = null;
     private var dTimeLabel = null;
     private var dDateLabel = null;
     private var dTimeBg = null;
@@ -71,6 +72,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var propShowClockBg = null;
     private var propShowDataBg = null;
     private var propAodFieldShows = null;
+    private var propAodRightFieldShows = null;
     private var propBottomFieldShows = null;
     private var propAodAlignment = null;
     private var propDateAlignment = null;
@@ -246,6 +248,7 @@ class Segment34View extends WatchUi.WatchFace {
         dAodPattern = View.findDrawableById("aodPattern") as Drawable;
         dGradient = View.findDrawableById("gradient") as Drawable;
         dAodDateLabel = View.findDrawableById("AODDateLabel") as Text;
+        dAodRightLabel = View.findDrawableById("AODRightLabel") as Text;
         dTimeLabel = View.findDrawableById("TimeLabel") as Text;
         dDateLabel = View.findDrawableById("DateLabel") as Text;
         dTimeBg = View.findDrawableById("TimeBg") as Text;
@@ -284,6 +287,7 @@ class Segment34View extends WatchUi.WatchFace {
         propShowClockBg = Application.Properties.getValue("showClockBg");
         propShowDataBg = Application.Properties.getValue("showDataBg");
         propAodFieldShows = Application.Properties.getValue("aodFieldShows");
+        propAodRightFieldShows = Application.Properties.getValue("aodRightFieldShows");
         propLeftValueShows = Application.Properties.getValue("leftValueShows");
         propMiddleValueShows = Application.Properties.getValue("middleValueShows");
         propRightValueShows = Application.Properties.getValue("rightValueShows");
@@ -343,9 +347,16 @@ class Segment34View extends WatchUi.WatchFace {
             } else {
                 dAodDateLabel.setVisible(false);
             }
+            if(propAodRightFieldShows != -2) {
+                dAodRightLabel.setVisible(true);
+            } else {
+                dAodRightLabel.setVisible(false);
+            }
             dAodPattern.setLocation(clock_time.min % 2, dAodPattern.locY);
             setAlignment(propAodAlignment, dAodDateLabel, (clock_time.min % 3) - 1);
+            alignAODRightField((clock_time.min % 3) - 1);
             dAodDateLabel.setColor(getColor("dateDisplayDim"));
+            dAodRightLabel.setColor(getColor("dateDisplayDim"));
             dbackground.setVisible(false);
         } else {
             dc.setAntiAlias(true);
@@ -387,8 +398,10 @@ class Segment34View extends WatchUi.WatchFace {
         dTimeBg.setVisible(hide_In_aod and propShowClockBg);
         dBattLabel.setVisible(hide_battery);
         dBattBg.setVisible(hide_battery);
+        dIcon1.setVisible(hide_In_aod);
+        dIcon2.setVisible(hide_In_aod);
+        
         dTimeLabel.setColor(getColor("timeDisplay"));
-
         dTimeBg.setColor(getColor("timeBg"));
         dTtrBg.setColor(getColor("fieldBg"));
         dHrBg.setColor(getColor("fieldBg"));
@@ -437,6 +450,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else {
                 dDateLabel.setFont(ledMidFont);
                 dAodDateLabel.setFont(ledMidFont);
+                dAodRightLabel.setFont(ledMidFont);
                 dSecondsLabel.setFont(ledMidFont);
                 dNotifLabel.setFont(ledMidFont);
                 dWeatherLabel1.setFont(ledMidFont);
@@ -446,6 +460,7 @@ class Segment34View extends WatchUi.WatchFace {
             if(canBurnIn) {
                 dAodPattern.setVisible(false);
                 dAodDateLabel.setVisible(false);
+                dAodRightLabel.setVisible(false);
 
                 if(getColor("background") == 0xFFFFFF) {
                     dGradient.setVisible(false);
@@ -501,6 +516,15 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
+    hidden function alignAODRightField(offset as Number) as Void {
+        var x = 0;
+        if(screenHeight == 360) { x = 345; }
+        if(screenHeight == 390) { x = 371; }
+        if(screenHeight == 416) { x = 385; }
+        if(screenHeight == 454) { x = 433; }
+
+        dAodRightLabel.setLocation(x + offset, dAodRightLabel.locY);
+    }
     hidden function alignNotification(setting as Number) as Void {
         var x = 0;
         if(setting == 1) { // Date is centered, left align notif
@@ -1626,6 +1650,8 @@ class Segment34View extends WatchUi.WatchFace {
                 }
                 dAodDateLabel.setText(Lang.format("$1$$2$", [getComplicationValue(propAodFieldShows, 10), unit]));
             }
+
+            dAodRightLabel.setText(getComplicationValue(propAodRightFieldShows, 3));
         }
     }
 

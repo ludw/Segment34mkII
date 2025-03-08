@@ -42,6 +42,7 @@
             <listEntry value="11">Orange</listEntry>
             <listEntry value="5">Peachy Orange</listEntry>
             <listEntry value="20">Red</listEntry>
+            <listEntry value="22">Purple</listEntry>
             <listEntry value="4">White on turquoise</listEntry>
             <listEntry value="6">White on red</listEntry>
             <listEntry value="7">White on blue</listEntry>
@@ -52,6 +53,7 @@
             <listEntry value="15">Blue on white (not recommended for AMOLED)</listEntry>
             <listEntry value="16">Green on white (not recommended for AMOLED)</listEntry>
             <listEntry value="17">Orange on white (not recommended for AMOLED)</listEntry>
+            <listEntry value="21">Purple on white (not recommended for AMOLED)</listEntry>
         </settingConfig>
     </setting>
 
@@ -562,6 +564,55 @@
             <listEntry value="25">Training status *</listEntry>
             <listEntry value="16">Alternative Timezone 1</listEntry>
             <listEntry value="41">Alternative Timezone 2</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.aodRightFieldShows" title="Second Always On Field (to the right):">
+        <settingConfig type="list">
+            <listEntry value="-2">Hidden</listEntry>
+            <listEntry value="0">Active min / week</listEntry>
+            <listEntry value="1">Active min / day</listEntry>
+            <listEntry value="2">Distance (km) / day</listEntry>
+            <listEntry value="3">Distance (miles) / day</listEntry>
+            <listEntry value="21">Run distance (km) / week *</listEntry>
+            <listEntry value="22">Run distance (miles) / week *</listEntry>
+            <listEntry value="23">Bike distance (km) / week *</listEntry>
+            <listEntry value="24">Bike distance (miles) / week *</listEntry>
+            <listEntry value="32">Total distance past 7 days (km)</listEntry>
+            <listEntry value="33">Total distance past 7 days (miles)</listEntry>
+            <listEntry value="4">Floors climbed / day</listEntry>
+            <listEntry value="5">Meters climbed / day</listEntry>
+            <listEntry value="6">Time to Recovery (h)</listEntry>
+            <listEntry value="7">VO2 Max Running</listEntry>
+            <listEntry value="8">VO2 Max Cycling</listEntry>
+            <listEntry value="9">Respiration Rate</listEntry>
+            <listEntry value="10">Heart Rate</listEntry>
+            <listEntry value="11">Calories (kcal) / day</listEntry>
+            <listEntry value="29">Active calories (kcal) / day</listEntry>
+            <listEntry value="12">Altitude (m)</listEntry>
+            <listEntry value="15">Altitude (ft)</listEntry>
+            <listEntry value="13">Stress score</listEntry>
+            <listEntry value="14">Body battery</listEntry>
+            <listEntry value="39">Sunrise time</listEntry>
+            <listEntry value="40">Sunset time</listEntry>
+            <listEntry value="55">Next sun event time</listEntry>
+            <listEntry value="16">Alternative Timezone 1</listEntry>
+            <listEntry value="41">Alternative Timezone 2</listEntry>
+            <listEntry value="26">Barometric Pressure, raw</listEntry>
+            <listEntry value="30">Barometric Pressure, sea level</listEntry>
+            <listEntry value="27">Weight (kg)</listEntry>
+            <listEntry value="28">Weight (lbs)</listEntry>
+            <listEntry value="31">Week number</listEntry>
+            <listEntry value="34">Battery percentage</listEntry>
+            <listEntry value="35">Battery days remaining *</listEntry>
+            <listEntry value="36">Notification count</listEntry>
+            <listEntry value="37">Solar intensity</listEntry>
+            <listEntry value="38">Sensor temperature</listEntry>
+            <listEntry value="42">Alarms (count)</listEntry>
+            <listEntry value="43">Weather: Daily high temperature</listEntry>
+            <listEntry value="44">Weather: Daily low temperature</listEntry>
+            <listEntry value="53">Weather: Temperature</listEntry>
+            <listEntry value="54">Weather: Chance of Precipitation</listEntry>
         </settingConfig>
     </setting>
 

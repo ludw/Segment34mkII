@@ -18,6 +18,7 @@
     <label id="DateLabel" x="15" y="236" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xfbcb77" />
     <label id="NotifLabel" x="297" y="236" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x00AAFF" />
     <label id="SecondsLabel" x="345" y="236" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xfbcb77" />
+    <label id="AODRightLabel" x="345" y="236" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xfbcb77" />
 
     <label id="TTRDesc" x="50" y="266" font="@Fonts.id_smol" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0x55AAAA" text="FLOORS:" />
     <label id="TTRBg" x="119" y="280" font="@Fonts.id_led_big" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x0e333c" text="###" />
