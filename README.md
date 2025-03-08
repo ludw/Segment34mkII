@@ -58,6 +58,9 @@ Lower priority:
 
 
 ## Change log
+2025-03-08 v.1.22.2
+- Issue with weight lbs label
+
 2025-03-08 v.1.22.1
 - Adjusted purple theme
 

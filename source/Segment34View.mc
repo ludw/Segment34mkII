@@ -2358,7 +2358,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 28) { // Weight lbs
             if(labelSize == 1) { desc = "LBS:"; }
             if(labelSize == 2) { desc = "WEIGHT:"; }
-            if(labelSize == 3) { desc = "WEIGHT KG:"; }
+            if(labelSize == 3) { desc = "WEIGHT LBS:"; }
         } else if(complicationType == 29) { // Act Calories / day
             if(labelSize == 1) { desc = "A CAL:"; }
             if(labelSize == 2) { desc = "ACT. CAL:"; }
