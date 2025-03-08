@@ -49,7 +49,6 @@ Pull requests are welcome, but please follow the following guidelines:
  ## TODO / Things people have asked for
 - Goal completion marker
 - Pressure trend
-- HR in AOD
 
 Lower priority:
 - Race predictions
