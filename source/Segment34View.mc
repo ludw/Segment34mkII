@@ -94,6 +94,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var propTzOffset2 = null;
     private var propTzName1 = null;
     private var propTzName2 = null;
+    private var propWeekOffset = null;
 
 
     function initialize() {
@@ -309,6 +310,7 @@ class Segment34View extends WatchUi.WatchFace {
         propTzOffset2 = Application.Properties.getValue("tzOffset2");
         propTzName1 = Application.Properties.getValue("tzName1");
         propTzName2 = Application.Properties.getValue("tzName2");
+        propWeekOffset = Application.Properties.getValue("weekOffset");
 
         var fontVariant = Application.Properties.getValue("smallFontVariant");
         if(fontVariant == 0) {
@@ -2592,23 +2594,27 @@ class Segment34View extends WatchUi.WatchFace {
         var given_day_of_year = julianDay(year, month, day);
         var day_of_week = (first_day_of_year + 3) % 7;
         var week_of_year = (given_day_of_year - first_day_of_year + day_of_week + 4) / 7;
+        var ret = 0;
         if (week_of_year == 53) {
             if (day_of_week == 6) {
-                return week_of_year;
+                ret = week_of_year;
             } else if (day_of_week == 5 && isLeapYear(year)) {
-                return week_of_year;
+                ret = week_of_year;
             } else {
-                return 1;
+                ret = 1;
             }
-        }
-        else if (week_of_year == 0) {
+        } else if (week_of_year == 0) {
             first_day_of_year = julianDay(year - 1, 1, 1);
             day_of_week = (first_day_of_year + 3) % 7;
-            return (given_day_of_year - first_day_of_year + day_of_week + 4) / 7;
+            ret = (given_day_of_year - first_day_of_year + day_of_week + 4) / 7;
         }
         else {
-            return week_of_year;
+            ret = week_of_year;
         }
+        if(propWeekOffset != 0) {
+            ret = ret + propWeekOffset;
+        }
+        return ret;
     }
 
 

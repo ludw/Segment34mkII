@@ -93,7 +93,7 @@
         <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.sunriseFieldShows" title="Sunrise field shows:">
+    <setting propertyKey="@Properties.sunriseFieldShows" title="Sunrise field shows: (* limited device support)">
             <settingConfig type="list">
                 <listEntry value="-2">Hidden</listEntry>
                 <listEntry value="39">Sunrise time</listEntry>
@@ -311,7 +311,7 @@
     </setting>
 
 
-    <setting propertyKey="@Properties.weatherLine1Shows" title="Line 1 above clock shows:">
+    <setting propertyKey="@Properties.weatherLine1Shows" title="Line 1 above clock shows: (* limited device support)">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
             <listEntry value="45">Temperature, Wind, Feels like</listEntry>
@@ -353,7 +353,7 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.leftValueShows" title="Bottom Left value:">
+    <setting propertyKey="@Properties.leftValueShows" title="Bottom Left value: (* limited device support)">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
             <listEntry value="0">Active min / week</listEntry>
@@ -575,6 +575,10 @@
                 <listEntry value="0">Left</listEntry>
                 <listEntry value="1">Center</listEntry>
             </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.weekOffset" title="Week number offset (0 = normal week number)">
+        <settingConfig type="numeric" />
     </setting>
 
     <setting propertyKey="@Properties.pressToOpenTop" title="Press top third to open:">

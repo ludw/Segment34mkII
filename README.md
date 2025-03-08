@@ -49,15 +49,21 @@ Pull requests are welcome, but please follow the following guidelines:
  ## TODO / Things people have asked for
 - Goal completion marker
 - Pressure trend
-- GPS Coordinates
+- Purple color themes
+- Week offset
+- HR in AOD
 
 Lower priority:
 - Race predictions
+- GPS Coordinates (tricky)
 - Localization
 - Option for left/right alignment of values
 
 
 ## Change log
+2025-03-08 v.1.21.5
+- Setting for week offset, adjusts the week number
+
 2025-03-06 v1.21.4
 - Option to not zeropad hour on clock
 
