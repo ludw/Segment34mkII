@@ -921,7 +921,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(colorName.equals("valueDisplay")) {
                 return 0xFFFFFF;
             }
-        } else if(theme_to_use == 13 or theme_to_use == 14 or theme_to_use == 15 or theme_to_use == 16 or theme_to_use == 17) { // on white
+        } else if(theme_to_use == 13 or theme_to_use == 14 or theme_to_use == 15 or theme_to_use == 16 or theme_to_use == 17 or theme_to_use == 21) { // on white
             if(colorName.equals("fieldBg")) {
                 if(amoled) { return 0xCCCCCC; }
                 return 0xAAAAAA;
@@ -936,6 +936,8 @@ class Segment34View extends WatchUi.WatchFace {
                     return 0x00AA00;
                 } else if(theme_to_use == 17) { // Orange on white
                     return 0x555555;
+                } else if(theme_to_use == 21) { // Purple on white
+                    return 0xAA00FF;
                 }
             } else if(colorName.equals("timeBg")) {
                 if(amoled) { return 0xCCCCCC; }
@@ -956,6 +958,8 @@ class Segment34View extends WatchUi.WatchFace {
                 } else if(theme_to_use == 17) { // Orange on white
                     if(amoled and isSleeping) { return 0xff7600; }
                     return 0xFF5500;
+                } else if(theme_to_use == 21) { // Purple on white
+                    return 0xAA00FF;
                 }
             } else if(colorName.equals("dateDisplay")) {
                 if(amoled) { return 0x000000; }
@@ -1079,6 +1083,36 @@ class Segment34View extends WatchUi.WatchFace {
                 return 0x55AAFF;
             } else if(colorName.equals("stress")) {
                 return 0xFF5555;
+            } else if(colorName.equals("bodybattery")) {
+                return 0x55AAFF;
+            } else if(colorName.equals("background")) {
+                return 0x000000;
+            } else if(colorName.equals("valueDisplay")) {
+                return 0xFFFFFF;
+            }
+        } else if(theme_to_use == 22) { // purple on black
+            if(colorName.equals("fieldBg")) {
+                if(amoled) { return 0x282828; }
+                return 0x555555;
+            } else if(colorName.equals("fieldLabel")) {
+                return 0xAA55AA;
+            } else if(colorName.equals("timeBg")) {
+                if(amoled) { return 0x282828; }
+                return 0x555555;
+            } else if(colorName.equals("timeDisplay")) {
+                return 0xAA55AA;
+            } else if(colorName.equals("dateDisplay")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("dateDisplayDim")) {
+                return 0x555555;
+            } else if(colorName.equals("dawnDuskLabel")) {
+                return 0xAA55AA;
+            } else if(colorName.equals("dawnDuskValue")) {
+                return 0xFFFFFF;
+            } else if(colorName.equals("notifications")) {
+                return 0x55AAFF;
+            } else if(colorName.equals("stress")) {
+                return 0xFFAA00;
             } else if(colorName.equals("bodybattery")) {
                 return 0x55AAFF;
             } else if(colorName.equals("background")) {
