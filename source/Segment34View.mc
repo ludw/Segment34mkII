@@ -97,7 +97,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var propTzName1 = null;
     private var propTzName2 = null;
     private var propWeekOffset = null;
-
+    private var propLabelVisibility = null;
 
     function initialize() {
         WatchFace.initialize();
@@ -307,6 +307,8 @@ class Segment34View extends WatchUi.WatchFace {
         propWeatherLine2Shows = Application.Properties.getValue("weatherLine2Shows");
         propSunriseFieldShows = Application.Properties.getValue("sunriseFieldShows");
         propSunsetFieldShows = Application.Properties.getValue("sunsetFieldShows");
+        propLabelVisibility = Application.Properties.getValue("labelVisibility");
+
         propDateFormat = Application.Properties.getValue("dateFormat");
         propShowStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery");
         propShowNotificationCount = Application.Properties.getValue("showNotificationCount");
@@ -1487,7 +1489,13 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             dDusk.setText(getComplicationDesc(propSunsetFieldShows, 1));
             dSunDownLabel.setText(getComplicationValue(propSunsetFieldShows, 5));
+            // hide labels if so configured
+            if (propLabelVisibility == 1 or propLabelVisibility == 2) {
+                dDawn.setVisible(false);
+                dDusk.setVisible(false);
+            }
         }
+
     }
 
     hidden function setNotif(dc) as Void {
@@ -1834,6 +1842,13 @@ class Segment34View extends WatchUi.WatchFace {
         }
         dActiveDesc.setText(getComplicationDesc(propRightValueShows, right_label_size));
         dActiveLabel.setText(getComplicationValue(propRightValueShows, right_width));
+
+        // hide labels if so configured
+       if (propLabelVisibility == 1 or propLabelVisibility == 3) {
+            dTtrDesc.setVisible(false);
+            dHrDesc.setVisible(false);
+            dActiveDesc.setVisible(false);
+        }
     }
 
     hidden function getComplicationValue(complicationType as Number, width as Number) as String {

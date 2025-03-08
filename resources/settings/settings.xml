@@ -65,35 +65,7 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.showClockBg" title="Show clock background">
-        <settingConfig type="boolean" />
-    </setting>
-
-    <setting propertyKey="@Properties.showDataBg" title="Show data fields background">
-        <settingConfig type="boolean" />
-    </setting>
-
-    <setting propertyKey="@Properties.showNotificationCount" title="Show Notification Count">
-        <settingConfig type="boolean" />
-    </setting>
-
-    <setting propertyKey="@Properties.showSeconds" title="Show Seconds in Active mode">
-        <settingConfig type="boolean" />
-    </setting>
-
-    <setting propertyKey="@Properties.alwaysShowSeconds" title="Show seconds in Inactive mode (MIP screens only)">
-        <settingConfig type="boolean" />
-    </setting>
-
     <setting propertyKey="@Properties.zeropadHour" title="Zeropad hour on clock">
-        <settingConfig type="boolean" />
-    </setting>
-
-    <setting propertyKey="@Properties.showStressAndBodyBattery" title="Show Stress (orange) and Body Battery (blue) bars">
-        <settingConfig type="boolean" />
-    </setting>
-
-    <setting propertyKey="@Properties.showMoonPhase" title="Show Moon Phase">
         <settingConfig type="boolean" />
     </setting>
 
@@ -129,7 +101,7 @@
             </settingConfig>
     </setting>
 
-        <setting propertyKey="@Properties.sunsetFieldShows" title="Sunset field shows:">
+    <setting propertyKey="@Properties.sunsetFieldShows" title="Sunset field shows:">
             <settingConfig type="list">
                 <listEntry value="-2">Hidden</listEntry>
                 <listEntry value="39">Sunrise time</listEntry>
@@ -768,5 +740,44 @@
             <listEntry value="37">Solar Input</listEntry>
         </settingConfig>
     </setting>
+
+    <group id="groupName" title="Show/Hide Settings">
+        <setting propertyKey="@Properties.showClockBg" title="Show clock background">
+            <settingConfig type="boolean" />
+        </setting>
+
+        <setting propertyKey="@Properties.showDataBg" title="Show data fields background">
+            <settingConfig type="boolean" />
+        </setting>
+
+        <setting propertyKey="@Properties.showNotificationCount" title="Show Notification Count">
+            <settingConfig type="boolean" />
+        </setting>
+
+        <setting propertyKey="@Properties.showSeconds" title="Show Seconds in Active mode">
+            <settingConfig type="boolean" />
+        </setting>
+
+        <setting propertyKey="@Properties.alwaysShowSeconds" title="Show seconds in Inactive mode (MIP screens only)">
+            <settingConfig type="boolean" />
+        </setting>
+
+        <setting propertyKey="@Properties.showStressAndBodyBattery" title="Show Stress (orange) and Body Battery (blue) bars">
+            <settingConfig type="boolean" />
+        </setting>
+
+        <setting propertyKey="@Properties.showMoonPhase" title="Show Moon Phase">
+            <settingConfig type="boolean" />
+        </setting>
+
+        <setting propertyKey="@Properties.labelVisibility" title="Show/Hide Labels">
+                <settingConfig type="list">
+                    <listEntry value="0">Show All Labels</listEntry>
+                    <listEntry value="1">Hide All Labels</listEntry>
+                    <listEntry value="2">Hide Top Labels</listEntry>
+                    <listEntry value="3">Hide Bottom Labels</listEntry>
+                </settingConfig>
+        </setting>
+    </group>
 
 </settings>
