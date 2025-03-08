@@ -86,11 +86,6 @@ class Segment34View extends WatchUi.WatchFace {
     private var propWeatherLine2Shows = null;
     private var propSunriseFieldShows = null;
     private var propSunsetFieldShows = null;
-    private var propShowSunriseLabel = null;
-    private var propShowSunsetLabel = null;
-    private var propShowLeftLabel = null;
-    private var propShowMiddleLabel = null;
-    private var propShowRightLabel = null;
     private var propDateFormat = null;
     private var propShowStressAndBodyBattery = null;
     private var propShowNotificationCount = null;
@@ -99,6 +94,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var propTzName1 = null;
     private var propTzName2 = null;
 
+    private var propLabelVisibility = null;  /*vds*/
 
     function initialize() {
         WatchFace.initialize();
@@ -306,11 +302,7 @@ class Segment34View extends WatchUi.WatchFace {
         propSunriseFieldShows = Application.Properties.getValue("sunriseFieldShows");
         propSunsetFieldShows = Application.Properties.getValue("sunsetFieldShows");
 
-        propShowSunriseLabel = Application.Properties.getValue("showSunriseLabel");
-        propShowSunsetLabel = Application.Properties.getValue("showSunsetLabel");
-        propShowLeftLabel = Application.Properties.getValue("showLeftLabel");
-        propShowMiddleLabel = Application.Properties.getValue("showMiddleLabel");
-        propShowRightLabel = Application.Properties.getValue("showRightLabel");
+        propLabelVisibility = Application.Properties.getValue("labelVisibility");
 
         propDateFormat = Application.Properties.getValue("dateFormat");
         propShowStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery");
@@ -1414,16 +1406,11 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setSunUpDown(dc) as Void {
-
         if(propSunriseFieldShows == -2) {
             dDawn.setText("");
             dSunUpLabel.setText("");
         } else {
-            if(propShowSunriseLabel) {
-                dDawn.setText(getComplicationDesc(propSunriseFieldShows, 1));
-            } else {
-                dDawn.setText("");
-            }
+            dDawn.setText(getComplicationDesc(propSunriseFieldShows, 1));
             dSunUpLabel.setText(getComplicationValue(propSunriseFieldShows, 5));
         }
 
@@ -1431,12 +1418,20 @@ class Segment34View extends WatchUi.WatchFace {
             dDusk.setText("");
             dSunDownLabel.setText("");
         } else {
-            if(propShowSunsetLabel) {
-                dDusk.setText(getComplicationDesc(propSunsetFieldShows, 1));
-            } else {
-                dDusk.setText("");
-            }
+            dDusk.setText(getComplicationDesc(propSunsetFieldShows, 1));
             dSunDownLabel.setText(getComplicationValue(propSunsetFieldShows, 5));
+        }
+
+        //supersede settings based on propLabelVisibility
+        if (propLabelVisibility == 0) {
+            dDawn.setVisible(true); //vds show all = 0
+            dDusk.setVisible(true); //vds show all = 0
+        } else if (propLabelVisibility == 1) {
+            dDawn.setVisible(false); //vds hide all = 1
+            dDusk.setVisible(false); //vds hide all = 1
+        } else if (propLabelVisibility == 1) {
+            dDawn.setVisible(false); //vds hide top 2
+            dDusk.setVisible(false); //vds hide top 2
         }
 
     }
@@ -1769,12 +1764,7 @@ class Segment34View extends WatchUi.WatchFace {
             left_width = 4;
             left_label_size = 3;
         }
-
-        if(propShowLeftLabel) {
-            dTtrDesc.setText(getComplicationDesc(propLeftValueShows, left_label_size));
-        } else {
-            dTtrDesc.setText("");
-        }
+        dTtrDesc.setText(getComplicationDesc(propLeftValueShows, left_label_size));
         dTtrLabel.setText(getComplicationValue(propLeftValueShows, left_width));
 
         var mid_width = 3;
@@ -1783,11 +1773,7 @@ class Segment34View extends WatchUi.WatchFace {
             mid_width = 4;
             mid_label_size = 3;
         }
-        if(propShowMiddleLabel) {
-            dHrDesc.setText(getComplicationDesc(propMiddleValueShows, mid_label_size));
-        } else {
-            dHrDesc.setText("");
-        }
+        dHrDesc.setText(getComplicationDesc(propMiddleValueShows, mid_label_size));
         dHrLabel.setText(getComplicationValue(propMiddleValueShows, mid_width));
 
         var right_width = 4;
@@ -1796,12 +1782,23 @@ class Segment34View extends WatchUi.WatchFace {
             right_width = 3;
             right_label_size = 2;
         }
-        if(propShowRightLabel) {
-            dActiveDesc.setText(getComplicationDesc(propRightValueShows, right_label_size));
-        } else {
-            dActiveDesc.setText("");
-        }
+        dActiveDesc.setText(getComplicationDesc(propRightValueShows, right_label_size));
         dActiveLabel.setText(getComplicationValue(propRightValueShows, right_width));
+
+        //supersede settings based on propLabelVisibility
+        if (propLabelVisibility == 0) {
+            dTtrDesc.setVisible(true);    //vds show all = 0
+            dHrDesc.setVisible(true);     //vds show all = 0
+            dActiveDesc.setVisible(true); //vds show all = 0
+        } else if (propLabelVisibility == 1) {
+            dTtrDesc.setVisible(false);    //vds hide all = 1
+            dHrDesc.setVisible(false);     //vds hide all = 1
+            dActiveDesc.setVisible(false); //vds show all = 1
+        } else if (propLabelVisibility == 3) {
+            dTtrDesc.setVisible(false);    //vds hide bottom = 3
+            dHrDesc.setVisible(false);     //vds hide bottom = 3
+            dActiveDesc.setVisible(false); //vds show bottom = 3
+        }
     }
 
     hidden function getComplicationValue(complicationType as Number, width as Number) as String {

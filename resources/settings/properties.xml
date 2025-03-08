@@ -9,8 +9,6 @@
     <property id="showNotificationCount" type="boolean">true</property>
     <property id="showSeconds" type="boolean">true</property>
     <property id="showStressAndBodyBattery" type="boolean">true</property>
-    <property id="showSunriseLabel" type="boolean">true</property>
-    <property id="showSunsetLabel" type="boolean">true</property>
     <property id="showSunriseSunset" type="boolean">true</property>
     <property id="sunriseFieldShows" type="number">39</property>
     <property id="sunsetFieldShows" type="number">40</property>
@@ -24,9 +22,6 @@
     <property id="leftValueShows" type="number">6</property>
     <property id="middleValueShows" type="number">10</property>
     <property id="rightValueShows" type="number">0</property>
-    <property id="showLeftLabel" type="boolean">true</property>
-    <property id="showMiddleLabel" type="boolean">true</property>
-    <property id="showRightLabel" type="boolean">true</property>
     <property id="bottomFieldShows" type="number">17</property>
     <property id="aodFieldShows" type="number">-1</property>
     <property id="aodAlignment" type="number">0</property>
@@ -45,4 +40,5 @@
     <property id="pressToOpenBottomLeft" type="number">0</property>
     <property id="pressToOpenBottomCenter" type="number">0</property>
     <property id="pressToOpenBottomRight" type="number">0</property>
+    <property id="labelVisibility" type="number">0</property>
 </properties>
