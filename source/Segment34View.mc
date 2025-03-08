@@ -307,7 +307,6 @@ class Segment34View extends WatchUi.WatchFace {
         propWeatherLine2Shows = Application.Properties.getValue("weatherLine2Shows");
         propSunriseFieldShows = Application.Properties.getValue("sunriseFieldShows");
         propSunsetFieldShows = Application.Properties.getValue("sunsetFieldShows");
-
         propLabelVisibility = Application.Properties.getValue("labelVisibility");
 
         propDateFormat = Application.Properties.getValue("dateFormat");
@@ -1491,10 +1490,7 @@ class Segment34View extends WatchUi.WatchFace {
             dDusk.setText(getComplicationDesc(propSunsetFieldShows, 1));
             dSunDownLabel.setText(getComplicationValue(propSunsetFieldShows, 5));
             // hide labels if so configured
-            if (propLabelVisibility == 1) {
-                dDawn.setVisible(false);
-                dDusk.setVisible(false);
-            } else if (propLabelVisibility == 2) {
+            if (propLabelVisibility == 1 or propLabelVisibility == 2) {
                 dDawn.setVisible(false);
                 dDusk.setVisible(false);
             }
@@ -1848,11 +1844,7 @@ class Segment34View extends WatchUi.WatchFace {
         dActiveLabel.setText(getComplicationValue(propRightValueShows, right_width));
 
         // hide labels if so configured
-       if (propLabelVisibility == 1) {
-            dTtrDesc.setVisible(false);
-            dHrDesc.setVisible(false);
-            dActiveDesc.setVisible(false);
-        } else if (propLabelVisibility == 3) {
+       if (propLabelVisibility == 1 or propLabelVisibility == 3) {
             dTtrDesc.setVisible(false);
             dHrDesc.setVisible(false);
             dActiveDesc.setVisible(false);
