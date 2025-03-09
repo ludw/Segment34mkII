@@ -58,7 +58,7 @@ Lower priority:
 
 
 ## Change log
-2025-03-08 v.1.22.3
+2025-03-09 v.1.22.3
 - Option for hiding labels thanks to vinceskahan
 
 2025-03-08 v.1.22.2
