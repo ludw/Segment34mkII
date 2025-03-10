@@ -567,6 +567,7 @@
             <listEntry value="25">Training status *</listEntry>
             <listEntry value="16">Alternative Timezone 1</listEntry>
             <listEntry value="41">Alternative Timezone 2</listEntry>
+            <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
         </settingConfig>
     </setting>
 
