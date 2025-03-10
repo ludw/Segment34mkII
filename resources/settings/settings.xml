@@ -290,6 +290,7 @@
     <setting propertyKey="@Properties.weatherLine1Shows" title="Line 1 above clock shows: (* limited device support)">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
+            <listEntry value="-1">Date</listEntry>
             <listEntry value="45">Temperature, Wind, Feels like</listEntry>
             <listEntry value="46">Temperature, Wind</listEntry>
             <listEntry value="47">Temperature, Wind, Humidity</listEntry>
@@ -311,6 +312,29 @@
     <setting propertyKey="@Properties.weatherLine2Shows" title="Line 2 above clock shows:">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
+            <listEntry value="-1">Date</listEntry>
+            <listEntry value="45">Temperature, Wind, Feels like</listEntry>
+            <listEntry value="46">Temperature, Wind</listEntry>
+            <listEntry value="47">Temperature, Wind, Humidity</listEntry>
+            <listEntry value="48">Temperature, Wind, High/Low</listEntry>
+            <listEntry value="49">Temperature, Wind, Percipitation chance</listEntry>
+            <listEntry value="51">Temperature, Humidity, High/Low</listEntry>
+            <listEntry value="52">Temperature, Percipitation chance, High/Low</listEntry>
+            <listEntry value="20">Weather conditions + Percipitation chance</listEntry>
+            <listEntry value="50">Weather conditions</listEntry>
+            <listEntry value="17">Steps / day</listEntry>
+            <listEntry value="19">Wheelchair pushes / day *</listEntry>
+            <listEntry value="11">Calories (kcal) / day</listEntry>
+            <listEntry value="12">Altitude (m)</listEntry>
+            <listEntry value="15">Altitude (ft)</listEntry>
+            <listEntry value="25">Training status *</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.dateFieldShows" title="Line below clock shows:">
+        <settingConfig type="list">
+            <listEntry value="-2">Hidden</listEntry>
+            <listEntry value="-1">Date</listEntry>
             <listEntry value="45">Temperature, Wind, Feels like</listEntry>
             <listEntry value="46">Temperature, Wind</listEntry>
             <listEntry value="47">Temperature, Wind, Humidity</listEntry>

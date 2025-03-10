@@ -73,6 +73,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var propShowDataBg = null;
     private var propAodFieldShows = null;
     private var propAodRightFieldShows = null;
+    private var propDateFieldShows = null;
     private var propBottomFieldShows = null;
     private var propAodAlignment = null;
     private var propDateAlignment = null;
@@ -288,6 +289,7 @@ class Segment34View extends WatchUi.WatchFace {
         propShowDataBg = Application.Properties.getValue("showDataBg");
         propAodFieldShows = Application.Properties.getValue("aodFieldShows");
         propAodRightFieldShows = Application.Properties.getValue("aodRightFieldShows");
+        propDateFieldShows = Application.Properties.getValue("dateFieldShows");
         propLeftValueShows = Application.Properties.getValue("leftValueShows");
         propMiddleValueShows = Application.Properties.getValue("middleValueShows");
         propRightValueShows = Application.Properties.getValue("rightValueShows");
@@ -308,7 +310,6 @@ class Segment34View extends WatchUi.WatchFace {
         propSunriseFieldShows = Application.Properties.getValue("sunriseFieldShows");
         propSunsetFieldShows = Application.Properties.getValue("sunsetFieldShows");
         propLabelVisibility = Application.Properties.getValue("labelVisibility");
-
         propDateFormat = Application.Properties.getValue("dateFormat");
         propShowStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery");
         propShowNotificationCount = Application.Properties.getValue("showNotificationCount");
@@ -1565,102 +1566,16 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setDate(dc) as Void {
-        var now = Time.now();
-        var today = Time.Gregorian.info(now, Time.FORMAT_SHORT);
-        var value = "";
+        var unit = "";
 
-        switch(propDateFormat) {
-            case 0: // Default: THU, 14 MAR 2024
-                value = Lang.format("$1$, $2$ $3$ $4$", [
-                    dayName(today.day_of_week),
-                    today.day,
-                    monthName(today.month),
-                    today.year
-                ]);
-                break;
-            case 1: // ISO: 2024-03-14
-                value = Lang.format("$1$-$2$-$3$", [
-                    today.year,
-                    today.month.format("%02d"),
-                    today.day.format("%02d")
-                ]);
-                break;
-            case 2: // US: 03/14/2024
-                value = Lang.format("$1$/$2$/$3$", [
-                    today.month.format("%02d"),
-                    today.day.format("%02d"),
-                    today.year
-                ]);
-                break;
-            case 3: // EU: 14.03.2024
-                value = Lang.format("$1$.$2$.$3$", [
-                    today.day.format("%02d"),
-                    today.month.format("%02d"),
-                    today.year
-                ]);
-                break;
-            case 4: // THU, 14 MAR (Week number)
-                value = Lang.format("$1$, $2$ $3$ (W$4$)", [
-                    dayName(today.day_of_week),
-                    today.day,
-                    monthName(today.month),
-                    isoWeekNumber(today.year, today.month, today.day)
-                ]);
-                break;
-            case 5: // THU, 14 MAR 2024 (Week number)
-                value = Lang.format("$1$, $2$ $3$ $4$ (W$5$)", [
-                    dayName(today.day_of_week),
-                    today.day,
-                    monthName(today.month),
-                    today.year,
-                    isoWeekNumber(today.year, today.month, today.day)
-                ]);
-                break;
-            case 6: // WEEKDAY, DD MONTH
-                value = Lang.format("$1$, $2$ $3$", [
-                    dayName(today.day_of_week),
-                    today.day,
-                    monthName(today.month)
-                ]);
-                break;
-            case 7: // WEEKDAY, YYYY-MM-DD
-                value = Lang.format("$1$, $2$-$3$-$4$", [
-                    dayName(today.day_of_week),
-                    today.year,
-                    today.month.format("%02d"),
-                    today.day.format("%02d")
-                ]);
-                break;
-            case 8: // WEEKDAY, MM/DD/YYYY
-                value = Lang.format("$1$, $2$/$3$/$4$", [
-                    dayName(today.day_of_week),
-                    today.month.format("%02d"),
-                    today.day.format("%02d"),
-                    today.year
-                ]);
-                break;
-            case 9: // WEEKDAY, DD.MM.YYYY
-                value = Lang.format("$1$, $2$.$3$.$4$", [
-                    dayName(today.day_of_week),
-                    today.day.format("%02d"),
-                    today.month.format("%02d"),
-                    today.year
-                ]);
-                break;
-        }
-
-        dDateLabel.setText(value.toUpper());
+        unit = getComplicationUnit(propDateFieldShows);
+        if (unit.length() > 0) { unit = Lang.format(" $1$", [unit]); }
+        dDateLabel.setText(Lang.format("$1$$2$", [getComplicationValue(propDateFieldShows, 10), unit]));
 
         if(canBurnIn) {
-            if(propAodFieldShows == -1) {
-                dAodDateLabel.setText(value.toUpper());
-            } else {
-                var unit = getComplicationUnit(propAodFieldShows);
-                if (unit.length() > 0) {
-                    unit = Lang.format(" $1$", [unit]);
-                }
-                dAodDateLabel.setText(Lang.format("$1$$2$", [getComplicationValue(propAodFieldShows, 10), unit]));
-            }
+            unit = getComplicationUnit(propAodFieldShows);
+            if (unit.length() > 0) { unit = Lang.format(" $1$", [unit]); }
+            dAodDateLabel.setText(Lang.format("$1$$2$", [getComplicationValue(propAodFieldShows, 10), unit]));
 
             dAodRightLabel.setText(getComplicationValue(propAodRightFieldShows, 3));
         }
@@ -1858,14 +1773,16 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getComplicationValueWithFormat(complicationType as Number, numberFormat as String, width as Number) as String {
         var val = "";
 
-        if(complicationType == 0) { // Active min / week
+        if(complicationType == -1) { // Date
+            val = formatDate();
+        } else if(complicationType == 0) { // Active min / week
             if(ActivityMonitor.getInfo() has :activeMinutesWeek) {
                 if(ActivityMonitor.getInfo().activeMinutesWeek != null) {
                     val = ActivityMonitor.getInfo().activeMinutesWeek.total.format(numberFormat);
                 }
             }
         } else if(complicationType == 1) { // Active min / day
-            if(ActivityMonitor.getInfo() has :activeMinutesWeek) {
+            if(ActivityMonitor.getInfo() has :activeMinutesDay) {
                 if(ActivityMonitor.getInfo().activeMinutesDay != null) {
                     val = ActivityMonitor.getInfo().activeMinutesDay.total.format(numberFormat);
                 }
@@ -2476,6 +2393,94 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
         return ret;
+    }
+
+    hidden function formatDate() as String {
+        var now = Time.now();
+        var today = Time.Gregorian.info(now, Time.FORMAT_SHORT);
+        var value = "";
+
+        switch(propDateFormat) {
+            case 0: // Default: THU, 14 MAR 2024
+                value = Lang.format("$1$, $2$ $3$ $4$", [
+                    dayName(today.day_of_week),
+                    today.day,
+                    monthName(today.month),
+                    today.year
+                ]);
+                break;
+            case 1: // ISO: 2024-03-14
+                value = Lang.format("$1$-$2$-$3$", [
+                    today.year,
+                    today.month.format("%02d"),
+                    today.day.format("%02d")
+                ]);
+                break;
+            case 2: // US: 03/14/2024
+                value = Lang.format("$1$/$2$/$3$", [
+                    today.month.format("%02d"),
+                    today.day.format("%02d"),
+                    today.year
+                ]);
+                break;
+            case 3: // EU: 14.03.2024
+                value = Lang.format("$1$.$2$.$3$", [
+                    today.day.format("%02d"),
+                    today.month.format("%02d"),
+                    today.year
+                ]);
+                break;
+            case 4: // THU, 14 MAR (Week number)
+                value = Lang.format("$1$, $2$ $3$ (W$4$)", [
+                    dayName(today.day_of_week),
+                    today.day,
+                    monthName(today.month),
+                    isoWeekNumber(today.year, today.month, today.day)
+                ]);
+                break;
+            case 5: // THU, 14 MAR 2024 (Week number)
+                value = Lang.format("$1$, $2$ $3$ $4$ (W$5$)", [
+                    dayName(today.day_of_week),
+                    today.day,
+                    monthName(today.month),
+                    today.year,
+                    isoWeekNumber(today.year, today.month, today.day)
+                ]);
+                break;
+            case 6: // WEEKDAY, DD MONTH
+                value = Lang.format("$1$, $2$ $3$", [
+                    dayName(today.day_of_week),
+                    today.day,
+                    monthName(today.month)
+                ]);
+                break;
+            case 7: // WEEKDAY, YYYY-MM-DD
+                value = Lang.format("$1$, $2$-$3$-$4$", [
+                    dayName(today.day_of_week),
+                    today.year,
+                    today.month.format("%02d"),
+                    today.day.format("%02d")
+                ]);
+                break;
+            case 8: // WEEKDAY, MM/DD/YYYY
+                value = Lang.format("$1$, $2$/$3$/$4$", [
+                    dayName(today.day_of_week),
+                    today.month.format("%02d"),
+                    today.day.format("%02d"),
+                    today.year
+                ]);
+                break;
+            case 9: // WEEKDAY, DD.MM.YYYY
+                value = Lang.format("$1$, $2$.$3$.$4$", [
+                    dayName(today.day_of_week),
+                    today.day.format("%02d"),
+                    today.month.format("%02d"),
+                    today.year
+                ]);
+                break;
+        }
+
+        return value;
     }
 
     hidden function getTemperature() as String {
