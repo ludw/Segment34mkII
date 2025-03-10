@@ -61,6 +61,7 @@ Lower priority:
 2025-03-10 v1.23.0
 - Option to change value in line under clock (the date field)
 - Option to put date as value in other fields
+- Millitary Date Time Group as option
 
 2025-03-09 v.1.22.3
 - Option for hiding labels thanks to vinceskahan

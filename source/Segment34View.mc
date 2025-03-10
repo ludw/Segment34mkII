@@ -2166,6 +2166,8 @@ class Segment34View extends WatchUi.WatchFace {
                     val = Lang.format("$1$:$2$", [nextSunEventHour.format("%02d"), nextSunEvent.min.format("%02d")]);
                 }
             }
+        } else if(complicationType == 56) { // Millitary Date Time Group
+            val = getDateTimeGroup();
         }
 
         return val;
@@ -2479,6 +2481,22 @@ class Segment34View extends WatchUi.WatchFace {
                 ]);
                 break;
         }
+
+        return value;
+    }
+
+    hidden function getDateTimeGroup() as String {
+        // 052125ZMAR25
+        // DDHHMMZmmmYY
+        var now = Time.now();
+        var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_SHORT);
+        var value = Lang.format("$1$$2$$3$Z$4$$5$", [
+                    utc.day.format("%02d"),
+                    utc.hour.format("%02d"),
+                    utc.min.format("%02d"),
+                    monthName(utc.month),
+                    utc.year.toString().substring(2,4)
+                ]);
 
         return value;
     }

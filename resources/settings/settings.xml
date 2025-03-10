@@ -306,6 +306,7 @@
             <listEntry value="12">Altitude (m)</listEntry>
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="25">Training status *</listEntry>
+            <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
         </settingConfig>
     </setting>
 
@@ -328,6 +329,7 @@
             <listEntry value="12">Altitude (m)</listEntry>
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="25">Training status *</listEntry>
+            <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
         </settingConfig>
     </setting>
 
@@ -350,6 +352,7 @@
             <listEntry value="12">Altitude (m)</listEntry>
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="25">Training status *</listEntry>
+            <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
         </settingConfig>
     </setting>
 
