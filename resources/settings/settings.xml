@@ -330,6 +330,7 @@
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="25">Training status *</listEntry>
             <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
+            <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
 
@@ -353,6 +354,7 @@
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="25">Training status *</listEntry>
             <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
+            <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
 
@@ -402,6 +404,7 @@
             <listEntry value="44">Weather: Daily low temperature</listEntry>
             <listEntry value="53">Weather: Temperature</listEntry>
             <listEntry value="54">Weather: Chance of Precipitation</listEntry>
+            <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
 
@@ -496,6 +499,7 @@
             <listEntry value="44">Weather: Daily low temperature</listEntry>
             <listEntry value="53">Weather: Temperature</listEntry>
             <listEntry value="54">Weather: Chance of Precipitation</listEntry>
+            <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
 
