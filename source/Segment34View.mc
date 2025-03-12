@@ -15,91 +15,91 @@ const INTEGER_FORMAT = "%d";
 
 class Segment34View extends WatchUi.WatchFace {
 
-    private var isSleeping = false;
-    private var doesPartialUpdate = false;
-    private var lastUpdate = null;
-    private var canBurnIn = false;
-    private var screenHeight = 0;
-    private var previousEssentialsVis = null;
-    private var batt = 0;
-    private var stress = 0;
-    private var weatherCondition = null;
-    private var nightMode = false;
-    private var ledSmallFont = null;
-    private var ledMidFont = null;
+    private var isSleeping as Boolean = false;
+    private var doesPartialUpdate as Boolean = false;
+    private var lastUpdate as Number or Null = null;
+    private var canBurnIn as Boolean = false;
+    private var screenHeight as Number = 0;
+    private var previousEssentialsVis as Boolean or Null = null;
+    private var batt as Number = 0;
+    private var stress as Number = 0;
+    private var weatherCondition as CurrentConditions or Null = null;
+    private var nightMode as Boolean = false;
+    private var ledSmallFont as Resource or Null = null;
+    private var ledMidFont as Resource or Null = null;
     
-    private var dbackground = null;
-    private var dSecondsLabel = null;
-    private var dAodPattern = null;
-    private var dGradient = null;
-    private var dAodDateLabel = null;
-    private var dAodRightLabel = null;
-    private var dTimeLabel = null;
-    private var dDateLabel = null;
-    private var dTimeBg = null;
-    private var dTtrBg = null;
-    private var dHrBg = null;
-    private var dActiveBg = null;
-    private var dTtrDesc = null;
-    private var dHrDesc = null;
-    private var dActiveDesc = null;
-    private var dMoonLabel = null;
-    private var dDusk = null;
-    private var dDawn = null;
-    private var dSunUpLabel = null;
-    private var dSunDownLabel = null;
-    private var dWeatherLabel1 = null;
-    private var dWeatherLabel2 = null;
-    private var dNotifLabel = null;
-    private var dTtrLabel = null;
-    private var dActiveLabel = null;
-    private var dStepBg = null;
-    private var dStepLabel = null;
-    private var dBattLabel = null;
-    private var dBattBg = null;
-    private var dHrLabel = null;
-    private var dIcon1 = null;
-    private var dIcon2 = null;
+    private var dbackground as Drawable or Null = null;
+    private var dSecondsLabel as Text or Null = null;
+    private var dAodPattern as Drawable or Null = null;
+    private var dGradient as Drawable or Null = null;
+    private var dAodDateLabel as Text or Null = null;
+    private var dAodRightLabel as Text or Null  = null;
+    private var dTimeLabel as Text or Null = null;
+    private var dDateLabel as Text or Null = null;
+    private var dTimeBg as Text or Null = null;
+    private var dTtrBg as Text or Null = null;
+    private var dHrBg as Text or Null = null;
+    private var dActiveBg as Text or Null = null;
+    private var dTtrDesc as Text or Null = null;
+    private var dHrDesc as Text or Null = null;
+    private var dActiveDesc as Text or Null = null;
+    private var dMoonLabel as Text or Null = null;
+    private var dDusk as Text or Null = null;
+    private var dDawn as Text or Null = null;
+    private var dSunUpLabel as Text or Null = null;
+    private var dSunDownLabel as Text or Null = null;
+    private var dWeatherLabel1 as Text or Null = null;
+    private var dWeatherLabel2 as Text or Null = null;
+    private var dNotifLabel as Text or Null = null;
+    private var dTtrLabel as Text or Null = null;
+    private var dActiveLabel as Text or Null = null;
+    private var dStepBg as Text or Null = null;
+    private var dStepLabel as Text or Null = null;
+    private var dBattLabel as Text or Null = null;
+    private var dBattBg as Text or Null = null;
+    private var dHrLabel as Text or Null = null;
+    private var dIcon1 as Text or Null = null;
+    private var dIcon2 as Text or Null = null;
 
-    private var propColorTheme = null;
-    private var propNightColorTheme = null;
-    private var propNightThemeActivation = null;
-    private var propBatteryVariant = null;
-    private var propShowSeconds = null;
-    private var propLeftValueShows = null;
-    private var propMiddleValueShows = null;
-    private var propRightValueShows = null;
-    private var propAlwaysShowSeconds = null;
-    private var propShowClockBg = null;
-    private var propShowDataBg = null;
-    private var propAodFieldShows = null;
-    private var propAodRightFieldShows = null;
-    private var propDateFieldShows = null;
-    private var propBottomFieldShows = null;
-    private var propAodAlignment = null;
-    private var propDateAlignment = null;
-    private var propIcon1 = null;
-    private var propIcon2 = null;
-    private var propHemisphere = null;
-    private var propHourFormat = null;
-    private var propZeropadHour = null;
-    private var propShowMoonPhase = null;
-    private var propTempUnit = null;
-    private var propWindUnit = null;
-    private var propPressureUnit = null;
-    private var propWeatherLine1Shows = null;
-    private var propWeatherLine2Shows = null;
-    private var propSunriseFieldShows = null;
-    private var propSunsetFieldShows = null;
-    private var propDateFormat = null;
-    private var propShowStressAndBodyBattery = null;
-    private var propShowNotificationCount = null;
-    private var propTzOffset1 = null;
-    private var propTzOffset2 = null;
-    private var propTzName1 = null;
-    private var propTzName2 = null;
-    private var propWeekOffset = null;
-    private var propLabelVisibility = null;
+    private var propColorTheme as Number = 0;
+    private var propNightColorTheme as Number = -1;
+    private var propNightThemeActivation as Number = 0;
+    private var propBatteryVariant as Number = 3;
+    private var propShowSeconds as Boolean = true;
+    private var propLeftValueShows as Number = 6;
+    private var propMiddleValueShows as Number = 10;
+    private var propRightValueShows as Number = 0;
+    private var propAlwaysShowSeconds as Boolean = false;
+    private var propShowClockBg as Boolean = true;
+    private var propShowDataBg as Boolean = false;
+    private var propAodFieldShows as Number = -1;
+    private var propAodRightFieldShows as Number = -2;
+    private var propDateFieldShows as Number = -1;
+    private var propBottomFieldShows as Number = 17;
+    private var propAodAlignment as Number = 0;
+    private var propDateAlignment as Number = 0;
+    private var propIcon1 as Number = 1;
+    private var propIcon2 as Number = 2;
+    private var propHemisphere as Number = 0;
+    private var propHourFormat as Number = 0;
+    private var propZeropadHour as Boolean = true;
+    private var propShowMoonPhase as Boolean = true;
+    private var propTempUnit as Number = 0;
+    private var propWindUnit as Number = 0;
+    private var propPressureUnit as Number = 0;
+    private var propWeatherLine1Shows as Number = 49;
+    private var propWeatherLine2Shows as Number = 50;
+    private var propSunriseFieldShows as Number = 39;
+    private var propSunsetFieldShows as Number = 40;
+    private var propDateFormat as Number = 0;
+    private var propShowStressAndBodyBattery as Boolean = true;
+    private var propShowNotificationCount as Boolean = true;
+    private var propTzOffset1 as Number = 0;
+    private var propTzOffset2 as Number = 0;
+    private var propTzName1 as String = "";
+    private var propTzName2 as String = "";
+    private var propWeekOffset as Number = 0;
+    private var propLabelVisibility as Number = 0;
 
     function initialize() {
         WatchFace.initialize();
@@ -213,7 +213,7 @@ class Segment34View extends WatchUi.WatchFace {
         dc.drawText(clip_x, clip_y, ledSmallFont, sec_string, Graphics.TEXT_JUSTIFY_LEFT);
     }
 
-    function onSettingsChanged() {
+    function onSettingsChanged() as Void {
         lastUpdate = null;
         previousEssentialsVis = null;
         cacheProps();
@@ -221,7 +221,7 @@ class Segment34View extends WatchUi.WatchFace {
         WatchUi.requestUpdate();
     }
 
-    function onPowerBudgetExceeded() {
+    function onPowerBudgetExceeded() as Void {
         System.println("Power budget exceeded");
     }
 
@@ -242,7 +242,7 @@ class Segment34View extends WatchUi.WatchFace {
         WatchUi.requestUpdate();
     }
 
-    hidden function cacheDrawables(dc) as Void {
+    hidden function cacheDrawables(dc as Dc) as Void {
         screenHeight = dc.getHeight();
 
         dbackground = View.findDrawableById("background") as Drawable;
@@ -280,47 +280,47 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function cacheProps() as Void {
-        propColorTheme = Application.Properties.getValue("colorTheme");
-        propNightColorTheme = Application.Properties.getValue("nightColorTheme");
-        propNightThemeActivation = Application.Properties.getValue("nightThemeActivation");
-        propBatteryVariant = Application.Properties.getValue("batteryVariant");
-        propShowSeconds = Application.Properties.getValue("showSeconds");
-        propAlwaysShowSeconds = Application.Properties.getValue("alwaysShowSeconds");
-        propShowClockBg = Application.Properties.getValue("showClockBg");
-        propShowDataBg = Application.Properties.getValue("showDataBg");
-        propAodFieldShows = Application.Properties.getValue("aodFieldShows");
-        propAodRightFieldShows = Application.Properties.getValue("aodRightFieldShows");
-        propDateFieldShows = Application.Properties.getValue("dateFieldShows");
-        propLeftValueShows = Application.Properties.getValue("leftValueShows");
-        propMiddleValueShows = Application.Properties.getValue("middleValueShows");
-        propRightValueShows = Application.Properties.getValue("rightValueShows");
-        propBottomFieldShows = Application.Properties.getValue("bottomFieldShows");
-        propAodAlignment = Application.Properties.getValue("aodAlignment");
-        propDateAlignment = Application.Properties.getValue("dateAlignment");
-        propIcon1 = Application.Properties.getValue("icon1");
-        propIcon2 = Application.Properties.getValue("icon2");
-        propHemisphere = Application.Properties.getValue("hemisphere");
-        propHourFormat = Application.Properties.getValue("hourFormat");
-        propZeropadHour = Application.Properties.getValue("zeropadHour");
-        propShowMoonPhase = Application.Properties.getValue("showMoonPhase");
-        propTempUnit = Application.Properties.getValue("tempUnit");
-        propWindUnit = Application.Properties.getValue("windUnit");
-        propPressureUnit = Application.Properties.getValue("pressureUnit");
-        propWeatherLine1Shows = Application.Properties.getValue("weatherLine1Shows");
-        propWeatherLine2Shows = Application.Properties.getValue("weatherLine2Shows");
-        propSunriseFieldShows = Application.Properties.getValue("sunriseFieldShows");
-        propSunsetFieldShows = Application.Properties.getValue("sunsetFieldShows");
-        propLabelVisibility = Application.Properties.getValue("labelVisibility");
-        propDateFormat = Application.Properties.getValue("dateFormat");
-        propShowStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery");
-        propShowNotificationCount = Application.Properties.getValue("showNotificationCount");
-        propTzOffset1 = Application.Properties.getValue("tzOffset1");
-        propTzOffset2 = Application.Properties.getValue("tzOffset2");
-        propTzName1 = Application.Properties.getValue("tzName1");
-        propTzName2 = Application.Properties.getValue("tzName2");
-        propWeekOffset = Application.Properties.getValue("weekOffset");
+        propColorTheme = Application.Properties.getValue("colorTheme") as Number;
+        propNightColorTheme = Application.Properties.getValue("nightColorTheme") as Number;
+        propNightThemeActivation = Application.Properties.getValue("nightThemeActivation") as Number;
+        propBatteryVariant = Application.Properties.getValue("batteryVariant") as Number;
+        propShowSeconds = Application.Properties.getValue("showSeconds") as Boolean;
+        propAlwaysShowSeconds = Application.Properties.getValue("alwaysShowSeconds") as Boolean;
+        propShowClockBg = Application.Properties.getValue("showClockBg") as Boolean;
+        propShowDataBg = Application.Properties.getValue("showDataBg") as Boolean;
+        propAodFieldShows = Application.Properties.getValue("aodFieldShows") as Number;
+        propAodRightFieldShows = Application.Properties.getValue("aodRightFieldShows") as Number;
+        propDateFieldShows = Application.Properties.getValue("dateFieldShows") as Number;
+        propLeftValueShows = Application.Properties.getValue("leftValueShows") as Number;
+        propMiddleValueShows = Application.Properties.getValue("middleValueShows") as Number;
+        propRightValueShows = Application.Properties.getValue("rightValueShows") as Number;
+        propBottomFieldShows = Application.Properties.getValue("bottomFieldShows") as Number;
+        propAodAlignment = Application.Properties.getValue("aodAlignment") as Number;
+        propDateAlignment = Application.Properties.getValue("dateAlignment") as Number;
+        propIcon1 = Application.Properties.getValue("icon1") as Number;
+        propIcon2 = Application.Properties.getValue("icon2") as Number;
+        propHemisphere = Application.Properties.getValue("hemisphere") as Number;
+        propHourFormat = Application.Properties.getValue("hourFormat") as Number;
+        propZeropadHour = Application.Properties.getValue("zeropadHour") as Boolean;
+        propShowMoonPhase = Application.Properties.getValue("showMoonPhase") as Boolean;
+        propTempUnit = Application.Properties.getValue("tempUnit") as Number;
+        propWindUnit = Application.Properties.getValue("windUnit") as Number;
+        propPressureUnit = Application.Properties.getValue("pressureUnit") as Number;
+        propWeatherLine1Shows = Application.Properties.getValue("weatherLine1Shows") as Number;
+        propWeatherLine2Shows = Application.Properties.getValue("weatherLine2Shows") as Number;
+        propSunriseFieldShows = Application.Properties.getValue("sunriseFieldShows") as Number;
+        propSunsetFieldShows = Application.Properties.getValue("sunsetFieldShows") as Number;
+        propLabelVisibility = Application.Properties.getValue("labelVisibility") as Number;
+        propDateFormat = Application.Properties.getValue("dateFormat") as Number;
+        propShowStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery") as Boolean;
+        propShowNotificationCount = Application.Properties.getValue("showNotificationCount") as Boolean;
+        propTzOffset1 = Application.Properties.getValue("tzOffset1") as Number;
+        propTzOffset2 = Application.Properties.getValue("tzOffset2") as Number;
+        propTzName1 = Application.Properties.getValue("tzName1") as String;
+        propTzName2 = Application.Properties.getValue("tzName2") as String;
+        propWeekOffset = Application.Properties.getValue("weekOffset") as Number;
 
-        var fontVariant = Application.Properties.getValue("smallFontVariant");
+        var fontVariant = Application.Properties.getValue("smallFontVariant") as Number;
         // Only load the font we need for this watch size
         if(screenHeight == 240 or screenHeight == 260 or screenHeight == 280) {
             if(fontVariant == 0) {
@@ -343,7 +343,7 @@ class Segment34View extends WatchUi.WatchFace {
         
     }
 
-    hidden function toggleNonEssentials(dc) as Void {
+    hidden function toggleNonEssentials(dc as Dc) as Void {
         var awake = !isSleeping;
         if(isSleeping and canBurnIn) {
             dc.setAntiAlias(false);
@@ -1161,13 +1161,13 @@ class Segment34View extends WatchUi.WatchFace {
         return Graphics.COLOR_WHITE;
     }
 
-    hidden function setSeconds(dc) as Void {
+    hidden function setSeconds(dc as Dc) as Void {
         var clock_time = System.getClockTime();
         var sec_string = Lang.format("$1$", [clock_time.sec.format("%02d")]);
         dSecondsLabel.setText(sec_string);
     }
 
-    hidden function setClock(dc) as Void {
+    hidden function setClock(dc as Dc) as Void {
         var clock_time = System.getClockTime();
         var hour = formatHour(clock_time.hour);
         var time_string = "";
@@ -1180,7 +1180,7 @@ class Segment34View extends WatchUi.WatchFace {
         dTimeLabel.setText(time_string);
     }
 
-    hidden function formatHour(hour) as Number {
+    hidden function formatHour(hour as Number) as Number {
         if((!System.getDeviceSettings().is24Hour and propHourFormat == 0) or propHourFormat == 2) {
             hour = hour % 12;
             if(hour == 0) { hour = 12; }
@@ -1188,7 +1188,7 @@ class Segment34View extends WatchUi.WatchFace {
         return hour;
     }
 
-    hidden function setMoon(dc) as Void {
+    hidden function setMoon(dc as Dc) as Void {
         if(propShowMoonPhase) {
             var now = Time.now();
             var today = Time.Gregorian.info(now, Time.FORMAT_SHORT);
@@ -1199,7 +1199,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function setBatt(dc) as Void {
+    hidden function setBatt(dc as Dc) as Void {
         var visible = (!isSleeping or !canBurnIn) && propBatteryVariant != 2;  // Only show if not in AOD and battery is not hidden
         var value = "";
 
@@ -1266,6 +1266,14 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
+    hidden function formatTemperatureFloat(temp as Float, unit as String) as Float {
+        if(unit.equals("C")) {
+            return temp;
+        } else {
+            return ((temp * 9/5) + 32);
+        }
+    }
+
     hidden function getTempUnit() as String {
         var temp_unit_setting = System.getDeviceSettings().temperatureUnits;
         if((temp_unit_setting == System.UNIT_METRIC and propTempUnit == 0) or propTempUnit == 1) {
@@ -1275,7 +1283,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function setWeather(dc) as Void {
+    hidden function setWeather(dc as Dc) as Void {
         var unit = getComplicationUnit(propWeatherLine1Shows);
         if (unit.length() > 0) {
             unit = Lang.format(" $1$", [unit]);
@@ -1478,7 +1486,7 @@ class Segment34View extends WatchUi.WatchFace {
         return condition;
     }
 
-    hidden function setSunUpDown(dc) as Void {
+    hidden function setSunUpDown(dc as Dc) as Void {
         if(propSunriseFieldShows == -2) {
             dDawn.setText("");
             dSunUpLabel.setText("");
@@ -1502,7 +1510,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     }
 
-    hidden function setNotif(dc) as Void {
+    hidden function setNotif(dc as Dc) as Void {
         var value = "";
 
         if(propShowNotificationCount) {
@@ -1517,7 +1525,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function setIcons(dc) as Void {
+    hidden function setIcons(dc as Dc) as Void {
         dIcon1.setText(getIconState(propIcon1));
         dIcon2.setText(getIconState(propIcon2));
     }
@@ -1568,7 +1576,7 @@ class Segment34View extends WatchUi.WatchFace {
         return "";
     }
 
-    hidden function setDate(dc) as Void {
+    hidden function setDate(dc as Dc) as Void {
         var unit = "";
 
         unit = getComplicationUnit(propDateFieldShows);
@@ -1584,7 +1592,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function setStep(dc) as Void {
+    hidden function setStep(dc as Dc) as Void {
         dStepLabel.setText(getComplicationValueWithFormat(propBottomFieldShows, "%05d", 5));
     }
 
@@ -1630,7 +1638,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(weatherCondition != null) {
             var nextSunEventArray = getNextSunEvent();
             if(nextSunEventArray != null && nextSunEventArray.size() == 2) { 
-                nightMode = nextSunEventArray[1];
+                nightMode = nextSunEventArray[1] as Boolean;
                 return (oldNightMode != nightMode);
             }
         }
@@ -1656,7 +1664,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function drawStressAndBodyBattery(dc) as Void {
+    hidden function drawStressAndBodyBattery(dc as Dc) as Void {
         if(!propShowStressAndBodyBattery) { return; }
 
         if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
@@ -1733,7 +1741,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function setBottomFields(dc) as Void {
+    hidden function setBottomFields(dc as Dc) as Void {
         var left_width = 3;
         var left_label_size = 2;
         if(dc.getWidth() > 450) {
@@ -2593,7 +2601,7 @@ class Segment34View extends WatchUi.WatchFace {
         var fl = "";
         var tempUnit = getTempUnit();
         if(weatherCondition != null and weatherCondition.feelsLikeTemperature != null) {
-            var fltemp = formatTemperature(weatherCondition.feelsLikeTemperature, tempUnit);
+            var fltemp = formatTemperatureFloat(weatherCondition.feelsLikeTemperature, tempUnit);
             fl = Lang.format("FL:$1$$2$", [fltemp.format(INTEGER_FORMAT), tempUnit]);
         }
 
