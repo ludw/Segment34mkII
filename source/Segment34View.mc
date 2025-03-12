@@ -457,8 +457,6 @@ class Segment34View extends WatchUi.WatchFace {
                 dWeatherLabel2.setFont(ledSmallFont);
             } else {
                 dDateLabel.setFont(ledMidFont);
-                dAodDateLabel.setFont(ledMidFont);
-                dAodRightLabel.setFont(ledMidFont);
                 dSecondsLabel.setFont(ledMidFont);
                 dNotifLabel.setFont(ledMidFont);
                 dWeatherLabel1.setFont(ledMidFont);
@@ -2179,8 +2177,7 @@ class Segment34View extends WatchUi.WatchFace {
                     var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_CALENDAR_EVENTS));
                     if (complication != null && complication.value != null) {
                         val = complication.value;
-                    }
-                    else {
+                    } else {
                         val = "--:--";
                     }
                     if (width < 5) {

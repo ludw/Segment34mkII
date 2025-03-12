@@ -50,7 +50,6 @@ Pull requests are welcome, but please follow the following guidelines:
 - Goal completion marker
 - Pressure trend
 - Custom colors
-- AOD burnin prevention should move in Y-axis
 
 Lower priority:
 - Race predictions
@@ -60,6 +59,10 @@ Lower priority:
 
 
 ## Change log
+2025-03-12 v1.24.0
+- AOD text is always with dot font to prevent burn-in
+- Option to show next calendar event thanks to dariy-vel
+
 2025-03-10 v1.23.0
 - Option to change value in line under clock (the date field)
 - Option to put date as value in other fields
