@@ -2168,6 +2168,23 @@ class Segment34View extends WatchUi.WatchFace {
             }
         } else if(complicationType == 56) { // Millitary Date Time Group
             val = getDateTimeGroup();
+        } else if(complicationType == 57) { // Time of the next Calendar Event
+            if (Toybox has :Complications) {
+                try {
+                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_CALENDAR_EVENTS));
+                    if (complication != null && complication.value != null) {
+                        val = complication.value;
+                    }
+                    else {
+                        val = "--:--";
+                    }
+                    if (width < 5) {
+                        val = val.substring(0, 2) + val.substring(3, 5);
+                    }
+                } catch(e) {
+                    // Complication not found
+                }
+            }
         }
 
         return val;
@@ -2363,6 +2380,10 @@ class Segment34View extends WatchUi.WatchFace {
             if(labelSize == 1) { desc = "SUN:"; }
             if(labelSize == 2) { desc = "NEXT SUN:"; }
             if(labelSize == 3) { desc = "NEXT SUN EVENT:"; }
+        } else if(complicationType == 57) {
+            if(labelSize == 1) { desc = "CAL:"; }
+            if(labelSize == 2) { desc = "NEXT CAL:"; }
+            if(labelSize == 3) { desc = "NEXT CAL EVENT:"; }
         }
         return desc;
     }
