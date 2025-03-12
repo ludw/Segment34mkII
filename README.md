@@ -49,6 +49,8 @@ Pull requests are welcome, but please follow the following guidelines:
  ## TODO / Things people have asked for
 - Goal completion marker
 - Pressure trend
+- Custom colors
+- AOD burnin prevention should move in Y-axis
 
 Lower priority:
 - Race predictions

@@ -27,6 +27,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var nightMode = false;
     private var ledSmallFont = null;
     private var ledMidFont = null;
+    
     private var dbackground = null;
     private var dSecondsLabel = null;
     private var dAodPattern = null;
@@ -320,21 +321,25 @@ class Segment34View extends WatchUi.WatchFace {
         propWeekOffset = Application.Properties.getValue("weekOffset");
 
         var fontVariant = Application.Properties.getValue("smallFontVariant");
-        if(fontVariant == 0) {
-            ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small );
-        } else if(fontVariant == 1) {
-            ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small_readable );
+        // Only load the font we need for this watch size
+        if(screenHeight == 240 or screenHeight == 260 or screenHeight == 280) {
+            if(fontVariant == 0) {
+                ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small );
+            } else if(fontVariant == 1) {
+                ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small_readable );
+            } else {
+                ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small_lines );
+            }
         } else {
-            ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small_lines );
+            if(fontVariant == 0) {
+                ledMidFont = Application.loadResource( Rez.Fonts.id_led );
+            } else if(fontVariant == 1) {
+                ledMidFont = Application.loadResource( Rez.Fonts.id_led_inbetween );
+            } else {
+                ledMidFont = Application.loadResource( Rez.Fonts.id_led_lines );
+            }
         }
-
-        if(fontVariant == 0) {
-            ledMidFont = Application.loadResource( Rez.Fonts.id_led );
-        } else if(fontVariant == 1) {
-            ledMidFont = Application.loadResource( Rez.Fonts.id_led_inbetween );
-        } else {
-            ledMidFont = Application.loadResource( Rez.Fonts.id_led_lines );
-        }
+        
         
     }
 
