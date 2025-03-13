@@ -2035,16 +2035,6 @@ class Segment34View extends WatchUi.WatchFace {
                     val = active_calories.format(numberFormat);
                 }
             }
-        } else if(complicationType == 58) {
-            var rest_calories = getRestCalories();
-            var total_calories = 0;
-            // Get total calories and subtract rest calories
-            if (ActivityMonitor.getInfo() has :calories && ActivityMonitor.getInfo().calories != null) {
-                total_calories = ActivityMonitor.getInfo().calories;
-            }
-            var active_calories = total_calories - rest_calories;
-            active_calories = (active_calories > 0) ? active_calories : 0; // Ensure active calories is not negative
-            val = active_calories.format(numberFormat) + "/" + total_calories.format(numberFormat);
         } else if(complicationType == 30) { // Sea level pressure (hPA)
             var info = Activity.getActivityInfo();
             if (info has :meanSeaLevelPressure && info.meanSeaLevelPressure != null) {
@@ -2215,6 +2205,16 @@ class Segment34View extends WatchUi.WatchFace {
                     // Complication not found
                 }
             }
+        } else if(complicationType == 58) { // Active / Total calories
+            var rest_calories = getRestCalories();
+            var total_calories = 0;
+            // Get total calories and subtract rest calories
+            if (ActivityMonitor.getInfo() has :calories && ActivityMonitor.getInfo().calories != null) {
+                total_calories = ActivityMonitor.getInfo().calories;
+            }
+            var active_calories = total_calories - rest_calories;
+            active_calories = (active_calories > 0) ? active_calories : 0; // Ensure active calories is not negative
+            val = active_calories.format(numberFormat) + "/" + total_calories.format(numberFormat);
         }
 
         return val;

@@ -60,7 +60,8 @@ Lower priority:
 
 ## Change log
 2025-03-13 v1.24.1
-- Fix for formatting issue with next calendar event
+- Fix for formatting issue with next calendar event, thanks to dariy-vel
+- Active / Total calories, thanks to dariy-vel
 
 
 2025-03-12 v1.24.0
