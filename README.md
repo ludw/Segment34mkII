@@ -59,6 +59,10 @@ Lower priority:
 
 
 ## Change log
+2025-03-13 v1.24.1
+- Fix for formatting issue with next calendar event
+
+
 2025-03-12 v1.24.0
 - AOD text is always with dot font to prevent burn-in
 - Option to show next calendar event thanks to dariy-vel
