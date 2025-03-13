@@ -1486,6 +1486,29 @@ class Segment34View extends WatchUi.WatchFace {
         return condition;
     }
 
+    hidden function getRestCalories() as Number {
+        var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+        var profile = UserProfile.getProfile();
+
+        if (profile has :weight && profile has :height && profile has :birthYear) {
+            var age = today.year - profile.birthYear;
+            var weight = profile.weight / 1000.0;
+            var rest_calories = 0;
+
+            if (profile.gender == UserProfile.GENDER_MALE) {
+                rest_calories = 5.2 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
+            } else {
+                rest_calories = -197.6 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
+            }
+
+            // Calculate rest calories for the current time of day
+            rest_calories = Math.round((today.hour * 60 + today.min) * rest_calories / 1440).toNumber();
+            return rest_calories;
+        } else {
+            return -1;
+        }
+    }
+
     hidden function setSunUpDown(dc as Dc) as Void {
         if(propSunriseFieldShows == -2) {
             dDawn.setText("");
@@ -2004,31 +2027,24 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 29) { // Act Calories
-            var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
-            var profile = UserProfile.getProfile();
-
-            if (profile has :weight && profile has :height && profile has :birthYear) {
-                var age = today.year - profile.birthYear;
-                var weight = profile.weight / 1000.0;
-                var rest_calories = 0;
-
-                if (profile.gender == UserProfile.GENDER_MALE) {
-                    rest_calories = 5.2 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
-                } else {
-                    rest_calories = -197.6 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
-                }
-
-                // Calculate rest calories for the current time of day
-                rest_calories = Math.round((today.hour * 60 + today.min) * rest_calories / 1440).toNumber();
-
-                // Get total calories and subtract rest calories
-                if (ActivityMonitor.getInfo() has :calories && ActivityMonitor.getInfo().calories != null) {
-                    var activeCalories = ActivityMonitor.getInfo().calories - rest_calories;
-                    if (activeCalories > 0) {
-                        val = activeCalories.format(numberFormat);
-                    }
+            var rest_calories = getRestCalories();
+            // Get total calories and subtract rest calories
+            if (ActivityMonitor.getInfo() has :calories && ActivityMonitor.getInfo().calories != null && rest_calories > 0) {
+                var active_calories = ActivityMonitor.getInfo().calories - rest_calories;
+                if (active_calories > 0) {
+                    val = active_calories.format(numberFormat);
                 }
             }
+        } else if(complicationType == 58) {
+            var rest_calories = getRestCalories();
+            var total_calories = 0;
+            // Get total calories and subtract rest calories
+            if (ActivityMonitor.getInfo() has :calories && ActivityMonitor.getInfo().calories != null) {
+                total_calories = ActivityMonitor.getInfo().calories;
+            }
+            var active_calories = total_calories - rest_calories;
+            active_calories = (active_calories > 0) ? active_calories : 0; // Ensure active calories is not negative
+            val = active_calories.format(numberFormat) + "/" + total_calories.format(numberFormat);
         } else if(complicationType == 30) { // Sea level pressure (hPA)
             var info = Activity.getActivityInfo();
             if (info has :meanSeaLevelPressure && info.meanSeaLevelPressure != null) {
@@ -2411,6 +2427,8 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 19) { // Wheelchair pushes
             unit = "PUSHES";
         } else if(complicationType == 29) { // Active calories / day
+            unit = "KCAL";
+        } else if(complicationType == 58) { // Active/Total calories / day
             unit = "KCAL";
         }
         return unit;
