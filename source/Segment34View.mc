@@ -2185,6 +2185,10 @@ class Segment34View extends WatchUi.WatchFace {
                     var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_CALENDAR_EVENTS));
                     if (complication != null && complication.value != null) {
                         val = complication.value;
+                        var colon_index = val.find(":");
+                        if (colon_index != null && colon_index < 2) {
+                            val = "0" + val;
+                        }
                     } else {
                         val = "--:--";
                     }
