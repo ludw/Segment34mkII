@@ -303,6 +303,7 @@
             <listEntry value="17">Steps / day</listEntry>
             <listEntry value="19">Wheelchair pushes / day *</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
+            <listEntry value="58">Active/Total Calories (kcal) / day</listEntry>
             <listEntry value="12">Altitude (m)</listEntry>
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="25">Training status *</listEntry>
@@ -326,6 +327,7 @@
             <listEntry value="17">Steps / day</listEntry>
             <listEntry value="19">Wheelchair pushes / day *</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
+            <listEntry value="58">Active/Total Calories (kcal) / day</listEntry>
             <listEntry value="12">Altitude (m)</listEntry>
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="25">Training status *</listEntry>
@@ -350,6 +352,7 @@
             <listEntry value="17">Steps / day</listEntry>
             <listEntry value="19">Wheelchair pushes / day *</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
+            <listEntry value="58">Active/Total Calories (kcal) / day</listEntry>
             <listEntry value="12">Altitude (m)</listEntry>
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="25">Training status *</listEntry>
