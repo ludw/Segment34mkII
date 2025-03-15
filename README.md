@@ -59,9 +59,10 @@ Lower priority:
 
 
 ## Change log
-2025-03-15 v1.24.2
+2025-03-15 v1.25.0
 - New value: Pulse Ox
-- New setting for HR update frequency (can save some battery life)
+- New setting for update frequency for bottom fields (can save some battery life)
+- HR as option for bottom field
 
 2025-03-13 v1.24.1
 - Fix for formatting issue with next calendar event, thanks to dariy-vel

@@ -1624,7 +1624,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setStep(dc as Dc) as Void {
-        dStepLabel.setText(getComplicationValueWithFormat(propBottomFieldShows, "%05d", 5));
+        dStepLabel.setText(getComplicationValueWithFormat(propBottomFieldShows, "%d", 5));
     }
 
     hidden function updateNightMode() as Boolean {
