@@ -70,6 +70,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var propMiddleValueShows as Number = 10;
     private var propRightValueShows as Number = 0;
     private var propAlwaysShowSeconds as Boolean = false;
+    private var propHrUpdateFreq as Number = 0;
     private var propShowClockBg as Boolean = true;
     private var propShowDataBg as Boolean = false;
     private var propAodFieldShows as Number = -1;
@@ -145,9 +146,17 @@ class Segment34View extends WatchUi.WatchFace {
             if(propShowSeconds) {
                 setSeconds(dc);
             }
-            if(clock_time.sec % 5 == 0 and (propLeftValueShows == 10 or propMiddleValueShows == 10 or propRightValueShows == 10)) {
-                setBottomFields(dc);
+
+            if(propHrUpdateFreq == 1) { // Every 5 seconds
+                if(clock_time.sec % 5 == 0 and (propLeftValueShows == 10 or propMiddleValueShows == 10 or propRightValueShows == 10)) {
+                    setBottomFields(dc);
+                }
+            } else if(propHrUpdateFreq == 2) { // Every second
+                if(propLeftValueShows == 10 or propMiddleValueShows == 10 or propRightValueShows == 10) {
+                    setBottomFields(dc);
+                }
             }
+            
         }
 
         if(update_everything) {
@@ -286,6 +295,7 @@ class Segment34View extends WatchUi.WatchFace {
         propBatteryVariant = Application.Properties.getValue("batteryVariant") as Number;
         propShowSeconds = Application.Properties.getValue("showSeconds") as Boolean;
         propAlwaysShowSeconds = Application.Properties.getValue("alwaysShowSeconds") as Boolean;
+        propHrUpdateFreq = Application.Properties.getValue("hrUpdateFreq") as Number;
         propShowClockBg = Application.Properties.getValue("showClockBg") as Boolean;
         propShowDataBg = Application.Properties.getValue("showDataBg") as Boolean;
         propAodFieldShows = Application.Properties.getValue("aodFieldShows") as Number;

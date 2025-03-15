@@ -65,6 +65,14 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.hrUpdateFreq" title="Update frequency for HR">
+        <settingConfig type="list">
+            <listEntry value="0">Every minute</listEntry>
+            <listEntry value="1">Every 5 seconds</listEntry>
+            <listEntry value="2">Every second</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.zeropadHour" title="Zeropad hour on clock">
         <settingConfig type="boolean" />
     </setting>
@@ -285,7 +293,6 @@
             <listEntry value="2">inHG</listEntry>
         </settingConfig>
     </setting>
-
 
     <setting propertyKey="@Properties.weatherLine1Shows" title="Line 1 above clock shows: (* limited device support)">
         <settingConfig type="list">
