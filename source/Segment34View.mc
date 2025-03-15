@@ -147,14 +147,10 @@ class Segment34View extends WatchUi.WatchFace {
                 setSeconds(dc);
             }
 
-            if(propHrUpdateFreq == 1) { // Every 5 seconds
-                if(clock_time.sec % 5 == 0 and (propLeftValueShows == 10 or propMiddleValueShows == 10 or propRightValueShows == 10)) {
-                    setBottomFields(dc);
-                }
+            if(propHrUpdateFreq == 1 and clock_time.sec % 5 == 0) { // Every 5 seconds
+                setBottomFields(dc);
             } else if(propHrUpdateFreq == 2) { // Every second
-                if(propLeftValueShows == 10 or propMiddleValueShows == 10 or propRightValueShows == 10) {
-                    setBottomFields(dc);
-                }
+                setBottomFields(dc);
             }
             
         }
@@ -442,6 +438,8 @@ class Segment34View extends WatchUi.WatchFace {
         dTtrLabel.setColor(getColor("valueDisplay"));
         dActiveLabel.setColor(getColor("valueDisplay"));
         dStepLabel.setColor(getColor("valueDisplay"));
+        dIcon1.setColor(getColor("valueDisplay"));
+        dIcon2.setColor(getColor("valueDisplay"));
         dBattBg.setColor(0x555555);
         
         if(System.getSystemStats().battery > 15) {

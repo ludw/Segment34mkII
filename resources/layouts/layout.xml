@@ -28,8 +28,8 @@
     <label id="ActiveBg" x="230" y="193" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x005555" text="####" />
     <label id="ActiveLabel" x="230" y="193" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xFFFFFF" />
     
-    <label id="StepBg" x="center" y="220" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0x005555" text="#####" />
-    <label id="StepLabel" x="center" y="220" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_CENTER" color="0xFFFFFF" />
+    <label id="StepBg" x="174" y="220" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0x005555" text="#####" />
+    <label id="StepLabel" x="174" y="220" font="@Fonts.id_led" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="0xFFFFFF" />
     
     <label id="Icon1" x="60" y="218" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xFFFFFF" text="A" />
     <label id="Icon2" x="182" y="218" font="@Fonts.id_icons" justification="Graphics.TEXT_JUSTIFY_LEFT" color="0xFFFFFF" text="D" />

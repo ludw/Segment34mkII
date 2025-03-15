@@ -65,7 +65,7 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.hrUpdateFreq" title="Update frequency for HR">
+    <setting propertyKey="@Properties.hrUpdateFreq" title="Update frequency for bottom fields">
         <settingConfig type="list">
             <listEntry value="0">Every minute</listEntry>
             <listEntry value="1">Every 5 seconds</listEntry>
@@ -529,6 +529,7 @@
             <listEntry value="33">Total distance past 7 days (miles)</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
             <listEntry value="29">Active calories (kcal) / day</listEntry>
+            <listEntry value="10">Heart Rate</listEntry>
             <listEntry value="19">Wheelchair pushes / day</listEntry>
             <listEntry value="12">Altitude (m)</listEntry>
             <listEntry value="15">Altitude (ft)</listEntry>
