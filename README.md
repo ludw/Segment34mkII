@@ -63,6 +63,7 @@ Lower priority:
 - New value: Pulse Ox
 - New setting for update frequency for bottom fields (can save some battery life)
 - HR as option for bottom field
+- Bottom field no longer zero padded for consistency with other fields
 
 2025-03-13 v1.24.1
 - Fix for formatting issue with next calendar event, thanks to dariy-vel
