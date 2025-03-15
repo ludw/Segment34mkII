@@ -2215,6 +2215,17 @@ class Segment34View extends WatchUi.WatchFace {
             var active_calories = total_calories - rest_calories;
             active_calories = (active_calories > 0) ? active_calories : 0; // Ensure active calories is not negative
             val = active_calories.format(numberFormat) + "/" + total_calories.format(numberFormat);
+        } else if(complicationType == 59) { // PulseOx
+            if (Toybox has :Complications) {
+                try {
+                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_PULSE_OX));
+                    if (complication != null && complication.value != null) {
+                        val = complication.value.format(numberFormat);
+                    }
+                } catch(e) {
+                    // Complication not found
+                }
+            }
         }
 
         return val;
@@ -2414,6 +2425,10 @@ class Segment34View extends WatchUi.WatchFace {
             if(labelSize == 1) { desc = "CAL:"; }
             if(labelSize == 2) { desc = "NEXT CAL:"; }
             if(labelSize == 3) { desc = "NEXT CAL EVENT:"; }
+        } else if(complicationType == 59) {
+            if(labelSize == 1) { desc = "OX:"; }
+            if(labelSize == 2) { desc = "PULSE OX:"; }
+            if(labelSize == 3) { desc = "PULSE OX:"; }
         }
         return desc;
     }

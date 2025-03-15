@@ -59,10 +59,13 @@ Lower priority:
 
 
 ## Change log
+2025-03-15 v1.24.2
+- New value: Pulse Ox
+- New setting for HR update frequency (can save some battery life)
+
 2025-03-13 v1.24.1
 - Fix for formatting issue with next calendar event, thanks to dariy-vel
 - Active / Total calories, thanks to dariy-vel
-
 
 2025-03-12 v1.24.0
 - AOD text is always with dot font to prevent burn-in
