@@ -309,7 +309,6 @@ class Segment34View extends WatchUi.WatchFace {
     function onExitSleep() as Void {
         isSleeping = false;
         lastUpdate = null;
-        cacheProps();
         updateNightMode();
         WatchUi.requestUpdate();
     }
