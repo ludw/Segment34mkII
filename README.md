@@ -50,6 +50,7 @@ Pull requests are welcome, but please follow the following guidelines:
 - Goal completion marker
 - Pressure trend
 - Custom colors
+- Bug with red battery indicator after charging
 
 Lower priority:
 - Race predictions
