@@ -311,6 +311,8 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function cacheProps() as Void {
+        canBurnIn = System.getDeviceSettings().requiresBurnInProtection;
+
         propColorTheme = Application.Properties.getValue("colorTheme") as Number;
         propNightColorTheme = Application.Properties.getValue("nightColorTheme") as Number;
         propNightThemeActivation = Application.Properties.getValue("nightThemeActivation") as Number;
