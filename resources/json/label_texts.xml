@@ -11,7 +11,7 @@
       "V02:",           //  [7] VO2 Max Running
       "V02:",           //  [8] VO2 Max Cycling
       "RESP:",          //  [9] Respiration rate
-      "",               // [10] HR, done in function
+      "HR:",            // [10] Heart Rate
       "CAL:",           // [11] Calories / day
       "ALT:",           // [12] Altitude (m)
       "STRSS:",         // [13] Stress
@@ -74,7 +74,7 @@
       "V02 MAX:",     //  [7] VO2 Max Running
       "V02 MAX:",     //  [8] VO2 Max Cycling
       "RESP RATE:",   //  [9] Respiration rate
-      "",             // [10] HR, done in function
+      "LAST HR:",     // [10] Heart Rate
       "CALORIES:",    // [11] Calories / day
       "ALTITUDE:",    // [12] Altitude (m)
       "STRESS:",      // [13] Stress
@@ -137,7 +137,7 @@
       "RUN V02 MAX:",    //  [7] VO2 Max Running
       "BIKE V02 MAX:",   //  [8] VO2 Max Cycling
       "RESP. RATE:",     //  [9] Respiration rate
-      "",                // [10] HR, done in function
+      "LAST HR:",        // [10] Heart Rate
       "DLY CALORIES:",   // [11] Calories / day
       "ALTITUDE M:",     // [12] Altitude (m)
       "STRESS:",         // [13] Stress

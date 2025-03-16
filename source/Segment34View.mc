@@ -176,14 +176,17 @@ class Segment34View extends WatchUi.WatchFace {
     private var leftCompLabel = null as String;
     private var leftCompMethod = null as Method;
     private var leftCompWidth = 0 as Integer;
+    private var leftCompLabelSize = 2 as Integer;
 
     private var centerCompLabel = null;
     private var centerCompMethod = null as Method;
     private var centerCompWidth = 0 as Integer;
+    private var centerCompLabelSize = 2 as Integer;
 
     private var rightCompLabel = null;
     private var rightCompMethod = null as Method;
     private var rightCompWidth = 0 as Integer;
+    private var rightCompLabelSize = 3 as Integer;
 
     private var bottomCompMethod = null as Method;
 
@@ -747,32 +750,32 @@ class Segment34View extends WatchUi.WatchFace {
         /*** Bottom Complications ***/
         /* Left label */
         leftCompWidth = 3;
-        var left_label_size = 2;
+        leftCompLabelSize = 2;
         if(screenWidth > 450) {
             leftCompWidth = 4;
-            left_label_size = 3;
+            leftCompLabelSize = 3;
         }
-        leftCompLabel = getComplicationDesc(propLeftValueShows, left_label_size);
+        leftCompLabel = getComplicationDesc(propLeftValueShows, leftCompLabelSize);
         leftCompMethod = getComplicationMethod(propLeftValueShows);
 
         /* Center label */
         centerCompWidth = 3;
-        var mid_label_size = 2;
+        centerCompLabelSize = 2;
         if(screenWidth > 450) {
             centerCompWidth = 4;
-            mid_label_size = 3;
+            centerCompLabelSize = 3;
         }
-        centerCompLabel = getComplicationDesc(propMiddleValueShows, mid_label_size);
+        centerCompLabel = getComplicationDesc(propMiddleValueShows, centerCompLabelSize);
         centerCompMethod = getComplicationMethod(propMiddleValueShows);
 
         /* Right label */
         rightCompWidth = 4;
-        var right_label_size = 3;
+        rightCompLabelSize = 3;
         if(screenWidth == 240) {
             rightCompWidth = 3;
-            right_label_size = 2;
+            rightCompLabelSize = 2;
         }
-        rightCompLabel = getComplicationDesc(propRightValueShows, right_label_size);
+        rightCompLabel = getComplicationDesc(propRightValueShows, rightCompLabelSize);
         rightCompMethod = getComplicationMethod(propRightValueShows);
 
         /* Bottom field */
@@ -1250,10 +1253,10 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setSunUpDown(dc as Dc) as Void {
-        dDawn.setText(sunriseFieldDesc);
+        dDawn.setText(getLiveComplicationDesc(propSunriseFieldShows, 1, sunriseFieldDesc));
         dSunUpLabel.setText(sunriseFieldMethod.invoke("%01d", 5));
 
-        dDusk.setText(sunsetFieldDesc);
+        dDusk.setText(getLiveComplicationDesc(propSunsetFieldShows, 1, sunsetFieldDesc));
         dSunDownLabel.setText(sunsetFieldMethod.invoke("%01d", 5));
         if (propLabelVisibility == 1 or propLabelVisibility == 2) {
             dDawn.setVisible(false);
@@ -1448,13 +1451,13 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function setBottomFields(dc as Dc) as Void {
         /* Left label */
-        dTtrDesc.setText(leftCompLabel);
+        dTtrDesc.setText(getLiveComplicationDesc(propLeftValueShows, leftCompLabelSize, leftCompLabel));
         dTtrLabel.setText(leftCompMethod.invoke("%01d", leftCompWidth));
 
-        dHrDesc.setText(centerCompLabel);
+        dHrDesc.setText(getLiveComplicationDesc(propMiddleValueShows, centerCompLabelSize, centerCompLabel));
         dHrLabel.setText(centerCompMethod.invoke("%01d", centerCompWidth));
 
-        dActiveDesc.setText(rightCompLabel);
+        dActiveDesc.setText(getLiveComplicationDesc(propRightValueShows, rightCompLabelSize, rightCompLabel));
         dActiveLabel.setText(rightCompMethod.invoke("%01d", rightCompWidth));
 
         // hide labels if so configured
@@ -1466,20 +1469,31 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getComplicationDesc(complicationType as Integer, labelSize as Number) as String {
-        var labelResourceId = null as ResourceId;
-
-        /* TODO : read from JSON */
-        switch (labelSize) {
-            case 1: labelResourceId = Rez.JsonData.shortLabels; break;
-            case 2: labelResourceId = Rez.JsonData.midLabels;   break;
-            case 3: labelResourceId = Rez.JsonData.longLabels;  break;
-            /* Invalid size, return nothing */
-            default: return "";
-        }
-        var arrayJsonDesc = Application.loadResource(labelResourceId) as Array<String>;
-
         /* Handle special cases or return from the array */
-        var desc = arrayJsonDesc[complicationType];
+        switch (complicationType) {
+            case 16:
+                return Lang.format("$1$:", [propTzName1.toUpper()]);
+            case 41:
+                return Lang.format("$1$:", [propTzName2.toUpper()]);
+            default:
+                var labelResourceId = null as ResourceId;
+
+                /* TODO : read from JSON */
+                switch (labelSize) {
+                    case 1: labelResourceId = Rez.JsonData.shortLabels; break;
+                    case 2: labelResourceId = Rez.JsonData.midLabels;   break;
+                    case 3: labelResourceId = Rez.JsonData.longLabels;  break;
+                    /* Invalid size, return nothing */
+                    default: return "";
+                }
+
+                var arrayJsonDesc = Application.loadResource(labelResourceId) as Array<String>;
+                return arrayJsonDesc[complicationType];
+        }
+    }
+
+    hidden function getLiveComplicationDesc(complicationType as Integer, labelSize as Number, currentValue as String) as String {
+        /* Handle special cases here */
         switch (complicationType) {
             case 10:
                 if(Activity.getActivityInfo().currentHeartRate == null) {
@@ -1489,12 +1503,7 @@ class Segment34View extends WatchUi.WatchFace {
                     var hrDesc = [ "HR:", "LIVE HR:", "LIVE HR:" ];
                     return hrDesc[labelSize - 1];
                 }
-            case 16:
-                return Lang.format("$1$:", [propTzName1.toUpper()]);
-            case 41:
-                return Lang.format("$1$:", [propTzName2.toUpper()]);
-            default:
-                return desc;
+            default: return currentValue;
         }
     }
 
@@ -2116,8 +2125,8 @@ class Segment34View extends WatchUi.WatchFace {
         var val = "" as String;
 
         if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
-            var elvIterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
-            var elv = elvIterator.next();
+            var elv_iterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
+            var elv = elv_iterator.next();
             if(elv != null and elv.data != null) {
                 val = elv.data.format(numberFormat);
             }
@@ -2129,8 +2138,8 @@ class Segment34View extends WatchUi.WatchFace {
         var val = "" as String;
 
         if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getStressHistory)) {
-            var stIterator = Toybox.SensorHistory.getStressHistory({:period => 1});
-            var st = stIterator.next();
+            var st_iterator = Toybox.SensorHistory.getStressHistory({:period => 1});
+            var st = st_iterator.next();
             if(st != null and st.data != null) {
                 val = st.data.format(numberFormat);
             }
@@ -2142,8 +2151,8 @@ class Segment34View extends WatchUi.WatchFace {
         var val = "" as String;
 
         if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getBodyBatteryHistory)) {
-            var bbIterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});
-            var bb = bbIterator.next();
+            var bb_iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});
+            var bb = bb_iterator.next();
             if(bb != null and bb.data != null) {
                 val = bb.data.format(numberFormat);
             }
@@ -2155,8 +2164,8 @@ class Segment34View extends WatchUi.WatchFace {
         var val = "" as String;
 
         if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
-            var elvIterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
-            var elv = elvIterator.next();
+            var elv_iterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
+            var elv = elv_iterator.next();
             if(elv != null and elv.data != null) {
                 val = (elv.data * 3.28084).format(numberFormat);
             }
@@ -2327,29 +2336,12 @@ class Segment34View extends WatchUi.WatchFace {
     function complicationType_29 (numberFormat as String, width as Integer) as String { // Act Calories
         var val = "" as String;
 
-        var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
-        var profile = UserProfile.getProfile();
-
-        if (profile has :weight && profile has :height && profile has :birthYear) {
-            var age = today.year - profile.birthYear;
-            var weight = profile.weight / 1000.0;
-            var restCalories = 0;
-
-            if (profile.gender == UserProfile.GENDER_MALE) {
-                restCalories = 5.2 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
-            } else {
-                restCalories = -197.6 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
-            }
-
-            // Calculate rest calories for the current time of day
-            restCalories = Math.round((today.hour * 60 + today.min) * restCalories / 1440).toNumber();
-
-            // Get total calories and subtract rest calories
-            if (ActivityMonitor.getInfo() has :calories && ActivityMonitor.getInfo().calories != null) {
-                var activeCalories = ActivityMonitor.getInfo().calories - restCalories;
-                if (activeCalories > 0) {
-                    val = activeCalories.format(numberFormat);
-                }
+        var rest_calories = getRestCalories();
+        // Get total calories and subtract rest calories
+        if (ActivityMonitor.getInfo() has :calories && ActivityMonitor.getInfo().calories != null && rest_calories > 0) {
+            var active_calories = ActivityMonitor.getInfo().calories - rest_calories;
+            if (active_calories > 0) {
+                val = active_calories.format(numberFormat);
             }
         }
         return val;
@@ -2369,8 +2361,8 @@ class Segment34View extends WatchUi.WatchFace {
         var val = "" as String;
 
         var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
-        var weekNumber = isoWeekNumber(today.year, today.month, today.day);
-        val = weekNumber.format(numberFormat);
+        var week_number = isoWeekNumber(today.year, today.month, today.day);
+        val = week_number.format(numberFormat);
         return val;
     } 
 
@@ -2401,9 +2393,9 @@ class Segment34View extends WatchUi.WatchFace {
     function complicationType_36 (numberFormat as String, width as Integer) as String { // Notification count
         var val = "" as String;
 
-        var notifCount = System.getDeviceSettings().notificationCount;
-        if(notifCount != null) {
-            val = notifCount.format(numberFormat);
+        var notif_count = System.getDeviceSettings().notificationCount;
+        if(notif_count != null) {
+            val = notif_count.format(numberFormat);
         }
         return val;
     } 
@@ -2481,10 +2473,7 @@ class Segment34View extends WatchUi.WatchFace {
     } 
 
     function complicationType_42 (numberFormat as String, width as Integer) as String { // Alarms
-        var val = "" as String;
-
-        val = System.getDeviceSettings().alarmCount.format(numberFormat);
-        return val;
+        return System.getDeviceSettings().alarmCount.format(numberFormat);
     } 
 
     function complicationType_43 (numberFormat as String, width as Integer) as String { // High temp
@@ -2561,10 +2550,7 @@ class Segment34View extends WatchUi.WatchFace {
     } 
 
     function complicationType_50 (numberFormat as String, width as Integer) as String { // Weather condition without precipitation
-        var val = "" as String;
-
-        val = getWeatherCondition(false);
-        return val;
+        return getWeatherCondition(false);
     } 
 
     function complicationType_51 (numberFormat as String, width as Integer) as String { // Temperature, Humidity, High/Low
@@ -2588,10 +2574,7 @@ class Segment34View extends WatchUi.WatchFace {
     } 
 
     function complicationType_53 (numberFormat as String, width as Integer) as String { // Temperature
-        var val = "" as String;
-
-        val = getTemperature();
-        return val;
+        return getTemperature();
     } 
 
     function complicationType_54 (numberFormat as String, width as Integer) as String { // Precipitation chance
@@ -2617,7 +2600,7 @@ class Segment34View extends WatchUi.WatchFace {
         return val;
     }
 
-    function complicationType_56 (numberFormat as String, width as Integer) as String { // Millitary Date Time Group
+    function complicationType_56 (numberFormat as String, width as Integer) as String { // Military Date Time Group
         return getDateTimeGroup();
     }
 
