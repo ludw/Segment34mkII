@@ -70,6 +70,8 @@ class Segment34View extends WatchUi.WatchFace {
     private var ledSmallFont as Resource or Null = null;
     private var ledMidFont as Resource or Null = null;
 
+    private var drawablesLoaded as Boolean = false;
+
     private var dbackground as Drawable or Null = null;
     private var dSecondsLabel as Text or Null = null;
     private var dAodPattern as Drawable or Null = null;
@@ -283,8 +285,14 @@ class Segment34View extends WatchUi.WatchFace {
     function onSettingsChanged() as Void {
         lastUpdate = null;
         previousEssentialsVis = null;
+
+        /* Retrieve all properties values */
         cacheProps();
+
+        /* Update ressources that might have changed */
         updateNightMode();
+
+        /* Update interface after changed settings */
         WatchUi.requestUpdate();
     }
 
@@ -345,8 +353,8 @@ class Segment34View extends WatchUi.WatchFace {
         dIcon1 = View.findDrawableById("Icon1") as Text;
         dIcon2 = View.findDrawableById("Icon2") as Text;
 
-        /* Setting up fonts */
-        updateFont();
+        /* We can now work on items */
+        drawablesLoaded = true;
     }
 
     hidden function cacheProps() as Void {
@@ -406,7 +414,7 @@ class Segment34View extends WatchUi.WatchFace {
         updateComplicationsData();
 
         /* Setting up fonts */
-        updateFont();
+        loadFontResource();
     }
 
     hidden function toggleNonEssentials(dc as Dc) as Void {
@@ -567,10 +575,13 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function updateFont() as Void {
+    hidden function loadFontResource() as Void {
         var fontVariant = Application.Properties.getValue("smallFontVariant") as Number;
+
         // Only load the font we need for this watch size
         if (screenHeight <= 280) {
+            ledMidFont = null;
+
             if(fontVariant == 0) {
                 ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small );
             } else if(fontVariant == 1) {
@@ -579,6 +590,8 @@ class Segment34View extends WatchUi.WatchFace {
                 ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small_lines );
             }
         } else {
+            ledSmallFont = null;
+
             if(fontVariant == 0) {
                 ledMidFont = Application.loadResource( Rez.Fonts.id_led );
             } else if(fontVariant == 1) {
@@ -588,9 +601,11 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
 
-        /* Updating fonts */
-        var font = ledSmallFont as Application.ResourceReferenceType;
+        /* Update components */
+        /* First check if drawables are loaded */
+        if (drawablesLoaded == false) { return; }
 
+        var font = ledSmallFont as Application.ResourceReferenceType;
         if(screenHeight > 280) {
             font = ledMidFont;
             dAodDateLabel.setFont(font);
