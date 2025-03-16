@@ -14,7 +14,7 @@ import Toybox.Complications;
 const INTEGER_FORMAT = "%d";
 
 /* Indexes for the colors in the following array */
-enum {
+enum labelEnum {
     labelFieldBg = 0,
     labelFieldLabel,
     labelTimeBg,
@@ -105,12 +105,12 @@ class Segment34View extends WatchUi.WatchFace {
     private var dIcon1 as Text or Null = null;
     private var dIcon2 as Text or Null = null;
 
-    private var propColorTheme as Number = 0;
-    private var propOldColorTheme as Number = -1;
-    private var propColorValues as Array<Lang.Integer> = new [labelNumber];
-    private var propNightColorTheme as Number = -1;
-    private var propOldNightColorTheme as Number = -1;
-    private var propNightColorValues as Array<Lang.Integer> = new [labelNumber];
+    private var propColorTheme as Integer = 0;
+    private var propOldColorTheme as Integer = -1;
+    private var propColorValues as Array<Lang.Integer> = new Array<Integer>[labelNumber];
+    private var propNightColorTheme as Integer = -1;
+    private var propOldNightColorTheme as Integer = -1;
+    private var propNightColorValues as Array<Lang.Integer> = new Array<Integer>[labelNumber];
     private var propNightThemeActivation as Number = 0;
     private var propBatteryVariant as Number = 3;
     private var propShowSeconds as Boolean = true;
@@ -153,42 +153,42 @@ class Segment34View extends WatchUi.WatchFace {
     /* Complication data */
 
     /* AoD Data */
-    private var aodDateMethod = self.method(:complicationType_Empty) as Method;
-    private var aodDateUnit = "" as String;
-    private var aodRightMethod = self.method(:complicationType_Empty) as Method;
+    private var aodDateMethod as Method(String, Integer) as String = self.method(:complicationType_Empty);
+    private var aodDateUnit as String = "";
+    private var aodRightMethod as Method(String, Integer) as String = self.method(:complicationType_Empty);
 
     /* Date Data */
-    private var dateFieldMethod = self.method(:complicationType_Empty) as Method;
-    private var dateFieldUnit = "" as String;
+    private var dateFieldMethod as Method(String, Integer) as String = self.method(:complicationType_Empty);
+    private var dateFieldUnit as String = "";
 
     /* Top Data */
-    private var sunriseFieldMethod = null as Method;
-    private var sunriseFieldDesc = "" as String;
-    private var sunsetFieldMethod = null as Method;
-    private var sunsetFieldDesc = "" as String;
+    private var sunriseFieldMethod as Method(String, Integer) as String = self.method(:complicationType_Empty);
+    private var sunriseFieldDesc as String = "";
+    private var sunsetFieldMethod as Method(String, Integer) as String = self.method(:complicationType_Empty);
+    private var sunsetFieldDesc as String = "";
 
-    private var weatherLine1Method = null as Method;
-    private var weatherLine1Unit = null as String;
-    private var weatherLine2Method = null as Method;
-    private var weatherLine2Unit = null as String;
+    private var weatherLine1Method as Method(String, Integer) as String = self.method(:complicationType_Empty);
+    private var weatherLine1Unit as String = "";
+    private var weatherLine2Method as Method(String, Integer) as String = self.method(:complicationType_Empty);
+    private var weatherLine2Unit as String = "";
 
     /* Bottom data */
-    private var leftCompLabel = null as String;
-    private var leftCompMethod = null as Method;
-    private var leftCompWidth = 0 as Integer;
-    private var leftCompLabelSize = 2 as Integer;
+    private var leftCompLabel as String = "";
+    private var leftCompMethod as Method(String, Integer) as String = self.method(:complicationType_Empty);
+    private var leftCompWidth as Integer = 0;
+    private var leftCompLabelSize as Integer = 2;
 
-    private var centerCompLabel = null;
-    private var centerCompMethod = null as Method;
-    private var centerCompWidth = 0 as Integer;
-    private var centerCompLabelSize = 2 as Integer;
+    private var centerCompLabel as String = "";
+    private var centerCompMethod as Method(String, Integer) as String = self.method(:complicationType_Empty);
+    private var centerCompWidth as Integer = 0;
+    private var centerCompLabelSize as Integer = 2;
 
-    private var rightCompLabel = null;
-    private var rightCompMethod = null as Method;
-    private var rightCompWidth = 0 as Integer;
-    private var rightCompLabelSize = 3 as Integer;
+    private var rightCompLabel as String = "";
+    private var rightCompMethod as Method(String, Integer) as String = self.method(:complicationType_Empty);
+    private var rightCompWidth as Integer = 0;
+    private var rightCompLabelSize as Integer = 3;
 
-    private var bottomCompMethod = null as Method;
+    private var bottomCompMethod as Method(String, Integer) as String = self.method(:complicationType_Empty);
 
     /* Implementation of existing functions */
     function initialize() {
@@ -273,7 +273,7 @@ class Segment34View extends WatchUi.WatchFace {
         doesPartialUpdate = true;
 
         var clock_time = System.getClockTime();
-        var sec_string = Lang.format("$1$", [clock_time.sec.format("%02d")]);
+        var sec_string = Lang.format("$1$", [clock_time.sec.format("%02d")]) as String;
 
         /* No clipping for big screens */
         if(screenHeight > 280) { return; }
@@ -320,7 +320,7 @@ class Segment34View extends WatchUi.WatchFace {
         WatchUi.requestUpdate();
     }
 
-    hidden function cacheDrawables(dc) as Void {
+    hidden function cacheDrawables(dc as Dc) as Void {
         updateScreenData(dc);
 
         dbackground = View.findDrawableById("background") as Drawable;
@@ -542,7 +542,7 @@ class Segment34View extends WatchUi.WatchFace {
         previousEssentialsVis = awake;
     }
 
-    hidden function updateScreenData(dc) as Void {
+    hidden function updateScreenData(dc as Dc) as Void {
         /* Update all screen data */
         screenHeight = dc.getHeight();
         screenWidth = dc.getWidth();
@@ -622,7 +622,7 @@ class Segment34View extends WatchUi.WatchFace {
         dWeatherLabel2.setFont(font);
     }
 
-    hidden function getComplicationMethod(compType as Integer) as Method {
+    hidden function getComplicationMethod(compType as Integer) as Method(String, Integer) as String {
         switch (compType) {
             case -1: return self.method(:complicationType_Date);// [-1] Date
             case 0: return self.method(:complicationType_0);    //  [0] Active min / week
@@ -854,7 +854,7 @@ class Segment34View extends WatchUi.WatchFace {
        when settings are changed.
        The AMOLED values redundant with the MIP profiles are commented to save on memory.
      */
-    hidden function updateThemeColors(themeSettings as Number, arrayToFill as Array<Number>) as Void {
+    hidden function updateThemeColors(themeSettings as Integer, arrayToFill as Array<Integer>) as Void {
         var amoled = canBurnIn ? 1 : 0 as Integer;
 
         /* Which theme are we using ? */
@@ -892,7 +892,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function getColor(colorName) as Graphics.ColorType {
+    hidden function getColor(colorName as labelEnum) as Integer {
         /* Check whether we are AMOLED or MIP */ 
         var amoled = canBurnIn ?    1   :   0;
         var array_to_use = propColorValues;
@@ -904,7 +904,7 @@ class Segment34View extends WatchUi.WatchFace {
         var color = array_to_use[colorName];
 
         /* Handle special cases */
-        if(colorName == labelTimeDisplay && isSleeping && amoled) {
+        if( (colorName == labelTimeDisplay) && isSleeping && (amoled == 1) ) {
             /* Get the dimmed version instead */
             color = array_to_use[labelTimeDisplayDim];
         }
@@ -1468,7 +1468,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function getComplicationDesc(complicationType as Integer, labelSize as Number) as String {
+    hidden function getComplicationDesc(complicationType as Integer, labelSize as Integer) as String {
         /* Handle special cases or return from the array */
         switch (complicationType) {
             case 16:
@@ -1507,7 +1507,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function getComplicationUnit(complicationType) as String {
+    hidden function getComplicationUnit(complicationType as Integer) as String {
         switch (complicationType) {
             case 11: return "KCAL";   // [11] Calories / day
             case 12: return "M";      // [12] Altitude (m)
@@ -1762,7 +1762,7 @@ class Segment34View extends WatchUi.WatchFace {
         return weekly_distance;
     }
 
-    hidden function secondaryTimezone(offset, width) as String {
+    hidden function secondaryTimezone(offset as Integer, width as Integer) as String {
         var val = "";
         var now = Time.now();
         var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_MEDIUM);
@@ -1794,7 +1794,7 @@ class Segment34View extends WatchUi.WatchFace {
         return val;
     }
 
-    hidden function dayName(day_of_week) as String {
+    hidden function dayName(day_of_week as Integer) as String {
         var names = [
             "SUN",
             "MON",
@@ -1807,7 +1807,7 @@ class Segment34View extends WatchUi.WatchFace {
         return names[day_of_week - 1];
     }
 
-    hidden function monthName(month) as String {
+    hidden function monthName(month as Integer) as String {
         var names = [
             "JAN",
             "FEB",
@@ -1854,7 +1854,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
 
-    hidden function julianDay(year, month, day) as Number {
+    hidden function julianDay(year as Integer, month as Integer, day as Integer) as Number {
         var a = (14 - month) / 12;
         var y = (year + 4800 - a);
         var m = (month + 12 * a - 3);
@@ -1862,7 +1862,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
 
-    hidden function isLeapYear(year) as Boolean {
+    hidden function isLeapYear(year as Integer) as Boolean {
         if (year % 4 != 0) {
             return false;
            } else if (year % 100 != 0) {
@@ -1873,7 +1873,7 @@ class Segment34View extends WatchUi.WatchFace {
         return false;
     }
 
-    hidden function moonPhase(time) as String {
+    hidden function moonPhase(time as Time.Gregorian.Info) as String {
         var jd = julianDay(time.year, time.month, time.day);
 
         var days_since_new_moon = jd - 2459966;
@@ -2668,8 +2668,8 @@ class Segment34View extends WatchUi.WatchFace {
 }
 
 class Segment34Delegate extends WatchUi.WatchFaceDelegate {
-    var screenW = null;
-    var screenH = null;
+    var screenW as Integer = 0;
+    var screenH as Integer = 0;
 
     public function initialize() {
         WatchFaceDelegate.initialize();
@@ -2697,7 +2697,7 @@ class Segment34Delegate extends WatchUi.WatchFaceDelegate {
         return true;
     }
 
-    function handlePress(areaSetting as String) {
+    function handlePress(areaSetting as String) as Void {
         var cID = Application.Properties.getValue(areaSetting) as Complications.Type;
         if(cID != null and cID != 0) {
             try {
