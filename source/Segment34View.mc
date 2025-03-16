@@ -13,13 +13,55 @@ import Toybox.Complications;
 
 const INTEGER_FORMAT = "%d";
 
+/* Indexes for the colors in the following array */
+enum {
+    labelFieldBg = 0,
+    labelFieldLabel,
+    labelTimeBg,
+    labelTimeDisplay,
+    labelTimeDisplayDim,
+    labelDateDisplay,
+    labelDateDisplayDim,
+    labelDawnDuskLabel,
+    labelDawnDuskValue,
+    labelNotifications,
+    labelStress,
+    labelBodybattery,
+    labelBackground,
+    labelValueDisplay,
+    labelMoonDisplay,
+    labelLowBatt,
+    /* Must stay last to count number of labels */
+    labelNumber
+}
+
+/* All screen heights available. */
+enum {
+    screenHeight240,    /* 240px */
+    screenHeight260,    /* 260px */
+    screenHeight280,    /* 280px */
+    screenHeight360,    /* 360px */
+    screenHeight390,    /* 390px */
+    screenHeight416,    /* 416px */
+    screenHeight454,    /* 454px */
+    screenHeightDefault
+}
+
 class Segment34View extends WatchUi.WatchFace {
 
     private var isSleeping as Boolean = false;
     private var doesPartialUpdate as Boolean = false;
     private var lastUpdate as Number or Null = null;
     private var canBurnIn as Boolean = false;
+
+    private var screenWidth as Integer = 0;
     private var screenHeight as Number = 0;
+    private var screenIndex as Integer = screenHeightDefault;
+    private var clip_x as Integer = 0;
+    private var clip_y as Integer = 0;
+    private var clip_width as Integer = 0;
+    private var clip_height as Integer = 0;
+
     private var previousEssentialsVis as Boolean or Null = null;
     private var batt as Number = 0;
     private var stress as Number = 0;
@@ -27,7 +69,7 @@ class Segment34View extends WatchUi.WatchFace {
     private var nightMode as Boolean = false;
     private var ledSmallFont as Resource or Null = null;
     private var ledMidFont as Resource or Null = null;
-    
+
     private var dbackground as Drawable or Null = null;
     private var dSecondsLabel as Text or Null = null;
     private var dAodPattern as Drawable or Null = null;
@@ -62,7 +104,11 @@ class Segment34View extends WatchUi.WatchFace {
     private var dIcon2 as Text or Null = null;
 
     private var propColorTheme as Number = 0;
+    private var propOldColorTheme as Number = -1;
+    private var propColorValues as Array<Lang.Integer> = new [labelNumber];
     private var propNightColorTheme as Number = -1;
+    private var propOldNightColorTheme as Number = -1;
+    private var propNightColorValues as Array<Lang.Integer> = new [labelNumber];
     private var propNightThemeActivation as Number = 0;
     private var propBatteryVariant as Number = 3;
     private var propShowSeconds as Boolean = true;
@@ -102,6 +148,44 @@ class Segment34View extends WatchUi.WatchFace {
     private var propWeekOffset as Number = 0;
     private var propLabelVisibility as Number = 0;
 
+    /* Complication data */
+
+    /* AoD Data */
+    private var aodDateMethod = self.method(:complicationType_Empty) as Method;
+    private var aodDateUnit = "" as String;
+    private var aodRightMethod = self.method(:complicationType_Empty) as Method;
+
+    /* Date Data */
+    private var dateFieldMethod = self.method(:complicationType_Empty) as Method;
+    private var dateFieldUnit = "" as String;
+
+    /* Top Data */
+    private var sunriseFieldMethod = null as Method;
+    private var sunriseFieldDesc = "" as String;
+    private var sunsetFieldMethod = null as Method;
+    private var sunsetFieldDesc = "" as String;
+
+    private var weatherLine1Method = null as Method;
+    private var weatherLine1Unit = null as String;
+    private var weatherLine2Method = null as Method;
+    private var weatherLine2Unit = null as String;
+
+    /* Bottom data */
+    private var leftCompLabel = null as String;
+    private var leftCompMethod = null as Method;
+    private var leftCompWidth = 0 as Integer;
+
+    private var centerCompLabel = null;
+    private var centerCompMethod = null as Method;
+    private var centerCompWidth = 0 as Integer;
+
+    private var rightCompLabel = null;
+    private var rightCompMethod = null as Method;
+    private var rightCompWidth = 0 as Integer;
+
+    private var bottomCompMethod = null as Method;
+
+    /* Implementation of existing functions */
     function initialize() {
         WatchFace.initialize();
     }
@@ -152,7 +236,6 @@ class Segment34View extends WatchUi.WatchFace {
             } else if(propHrUpdateFreq == 2) { // Every second
                 setBottomFields(dc);
             }
-            
         }
 
         if(update_everything) {
@@ -187,34 +270,13 @@ class Segment34View extends WatchUi.WatchFace {
         var clock_time = System.getClockTime();
         var sec_string = Lang.format("$1$", [clock_time.sec.format("%02d")]);
 
-        var clip_x = 0;
-        var clip_y = 0;
-        var clip_width = 0;
-        var clip_height = 0;
-
-        if(screenHeight == 240) {
-            clip_x = 205;
-            clip_y = 157;
-            clip_width = 24;
-            clip_height = 20;
-        } else if(screenHeight == 260) {
-            clip_x = 220;
-            clip_y = 162;
-            clip_width = 24;
-            clip_height = 20;
-        } else if(screenHeight == 280) {
-            clip_x = 235;
-            clip_y = 170;
-            clip_width = 24;
-            clip_height = 20;
-        } else if(screenHeight > 280) {
-            return;
-        }
+        /* No clipping for big screens */
+        if(screenHeight > 280) { return; }
 
         dc.setClip(clip_x, clip_y, clip_width, clip_height);
-        dc.setColor(getColor("background"), getColor("background"));
+        dc.setColor(getColor(labelBackground), getColor(labelBackground));
         dc.clear();
-        dc.setColor(getColor("dateDisplay"), Graphics.COLOR_TRANSPARENT);
+        dc.setColor(getColor(labelDateDisplay), Graphics.COLOR_TRANSPARENT);
         dc.drawText(clip_x, clip_y, ledSmallFont, sec_string, Graphics.TEXT_JUSTIFY_LEFT);
     }
 
@@ -247,8 +309,8 @@ class Segment34View extends WatchUi.WatchFace {
         WatchUi.requestUpdate();
     }
 
-    hidden function cacheDrawables(dc as Dc) as Void {
-        screenHeight = dc.getHeight();
+    hidden function cacheDrawables(dc) as Void {
+        updateScreenData(dc);
 
         dbackground = View.findDrawableById("background") as Drawable;
         dSecondsLabel = View.findDrawableById("SecondsLabel") as Text;
@@ -282,6 +344,9 @@ class Segment34View extends WatchUi.WatchFace {
         dHrLabel = View.findDrawableById("HRLabel") as Text;
         dIcon1 = View.findDrawableById("Icon1") as Text;
         dIcon2 = View.findDrawableById("Icon2") as Text;
+
+        /* Setting up fonts */
+        updateFont();
     }
 
     hidden function cacheProps() as Void {
@@ -317,6 +382,7 @@ class Segment34View extends WatchUi.WatchFace {
         propSunriseFieldShows = Application.Properties.getValue("sunriseFieldShows") as Number;
         propSunsetFieldShows = Application.Properties.getValue("sunsetFieldShows") as Number;
         propLabelVisibility = Application.Properties.getValue("labelVisibility") as Number;
+
         propDateFormat = Application.Properties.getValue("dateFormat") as Number;
         propShowStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery") as Boolean;
         propShowNotificationCount = Application.Properties.getValue("showNotificationCount") as Boolean;
@@ -326,27 +392,21 @@ class Segment34View extends WatchUi.WatchFace {
         propTzName2 = Application.Properties.getValue("tzName2") as String;
         propWeekOffset = Application.Properties.getValue("weekOffset") as Number;
 
-        var fontVariant = Application.Properties.getValue("smallFontVariant") as Number;
-        // Only load the font we need for this watch size
-        if(screenHeight == 240 or screenHeight == 260 or screenHeight == 280) {
-            if(fontVariant == 0) {
-                ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small );
-            } else if(fontVariant == 1) {
-                ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small_readable );
-            } else {
-                ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small_lines );
-            }
-        } else {
-            if(fontVariant == 0) {
-                ledMidFont = Application.loadResource( Rez.Fonts.id_led );
-            } else if(fontVariant == 1) {
-                ledMidFont = Application.loadResource( Rez.Fonts.id_led_inbetween );
-            } else {
-                ledMidFont = Application.loadResource( Rez.Fonts.id_led_lines );
-            }
+        /* Update all the colors used for this theme */
+        if (propColorTheme != propOldColorTheme) {
+            updateThemeColors(propColorTheme, propColorValues);
+            propOldColorTheme = propColorTheme;
         }
-        
-        
+        if ((propNightColorTheme >= 0) && (propNightColorTheme != propOldNightColorTheme)) {
+            updateThemeColors(propNightColorTheme, propNightColorValues);
+            propOldNightColorTheme = propNightColorTheme;
+        }
+
+        /* Update the settings for all complications */
+        updateComplicationsData();
+
+        /* Setting up fonts */
+        updateFont();
     }
 
     hidden function toggleNonEssentials(dc as Dc) as Void {
@@ -369,8 +429,8 @@ class Segment34View extends WatchUi.WatchFace {
             dAodPattern.setLocation(clock_time.min % 2, dAodPattern.locY);
             setAlignment(propAodAlignment, dAodDateLabel, (clock_time.min % 3) - 1);
             alignAODRightField((clock_time.min % 3) - 1);
-            dAodDateLabel.setColor(getColor("dateDisplayDim"));
-            dAodRightLabel.setColor(getColor("dateDisplayDim"));
+            dAodDateLabel.setColor(getColor(labelDateDisplayDim));
+            dAodRightLabel.setColor(getColor(labelDateDisplayDim));
             dbackground.setVisible(false);
         } else {
             dc.setAntiAlias(true);
@@ -415,68 +475,52 @@ class Segment34View extends WatchUi.WatchFace {
         dIcon1.setVisible(hide_In_aod);
         dIcon2.setVisible(hide_In_aod);
         
-        dTimeLabel.setColor(getColor("timeDisplay"));
-        dTimeBg.setColor(getColor("timeBg"));
-        dTtrBg.setColor(getColor("fieldBg"));
-        dHrBg.setColor(getColor("fieldBg"));
-        dActiveBg.setColor(getColor("fieldBg"));
-        dStepBg.setColor(getColor("fieldBg"));
-        dTtrDesc.setColor(getColor("fieldLabel"));
-        dHrLabel.setColor(getColor("valueDisplay"));
-        dHrDesc.setColor(getColor("fieldLabel"));
-        dActiveDesc.setColor(getColor("fieldLabel"));
-        dDateLabel.setColor(getColor("dateDisplay"));
-        dSecondsLabel.setColor(getColor("dateDisplay"));
-        dNotifLabel.setColor(getColor("notifications"));
-        dMoonLabel.setColor(getColor("moonDisplay"));
-        dDusk.setColor(getColor("dawnDuskLabel"));
-        dDawn.setColor(getColor("dawnDuskLabel"));
-        dSunUpLabel.setColor(getColor("dawnDuskValue"));
-        dSunDownLabel.setColor(getColor("dawnDuskValue"));
-        dWeatherLabel1.setColor(getColor("valueDisplay"));
-        dWeatherLabel2.setColor(getColor("valueDisplay"));
-        dTtrLabel.setColor(getColor("valueDisplay"));
-        dActiveLabel.setColor(getColor("valueDisplay"));
-        dStepLabel.setColor(getColor("valueDisplay"));
-        dIcon1.setColor(getColor("valueDisplay"));
-        dIcon2.setColor(getColor("valueDisplay"));
+        dTimeLabel.setColor(getColor(labelTimeDisplay));
+        dTimeBg.setColor(getColor(labelTimeBg));
+        dTtrBg.setColor(getColor(labelFieldBg));
+        dHrBg.setColor(getColor(labelFieldBg));
+        dActiveBg.setColor(getColor(labelFieldBg));
+        dStepBg.setColor(getColor(labelFieldBg));
+        dTtrDesc.setColor(getColor(labelFieldLabel));
+        dHrLabel.setColor(getColor(labelValueDisplay));
+        dHrDesc.setColor(getColor(labelFieldLabel));
+        dActiveDesc.setColor(getColor(labelFieldLabel));
+        dDateLabel.setColor(getColor(labelDateDisplay));
+        dSecondsLabel.setColor(getColor(labelDateDisplay));
+        dNotifLabel.setColor(getColor(labelNotifications));
+        dMoonLabel.setColor(getColor(labelMoonDisplay));
+        dDusk.setColor(getColor(labelDawnDuskLabel));
+        dDawn.setColor(getColor(labelDawnDuskLabel));
+        dSunUpLabel.setColor(getColor(labelDawnDuskValue));
+        dSunDownLabel.setColor(getColor(labelDawnDuskValue));
+        dWeatherLabel1.setColor(getColor(labelValueDisplay));
+        dWeatherLabel2.setColor(getColor(labelValueDisplay));
+        dTtrLabel.setColor(getColor(labelValueDisplay));
+        dActiveLabel.setColor(getColor(labelValueDisplay));
+        dStepLabel.setColor(getColor(labelValueDisplay));
         dBattBg.setColor(0x555555);
         
         if(System.getSystemStats().battery > 15) {
-            dBattLabel.setColor(getColor("valueDisplay"));
+            dBattLabel.setColor(getColor(labelValueDisplay));
         } else {
-            dBattLabel.setColor(getColor("lowBatt"));
+            dBattLabel.setColor(getColor(labelLowBatt));
         }
-        
+
         if(hide_In_aod) {
-            if(getColor("background") == 0xFFFFFF) {
+            if(getColor(labelBackground) == 0xFFFFFF) {
                 dbackground.setVisible(true);
             } else {
                 dbackground.setVisible(false);
             }
         }
-        
-        if(awake) {
-            if(screenHeight == 240 or screenHeight == 260 or screenHeight == 280) {
-                dDateLabel.setFont(ledSmallFont);
-                dSecondsLabel.setFont(ledSmallFont);
-                dNotifLabel.setFont(ledSmallFont);
-                dWeatherLabel1.setFont(ledSmallFont);
-                dWeatherLabel2.setFont(ledSmallFont);
-            } else {
-                dDateLabel.setFont(ledMidFont);
-                dSecondsLabel.setFont(ledMidFont);
-                dNotifLabel.setFont(ledMidFont);
-                dWeatherLabel1.setFont(ledMidFont);
-                dWeatherLabel2.setFont(ledMidFont);
-            }
 
+        if(awake) {
             if(canBurnIn) {
                 dAodPattern.setVisible(false);
                 dAodDateLabel.setVisible(false);
                 dAodRightLabel.setVisible(false);
 
-                if(getColor("background") == 0xFFFFFF) {
+                if(getColor(labelBackground) == 0xFFFFFF) {
                     dGradient.setVisible(false);
                 } else {
                     dGradient.setVisible(true);
@@ -485,6 +529,239 @@ class Segment34View extends WatchUi.WatchFace {
         }
 
         previousEssentialsVis = awake;
+    }
+
+    hidden function updateScreenData(dc) as Void {
+        /* Update all screen data */
+        screenHeight = dc.getHeight();
+        screenWidth = dc.getWidth();
+
+        /* Setting index */
+        if      (screenHeight == 240) { screenIndex = screenHeight240; }
+        else if (screenHeight == 260) { screenIndex = screenHeight260; }
+        else if (screenHeight == 280) { screenIndex = screenHeight280; }
+        else if (screenHeight == 360) { screenIndex = screenHeight360; }
+        else if (screenHeight == 390) { screenIndex = screenHeight390; }
+        else if (screenHeight == 416) { screenIndex = screenHeight416; }
+        else if (screenHeight == 454) { screenIndex = screenHeight454; }
+        else                          { screenIndex = screenHeightDefault; }
+
+        if (screenHeight <= 280) {
+            /* No clipping above 280px so no entries in the array */
+            var screenClipValues = [
+                /* size         clipX, clipY, clipWidth, clipHeight */
+                /* 240px */   [   205,   157,        24,        20 ],
+                /* 260px */   [   220,   162,        24,        20 ],
+                /* 280px */   [   235,   170,        24,        20 ],
+            ] as Array<Array<Integer>>;
+
+            clip_x      = screenClipValues[screenIndex][0];
+            clip_y      = screenClipValues[screenIndex][1];
+            clip_width  = screenClipValues[screenIndex][2];
+            clip_height = screenClipValues[screenIndex][3];
+        } else {
+            clip_x      = 0;
+            clip_y      = 0;
+            clip_width  = 0;
+            clip_height = 0;
+        }
+    }
+
+    hidden function updateFont() as Void {
+        var fontVariant = Application.Properties.getValue("smallFontVariant") as Number;
+        // Only load the font we need for this watch size
+        if (screenHeight <= 280) {
+            if(fontVariant == 0) {
+                ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small );
+            } else if(fontVariant == 1) {
+                ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small_readable );
+            } else {
+                ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small_lines );
+            }
+        } else {
+            if(fontVariant == 0) {
+                ledMidFont = Application.loadResource( Rez.Fonts.id_led );
+            } else if(fontVariant == 1) {
+                ledMidFont = Application.loadResource( Rez.Fonts.id_led_inbetween );
+            } else {
+                ledMidFont = Application.loadResource( Rez.Fonts.id_led_lines );
+            }
+        }
+
+        /* Updating fonts */
+        var font = ledSmallFont as Application.ResourceReferenceType;
+
+        if(screenHeight > 280) {
+            font = ledMidFont;
+            dAodDateLabel.setFont(font);
+            dAodRightLabel.setFont(font);
+        }
+
+        dDateLabel.setFont    (font);
+        dSecondsLabel.setFont (font);
+        dNotifLabel.setFont   (font);
+        dWeatherLabel1.setFont(font);
+        dWeatherLabel2.setFont(font);
+    }
+
+    hidden function getComplicationMethod(compType as Integer) as Method {
+        switch (compType) {
+            case -1: return self.method(:complicationType_Date);// [-1] Date
+            case 0: return self.method(:complicationType_0);    //  [0] Active min / week
+            case 1: return self.method(:complicationType_1);    //  [1] Active min / day
+            case 2: return self.method(:complicationType_2);    //  [2] distance (km) / day
+            case 3: return self.method(:complicationType_3);    //  [3] distance (miles) / day
+            case 4: return self.method(:complicationType_4);    //  [4] floors climbed / day
+            case 5: return self.method(:complicationType_5);    //  [5] meters climbed / day
+            case 6: return self.method(:complicationType_6);    //  [6] Time to Recovery (h)
+            case 7: return self.method(:complicationType_7);    //  [7] VO2 Max Running
+            case 8: return self.method(:complicationType_8);    //  [8] VO2 Max Cycling
+            case 9: return self.method(:complicationType_9);    //  [9] Respiration rate
+            case 10: return self.method(:complicationType_10);  // [10] HR, done in function
+            case 11: return self.method(:complicationType_11);  // [11] Calories / day
+            case 12: return self.method(:complicationType_12);  // [12] Altitude (m)
+            case 13: return self.method(:complicationType_13);  // [13] Stress
+            case 14: return self.method(:complicationType_14);  // [14] Body battery
+            case 15: return self.method(:complicationType_15);  // [15] Altitude (ft)
+            case 16: return self.method(:complicationType_16);  // [16] Alt TZ 1, done in function
+            case 17: return self.method(:complicationType_17);  // [17] Steps / day
+            case 18: return self.method(:complicationType_18);  // [18] Distance (m) / day
+            case 19: return self.method(:complicationType_19);  // [19] Wheelchair pushes
+            case 20: return self.method(:complicationType_20);  // [20] Weather condition
+            case 21: return self.method(:complicationType_21);  // [21] Weekly run distance (km)
+            case 22: return self.method(:complicationType_22);  // [22] Weekly run distance (miles)
+            case 23: return self.method(:complicationType_23);  // [23] Weekly bike distance (km)
+            case 24: return self.method(:complicationType_24);  // [24] Weekly bike distance (miles)
+            case 25: return self.method(:complicationType_25);  // [25] Training status
+            case 26: return self.method(:complicationType_26);  // [26] Barometric pressure (hPA)
+            case 27: return self.method(:complicationType_27);  // [27] Weight kg
+            case 28: return self.method(:complicationType_28);  // [28] Weight lbs
+            case 29: return self.method(:complicationType_29);  // [29] Act Calories / day
+            case 30: return self.method(:complicationType_30);  // [30] Sea level pressure (hPA)
+            case 31: return self.method(:complicationType_31);  // [31] Week number
+            case 32: return self.method(:complicationType_32);  // [32] Weekly distance (km)
+            case 33: return self.method(:complicationType_33);  // [33] Weekly distance (miles)
+            case 34: return self.method(:complicationType_34);  // [34] Battery percentage
+            case 35: return self.method(:complicationType_35);  // [35] Battery days remaining
+            case 36: return self.method(:complicationType_36);  // [36] Notification count
+            case 37: return self.method(:complicationType_37);  // [37] Solar intensity
+            case 38: return self.method(:complicationType_38);  // [38] Sensor temp
+            case 39: return self.method(:complicationType_39);  // [39] Sunrise
+            case 40: return self.method(:complicationType_40);  // [40] Sunset
+            case 41: return self.method(:complicationType_41);  // [41] Alt TZ 2:
+            case 42: return self.method(:complicationType_42);  // [42] Alarms
+            case 43: return self.method(:complicationType_43);  // [43] Daily high temp
+            case 44: return self.method(:complicationType_44);  // [44] Daily low temp
+            case 45: return self.method(:complicationType_45);  // [45] empty for offset 45
+            case 46: return self.method(:complicationType_46);  // [46] empty for offset 46
+            case 47: return self.method(:complicationType_47);  // [47] empty for offset 47
+            case 48: return self.method(:complicationType_48);  // [48] empty for offset 48
+            case 49: return self.method(:complicationType_49);  // [49] empty for offset 49
+            case 50: return self.method(:complicationType_50);  // [50] empty for offset 50
+            case 51: return self.method(:complicationType_51);  // [51] empty for offset 51
+            case 52: return self.method(:complicationType_52);  // [52] empty for offset 52
+            case 53: return self.method(:complicationType_53);  // [53] Temperature
+            case 54: return self.method(:complicationType_54);  // [54] Precipitation
+            case 55: return self.method(:complicationType_55);  // [55] Next sun event
+            case 56: return self.method(:complicationType_56);  // [56] Military Date Time
+            case 57: return self.method(:complicationType_57);  // [57] Time of next calendar Event
+            case 58: return self.method(:complicationType_58);  // [58] Active / Total Calories
+            case 59: return self.method(:complicationType_59);  // [59] PulseOx
+            default: return self.method(:complicationType_Empty); // Empty by default
+        }
+    }
+
+    /* For each complication, update description, unit, and update method */
+    hidden function updateComplicationsData() as Void {
+        /*** Top Complications ***/
+
+        /* AoD complication */
+        if(canBurnIn) {
+            if(propAodFieldShows != -1) {
+                aodDateUnit = getComplicationUnit(propAodFieldShows);
+                if (aodDateUnit.length() > 0) {
+                    aodDateUnit = Lang.format(" $1$", [aodDateUnit]);
+                }
+                aodDateMethod = getComplicationMethod(propAodFieldShows);
+            }
+
+            aodRightMethod = getComplicationMethod(propAodRightFieldShows);
+        }
+
+        /*  Date complication */
+        dateFieldUnit = getComplicationUnit(propDateFieldShows);
+        if (dateFieldUnit.length() > 0) { dateFieldUnit = Lang.format(" $1$", [dateFieldUnit]); }
+        dateFieldMethod = getComplicationMethod(propDateFieldShows);
+
+        /* Sun events */
+        if(propSunriseFieldShows == -2) {
+            sunriseFieldDesc = "";
+            sunriseFieldMethod = self.method(:complicationType_Empty);
+        } else {
+            sunriseFieldDesc = getComplicationDesc(propSunriseFieldShows, 1);
+            sunriseFieldMethod = getComplicationMethod(propSunriseFieldShows);
+        }
+
+        if(propSunsetFieldShows == -2) {
+            sunsetFieldDesc = "";
+            sunsetFieldMethod = self.method(:complicationType_Empty);
+        } else {
+            sunsetFieldDesc = getComplicationDesc(propSunsetFieldShows, 1);
+            sunsetFieldMethod = getComplicationMethod(propSunsetFieldShows);
+
+            // hide labels if so configured
+            if (propLabelVisibility == 1 or propLabelVisibility == 2) {
+                dDawn.setVisible(false);
+                dDusk.setVisible(false);
+            }
+        }
+
+        /* Weather complications */
+        weatherLine1Unit = getComplicationUnit(propWeatherLine1Shows);
+        if (weatherLine1Unit.length() > 0) {
+            weatherLine1Unit = Lang.format(" $1$", [weatherLine1Unit]);
+        }
+        weatherLine1Method = getComplicationMethod(propWeatherLine1Shows);
+
+        weatherLine2Unit = getComplicationUnit(propWeatherLine2Shows);
+        if (weatherLine2Unit.length() > 0) {
+            weatherLine2Unit = Lang.format(" $1$", [weatherLine2Unit]);
+        }
+        weatherLine2Method = getComplicationMethod(propWeatherLine2Shows);
+
+        /*** Bottom Complications ***/
+        /* Left label */
+        leftCompWidth = 3;
+        var left_label_size = 2;
+        if(screenWidth > 450) {
+            leftCompWidth = 4;
+            left_label_size = 3;
+        }
+        leftCompLabel = getComplicationDesc(propLeftValueShows, left_label_size);
+        leftCompMethod = getComplicationMethod(propLeftValueShows);
+
+        /* Center label */
+        centerCompWidth = 3;
+        var mid_label_size = 2;
+        if(screenWidth > 450) {
+            centerCompWidth = 4;
+            mid_label_size = 3;
+        }
+        centerCompLabel = getComplicationDesc(propMiddleValueShows, mid_label_size);
+        centerCompMethod = getComplicationMethod(propMiddleValueShows);
+
+        /* Right label */
+        rightCompWidth = 4;
+        var right_label_size = 3;
+        if(screenWidth == 240) {
+            rightCompWidth = 3;
+            right_label_size = 2;
+        }
+        rightCompLabel = getComplicationDesc(propRightValueShows, right_label_size);
+        rightCompMethod = getComplicationMethod(propRightValueShows);
+
+        /* Bottom field */
+        bottomCompMethod = getComplicationMethod(propBottomFieldShows);
     }
 
     hidden function setVisibility2(setting as Number, label as Text, bg as Text) as Void {
@@ -512,14 +789,9 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setAlignment(setting as Number, label as Text, offset as Number) as Void {
-        var x = 0;
-        if(screenHeight == 240) { x = 10; }
-        if(screenHeight == 260) { x = 16; }
-        if(screenHeight == 280) { x = 25; }
-        if(screenHeight == 360) { x = 15; }
-        if(screenHeight == 390) { x = 17; }
-        if(screenHeight == 416) { x = 31; }
-        if(screenHeight == 454) { x = 23; }
+        /* Screen alignement values :   240px, 260px 280px, 360px, 390px, 416px, 454px, Default */
+        var screenAlignValues =       [ 10,    16,   25,    15,    17,    31,    23,    0 ];
+        var x = screenAlignValues[screenIndex];
 
         if(setting == 0) { // Left align
             label.setJustification(Graphics.TEXT_JUSTIFY_LEFT);
@@ -539,634 +811,87 @@ class Segment34View extends WatchUi.WatchFace {
 
         dAodRightLabel.setLocation(x + offset, dAodRightLabel.locY);
     }
+ 
     hidden function alignNotification(setting as Number) as Void {
         var x = 0;
+        var alignment = Graphics.TEXT_JUSTIFY_RIGHT;
+
         if(setting == 1) { // Date is centered, left align notif
-            if(screenHeight == 240) { x = 10; }
-            if(screenHeight == 260) { x = 16; }
-            if(screenHeight == 280) { x = 25; }
-            if(screenHeight == 360) { x = 15; }
-            if(screenHeight == 390) { x = 17; }
-            if(screenHeight == 416) { x = 31; }
-            if(screenHeight == 454) { x = 23; }
-            dNotifLabel.setJustification(Graphics.TEXT_JUSTIFY_LEFT);
-            dNotifLabel.setLocation(x, dNotifLabel.locY);
+            /* Screen notification alignement :    240px, 260px 280px, 360px, 390px, 416px, 454px, Default */
+            var screenNotifLeft  =     [ 10,    16,   25,    15,    17,    31,    23,    0 ];
+            x = screenNotifLeft[screenIndex];
+            alignment = Graphics.TEXT_JUSTIFY_LEFT;
         } else { // Date is left aligned, put notif after
-            if(screenHeight == 240) { x = 195; }
-            if(screenHeight == 260) { x = 210; }
-            if(screenHeight == 280) { x = 220; }
-            if(screenHeight == 360) { x = 297; }
-            if(screenHeight == 390) { x = 317; }
-            if(screenHeight == 416) { x = 331; }
-            if(screenHeight == 454) { x = 379; }
-            dNotifLabel.setJustification(Graphics.TEXT_JUSTIFY_RIGHT);
-            dNotifLabel.setLocation(x, dNotifLabel.locY);
+            /* Screen notification alignement :    240px, 260px 280px, 360px, 390px, 416px, 454px, Default */
+            var screenNotifAfter =     [ 195,   210,  220,   297,   317,   331,   379,   0 ];
+            x = screenNotifAfter[screenIndex];
+            alignment = Graphics.TEXT_JUSTIFY_RIGHT;
+        }
+
+        dNotifLabel.setJustification(alignment);
+        dNotifLabel.setLocation(x, dNotifLabel.locY);
+    }
+
+    /* Update the current colors for the requested theme. This function is only called
+       when settings are changed.
+       The AMOLED values redundant with the MIP profiles are commented to save on memory.
+     */
+    hidden function updateThemeColors(themeSettings as Number, arrayToFill as Array<Number>) as Void {
+        var amoled = canBurnIn ? 1 : 0 as Integer;
+
+        /* Which theme are we using ? */
+        var listOfThemes = [ 
+            Rez.JsonData.yellow_on_turquoise,
+            Rez.JsonData.hot_pink,
+            Rez.JsonData.blueish_green,
+            Rez.JsonData.very_green,
+            Rez.JsonData.white_on_turquoise,
+            Rez.JsonData.orange,
+            Rez.JsonData.red_and_white,
+            Rez.JsonData.white_on_blue,
+            Rez.JsonData.yellow_on_blue,
+            Rez.JsonData.white_and_orange,
+            Rez.JsonData.blue,
+            Rez.JsonData.peachy_orange,
+            Rez.JsonData.white_on_black,
+            Rez.JsonData.black_on_white,
+            Rez.JsonData.red_on_white,
+            Rez.JsonData.blue_on_white,
+            Rez.JsonData.green_on_white,
+            Rez.JsonData.orange_on_white,
+            Rez.JsonData.green_and_orange,
+            Rez.JsonData.green_camo,
+            Rez.JsonData.red_on_black,
+            Rez.JsonData.purple_on_white,
+            Rez.JsonData.purple_on_black,
+         ] as Array<ResourceId>;
+
+        /* Load the color array in JSON */
+        var themeArray = Application.loadResource(listOfThemes[themeSettings]) as Array<Array<String>>;
+
+        for (var ii = 0; ii < labelNumber; ii++) {
+            arrayToFill[ii] = themeArray[amoled][ii].toNumberWithBase(16);
         }
     }
-    
+
     hidden function getColor(colorName) as Graphics.ColorType {
-        var amoled = canBurnIn;
+        /* Check whether we are AMOLED or MIP */ 
+        var amoled = canBurnIn ?    1   :   0;
+        var array_to_use = propColorValues;
 
-        var theme_to_use = propColorTheme;
         if (propNightColorTheme != -1 && nightMode) {
-            theme_to_use = propNightColorTheme;
+            array_to_use = propNightColorValues;
         }
 
-        if(theme_to_use == 0) { // Yellow on turquiose
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x0e333c; }
-                return 0x005555;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0x55AAAA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x0d333c; }
-                return 0x005555;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xfbcb77; }
-                return 0xFFFF00;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0xa98753;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0x005555;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(theme_to_use == 1) { // Hot pink
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x0e333c; }
-                return 0x005555;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xAA55AA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x0f3b46; }
-                return 0x005555;
-            } else if(colorName.equals("timeDisplay")) {
-                if(amoled) { return 0xf988f2; }
-                return 0xFF55AA;
-            } else if(colorName.equals("dateDisplay")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0xa95399;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xAA55AA;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0xFF55AA;
-            } else if(colorName.equals("stress")) {
-                return 0xFF55AA;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x00FFAA;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(theme_to_use == 2) { // Blueish green
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x0f2246; }
-                return 0x0055AA;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0x55AAAA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x0f2246; }
-                return 0x0055AA;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                if(amoled) { return 0x89efd2; }
-                return 0x00FFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x5ca28f;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0x005555;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(theme_to_use == 3) { // Very green
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x152b19; }
-                return 0x005500;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0x00AA55;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x152b19; }
-                return 0x005500;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                if(amoled) { return 0x96e0ac; }
-                return 0x00FF00;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x5ca28f;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0x00AA55;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("stress")) {
-                if(amoled) { return 0xffc884; }
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                if(amoled) { return 0x59b9fe; }
-                return 0x00AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(theme_to_use == 4) { // White on turquoise
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x0e333c; }
-                return 0x005555;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0x55AAAA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x0d333c; }
-                return 0x005555;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x114a5a;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0x005555;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0xAAAAAA;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA55;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(theme_to_use == 5) { // Orange
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x1b263d; }
-                return 0x5500AA;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xFFAAAA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x1b263d; }
-                return 0x5500AA;
-            } else if(colorName.equals("timeDisplay")) {
-                if(amoled) { return 0xff9161; }
-                return 0xFF5500;
-            } else if(colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xffb383; }
-                return 0xFFAAAA;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0xaa6e56;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xFFAAAA;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFF5555;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(theme_to_use == 6) { // Red & White
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x550000; }
-                return 0xAA0000;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xFF0000;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x550000; }
-                return 0xAA0000;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xffffff; }
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0xAA0000;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xAA0000;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0xFF0000;
-            } else if(colorName.equals("stress")) {
-                return 0xAA0000;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(theme_to_use == 7) { // White on Blue
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x0b2051; }
-                return 0x0055AA;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0x0055AA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x0b2051; }
-                return 0x0055AA;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xffffff; }
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x0055AA;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0x0055AA;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(theme_to_use == 8) { // Yellow on Blue
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x0b2051; }
-                return 0x0055AA;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0x0055AA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x0b2051; }
-                return 0x0055AA;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xfbcb77; }
-                return 0xFFFF00;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0xa98753;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0x0055AA;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(theme_to_use == 9) { // White & Orange
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x58250b; }
-                return 0xaa5500;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xFF5500;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x7d3f01; }
-                return 0xaa5500;
-            } else if(colorName.equals("timeDisplay") || colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xffffff; }
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0xAA5500;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xFF5500;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x00AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(theme_to_use == 10) { // Blue
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x191b33; }
-                return 0x555555;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0x0055AA;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x191b33; }
-                return 0x000055;
-            } else if(colorName.equals("timeDisplay")) {
-                if(amoled) { return 0x3495d4; }
-                return 0x0055AA;
-            } else if(colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xffffff; }
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x0055AA;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0x0055AA;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(theme_to_use == 11) { // Orange
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x333333; }
-                return 0x555555;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x333333; }
-                return 0x555555;
-            } else if(colorName.equals("timeDisplay")) {
-                if(amoled) { return 0xff7600; }
-                return 0xFFAA00;
-            } else if(colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xffffff; }
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x555555;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            }
-        } else if(theme_to_use == 12) { // White on black
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x333333; }
-                return 0x555555;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x333333; }
-                return 0x555555;
-            } else if(colorName.equals("timeDisplay")) {
-                if(amoled) {
-                    if(isSleeping) {
-                        return 0xAAAAAA;
-                    } else {
-                        return 0xFFFFFF;
-                    }
-                }
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplay")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x555555;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xFFFFFF;
-            } else if(colorName.equals("notifications")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            } else if(colorName.equals("valueDisplay")) {
-                return 0xFFFFFF;
-            }
-        } else if(theme_to_use == 13 or theme_to_use == 14 or theme_to_use == 15 or theme_to_use == 16 or theme_to_use == 17 or theme_to_use == 21) { // on white
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0xCCCCCC; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("fieldLabel") or colorName.equals("dawnDuskLabel")) {
-                if(theme_to_use == 13) { // Black on white
-                    return 0x000000;
-                } else if(theme_to_use == 14) { // Red on white
-                    return 0xAA0000;
-                } else if(theme_to_use == 15) { // Blue on white
-                    return 0x0000AA;
-                } else if(theme_to_use == 16) { // Green on white
-                    return 0x00AA00;
-                } else if(theme_to_use == 17) { // Orange on white
-                    return 0x555555;
-                } else if(theme_to_use == 21) { // Purple on white
-                    return 0xAA00FF;
-                }
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0xCCCCCC; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("timeDisplay")) {
-                if(theme_to_use == 13) { // Black on white
-                    if(amoled and isSleeping) { return 0xAAAAAA; }
-                    return 0x000000;
-                } else if(theme_to_use == 14) { // Red on white
-                    if(amoled and isSleeping) { return 0xAA5555; }
-                    return 0xAA0000;
-                } else if(theme_to_use == 15) { // Blue on white
-                    if(amoled and isSleeping) { return 0x5555AA; }
-                    return 0x0000AA;
-                } else if(theme_to_use == 16) { // Green on white
-                    if(amoled and isSleeping) { return 0x55AA55; }
-                    return 0x00AA00;
-                } else if(theme_to_use == 17) { // Orange on white
-                    if(amoled and isSleeping) { return 0xff7600; }
-                    return 0xFF5500;
-                } else if(theme_to_use == 21) { // Purple on white
-                    return 0xAA00FF;
-                }
-            } else if(colorName.equals("dateDisplay")) {
-                if(amoled) { return 0x000000; }
-                return 0x000000;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x555555;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0x000000; }
-                return 0x555555;
-            } else if(colorName.equals("notifications")) {
-                return 0x000000;
-            } else if(colorName.equals("stress")) {
-                if(theme_to_use == 17) { return 0xFF5500; }
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("valueDisplay")) {
-                return 0x000000;
-            } else if(colorName.equals("moonDisplay")) {
-                return 0x555555;
-            }
-        } else if(theme_to_use == 18) { // green & orange
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x152b19; }
-                return 0x005500;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xFF5500;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x152b19; }
-                return 0x005500;
-            } else if(colorName.equals("timeDisplay")) {
-                if(amoled) { return 0xff7600; }
-                return 0xFF5500;
-            } else if (colorName.equals("dateDisplay")) {
-                if(amoled) { return 0x55FF55; }
-                return 0x00FF00;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x5ca28f;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xFF5500;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0xFFFFFF; }
-                return 0xAAAAAA;
-            } else if(colorName.equals("notifications")) {
-                return 0x55FF55;
-            } else if(colorName.equals("stress")) {
-                if(amoled) { return 0xff7600; }
-                return 0xFF5500;
-            } else if(colorName.equals("bodybattery")) {
-                if(amoled) { return 0x59b9fe; }
-                return 0x00AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            } else if(colorName.equals("valueDisplay")) {
-                if(amoled) { return 0x55FF55; }
-                return 0x00FF00;
-            }
-        } else if(theme_to_use == 19) { // green camo
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x152b19; }
-                return 0x005500;
-            } else if(colorName.equals("fieldLabel")) {
-                if(amoled) { return 0xa8aa6c; }
-                return 0xAAAA00;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x152b19; }
-                return 0x005500;
-            } else if(colorName.equals("timeDisplay")) {
-                if(amoled) { return 0x889f4a; }
-                return 0xAAAA55;
-            } else if (colorName.equals("dateDisplay")) {
-                if(amoled) { return 0x889f4a; }
-                return 0xAAAA55;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x546a36;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                if(amoled) { return 0xa8aa6c; }
-                return 0xAAAA00;
-            } else if(colorName.equals("dawnDuskValue")) {
-                if(amoled) { return 0x55AA55; }
-                return 0x00FF00;
-            } else if(colorName.equals("notifications")) {
-                return 0x00FF55;
-            } else if(colorName.equals("stress")) {
-                if(amoled) { return 0x889f4a; }
-                return 0xAAAA55;
-            } else if(colorName.equals("bodybattery")) {
-                if(amoled) { return 0x55AA55; }
-                return 0x00FF00;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            } else if(colorName.equals("valueDisplay")) {
-                if(amoled) { return 0x55AA55; }
-                return 0x00FF00;
-            } else if(colorName.equals("moonDisplay")) {
-                if(amoled) { return 0xe3efd2; }
-                return 0xFFFFFF;
-            }
-        } else if(theme_to_use == 20) { // red on black
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x282828; }
-                return 0x555555;
-            } else if(colorName.equals("fieldLabel")) {
-                return 0xFF0000;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x282828; }
-                return 0x555555;
-            } else if(colorName.equals("timeDisplay")) {
-                return 0xFF0000;
-            } else if(colorName.equals("dateDisplay")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x555555;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                return 0xFF0000;
-            } else if(colorName.equals("dawnDuskValue")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("notifications")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFF5555;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            } else if(colorName.equals("valueDisplay")) {
-                return 0xFFFFFF;
-            }
-        } else if(theme_to_use == 22) { // purple on black
-            if(colorName.equals("fieldBg")) {
-                if(amoled) { return 0x282828; }
-                return 0x555555;
-            } else if(colorName.equals("fieldLabel")) {
-                                if(amoled) { return 0xAA55AA; }
-                return 0xAA00FF;
-            } else if(colorName.equals("timeBg")) {
-                if(amoled) { return 0x282828; }
-                return 0x555555;
-            } else if(colorName.equals("timeDisplay")) {
-                if(amoled) { return 0xAA55AA; }
-                return 0xAA00FF;
-            } else if(colorName.equals("dateDisplay")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("dateDisplayDim")) {
-                return 0x555555;
-            } else if(colorName.equals("dawnDuskLabel")) {
-                if(amoled) { return 0xAA55AA; }
-                return 0xAA00FF;
-            } else if(colorName.equals("dawnDuskValue")) {
-                return 0xFFFFFF;
-            } else if(colorName.equals("notifications")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("stress")) {
-                return 0xFFAA00;
-            } else if(colorName.equals("bodybattery")) {
-                return 0x55AAFF;
-            } else if(colorName.equals("background")) {
-                return 0x000000;
-            } else if(colorName.equals("valueDisplay")) {
-                return 0xFFFFFF;
-            }
+        var color = array_to_use[colorName];
+
+        /* Handle special cases */
+        if(colorName == labelTimeDisplay && isSleeping && amoled) {
+            /* Get the dimmed version instead */
+            color = array_to_use[labelTimeDisplayDim];
         }
 
-        if(colorName.equals("lowBatt")) {
-            return 0xFF0000;
-        }
-        return Graphics.COLOR_WHITE;
+        return color;
     }
 
     hidden function setSeconds(dc as Dc) as Void {
@@ -1292,19 +1017,11 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setWeather(dc as Dc) as Void {
-        var unit = getComplicationUnit(propWeatherLine1Shows);
-        if (unit.length() > 0) {
-            unit = Lang.format(" $1$", [unit]);
-        }
-        dWeatherLabel1.setText(Lang.format("$1$$2$", [getComplicationValue(propWeatherLine1Shows, 10), unit]));
+        dWeatherLabel1.setText(Lang.format("$1$$2$", [weatherLine1Method.invoke("%01d", 10), weatherLine1Unit]));
     }
 
     hidden function setWeatherLabel() as Void {
-        var unit = getComplicationUnit(propWeatherLine2Shows);
-        if (unit.length() > 0) {
-            unit = Lang.format(" $1$", [unit]);
-        }
-        dWeatherLabel2.setText(Lang.format("$1$$2$", [getComplicationValue(propWeatherLine2Shows, 10), unit]));
+        dWeatherLabel2.setText(Lang.format("$1$$2$", [weatherLine2Method.invoke("%01d", 10), weatherLine2Unit]));
     }
 
     hidden function getWeatherCondition(includePrecipitation as Boolean) as String {
@@ -1518,27 +1235,15 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setSunUpDown(dc as Dc) as Void {
-        if(propSunriseFieldShows == -2) {
-            dDawn.setText("");
-            dSunUpLabel.setText("");
-        } else {
-            dDawn.setText(getComplicationDesc(propSunriseFieldShows, 1));
-            dSunUpLabel.setText(getComplicationValue(propSunriseFieldShows, 5));
-        }
+        dDawn.setText(sunriseFieldDesc);
+        dSunUpLabel.setText(sunriseFieldMethod.invoke("%01d", 5));
 
-        if(propSunsetFieldShows == -2) {
-            dDusk.setText("");
-            dSunDownLabel.setText("");
-        } else {
-            dDusk.setText(getComplicationDesc(propSunsetFieldShows, 1));
-            dSunDownLabel.setText(getComplicationValue(propSunsetFieldShows, 5));
-            // hide labels if so configured
-            if (propLabelVisibility == 1 or propLabelVisibility == 2) {
-                dDawn.setVisible(false);
-                dDusk.setVisible(false);
-            }
+        dDusk.setText(sunsetFieldDesc);
+        dSunDownLabel.setText(sunsetFieldMethod.invoke("%01d", 5));
+        if (propLabelVisibility == 1 or propLabelVisibility == 2) {
+            dDawn.setVisible(false);
+            dDusk.setVisible(false);
         }
-
     }
 
     hidden function setNotif(dc as Dc) as Void {
@@ -1608,23 +1313,16 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setDate(dc as Dc) as Void {
-        var unit = "";
-
-        unit = getComplicationUnit(propDateFieldShows);
-        if (unit.length() > 0) { unit = Lang.format(" $1$", [unit]); }
-        dDateLabel.setText(Lang.format("$1$$2$", [getComplicationValue(propDateFieldShows, 10), unit]));
+        dDateLabel.setText(Lang.format("$1$$2$", [dateFieldMethod.invoke("%01d", 10), dateFieldUnit]));
 
         if(canBurnIn) {
-            unit = getComplicationUnit(propAodFieldShows);
-            if (unit.length() > 0) { unit = Lang.format(" $1$", [unit]); }
-            dAodDateLabel.setText(Lang.format("$1$$2$", [getComplicationValue(propAodFieldShows, 10), unit]));
-
-            dAodRightLabel.setText(getComplicationValue(propAodRightFieldShows, 3));
+            dAodDateLabel.setText(Lang.format("$1$$2$", [aodDateMethod.invoke("%01d", 10), aodDateUnit]));
+            dAodRightLabel.setText(aodRightMethod.invoke("%01d", 3));
         }
     }
 
     hidden function setStep(dc as Dc) as Void {
-        dStepLabel.setText(getComplicationValueWithFormat(propBottomFieldShows, "%d", 5));
+        dStepLabel.setText(bottomCompMethod.invoke("%05d", 5));
     }
 
     hidden function updateNightMode() as Boolean {
@@ -1699,106 +1397,50 @@ class Segment34View extends WatchUi.WatchFace {
         if(!propShowStressAndBodyBattery) { return; }
 
         if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
-            var bar_top = 110;
-            var from_edge = 8;
-            var bar_width = 4;
-            var bar_height = 125;
-            var bb_adjustment = 0;
+            var stressAndBodyBatteryMeasures = [
+                /* screenHeight, barTop, fromEdge, barWidth, barHeight, bbAdjustement, fromEdgeSleeping */
+                /* 240px */    [  72,     5,       3,        80,        1,             5 ],
+                /* 260px */    [  77,    10,       3,        80,        1,            10 ],
+                /* 280px */    [  83,    14,       3,        80,       -1,            14 ],
+                /* 360px */    [ 103,     3,       3,        125,      -1,             0 ],
+                /* 390px */    [ 111,     8,       4,        125,       0,             4 ],
+                /* 416px */    [ 122,    15,       4,        125,       0,            10 ],
+                /* 454px */    [ 146,    12,       4,        145,       0,             8 ],
+                /* Default */  [ 110,     8,       4,        125,       0,             8 ]
+            ] as Array<Array<Number>>;
 
-            if(screenHeight == 240) {
-                bar_top = 72;
-                from_edge = 5;
-                bar_width = 3;
-                bar_height = 80;
-                bb_adjustment = 1;
-            } else if(screenHeight == 260) {
-                bar_top = 77;
-                from_edge = 10;
-                bar_width = 3;
-                bar_height = 80;
-                bb_adjustment = 1;
-            } else if(screenHeight == 280) {
-                bar_top = 83;
-                from_edge = 14;
-                bar_width = 3;
-                bar_height = 80;
-                bb_adjustment = -1;
-            } else if(screenHeight == 360) {
-                bar_top = 103;
-                from_edge = 3;
-                bar_width = 3;
-                bar_height = 125;
-                bb_adjustment = -1;
-                if(isSleeping) {
-                    from_edge = 0;
-                }
-            } else if(screenHeight == 390) {
-                bar_top = 111;
-                from_edge = 8;
-                bar_width = 4;
-                bar_height = 125;
-                bb_adjustment = 0;
-                if(isSleeping) {
-                    from_edge = 4;
-                }
-            } else if(screenHeight == 416) {
-                bar_top = 122;
-                from_edge = 15;
-                bar_width = 4;
-                bar_height = 125;
-                bb_adjustment = 0;
-                if(isSleeping) {
-                    from_edge = 10;
-                }
-            } else if(screenHeight == 454) {
-                bar_top = 146;
-                from_edge = 12;
-                bar_width = 4;
-                bar_height = 145;
-                bb_adjustment = 0;
-                if(isSleeping) {
-                    from_edge = 8;
-                }
+            var bar_top =       stressAndBodyBatteryMeasures[screenIndex][0] as Number;
+            var from_edge =     stressAndBodyBatteryMeasures[screenIndex][1] as Number;
+            var bar_width =     stressAndBodyBatteryMeasures[screenIndex][2] as Number;
+            var bar_height =    stressAndBodyBatteryMeasures[screenIndex][3] as Number;
+            var bb_adjustment = stressAndBodyBatteryMeasures[screenIndex][4] as Number;
+
+            /* Taking data from the last column instead */
+            if (isSleeping) {
+                from_edge =     stressAndBodyBatteryMeasures[screenIndex][5];
             }
 
             var batt_bar = Math.round(batt * (bar_height / 100.0));
-            dc.setColor(getColor("bodybattery"), -1);
+            dc.setColor(getColor(labelBodybattery), -1);
             dc.fillRectangle(dc.getWidth() - from_edge - bar_width - bb_adjustment, bar_top + (bar_height - batt_bar), bar_width, batt_bar);
 
             var stress_bar = Math.round(stress * (bar_height / 100.0));
-            dc.setColor(getColor("stress"), -1);
+            dc.setColor(getColor(labelStress), -1);
             dc.fillRectangle(from_edge, bar_top + (bar_height - stress_bar), bar_width, stress_bar);
 
         }
     }
 
     hidden function setBottomFields(dc as Dc) as Void {
-        var left_width = 3;
-        var left_label_size = 2;
-        if(dc.getWidth() > 450) {
-            left_width = 4;
-            left_label_size = 3;
-        }
-        dTtrDesc.setText(getComplicationDesc(propLeftValueShows, left_label_size));
-        dTtrLabel.setText(getComplicationValue(propLeftValueShows, left_width));
+        /* Left label */
+        dTtrDesc.setText(leftCompLabel);
+        dTtrLabel.setText(leftCompMethod.invoke("%01d", leftCompWidth));
 
-        var mid_width = 3;
-        var mid_label_size = 2;
-        if(dc.getWidth() > 450) {
-            mid_width = 4;
-            mid_label_size = 3;
-        }
-        dHrDesc.setText(getComplicationDesc(propMiddleValueShows, mid_label_size));
-        dHrLabel.setText(getComplicationValue(propMiddleValueShows, mid_width));
+        dHrDesc.setText(centerCompLabel);
+        dHrLabel.setText(centerCompMethod.invoke("%01d", centerCompWidth));
 
-        var right_width = 4;
-        var right_label_size = 3;
-        if(dc.getWidth() == 240) {
-            right_width = 3;
-            right_label_size = 2;
-        }
-        dActiveDesc.setText(getComplicationDesc(propRightValueShows, right_label_size));
-        dActiveLabel.setText(getComplicationValue(propRightValueShows, right_width));
+        dActiveDesc.setText(rightCompLabel);
+        dActiveLabel.setText(rightCompMethod.invoke("%01d", rightCompWidth));
 
         // hide labels if so configured
        if (propLabelVisibility == 1 or propLabelVisibility == 3) {
@@ -1808,657 +1450,50 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function getComplicationValue(complicationType as Number, width as Number) as String {
-        return getComplicationValueWithFormat(complicationType, "%01d", width);
-    }
+    hidden function getComplicationDesc(complicationType as Integer, labelSize as Number) as String {
+        var labelResourceId = null as ResourceId;
 
-    hidden function getComplicationValueWithFormat(complicationType as Number, numberFormat as String, width as Number) as String {
-        var val = "";
+        /* TODO : read from JSON */
+        switch (labelSize) {
+            case 1: labelResourceId = Rez.JsonData.shortLabels; break;
+            case 2: labelResourceId = Rez.JsonData.midLabels;   break;
+            case 3: labelResourceId = Rez.JsonData.longLabels;  break;
+            /* Invalid size, return nothing */
+            default: return "";
+        }
+        var arrayJsonDesc = Application.loadResource(labelResourceId) as Array<String>;
 
-        if(complicationType == -1) { // Date
-            val = formatDate();
-        } else if(complicationType == 0) { // Active min / week
-            if(ActivityMonitor.getInfo() has :activeMinutesWeek) {
-                if(ActivityMonitor.getInfo().activeMinutesWeek != null) {
-                    val = ActivityMonitor.getInfo().activeMinutesWeek.total.format(numberFormat);
-                }
-            }
-        } else if(complicationType == 1) { // Active min / day
-            if(ActivityMonitor.getInfo() has :activeMinutesDay) {
-                if(ActivityMonitor.getInfo().activeMinutesDay != null) {
-                    val = ActivityMonitor.getInfo().activeMinutesDay.total.format(numberFormat);
-                }
-            }
-        } else if(complicationType == 2) { // distance (km) / day
-            if(ActivityMonitor.getInfo() has :distance) {
-                if(ActivityMonitor.getInfo().distance != null) {
-                    var distance_km = ActivityMonitor.getInfo().distance / 100000.0;
-                    val = formatDistanceByWidth(distance_km, width);
-                }
-            }
-        } else if(complicationType == 3) { // distance (miles) / day
-            if(ActivityMonitor.getInfo() has :distance) {
-                if(ActivityMonitor.getInfo().distance != null) {
-                    var distance_miles = ActivityMonitor.getInfo().distance / 160900.0;
-                    val = formatDistanceByWidth(distance_miles, width);
-                }
-            }
-        } else if(complicationType == 4) { // floors climbed / day
-            if(ActivityMonitor.getInfo() has :floorsClimbed) {
-                if(ActivityMonitor.getInfo().floorsClimbed != null) {
-                    val = ActivityMonitor.getInfo().floorsClimbed.format(numberFormat);
-                }
-            }
-        } else if(complicationType == 5) { // meters climbed / day
-            if(ActivityMonitor.getInfo() has :metersClimbed) {
-                if(ActivityMonitor.getInfo().metersClimbed != null) {
-                    val = ActivityMonitor.getInfo().metersClimbed.format(numberFormat);
-                }
-            }
-        } else if(complicationType == 6) { // Time to Recovery (h)
-            if(ActivityMonitor.getInfo() has :timeToRecovery) {
-                if(ActivityMonitor.getInfo().timeToRecovery != null) {
-                    val = ActivityMonitor.getInfo().timeToRecovery.format(numberFormat);
-                }
-            }
-        } else if(complicationType == 7) { // VO2 Max Running
-            var profile = UserProfile.getProfile();
-            if(profile has :vo2maxRunning) {
-                if(profile.vo2maxRunning != null) {
-                    val = profile.vo2maxRunning.format(numberFormat);
-                }
-            }
-        } else if(complicationType == 8) { // VO2 Max Cycling
-            var profile = UserProfile.getProfile();
-            if(profile has :vo2maxCycling) {
-                if(profile.vo2maxCycling != null) {
-                    val = profile.vo2maxCycling.format(numberFormat);
-                }
-            }
-        } else if(complicationType == 9) { // Respiration rate
-            if(ActivityMonitor.getInfo() has :respirationRate) {
-                var resp_rate = ActivityMonitor.getInfo().respirationRate;
-                if(resp_rate != null) {
-                    val = resp_rate.format(numberFormat);
-                }
-            }
-        } else if(complicationType == 10) {
-            // Try to retrieve live HR from Activity::Info
-            var activity_info = Activity.getActivityInfo();
-            var sample = activity_info.currentHeartRate;
-            if(sample != null) {
-                val = sample.format("%01d");
-            } else if (ActivityMonitor has :getHeartRateHistory) {
-                // Falling back to historical HR from ActivityMonitor
-                var hist = ActivityMonitor.getHeartRateHistory(1, /* newestFirst */ true).next();
-                if ((hist != null) && (hist.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)) {
-                    val = hist.heartRate.format("%01d");
-                }
-            }
-        } else if(complicationType == 11) { // Calories
-            if (ActivityMonitor.getInfo() has :calories) {
-                if(ActivityMonitor.getInfo().calories != null) {
-                    val = ActivityMonitor.getInfo().calories.format(numberFormat);
-                }
-            }
-        } else if(complicationType == 12) { // Altitude (m)
-            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
-                var elv_iterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
-                var elv = elv_iterator.next();
-                if(elv != null and elv.data != null) {
-                    val = elv.data.format(numberFormat);
-                }
-            }
-        } else if(complicationType == 13) { // Stress
-            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getStressHistory)) {
-                var st_iterator = Toybox.SensorHistory.getStressHistory({:period => 1});
-                var st = st_iterator.next();
-                if(st != null and st.data != null) {
-                    val = st.data.format(numberFormat);
-                }
-            }
-        } else if(complicationType == 14) { // Body battery
-            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getBodyBatteryHistory)) {
-                var bb_iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});
-                var bb = bb_iterator.next();
-                if(bb != null and bb.data != null) {
-                    val = bb.data.format(numberFormat);
-                }
-            }
-        } else if(complicationType == 15) { // Altitude (ft)
-            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
-                var elv_iterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
-                var elv = elv_iterator.next();
-                if(elv != null and elv.data != null) {
-                    val = (elv.data * 3.28084).format(numberFormat);
-                }
-            }
-        } else if(complicationType == 16) { // Alt TZ 1
-            val = secondaryTimezone(propTzOffset1, width);
-        } else if(complicationType == 17) { // Steps / day
-            if(ActivityMonitor.getInfo().steps != null) {
-                val = ActivityMonitor.getInfo().steps.format(numberFormat);
-            }
-        } else if(complicationType == 18) { // Distance (m) / day
-            if(ActivityMonitor.getInfo().distance != null) {
-                val = (ActivityMonitor.getInfo().distance / 100).format(numberFormat);
-            }
-        } else if(complicationType == 19) { // Wheelchair pushes
-            if(ActivityMonitor.getInfo() has :pushes) {
-                if(ActivityMonitor.getInfo().pushes != null) {
-                    val = ActivityMonitor.getInfo().pushes.format(numberFormat);
-                }
-            }
-        } else if(complicationType == 20) { // Weather condition
-            val = getWeatherCondition(true);
-        } else if(complicationType == 21) { // Weekly run distance (km)
-            if (Toybox has :Complications) {
-                try {
-                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
-                    if (complication != null && complication.value != null) {
-                        var distanceKm = complication.value / 1000.0;  // Convert meters to km
-                        val = formatDistanceByWidth(distanceKm, width);
-                    }
-                } catch(e) {
-                    // Complication not found
-                }
-            }
-        } else if(complicationType == 22) { // Weekly run distance (miles)
-            if (Toybox has :Complications) {
-                try {
-                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
-                    if (complication != null && complication.value != null) {
-                        var distanceMiles = complication.value * 0.000621371;  // Convert meters to miles
-                        val = formatDistanceByWidth(distanceMiles, width);
-                    }
-                } catch(e) {
-                    // Complication not found
-                }
-            }
-        } else if(complicationType == 23) { // Weekly bike distance (km)
-            if (Toybox has :Complications) {
-                try {
-                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
-                    if (complication != null && complication.value != null) {
-                        var distanceKm = complication.value / 1000.0;  // Convert meters to km
-                        val = formatDistanceByWidth(distanceKm, width);
-                    }
-                } catch(e) {
-                    // Complication not found
-                }
-            }
-        } else if(complicationType == 24) { // Weekly bike distance (miles)
-            if (Toybox has :Complications) {
-                try {
-                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
-                    if (complication != null && complication.value != null) {
-                        var distanceMiles = complication.value * 0.000621371;  // Convert meters to miles
-                        val = formatDistanceByWidth(distanceMiles, width);
-                    }
-                } catch(e) {
-                    // Complication not found
-                }
-            }
-        } else if(complicationType == 25) { // Training status
-            if (Toybox has :Complications) {
-                try {
-                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_TRAINING_STATUS));
-                    if (complication != null && complication.value != null) {
-                        val = complication.value.toUpper();
-                    }
-                } catch(e) {
-                    // Complication not found
-                }
-            }
-        } else if(complicationType == 26) { // Raw Barometric pressure (hPA)
-            var info = Activity.getActivityInfo();
-            if (info has :rawAmbientPressure && info.rawAmbientPressure != null) {
-                val = formatPressure(info.rawAmbientPressure / 100.0, numberFormat);
-            }
-        } else if(complicationType == 27) { // Weight kg
-            var profile = UserProfile.getProfile();
-            if(profile has :weight) {
-                if(profile.weight != null) {
-                    var weight_kg = profile.weight / 1000.0;
-                    if (width == 3) {
-                        val = weight_kg.format(numberFormat);
-                    } else {
-                        val = weight_kg.format("%.1f");
-                    }
-                }
-            }
-        } else if(complicationType == 28) { // Weight lbs
-            var profile = UserProfile.getProfile();
-            if(profile has :weight) {
-                if(profile.weight != null) {
-                    val = (profile.weight * 0.00220462).format(numberFormat);
-                }
-            }
-        } else if(complicationType == 29) { // Act Calories
-            var rest_calories = getRestCalories();
-            // Get total calories and subtract rest calories
-            if (ActivityMonitor.getInfo() has :calories && ActivityMonitor.getInfo().calories != null && rest_calories > 0) {
-                var active_calories = ActivityMonitor.getInfo().calories - rest_calories;
-                if (active_calories > 0) {
-                    val = active_calories.format(numberFormat);
-                }
-            }
-        } else if(complicationType == 30) { // Sea level pressure (hPA)
-            var info = Activity.getActivityInfo();
-            if (info has :meanSeaLevelPressure && info.meanSeaLevelPressure != null) {
-                val = formatPressure(info.meanSeaLevelPressure / 100.0, numberFormat);
-            }
-        } else if(complicationType == 31) { // Week number
-            var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
-            var week_number = isoWeekNumber(today.year, today.month, today.day);
-            val = week_number.format(numberFormat);
-        } else if(complicationType == 32) { // Weekly distance (km)
-            var weekly_distance = getWeeklyDistance() / 100000.0;  // Convert to km
-            val = formatDistanceByWidth(weekly_distance, width);
-        } else if(complicationType == 33) { // Weekly distance (miles)
-            var weekly_distance = getWeeklyDistance() * 0.00000621371;  // Convert to miles
-            val = formatDistanceByWidth(weekly_distance, width);
-        } else if(complicationType == 34) { // Battery percentage
-            var battery = System.getSystemStats().battery;
-            val = Lang.format("$1$", [battery.format("%d")]);
-        } else if(complicationType == 35) { // Battery days remaining
-            if(System.getSystemStats() has :batteryInDays) {
-                if (System.getSystemStats().batteryInDays != null){
-                    var sample = Math.round(System.getSystemStats().batteryInDays);
-                    val = Lang.format("$1$", [sample.format(numberFormat)]);
-                }
-            }
-        } else if(complicationType == 36) { // Notification count
-            var notif_count = System.getDeviceSettings().notificationCount;
-            if(notif_count != null) {
-                val = notif_count.format(numberFormat);
-            }
-        } else if(complicationType == 37) { // Solar intensity
-            if (Toybox has :Complications) {
-                try {
-                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_SOLAR_INPUT));
-                    if (complication != null && complication.value != null) {
-                        val = complication.value.format(numberFormat);
-                    }
-                } catch(e) {
-                    // Complication not found
-                }
-            }
-        } else if(complicationType == 38) { // Sensor temperature
-            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getTemperatureHistory)) {
-                var tempIterator = Toybox.SensorHistory.getTemperatureHistory({:period => 1});
-                var temp = tempIterator.next();
-                if(temp != null and temp.data != null) {
-                    var tempUnit = getTempUnit();
-                    val = Lang.format("$1$$2$", [formatTemperature(temp.data, tempUnit).format(numberFormat), tempUnit]);
-                }
-            }
-        } else if(complicationType == 39) { // Sunrise
-            var now = Time.now();
-            if(weatherCondition != null) {
-                var loc = weatherCondition.observationLocationPosition;
-                if(loc != null) {
-                    var sunrise = Time.Gregorian.info(Weather.getSunrise(loc, now), Time.FORMAT_SHORT);
-                    var sunriseHour = formatHour(sunrise.hour);
-                    if(width < 5) {
-                        val = Lang.format("$1$$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]);
-                    } else {
-                        val = Lang.format("$1$:$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]);
-                    }
-                }
-            }
-        } else if(complicationType == 40) { // Sunset
-            var now = Time.now();
-            if(weatherCondition != null) {
-                var loc = weatherCondition.observationLocationPosition;
-                if(loc != null) {
-                    var sunset = Time.Gregorian.info(Weather.getSunset(loc, now), Time.FORMAT_SHORT);
-                    var sunsetHour = formatHour(sunset.hour);
-                    if(width < 5) {
-                        val = Lang.format("$1$$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]);
-                    } else {
-                        val = Lang.format("$1$:$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]);
-                    }
-                }
-            }
-        } else if(complicationType == 41) { // Alt TZ 2
-            val = secondaryTimezone(propTzOffset2, width);
-        } else if(complicationType == 42) { // Alarms
-            val = System.getDeviceSettings().alarmCount.format(numberFormat);
-        } else if(complicationType == 43) { // High temp
-            if(weatherCondition != null and weatherCondition.highTemperature != null) {
-                var tempVal = weatherCondition.highTemperature;
-                var tempUnit = getTempUnit();
-                var temp = formatTemperature(tempVal, tempUnit).format("%01d");
-                val = Lang.format("$1$$2$", [temp, tempUnit]);
-            }
-        } else if(complicationType == 44) { // Low temp
-            if(weatherCondition != null and weatherCondition.lowTemperature != null) {
-                var tempVal = weatherCondition.lowTemperature;
-                var tempUnit = getTempUnit();
-                var temp = formatTemperature(tempVal, tempUnit).format("%01d");
-                val = Lang.format("$1$$2$", [temp, tempUnit]);
-            }
-        } else if(complicationType == 45) { // Temperature, Wind, Feels like
-            var temp = getTemperature();
-            var wind = getWind();
-            var feelsLike = getFeelsLike();
-            val = join([temp, wind, feelsLike]);
-        } else if(complicationType == 46) { // Temperature, Wind
-            var temp = getTemperature();
-            var wind = getWind();
-            val = join([temp, wind]);
-        } else if(complicationType == 47) { // Temperature, Wind, Humidity
-            var temp = getTemperature();
-            var wind = getWind();
-            var humidity = getHumidity();
-            val = join([temp, wind, humidity]);
-        } else if(complicationType == 48) { // Temperature, Wind, High/Low
-            var temp = getTemperature();
-            var wind = getWind();
-            var highlow = getHighLow();
-            val = join([temp, wind, highlow]);
-        } else if(complicationType == 49) { // Temperature, Wind, Precipitation chance
-            var temp = getTemperature();
-            var wind = getWind();
-            var precip = getPrecip();
-            val = join([temp, wind, precip]);
-        } else if(complicationType == 50) { // Weather condition without precipitation
-            val = getWeatherCondition(false);
-        } else if(complicationType == 51) { // Temperature, Humidity, High/Low
-            var temp = getTemperature();
-            var humidity = getHumidity();
-            var highlow = getHighLow();
-            val = join([temp, humidity, highlow]);
-        } else if(complicationType == 52) { // Temperature, Percipitation chance, High/Low
-            var temp = getTemperature();
-            var precip = getPrecip();
-            var highlow = getHighLow();
-            val = join([temp, precip, highlow]);
-        } else if(complicationType == 53) { // Temperature
-            val = getTemperature();
-        } else if(complicationType == 54) { // Precipitation chance
-            val = getPrecip();
-            if(width == 3 and val.equals("100%")) { val = "100"; }
-        } else if(complicationType == 55) { // Next Sun Event
-            var nextSunEventArray = getNextSunEvent();
-            if(nextSunEventArray != null && nextSunEventArray.size() == 2) { 
-                var nextSunEvent = Time.Gregorian.info(nextSunEventArray[0], Time.FORMAT_SHORT);
-                var nextSunEventHour = formatHour(nextSunEvent.hour);
-                if(width < 5) {
-                    val = Lang.format("$1$$2$", [nextSunEventHour.format("%02d"), nextSunEvent.min.format("%02d")]);
+        /* Handle special cases or return from the array */
+        var desc = arrayJsonDesc[complicationType];
+        switch (complicationType) {
+            case 10:
+                if(Activity.getActivityInfo().currentHeartRate == null) {
+                    var hrDesc = [ "HR:", "LAST HR:", "LAST HR:" ];
+                    return hrDesc[labelSize - 1];
                 } else {
-                    val = Lang.format("$1$:$2$", [nextSunEventHour.format("%02d"), nextSunEvent.min.format("%02d")]);
+                    var hrDesc = [ "HR:", "LIVE HR:", "LIVE HR:" ];
+                    return hrDesc[labelSize - 1];
                 }
-            }
-        } else if(complicationType == 56) { // Millitary Date Time Group
-            val = getDateTimeGroup();
-        } else if(complicationType == 57) { // Time of the next Calendar Event
-            if (Toybox has :Complications) {
-                try {
-                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_CALENDAR_EVENTS));
-                    if (complication != null && complication.value != null) {
-                        val = complication.value;
-                        var colon_index = val.find(":");
-                        if (colon_index != null && colon_index < 2) {
-                            val = "0" + val;
-                        }
-                    } else {
-                        val = "--:--";
-                    }
-                    if (width < 5) {
-                        val = val.substring(0, 2) + val.substring(3, 5);
-                    }
-                } catch(e) {
-                    // Complication not found
-                }
-            }
-        } else if(complicationType == 58) { // Active / Total calories
-            var rest_calories = getRestCalories();
-            var total_calories = 0;
-            // Get total calories and subtract rest calories
-            if (ActivityMonitor.getInfo() has :calories && ActivityMonitor.getInfo().calories != null) {
-                total_calories = ActivityMonitor.getInfo().calories;
-            }
-            var active_calories = total_calories - rest_calories;
-            active_calories = (active_calories > 0) ? active_calories : 0; // Ensure active calories is not negative
-            val = active_calories.format(numberFormat) + "/" + total_calories.format(numberFormat);
-        } else if(complicationType == 59) { // PulseOx
-            if (Toybox has :Complications) {
-                try {
-                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_PULSE_OX));
-                    if (complication != null && complication.value != null) {
-                        val = complication.value.format(numberFormat);
-                    }
-                } catch(e) {
-                    // Complication not found
-                }
-            }
+            case 16:
+                return Lang.format("$1$:", [propTzName1.toUpper()]);
+            case 41:
+                return Lang.format("$1$:", [propTzName2.toUpper()]);
+            default:
+                return desc;
         }
-
-        return val;
-    }
-
-    hidden function getComplicationDesc(complicationType, labelSize as Number) as String {
-        // labelSize 1 = short
-        // labelSize 2 = mid
-        // labelSize 3 = long
-        var desc = "";
-
-        if(complicationType == 0) { // Active min / week
-            if(labelSize == 1) { desc = "W MIN:"; }
-            if(labelSize == 2) { desc = "WEEK MIN:"; }
-            if(labelSize == 3) { desc = "WEEK ACT MIN:"; }
-        } else if(complicationType == 1) { // Active min / day
-            if(labelSize == 1) { desc = "D MIN:"; }
-            if(labelSize == 2) { desc = "MIN TODAY:"; }
-            if(labelSize == 3) { desc = "DAY ACT MIN:"; }
-        } else if(complicationType == 2) { // distance (km) / day
-            if(labelSize == 1) { desc = "D KM:"; }
-            if(labelSize == 2) { desc = "KM TODAY:"; }
-            if(labelSize == 3) { desc = "KM TODAY:"; }
-        } else if(complicationType == 3) { // distance (miles) / day
-            if(labelSize == 1) { desc = "D MI:"; }
-            if(labelSize == 2) { desc = "MI TODAY:"; }
-            if(labelSize == 3) { desc = "MILES TODAY:"; }
-        } else if(complicationType == 4) { // floors climbed / day
-            if(labelSize == 1) { desc = "FLRS:"; }
-            if(labelSize == 2) { desc = "FLOORS:"; }
-            if(labelSize == 3) { desc = "FLOORS:"; }
-        } else if(complicationType == 5) { // meters climbed / day
-            if(labelSize == 1) { desc = "CLIMB:"; }
-            if(labelSize == 2) { desc = "M CLIMBED:"; }
-            if(labelSize == 3) { desc = "M CLIMBED:"; }
-        } else if(complicationType == 6) { // Time to Recovery (h)
-            if(labelSize == 1) { desc = "RECOV:"; }
-            if(labelSize == 2) { desc = "RECOV HRS:"; }
-            if(labelSize == 3) { desc = "RECOVERY HRS:"; }
-        } else if(complicationType == 7) { // VO2 Max Running
-            if(labelSize == 1) { desc = "V02:"; }
-            if(labelSize == 2) { desc = "V02 MAX:"; }
-            if(labelSize == 3) { desc = "RUN V02 MAX:"; }
-        } else if(complicationType == 8) { // VO2 Max Cycling
-            if(labelSize == 1) { desc = "V02:"; }
-            if(labelSize == 2) { desc = "V02 MAX:"; }
-            if(labelSize == 3) { desc = "BIKE V02 MAX:"; }
-        } else if(complicationType == 9) { // Respiration rate
-            if(labelSize == 1) { desc = "RESP:"; }
-            if(labelSize == 2) { desc = "RESP RATE:"; }
-            if(labelSize == 3) { desc = "RESP. RATE:"; }
-        } else if(complicationType == 10) { // HR
-            var activityInfo = Activity.getActivityInfo();
-            var sample = activityInfo.currentHeartRate;
-            if(sample == null) {
-                if(labelSize == 1) { desc = "HR:"; }
-                if(labelSize == 2) { desc = "LAST HR:"; }
-                if(labelSize == 3) { desc = "LAST HR:"; }
-            } else {
-                if(labelSize == 1) { desc = "HR:"; }
-                if(labelSize == 2) { desc = "LIVE HR:"; }
-                if(labelSize == 3) { desc = "LIVE HR:"; }
-            }
-        } else if(complicationType == 11) { // Calories / day
-            if(labelSize == 1) { desc = "CAL:"; }
-            if(labelSize == 2) { desc = "CALORIES:"; }
-            if(labelSize == 3) { desc = "DLY CALORIES:"; }
-        } else if(complicationType == 12) { // Altitude (m)
-            if(labelSize == 1) { desc = "ALT:"; }
-            if(labelSize == 2) { desc = "ALTITUDE:"; }
-            if(labelSize == 3) { desc = "ALTITUDE M:"; }
-        } else if(complicationType == 13) { // Stress
-            if(labelSize == 1) { desc = "STRSS:"; }
-            if(labelSize == 2) { desc = "STRESS:"; }
-            if(labelSize == 3) { desc = "STRESS:"; }
-        } else if(complicationType == 14) { // Body battery
-            if(labelSize == 1) { desc = "B BAT:"; }
-            if(labelSize == 2) { desc = "BODY BATT:"; }
-            if(labelSize == 3) { desc = "BODY BATTERY:"; }
-        } else if(complicationType == 15) { // Altitude (ft)
-            if(labelSize == 1) { desc = "ALT:"; }
-            if(labelSize == 2) { desc = "ALTITUDE:"; }
-            if(labelSize == 3) { desc = "ALTITUDE FT:"; }
-        } else if(complicationType == 16) { // Alt TZ 1:
-            desc = Lang.format("$1$:", [propTzName1.toUpper()]);
-        } else if(complicationType == 17) { // Steps / day
-            if(labelSize == 1) { desc = "STEPS:"; }
-            if(labelSize == 2) { desc = "STEPS:"; }
-            if(labelSize == 3) { desc = "STEPS:"; }
-        } else if(complicationType == 18) { // Distance (m) / day
-            if(labelSize == 1) { desc = "DIST:"; }
-            if(labelSize == 2) { desc = "M TODAY:"; }
-            if(labelSize == 3) { desc = "METERS TODAY:"; }
-        } else if(complicationType == 19) { // Wheelchair pushes
-            desc = "PUSHES:";
-        } else if(complicationType == 20) { // Weather condition
-            desc = "";
-        } else if(complicationType == 21) { // Weekly run distance (km)
-            if(labelSize == 1) { desc = "W KM:"; }
-            if(labelSize == 2) { desc = "W RUN KM:"; }
-            if(labelSize == 3) { desc = "WEEK RUN KM:"; }
-        } else if(complicationType == 22) { // Weekly run distance (miles)
-            if(labelSize == 1) { desc = "W MI:"; }
-            if(labelSize == 2) { desc = "W RUN MI:"; }
-            if(labelSize == 3) { desc = "WEEK RUN MI:"; }
-        } else if(complicationType == 23) { // Weekly bike distance (km)
-            if(labelSize == 1) { desc = "W KM:"; }
-            if(labelSize == 2) { desc = "W BIKE KM:"; }
-            if(labelSize == 3) { desc = "WEEK BIKE KM:"; }
-        } else if(complicationType == 24) { // Weekly bike distance (miles)
-            if(labelSize == 1) { desc = "W MI:"; }
-            if(labelSize == 2) { desc = "W BIKE MI:"; }
-            if(labelSize == 3) { desc = "WEEK BIKE MI:"; }
-        } else if(complicationType == 25) { // Training status
-            desc = "TRAINING:";
-        } else if(complicationType == 26) { // Barometric pressure (hPA)
-            desc = "PRESSURE:";
-        } else if(complicationType == 27) { // Weight kg
-            if(labelSize == 1) { desc = "KG:"; }
-            if(labelSize == 2) { desc = "WEIGHT:"; }
-            if(labelSize == 3) { desc = "WEIGHT KG:"; }
-        } else if(complicationType == 28) { // Weight lbs
-            if(labelSize == 1) { desc = "LBS:"; }
-            if(labelSize == 2) { desc = "WEIGHT:"; }
-            if(labelSize == 3) { desc = "WEIGHT LBS:"; }
-        } else if(complicationType == 29) { // Act Calories / day
-            if(labelSize == 1) { desc = "A CAL:"; }
-            if(labelSize == 2) { desc = "ACT. CAL:"; }
-            if(labelSize == 3) { desc = "ACT. CALORIES:"; }
-        } else if(complicationType == 30) { // Sea level pressure (hPA)
-            desc = "PRESSURE:";
-        } else if(complicationType == 31) { // Week number
-            desc = "WEEK:";
-        } else if(complicationType == 32) { // Weekly distance (km)
-            if(labelSize == 1) { desc = "W KM:"; }
-            if(labelSize == 2) { desc = "WEEK KM:"; }
-            if(labelSize == 3) { desc = "WEEK DIST KM:"; }
-        } else if(complicationType == 33) { // Weekly distance (miles)
-            if(labelSize == 1) { desc = "W MI:"; }
-            if(labelSize == 2) { desc = "WEEK MI:"; }
-            if(labelSize == 3) { desc = "WEEKLY MILES:"; }
-        } else if(complicationType == 34) { // Battery percentage
-            if(labelSize == 1) { desc = "BATT:"; }
-            if(labelSize == 2) { desc = "BATT %:"; }
-            if(labelSize == 3) { desc = "BATTERY %:"; }
-        } else if(complicationType == 35) { // Battery days remaining
-            if(labelSize == 1) { desc = "BATT D:"; }
-            if(labelSize == 2) { desc = "BATT DAYS:"; }
-            if(labelSize == 3) { desc = "BATTERY DAYS:"; }
-        } else if(complicationType == 36) { // Notification count
-            if(labelSize == 1) { desc = "NOTIFS:"; }
-            if(labelSize == 2) { desc = "NOTIFS:"; }
-            if(labelSize == 3) { desc = "NOTIFICATIONS:"; }
-        } else if(complicationType == 37) { // Solar intensity
-            if(labelSize == 1) { desc = "SUN:"; }
-            if(labelSize == 2) { desc = "SUN INT:"; }
-            if(labelSize == 3) { desc = "SUN INTENSITY:"; }
-        } else if(complicationType == 38) { // Sensor temp
-            if(labelSize == 1) { desc = "TEMP:"; }
-            if(labelSize == 2) { desc = "TEMP:"; }
-            if(labelSize == 3) { desc = "SENSOR TEMP:"; }
-        } else if(complicationType == 39) { // Sunrise
-            if(labelSize == 1) { desc = "DAWN:"; }
-            if(labelSize == 2) { desc = "SUNRISE:"; }
-            if(labelSize == 3) { desc = "SUNRISE:"; }
-        } else if(complicationType == 40) { // Sunset
-            if(labelSize == 1) { desc = "DUSK:"; }
-            if(labelSize == 2) { desc = "SUNSET:"; }
-            if(labelSize == 3) { desc = "SUNSET:"; }
-        } else if(complicationType == 41) { // Alt TZ 2:
-            desc = Lang.format("$1$:", [propTzName2.toUpper()]);
-        } else if(complicationType == 42) {
-            if(labelSize == 1) { desc = "ALARM:"; }
-            if(labelSize == 2) { desc = "ALARMS:"; }
-            if(labelSize == 3) { desc = "ALARMS:"; }
-        } else if(complicationType == 43) {
-            if(labelSize == 1) { desc = "HIGH:"; }
-            if(labelSize == 2) { desc = "DAILY HIGH:"; }
-            if(labelSize == 3) { desc = "DAILY HIGH:"; }
-        } else if(complicationType == 44) {
-            if(labelSize == 1) { desc = "LOW:"; }
-            if(labelSize == 2) { desc = "DAILY LOW:"; }
-            if(labelSize == 3) { desc = "DAILY LOW:"; }
-        } else if(complicationType == 53) {
-            if(labelSize == 1) { desc = "TEMP:"; }
-            if(labelSize == 2) { desc = "TEMP:"; }
-            if(labelSize == 3) { desc = "TEMPERATURE:"; }
-        } else if(complicationType == 54) {
-            if(labelSize == 1) { desc = "PRECIP:"; }
-            if(labelSize == 2) { desc = "PRECIP:"; }
-            if(labelSize == 3) { desc = "PRECIPITATION:"; }
-        } else if(complicationType == 55) {
-            if(labelSize == 1) { desc = "SUN:"; }
-            if(labelSize == 2) { desc = "NEXT SUN:"; }
-            if(labelSize == 3) { desc = "NEXT SUN EVENT:"; }
-        } else if(complicationType == 57) {
-            if(labelSize == 1) { desc = "CAL:"; }
-            if(labelSize == 2) { desc = "NEXT CAL:"; }
-            if(labelSize == 3) { desc = "NEXT CAL EVENT:"; }
-        } else if(complicationType == 59) {
-            if(labelSize == 1) { desc = "OX:"; }
-            if(labelSize == 2) { desc = "PULSE OX:"; }
-            if(labelSize == 3) { desc = "PULSE OX:"; }
-        }
-        return desc;
     }
 
     hidden function getComplicationUnit(complicationType) as String {
-        var unit = "";
-        if(complicationType == 11) { // Calories / day
-            unit = "KCAL";
-        } else if(complicationType == 12) { // Altitude (m)
-            unit = "M";
-        } else if(complicationType == 15) { // Altitude (ft)
-            unit = "FT";
-        } else if(complicationType == 17) { // Steps / day
-            unit = "STEPS";
-        } else if(complicationType == 19) { // Wheelchair pushes
-            unit = "PUSHES";
-        } else if(complicationType == 29) { // Active calories / day
-            unit = "KCAL";
-        } else if(complicationType == 58) { // Active/Total calories / day
-            unit = "KCAL";
+        switch (complicationType) {
+            case 11: return "KCAL";   // [11] Calories / day
+            case 12: return "M";      // [12] Altitude (m)
+            case 15: return "FT";     // [15] Altitude (ft)
+            case 17: return "STEPS";  // [17] Steps / day
+            case 19: return "PUSHES"; // [19] Wheelchair pushes
+            case 29: return "KCAL";   // [29] Act Calories / day
+            case 58: return "KCAL";   // [58] Active/Total calories / day
+            default: return "";
         }
-        return unit;
     }
 
     hidden function join(array as Array<String>) as String {
@@ -2913,6 +1948,725 @@ class Segment34View extends WatchUi.WatchFace {
         }
         return [];
     }
+
+    /**********************************************************/
+    /* Define all method for complications. Might be worth a  */
+    /* class. */
+
+    function complicationType_Date(numberFormat as String, width as Integer) as String {
+        return formatDate();
+    }
+
+    function complicationType_0 (numberFormat as String, width as Integer) as String { // Active min / week
+        var val = "" as String;
+
+        if(ActivityMonitor.getInfo() has :activeMinutesWeek) {
+            if(ActivityMonitor.getInfo().activeMinutesWeek != null) {
+                val = ActivityMonitor.getInfo().activeMinutesWeek.total.format(numberFormat);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_1 (numberFormat as String, width as Integer) as String { // Active min / day
+        var val = "" as String;
+
+        if(ActivityMonitor.getInfo() has :activeMinutesWeek) {
+            if(ActivityMonitor.getInfo().activeMinutesDay != null) {
+                val = ActivityMonitor.getInfo().activeMinutesDay.total.format(numberFormat);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_2 (numberFormat as String, width as Integer) as String { // distance (km) / day
+        var val = "" as String;
+
+        if(ActivityMonitor.getInfo() has :distance) {
+            if(ActivityMonitor.getInfo().distance != null) {
+                val = formatDistanceByWidth(ActivityMonitor.getInfo().distance / 100000.0, width);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_3 (numberFormat as String, width as Integer) as String { // distance (miles) / day
+        var val = "" as String;
+
+        if(ActivityMonitor.getInfo() has :distance) {
+            if(ActivityMonitor.getInfo().distance != null) {
+                val = formatDistanceByWidth(ActivityMonitor.getInfo().distance / 160900.0, width);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_4 (numberFormat as String, width as Integer) as String { // floors climbed / day
+        var val = "" as String;
+
+        if(ActivityMonitor.getInfo() has :floorsClimbed) {
+            if(ActivityMonitor.getInfo().floorsClimbed != null) {
+                val = ActivityMonitor.getInfo().floorsClimbed.format(numberFormat);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_5 (numberFormat as String, width as Integer) as String { // meters climbed / day
+        var val = "" as String;
+
+        if(ActivityMonitor.getInfo() has :metersClimbed) {
+            if(ActivityMonitor.getInfo().metersClimbed != null) {
+                val = ActivityMonitor.getInfo().metersClimbed.format(numberFormat);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_6 (numberFormat as String, width as Integer) as String { // Time to Recovery (h)
+        var val = "" as String;
+
+        if(ActivityMonitor.getInfo() has :timeToRecovery) {
+            if(ActivityMonitor.getInfo().timeToRecovery != null) {
+                val = ActivityMonitor.getInfo().timeToRecovery.format(numberFormat);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_7 (numberFormat as String, width as Integer) as String { // VO2 Max Running
+        var val = "" as String;
+
+        var profile = UserProfile.getProfile();
+        if(profile has :vo2maxRunning) {
+            if(profile.vo2maxRunning != null) {
+                val = profile.vo2maxRunning.format(numberFormat);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_8 (numberFormat as String, width as Integer) as String { // VO2 Max Cycling
+        var val = "" as String;
+
+        var profile = UserProfile.getProfile();
+        if(profile has :vo2maxCycling) {
+            if(profile.vo2maxCycling != null) {
+                val = profile.vo2maxCycling.format(numberFormat);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_9 (numberFormat as String, width as Integer) as String { // Respiration rate
+        var val = "" as String;
+
+        if(ActivityMonitor.getInfo() has :respirationRate) {
+            if(ActivityMonitor.getInfo().respirationRate != null) {
+                val = ActivityMonitor.getInfo().respirationRate.format(numberFormat);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_10 (numberFormat as String, width as Integer) as String {
+        var val = "" as String;
+
+        // Try to retrieve live HR from Activity::Info
+        var sample = Activity.getActivityInfo().currentHeartRate;
+        if(sample != null) {
+            val = sample.format("%01d");
+        } else if (ActivityMonitor has :getHeartRateHistory) {
+            // Falling back to historical HR from ActivityMonitor
+            var hist = ActivityMonitor.getHeartRateHistory(1, /* newestFirst */ true).next();
+            if ((hist != null) && (hist.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)) {
+                val = hist.heartRate.format("%01d");
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_11 (numberFormat as String, width as Integer) as String { // Calories
+        var val = "" as String;
+
+        if (ActivityMonitor.getInfo() has :calories) {
+            if(ActivityMonitor.getInfo().calories != null) {
+                val = ActivityMonitor.getInfo().calories.format(numberFormat);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_12 (numberFormat as String, width as Integer) as String { // Altitude (m)
+        var val = "" as String;
+
+        if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
+            var elvIterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
+            var elv = elvIterator.next();
+            if(elv != null and elv.data != null) {
+                val = elv.data.format(numberFormat);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_13 (numberFormat as String, width as Integer) as String { // Stress
+        var val = "" as String;
+
+        if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getStressHistory)) {
+            var stIterator = Toybox.SensorHistory.getStressHistory({:period => 1});
+            var st = stIterator.next();
+            if(st != null and st.data != null) {
+                val = st.data.format(numberFormat);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_14 (numberFormat as String, width as Integer) as String { // Body battery
+        var val = "" as String;
+
+        if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getBodyBatteryHistory)) {
+            var bbIterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});
+            var bb = bbIterator.next();
+            if(bb != null and bb.data != null) {
+                val = bb.data.format(numberFormat);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_15 (numberFormat as String, width as Integer) as String { // Altitude (ft)
+        var val = "" as String;
+
+        if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
+            var elvIterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
+            var elv = elvIterator.next();
+            if(elv != null and elv.data != null) {
+                val = (elv.data * 3.28084).format(numberFormat);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_16 (numberFormat as String, width as Integer) as String { // Alt TZ 1
+        return secondaryTimezone(propTzOffset1, width);
+    } 
+
+    function complicationType_17 (numberFormat as String, width as Integer) as String { // Steps / day
+        var val = "" as String;
+
+        if(ActivityMonitor.getInfo().steps != null) {
+            val = ActivityMonitor.getInfo().steps.format(numberFormat);
+        }
+        return val;
+    } 
+
+    function complicationType_18 (numberFormat as String, width as Integer) as String { // Distance (m) / day
+        var val = "" as String;
+
+        if(ActivityMonitor.getInfo().distance != null) {
+            val = (ActivityMonitor.getInfo().distance / 100).format(numberFormat);
+        }
+        return val;
+    } 
+
+    function complicationType_19 (numberFormat as String, width as Integer) as String { // Wheelchair pushes
+        var val = "" as String;
+
+        if(ActivityMonitor.getInfo() has :pushes) {
+            if(ActivityMonitor.getInfo().pushes != null) {
+                val = ActivityMonitor.getInfo().pushes.format(numberFormat);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_20 (numberFormat as String, width as Integer) as String { // Weather condition
+        return getWeatherCondition(true);
+    } 
+
+    function complicationType_21 (numberFormat as String, width as Integer) as String { // Weekly run distance (km)
+        var val = "" as String;
+
+        if (Toybox has :Complications) {
+            try {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
+                if (complication != null && complication.value != null) {
+                    var distanceKm = complication.value / 1000.0;  // Convert meters to km
+                    val = formatDistanceByWidth(distanceKm, width);
+                }
+            } catch(e) {
+                // Complication not found
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_22 (numberFormat as String, width as Integer) as String { // Weekly run distance (miles)
+        var val = "" as String;
+
+        if (Toybox has :Complications) {
+            try {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
+                if (complication != null && complication.value != null) {
+                    var distanceMiles = complication.value * 0.000621371;  // Convert meters to miles
+                    val = formatDistanceByWidth(distanceMiles, width);
+                }
+            } catch(e) {
+                // Complication not found
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_23 (numberFormat as String, width as Integer) as String { // Weekly bike distance (km)
+        var val = "" as String;
+
+        if (Toybox has :Complications) {
+            try {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
+                if (complication != null && complication.value != null) {
+                    var distanceKm = complication.value / 1000.0;  // Convert meters to km
+                    val = formatDistanceByWidth(distanceKm, width);
+                }
+            } catch(e) {
+                // Complication not found
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_24 (numberFormat as String, width as Integer) as String { // Weekly bike distance (miles)
+        var val = "" as String;
+
+        if (Toybox has :Complications) {
+            try {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
+                if (complication != null && complication.value != null) {
+                    var distanceMiles = complication.value * 0.000621371;  // Convert meters to miles
+                    val = formatDistanceByWidth(distanceMiles, width);
+                }
+            } catch(e) {
+                // Complication not found
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_25 (numberFormat as String, width as Integer) as String { // Training status
+        var val = "" as String;
+
+        if (Toybox has :Complications) {
+            try {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_TRAINING_STATUS));
+                if (complication != null && complication.value != null) {
+                    val = complication.value.toUpper();
+                }
+            } catch(e) {
+                // Complication not found
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_26 (numberFormat as String, width as Integer) as String { // Raw Barometric pressure (hPA)
+        var val = "" as String;
+
+        var info = Activity.getActivityInfo();
+        if (info has :rawAmbientPressure && info.rawAmbientPressure != null) {
+            val = formatPressure(info.rawAmbientPressure / 100.0, numberFormat);
+        }
+        return val;
+    } 
+
+    function complicationType_27 (numberFormat as String, width as Integer) as String { // Weight kg
+        var val = "" as String;
+
+        var profile = UserProfile.getProfile();
+        if(profile has :weight) {
+            if(profile.weight != null) {
+                var weightKg = profile.weight / 1000.0;
+                if (width == 3) {
+                    val = weightKg.format(numberFormat);
+                } else {
+                    val = weightKg.format("%.1f");
+                }
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_28 (numberFormat as String, width as Integer) as String { // Weight lbs
+        var val = "" as String;
+
+        var profile = UserProfile.getProfile();
+        if(profile has :weight) {
+            if(profile.weight != null) {
+                val = (profile.weight * 0.00220462).format(numberFormat);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_29 (numberFormat as String, width as Integer) as String { // Act Calories
+        var val = "" as String;
+
+        var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+        var profile = UserProfile.getProfile();
+
+        if (profile has :weight && profile has :height && profile has :birthYear) {
+            var age = today.year - profile.birthYear;
+            var weight = profile.weight / 1000.0;
+            var restCalories = 0;
+
+            if (profile.gender == UserProfile.GENDER_MALE) {
+                restCalories = 5.2 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
+            } else {
+                restCalories = -197.6 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
+            }
+
+            // Calculate rest calories for the current time of day
+            restCalories = Math.round((today.hour * 60 + today.min) * restCalories / 1440).toNumber();
+
+            // Get total calories and subtract rest calories
+            if (ActivityMonitor.getInfo() has :calories && ActivityMonitor.getInfo().calories != null) {
+                var activeCalories = ActivityMonitor.getInfo().calories - restCalories;
+                if (activeCalories > 0) {
+                    val = activeCalories.format(numberFormat);
+                }
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_30 (numberFormat as String, width as Integer) as String { // Sea level pressure (hPA)
+        var val = "" as String;
+
+        var info = Activity.getActivityInfo();
+        if (info has :meanSeaLevelPressure && info.meanSeaLevelPressure != null) {
+            val = formatPressure(info.meanSeaLevelPressure / 100.0, numberFormat);
+        }
+        return val;
+    } 
+
+    function complicationType_31 (numberFormat as String, width as Integer) as String { // Week number
+        var val = "" as String;
+
+        var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+        var weekNumber = isoWeekNumber(today.year, today.month, today.day);
+        val = weekNumber.format(numberFormat);
+        return val;
+    } 
+
+    function complicationType_32 (numberFormat as String, width as Integer) as String { // Weekly distance (km)
+        return formatDistanceByWidth(getWeeklyDistance() / 100000.0, width); // Convert to km
+    } 
+
+    function complicationType_33 (numberFormat as String, width as Integer) as String { // Weekly distance (miles)
+        return formatDistanceByWidth(getWeeklyDistance() * 0.00000621371, width); // Convert to miles
+    } 
+
+    function complicationType_34 (numberFormat as String, width as Integer) as String { // Battery percentage
+        return Lang.format("$1$", [System.getSystemStats().battery.format("%d")]);
+    } 
+
+    function complicationType_35 (numberFormat as String, width as Integer) as String { // Battery days remaining
+        var val = "" as String;
+
+        if(System.getSystemStats() has :batteryInDays) {
+            if (System.getSystemStats().batteryInDays != null){
+                var sample = Math.round(System.getSystemStats().batteryInDays);
+                val = Lang.format("$1$", [sample.format(numberFormat)]);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_36 (numberFormat as String, width as Integer) as String { // Notification count
+        var val = "" as String;
+
+        var notifCount = System.getDeviceSettings().notificationCount;
+        if(notifCount != null) {
+            val = notifCount.format(numberFormat);
+        }
+        return val;
+    } 
+
+    function complicationType_37 (numberFormat as String, width as Integer) as String { // Solar intensity
+        var val = "" as String;
+
+        if (Toybox has :Complications) {
+            try {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_SOLAR_INPUT));
+                if (complication != null && complication.value != null) {
+                    val = complication.value.format(numberFormat);
+                }
+            } catch(e) {
+                // Complication not found
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_38 (numberFormat as String, width as Integer) as String { // Sensor temperature
+        var val = "" as String;
+
+        if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getTemperatureHistory)) {
+            var tempIterator = Toybox.SensorHistory.getTemperatureHistory({:period => 1});
+            var temp = tempIterator.next();
+            if(temp != null and temp.data != null) {
+                var tempUnit = getTempUnit();
+                val = Lang.format("$1$$2$", [formatTemperature(temp.data, tempUnit).format(numberFormat), tempUnit]);
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_39 (numberFormat as String, width as Integer) as String { // Sunrise
+        var val = "" as String;
+
+        var now = Time.now();
+        if(weatherCondition != null) {
+            var loc = weatherCondition.observationLocationPosition;
+            if(loc != null) {
+                var sunrise = Time.Gregorian.info(Weather.getSunrise(loc, now), Time.FORMAT_SHORT);
+                var sunriseHour = formatHour(sunrise.hour);
+                if(width < 5) {
+                    val = Lang.format("$1$$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]);
+                } else {
+                    val = Lang.format("$1$:$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]);
+                }
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_40 (numberFormat as String, width as Integer) as String { // Sunset
+        var val = "" as String;
+
+        var now = Time.now();
+        if(weatherCondition != null) {
+            var loc = weatherCondition.observationLocationPosition;
+            if(loc != null) {
+                var sunset = Time.Gregorian.info(Weather.getSunset(loc, now), Time.FORMAT_SHORT);
+                var sunsetHour = formatHour(sunset.hour);
+                if(width < 5) {
+                    val = Lang.format("$1$$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]);
+                } else {
+                    val = Lang.format("$1$:$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]);
+                }
+            }
+        }
+        return val;
+    } 
+
+    function complicationType_41 (numberFormat as String, width as Integer) as String { // Alt TZ 2
+        return secondaryTimezone(propTzOffset2, width);
+    } 
+
+    function complicationType_42 (numberFormat as String, width as Integer) as String { // Alarms
+        var val = "" as String;
+
+        val = System.getDeviceSettings().alarmCount.format(numberFormat);
+        return val;
+    } 
+
+    function complicationType_43 (numberFormat as String, width as Integer) as String { // High temp
+        var val = "" as String;
+
+        if(weatherCondition != null and weatherCondition.highTemperature != null) {
+            var tempVal = weatherCondition.highTemperature;
+            var tempUnit = getTempUnit();
+            var temp = formatTemperature(tempVal, tempUnit).format("%01d");
+            val = Lang.format("$1$$2$", [temp, tempUnit]);
+        }
+        return val;
+    } 
+
+    function complicationType_44 (numberFormat as String, width as Integer) as String { // Low temp
+        var val = "" as String;
+
+        if(weatherCondition != null and weatherCondition.lowTemperature != null) {
+            var tempVal = weatherCondition.lowTemperature;
+            var tempUnit = getTempUnit();
+            var temp = formatTemperature(tempVal, tempUnit).format("%01d");
+            val = Lang.format("$1$$2$", [temp, tempUnit]);
+        }
+        return val;
+    } 
+
+    function complicationType_45 (numberFormat as String, width as Integer) as String { // Temperature, Wind, Feels like
+        var val = "" as String;
+
+        var temp = getTemperature();
+        var wind = getWind();
+        var feelsLike = getFeelsLike();
+        val = join([temp, wind, feelsLike]);
+        return val;
+    } 
+
+    function complicationType_46 (numberFormat as String, width as Integer) as String { // Temperature, Wind
+        var val = "" as String;
+
+        var temp = getTemperature();
+        var wind = getWind();
+        val = join([temp, wind]);
+        return val;
+    } 
+
+    function complicationType_47 (numberFormat as String, width as Integer) as String { // Temperature, Wind, Humidity
+        var val = "" as String;
+
+        var temp = getTemperature();
+        var wind = getWind();
+        var humidity = getHumidity();
+        val = join([temp, wind, humidity]);
+        return val;
+    } 
+
+    function complicationType_48 (numberFormat as String, width as Integer) as String { // Temperature, Wind, High/Low
+        var val = "" as String;
+
+        var temp = getTemperature();
+        var wind = getWind();
+        var highlow = getHighLow();
+        val = join([temp, wind, highlow]);
+        return val;
+    } 
+
+    function complicationType_49 (numberFormat as String, width as Integer) as String { // Temperature, Wind, Precipitation chance
+        var val = "" as String;
+
+        var temp = getTemperature();
+        var wind = getWind();
+        var precip = getPrecip();
+        val = join([temp, wind, precip]);
+        return val;
+    } 
+
+    function complicationType_50 (numberFormat as String, width as Integer) as String { // Weather condition without precipitation
+        var val = "" as String;
+
+        val = getWeatherCondition(false);
+        return val;
+    } 
+
+    function complicationType_51 (numberFormat as String, width as Integer) as String { // Temperature, Humidity, High/Low
+        var val = "" as String;
+
+        var temp = getTemperature();
+        var humidity = getHumidity();
+        var highlow = getHighLow();
+        val = join([temp, humidity, highlow]);
+        return val;
+    } 
+
+    function complicationType_52 (numberFormat as String, width as Integer) as String { // Temperature, Percipitation chance, High/Low
+        var val = "" as String;
+
+        var temp = getTemperature();
+        var precip = getPrecip();
+        var highlow = getHighLow();
+        val = join([temp, precip, highlow]);
+        return val;
+    } 
+
+    function complicationType_53 (numberFormat as String, width as Integer) as String { // Temperature
+        var val = "" as String;
+
+        val = getTemperature();
+        return val;
+    } 
+
+    function complicationType_54 (numberFormat as String, width as Integer) as String { // Precipitation chance
+        var val = "" as String;
+
+        val = getPrecip();
+        if(width == 3 and val.equals("100%")) { val = "100"; }
+        return val;
+    }
+
+    function complicationType_55 (numberFormat as String, width as Integer) as String { // Next Sun Event
+        var val = "" as String;
+        var nextSunEventArray = getNextSunEvent();
+        if(nextSunEventArray != null && nextSunEventArray.size() == 2) { 
+            var nextSunEvent = Time.Gregorian.info(nextSunEventArray[0], Time.FORMAT_SHORT);
+            var nextSunEventHour = formatHour(nextSunEvent.hour);
+            if(width < 5) {
+                val = Lang.format("$1$$2$", [nextSunEventHour.format("%02d"), nextSunEvent.min.format("%02d")]);
+            } else {
+                val = Lang.format("$1$:$2$", [nextSunEventHour.format("%02d"), nextSunEvent.min.format("%02d")]);
+            }
+        }
+        return val;
+    }
+
+    function complicationType_56 (numberFormat as String, width as Integer) as String { // Millitary Date Time Group
+        return getDateTimeGroup();
+    }
+
+    function complicationType_57 (numberFormat as String, width as Integer) as String { // Time of the next Calendar Event
+        var val = "" as String;
+
+        if (Toybox has :Complications) {
+            try {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_CALENDAR_EVENTS));
+                if (complication != null && complication.value != null) {
+                    val = complication.value;
+                    var colon_index = val.find(":");
+                    if (colon_index != null && colon_index < 2) {
+                        val = "0" + val;
+                    }
+                } else {
+                    val = "--:--";
+                }
+                if (width < 5) {
+                    val = val.substring(0, 2) + val.substring(3, 5);
+                }
+            } catch(e) {
+                // Complication not found
+            }
+        }
+
+        return val;
+    }
+
+    function complicationType_58 (numberFormat as String, width as Integer) as String { // Active / Total calories
+        var val = "" as String;
+        var rest_calories = getRestCalories();
+        var total_calories = 0;
+        // Get total calories and subtract rest calories
+        if (ActivityMonitor.getInfo() has :calories && ActivityMonitor.getInfo().calories != null) {
+            total_calories = ActivityMonitor.getInfo().calories;
+        }
+        var active_calories = total_calories - rest_calories;
+        active_calories = (active_calories > 0) ? active_calories : 0; // Ensure active calories is not negative
+        val = active_calories.format(numberFormat) + "/" + total_calories.format(numberFormat);
+
+        return val;
+    }
+
+    function complicationType_59 (numberFormat as String, width as Integer) as String { // PulseOx
+        var val = "" as String;
+        if (Toybox has :Complications) {
+            try {
+                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_PULSE_OX));
+                if (complication != null && complication.value != null) {
+                    val = complication.value.format(numberFormat);
+                }
+            } catch(e) {
+                // Complication not found
+            }
+        }
+
+        return val;
+    }
+
+    function complicationType_Empty (numberFormat as String, width as Integer) as String { // For empty complications
+        return "";
+    }
+
 }
 
 class Segment34Delegate extends WatchUi.WatchFaceDelegate {
