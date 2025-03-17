@@ -50,7 +50,6 @@ Pull requests are welcome, but please follow the following guidelines:
 - Goal completion marker
 - Pressure trend
 - Custom colors
-- Bug with red battery indicator after charging
 
 Lower priority:
 - Race predictions
@@ -60,6 +59,9 @@ Lower priority:
 
 
 ## Change log
+2025-03-17 v1.25.1
+- Bug with red battery indicator after charging
+
 2025-03-15 v1.25.0
 - New value: Pulse Ox
 - New setting for update frequency for bottom fields (can save some battery life)
