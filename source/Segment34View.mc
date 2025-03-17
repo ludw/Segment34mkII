@@ -41,6 +41,8 @@ class Segment34View extends WatchUi.WatchFace {
     private var doesPartialUpdate as Boolean = false;
     private var lastUpdate as Number or Null = null;
     private var canBurnIn as Boolean = false;
+
+    private var screenWidth as Integer = 0;
     private var screenHeight as Number = 0;
     private var previousEssentialsVis as Boolean or Null = null;
     private var batt as Number = 0;
@@ -128,6 +130,25 @@ class Segment34View extends WatchUi.WatchFace {
     private var propTzName2 as String = "";
     private var propWeekOffset as Number = 0;
     private var propLabelVisibility as Number = 0;
+
+    /* Complication data */
+
+    /* Top Data */
+    private var sunriseFieldDesc as String = "";
+    private var sunsetFieldDesc as String = "";
+
+    /* Bottom data */
+    private var leftCompLabel as String = "";
+    private var leftCompWidth as Integer = 0;
+    private var leftCompLabelSize as Integer = 2;
+
+    private var centerCompLabel as String = "";
+    private var centerCompWidth as Integer = 0;
+    private var centerCompLabelSize as Integer = 2;
+
+    private var rightCompLabel as String = "";
+    private var rightCompWidth as Integer = 0;
+    private var rightCompLabelSize as Integer = 3;
 
     function initialize() {
         WatchFace.initialize();
@@ -365,6 +386,9 @@ class Segment34View extends WatchUi.WatchFace {
             propOldNightColorTheme = propNightColorTheme;
         }
 
+        /* Update the settings for all complications */
+        updateComplicationsData();
+
         var fontVariant = Application.Properties.getValue("smallFontVariant") as Number;
         // Only load the font we need for this watch size
         if(screenHeight == 240 or screenHeight == 260 or screenHeight == 280) {
@@ -524,6 +548,52 @@ class Segment34View extends WatchUi.WatchFace {
         }
 
         previousEssentialsVis = awake;
+    }
+
+    /* For each complication, update description, unit, and update method */
+    hidden function updateComplicationsData() as Void {
+        /*** Top Complications ***/
+
+        /* Sun events */
+        if(propSunriseFieldShows == -2) {
+            sunriseFieldDesc = "";
+        } else {
+            sunriseFieldDesc = getComplicationDesc(propSunriseFieldShows, 1);
+        }
+
+        if(propSunsetFieldShows == -2) {
+            sunsetFieldDesc = "";
+        } else {
+            sunsetFieldDesc = getComplicationDesc(propSunsetFieldShows, 1);
+        }
+
+        /*** Bottom Complications ***/
+        /* Left label */
+        leftCompWidth = 3;
+        leftCompLabelSize = 2;
+        if(screenWidth > 450) {
+            leftCompWidth = 4;
+            leftCompLabelSize = 3;
+        }
+        leftCompLabel = getComplicationDesc(propLeftValueShows, leftCompLabelSize);
+
+        /* Center label */
+        centerCompWidth = 3;
+        centerCompLabelSize = 2;
+        if(screenWidth > 450) {
+            centerCompWidth = 4;
+            centerCompLabelSize = 3;
+        }
+        centerCompLabel = getComplicationDesc(propMiddleValueShows, centerCompLabelSize);
+
+        /* Right label */
+        rightCompWidth = 4;
+        rightCompLabelSize = 3;
+        if(screenWidth == 240) {
+            rightCompWidth = 3;
+            rightCompLabelSize = 2;
+        }
+        rightCompLabel = getComplicationDesc(propRightValueShows, rightCompLabelSize);
     }
 
     hidden function setVisibility2(setting as Number, label as Text, bg as Text) as Void {
@@ -1021,18 +1091,18 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function setSunUpDown(dc as Dc) as Void {
         if(propSunriseFieldShows == -2) {
-            dDawn.setText("");
+            dDawn.setText(getLiveComplicationDesc(propSunriseFieldShows, 1, sunriseFieldDesc));
             dSunUpLabel.setText("");
         } else {
-            dDawn.setText(getComplicationDesc(propSunriseFieldShows, 1));
+            dDawn.setText(getLiveComplicationDesc(propSunriseFieldShows, 1, sunriseFieldDesc));
             dSunUpLabel.setText(getComplicationValue(propSunriseFieldShows, 5));
         }
 
         if(propSunsetFieldShows == -2) {
-            dDusk.setText("");
+            dDusk.setText(getLiveComplicationDesc(propSunsetFieldShows, 1, sunsetFieldDesc));
             dSunDownLabel.setText("");
         } else {
-            dDusk.setText(getComplicationDesc(propSunsetFieldShows, 1));
+            dDusk.setText(getLiveComplicationDesc(propSunsetFieldShows, 1, sunsetFieldDesc));
             dSunDownLabel.setText(getComplicationValue(propSunsetFieldShows, 5));
             // hide labels if so configured
             if (propLabelVisibility == 1 or propLabelVisibility == 2) {
@@ -1275,32 +1345,14 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setBottomFields(dc as Dc) as Void {
-        var left_width = 3;
-        var left_label_size = 2;
-        if(dc.getWidth() > 450) {
-            left_width = 4;
-            left_label_size = 3;
-        }
-        dTtrDesc.setText(getComplicationDesc(propLeftValueShows, left_label_size));
-        dTtrLabel.setText(getComplicationValue(propLeftValueShows, left_width));
+        dTtrDesc.setText(getLiveComplicationDesc(propLeftValueShows, leftCompLabelSize, leftCompLabel));
+        dTtrLabel.setText(getComplicationValue(propLeftValueShows, leftCompWidth));
 
-        var mid_width = 3;
-        var mid_label_size = 2;
-        if(dc.getWidth() > 450) {
-            mid_width = 4;
-            mid_label_size = 3;
-        }
-        dHrDesc.setText(getComplicationDesc(propMiddleValueShows, mid_label_size));
-        dHrLabel.setText(getComplicationValue(propMiddleValueShows, mid_width));
+        dHrDesc.setText(getLiveComplicationDesc(propMiddleValueShows, centerCompLabelSize, centerCompLabel));
+        dHrLabel.setText(getComplicationValue(propMiddleValueShows, centerCompWidth));
 
-        var right_width = 4;
-        var right_label_size = 3;
-        if(dc.getWidth() == 240) {
-            right_width = 3;
-            right_label_size = 2;
-        }
-        dActiveDesc.setText(getComplicationDesc(propRightValueShows, right_label_size));
-        dActiveLabel.setText(getComplicationValue(propRightValueShows, right_width));
+        dActiveDesc.setText(getLiveComplicationDesc(propRightValueShows, rightCompLabelSize, rightCompLabel));
+        dActiveLabel.setText(getComplicationValue(propRightValueShows, rightCompWidth));
 
         // hide labels if so configured
        if (propLabelVisibility == 1 or propLabelVisibility == 3) {
@@ -1744,14 +1796,6 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getComplicationDesc(complicationType as Integer, labelSize as Integer) as String {
         /* Handle special cases or return from the array */
         switch (complicationType) {
-            case 10:
-                if(Activity.getActivityInfo().currentHeartRate == null) {
-                    var hrDesc = [ "HR:", "LAST HR:", "LAST HR:" ];
-                    return hrDesc[labelSize - 1];
-                } else {
-                    var hrDesc = [ "HR:", "LIVE HR:", "LIVE HR:" ];
-                    return hrDesc[labelSize - 1];
-                }
             case 16:
                 return Lang.format("$1$:", [propTzName1.toUpper()]);
             case 41:
@@ -1770,6 +1814,21 @@ class Segment34View extends WatchUi.WatchFace {
 
                 var arrayJsonDesc = Application.loadResource(labelResourceId) as Array<String>;
                 return arrayJsonDesc[complicationType];
+        }
+    }
+
+    hidden function getLiveComplicationDesc(complicationType as Integer, labelSize as Number, currentValue as String) as String {
+        /* Handle special cases here */
+        switch (complicationType) {
+            case 10:
+                if(Activity.getActivityInfo().currentHeartRate == null) {
+                    var hrDesc = [ "HR:", "LAST HR:", "LAST HR:" ];
+                    return hrDesc[labelSize - 1];
+                } else {
+                    var hrDesc = [ "HR:", "LIVE HR:", "LIVE HR:" ];
+                    return hrDesc[labelSize - 1];
+                }
+            default: return currentValue;
         }
     }
 
