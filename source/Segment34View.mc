@@ -49,6 +49,9 @@ class Segment34View extends WatchUi.WatchFace {
     private var nightMode as Boolean = false;
     private var ledSmallFont as Resource or Null = null;
     private var ledMidFont as Resource or Null = null;
+
+    private var arrayColorValues as Array<Lang.Integer> = new Array<Integer>[labelNumber];
+    private var arrayNightColorValues as Array<Lang.Integer> = new Array<Integer>[labelNumber];
     
     private var dbackground as Drawable or Null = null;
     private var dSecondsLabel as Text or Null = null;
@@ -85,10 +88,8 @@ class Segment34View extends WatchUi.WatchFace {
 
     private var propColorTheme as Integer = 0;
     private var propOldColorTheme as Integer = -1;
-    private var propColorValues as Array<Lang.Integer> = new Array<Integer>[labelNumber];
     private var propNightColorTheme as Integer = -1;
     private var propOldNightColorTheme as Integer = -1;
-    private var propNightColorValues as Array<Lang.Integer> = new Array<Integer>[labelNumber];
     private var propNightThemeActivation as Number = 0;
     private var propBatteryVariant as Number = 3;
     private var propShowSeconds as Boolean = true;
@@ -356,11 +357,11 @@ class Segment34View extends WatchUi.WatchFace {
 
         /* Update all the colors used for this theme */
         if (propColorTheme != propOldColorTheme) {
-            updateThemeColors(propColorTheme, propColorValues);
+            updateThemeColors(propColorTheme, arrayColorValues);
             propOldColorTheme = propColorTheme;
         }
         if ((propNightColorTheme >= 0) && (propNightColorTheme != propOldNightColorTheme)) {
-            updateThemeColors(propNightColorTheme, propNightColorValues);
+            updateThemeColors(propNightColorTheme, arrayNightColorValues);
             propOldNightColorTheme = propNightColorTheme;
         }
 
@@ -647,10 +648,10 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getColor(colorName as labelEnum) as Integer {
         /* Check whether we are AMOLED or MIP */ 
         var amoled = canBurnIn ?    1   :   0;
-        var array_to_use = propColorValues;
+        var array_to_use = arrayColorValues;
 
         if (propNightColorTheme != -1 && nightMode) {
-            array_to_use = propNightColorValues;
+            array_to_use = arrayNightColorValues;
         }
 
         var color = array_to_use[colorName];
@@ -744,9 +745,9 @@ class Segment34View extends WatchUi.WatchFace {
         }
 
         if(System.getSystemStats().battery > 15) {
-            dBattLabel.setColor(getColor("valueDisplay"));
+            dBattLabel.setColor(getColor(labelValueDisplay));
         } else {
-            dBattLabel.setColor(getColor("lowBatt"));
+            dBattLabel.setColor(getColor(labelLowBatt));
         }
         
         dBattBg.setVisible(visible);
