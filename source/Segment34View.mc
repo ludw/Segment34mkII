@@ -1248,6 +1248,12 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
 
+        if(System.getSystemStats().battery > 15) {
+            dBattLabel.setColor(getColor("valueDisplay"));
+        } else {
+            dBattLabel.setColor(getColor("lowBatt"));
+        }
+        
         dBattBg.setVisible(visible);
         dBattLabel.setText(value);
     }
