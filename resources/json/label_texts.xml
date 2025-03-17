@@ -1,0 +1,193 @@
+<resources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://developer.garmin.com/downloads/connect-iq/resources.xsd">
+  <jsonData id="shortLabels">[
+      "W MIN:",         //  [0] Active min / week
+      "D MIN:",         //  [1] Active min / day
+      "D KM:",          //  [2] distance (km) / day
+      "D MI:",          //  [3] distance (miles) / day
+      "FLRS:",          //  [4] floors climbed / day
+      "CLIMB:",         //  [5] meters climbed / day
+      "RECOV:",         //  [6] Time to Recovery (h)
+      "V02:",           //  [7] VO2 Max Running
+      "V02:",           //  [8] VO2 Max Cycling
+      "RESP:",          //  [9] Respiration rate
+      "HR:",            // [10] Heart Rate
+      "CAL:",           // [11] Calories / day
+      "ALT:",           // [12] Altitude (m)
+      "STRSS:",         // [13] Stress
+      "B BAT:",         // [14] Body battery
+      "ALT:",           // [15] Altitude (ft)
+      "",               // [16] Alt TZ 1, done in function
+      "STEPS:",         // [17] Steps / day
+      "DIST:",          // [18] Distance (m) / day
+      "PUSHES:",        // [19] Wheelchair pushes
+      "",               // [20] Weather condition
+      "W KM:",          // [21] Weekly run distance (km)
+      "W MI:",          // [22] Weekly run distance (miles)
+      "W KM:",          // [23] Weekly bike distance (km)
+      "W MI:",          // [24] Weekly bike distance (miles)
+      "TRAINING:",      // [25] Training status
+      "PRESSURE:",      // [26] Barometric pressure (hPA)
+      "KG:",            // [27] Weight kg
+      "LBS:",           // [28] Weight lbs
+      "A CAL:",         // [29] Act Calories / day
+      "PRESSURE:",      // [30] Sea level pressure (hPA)
+      "WEEK:",          // [31] Week number
+      "W KM:",          // [32] Weekly distance (km)
+      "W MI:",          // [33] Weekly distance (miles)
+      "BATT:",          // [34] Battery percentage
+      "BATT D:",        // [35] Battery days remaining
+      "NOTIFS:",        // [36] Notification count
+      "SUN:",           // [37] Solar intensity
+      "TEMP:",          // [38] Sensor temp
+      "DAWN:",          // [39] Sunrise
+      "DUSK:",          // [40] Sunset
+      "",               // [41] Alt TZ 2:
+      "ALARM:",         // [42] Alarms
+      "HIGH:",          // [43] Daily high temp
+      "LOW:",           // [44] Daily low temp
+      "",               // [45] empty for offset 45
+      "",               // [46] empty for offset 46
+      "",               // [47] empty for offset 47
+      "",               // [48] empty for offset 48
+      "",               // [49] empty for offset 49
+      "",               // [50] empty for offset 50
+      "",               // [51] empty for offset 51
+      "",               // [52] empty for offset 52
+      "TEMP:",          // [53] Temperature
+      "PRECIP:",        // [54] Precipitation
+      "SUN:",           // [55] Next sun event
+      "",               // [56] empty for offset 56
+      "CAL:",           // [57] Time of the next Calendar Event
+      "",               // [58] empty for offset 58
+      "OX:"             // [59] Pulse Ox
+    ]
+    </jsonData>
+    <jsonData id="midLabels">[
+      "WEEK MIN:",    //  [0] Active min / week
+      "MIN TODAY:",   //  [1] Active min / day
+      "KM TODAY:",    //  [2] distance (km) / day
+      "MI TODAY:",    //  [3] distance (miles) / day
+      "FLOORS:",      //  [4] floors climbed / day
+      "M CLIMBED:",   //  [5] meters climbed / day
+      "RECOV HRS:",   //  [6] Time to Recovery (h)
+      "V02 MAX:",     //  [7] VO2 Max Running
+      "V02 MAX:",     //  [8] VO2 Max Cycling
+      "RESP RATE:",   //  [9] Respiration rate
+      "LAST HR:",     // [10] Heart Rate
+      "CALORIES:",    // [11] Calories / day
+      "ALTITUDE:",    // [12] Altitude (m)
+      "STRESS:",      // [13] Stress
+      "BODY BATT:",   // [14] Body battery
+      "ALTITUDE:",    // [15] Altitude (ft)
+      "",             // [16] Alt TZ 1, done in function
+      "STEPS:",       // [17] Steps / day
+      "M TODAY:",     // [18] Distance (m) / day
+      "PUSHES:",      // [19] Wheelchair pushes
+      "",             // [20] Weather condition
+      "W RUN KM:",    // [21] Weekly run distance (km)
+      "W RUN MI:",    // [22] Weekly run distance (miles)
+      "W BIKE KM:",   // [23] Weekly bike distance (km)
+      "W BIKE MI:",   // [24] Weekly bike distance (miles)
+      "TRAINING:",    // [25] Training status
+      "PRESSURE:",    // [26] Barometric pressure (hPA)
+      "WEIGHT:",      // [27] Weight kg
+      "WEIGHT:",      // [28] Weight lbs
+      "ACT. CAL:",    // [29] Act Calories / day
+      "PRESSURE:",    // [30] Sea level pressure (hPA)
+      "WEEK:",        // [31] Week number
+      "WEEK KM:",     // [32] Weekly distance (km)
+      "WEEK MI:",     // [33] Weekly distance (miles)
+      "BATT %:",      // [34] Battery percentage
+      "BATT DAYS:",   // [35] Battery days remaining
+      "NOTIFS:",      // [36] Notification count
+      "SUN INT:",     // [37] Solar intensity
+      "TEMP:",        // [38] Sensor temp
+      "SUNRISE:",     // [39] Sunrise
+      "SUNSET:",      // [40] Sunset
+      "",             // [41] Alt TZ 2:
+      "ALARMS:",      // [42] Alarms
+      "DAILY HIGH:",  // [43] Daily high temp
+      "DAILY LOW:",   // [44] Daily low temp
+      "",             // [45] empty for offset 45
+      "",             // [46] empty for offset 46
+      "",             // [47] empty for offset 47
+      "",             // [48] empty for offset 48
+      "",             // [49] empty for offset 49
+      "",             // [50] empty for offset 50
+      "",             // [51] empty for offset 51
+      "",             // [52] empty for offset 52
+      "TEMP:",        // [53] Temperature
+      "PRECIP:",      // [54] Precipitation
+      "NEXT SUN:",    // [55] Next sun event
+      "",             // [56] empty for offset 56
+      "NEXT CAL:",    // [57] Time of the next Calendar Event
+      "",             // [58] empty for offset 58
+      "PULSE OX:"     // [59] Pulse Ox
+      ]
+    </jsonData>
+    <jsonData id="longLabels">[
+      "WEEK ACT MIN:",   //  [0] Active min / week
+      "DAY ACT MIN:",    //  [1] Active min / day
+      "KM TODAY:",       //  [2] distance (km) / day
+      "MILES TODAY:",    //  [3] distance (miles) / day
+      "FLOORS:",         //  [4] floors climbed / day
+      "M CLIMBED:",      //  [5] meters climbed / day
+      "RECOVERY HRS:",   //  [6] Time to Recovery (h)
+      "RUN V02 MAX:",    //  [7] VO2 Max Running
+      "BIKE V02 MAX:",   //  [8] VO2 Max Cycling
+      "RESP. RATE:",     //  [9] Respiration rate
+      "LAST HR:",        // [10] Heart Rate
+      "DLY CALORIES:",   // [11] Calories / day
+      "ALTITUDE M:",     // [12] Altitude (m)
+      "STRESS:",         // [13] Stress
+      "BODY BATTERY:",   // [14] Body battery
+      "ALTITUDE FT:",    // [15] Altitude (ft)
+      "",                // [16] Alt TZ 1, done in function
+      "STEPS:",          // [17] Steps / day
+      "METERS TODAY:",   // [18] Distance (m) / day
+      "PUSHES:",         // [19] Wheelchair pushes
+      "",                // [20] Weather condition
+      "WEEK RUN KM:",    // [21] Weekly run distance (km)
+      "WEEK RUN MI:",    // [22] Weekly run distance (miles)
+      "WEEK BIKE KM:",   // [23] Weekly bike distance (km)
+      "WEEK BIKE MI:",   // [24] Weekly bike distance (miles)
+      "TRAINING:",       // [25] Training status
+      "PRESSURE:",       // [26] Barometric pressure (hPA)
+      "WEIGHT KG:",      // [27] Weight kg
+      "WEIGHT KG:",      // [28] Weight lbs
+      "ACT. CALORIES:",  // [29] Act Calories / day
+      "PRESSURE:",       // [30] Sea level pressure (hPA)
+      "WEEK:",           // [31] Week number
+      "WEEK DIST KM:",   // [32] Weekly distance (km)
+      "WEEKLY MILES:",   // [33] Weekly distance (miles)
+      "BATTERY %:",      // [34] Battery percentage
+      "BATTERY DAYS:",   // [35] Battery days remaining
+      "NOTIFICATIONS:",  // [36] Notification count
+      "SUN INTENSITY:",  // [37] Solar intensity
+      "SENSOR TEMP:",    // [38] Sensor temp
+      "SUNRISE:",        // [39] Sunrise
+      "SUNSET:",         // [40] Sunset
+      "",                // [41] Alt TZ 2:
+      "ALARMS:",         // [42] Alarms
+      "DAILY HIGH:",     // [43] Daily high temp
+      "DAILY LOW:",      // [44] Daily low temp
+      "",                // [45] empty for offset 45
+      "",                // [46] empty for offset 46
+      "",                // [47] empty for offset 47
+      "",                // [48] empty for offset 48
+      "",                // [49] empty for offset 49
+      "",                // [50] empty for offset 50
+      "",                // [51] empty for offset 51
+      "",                // [52] empty for offset 52
+      "TEMPERATURE:",    // [53] Temperature
+      "PRECIPITATION:",  // [54] Precipitation
+      "NEXT SUN EVENT:", // [55] Next sun event
+      "",                // [56] empty for offset 56
+      "NEXT CAL EVENT:", // [57] Time of the next Calendar Event
+      "",                // [58] empty for offset 58
+      "PULSE OX:"        // [59] Pulse Ox
+      ]
+    </jsonData>
+</resources>
+
