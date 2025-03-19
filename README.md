@@ -50,6 +50,7 @@ Pull requests are welcome, but please follow the following guidelines:
 - Goal completion marker
 - Pressure trend
 - Custom colors
+- Localization of settings
 
 Lower priority:
 - Race predictions
@@ -59,6 +60,12 @@ Lower priority:
 
 
 ## Change log
+2025-03-19 v1.25.3
+- Fixed swapped colors (Orange / Peachy Orange)
+
+2025-03-18 v1.25.2
+- Reduced memory usage thanks to Contarkos
+
 2025-03-17 v1.25.1
 - Bug with red battery indicator after charging
 

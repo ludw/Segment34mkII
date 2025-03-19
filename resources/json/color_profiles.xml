@@ -32,9 +32,9 @@
     </jsonData>
     <jsonData id="peachy_orange">[
  /*  [n] propColorTheme,                    fieldBg,   fieldLabel,   timeBg,     timeDisplay,   timeDisplayDim,   dateDisplay,   dateDisplayDim,   dawnDuskLabel,   dawnDuskValue,   notifications,   stress,     bodybattery,   background,   valueDisplay,   moonDisplay, lowBatt */
- /*  [5] Peachy Orange       MIP */      [ "0x5500AA", "0xFFAAAA",   "0x5500AA", "0xFF5500",    "0xFF5500",       "0xFFAAAA",    "0xaa6e56",       "0xFFAAAA",      "0xAAAAAA",      "0xFFFFFF",      "0xFF5555", "0x00AAFF",    "0x000000",   "0xFFFFFF",     "0xFFFFFF", "0xFF0000" ],
- /*  [5] Peachy Orange       AMOLED */   [ "0x1b263d", "0xFFAAAA",   "0x1b263d", "0xff9161",    "0xff9161",       "0xffb383",    "0xaa6e56",       "0xFFAAAA",      "0xFFFFFF",      "0xFFFFFF",      "0xFF5555", "0x00AAFF",    "0x000000",   "0xFFFFFF",     "0xFFFFFF", "0xFF0000" ]
-    ]
+ /* [11] Orange              MIP */      [ "0x555555", "0xFFAA00",   "0x555555", "0xFFAA00",    "0xFFAA00",       "0xFFFFFF",    "0x555555",       "0xFFAA00",      "0xAAAAAA",      "0x55AAFF",      "0xFFAA00", "0x55AAFF",    "0x000000",   "0xFFFFFF",     "0xFFFFFF", "0xFF0000" ],
+ /* [11] Orange              AMOLED */   [ "0x333333", "0xFFAA00",   "0x333333", "0xff7600",    "0xff7600",       "0xffffff",    "0x555555",       "0xFFAA00",      "0xFFFFFF",      "0x55AAFF",      "0xFFAA00", "0x55AAFF",    "0x000000",   "0xFFFFFF",     "0xFFFFFF", "0xFF0000" ]
+     ]
     </jsonData>
     <jsonData id="red_and_white">[
  /*  [n] propColorTheme,                    fieldBg,   fieldLabel,   timeBg,     timeDisplay,   timeDisplayDim,   dateDisplay,   dateDisplayDim,   dawnDuskLabel,   dawnDuskValue,   notifications,   stress,     bodybattery,   background,   valueDisplay,   moonDisplay, lowBatt */
@@ -68,8 +68,8 @@
     </jsonData>
     <jsonData id="orange">[
  /*  [n] propColorTheme,                    fieldBg,   fieldLabel,   timeBg,     timeDisplay,   timeDisplayDim,   dateDisplay,   dateDisplayDim,   dawnDuskLabel,   dawnDuskValue,   notifications,   stress,     bodybattery,   background,   valueDisplay,   moonDisplay, lowBatt */
- /* [11] Orange              MIP */      [ "0x555555", "0xFFAA00",   "0x555555", "0xFFAA00",    "0xFFAA00",       "0xFFFFFF",    "0x555555",       "0xFFAA00",      "0xAAAAAA",      "0x55AAFF",      "0xFFAA00", "0x55AAFF",    "0x000000",   "0xFFFFFF",     "0xFFFFFF", "0xFF0000" ],
- /* [11] Orange              AMOLED */   [ "0x333333", "0xFFAA00",   "0x333333", "0xff7600",    "0xff7600",       "0xffffff",    "0x555555",       "0xFFAA00",      "0xFFFFFF",      "0x55AAFF",      "0xFFAA00", "0x55AAFF",    "0x000000",   "0xFFFFFF",     "0xFFFFFF", "0xFF0000" ]
+ /*  [5] Peachy Orange       MIP */      [ "0x5500AA", "0xFFAAAA",   "0x5500AA", "0xFF5500",    "0xFF5500",       "0xFFAAAA",    "0xaa6e56",       "0xFFAAAA",      "0xAAAAAA",      "0xFFFFFF",      "0xFF5555", "0x00AAFF",    "0x000000",   "0xFFFFFF",     "0xFFFFFF", "0xFF0000" ],
+ /*  [5] Peachy Orange       AMOLED */   [ "0x1b263d", "0xFFAAAA",   "0x1b263d", "0xff9161",    "0xff9161",       "0xffb383",    "0xaa6e56",       "0xFFAAAA",      "0xFFFFFF",      "0xFFFFFF",      "0xFF5555", "0x00AAFF",    "0x000000",   "0xFFFFFF",     "0xFFFFFF", "0xFF0000" ]
     ]
     </jsonData>
     <jsonData id="white_on_black">[
