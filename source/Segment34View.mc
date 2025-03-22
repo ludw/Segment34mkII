@@ -810,14 +810,12 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getWeatherCondition(includePrecipitation as Boolean) as String {
-        var condition;
-        var perp = "";
-
         // Early return if no weather data
         if (weatherCondition == null || weatherCondition.condition == null) {
             return "";
         }
 
+        var perp = "";
         // Safely check precipitation chance
         if(includePrecipitation) {
             if (weatherCondition has :precipitationChance &&
@@ -829,171 +827,64 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
 
-        switch(weatherCondition.condition) {
-            case Weather.CONDITION_CLEAR:
-                condition = "CLEAR" + perp;
-                break;
-            case Weather.CONDITION_PARTLY_CLOUDY:
-                condition = "PARTLY CLOUDY" + perp;
-                break;
-            case Weather.CONDITION_MOSTLY_CLOUDY:
-                condition = "MOSTLY CLOUDY" + perp;
-                break;
-            case Weather.CONDITION_RAIN:
-                condition = "RAIN" + perp;
-                break;
-            case Weather.CONDITION_SNOW:
-                condition = "SNOW" + perp;
-                break;
-            case Weather.CONDITION_WINDY:
-                condition = "WINDY" + perp;
-                break;
-            case Weather.CONDITION_THUNDERSTORMS:
-                condition = "THUNDERSTORMS" + perp;
-                break;
-            case Weather.CONDITION_WINTRY_MIX:
-                condition = "WINTRY MIX" + perp;
-                break;
-            case Weather.CONDITION_FOG:
-                condition = "FOG" + perp;
-                break;
-            case Weather.CONDITION_HAZY:
-                condition = "HAZY" + perp;
-                break;
-            case Weather.CONDITION_HAIL:
-                condition = "HAIL" + perp;
-                break;
-            case Weather.CONDITION_SCATTERED_SHOWERS:
-                condition = "SCT SHOWERS" + perp;
-                break;
-            case Weather.CONDITION_SCATTERED_THUNDERSTORMS:
-                condition = "SCT THUNDERSTORMS";
-                break;
-            case Weather.CONDITION_UNKNOWN_PRECIPITATION:
-                condition = "UNKN PRECIPITATION";
-                break;
-            case Weather.CONDITION_LIGHT_RAIN:
-                condition = "LIGHT RAIN" + perp;
-                break;
-            case Weather.CONDITION_HEAVY_RAIN:
-                condition = "HEAVY RAIN" + perp;
-                break;
-            case Weather.CONDITION_LIGHT_SNOW:
-                condition = "LIGHT SNOW" + perp;
-                break;
-            case Weather.CONDITION_HEAVY_SNOW:
-                condition = "HEAVY SNOW" + perp;
-                break;
-            case Weather.CONDITION_LIGHT_RAIN_SNOW:
-                condition = "LIGHT RAIN & SNOW";
-                break;
-            case Weather.CONDITION_HEAVY_RAIN_SNOW:
-                condition = "HEAVY RAIN & SNOW";
-                break;
-            case Weather.CONDITION_CLOUDY:
-                condition = "CLOUDY" + perp;
-                break;
-            case Weather.CONDITION_RAIN_SNOW:
-                condition = "RAIN & SNOW" + perp;
-                break;
-            case Weather.CONDITION_PARTLY_CLEAR:
-                condition = "PARTLY CLEAR" + perp;
-                break;
-            case Weather.CONDITION_MOSTLY_CLEAR:
-                condition = "MOSTLY CLEAR" + perp;
-                break;
-            case Weather.CONDITION_LIGHT_SHOWERS:
-                condition = "LIGHT SHOWERS" + perp;
-                break;
-            case Weather.CONDITION_SHOWERS:
-                condition = "SHOWERS" + perp;
-                break;
-            case Weather.CONDITION_HEAVY_SHOWERS:
-                condition = "HEAVY SHOWERS" + perp;
-                break;
-            case Weather.CONDITION_CHANCE_OF_SHOWERS:
-                condition = "CHC OF SHOWERS" + perp;
-                break;
-            case Weather.CONDITION_CHANCE_OF_THUNDERSTORMS:
-                condition = "CHC THUNDERSTORMS";
-                break;
-            case Weather.CONDITION_MIST:
-                condition = "MIST" + perp;
-                break;
-            case Weather.CONDITION_DUST:
-                condition = "DUST" + perp;
-                break;
-            case Weather.CONDITION_DRIZZLE:
-                condition = "DRIZZLE" + perp;
-                break;
-            case Weather.CONDITION_TORNADO:
-                condition = "TORNADO" + perp;
-                break;
-            case Weather.CONDITION_SMOKE:
-                condition = "SMOKE" + perp;
-                break;
-            case Weather.CONDITION_ICE:
-                condition = "ICE" + perp;
-                break;
-            case Weather.CONDITION_SAND:
-                condition = "SAND" + perp;
-                break;
-            case Weather.CONDITION_SQUALL:
-                condition = "SQUALL" + perp;
-                break;
-            case Weather.CONDITION_SANDSTORM:
-                condition = "SANDSTORM" + perp;
-                break;
-            case Weather.CONDITION_VOLCANIC_ASH:
-                condition = "VOLCANIC ASH" + perp;
-                break;
-            case Weather.CONDITION_HAZE:
-                condition = "HAZE" + perp;
-                break;
-            case Weather.CONDITION_FAIR:
-                condition = "FAIR" + perp;
-                break;
-            case Weather.CONDITION_HURRICANE:
-                condition = "HURRICANE" + perp;
-                break;
-            case Weather.CONDITION_TROPICAL_STORM:
-                condition = "TROPICAL STORM" + perp;
-                break;
-            case Weather.CONDITION_CHANCE_OF_SNOW:
-                condition = "CHC OF SNOW" + perp;
-                break;
-            case Weather.CONDITION_CHANCE_OF_RAIN_SNOW:
-                condition = "CHC OF RAIN & SNOW";
-                break;
-            case Weather.CONDITION_CLOUDY_CHANCE_OF_RAIN:
-                condition = "CLOUDY CHC RAIN";
-                break;
-            case Weather.CONDITION_CLOUDY_CHANCE_OF_SNOW:
-                condition = "CLOUDY CHC SNOW";
-                break;
-            case Weather.CONDITION_CLOUDY_CHANCE_OF_RAIN_SNOW:
-                condition = "CLOUDY RAIN & SNOW";
-                break;
-            case Weather.CONDITION_FLURRIES:
-                condition = "FLURRIES" + perp;
-                break;
-            case Weather.CONDITION_FREEZING_RAIN:
-                condition = "FREEZING RAIN" + perp;
-                break;
-            case Weather.CONDITION_SLEET:
-                condition = "SLEET" + perp;
-                break;
-            case Weather.CONDITION_ICE_SNOW:
-                condition = "ICE & SNOW" + perp;
-                break;
-            case Weather.CONDITION_THIN_CLOUDS:
-                condition = "THIN CLOUDS" + perp;
-                break;
-            default:
-                condition = "UNKNOWN";
-        }
+        var weatherNames = [
+            "CLEAR",
+            "PARTLY CLOUDY",
+            "MOSTLY CLOUDY",
+            "RAIN",
+            "SNOW",
+            "WINDY",
+            "THUNDERSTORMS",
+            "WINTRY MIX",
+            "FOG",
+            "HAZY",
+            "HAIL",
+            "SCATTERED SHOWERS",
+            "SCATTERED THUNDERSTORMS",
+            "UNKNOWN PRECIPITATION",
+            "LIGHT RAIN",
+            "HEAVY RAIN",
+            "LIGHT SNOW",
+            "HEAVY SNOW",
+            "LIGHT RAIN SNOW",
+            "HEAVY RAIN SNOW",
+            "CLOUDY",
+            "RAIN SNOW",
+            "PARTLY CLEAR",
+            "MOSTLY CLEAR",
+            "LIGHT SHOWERS",
+            "SHOWERS",
+            "HEAVY SHOWERS",
+            "CHANCE OF SHOWERS",
+            "CHANCE OF THUNDERSTORMS",
+            "MIST",
+            "DUST",
+            "DRIZZLE",
+            "TORNADO",
+            "SMOKE",
+            "ICE",
+            "SAND",
+            "SQUALL",
+            "SANDSTORM",
+            "VOLCANIC ASH",
+            "HAZE",
+            "FAIR",
+            "HURRICANE",
+            "TROPICAL STORM",
+            "CHANCE OF SNOW",
+            "CHANCE OF RAIN SNOW",
+            "CLOUDY CHANCE OF RAIN",
+            "CLOUDY CHANCE OF SNOW",
+            "CLOUDY CHANCE OF RAIN SNOW",
+            "FLURRIES",
+            "FREEZING RAIN",
+            "SLEET",
+            "ICE SNOW",
+            "THIN CLOUDS",
+            "UNKNOWN"
+        ];
 
-        return condition;
+        return weatherNames[weatherCondition.condition] + perp;
     }
 
     hidden function getRestCalories() as Number {
@@ -1742,205 +1633,73 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getComplicationDesc(complicationType, labelSize as Number) as String {
-        // labelSize 1 = short
-        // labelSize 2 = mid
-        // labelSize 3 = long
-        var desc = "";
+        // labelSize 1 = short, 2 = mid, 3 = long
 
-        if(complicationType == 0) { // Active min / week
-            if(labelSize == 1) { desc = "W MIN:"; }
-            if(labelSize == 2) { desc = "WEEK MIN:"; }
-            if(labelSize == 3) { desc = "WEEK ACT MIN:"; }
-        } else if(complicationType == 1) { // Active min / day
-            if(labelSize == 1) { desc = "D MIN:"; }
-            if(labelSize == 2) { desc = "MIN TODAY:"; }
-            if(labelSize == 3) { desc = "DAY ACT MIN:"; }
-        } else if(complicationType == 2) { // distance (km) / day
-            if(labelSize == 1) { desc = "D KM:"; }
-            if(labelSize == 2) { desc = "KM TODAY:"; }
-            if(labelSize == 3) { desc = "KM TODAY:"; }
-        } else if(complicationType == 3) { // distance (miles) / day
-            if(labelSize == 1) { desc = "D MI:"; }
-            if(labelSize == 2) { desc = "MI TODAY:"; }
-            if(labelSize == 3) { desc = "MILES TODAY:"; }
-        } else if(complicationType == 4) { // floors climbed / day
-            if(labelSize == 1) { desc = "FLRS:"; }
-            if(labelSize == 2) { desc = "FLOORS:"; }
-            if(labelSize == 3) { desc = "FLOORS:"; }
-        } else if(complicationType == 5) { // meters climbed / day
-            if(labelSize == 1) { desc = "CLIMB:"; }
-            if(labelSize == 2) { desc = "M CLIMBED:"; }
-            if(labelSize == 3) { desc = "M CLIMBED:"; }
-        } else if(complicationType == 6) { // Time to Recovery (h)
-            if(labelSize == 1) { desc = "RECOV:"; }
-            if(labelSize == 2) { desc = "RECOV HRS:"; }
-            if(labelSize == 3) { desc = "RECOVERY HRS:"; }
-        } else if(complicationType == 7) { // VO2 Max Running
-            if(labelSize == 1) { desc = "V02:"; }
-            if(labelSize == 2) { desc = "V02 MAX:"; }
-            if(labelSize == 3) { desc = "RUN V02 MAX:"; }
-        } else if(complicationType == 8) { // VO2 Max Cycling
-            if(labelSize == 1) { desc = "V02:"; }
-            if(labelSize == 2) { desc = "V02 MAX:"; }
-            if(labelSize == 3) { desc = "BIKE V02 MAX:"; }
-        } else if(complicationType == 9) { // Respiration rate
-            if(labelSize == 1) { desc = "RESP:"; }
-            if(labelSize == 2) { desc = "RESP RATE:"; }
-            if(labelSize == 3) { desc = "RESP. RATE:"; }
-        } else if(complicationType == 10) { // HR
-            var activityInfo = Activity.getActivityInfo();
-            var sample = activityInfo.currentHeartRate;
-            if(sample == null) {
-                if(labelSize == 1) { desc = "HR:"; }
-                if(labelSize == 2) { desc = "LAST HR:"; }
-                if(labelSize == 3) { desc = "LAST HR:"; }
-            } else {
-                if(labelSize == 1) { desc = "HR:"; }
-                if(labelSize == 2) { desc = "LIVE HR:"; }
-                if(labelSize == 3) { desc = "LIVE HR:"; }
-            }
-        } else if(complicationType == 11) { // Calories / day
-            if(labelSize == 1) { desc = "CAL:"; }
-            if(labelSize == 2) { desc = "CALORIES:"; }
-            if(labelSize == 3) { desc = "DLY CALORIES:"; }
-        } else if(complicationType == 12) { // Altitude (m)
-            if(labelSize == 1) { desc = "ALT:"; }
-            if(labelSize == 2) { desc = "ALTITUDE:"; }
-            if(labelSize == 3) { desc = "ALTITUDE M:"; }
-        } else if(complicationType == 13) { // Stress
-            if(labelSize == 1) { desc = "STRSS:"; }
-            if(labelSize == 2) { desc = "STRESS:"; }
-            if(labelSize == 3) { desc = "STRESS:"; }
-        } else if(complicationType == 14) { // Body battery
-            if(labelSize == 1) { desc = "B BAT:"; }
-            if(labelSize == 2) { desc = "BODY BATT:"; }
-            if(labelSize == 3) { desc = "BODY BATTERY:"; }
-        } else if(complicationType == 15) { // Altitude (ft)
-            if(labelSize == 1) { desc = "ALT:"; }
-            if(labelSize == 2) { desc = "ALTITUDE:"; }
-            if(labelSize == 3) { desc = "ALTITUDE FT:"; }
-        } else if(complicationType == 16) { // Alt TZ 1:
-            desc = Lang.format("$1$:", [propTzName1.toUpper()]);
-        } else if(complicationType == 17) { // Steps / day
-            if(labelSize == 1) { desc = "STEPS:"; }
-            if(labelSize == 2) { desc = "STEPS:"; }
-            if(labelSize == 3) { desc = "STEPS:"; }
-        } else if(complicationType == 18) { // Distance (m) / day
-            if(labelSize == 1) { desc = "DIST:"; }
-            if(labelSize == 2) { desc = "M TODAY:"; }
-            if(labelSize == 3) { desc = "METERS TODAY:"; }
-        } else if(complicationType == 19) { // Wheelchair pushes
-            desc = "PUSHES:";
-        } else if(complicationType == 20) { // Weather condition
-            desc = "";
-        } else if(complicationType == 21) { // Weekly run distance (km)
-            if(labelSize == 1) { desc = "W KM:"; }
-            if(labelSize == 2) { desc = "W RUN KM:"; }
-            if(labelSize == 3) { desc = "WEEK RUN KM:"; }
-        } else if(complicationType == 22) { // Weekly run distance (miles)
-            if(labelSize == 1) { desc = "W MI:"; }
-            if(labelSize == 2) { desc = "W RUN MI:"; }
-            if(labelSize == 3) { desc = "WEEK RUN MI:"; }
-        } else if(complicationType == 23) { // Weekly bike distance (km)
-            if(labelSize == 1) { desc = "W KM:"; }
-            if(labelSize == 2) { desc = "W BIKE KM:"; }
-            if(labelSize == 3) { desc = "WEEK BIKE KM:"; }
-        } else if(complicationType == 24) { // Weekly bike distance (miles)
-            if(labelSize == 1) { desc = "W MI:"; }
-            if(labelSize == 2) { desc = "W BIKE MI:"; }
-            if(labelSize == 3) { desc = "WEEK BIKE MI:"; }
-        } else if(complicationType == 25) { // Training status
-            desc = "TRAINING:";
-        } else if(complicationType == 26) { // Barometric pressure (hPA)
-            desc = "PRESSURE:";
-        } else if(complicationType == 27) { // Weight kg
-            if(labelSize == 1) { desc = "KG:"; }
-            if(labelSize == 2) { desc = "WEIGHT:"; }
-            if(labelSize == 3) { desc = "WEIGHT KG:"; }
-        } else if(complicationType == 28) { // Weight lbs
-            if(labelSize == 1) { desc = "LBS:"; }
-            if(labelSize == 2) { desc = "WEIGHT:"; }
-            if(labelSize == 3) { desc = "WEIGHT LBS:"; }
-        } else if(complicationType == 29) { // Act Calories / day
-            if(labelSize == 1) { desc = "A CAL:"; }
-            if(labelSize == 2) { desc = "ACT. CAL:"; }
-            if(labelSize == 3) { desc = "ACT. CALORIES:"; }
-        } else if(complicationType == 30) { // Sea level pressure (hPA)
-            desc = "PRESSURE:";
-        } else if(complicationType == 31) { // Week number
-            desc = "WEEK:";
-        } else if(complicationType == 32) { // Weekly distance (km)
-            if(labelSize == 1) { desc = "W KM:"; }
-            if(labelSize == 2) { desc = "WEEK KM:"; }
-            if(labelSize == 3) { desc = "WEEK DIST KM:"; }
-        } else if(complicationType == 33) { // Weekly distance (miles)
-            if(labelSize == 1) { desc = "W MI:"; }
-            if(labelSize == 2) { desc = "WEEK MI:"; }
-            if(labelSize == 3) { desc = "WEEKLY MILES:"; }
-        } else if(complicationType == 34) { // Battery percentage
-            if(labelSize == 1) { desc = "BATT:"; }
-            if(labelSize == 2) { desc = "BATT %:"; }
-            if(labelSize == 3) { desc = "BATTERY %:"; }
-        } else if(complicationType == 35) { // Battery days remaining
-            if(labelSize == 1) { desc = "BATT D:"; }
-            if(labelSize == 2) { desc = "BATT DAYS:"; }
-            if(labelSize == 3) { desc = "BATTERY DAYS:"; }
-        } else if(complicationType == 36) { // Notification count
-            if(labelSize == 1) { desc = "NOTIFS:"; }
-            if(labelSize == 2) { desc = "NOTIFS:"; }
-            if(labelSize == 3) { desc = "NOTIFICATIONS:"; }
-        } else if(complicationType == 37) { // Solar intensity
-            if(labelSize == 1) { desc = "SUN:"; }
-            if(labelSize == 2) { desc = "SUN INT:"; }
-            if(labelSize == 3) { desc = "SUN INTENSITY:"; }
-        } else if(complicationType == 38) { // Sensor temp
-            if(labelSize == 1) { desc = "TEMP:"; }
-            if(labelSize == 2) { desc = "TEMP:"; }
-            if(labelSize == 3) { desc = "SENSOR TEMP:"; }
-        } else if(complicationType == 39) { // Sunrise
-            if(labelSize == 1) { desc = "DAWN:"; }
-            if(labelSize == 2) { desc = "SUNRISE:"; }
-            if(labelSize == 3) { desc = "SUNRISE:"; }
-        } else if(complicationType == 40) { // Sunset
-            if(labelSize == 1) { desc = "DUSK:"; }
-            if(labelSize == 2) { desc = "SUNSET:"; }
-            if(labelSize == 3) { desc = "SUNSET:"; }
-        } else if(complicationType == 41) { // Alt TZ 2:
-            desc = Lang.format("$1$:", [propTzName2.toUpper()]);
-        } else if(complicationType == 42) {
-            if(labelSize == 1) { desc = "ALARM:"; }
-            if(labelSize == 2) { desc = "ALARMS:"; }
-            if(labelSize == 3) { desc = "ALARMS:"; }
-        } else if(complicationType == 43) {
-            if(labelSize == 1) { desc = "HIGH:"; }
-            if(labelSize == 2) { desc = "DAILY HIGH:"; }
-            if(labelSize == 3) { desc = "DAILY HIGH:"; }
-        } else if(complicationType == 44) {
-            if(labelSize == 1) { desc = "LOW:"; }
-            if(labelSize == 2) { desc = "DAILY LOW:"; }
-            if(labelSize == 3) { desc = "DAILY LOW:"; }
-        } else if(complicationType == 53) {
-            if(labelSize == 1) { desc = "TEMP:"; }
-            if(labelSize == 2) { desc = "TEMP:"; }
-            if(labelSize == 3) { desc = "TEMPERATURE:"; }
-        } else if(complicationType == 54) {
-            if(labelSize == 1) { desc = "PRECIP:"; }
-            if(labelSize == 2) { desc = "PRECIP:"; }
-            if(labelSize == 3) { desc = "PRECIPITATION:"; }
-        } else if(complicationType == 55) {
-            if(labelSize == 1) { desc = "SUN:"; }
-            if(labelSize == 2) { desc = "NEXT SUN:"; }
-            if(labelSize == 3) { desc = "NEXT SUN EVENT:"; }
-        } else if(complicationType == 57) {
-            if(labelSize == 1) { desc = "CAL:"; }
-            if(labelSize == 2) { desc = "NEXT CAL:"; }
-            if(labelSize == 3) { desc = "NEXT CAL EVENT:"; }
-        } else if(complicationType == 59) {
-            if(labelSize == 1) { desc = "OX:"; }
-            if(labelSize == 2) { desc = "PULSE OX:"; }
-            if(labelSize == 3) { desc = "PULSE OX:"; }
+        // Handle HR special case
+        if(complicationType == 10) {
+            var isLive = (Activity.getActivityInfo().currentHeartRate != null);
+            return (labelSize == 1) ? "HR:" : (isLive ? "LIVE HR:" : "LAST HR:");
         }
-        return desc;
+        
+        // Handle all other cases with standard patterns
+        switch(complicationType) {
+            case 0: return formatLabel("W MIN", "WEEK MIN", "WEEK ACT MIN", labelSize);
+            case 1: return formatLabel("D MIN", "MIN TODAY", "DAY ACT MIN", labelSize);
+            case 2: return formatLabel("D KM", "KM TODAY", "KM TODAY", labelSize);
+            case 3: return formatLabel("D MI", "MI TODAY", "MILES TODAY", labelSize);
+            case 4: return "FLOORS:";
+            case 5: return formatLabel("CLIMB", "M CLIMBED", "M CLIMBED", labelSize);
+            case 6: return formatLabel("RECOV", "RECOV HRS", "RECOVERY HRS", labelSize);
+            case 7: return formatLabel("V02", "V02 MAX", "RUN V02 MAX", labelSize);  
+            case 8: return formatLabel("V02", "V02 MAX", "BIKE V02 MAX", labelSize);
+            case 9: return formatLabel("RESP", "RESP RATE", "RESP. RATE", labelSize);
+            case 11: return formatLabel("CAL", "CALORIES", "DLY CALORIES", labelSize);
+            case 12: return formatLabel("ALT", "ALTITUDE", "ALTITUDE M", labelSize);
+            case 13: return "STRESS:";
+            case 15: return formatLabel("ALT", "ALTITUDE", "ALTITUDE FT", labelSize);
+            case 16: return Lang.format("$1$:", [propTzName1.toUpper()]);
+            case 14: return formatLabel("B BAT", "BODY BATT", "BODY BATTERY", labelSize);
+            case 17: return "STEPS:";
+            case 18: return formatLabel("DIST", "M TODAY", "METERS TODAY", labelSize);
+            case 19: return "PUSHES:";
+            case 20: return "";
+            case 21: return formatLabel("W KM", "W RUN KM" , "WEEK RUN KM", labelSize);
+            case 22: return formatLabel("W MI", "W RUN MI" , "WEEK RUN MI", labelSize);
+            case 23: return formatLabel("W KM", "W BIKE KM" , "WEEK BIKE KM", labelSize);
+            case 24: return formatLabel("W MI", "W BIKE MI" , "WEEK BIKE MI", labelSize);
+            case 25: return "TRAINING:";
+            case 27: return formatLabel("KG", "WEIGHT", "WEIGHT KG", labelSize);
+            case 28: return formatLabel("LBS", "WEIGHT", "WEIGHT LBS", labelSize);
+            case 29: return formatLabel("A CAL", "ACT. CAL", "ACT. CALORIES", labelSize);
+            case 30: return "PRESSURE:";
+            case 31: return "WEEK:";
+            case 32: return formatLabel("W KM", "WEEK KM", "WEEK DIST KM", labelSize);
+            case 33: return formatLabel("W MI", "WEEK MI", "WEEKLY MILES", labelSize);
+            case 34: return formatLabel("BATT", "BATT %", "BATTERY %", labelSize);
+            case 35: return formatLabel("BATT D", "BATT DAYS", "BATTERY DAYS", labelSize);
+            case 36: return formatLabel("NOTIFS", "NOTIFS", "NOTIFICATIONS", labelSize);
+            case 37: return formatLabel("SUN", "SUN INT", "SUN INTENSITY", labelSize);
+            case 38: return formatLabel("TEMP", "TEMP", "SENSOR TEMP", labelSize);
+            case 39: return formatLabel("DAWN", "SUNRISE", "SUNRISE", labelSize);
+            case 40: return formatLabel("DUSK", "SUNSET", "SUNSET", labelSize);
+            case 41: return Lang.format("$1$:", [propTzName2.toUpper()]);
+            case 42: return formatLabel("ALARM", "ALARMS", "ALARMS", labelSize);
+            case 43: return formatLabel("HIGH", "DAILY HIGH", "DAILY HIGH", labelSize);
+            case 44: return formatLabel("LOW", "DAILY LOW", "DAILY LOW", labelSize);
+            case 53: return formatLabel("TEMP", "TEMP", "TEMPERATURE", labelSize);
+            case 54: return formatLabel("PRECIP", "PRECIP", "PRECIPITATION", labelSize);
+            case 55: return formatLabel("SUN", "NEXT SUN", "NEXT SUN EVENT", labelSize);
+            case 57: return formatLabel("CAL", "NEXT CAL", "NEXT CAL EVENT", labelSize);
+            case 59: return formatLabel("OX", "PULSE OX", "PULSE OX", labelSize);
+        }
+        
+        return "";
+    }
+
+    hidden function formatLabel(short as String, mid as String, long as String, size as Number) as String {
+        if(size == 1) { return short + ":"; }
+        if(size == 2) { return mid + ":"; }
+        return long + ":";
     }
 
     hidden function getComplicationUnit(complicationType) as String {
