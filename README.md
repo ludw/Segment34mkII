@@ -51,6 +51,8 @@ Pull requests are welcome, but please follow the following guidelines:
 - Pressure trend
 - Custom colors
 - Localization of settings
+- Floors climbed for 5 digit field
+- stressScore on watches that support this API
 
 Lower priority:
 - Race predictions
