@@ -1,350 +1,806 @@
+import Toybox.Application;
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
-import Toybox.ActivityMonitor;
-import Toybox.Application;
-import Toybox.Weather;
 import Toybox.Time;
-import Toybox.Math;
-import Toybox.SensorHistory;
-import Toybox.Position;
+import Toybox.Weather;
 import Toybox.Complications;
-
-const INTEGER_FORMAT = "%d";
-
-/* Indexes for the colors in the following array */
-enum labelEnum {
-    labelFieldBg = 0,
-    labelFieldLabel,
-    labelTimeBg,
-    labelTimeDisplay,
-    labelTimeDisplayDim,
-    labelDateDisplay,
-    labelDateDisplayDim,
-    labelDawnDuskLabel,
-    labelDawnDuskValue,
-    labelNotifications,
-    labelStress,
-    labelBodybattery,
-    labelBackground,
-    labelValueDisplay,
-    labelMoonDisplay,
-    labelLowBatt,
-    /* Must stay last to count number of labels */
-    labelNumber
-}
 
 class Segment34View extends WatchUi.WatchFace {
 
-    private var isSleeping as Boolean = false;
-    private var doesPartialUpdate as Boolean = false;
-    private var lastUpdate as Number or Null = null;
-    private var canBurnIn as Boolean = false;
-    private var screenHeight as Number = 0;
-    private var previousEssentialsVis as Boolean or Null = null;
-    private var batt as Number = 0;
-    private var stress as Number = 0;
-    private var weatherCondition as CurrentConditions or Null = null;
-    private var nightMode as Boolean = false;
-    private var ledSmallFont as Resource or Null = null;
-    private var ledMidFont as Resource or Null = null;
+    hidden var screenHeight as Number;
+    hidden var screenWidth as Number;
+    (:initialized) hidden var clockHeight as Number;
+    (:initialized) hidden var clockWidth as Number;
+    (:initialized) hidden var labelHeight as Number;
+    (:initialized) hidden var labelMargin as Number;
+    (:initialized) hidden var tinyDataHeight as Number;
+    (:initialized) hidden var smallDataHeight as Number;
+    (:initialized) hidden var largeDataHeight as Number;
+    (:initialized) hidden var baseX as Number;
+    (:initialized) hidden var baseY as Number;
+    hidden var centerX as Number;
+    hidden var centerY as Number;
+    hidden var marginX as Number;
+    hidden var marginY as Number;
+    hidden var halfMarginY as Number;
+    hidden var halfClockHeight as Number;
+    hidden var halfClockWidth as Number;
+    hidden var barBottomAdj as Number = 0;
+    hidden var bottomFiveAdj as Number = 0;
+    hidden var fieldSpaceingAdj as Number = 0;
+    hidden var textSideAdj as Number = 0;
+    hidden var iconYAdj as Number = 0;
 
-    private var arrayColorValues as Array<Lang.Integer> = new Array<Integer>[labelNumber];
-    private var arrayNightColorValues as Array<Lang.Integer> = new Array<Integer>[labelNumber];
+    hidden var fontMoon as WatchUi.FontResource;
+    hidden var fontIcons as WatchUi.FontResource;
+    (:initialized) hidden var fontClock as WatchUi.FontResource;
+    (:initialized) hidden var fontLabel as WatchUi.FontResource;
+    (:initialized) hidden var fontTinyData as WatchUi.FontResource;
+    (:initialized) hidden var fontSmallData as WatchUi.FontResource;
+    (:initialized) hidden var fontLargeData as WatchUi.FontResource;
+    (:initialized) hidden var fontAODData as WatchUi.FontResource;
+    (:initialized) hidden var fontBottomData as WatchUi.FontResource;
+    (:initialized) hidden var fontBattery as WatchUi.FontResource;
+
+    hidden var drawGradient as BitmapResource?;
+    hidden var drawAODPattern as BitmapResource?;
     
-    private var dbackground as Drawable or Null = null;
-    private var dSecondsLabel as Text or Null = null;
-    private var dAodPattern as Drawable or Null = null;
-    private var dGradient as Drawable or Null = null;
-    private var dAodDateLabel as Text or Null = null;
-    private var dAodRightLabel as Text or Null  = null;
-    private var dTimeLabel as Text or Null = null;
-    private var dDateLabel as Text or Null = null;
-    private var dTimeBg as Text or Null = null;
-    private var dTtrBg as Text or Null = null;
-    private var dHrBg as Text or Null = null;
-    private var dActiveBg as Text or Null = null;
-    private var dTtrDesc as Text or Null = null;
-    private var dHrDesc as Text or Null = null;
-    private var dActiveDesc as Text or Null = null;
-    private var dMoonLabel as Text or Null = null;
-    private var dDusk as Text or Null = null;
-    private var dDawn as Text or Null = null;
-    private var dSunUpLabel as Text or Null = null;
-    private var dSunDownLabel as Text or Null = null;
-    private var dWeatherLabel1 as Text or Null = null;
-    private var dWeatherLabel2 as Text or Null = null;
-    private var dNotifLabel as Text or Null = null;
-    private var dTtrLabel as Text or Null = null;
-    private var dActiveLabel as Text or Null = null;
-    private var dStepBg as Text or Null = null;
-    private var dStepLabel as Text or Null = null;
-    private var dBattLabel as Text or Null = null;
-    private var dBattBg as Text or Null = null;
-    private var dHrLabel as Text or Null = null;
-    private var dIcon1 as Text or Null = null;
-    private var dIcon2 as Text or Null = null;
+    hidden var dataMoon as String = "";
+    hidden var dataTopLeft as String = "";
+    hidden var dataTopRight as String = "";
+    hidden var dataAboveLine1 as String = "";
+    hidden var dataAboveLine2 as String = "";
+    hidden var dataClock as String = "";
+    hidden var dataBelow as String = "";
+    hidden var dataNotifications as String = "";
+    hidden var dataSeconds as String = "";
+    hidden var dataBottomLeft as String = "";
+    hidden var dataBottomMiddle as String = "";
+    hidden var dataBottomRight as String = "";
+    hidden var dataBottom as String = "";
+    hidden var dataIcon1 as String = "";
+    hidden var dataIcon2 as String = "";
+    hidden var dataBattery as String = "";
+    hidden var dataAODLeft as String = "";
+    hidden var dataAODRight as String = "";
+    private var dataBbatt as Number = 0;
+    private var dataStress as Number = 0;
 
-    private var propColorTheme as Integer = 0;
-    private var propOldColorTheme as Integer = -1;
-    private var propNightColorTheme as Integer = -1;
-    private var propOldNightColorTheme as Integer = -1;
-    private var propNightThemeActivation as Number = 0;
-    private var propBatteryVariant as Number = 3;
-    private var propShowSeconds as Boolean = true;
-    private var propLeftValueShows as Number = 6;
-    private var propMiddleValueShows as Number = 10;
-    private var propRightValueShows as Number = 0;
-    private var propAlwaysShowSeconds as Boolean = false;
-    private var propHrUpdateFreq as Number = 0;
-    private var propShowClockBg as Boolean = true;
-    private var propShowDataBg as Boolean = false;
-    private var propAodFieldShows as Number = -1;
-    private var propAodRightFieldShows as Number = -2;
-    private var propDateFieldShows as Number = -1;
-    private var propBottomFieldShows as Number = 17;
-    private var propAodAlignment as Number = 0;
-    private var propDateAlignment as Number = 0;
-    private var propIcon1 as Number = 1;
-    private var propIcon2 as Number = 2;
-    private var propHemisphere as Number = 0;
-    private var propHourFormat as Number = 0;
-    private var propZeropadHour as Boolean = true;
-    private var propShowMoonPhase as Boolean = true;
-    private var propTempUnit as Number = 0;
-    private var propWindUnit as Number = 0;
-    private var propPressureUnit as Number = 0;
-    private var propWeatherLine1Shows as Number = 49;
-    private var propWeatherLine2Shows as Number = 50;
-    private var propSunriseFieldShows as Number = 39;
-    private var propSunsetFieldShows as Number = 40;
-    private var propDateFormat as Number = 0;
-    private var propShowStressAndBodyBattery as Boolean = true;
-    private var propShowNotificationCount as Boolean = true;
-    private var propTzOffset1 as Number = 0;
-    private var propTzOffset2 as Number = 0;
-    private var propTzName1 as String = "";
-    private var propTzName2 as String = "";
-    private var propWeekOffset as Number = 0;
-    private var propLabelVisibility as Number = 0;
+    hidden var dataLabelTopLeft as String = "";
+    hidden var dataLabelTopRight as String = "";
+    hidden var dataLabelBottomLeft as String = "";
+    hidden var dataLabelBottomMiddle as String = "";
+    hidden var dataLabelBottomRight as String = "";
+
+    hidden var themeColors as Array<Graphics.ColorType> = [];
+    hidden var nightMode as Boolean?;
+    hidden var weatherCondition as CurrentConditions?;
+    hidden var canBurnIn as Boolean = false;
+    hidden var isSleeping as Boolean = false;
+    hidden var lastUpdate as Number? = null;
+    hidden var doesPartialUpdate as Boolean = false;
+
+    hidden var propTheme as Integer = 0;
+    hidden var propNightTheme as Integer = -1;
+    hidden var propNightThemeActivation as Number = 0;
+    hidden var propBatteryVariant as Number = 3;
+    hidden var propShowSeconds as Boolean = true;
+    hidden var propLeftValueShows as Number = 6;
+    hidden var propMiddleValueShows as Number = 10;
+    hidden var propRightValueShows as Number = 0;
+    hidden var propAlwaysShowSeconds as Boolean = false;
+    hidden var propHrUpdateFreq as Number = 0;
+    hidden var propShowClockBg as Boolean = true;
+    hidden var propShowDataBg as Boolean = false;
+    hidden var propAodFieldShows as Number = -1;
+    hidden var propAodRightFieldShows as Number = -2;
+    hidden var propDateFieldShows as Number = -1;
+    hidden var propBottomFieldShows as Number = 17;
+    hidden var propAodAlignment as Number = 0;
+    hidden var propDateAlignment as Number = 0;
+    hidden var propIcon1 as Number = 1;
+    hidden var propIcon2 as Number = 2;
+    hidden var propHemisphere as Number = 0;
+    hidden var propHourFormat as Number = 0;
+    hidden var propZeropadHour as Boolean = true;
+    hidden var propShowMoonPhase as Boolean = true;
+    hidden var propTempUnit as Number = 0;
+    hidden var propWindUnit as Number = 0;
+    hidden var propPressureUnit as Number = 0;
+    hidden var propWeatherLine1Shows as Number = 49;
+    hidden var propWeatherLine2Shows as Number = 50;
+    hidden var propSunriseFieldShows as Number = 39;
+    hidden var propSunsetFieldShows as Number = 40;
+    hidden var propDateFormat as Number = 0;
+    hidden var propShowStressAndBodyBattery as Boolean = true;
+    hidden var propShowNotificationCount as Boolean = true;
+    hidden var propTzOffset1 as Number = 0;
+    hidden var propTzOffset2 as Number = 0;
+    hidden var propTzName1 as String = "";
+    hidden var propTzName2 as String = "";
+    hidden var propWeekOffset as Number = 0;
+    hidden var propLabelVisibility as Number = 0;
+    hidden var propSmallFontVariant as Number = 0;
+
+    enum colorNames {
+        fieldBg = 0,
+        fieldLbl,
+        clockBg,
+        clock,
+        clockDim,
+        date,
+        dateDim,
+        notif,
+        stress,
+        bodybatt,
+        bg,
+        dataVal,
+        moon,
+        lowBatt
+    }
+
+    const clockBgText = "#####";
+    (:MIP) const bottomFieldBg = "#";
+    (:Round390) const bottomFieldBg = "#";
+    (:Round416) const bottomFieldBg = "#";
+    (:Round454) const bottomFieldBg = "#";
+    (:Round360) const bottomFieldBg = "$";
+
+    (:Round240) const bottomFieldWidths = [3, 3, 3];
+    (:Round260) const bottomFieldWidths = [3, 4, 3];
+    (:Round280) const bottomFieldWidths = [4, 3, 4];
+    (:Round360) const bottomFieldWidths = [3, 4, 3];
+    (:Round390) const bottomFieldWidths = [3, 4, 3];
+    (:Round416) const bottomFieldWidths = [4, 3, 4];
+    (:Round454) const bottomFieldWidths = [4, 4, 4];
+
+    (:Round240) const barWidth = 3;
+    (:Round260) const barWidth = 3;
+    (:Round280) const barWidth = 3;
+    (:Round360) const barWidth = 3;
+    (:Round390) const barWidth = 4;
+    (:Round416) const barWidth = 4;
+    (:Round454) const barWidth = 4;
 
     function initialize() {
         WatchFace.initialize();
-    }
 
-    function onLayout(dc as Dc) as Void {
-        setLayout(Rez.Layouts.WatchFace(dc));
-        cacheDrawables(dc);
-        cacheProps();
-    }
+        if(System.getDeviceSettings() has :requiresBurnInProtection) { canBurnIn = System.getDeviceSettings().requiresBurnInProtection; }
+        updateProperties();
+        
+        screenHeight = Toybox.System.getDeviceSettings().screenHeight;
+        screenWidth = Toybox.System.getDeviceSettings().screenWidth;
 
-    function onShow() as Void {
+        fontMoon = Application.loadResource(Rez.Fonts.moon);
+        fontIcons = Application.loadResource(Rez.Fonts.icons);
+
+        centerX = Math.round(screenWidth / 2);
+        centerY = Math.round(screenHeight / 2);
+        marginY = Math.round(screenHeight / 30);
+        marginX = Math.round(screenWidth / 20);
+        
+        loadResources();
+
+        halfClockHeight = Math.round(clockHeight / 2);
+        halfClockWidth = Math.round(clockWidth / 2);
+        halfMarginY = Math.round(marginY / 2);
+
         updateWeather();
     }
 
+    (:Round240)
+    hidden function loadResources() as Void {
+        fontClock = Application.loadResource(Rez.Fonts.segments80narrow);
+        fontTinyData = Application.loadResource(Rez.Fonts.smol);
+        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led_small); }
+        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_readable); }
+        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_lines); }
+        fontLargeData = Application.loadResource(Rez.Fonts.led);
+        fontBottomData = Application.loadResource(Rez.Fonts.led_small);
+        fontLabel = Application.loadResource(Rez.Fonts.xsmol);
+        fontBattery = fontTinyData;
+
+        clockHeight = 80;
+        clockWidth = 220;
+        labelHeight = 5;
+        labelMargin = 3;
+        tinyDataHeight = 8;
+        smallDataHeight = 13;
+        largeDataHeight = 20;
+
+        baseX = centerX;
+        baseY = centerY - smallDataHeight + 4;
+        fieldSpaceingAdj = 10;
+        barBottomAdj = 1;
+    }
+
+    (:Round260)
+    hidden function loadResources() as Void {
+        fontClock = Application.loadResource(Rez.Fonts.segments80);
+        fontTinyData = Application.loadResource(Rez.Fonts.smol);
+        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led_small); }
+        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_readable); }
+        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_lines); }
+        fontLargeData = Application.loadResource(Rez.Fonts.led);
+        fontBottomData = fontLargeData;
+        fontLabel = Application.loadResource(Rez.Fonts.xsmol);
+        fontBattery = fontTinyData;
+
+        clockHeight = 80;
+        clockWidth = 227;
+        labelHeight = 5;
+        labelMargin = 3;
+        tinyDataHeight = 8;
+        smallDataHeight = 13;
+        largeDataHeight = 20;
+
+        baseX = centerX + 1;
+        baseY = centerY - smallDataHeight - 1;
+        bottomFiveAdj = 2;
+        barBottomAdj = 1;
+    }
+
+    (:Round280)
+    hidden function loadResources() as Void {
+        fontClock = Application.loadResource(Rez.Fonts.segments80wide);
+        fontTinyData = Application.loadResource(Rez.Fonts.storre);
+        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led_small); }
+        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_readable); }
+        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_lines); }
+        fontLargeData = Application.loadResource(Rez.Fonts.led);
+        fontBottomData = fontLargeData;
+        fontLabel = Application.loadResource(Rez.Fonts.smol);
+        fontBattery = fontLabel;
+
+        clockHeight = 80;
+        clockWidth = 236;
+        labelHeight = 8;
+        labelMargin = 3;
+        tinyDataHeight = 10;
+        smallDataHeight = 13;
+        largeDataHeight = 20;
+
+        baseX = centerX;
+        baseY = centerY - smallDataHeight - 4;
+        bottomFiveAdj = 5;
+        barBottomAdj = 1;
+    }
+
+    (:Round360)
+    hidden function loadResources() as Void {
+        fontClock = Application.loadResource(Rez.Fonts.segments125narrow);
+        fontTinyData = Application.loadResource(Rez.Fonts.storre);
+        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
+        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_inbetween); }
+        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_lines); }
+        fontLargeData = Application.loadResource(Rez.Fonts.led_big);
+        fontBottomData = Application.loadResource(Rez.Fonts.led);
+        fontLabel = Application.loadResource(Rez.Fonts.smol);
+        fontAODData = fontBottomData;
+        fontBattery = Application.loadResource(Rez.Fonts.led_small_lines);
+
+        drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
+        drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
+
+        clockHeight = 125;
+        clockWidth = 345;
+        labelHeight = 8;
+        labelMargin = 5;
+        tinyDataHeight = 10;
+        smallDataHeight = 20;
+        largeDataHeight = 27;
+
+        baseX = centerX;
+        baseY = centerY - smallDataHeight + 4;
+        fieldSpaceingAdj = 20;
+        barBottomAdj = 2;
+        textSideAdj = 10;
+        iconYAdj = -4;
+        marginY = 10;
+    }
+
+    (:Round390)
+    hidden function loadResources() as Void {
+        fontClock = Application.loadResource(Rez.Fonts.segments125narrow);
+        fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
+        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
+        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_inbetween); }
+        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_lines); }
+        fontLargeData = Application.loadResource(Rez.Fonts.led_big);
+        fontBottomData = fontLargeData;
+        fontLabel = Application.loadResource(Rez.Fonts.storre);
+        fontAODData = Application.loadResource(Rez.Fonts.led);
+        fontBattery = fontTinyData;
+
+        drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
+        drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
+
+        clockHeight = 125;
+        clockWidth = 345;
+        labelHeight = 10;
+        labelMargin = 5;
+        tinyDataHeight = 13;
+        smallDataHeight = 20;
+        largeDataHeight = 27;
+
+        baseX = centerX;
+        baseY = centerY - smallDataHeight - 3;
+        barBottomAdj = 2;
+        bottomFiveAdj = 6;
+        marginY = 10;
+    }
+
+    (:Round416)
+    hidden function loadResources() as Void {
+        fontClock = Application.loadResource(Rez.Fonts.segments125);
+        fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
+        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
+        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_inbetween); }
+        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_lines); }
+        fontLargeData = Application.loadResource(Rez.Fonts.led_big);
+        fontBottomData = fontLargeData;
+        fontLabel = Application.loadResource(Rez.Fonts.storre);
+        fontAODData = Application.loadResource(Rez.Fonts.led);
+        fontBattery = fontTinyData;
+
+        drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
+        drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
+
+        clockHeight = 125;
+        clockWidth = 360;
+        labelHeight = 10;
+        labelMargin = 5;
+        tinyDataHeight = 13;
+        smallDataHeight = 20;
+        largeDataHeight = 27;
+
+        baseX = centerX;
+        baseY = centerY - smallDataHeight - 5;
+        barBottomAdj = 2;
+        bottomFiveAdj = 8;
+    }
+
+    (:Round454)
+    hidden function loadResources() as Void {
+        fontClock = Application.loadResource(Rez.Fonts.segments145);
+        fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
+        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
+        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_inbetween); }
+        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_lines); }
+        fontLargeData = Application.loadResource(Rez.Fonts.led_big);
+        fontBottomData = fontLargeData;
+        fontLabel = Application.loadResource(Rez.Fonts.storre);
+        fontAODData = Application.loadResource(Rez.Fonts.led);
+        fontBattery = fontTinyData;
+
+        drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
+        drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
+
+        clockHeight = 145;
+        clockWidth = 413;
+        labelHeight = 10;
+        labelMargin = 5;
+        tinyDataHeight = 13;
+        smallDataHeight = 20;
+        largeDataHeight = 27;
+
+        baseX = centerX + 3;
+        baseY = centerY - smallDataHeight + 10;
+        bottomFiveAdj = 4;
+        barBottomAdj = 2;
+    }
+
+    // Load your resources here
+    function onLayout(dc as Dc) as Void {
+    }
+
+    // Called when this View is brought to the foreground. Restore
+    // the state of this View and prepare it to be shown. This includes
+    // loading resources into memory.
+    function onShow() as Void {
+    }
+
+    // Update the view
     function onUpdate(dc as Dc) as Void {
-        var clock_time = System.getClockTime();
-        var now = Time.now().value();
-        var update_everything = false;
+        var now = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+        var unix_timestamp = Time.now().value();
 
         if(doesPartialUpdate) {
             dc.clearClip();
             doesPartialUpdate = false;
         }
 
-        if(lastUpdate == null or now - lastUpdate > 30 or clock_time.sec % 60 == 0) {
-            update_everything = true;
-            canBurnIn = System.getDeviceSettings().requiresBurnInProtection;
-            lastUpdate = now;
+        if(now.sec % 60 == 0 or lastUpdate == null or unix_timestamp - lastUpdate > 60) {
+            lastUpdate = unix_timestamp;
+            updateData(now);
 
-            if(clock_time.min % 5 == 0 or weatherCondition == null) {
+            if(now.min % 5 == 0 or weatherCondition == null) {
                 updateWeather();
             }
-
-            if (updateNightMode()){
-                previousEssentialsVis = null;
-            }
         }
 
-        toggleNonEssentials(dc);
-
-        if(!isSleeping && !update_everything) {
-            if(propShowSeconds) {
-                setSeconds(dc);
-            }
-
-            if(propHrUpdateFreq == 1 and clock_time.sec % 5 == 0) { // Every 5 seconds
-                setBottomFields(dc);
-            } else if(propHrUpdateFreq == 2) { // Every second
-                setBottomFields(dc);
-            }
-            
-        }
-
-        if(update_everything) {
-            setClock(dc);
-            setDate(dc);
-            if(!isSleeping or !canBurnIn) {
-                setSeconds(dc);
-                setBottomFields(dc);
-                setNotif(dc);
-                setMoon(dc);
-                setWeather(dc);
-                setWeatherLabel();
-                setSunUpDown(dc);
-                setStep(dc);
-                setBatt(dc);
-                setIcons(dc);
-                updateStressAndBodyBatteryData();
-            }
-        }
-
-        View.onUpdate(dc);
-        if(!isSleeping or !canBurnIn) {
-            drawStressAndBodyBattery(dc);
+        if(isSleeping and canBurnIn) {
+            drawAOD(dc, now);
+        } else {
+            drawWatchface(dc, now);
         }
     }
 
-    function onPartialUpdate(dc) {
-        if(canBurnIn) { return; }
-        if(!propAlwaysShowSeconds) { return; }
-        doesPartialUpdate = true;
-
-        var clock_time = System.getClockTime();
-        var sec_string = Lang.format("$1$", [clock_time.sec.format("%02d")]);
-
-        var clip_x = 0;
-        var clip_y = 0;
-        var clip_width = 0;
-        var clip_height = 0;
-
-        if(screenHeight == 240) {
-            clip_x = 205;
-            clip_y = 157;
-            clip_width = 24;
-            clip_height = 20;
-        } else if(screenHeight == 260) {
-            clip_x = 220;
-            clip_y = 162;
-            clip_width = 24;
-            clip_height = 20;
-        } else if(screenHeight == 280) {
-            clip_x = 235;
-            clip_y = 170;
-            clip_width = 24;
-            clip_height = 20;
-        } else if(screenHeight > 280) {
-            return;
-        }
-
-        dc.setClip(clip_x, clip_y, clip_width, clip_height);
-        dc.setColor(getColor(labelBackground), getColor(labelBackground));
-        dc.clear();
-        dc.setColor(getColor(labelDateDisplay), Graphics.COLOR_TRANSPARENT);
-        dc.drawText(clip_x, clip_y, ledSmallFont, sec_string, Graphics.TEXT_JUSTIFY_LEFT);
-    }
-
-    function onSettingsChanged() as Void {
-        lastUpdate = null;
-        previousEssentialsVis = null;
-        cacheProps();
-        updateNightMode();
-        WatchUi.requestUpdate();
-    }
-
-    function onPowerBudgetExceeded() as Void {
-        System.println("Power budget exceeded");
-    }
-
+    // Called when this View is removed from the screen. Save the
+    // state of this View here. This includes freeing resources from
+    // memory.
     function onHide() as Void {
     }
 
+    // The user has just looked at their watch. Timers and animations may be started here.
     function onExitSleep() as Void {
+        lastUpdate = null;
         isSleeping = false;
-        lastUpdate = null;
-        cacheProps();
-        updateNightMode();
         WatchUi.requestUpdate();
     }
 
+    // Terminate any active timers and prepare for slow updates.
     function onEnterSleep() as Void {
+        lastUpdate = null;
         isSleeping = true;
+        WatchUi.requestUpdate();
+    }
+
+    function onSettingsChanged() as Void {
+        initialize();
         lastUpdate = null;
         WatchUi.requestUpdate();
     }
 
-    hidden function cacheDrawables(dc as Dc) as Void {
-        screenHeight = dc.getHeight();
+    hidden function drawWatchface(dc as Dc, now as Gregorian.Info) as Void {
+        // Clear
+        dc.setColor(themeColors[bg], themeColors[bg]);
+        dc.clear();
 
-        dbackground = View.findDrawableById("background") as Drawable;
-        dSecondsLabel = View.findDrawableById("SecondsLabel") as Text;
-        dAodPattern = View.findDrawableById("aodPattern") as Drawable;
-        dGradient = View.findDrawableById("gradient") as Drawable;
-        dAodDateLabel = View.findDrawableById("AODDateLabel") as Text;
-        dAodRightLabel = View.findDrawableById("AODRightLabel") as Text;
-        dTimeLabel = View.findDrawableById("TimeLabel") as Text;
-        dDateLabel = View.findDrawableById("DateLabel") as Text;
-        dTimeBg = View.findDrawableById("TimeBg") as Text;
-        dTtrBg = View.findDrawableById("TTRBg") as Text;
-        dHrBg = View.findDrawableById("HRBg") as Text;
-        dActiveBg = View.findDrawableById("ActiveBg") as Text;
-        dTtrDesc = View.findDrawableById("TTRDesc") as Text;
-        dHrDesc = View.findDrawableById("HRDesc") as Text;
-        dActiveDesc = View.findDrawableById("ActiveDesc") as Text;
-        dMoonLabel = View.findDrawableById("MoonLabel") as Text;
-        dDusk = View.findDrawableById("Dusk") as Text;
-        dDawn = View.findDrawableById("Dawn") as Text;
-        dSunUpLabel = View.findDrawableById("SunUpLabel") as Text;
-        dSunDownLabel = View.findDrawableById("SunDownLabel") as Text;
-        dWeatherLabel1 = View.findDrawableById("WeatherLabel1") as Text;
-        dWeatherLabel2 = View.findDrawableById("WeatherLabel2") as Text;
-        dNotifLabel = View.findDrawableById("NotifLabel") as Text;
-        dTtrLabel = View.findDrawableById("TTRLabel") as Text;
-        dActiveLabel = View.findDrawableById("ActiveLabel") as Text;
-        dStepBg = View.findDrawableById("StepBg") as Text;
-        dStepLabel = View.findDrawableById("StepLabel") as Text;
-        dBattLabel = View.findDrawableById("BattLabel") as Text;
-        dBattBg = View.findDrawableById("BattBg") as Text;
-        dHrLabel = View.findDrawableById("HRLabel") as Text;
-        dIcon1 = View.findDrawableById("Icon1") as Text;
-        dIcon2 = View.findDrawableById("Icon2") as Text;
+        // Draw Top data fields
+        var top_data_height = 0;
+        if(propLabelVisibility == 0 or propLabelVisibility == 3) {
+            dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
+            dc.drawText(centerX - 20, marginY, fontLabel, dataLabelTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
+            dc.drawText(centerX + 20, marginY, fontLabel, dataLabelTopRight, Graphics.TEXT_JUSTIFY_LEFT);
+
+            top_data_height = labelHeight + halfMarginY;
+        }
+        dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+        dc.drawText(centerX - 20, marginY + top_data_height, fontTinyData, dataTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
+        dc.drawText(centerX + 20, marginY + top_data_height, fontTinyData, dataTopRight, Graphics.TEXT_JUSTIFY_LEFT);
+
+        // Draw Moon
+        if(propShowMoonPhase) {
+            dc.setColor(themeColors[moon], Graphics.COLOR_TRANSPARENT);
+            dc.drawText(centerX, marginY + ((top_data_height + tinyDataHeight) / 2), fontMoon, dataMoon, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        }
+
+        // Draw Lines above clock
+        var yn1 = baseY - halfClockHeight - marginY - smallDataHeight;
+        var yn2 = yn1 - marginY - smallDataHeight;
+        dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+        dc.drawText(centerX, yn2, fontSmallData, dataAboveLine1, Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(centerX, yn1, fontSmallData, dataAboveLine2, Graphics.TEXT_JUSTIFY_CENTER);        
+
+        // Draw Clock
+        dc.setColor(themeColors[clockBg], Graphics.COLOR_TRANSPARENT);
+        if(propShowClockBg) {
+            dc.drawText(baseX, baseY, fontClock, clockBgText, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        }
+        dc.setColor(themeColors[clock], Graphics.COLOR_TRANSPARENT);
+        dc.drawText(baseX, baseY, fontClock, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+
+        // Draw clock gradient
+        if(drawGradient != null and themeColors[bg] == 0x000000) {
+            dc.drawBitmap(centerX - halfClockWidth, baseY - halfClockHeight, drawGradient);
+        }
+
+        // Draw stress and body battery bars
+        drawStressAndBodyBattery(dc);
+
+        // Draw Line below clock
+        var y1 = baseY + halfClockHeight + marginY;
+        dc.setColor(themeColors[date], Graphics.COLOR_TRANSPARENT);
+        if(propDateAlignment == 0) {
+            dc.drawText(baseX - halfClockWidth + textSideAdj, y1, fontSmallData, dataBelow, Graphics.TEXT_JUSTIFY_LEFT);
+        } else {
+            dc.drawText(baseX, y1, fontSmallData, dataBelow, Graphics.TEXT_JUSTIFY_CENTER);
+        }
+        
+        // Draw seconds
+        if(propShowSeconds) {
+            updateSeconds(now);
+            dc.drawText(baseX + halfClockWidth - textSideAdj, y1, fontSmallData, dataSeconds, Graphics.TEXT_JUSTIFY_RIGHT);
+        }
+
+        // Draw Notification count
+        dc.setColor(themeColors[notif], Graphics.COLOR_TRANSPARENT);
+        if(propDateAlignment == 0) {
+            dc.drawText(baseX + halfClockWidth - (smallDataHeight*3), y1, fontSmallData, dataNotifications, Graphics.TEXT_JUSTIFY_RIGHT);
+        } else {
+            dc.drawText(baseX - halfClockWidth, y1, fontSmallData, dataNotifications, Graphics.TEXT_JUSTIFY_LEFT);
+        }
+
+        // Draw the three bottom data fields
+        var y2 = y1 + smallDataHeight + marginY;
+        var y3 = y2 + labelHeight + labelMargin + largeDataHeight;
+        var data_width = Math.sqrt(centerY*centerY - (y3 - centerY)*(y3 - centerY)) * 2 + fieldSpaceingAdj;
+        var data_x = Math.ceil(data_width / 3);
+        drawDataField(dc, centerX - data_x, y2, 3, dataLabelBottomLeft, dataBottomLeft, "#", bottomFieldWidths[0], fontLargeData);
+        drawDataField(dc, centerX, y2, 3, dataLabelBottomMiddle, dataBottomMiddle, "#", bottomFieldWidths[1], fontLargeData);
+        drawDataField(dc, centerX + data_x, y2, 3, dataLabelBottomRight, dataBottomRight, "#", bottomFieldWidths[2], fontLargeData);
+
+        // Draw the 5 digit bottom field
+        var y4 = y3 + halfMarginY + bottomFiveAdj;
+        if((propLabelVisibility == 1 or propLabelVisibility == 3)) { y4 = y4 - labelHeight; }
+        var step_width = 0;
+        if(screenHeight == 240) {
+            step_width = drawDataField(dc, centerX - 19, y4 + 3, 0, "", dataBottom, bottomFieldBg, 5, fontBottomData);
+        } else {
+            step_width = drawDataField(dc, centerX, y4, 0, "", dataBottom, bottomFieldBg, 5, fontBottomData);
+        }
+
+        // Draw icons
+        dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+        if(screenHeight == 240) { step_width += 30; }
+        dc.drawText(centerX - (step_width / 2) - (marginX / 2), y4 + (largeDataHeight / 2) + iconYAdj, fontIcons, dataIcon1, Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(centerX + (step_width / 2) + (marginX / 2) - 2, y4 + (largeDataHeight / 2) + iconYAdj, fontIcons, dataIcon2, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+        
+        // Draw battery icon
+        if(screenHeight == 240) {
+            drawBatteryIcon(dc, centerX + 32, y4);
+        } else {
+            drawBatteryIcon(dc, null, null);
+        }
     }
 
-    hidden function cacheProps() as Void {
-        canBurnIn = System.getDeviceSettings().requiresBurnInProtection;
+    hidden function drawAOD(dc as Dc, now as Gregorian.Info) as Void {
+        // Clear
+        dc.setColor(0x000000, 0x000000);
+        dc.clear();
 
-        propColorTheme = Application.Properties.getValue("colorTheme") as Number;
-        propNightColorTheme = Application.Properties.getValue("nightColorTheme") as Number;
+        // Draw Clock
+        dc.setColor(themeColors[clockDim], Graphics.COLOR_TRANSPARENT);
+        dc.drawText(baseX, baseY, fontClock, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+
+        // Draw clock gradient
+        dc.drawBitmap(centerX - halfClockWidth - (now.min % 2), baseY - halfClockHeight, drawAODPattern);
+
+        // Draw Line below clock
+        var y1 = baseY + halfClockHeight + marginY;
+        dc.setColor(themeColors[dateDim], Graphics.COLOR_TRANSPARENT);
+        if(propAodAlignment == 0) {
+            dc.drawText(baseX - halfClockWidth + textSideAdj - (now.min % 3), y1, fontAODData, dataAODLeft, Graphics.TEXT_JUSTIFY_LEFT);
+        } else {
+            dc.drawText(baseX - (now.min % 3), y1, fontAODData, dataAODLeft, Graphics.TEXT_JUSTIFY_CENTER);
+        }
+        dc.drawText(baseX + halfClockWidth - textSideAdj - 2 - (now.min % 3), y1, fontAODData, dataAODRight, Graphics.TEXT_JUSTIFY_RIGHT);
+    }
+
+    hidden function drawDataField(dc as Dc, x as Number, y as Number, adjX as Number, label as String, value as String, bgChar as String, width as Number, font as FontResource) as Number {
+        var valueBg = "";
+        for(var i=0; i<width; i++) { valueBg += bgChar; }
+
+        var value_bg_width = dc.getTextWidthInPixels(valueBg, font);
+        var data_y = y;
+
+        if((propLabelVisibility == 0 or propLabelVisibility == 2) and !(label.equals(""))) {
+            dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
+            dc.drawText(x - (value_bg_width / 2) + adjX, y, fontLabel, label, Graphics.TEXT_JUSTIFY_LEFT);
+
+            data_y += labelHeight + labelMargin;
+        }
+
+        if(propShowDataBg) {
+            dc.setColor(themeColors[fieldBg], Graphics.COLOR_TRANSPARENT);
+            dc.drawText(x - (value_bg_width / 2) + adjX, data_y, font, valueBg, Graphics.TEXT_JUSTIFY_LEFT);
+        }
+
+        dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+        if(false) {
+            dc.drawText(x - (value_bg_width / 2) + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_LEFT);
+        } else {
+            dc.drawText(x + (value_bg_width / 2) + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_RIGHT);
+        }
+
+        return value_bg_width;
+    }
+
+    hidden function drawStressAndBodyBattery(dc as Dc) as Void {
+        if(!propShowStressAndBodyBattery) { return; }
+
+        if (dataBbatt != null and dataStress != null) {
+            var batt_bar = Math.round(dataBbatt * (clockHeight / 100.0));
+            dc.setColor(themeColors[bodybatt], Graphics.COLOR_TRANSPARENT);
+            dc.fillRectangle(centerX + halfClockWidth + barWidth, baseY + halfClockHeight - batt_bar + barBottomAdj, barWidth, batt_bar);
+
+            var stress_bar = Math.round(dataStress * (clockHeight / 100.0));
+            dc.setColor(themeColors[stress], Graphics.COLOR_TRANSPARENT);
+            dc.fillRectangle(centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - stress_bar + barBottomAdj, barWidth, stress_bar);
+        }
+    }
+
+    (:AMOLED)
+    hidden function drawBatteryIcon(dc as Dc, x as Number?, y as Number?) {
+        var visible = (!isSleeping) && propBatteryVariant != 2;  // Only show if not in AOD and battery is not hidden
+        if(!visible) { return; }
+        if(x == null) { x = centerX; }
+        if(y == null) { y =  screenHeight - 25; }
+
+        dc.setColor(0x555555, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(x, y, fontIcons, "C", Graphics.TEXT_JUSTIFY_CENTER);
+        if(System.getSystemStats().battery <= 15) {
+            dc.setColor(themeColors[lowBatt], Graphics.COLOR_TRANSPARENT);
+        } else {
+            dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+        }
+        dc.drawText(x - 19, y + 4, fontBattery, dataBattery, Graphics.TEXT_JUSTIFY_LEFT);
+    }
+
+    (:MIP)
+    hidden function drawBatteryIcon(dc as Dc, x as Number?, y as Number?) {
+        if(propBatteryVariant == 2) { return; }
+        if(x == null) { x = centerX; }
+        if(y == null) { y =  screenHeight - 18; }
+
+        dc.setColor(0x555555, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(x, y, fontIcons, "B", Graphics.TEXT_JUSTIFY_CENTER);
+        if(System.getSystemStats().battery <= 15) {
+            dc.setColor(themeColors[lowBatt], Graphics.COLOR_TRANSPARENT);
+        } else {
+            dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+        }
+        dc.drawText(x - 10, y + 6, fontBattery, dataBattery, Graphics.TEXT_JUSTIFY_LEFT);
+    }
+
+    (:MIP)
+    hidden function setColorTheme(theme as Number) as Array<Graphics.ColorType> {
+        //                       fieldBg,   fieldLbl, clockBg,  clock,    clockDim, date,     dateDim,  notif,    stress,   bodybatt, bg,       dataVal,  moon,     lowBatt
+        if(theme == 0 ) { return [0x005555, 0x55AAAA, 0x005555, 0xFFFF00, 0xFFFF00, 0xFFFF00, 0xa98753, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Yellow on turquoise MIP
+        if(theme == 1 ) { return [0x005555, 0xAA55AA, 0x005555, 0xFF55AA, 0xFF55AA, 0xFFFFFF, 0xa95399, 0xFF55AA, 0xFF55AA, 0x00FFAA, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Hot pink MIP
+        if(theme == 2 ) { return [0x0055AA, 0x55AAAA, 0x0055AA, 0x00FFFF, 0x00FFFF, 0x00FFFF, 0x5ca28f, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Blueish green MIP
+        if(theme == 3 ) { return [0x005500, 0x00AA55, 0x005500, 0x00FF00, 0x00FF00, 0x00FF00, 0x5ca28f, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Very green MIP
+        if(theme == 4 ) { return [0x005555, 0x55AAAA, 0x005555, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0x114a5a, 0xAAAAAA, 0xFFAA55, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // White on turquoise MIP
+        if(theme == 5 ) { return [0x5500AA, 0xFFAAAA, 0x5500AA, 0xFF5500, 0xFF5500, 0xFFAAAA, 0xaa6e56, 0xFFFFFF, 0xFF5555, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Peachy Orange MIP
+        if(theme == 6 ) { return [0xAA0000, 0xFF0000, 0xAA0000, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xAA0000, 0xFF0000, 0xAA0000, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Red and White MIP
+        if(theme == 7 ) { return [0x0055AA, 0x0055AA, 0x0055AA, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // White on Blue MIP
+        if(theme == 8 ) { return [0x0055AA, 0x0055AA, 0x0055AA, 0xFFFF00, 0xFFFF00, 0xFFFF00, 0xa98753, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Yellow on Blue MIP
+        if(theme == 9 ) { return [0xaa5500, 0xFF5500, 0xaa5500, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xAA5500, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // White and Orange MIP
+        if(theme == 10) { return [0x555555, 0x0055AA, 0x000055, 0x0055AA, 0x0055AA, 0xFFFFFF, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Blue MIP
+        if(theme == 11) { return [0x555555, 0xFFAA00, 0x555555, 0xFFAA00, 0xFFAA00, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Orange MIP
+        if(theme == 12) { return [0x555555, 0xFFFFFF, 0x555555, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // White on black MIP
+        if(theme == 13) { return [0xAAAAAA, 0x000000, 0xAAAAAA, 0x000000, 0x000000, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555, 0xFF0000]; } // Black on White MIP
+        if(theme == 14) { return [0xAAAAAA, 0xAA0000, 0xAAAAAA, 0xAA0000, 0xAA0000, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555, 0xFF0000]; } // Red on White MIP
+        if(theme == 15) { return [0xAAAAAA, 0x0000AA, 0xAAAAAA, 0x0000AA, 0x0000AA, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555, 0xFF0000]; } // Blue on White MIP
+        if(theme == 16) { return [0xAAAAAA, 0x00AA00, 0xAAAAAA, 0x00AA00, 0x00AA00, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555, 0xFF0000]; } // Green on White MIP
+        if(theme == 17) { return [0xAAAAAA, 0x555555, 0xAAAAAA, 0xFF5500, 0xFF5500, 0x000000, 0x555555, 0x000000, 0xFF5500, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555, 0xFF0000]; } // Orange on White MIP
+        if(theme == 18) { return [0x005500, 0xFF5500, 0x005500, 0xFF5500, 0xFF5500, 0x00FF00, 0x5ca28f, 0x55FF55, 0xFF5500, 0x00AAFF, 0x000000, 0x00FF00, 0xFFFFFF, 0xFF0000]; } // Green and Orange MIP
+        if(theme == 19) { return [0x005500, 0xAAAA00, 0x005500, 0xAAAA55, 0xAAAA55, 0xAAAA55, 0x546a36, 0x00FF55, 0xAAAA55, 0x00FF00, 0x000000, 0x00FF00, 0xFFFFFF, 0xFF0000]; } // Green Camo MIP
+        if(theme == 20) { return [0x555555, 0xFF0000, 0x555555, 0xFF0000, 0xFF0000, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFF5555, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Red on Black MIP
+        if(theme == 21) { return [0xAAAAAA, 0xAA00FF, 0xAAAAAA, 0xAA00FF, 0xAA00FF, 0x000000, 0x555555, 0x000000, 0xFF5500, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555, 0xFF0000]; } // Purple on White MIP
+                          return [0x555555, 0xAA00FF, 0x555555, 0xAA00FF, 0xAA00FF, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000];   // Purple on black MIP
+    }
+
+    (:AMOLED)
+    hidden function setColorTheme(theme as Number) as Array<Graphics.ColorType> {
+        //                       fieldBg,   fieldLbl, clockBg,  clock,    clockDim, date,     dateDim,  notif,    stress,   bodybatt, bg,       dataVal,  moon,     lowBatt
+        if(theme == 0 ) { return [0x0e333c, 0x55AAAA, 0x0d333c, 0xfbcb77, 0xfbcb77, 0xfbcb77, 0xa98753, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Yellow on turquoise AMOLED
+        if(theme == 1 ) { return [0x0e333c, 0xAA55AA, 0x0f3b46, 0xf988f2, 0xf988f2, 0xFFFFFF, 0xa95399, 0xFF55AA, 0xFF55AA, 0x00FFAA, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Hot pink AMOLED
+        if(theme == 2 ) { return [0x0f2246, 0x55AAAA, 0x0f2246, 0x89efd2, 0x89efd2, 0x89efd2, 0x5ca28f, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Blueish green AMOLED
+        if(theme == 3 ) { return [0x152b19, 0x00AA55, 0x152b19, 0x96e0ac, 0x96e0ac, 0x96e0ac, 0x5ca28f, 0x00AAFF, 0xffc884, 0x59b9fe, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Very green AMOLED
+        if(theme == 4 ) { return [0x0e333c, 0x55AAAA, 0x0d333c, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0x114a5a, 0xAAAAAA, 0xFFAA55, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // White on turquoise AMOLED
+        if(theme == 5 ) { return [0x1b263d, 0xFFAAAA, 0x1b263d, 0xff9161, 0xff9161, 0xffb383, 0xaa6e56, 0xFFFFFF, 0xFF5555, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Peachy Orange AMOLED
+        if(theme == 6 ) { return [0x550000, 0xFF0000, 0x550000, 0xffffff, 0xffffff, 0xffffff, 0xAA0000, 0xFF0000, 0xAA0000, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Red and White AMOLED
+        if(theme == 7 ) { return [0x0b2051, 0x0055AA, 0x0b2051, 0xffffff, 0xffffff, 0xffffff, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // White on Blue AMOLED
+        if(theme == 8 ) { return [0x0b2051, 0x0055AA, 0x0b2051, 0xfbcb77, 0xfbcb77, 0xfbcb77, 0xa98753, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Yellow on Blue AMOLED
+        if(theme == 9 ) { return [0x58250b, 0xFF5500, 0x7d3f01, 0xffffff, 0xffffff, 0xffffff, 0xAA5500, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // White and Orange AMOLED
+        if(theme == 10) { return [0x191b33, 0x0055AA, 0x191b33, 0x3495d4, 0x3495d4, 0xffffff, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Blue AMOLED
+        if(theme == 11) { return [0x333333, 0xFFAA00, 0x333333, 0xff7600, 0xff7600, 0xffffff, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Orange AMOLED
+        if(theme == 12) { return [0x333333, 0xFFFFFF, 0x333333, 0xFFFFFF, 0xAAAAAA, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // White on black AMOLED
+        if(theme == 13) { return [0xCCCCCC, 0x000000, 0xCCCCCC, 0x000000, 0xAAAAAA, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555, 0xFF0000]; } // Black on White AMOLED
+        if(theme == 14) { return [0xCCCCCC, 0xAA0000, 0xCCCCCC, 0xAA0000, 0xAA5555, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555, 0xFF0000]; } // Red on White AMOLED
+        if(theme == 15) { return [0xCCCCCC, 0x0000AA, 0xCCCCCC, 0x0000AA, 0x5555AA, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555, 0xFF0000]; } // Blue on White AMOLED
+        if(theme == 16) { return [0xCCCCCC, 0x00AA00, 0xCCCCCC, 0x00AA00, 0x55AA55, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555, 0xFF0000]; } // Green on White AMOLED
+        if(theme == 17) { return [0xCCCCCC, 0x555555, 0xCCCCCC, 0xFF5500, 0xff7600, 0x000000, 0x555555, 0x000000, 0xFF5500, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555, 0xFF0000]; } // Orange on White AMOLED
+        if(theme == 18) { return [0x152b19, 0xFF5500, 0x152b19, 0xff7600, 0xff7600, 0x55FF55, 0x5ca28f, 0x55FF55, 0xff7600, 0x59b9fe, 0x000000, 0x55FF55, 0xFFFFFF, 0xFF0000]; } // Green and Orange AMOLED
+        if(theme == 19) { return [0x152b19, 0xa8aa6c, 0x152b19, 0x889f4a, 0x889f4a, 0x889f4a, 0x546a36, 0x00FF55, 0x889f4a, 0x55AA55, 0x000000, 0x55AA55, 0xe3efd2, 0xFF0000]; } // Green Camo AMOLED
+        if(theme == 20) { return [0x282828, 0xFF0000, 0x282828, 0xFF0000, 0xFF0000, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFF5555, 0x55AAFF, 0x000000, 0xFFFFFF, 0xe3efd2, 0xFF0000]; } // Red on Black AMOLED
+        if(theme == 21) { return [0xCCCCCC, 0xAA00FF, 0xCCCCCC, 0xAA00FF, 0xAA00FF, 0x000000, 0x555555, 0x000000, 0xFF5500, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555, 0xFF0000]; } // Purple on White AMOLED
+                          return [0x282828, 0xAA55AA, 0x282828, 0xAA55AA, 0xAA55AA, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000];  // Purple on black AMOLED
+    }
+
+    hidden function updateColorTheme() {
+        var newValue = getNightModeValue();
+        
+        if(nightMode != newValue) {
+            if(newValue == true) {
+                themeColors = setColorTheme(propNightTheme);
+            } else {
+                themeColors = setColorTheme(propTheme);
+            }
+            nightMode = newValue;
+        }
+    }
+
+    hidden function getNightModeValue() as Boolean {
+        if (propNightTheme == -1 || propNightTheme == propTheme) {
+            return false;
+        }
+
+        var now = Time.now(); // Moment
+        var todayMidnight = Time.today(); // Moment
+        var nowAsTimeSinceMidnight = now.subtract(todayMidnight) as Duration; // Duration
+
+        if(propNightThemeActivation == 0 or propNightThemeActivation == 1) {
+            var profile = UserProfile.getProfile();
+            if ((profile has :wakeTime) == false || (profile has :sleepTime) == false) {
+                return false;
+            }
+
+            var wakeTime = profile.wakeTime;
+            var sleepTime = profile.sleepTime;
+
+            if (wakeTime == null || sleepTime == null) {
+                return false;
+            }
+
+            if(propNightThemeActivation == 0) {
+                return (nowAsTimeSinceMidnight.greaterThan(sleepTime) || nowAsTimeSinceMidnight.lessThan(wakeTime));
+            } else { // Start two hours before sleep time
+                var twoHours = new Time.Duration(7200);
+                sleepTime = sleepTime.subtract(twoHours);
+                return (nowAsTimeSinceMidnight.greaterThan(sleepTime) || nowAsTimeSinceMidnight.lessThan(wakeTime));
+            }
+        }
+
+        // From Sunset to Sunrise
+        if(weatherCondition != null) {
+            var nextSunEventArray = getNextSunEvent();
+            if(nextSunEventArray != null && nextSunEventArray.size() == 2) { 
+                return nextSunEventArray[1] as Boolean;
+            }
+        }
+
+        return false;
+    }
+
+    hidden function updateProperties() as Void {
+        propTheme = Application.Properties.getValue("colorTheme") as Number;
+        propNightTheme = Application.Properties.getValue("nightColorTheme") as Number;
         propNightThemeActivation = Application.Properties.getValue("nightThemeActivation") as Number;
-        propBatteryVariant = Application.Properties.getValue("batteryVariant") as Number;
+
+        propSunriseFieldShows = Application.Properties.getValue("sunriseFieldShows") as Number;
+        propSunsetFieldShows = Application.Properties.getValue("sunsetFieldShows") as Number;
+        propShowMoonPhase = Application.Properties.getValue("showMoonPhase") as Boolean;
+        propWeatherLine1Shows = Application.Properties.getValue("weatherLine1Shows") as Number;
+        propWeatherLine2Shows = Application.Properties.getValue("weatherLine2Shows") as Number;
+        propDateFieldShows = Application.Properties.getValue("dateFieldShows") as Number;
         propShowSeconds = Application.Properties.getValue("showSeconds") as Boolean;
         propAlwaysShowSeconds = Application.Properties.getValue("alwaysShowSeconds") as Boolean;
+        propLeftValueShows = Application.Properties.getValue("leftValueShows") as Number;
+        propMiddleValueShows = Application.Properties.getValue("middleValueShows") as Number;
+        propRightValueShows = Application.Properties.getValue("rightValueShows") as Number;
+        propBottomFieldShows = Application.Properties.getValue("bottomFieldShows") as Number;
+        propIcon1 = Application.Properties.getValue("icon1") as Number;
+        propIcon2 = Application.Properties.getValue("icon2") as Number;
+        propBatteryVariant = Application.Properties.getValue("batteryVariant") as Number;
+        
         propHrUpdateFreq = Application.Properties.getValue("hrUpdateFreq") as Number;
         propShowClockBg = Application.Properties.getValue("showClockBg") as Boolean;
         propShowDataBg = Application.Properties.getValue("showDataBg") as Boolean;
         propAodFieldShows = Application.Properties.getValue("aodFieldShows") as Number;
         propAodRightFieldShows = Application.Properties.getValue("aodRightFieldShows") as Number;
-        propDateFieldShows = Application.Properties.getValue("dateFieldShows") as Number;
-        propLeftValueShows = Application.Properties.getValue("leftValueShows") as Number;
-        propMiddleValueShows = Application.Properties.getValue("middleValueShows") as Number;
-        propRightValueShows = Application.Properties.getValue("rightValueShows") as Number;
-        propBottomFieldShows = Application.Properties.getValue("bottomFieldShows") as Number;
         propAodAlignment = Application.Properties.getValue("aodAlignment") as Number;
         propDateAlignment = Application.Properties.getValue("dateAlignment") as Number;
-        propIcon1 = Application.Properties.getValue("icon1") as Number;
-        propIcon2 = Application.Properties.getValue("icon2") as Number;
         propHemisphere = Application.Properties.getValue("hemisphere") as Number;
         propHourFormat = Application.Properties.getValue("hourFormat") as Number;
         propZeropadHour = Application.Properties.getValue("zeropadHour") as Boolean;
-        propShowMoonPhase = Application.Properties.getValue("showMoonPhase") as Boolean;
         propTempUnit = Application.Properties.getValue("tempUnit") as Number;
         propWindUnit = Application.Properties.getValue("windUnit") as Number;
         propPressureUnit = Application.Properties.getValue("pressureUnit") as Number;
-        propWeatherLine1Shows = Application.Properties.getValue("weatherLine1Shows") as Number;
-        propWeatherLine2Shows = Application.Properties.getValue("weatherLine2Shows") as Number;
-        propSunriseFieldShows = Application.Properties.getValue("sunriseFieldShows") as Number;
-        propSunsetFieldShows = Application.Properties.getValue("sunsetFieldShows") as Number;
         propLabelVisibility = Application.Properties.getValue("labelVisibility") as Number;
         propDateFormat = Application.Properties.getValue("dateFormat") as Number;
         propShowStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery") as Boolean;
@@ -354,604 +810,58 @@ class Segment34View extends WatchUi.WatchFace {
         propTzName1 = Application.Properties.getValue("tzName1") as String;
         propTzName2 = Application.Properties.getValue("tzName2") as String;
         propWeekOffset = Application.Properties.getValue("weekOffset") as Number;
-
-        /* Update all the colors used for this theme */
-        if (propColorTheme != propOldColorTheme) {
-            updateThemeColors(propColorTheme, arrayColorValues);
-            propOldColorTheme = propColorTheme;
-        }
-        if ((propNightColorTheme >= 0) && (propNightColorTheme != propOldNightColorTheme)) {
-            updateThemeColors(propNightColorTheme, arrayNightColorValues);
-            propOldNightColorTheme = propNightColorTheme;
-        }
-
-        var fontVariant = Application.Properties.getValue("smallFontVariant") as Number;
-        // Only load the font we need for this watch size
-        if(screenHeight == 240 or screenHeight == 260 or screenHeight == 280) {
-            if(fontVariant == 0) {
-                ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small );
-            } else if(fontVariant == 1) {
-                ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small_readable );
-            } else {
-                ledSmallFont = Application.loadResource( Rez.Fonts.id_led_small_lines );
-            }
-        } else {
-            if(fontVariant == 0) {
-                ledMidFont = Application.loadResource( Rez.Fonts.id_led );
-            } else if(fontVariant == 1) {
-                ledMidFont = Application.loadResource( Rez.Fonts.id_led_inbetween );
-            } else {
-                ledMidFont = Application.loadResource( Rez.Fonts.id_led_lines );
-            }
-        }
+        propSmallFontVariant = Application.Properties.getValue("smallFontVariant") as Number;
         
-        
+        nightMode = null; // force update color theme
+        updateColorTheme();
     }
 
-    hidden function toggleNonEssentials(dc as Dc) as Void {
-        var awake = !isSleeping;
-        if(isSleeping and canBurnIn) {
-            dc.setAntiAlias(false);
-            var clock_time = System.getClockTime();
-            dGradient.setVisible(false);
-            dAodPattern.setVisible(true);
-            if(propAodFieldShows != -2) {
-                dAodDateLabel.setVisible(true);
-            } else {
-                dAodDateLabel.setVisible(false);
-            }
-            if(propAodRightFieldShows != -2) {
-                dAodRightLabel.setVisible(true);
-            } else {
-                dAodRightLabel.setVisible(false);
-            }
-            dAodPattern.setLocation(clock_time.min % 2, dAodPattern.locY);
-            setAlignment(propAodAlignment, dAodDateLabel, (clock_time.min % 3) - 1);
-            alignAODRightField((clock_time.min % 3) - 1);
-            dAodDateLabel.setColor(getColor(labelDateDisplayDim));
-            dAodRightLabel.setColor(getColor(labelDateDisplayDim));
-            dbackground.setVisible(false);
+    hidden function updateData(now as Gregorian.Info) as Void {
+        dataClock = getClockData(now);
+
+        dataMoon = moonPhase(now);
+        dataTopLeft = getValueByType(propSunriseFieldShows, 5);
+        dataTopRight = getValueByType(propSunsetFieldShows, 5);
+        dataAboveLine1 = getValueByType(propWeatherLine1Shows, 10);
+        dataAboveLine2 = getValueByType(propWeatherLine2Shows, 10);
+        dataClock = getClockData(now);
+        dataBelow = getValueByType(propDateFieldShows, 10);
+        dataNotifications = getNotificationsData();
+        dataBottomLeft = getValueByType(propLeftValueShows, bottomFieldWidths[0]);
+        dataBottomMiddle = getValueByType(propMiddleValueShows, bottomFieldWidths[1]);
+        dataBottomRight = getValueByType(propRightValueShows, bottomFieldWidths[2]);
+        dataBottom = getValueByType(propBottomFieldShows, 5);
+        dataIcon1 = getIconState(propIcon1);
+        dataIcon2 = getIconState(propIcon2);
+        dataBattery = getBattData();
+        dataAODLeft = getValueByType(propAodFieldShows, 10);
+        dataAODRight = getValueByType(propAodRightFieldShows, 5);
+
+        dataLabelTopLeft = getLabelByType(propSunriseFieldShows, 1);
+        dataLabelTopRight = getLabelByType(propSunsetFieldShows, 1);
+        dataLabelBottomLeft = getLabelByType(propLeftValueShows, bottomFieldWidths[0] - 1);
+        dataLabelBottomMiddle = getLabelByType(propMiddleValueShows, bottomFieldWidths[1] - 1);
+        dataLabelBottomRight = getLabelByType(propRightValueShows, bottomFieldWidths[2] - 1);
+
+        updateStressAndBodyBatteryData();
+
+        updateColorTheme();
+    }
+
+    hidden function updateSeconds(now as Gregorian.Info) as Void {
+        if(isSleeping and (!propAlwaysShowSeconds or canBurnIn)) {
+            dataSeconds = "";
         } else {
-            dc.setAntiAlias(true);
-        }
-
-        if(previousEssentialsVis == awake) {
-            return;
-        }
-
-        var hide_In_aod = (awake or !canBurnIn);
-        var hide_battery = (hide_In_aod && propBatteryVariant != 2);
-
-        if(propAlwaysShowSeconds and propShowSeconds and !canBurnIn) {
-            dSecondsLabel.setVisible(true);
-        } else {
-            dSecondsLabel.setVisible(awake && propShowSeconds);
-        }
-
-        setVisibility3(propLeftValueShows, dTtrDesc, dTtrLabel, dTtrBg);
-        setVisibility3(propMiddleValueShows, dHrDesc, dHrLabel, dHrBg);
-        setVisibility3(propRightValueShows, dActiveDesc, dActiveLabel, dActiveBg);
-        setVisibility2(propBottomFieldShows, dStepLabel, dStepBg);
-
-        setAlignment(propDateAlignment, dDateLabel, 0);
-        alignNotification(propDateAlignment);
-
-        dDateLabel.setVisible(hide_In_aod);
-        dHrDesc.setVisible(hide_In_aod);
-        dActiveDesc.setVisible(hide_In_aod);
-        dMoonLabel.setVisible(hide_In_aod);
-        dDusk.setVisible(hide_In_aod);
-        dDawn.setVisible(hide_In_aod);
-        dSunUpLabel.setVisible(hide_In_aod);
-        dSunDownLabel.setVisible(hide_In_aod);
-        dWeatherLabel1.setVisible(hide_In_aod);
-        dWeatherLabel2.setVisible(hide_In_aod);
-        dNotifLabel.setVisible(hide_In_aod);
-        dWeatherLabel2.setVisible(hide_In_aod);
-        dTimeBg.setVisible(hide_In_aod and propShowClockBg);
-        dBattLabel.setVisible(hide_battery);
-        dBattBg.setVisible(hide_battery);
-        dIcon1.setVisible(hide_In_aod);
-        dIcon2.setVisible(hide_In_aod);
-        
-        dTimeLabel.setColor(getColor(labelTimeDisplay));
-        dTimeBg.setColor(getColor(labelTimeBg));
-        dTtrBg.setColor(getColor(labelFieldBg));
-        dHrBg.setColor(getColor(labelFieldBg));
-        dActiveBg.setColor(getColor(labelFieldBg));
-        dStepBg.setColor(getColor(labelFieldBg));
-        dTtrDesc.setColor(getColor(labelFieldLabel));
-        dHrLabel.setColor(getColor(labelValueDisplay));
-        dHrDesc.setColor(getColor(labelFieldLabel));
-        dActiveDesc.setColor(getColor(labelFieldLabel));
-        dDateLabel.setColor(getColor(labelDateDisplay));
-        dSecondsLabel.setColor(getColor(labelDateDisplay));
-        dNotifLabel.setColor(getColor(labelNotifications));
-        dMoonLabel.setColor(getColor(labelMoonDisplay));
-        dDusk.setColor(getColor(labelDawnDuskLabel));
-        dDawn.setColor(getColor(labelDawnDuskLabel));
-        dSunUpLabel.setColor(getColor(labelDawnDuskValue));
-        dSunDownLabel.setColor(getColor(labelDawnDuskValue));
-        dWeatherLabel1.setColor(getColor(labelValueDisplay));
-        dWeatherLabel2.setColor(getColor(labelValueDisplay));
-        dTtrLabel.setColor(getColor(labelValueDisplay));
-        dActiveLabel.setColor(getColor(labelValueDisplay));
-        dStepLabel.setColor(getColor(labelValueDisplay));
-        dIcon1.setColor(getColor(labelValueDisplay));
-        dIcon2.setColor(getColor(labelValueDisplay));
-        dBattBg.setColor(0x555555);
-        
-        if(System.getSystemStats().battery > 15) {
-            dBattLabel.setColor(getColor(labelValueDisplay));
-        } else {
-            dBattLabel.setColor(getColor(labelLowBatt));
-        }
-
-        if(hide_In_aod) {
-            if(getColor(labelBackground) == 0xFFFFFF) {
-                dbackground.setVisible(true);
-            } else {
-                dbackground.setVisible(false);
-            }
-        }
-        
-        if(awake) {
-            if(screenHeight == 240 or screenHeight == 260 or screenHeight == 280) {
-                dDateLabel.setFont(ledSmallFont);
-                dSecondsLabel.setFont(ledSmallFont);
-                dNotifLabel.setFont(ledSmallFont);
-                dWeatherLabel1.setFont(ledSmallFont);
-                dWeatherLabel2.setFont(ledSmallFont);
-            } else {
-                dDateLabel.setFont(ledMidFont);
-                dSecondsLabel.setFont(ledMidFont);
-                dNotifLabel.setFont(ledMidFont);
-                dWeatherLabel1.setFont(ledMidFont);
-                dWeatherLabel2.setFont(ledMidFont);
-            }
-
-            if(canBurnIn) {
-                dAodPattern.setVisible(false);
-                dAodDateLabel.setVisible(false);
-                dAodRightLabel.setVisible(false);
-
-                if(getColor(labelBackground) == 0xFFFFFF) {
-                    dGradient.setVisible(false);
-                } else {
-                    dGradient.setVisible(true);
-                }
-            }
-        }
-
-        previousEssentialsVis = awake;
-    }
-
-    hidden function setVisibility2(setting as Number, label as Text, bg as Text) as Void {
-        var hide_In_aod = (!isSleeping or !canBurnIn);
-        if(setting == -2) {
-            label.setVisible(false);
-            bg.setVisible(false);
-        } else {
-            label.setVisible(hide_In_aod);
-            bg.setVisible(hide_In_aod and propShowDataBg);
+            dataSeconds = now.sec.format("%02d");
         }
     }
 
-    hidden function setVisibility3(setting as Number, desc as Text, label as Text, bg as Text) as Void {
-        var hide_In_aod = (!isSleeping or !canBurnIn);
-        if(setting == -2) {
-            desc.setVisible(false);
-            label.setVisible(false);
-            bg.setVisible(false);
-        } else {
-            desc.setVisible(hide_In_aod);
-            label.setVisible(hide_In_aod);
-            bg.setVisible(hide_In_aod and propShowDataBg);
-        }
-    }
-
-    hidden function setAlignment(setting as Number, label as Text, offset as Number) as Void {
-        var x = 0;
-        if(screenHeight == 240) { x = 10; }
-        if(screenHeight == 260) { x = 16; }
-        if(screenHeight == 280) { x = 25; }
-        if(screenHeight == 360) { x = 15; }
-        if(screenHeight == 390) { x = 17; }
-        if(screenHeight == 416) { x = 31; }
-        if(screenHeight == 454) { x = 23; }
-
-        if(setting == 0) { // Left align
-            label.setJustification(Graphics.TEXT_JUSTIFY_LEFT);
-            label.setLocation(x + offset, label.locY);
-        } else { // Center align
-            label.setJustification(Graphics.TEXT_JUSTIFY_CENTER);
-            label.setLocation(Math.floor(screenHeight / 2) + offset, label.locY);
-        }
-    }
-
-    hidden function alignAODRightField(offset as Number) as Void {
-        var x = 0;
-        if(screenHeight == 360) { x = 345; }
-        if(screenHeight == 390) { x = 371; }
-        if(screenHeight == 416) { x = 385; }
-        if(screenHeight == 454) { x = 433; }
-
-        dAodRightLabel.setLocation(x + offset, dAodRightLabel.locY);
-    }
-    hidden function alignNotification(setting as Number) as Void {
-        var x = 0;
-        if(setting == 1) { // Date is centered, left align notif
-            if(screenHeight == 240) { x = 10; }
-            if(screenHeight == 260) { x = 16; }
-            if(screenHeight == 280) { x = 25; }
-            if(screenHeight == 360) { x = 15; }
-            if(screenHeight == 390) { x = 17; }
-            if(screenHeight == 416) { x = 31; }
-            if(screenHeight == 454) { x = 23; }
-            dNotifLabel.setJustification(Graphics.TEXT_JUSTIFY_LEFT);
-            dNotifLabel.setLocation(x, dNotifLabel.locY);
-        } else { // Date is left aligned, put notif after
-            if(screenHeight == 240) { x = 195; }
-            if(screenHeight == 260) { x = 210; }
-            if(screenHeight == 280) { x = 220; }
-            if(screenHeight == 360) { x = 297; }
-            if(screenHeight == 390) { x = 317; }
-            if(screenHeight == 416) { x = 331; }
-            if(screenHeight == 454) { x = 379; }
-            dNotifLabel.setJustification(Graphics.TEXT_JUSTIFY_RIGHT);
-            dNotifLabel.setLocation(x, dNotifLabel.locY);
-        }
-    }
-    
-    /* Update the current colors for the requested theme. This function is only called
-       when settings are changed.
-       The AMOLED values redundant with the MIP profiles are commented to save on memory.
-     */
-    hidden function updateThemeColors(themeSettings as Integer, arrayToFill as Array<Integer>) as Void {
-        var amoled = canBurnIn ? 1 : 0 as Integer;
-
-        /* Which theme are we using ? */
-        var listOfThemes = [ 
-            Rez.JsonData.yellow_on_turquoise,
-            Rez.JsonData.hot_pink,
-            Rez.JsonData.blueish_green,
-            Rez.JsonData.very_green,
-            Rez.JsonData.white_on_turquoise,
-            Rez.JsonData.orange,
-            Rez.JsonData.red_and_white,
-            Rez.JsonData.white_on_blue,
-            Rez.JsonData.yellow_on_blue,
-            Rez.JsonData.white_and_orange,
-            Rez.JsonData.blue,
-            Rez.JsonData.peachy_orange,
-            Rez.JsonData.white_on_black,
-            Rez.JsonData.black_on_white,
-            Rez.JsonData.red_on_white,
-            Rez.JsonData.blue_on_white,
-            Rez.JsonData.green_on_white,
-            Rez.JsonData.orange_on_white,
-            Rez.JsonData.green_and_orange,
-            Rez.JsonData.green_camo,
-            Rez.JsonData.red_on_black,
-            Rez.JsonData.purple_on_white,
-            Rez.JsonData.purple_on_black,
-         ] as Array<ResourceId>;
-
-        /* Load the color array in JSON */
-        var themeArray = Application.loadResource(listOfThemes[themeSettings]) as Array<Array<String>>;
-
-        for (var ii = 0; ii < labelNumber; ii++) {
-            arrayToFill[ii] = themeArray[amoled][ii].toNumberWithBase(16);
-        }
-    }
-
-    hidden function getColor(colorName as labelEnum) as Integer {
-        /* Check whether we are AMOLED or MIP */ 
-        var amoled = canBurnIn ?    1   :   0;
-        var array_to_use = arrayColorValues;
-
-        if (propNightColorTheme != -1 && nightMode) {
-            array_to_use = arrayNightColorValues;
-        }
-
-        var color = array_to_use[colorName];
-
-        /* Handle special cases */
-        if( (colorName == labelTimeDisplay) && isSleeping && (amoled == 1) ) {
-            /* Get the dimmed version instead */
-            color = array_to_use[labelTimeDisplayDim];
-        }
-
-        return color;
-    }
-
-    hidden function setSeconds(dc as Dc) as Void {
-        var clock_time = System.getClockTime();
-        var sec_string = Lang.format("$1$", [clock_time.sec.format("%02d")]);
-        dSecondsLabel.setText(sec_string);
-    }
-
-    hidden function setClock(dc as Dc) as Void {
-        var clock_time = System.getClockTime();
-        var hour = formatHour(clock_time.hour);
-        var time_string = "";
+    hidden function getClockData(now as Gregorian.Info) as String {
         if(propZeropadHour) {
-            time_string = Lang.format("$1$:$2$", [hour.format("%02d"), clock_time.min.format("%02d")]);
+            return Lang.format("$1$:$2$", [formatHour(now.hour).format("%02d"), now.min.format("%02d")]);
         } else {
-            time_string = Lang.format("$1$:$2$", [hour.format("%2d"), clock_time.min.format("%02d")]);
+            return Lang.format("$1$:$2$", [formatHour(now.hour).format("%2d"), now.min.format("%02d")]);
         }
-
-        dTimeLabel.setText(time_string);
-    }
-
-    hidden function formatHour(hour as Number) as Number {
-        if((!System.getDeviceSettings().is24Hour and propHourFormat == 0) or propHourFormat == 2) {
-            hour = hour % 12;
-            if(hour == 0) { hour = 12; }
-        }
-        return hour;
-    }
-
-    hidden function setMoon(dc as Dc) as Void {
-        if(propShowMoonPhase) {
-            var now = Time.now();
-            var today = Time.Gregorian.info(now, Time.FORMAT_SHORT);
-            var moonVal = moonPhase(today);
-            dMoonLabel.setText(moonVal);
-        } else {
-            dMoonLabel.setText("");
-        }
-    }
-
-    hidden function setBatt(dc as Dc) as Void {
-        var visible = (!isSleeping or !canBurnIn) && propBatteryVariant != 2;  // Only show if not in AOD and battery is not hidden
-        var value = "";
-
-        if(propBatteryVariant == 0) {
-            if(System.getSystemStats() has :batteryInDays) {
-                if (System.getSystemStats().batteryInDays != null){
-                    var sample = Math.round(System.getSystemStats().batteryInDays);
-                    value = Lang.format("$1$D", [sample.format("%0d")]);
-                }
-            } else {
-                propBatteryVariant = 1;  // Fall back to percentage if days not available
-            }
-        }
-        if(propBatteryVariant == 1) {
-            var sample = System.getSystemStats().battery;
-            if(sample < 100) {
-                value = Lang.format("$1$%", [sample.format("%d")]);
-            } else {
-                value = Lang.format("$1$", [sample.format("%d")]);
-            }
-        } else if(propBatteryVariant == 3) {
-            var sample = 0;
-            var max = 0;
-            if(screenHeight > 280) {
-                sample = Math.round(System.getSystemStats().battery / 100.0 * 35);
-                max = 35;
-            } else {
-                sample = Math.round(System.getSystemStats().battery / 100.0 * 20);
-                max = 20;
-            }
-            
-            for(var i = 0; i < sample; i++) {
-                value += "|";
-            }
-
-            for(var i = 0; i < max-sample; i++) {
-                value += "{"; // rendered as 1px space to always fill the same number of px
-            }
-        }
-
-        if(System.getSystemStats().battery > 15) {
-            dBattLabel.setColor(getColor(labelValueDisplay));
-        } else {
-            dBattLabel.setColor(getColor(labelLowBatt));
-        }
-        
-        dBattBg.setVisible(visible);
-        dBattLabel.setText(value);
-    }
-
-    hidden function updateWeather() as Void {
-        var now = Time.now().value();
-        // Clear cached weather if older than 3 hours
-        if(weatherCondition != null 
-           and weatherCondition.observationTime != null 
-           and (now - weatherCondition.observationTime.value() > 3600 * 3)) {
-            weatherCondition = null;
-        }
-
-        if(Weather.getCurrentConditions != null) {
-            weatherCondition = Weather.getCurrentConditions();
-        }
-    }
-
-    hidden function formatTemperature(temp as Number, unit as String) as Number {
-        if(unit.equals("C")) {
-            return temp;
-        } else {
-            return ((temp * 9/5) + 32);
-        }
-    }
-
-    hidden function formatTemperatureFloat(temp as Float, unit as String) as Float {
-        if(unit.equals("C")) {
-            return temp;
-        } else {
-            return ((temp * 9/5) + 32);
-        }
-    }
-
-    hidden function getTempUnit() as String {
-        var temp_unit_setting = System.getDeviceSettings().temperatureUnits;
-        if((temp_unit_setting == System.UNIT_METRIC and propTempUnit == 0) or propTempUnit == 1) {
-            return "C";
-        } else {
-            return "F";
-        }
-    }
-
-    hidden function setWeather(dc as Dc) as Void {
-        var unit = getComplicationUnit(propWeatherLine1Shows);
-        if (unit.length() > 0) {
-            unit = Lang.format(" $1$", [unit]);
-        }
-        dWeatherLabel1.setText(Lang.format("$1$$2$", [getComplicationValue(propWeatherLine1Shows, 10), unit]));
-    }
-
-    hidden function setWeatherLabel() as Void {
-        var unit = getComplicationUnit(propWeatherLine2Shows);
-        if (unit.length() > 0) {
-            unit = Lang.format(" $1$", [unit]);
-        }
-        dWeatherLabel2.setText(Lang.format("$1$$2$", [getComplicationValue(propWeatherLine2Shows, 10), unit]));
-    }
-
-    hidden function getWeatherCondition(includePrecipitation as Boolean) as String {
-        // Early return if no weather data
-        if (weatherCondition == null || weatherCondition.condition == null) {
-            return "";
-        }
-
-        var perp = "";
-        // Safely check precipitation chance
-        if(includePrecipitation) {
-            if (weatherCondition has :precipitationChance &&
-                weatherCondition.precipitationChance != null &&
-                weatherCondition.precipitationChance instanceof Number) {
-                if(weatherCondition.precipitationChance > 0) {
-                    perp = Lang.format(" ($1$%)", [weatherCondition.precipitationChance.format("%02d")]);
-                }
-            }
-        }
-
-        var weatherNames = [
-            "CLEAR",
-            "PARTLY CLOUDY",
-            "MOSTLY CLOUDY",
-            "RAIN",
-            "SNOW",
-            "WINDY",
-            "THUNDERSTORMS",
-            "WINTRY MIX",
-            "FOG",
-            "HAZY",
-            "HAIL",
-            "SCATTERED SHOWERS",
-            "SCATTERED THUNDERSTORMS",
-            "UNKNOWN PRECIPITATION",
-            "LIGHT RAIN",
-            "HEAVY RAIN",
-            "LIGHT SNOW",
-            "HEAVY SNOW",
-            "LIGHT RAIN SNOW",
-            "HEAVY RAIN SNOW",
-            "CLOUDY",
-            "RAIN SNOW",
-            "PARTLY CLEAR",
-            "MOSTLY CLEAR",
-            "LIGHT SHOWERS",
-            "SHOWERS",
-            "HEAVY SHOWERS",
-            "CHANCE OF SHOWERS",
-            "CHANCE OF THUNDERSTORMS",
-            "MIST",
-            "DUST",
-            "DRIZZLE",
-            "TORNADO",
-            "SMOKE",
-            "ICE",
-            "SAND",
-            "SQUALL",
-            "SANDSTORM",
-            "VOLCANIC ASH",
-            "HAZE",
-            "FAIR",
-            "HURRICANE",
-            "TROPICAL STORM",
-            "CHANCE OF SNOW",
-            "CHANCE OF RAIN SNOW",
-            "CLOUDY CHANCE OF RAIN",
-            "CLOUDY CHANCE OF SNOW",
-            "CLOUDY CHANCE OF RAIN SNOW",
-            "FLURRIES",
-            "FREEZING RAIN",
-            "SLEET",
-            "ICE SNOW",
-            "THIN CLOUDS",
-            "UNKNOWN"
-        ];
-
-        return weatherNames[weatherCondition.condition] + perp;
-    }
-
-    hidden function getRestCalories() as Number {
-        var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
-        var profile = UserProfile.getProfile();
-
-        if (profile has :weight && profile has :height && profile has :birthYear) {
-            var age = today.year - profile.birthYear;
-            var weight = profile.weight / 1000.0;
-            var rest_calories = 0;
-
-            if (profile.gender == UserProfile.GENDER_MALE) {
-                rest_calories = 5.2 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
-            } else {
-                rest_calories = -197.6 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
-            }
-
-            // Calculate rest calories for the current time of day
-            rest_calories = Math.round((today.hour * 60 + today.min) * rest_calories / 1440).toNumber();
-            return rest_calories;
-        } else {
-            return -1;
-        }
-    }
-
-    hidden function setSunUpDown(dc as Dc) as Void {
-        if(propSunriseFieldShows == -2) {
-            dDawn.setText("");
-            dSunUpLabel.setText("");
-        } else {
-            dDawn.setText(getComplicationDesc(propSunriseFieldShows, 1));
-            dSunUpLabel.setText(getComplicationValue(propSunriseFieldShows, 5));
-        }
-
-        if(propSunsetFieldShows == -2) {
-            dDusk.setText("");
-            dSunDownLabel.setText("");
-        } else {
-            dDusk.setText(getComplicationDesc(propSunsetFieldShows, 1));
-            dSunDownLabel.setText(getComplicationValue(propSunsetFieldShows, 5));
-            // hide labels if so configured
-            if (propLabelVisibility == 1 or propLabelVisibility == 2) {
-                dDawn.setVisible(false);
-                dDusk.setVisible(false);
-            }
-        }
-
-    }
-
-    hidden function setNotif(dc as Dc) as Void {
-        var value = "";
-
-        if(propShowNotificationCount) {
-            var sample = System.getDeviceSettings().notificationCount;
-            if(sample > 0) {
-                value = sample.format("%01d");
-            }
-
-            dNotifLabel.setText(value);
-        } else {
-            dNotifLabel.setText("");
-        }
-    }
-
-    hidden function setIcons(dc as Dc) as Void {
-        dIcon1.setText(getIconState(propIcon1));
-        dIcon2.setText(getIconState(propIcon2));
     }
 
     hidden function getIconState(setting as Number) as String {
@@ -1000,76 +910,6 @@ class Segment34View extends WatchUi.WatchFace {
         return "";
     }
 
-    hidden function setDate(dc as Dc) as Void {
-        var unit = "";
-
-        unit = getComplicationUnit(propDateFieldShows);
-        if (unit.length() > 0) { unit = Lang.format(" $1$", [unit]); }
-        dDateLabel.setText(Lang.format("$1$$2$", [getComplicationValue(propDateFieldShows, 10), unit]));
-
-        if(canBurnIn) {
-            unit = getComplicationUnit(propAodFieldShows);
-            if (unit.length() > 0) { unit = Lang.format(" $1$", [unit]); }
-            dAodDateLabel.setText(Lang.format("$1$$2$", [getComplicationValue(propAodFieldShows, 10), unit]));
-
-            dAodRightLabel.setText(getComplicationValue(propAodRightFieldShows, 3));
-        }
-    }
-
-    hidden function setStep(dc as Dc) as Void {
-        dStepLabel.setText(getComplicationValueWithFormat(propBottomFieldShows, "%d", 5));
-    }
-
-    hidden function updateNightMode() as Boolean {
-        var oldNightMode = nightMode;
-
-        if (propNightColorTheme == -1 || propNightColorTheme == propColorTheme) {
-            nightMode = false;
-            return (oldNightMode != nightMode);
-        }
-
-        var now = Time.now(); // Moment
-        var todayMidnight = Time.today(); // Moment
-        var nowAsTimeSinceMidnight = now.subtract(todayMidnight) as Duration; // Duration
-
-        if(propNightThemeActivation == 0 or propNightThemeActivation == 1) {
-            var profile = UserProfile.getProfile();
-            if ((profile has :wakeTime) == false || (profile has :sleepTime) == false) {
-                nightMode = false;
-                return (oldNightMode != nightMode);
-            }
-
-            var wakeTime = profile.wakeTime;
-            var sleepTime = profile.sleepTime;
-
-            if (wakeTime == null || sleepTime == null) {
-                nightMode = false;
-                return (oldNightMode != nightMode);
-            }
-
-            if(propNightThemeActivation == 0) {
-                nightMode = (nowAsTimeSinceMidnight.greaterThan(sleepTime) || nowAsTimeSinceMidnight.lessThan(wakeTime));
-                return (oldNightMode != nightMode);
-            } else { // Start two hours before sleep time
-                var twoHours = new Time.Duration(7200);
-                sleepTime = sleepTime.subtract(twoHours);
-                nightMode = (nowAsTimeSinceMidnight.greaterThan(sleepTime) || nowAsTimeSinceMidnight.lessThan(wakeTime));
-                return (oldNightMode != nightMode);
-            }
-        }
-
-        // From Sunset to Sunrise
-        if(weatherCondition != null) {
-            var nextSunEventArray = getNextSunEvent();
-            if(nextSunEventArray != null && nextSunEventArray.size() == 2) { 
-                nightMode = nextSunEventArray[1] as Boolean;
-                return (oldNightMode != nightMode);
-            }
-        }
-
-        return false;
-    }
-
     hidden function updateStressAndBodyBatteryData() as Void {
         if(!propShowStressAndBodyBattery) { return; }
 
@@ -1080,133 +920,107 @@ class Segment34View extends WatchUi.WatchFace {
             var st = st_iterator.next();
 
             if(bb != null) {
-                batt = bb.data;
+                dataBbatt = bb.data;
             }
             if(st != null) {
-                stress = st.data;
+                dataStress = st.data;
             }
         }
     }
 
-    hidden function drawStressAndBodyBattery(dc as Dc) as Void {
-        if(!propShowStressAndBodyBattery) { return; }
+    hidden function getBattData() as String {
+        var value = "";
 
-        if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
-            var bar_top = 110;
-            var from_edge = 8;
-            var bar_width = 4;
-            var bar_height = 125;
-            var bb_adjustment = 0;
-
-            if(screenHeight == 240) {
-                bar_top = 72;
-                from_edge = 5;
-                bar_width = 3;
-                bar_height = 80;
-                bb_adjustment = 1;
-            } else if(screenHeight == 260) {
-                bar_top = 77;
-                from_edge = 10;
-                bar_width = 3;
-                bar_height = 80;
-                bb_adjustment = 1;
-            } else if(screenHeight == 280) {
-                bar_top = 83;
-                from_edge = 14;
-                bar_width = 3;
-                bar_height = 80;
-                bb_adjustment = -1;
-            } else if(screenHeight == 360) {
-                bar_top = 103;
-                from_edge = 3;
-                bar_width = 3;
-                bar_height = 125;
-                bb_adjustment = -1;
-                if(isSleeping) {
-                    from_edge = 0;
+        if(propBatteryVariant == 0) {
+            if(System.getSystemStats() has :batteryInDays) {
+                if (System.getSystemStats().batteryInDays != null){
+                    var sample = Math.round(System.getSystemStats().batteryInDays);
+                    value = Lang.format("$1$D", [sample.format("%0d")]);
                 }
-            } else if(screenHeight == 390) {
-                bar_top = 111;
-                from_edge = 8;
-                bar_width = 4;
-                bar_height = 125;
-                bb_adjustment = 0;
-                if(isSleeping) {
-                    from_edge = 4;
-                }
-            } else if(screenHeight == 416) {
-                bar_top = 122;
-                from_edge = 15;
-                bar_width = 4;
-                bar_height = 125;
-                bb_adjustment = 0;
-                if(isSleeping) {
-                    from_edge = 10;
-                }
-            } else if(screenHeight == 454) {
-                bar_top = 146;
-                from_edge = 12;
-                bar_width = 4;
-                bar_height = 145;
-                bb_adjustment = 0;
-                if(isSleeping) {
-                    from_edge = 8;
-                }
+            } else {
+                propBatteryVariant = 1;  // Fall back to percentage if days not available
+            }
+        }
+        if(propBatteryVariant == 1) {
+            var sample = System.getSystemStats().battery;
+            if(sample < 100) {
+                value = Lang.format("$1$%", [sample.format("%d")]);
+            } else {
+                value = Lang.format("$1$", [sample.format("%d")]);
+            }
+        } else if(propBatteryVariant == 3) {
+            var sample = 0;
+            var max = 0;
+            if(screenHeight > 280) {
+                sample = Math.round(System.getSystemStats().battery / 100.0 * 35);
+                max = 35;
+            } else {
+                sample = Math.round(System.getSystemStats().battery / 100.0 * 20);
+                max = 20;
+            }
+            
+            for(var i = 0; i < sample; i++) {
+                value += "|";
             }
 
-            var batt_bar = Math.round(batt * (bar_height / 100.0));
-            dc.setColor(getColor(labelBodybattery), -1);
-            dc.fillRectangle(dc.getWidth() - from_edge - bar_width - bb_adjustment, bar_top + (bar_height - batt_bar), bar_width, batt_bar);
+            for(var i = 0; i < max - sample; i++) {
+                value += "{"; // rendered as 1px space to always fill the same number of px
+            }
+        }
+        
+        return value;
+    }
 
-            var stress_bar = Math.round(stress * (bar_height / 100.0));
-            dc.setColor(getColor(labelStress), -1);
-            dc.fillRectangle(from_edge, bar_top + (bar_height - stress_bar), bar_width, stress_bar);
+    hidden function getNotificationsData() as String {
+        var value = "";
 
+        if(propShowNotificationCount) {
+            var sample = System.getDeviceSettings().notificationCount;
+            if(sample > 0) {
+                value = sample.format("%01d");
+            }
+        }
+
+        return value;
+    }
+
+    hidden function formatHour(hour as Number) as Number {
+        if((!System.getDeviceSettings().is24Hour and propHourFormat == 0) or propHourFormat == 2) {
+            hour = hour % 12;
+            if(hour == 0) { hour = 12; }
+        }
+        return hour;
+    }
+
+    hidden function updateWeather() as Void {
+        if(!(Toybox has :Weather) or !(Weather has :getCurrentConditions)) { return; }
+
+        var now = Time.now().value();
+
+        // Clear cached weather if older than 3 hours
+        if(weatherCondition != null 
+           and weatherCondition.observationTime != null 
+           and (now - weatherCondition.observationTime.value() > 3600 * 3)) {
+            weatherCondition = null;
+        }
+
+        if(Weather.getCurrentConditions != null) {
+            weatherCondition = Weather.getCurrentConditions();
         }
     }
 
-    hidden function setBottomFields(dc as Dc) as Void {
-        var left_width = 3;
-        var left_label_size = 2;
-        if(dc.getWidth() > 450) {
-            left_width = 4;
-            left_label_size = 3;
+    hidden function getBatteryBars() as String {
+        var bat = Math.round(System.getSystemStats().battery / 100.0 * 6);
+        var value = "";
+        for(var i = 0; i < bat; i++) {
+            value += "|";
         }
-        dTtrDesc.setText(getComplicationDesc(propLeftValueShows, left_label_size));
-        dTtrLabel.setText(getComplicationValue(propLeftValueShows, left_width));
-
-        var mid_width = 3;
-        var mid_label_size = 2;
-        if(dc.getWidth() > 450) {
-            mid_width = 4;
-            mid_label_size = 3;
-        }
-        dHrDesc.setText(getComplicationDesc(propMiddleValueShows, mid_label_size));
-        dHrLabel.setText(getComplicationValue(propMiddleValueShows, mid_width));
-
-        var right_width = 4;
-        var right_label_size = 3;
-        if(dc.getWidth() == 240) {
-            right_width = 3;
-            right_label_size = 2;
-        }
-        dActiveDesc.setText(getComplicationDesc(propRightValueShows, right_label_size));
-        dActiveLabel.setText(getComplicationValue(propRightValueShows, right_width));
-
-        // hide labels if so configured
-       if (propLabelVisibility == 1 or propLabelVisibility == 3) {
-            dTtrDesc.setVisible(false);
-            dHrDesc.setVisible(false);
-            dActiveDesc.setVisible(false);
-        }
+        return value;
     }
 
-    hidden function getComplicationValue(complicationType as Number, width as Number) as String {
-        return getComplicationValueWithFormat(complicationType, "%01d", width);
-    }
-
-    hidden function getComplicationValueWithFormat(complicationType as Number, numberFormat as String, width as Number) as String {
+    hidden function getValueByType(complicationType as Number, width as Number) as String {
         var val = "";
+        var numberFormat = "%d";
 
         if(complicationType == -1) { // Date
             val = formatDate();
@@ -1632,7 +1446,7 @@ class Segment34View extends WatchUi.WatchFace {
         return val;
     }
 
-    hidden function getComplicationDesc(complicationType, labelSize as Number) as String {
+    hidden function getLabelByType(complicationType, labelSize as Number) as String {
         // labelSize 1 = short, 2 = mid, 3 = long
 
         // Handle HR special case
@@ -1700,38 +1514,6 @@ class Segment34View extends WatchUi.WatchFace {
         if(size == 1) { return short + ":"; }
         if(size == 2) { return mid + ":"; }
         return long + ":";
-    }
-
-    hidden function getComplicationUnit(complicationType) as String {
-        var unit = "";
-        if(complicationType == 11) { // Calories / day
-            unit = "KCAL";
-        } else if(complicationType == 12) { // Altitude (m)
-            unit = "M";
-        } else if(complicationType == 15) { // Altitude (ft)
-            unit = "FT";
-        } else if(complicationType == 17) { // Steps / day
-            unit = "STEPS";
-        } else if(complicationType == 19) { // Wheelchair pushes
-            unit = "PUSHES";
-        } else if(complicationType == 29) { // Active calories / day
-            unit = "KCAL";
-        } else if(complicationType == 58) { // Active/Total calories / day
-            unit = "KCAL";
-        }
-        return unit;
-    }
-
-    hidden function join(array as Array<String>) as String {
-        var ret = "";
-        for(var i=0; i<array.size(); i++) {
-            if(ret.equals("")) {
-                ret = array[i];
-            } else {
-                ret = ret + ", " + array[i];
-            }
-        }
-        return ret;
     }
 
     hidden function formatDate() as String {
@@ -1822,6 +1604,18 @@ class Segment34View extends WatchUi.WatchFace {
         return value;
     }
 
+    hidden function join(array as Array<String>) as String {
+        var ret = "";
+        for(var i=0; i<array.size(); i++) {
+            if(ret.equals("")) {
+                ret = array[i];
+            } else {
+                ret = ret + ", " + array[i];
+            }
+        }
+        return ret;
+    }
+
     hidden function getDateTimeGroup() as String {
         // 052125ZMAR25
         // DDHHMMZmmmYY
@@ -1838,6 +1632,150 @@ class Segment34View extends WatchUi.WatchFace {
         return value;
     }
 
+    hidden function formatPressure(pressureHpa as Float, numberFormat as String) as String {
+        var val = "";
+
+        if (propPressureUnit == 0) { // hPA
+            val = pressureHpa.format(numberFormat);
+        } else if (propPressureUnit == 1) { // mmHG
+            val = (pressureHpa * 0.750062).format(numberFormat);
+        } else if (propPressureUnit == 2) { // inHG
+            val = (pressureHpa * 0.02953).format("%.1f");
+        }
+
+        return val;
+    }
+
+    hidden function moonPhase(time) as String {
+        var jd = julianDay(time.year, time.month, time.day);
+
+        var days_since_new_moon = jd - 2459966;
+        var lunar_cycle = 29.53;
+        var phase = ((days_since_new_moon / lunar_cycle) * 100).toNumber() % 100;
+        var into_cycle = (phase / 100.0) * lunar_cycle;
+
+        if(time.month == 5 and time.day == 4) {
+            return "8"; // That's no moon!
+        }
+
+        var moonPhase;
+        if (into_cycle < 3) { // 2+1
+            moonPhase = 0;
+        } else if (into_cycle < 6) { // 4
+            moonPhase = 1;
+        } else if (into_cycle < 10) { // 4
+            moonPhase = 2;
+        } else if (into_cycle < 14) { // 4
+            moonPhase = 3;
+        } else if (into_cycle < 18) { // 4
+            moonPhase = 4;
+        } else if (into_cycle < 22) { // 4
+            moonPhase = 5;
+        } else if (into_cycle < 26) { // 4
+            moonPhase = 6;
+        } else if (into_cycle < 29) { // 3
+            moonPhase = 7;
+        } else {
+            moonPhase = 0;
+        }
+
+        // If hemisphere is 1 (southern), invert the phase index
+        if (propHemisphere == 1) {
+            moonPhase = (8 - moonPhase) % 8;
+        }
+
+        return moonPhase.toString();
+
+    }
+
+    hidden function formatDistanceByWidth(distance as Float, width as Number) as String {
+        if (width == 3) {
+            return distance < 10 ? distance.format("%.1f") : distance.format("%d");
+        } else if (width == 4) {
+            return distance < 100 ? distance.format("%.1f") : distance.format("%d");
+        } else {  // width == 5
+            return distance < 1000 ? distance.format("%05.1f") : distance.format("%05d");
+        }
+    }
+
+    hidden function getWeatherCondition(includePrecipitation as Boolean) as String {
+        // Early return if no weather data
+        if (weatherCondition == null || weatherCondition.condition == null) {
+            return "";
+        }
+
+        var perp = "";
+        // Safely check precipitation chance
+        if(includePrecipitation) {
+            if (weatherCondition has :precipitationChance &&
+                weatherCondition.precipitationChance != null &&
+                weatherCondition.precipitationChance instanceof Number) {
+                if(weatherCondition.precipitationChance > 0) {
+                    perp = Lang.format(" ($1$%)", [weatherCondition.precipitationChance.format("%02d")]);
+                }
+            }
+        }
+
+        var weatherNames = [
+            "CLEAR",
+            "PARTLY CLOUDY",
+            "MOSTLY CLOUDY",
+            "RAIN",
+            "SNOW",
+            "WINDY",
+            "THUNDERSTORMS",
+            "WINTRY MIX",
+            "FOG",
+            "HAZY",
+            "HAIL",
+            "SCATTERED SHOWERS",
+            "SCATTERED THUNDERSTORMS",
+            "UNKNOWN PRECIPITATION",
+            "LIGHT RAIN",
+            "HEAVY RAIN",
+            "LIGHT SNOW",
+            "HEAVY SNOW",
+            "LIGHT RAIN SNOW",
+            "HEAVY RAIN SNOW",
+            "CLOUDY",
+            "RAIN SNOW",
+            "PARTLY CLEAR",
+            "MOSTLY CLEAR",
+            "LIGHT SHOWERS",
+            "SHOWERS",
+            "HEAVY SHOWERS",
+            "CHANCE OF SHOWERS",
+            "CHANCE OF THUNDERSTORMS",
+            "MIST",
+            "DUST",
+            "DRIZZLE",
+            "TORNADO",
+            "SMOKE",
+            "ICE",
+            "SAND",
+            "SQUALL",
+            "SANDSTORM",
+            "VOLCANIC ASH",
+            "HAZE",
+            "FAIR",
+            "HURRICANE",
+            "TROPICAL STORM",
+            "CHANCE OF SNOW",
+            "CHANCE OF RAIN SNOW",
+            "CLOUDY CHANCE OF RAIN",
+            "CLOUDY CHANCE OF SNOW",
+            "CLOUDY CHANCE OF RAIN SNOW",
+            "FLURRIES",
+            "FREEZING RAIN",
+            "SLEET",
+            "ICE SNOW",
+            "THIN CLOUDS",
+            "UNKNOWN"
+        ];
+
+        return weatherNames[weatherCondition.condition] + perp;
+    }
+
     hidden function getTemperature() as String {
         if(weatherCondition != null and weatherCondition.temperature != null) {
             var temp_unit = getTempUnit();
@@ -1846,6 +1784,31 @@ class Segment34View extends WatchUi.WatchFace {
             return Lang.format("$1$$2$", [temp, temp_unit]);
         }
         return "";
+    }
+
+    hidden function getTempUnit() as String {
+        var temp_unit_setting = System.getDeviceSettings().temperatureUnits;
+        if((temp_unit_setting == System.UNIT_METRIC and propTempUnit == 0) or propTempUnit == 1) {
+            return "C";
+        } else {
+            return "F";
+        }
+    }
+
+    hidden function formatTemperature(temp as Number, unit as String) as Number {
+        if(unit.equals("C")) {
+            return temp;
+        } else {
+            return ((temp * 9/5) + 32);
+        }
+    }
+
+    hidden function formatTemperatureFloat(temp as Float, unit as String) as Float {
+        if(unit.equals("C")) {
+            return temp;
+        } else {
+            return ((temp * 9/5) + 32);
+        }
     }
 
     hidden function getWind() as String {
@@ -1908,7 +1871,7 @@ class Segment34View extends WatchUi.WatchFace {
         var tempUnit = getTempUnit();
         if(weatherCondition != null and weatherCondition.feelsLikeTemperature != null) {
             var fltemp = formatTemperatureFloat(weatherCondition.feelsLikeTemperature, tempUnit);
-            fl = Lang.format("FL:$1$$2$", [fltemp.format(INTEGER_FORMAT), tempUnit]);
+            fl = Lang.format("FL:$1$$2$", [fltemp.format("%d"), tempUnit]);
         }
 
         return fl;
@@ -1929,7 +1892,7 @@ class Segment34View extends WatchUi.WatchFace {
                 var tempUnit = getTempUnit();
                 var high = formatTemperature(weatherCondition.highTemperature, tempUnit);
                 var low = formatTemperature(weatherCondition.lowTemperature, tempUnit);
-                ret = Lang.format("$1$$2$/$3$$2$", [high.format(INTEGER_FORMAT), tempUnit, low.format(INTEGER_FORMAT)]);
+                ret = Lang.format("$1$$2$/$3$$2$", [high.format("%d"), tempUnit, low.format("%d")]);
             }
         }
         return ret;
@@ -1941,6 +1904,63 @@ class Segment34View extends WatchUi.WatchFace {
             ret = Lang.format("$1$%", [weatherCondition.precipitationChance.format("%d")]);
         }
         return ret;
+    }
+
+    hidden function getNextSunEvent() as Array {
+        var now = Time.now();
+        if (weatherCondition != null) {
+            var loc = weatherCondition.observationLocationPosition;
+            if (loc != null) {
+                var nextSunEvent = null;
+                var sunrise = Weather.getSunrise(loc, now);
+                var sunset = Weather.getSunset(loc, now);
+                var isNight = false;
+
+                if ((sunrise != null) && (sunset != null)) {
+                    if (sunrise.lessThan(now)) { 
+                        //if sunrise was already, take tomorrows
+                        sunrise = Weather.getSunrise(loc, Time.today().add(new Time.Duration(86401)));
+                    }
+                    if (sunset.lessThan(now)) { 
+                        //if sunset was already, take tomorrows
+                        sunset = Weather.getSunset(loc, Time.today().add(new Time.Duration(86401)));
+                    }
+                    if (sunrise.lessThan(sunset)) { 
+                        nextSunEvent = sunrise;
+                        isNight = true;
+                    } else {
+                        nextSunEvent = sunset;
+                        isNight = false;
+                    }
+                    return [nextSunEvent, isNight];
+                }
+                
+            }
+        }
+        return [];
+    }
+
+    hidden function getRestCalories() as Number {
+        var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+        var profile = UserProfile.getProfile();
+
+        if (profile has :weight && profile has :height && profile has :birthYear) {
+            var age = today.year - profile.birthYear;
+            var weight = profile.weight / 1000.0;
+            var rest_calories = 0;
+
+            if (profile.gender == UserProfile.GENDER_MALE) {
+                rest_calories = 5.2 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
+            } else {
+                rest_calories = -197.6 - 6.116 * age + 7.628 * profile.height + 12.2 * weight;
+            }
+
+            // Calculate rest calories for the current time of day
+            rest_calories = Math.round((today.hour * 60 + today.min) * rest_calories / 1440).toNumber();
+            return rest_calories;
+        } else {
+            return -1;
+        }
     }
 
     hidden function getWeeklyDistance() as Number {
@@ -1996,7 +2016,7 @@ class Segment34View extends WatchUi.WatchFace {
         return val;
     }
 
-    hidden function dayName(day_of_week) as String {
+    hidden function dayName(day_of_week as Number) as String {
         var names = [
             "SUN",
             "MON",
@@ -2009,7 +2029,7 @@ class Segment34View extends WatchUi.WatchFace {
         return names[day_of_week - 1];
     }
 
-    hidden function monthName(month) as String {
+    hidden function monthName(month as Number) as String {
         var names = [
             "JAN",
             "FEB",
@@ -2027,7 +2047,7 @@ class Segment34View extends WatchUi.WatchFace {
         return names[month - 1];
     }
 
-    hidden function isoWeekNumber(year, month, day) as Number {
+    hidden function isoWeekNumber(year as Number, month as Number, day as Number) as Number {
         var first_day_of_year = julianDay(year, 1, 1);
         var given_day_of_year = julianDay(year, month, day);
         var day_of_week = (first_day_of_year + 3) % 7;
@@ -2045,8 +2065,7 @@ class Segment34View extends WatchUi.WatchFace {
             first_day_of_year = julianDay(year - 1, 1, 1);
             day_of_week = (first_day_of_year + 3) % 7;
             ret = (given_day_of_year - first_day_of_year + day_of_week + 4) / 7;
-        }
-        else {
+        } else {
             ret = week_of_year;
         }
         if(propWeekOffset != 0) {
@@ -2055,16 +2074,14 @@ class Segment34View extends WatchUi.WatchFace {
         return ret;
     }
 
-
-    hidden function julianDay(year, month, day) as Number {
+    hidden function julianDay(year as Number, month as Number, day as Number) as Number {
         var a = (14 - month) / 12;
         var y = (year + 4800 - a);
         var m = (month + 12 * a - 3);
         return day + ((153 * m + 2) / 5) + (365 * y) + (y / 4) - (y / 100) + (y / 400) - 32045;
     }
 
-
-    hidden function isLeapYear(year) as Boolean {
+    hidden function isLeapYear(year as Number) as Boolean {
         if (year % 4 != 0) {
             return false;
            } else if (year % 100 != 0) {
@@ -2073,106 +2090,6 @@ class Segment34View extends WatchUi.WatchFace {
             return true;
         }
         return false;
-    }
-
-    hidden function moonPhase(time) as String {
-        var jd = julianDay(time.year, time.month, time.day);
-
-        var days_since_new_moon = jd - 2459966;
-        var lunar_cycle = 29.53;
-        var phase = ((days_since_new_moon / lunar_cycle) * 100).toNumber() % 100;
-        var into_cycle = (phase / 100.0) * lunar_cycle;
-
-        if(time.month == 5 and time.day == 4) {
-            return "8"; // That's no moon!
-        }
-
-        var moonPhase;
-        if (into_cycle < 3) { // 2+1
-            moonPhase = 0;
-        } else if (into_cycle < 6) { // 4
-            moonPhase = 1;
-        } else if (into_cycle < 10) { // 4
-            moonPhase = 2;
-        } else if (into_cycle < 14) { // 4
-            moonPhase = 3;
-        } else if (into_cycle < 18) { // 4
-            moonPhase = 4;
-        } else if (into_cycle < 22) { // 4
-            moonPhase = 5;
-        } else if (into_cycle < 26) { // 4
-            moonPhase = 6;
-        } else if (into_cycle < 29) { // 3
-            moonPhase = 7;
-        } else {
-            moonPhase = 0;
-        }
-
-        // If hemisphere is 1 (southern), invert the phase index
-        if (propHemisphere == 1) {
-            moonPhase = (8 - moonPhase) % 8;
-        }
-
-        return moonPhase.toString();
-
-    }
-
-    hidden function formatDistanceByWidth(distance as Float, width as Number) as String {
-        if (width == 3) {
-            return distance < 10 ? distance.format("%.1f") : distance.format("%d");
-        } else if (width == 4) {
-            return distance < 100 ? distance.format("%.1f") : distance.format("%d");
-        } else {  // width == 5
-            return distance < 1000 ? distance.format("%05.1f") : distance.format("%05d");
-        }
-    }
-
-    hidden function formatPressure(pressureHpa as Float, numberFormat as String) as String {
-        var val = "";
-
-        if (propPressureUnit == 0) { // hPA
-            val = pressureHpa.format(numberFormat);
-        } else if (propPressureUnit == 1) { // mmHG
-            val = (pressureHpa * 0.750062).format(numberFormat);
-        } else if (propPressureUnit == 2) { // inHG
-            val = (pressureHpa * 0.02953).format("%.1f");
-        }
-
-        return val;
-    }
-
-    hidden function getNextSunEvent() as Array {
-        var now = Time.now();
-        if (weatherCondition != null) {
-            var loc = weatherCondition.observationLocationPosition;
-            if (loc != null) {
-                var nextSunEvent = null;
-                var sunrise = Weather.getSunrise(loc, now);
-                var sunset = Weather.getSunset(loc, now);
-                var isNight = false;
-
-                if ((sunrise != null) && (sunset != null)) {
-                    if (sunrise.lessThan(now)) { 
-                        //if sunrise was already, take tomorrows
-                        sunrise = Weather.getSunrise(loc, Time.today().add(new Time.Duration(86401)));
-                    }
-                    if (sunset.lessThan(now)) { 
-                        //if sunset was already, take tomorrows
-                        sunset = Weather.getSunset(loc, Time.today().add(new Time.Duration(86401)));
-                    }
-                    if (sunrise.lessThan(sunset)) { 
-                        nextSunEvent = sunrise;
-                        isNight = true;
-                    } else {
-                        nextSunEvent = sunset;
-                        isNight = false;
-                    }
-                    return [nextSunEvent, isNight];
-                }
-                
-            }
-        }
-        return [];
     }
 }
 
