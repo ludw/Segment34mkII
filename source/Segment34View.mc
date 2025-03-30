@@ -91,7 +91,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propMiddleValueShows as Number = 10;
     hidden var propRightValueShows as Number = 0;
     hidden var propAlwaysShowSeconds as Boolean = false;
-    hidden var propHrUpdateFreq as Number = 0;
+    hidden var propUpdateFreq as Number = 5;
     hidden var propShowClockBg as Boolean = true;
     hidden var propShowDataBg as Boolean = false;
     hidden var propAodFieldShows as Number = -1;
@@ -412,7 +412,7 @@ class Segment34View extends WatchUi.WatchFace {
             doesPartialUpdate = false;
         }
 
-        if(now.sec % 60 == 0 or lastUpdate == null or unix_timestamp - lastUpdate > 60) {
+        if(now.sec % 60 == 0 or lastUpdate == null or unix_timestamp - lastUpdate >= propUpdateFreq) {
             lastUpdate = unix_timestamp;
             updateData(now);
 
@@ -808,7 +808,7 @@ class Segment34View extends WatchUi.WatchFace {
         propIcon2 = Application.Properties.getValue("icon2") as Number;
         propBatteryVariant = Application.Properties.getValue("batteryVariant") as Number;
         
-        propHrUpdateFreq = Application.Properties.getValue("hrUpdateFreq") as Number;
+        propUpdateFreq = Application.Properties.getValue("updateFreq") as Number;
         propShowClockBg = Application.Properties.getValue("showClockBg") as Boolean;
         propShowDataBg = Application.Properties.getValue("showDataBg") as Boolean;
         propAodFieldShows = Application.Properties.getValue("aodFieldShows") as Number;

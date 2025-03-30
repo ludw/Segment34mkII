@@ -17,7 +17,7 @@
     <property id="showClockBg" type="boolean">true</property>
     <property id="showDataBg" type="boolean">true</property>
     <property id="alwaysShowSeconds" type="boolean">false</property>
-    <property id="hrUpdateFreq" type="number">1</property>
+    <property id="updateFreq" type="number">5</property>
     <property id="batteryVariant" type="number">3</property>
     <property id="weatherLine1Shows" type="number">49</property>
     <property id="weatherLine2Shows" type="number">50</property>
