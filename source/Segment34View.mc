@@ -81,7 +81,8 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var isSleeping as Boolean = false;
     hidden var lastUpdate as Number? = null;
     hidden var doesPartialUpdate as Boolean = false;
-
+    
+    hidden var propIs24H as Boolean = false;
     hidden var propTheme as Integer = 0;
     hidden var propNightTheme as Integer = -1;
     hidden var propNightThemeActivation as Number = 0;
@@ -831,6 +832,7 @@ class Segment34View extends WatchUi.WatchFace {
         propTzName2 = Application.Properties.getValue("tzName2") as String;
         propWeekOffset = Application.Properties.getValue("weekOffset") as Number;
         propSmallFontVariant = Application.Properties.getValue("smallFontVariant") as Number;
+        propIs24H = System.getDeviceSettings().is24Hour;
         
         nightMode = null; // force update color theme
         updateColorTheme();
@@ -1005,7 +1007,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function formatHour(hour as Number) as Number {
-        if((!System.getDeviceSettings().is24Hour and propHourFormat == 0) or propHourFormat == 2) {
+        if((!propIs24H and propHourFormat == 0) or propHourFormat == 2) {
             hour = hour % 12;
             if(hour == 0) { hour = 12; }
         }

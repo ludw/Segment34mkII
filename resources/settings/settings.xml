@@ -69,7 +69,6 @@
         <settingConfig type="list">
             <listEntry value="60">Every minute</listEntry>
             <listEntry value="5">Every 5 seconds</listEntry>
-            <listEntry value="2">Every 2 seconds</listEntry>
             <listEntry value="1">Every second</listEntry>
         </settingConfig>
     </setting>
