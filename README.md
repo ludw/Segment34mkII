@@ -46,7 +46,10 @@ Pull requests are welcome, but please follow the following guidelines:
 
  Connect your watch via usb and transfer the Segment34.prg file to the GARMIN/Apps folder on the watch. 
 
- ## TODO / Things people have asked for
+ ## TODO
+ - Fix field update freqency
+
+ ## Things people have asked for
 - Goal completion marker
 - Pressure trend
 - Custom colors
@@ -62,6 +65,9 @@ Lower priority:
 
 
 ## Change log
+2025-03-30 v2.0.0
+- Rewritten rendering: Improved performance using less CPU and memory
+
 2025-03-19 v1.25.3
 - Fixed swapped colors (Orange / Peachy Orange)
 

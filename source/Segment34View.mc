@@ -454,6 +454,26 @@ class Segment34View extends WatchUi.WatchFace {
         WatchUi.requestUpdate();
     }
 
+    function onPartialUpdate(dc) {
+        if(canBurnIn) { return; }
+        if(!propAlwaysShowSeconds) { return; }
+        doesPartialUpdate = true;
+
+        var clip_width = 24;
+        var clip_height = 20;
+        var now = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+        var y1 = baseY + halfClockHeight + marginY;
+
+        updateSeconds(now);
+        
+        dc.setClip(baseX + halfClockWidth - textSideAdj - clip_width, y1, clip_width, clip_height);
+        dc.setColor(themeColors[bg], themeColors[bg]);
+        dc.clear();
+
+        dc.setColor(themeColors[date], Graphics.COLOR_TRANSPARENT);
+        dc.drawText(baseX + halfClockWidth - textSideAdj, y1, fontSmallData, dataSeconds, Graphics.TEXT_JUSTIFY_RIGHT);
+    }
+
     hidden function drawWatchface(dc as Dc, now as Gregorian.Info) as Void {
         // Clear
         dc.setColor(themeColors[bg], themeColors[bg]);
