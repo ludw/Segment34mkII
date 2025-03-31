@@ -101,6 +101,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propBottomFieldShows as Number = 17;
     hidden var propAodAlignment as Number = 0;
     hidden var propDateAlignment as Number = 0;
+    hidden var propBottomFieldAlignment as Number = 2;
     hidden var propIcon1 as Number = 1;
     hidden var propIcon2 as Number = 2;
     hidden var propHemisphere as Number = 0;
@@ -621,10 +622,16 @@ class Segment34View extends WatchUi.WatchFace {
         }
 
         dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
-        if(false) {
+        if(propBottomFieldAlignment == 0) {
             dc.drawText(x - (value_bg_width / 2) + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_LEFT);
-        } else {
+        } else if (propBottomFieldAlignment == 1) {
+            dc.drawText(x + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_CENTER);
+        } else if (propBottomFieldAlignment == 2) {
             dc.drawText(x + (value_bg_width / 2) + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_RIGHT);
+        } else if (propBottomFieldAlignment == 3 and width != 5) {
+            dc.drawText(x - (value_bg_width / 2) + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_LEFT);
+        } else if (propBottomFieldAlignment == 3 and width == 5) {
+            dc.drawText(x + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_CENTER);
         }
 
         return value_bg_width;
@@ -816,6 +823,7 @@ class Segment34View extends WatchUi.WatchFace {
         propAodRightFieldShows = Application.Properties.getValue("aodRightFieldShows") as Number;
         propAodAlignment = Application.Properties.getValue("aodAlignment") as Number;
         propDateAlignment = Application.Properties.getValue("dateAlignment") as Number;
+        propBottomFieldAlignment = Application.Properties.getValue("bottomFieldAlignment") as Number;
         propHemisphere = Application.Properties.getValue("hemisphere") as Number;
         propHourFormat = Application.Properties.getValue("hourFormat") as Number;
         propZeropadHour = Application.Properties.getValue("zeropadHour") as Boolean;

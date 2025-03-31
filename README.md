@@ -58,12 +58,13 @@ Lower priority:
 - Race predictions
 - GPS Coordinates (tricky)
 - Localization
-- Option for left/right alignment of values
 
 
 ## Change log
 2025-03-30 v2.0.0
 - Rewritten rendering: Improved performance using less CPU and memory
+- Hiding labels adjusts layout
+- Alignment options for bottom data fields
 
 2025-03-19 v1.25.3
 - Fixed swapped colors (Orange / Peachy Orange)

@@ -648,6 +648,15 @@
             </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.bottomFieldAlignment" title="Text alignment for bottom data fields:">
+            <settingConfig type="list">
+                <listEntry value="0">Left</listEntry>
+                <listEntry value="1">Center</listEntry>
+                <listEntry value="2">Right</listEntry>
+                <listEntry value="3">Left, but center the 5 digit field</listEntry>
+            </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.weekOffset" title="Week number offset (0 = normal week number)">
         <settingConfig type="numeric" />
     </setting>

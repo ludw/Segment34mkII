@@ -30,6 +30,7 @@
     <property id="dateFieldShows" type="number">-1</property>
     <property id="aodAlignment" type="number">0</property>
     <property id="dateAlignment" type="number">0</property>
+    <property id="bottomFieldAlignment" type="number">2</property>
     <property id="dateFormat" type="number">0</property>
     <property id="smallFontVariant" type="number">2</property>
     <property id="hemisphere" type="number">0</property>
