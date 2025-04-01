@@ -154,8 +154,8 @@ class Segment34View extends WatchUi.WatchFace {
     (:Round260) const bottomFieldWidths = [3, 4, 3];
     (:Round280) const bottomFieldWidths = [4, 3, 4];
     (:Round360) const bottomFieldWidths = [3, 4, 3];
-    (:Round390) const bottomFieldWidths = [3, 4, 3];
-    (:Round416) const bottomFieldWidths = [4, 3, 4];
+    (:Round390) const bottomFieldWidths = [4, 3, 4];
+    (:Round416) const bottomFieldWidths = [4, 4, 4];
     (:Round454) const bottomFieldWidths = [4, 4, 4];
 
     (:Round240) const barWidth = 3;
@@ -240,6 +240,7 @@ class Segment34View extends WatchUi.WatchFace {
 
         baseX = centerX + 1;
         baseY = centerY - smallDataHeight - 1;
+        fieldSpaceingAdj = 15;
         bottomFiveAdj = 2;
         barBottomAdj = 1;
     }
@@ -390,6 +391,7 @@ class Segment34View extends WatchUi.WatchFace {
 
         baseX = centerX + 3;
         baseY = centerY - smallDataHeight + 10;
+        textSideAdj = 4;
         bottomFiveAdj = 4;
         barBottomAdj = 2;
     }

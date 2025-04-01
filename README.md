@@ -61,6 +61,9 @@ Lower priority:
 
 
 ## Change log
+2025-03-30 v2.0.1
+- Layout tweaks
+
 2025-03-30 v2.0.0
 - Rewritten rendering: Improved performance using less CPU and memory
 - Hiding labels adjusts layout
