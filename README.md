@@ -66,6 +66,7 @@ Lower priority:
 ## Change log
 2025-04-02 v2.1.0
 - Fixed issue with units missing
+- More data available in more of the fields
 
 2025-04-01 v2.0.1
 - Layout tweaks
