@@ -64,6 +64,9 @@ Lower priority:
 
 
 ## Change log
+2025-04-02 v2.1.1
+- Fixed issue with hidden fields not being hidden
+
 2025-04-02 v2.1.0
 - Fixed issue with units missing
 - More data available in more of the fields

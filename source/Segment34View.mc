@@ -605,6 +605,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function drawDataField(dc as Dc, x as Number, y as Number, adjX as Number, label as String, value as String, bgChar as String, width as Number, font as FontResource) as Number {
+        if(value.equals("")) { return 0; }
         var valueBg = "";
         for(var i=0; i<width; i++) { valueBg += bgChar; }
 
@@ -1082,7 +1083,9 @@ class Segment34View extends WatchUi.WatchFace {
         var val = "";
         var numberFormat = "%d";
 
-        if(complicationType == -1) { // Date
+        if(complicationType == -2) { // Hidden
+            return "";
+        } else if(complicationType == -1) { // Date
             val = formatDate();
         } else if(complicationType == 0) { // Active min / week
             if(ActivityMonitor.getInfo() has :activeMinutesWeek) {
