@@ -48,7 +48,6 @@ Pull requests are welcome, but please follow the following guidelines:
 
  ## TODO
 - Check what data is available in each field
-- Investigate issue with units
 
  ## Things people have asked for
 - Goal completion marker

@@ -1503,6 +1503,10 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
 
+        if(val.equals("")) {
+            val = "N/A";
+        }
+
         return val;
     }
 
@@ -1562,8 +1566,8 @@ class Segment34View extends WatchUi.WatchFace {
             case 44: return formatLabel("LOW", "DAILY LOW", "DAILY LOW", labelSize);
             case 53: return formatLabel("TEMP", "TEMP", "TEMPERATURE", labelSize);
             case 54: return formatLabel("PRECIP", "PRECIP", "PRECIPITATION", labelSize);
-            case 55: return formatLabel("SUN", "NEXT SUN", "NEXT SUN EVENT", labelSize);
-            case 57: return formatLabel("CAL", "NEXT CAL", "NEXT CAL EVENT", labelSize);
+            case 55: return formatLabel("SUN", "NEXT SUN", "NEXT SUN EVNT", labelSize);
+            case 57: return formatLabel("CAL", "NEXT CAL", "NEXT CAL EVNT", labelSize);
             case 59: return formatLabel("OX", "PULSE OX", "PULSE OX", labelSize);
         }
         
