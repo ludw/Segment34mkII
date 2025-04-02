@@ -854,10 +854,10 @@ class Segment34View extends WatchUi.WatchFace {
         dataMoon = moonPhase(now);
         dataTopLeft = getValueByType(propSunriseFieldShows, 5);
         dataTopRight = getValueByType(propSunsetFieldShows, 5);
-        dataAboveLine1 = getValueByType(propWeatherLine1Shows, 10);
-        dataAboveLine2 = getValueByType(propWeatherLine2Shows, 10);
+        dataAboveLine1 = getValueByTypeWithUnit(propWeatherLine1Shows, 10);
+        dataAboveLine2 = getValueByTypeWithUnit(propWeatherLine2Shows, 10);
         dataClock = getClockData(now);
-        dataBelow = getValueByType(propDateFieldShows, 10);
+        dataBelow = getValueByTypeWithUnit(propDateFieldShows, 10);
         dataNotifications = getNotificationsData();
         dataBottomLeft = getValueByType(propLeftValueShows, bottomFieldWidths[0]);
         dataBottomMiddle = getValueByType(propMiddleValueShows, bottomFieldWidths[1]);
@@ -1048,6 +1048,34 @@ class Segment34View extends WatchUi.WatchFace {
             value += "|";
         }
         return value;
+    }
+
+    hidden function getValueByTypeWithUnit(complicationType as Number, width as Number) as String {
+        var unit = getUnitByType(complicationType);
+        if (unit.length() > 0) {
+            unit = Lang.format(" $1$", [unit]);
+        }
+        return Lang.format("$1$$2$", [getValueByType(complicationType, width), unit]);
+    }
+
+    hidden function getUnitByType(complicationType) as String {
+        var unit = "";
+        if(complicationType == 11) { // Calories / day
+            unit = "KCAL";
+        } else if(complicationType == 12) { // Altitude (m)
+            unit = "M";
+        } else if(complicationType == 15) { // Altitude (ft)
+            unit = "FT";
+        } else if(complicationType == 17) { // Steps / day
+            unit = "STEPS";
+        } else if(complicationType == 19) { // Wheelchair pushes
+            unit = "PUSHES";
+        } else if(complicationType == 29) { // Active calories / day
+            unit = "KCAL";
+        } else if(complicationType == 58) { // Active/Total calories / day
+            unit = "KCAL";
+        }
+        return unit;
     }
 
     hidden function getValueByType(complicationType as Number, width as Number) as String {

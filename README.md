@@ -46,7 +46,11 @@ Pull requests are welcome, but please follow the following guidelines:
 
  Connect your watch via usb and transfer the Segment34.prg file to the GARMIN/Apps folder on the watch. 
 
- ## TODO / Things people have asked for
+ ## TODO
+- Check what data is available in each field
+- Investigate issue with units
+
+ ## Things people have asked for
 - Goal completion marker
 - Pressure trend
 - Custom colors
@@ -61,7 +65,10 @@ Lower priority:
 
 
 ## Change log
-2025-03-30 v2.0.1
+2025-04-02 v2.1.0
+- Fixed issue with units missing
+
+2025-04-01 v2.0.1
 - Layout tweaks
 
 2025-03-30 v2.0.0
