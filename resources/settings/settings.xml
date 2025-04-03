@@ -11,6 +11,7 @@
             <listEntry value="19">Green camo</listEntry>
             <listEntry value="18">Green and Orange</listEntry>
             <listEntry value="11">Orange</listEntry>
+            <listEntry value="23">Amber</listEntry>
             <listEntry value="5">Peachy Orange</listEntry>
             <listEntry value="20">Red</listEntry>
             <listEntry value="22">Purple</listEntry>
@@ -40,6 +41,7 @@
             <listEntry value="19">Green camo</listEntry>
             <listEntry value="18">Green and Orange</listEntry>
             <listEntry value="11">Orange</listEntry>
+            <listEntry value="23">Amber</listEntry>
             <listEntry value="5">Peachy Orange</listEntry>
             <listEntry value="20">Red</listEntry>
             <listEntry value="22">Purple</listEntry>
@@ -641,6 +643,7 @@
             <listEntry value="-2">Hidden</listEntry>
             <listEntry value="0">Active min / week</listEntry>
             <listEntry value="1">Active min / day</listEntry>
+            <listEntry value="17">Steps / day</listEntry>
             <listEntry value="2">Distance (km) / day</listEntry>
             <listEntry value="3">Distance (miles) / day</listEntry>
             <listEntry value="21">Run distance (km) / week</listEntry>
@@ -656,6 +659,7 @@
             <listEntry value="8">VO2 Max Cycling</listEntry>
             <listEntry value="9">Respiration Rate</listEntry>
             <listEntry value="10">Heart Rate</listEntry>
+            <listEntry value="59">Pulse Ox</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
             <listEntry value="29">Active calories (kcal) / day</listEntry>
             <listEntry value="12">Altitude (m)</listEntry>
@@ -682,6 +686,7 @@
             <listEntry value="44">Weather: Daily low temperature</listEntry>
             <listEntry value="53">Weather: Temperature</listEntry>
             <listEntry value="54">Weather: Chance of Precipitation</listEntry>
+            <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
 

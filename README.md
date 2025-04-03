@@ -64,6 +64,11 @@ Lower priority:
 
 
 ## Change log
+2025-04-03 v2.2.0
+- Small layout tweaks on 454 screen sizes (Fenix 8, Epix 51mm, etc)
+- New color: Amber
+- Small color adjustments on AMOLED screens
+
 2025-04-02 v2.1.1
 - Fixed issue with hidden fields not being hidden
 

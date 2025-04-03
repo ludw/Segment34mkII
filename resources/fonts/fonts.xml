@@ -13,6 +13,8 @@
     <font id="led_small_readable" filename="led_small_readable.fnt" antialias="true" />
     <font id="led_small_lines" filename="led_small_lines.fnt" antialias="false" />
     <font id="led_big" filename="led_big.fnt" antialias="false"/>
+    <font id="led_big_readable" filename="led_big_readable.fnt" antialias="false"/>
+    <font id="led_big_lines" filename="led_big_lines.fnt" antialias="false"/>
     <font id="smol" filename="smol.fnt" antialias="false" />
     <font id="xsmol" filename="xsmol.fnt" antialias="false" />
     <font id="moon" filename="moon.fnt" antialias="true" />
