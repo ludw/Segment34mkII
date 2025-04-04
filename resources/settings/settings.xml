@@ -26,6 +26,8 @@
             <listEntry value="16">Green on white (not recommended for AMOLED)</listEntry>
             <listEntry value="17">Orange on white (not recommended for AMOLED)</listEntry>
             <listEntry value="21">Purple on white (not recommended for AMOLED)</listEntry>
+            <listEntry value="30">Custom theme, variant 1</listEntry>
+            <listEntry value="31">Custom theme, variant 2</listEntry>
         </settingConfig>
     </setting>
 
@@ -56,6 +58,8 @@
             <listEntry value="16">Green on white (not recommended for AMOLED)</listEntry>
             <listEntry value="17">Orange on white (not recommended for AMOLED)</listEntry>
             <listEntry value="21">Purple on white (not recommended for AMOLED)</listEntry>
+            <listEntry value="30">Custom theme, variant 1</listEntry>
+            <listEntry value="31">Custom theme, variant 2</listEntry>
         </settingConfig>
     </setting>
 
@@ -65,6 +69,22 @@
             <listEntry value="1">2 hours before scheduled sleep hours</listEntry>
             <listEntry value="2">From Sunset to Sunrise (requires weather data)</listEntry>
         </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.customHue1" title="Custom theme color 1, hue (0-365)">
+        <settingConfig type="numeric" errorMessage="Enter a value between 0 and 365" />
+    </setting>
+
+    <setting propertyKey="@Properties.customSaturation1" title="Custom theme color 1, saturation (0-100)">
+        <settingConfig type="numeric" errorMessage="Enter a value between 0 and 100" />
+    </setting>
+
+    <setting propertyKey="@Properties.customHue2" title="Custom theme color 2, hue (0-365)">
+        <settingConfig type="numeric" errorMessage="Enter a value between 0 and 365" />
+    </setting>
+
+    <setting propertyKey="@Properties.customSaturation2" title="Custom theme color 2, saturation (0-100)">
+        <settingConfig type="numeric" errorMessage="Enter a value between 0 and 100" />
     </setting>
 
     <setting propertyKey="@Properties.updateFreq" title="Update frequency for data">

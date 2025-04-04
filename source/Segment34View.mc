@@ -86,6 +86,10 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propTheme as Integer = 0;
     hidden var propNightTheme as Integer = -1;
     hidden var propNightThemeActivation as Number = 0;
+    hidden var propCustomHue1 as Number = 0;
+    hidden var propCustomSaturation1 as Number = 0;
+    hidden var propCustomHue2 as Number = 0;
+    hidden var propCustomSaturation2 as Number = 0;
     hidden var propBatteryVariant as Number = 3;
     hidden var propShowSeconds as Boolean = true;
     hidden var propLeftValueShows as Number = 6;
@@ -691,6 +695,9 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:MIP)
     hidden function setColorTheme(theme as Number) as Array<Graphics.ColorType> {
+        if(theme == 30) { return customColorTheme1(); }
+        if(theme == 31) { return customColorTheme2(); }
+
         //                       fieldBg,   fieldLbl, clockBg,  clock,    clockDim, date,     dateDim,  notif,    stress,   bodybatt, bg,       dataVal,  moon,     lowBatt
         if(theme == 0 ) { return [0x005555, 0x55AAAA, 0x005555, 0xFFFF00, 0xFFFF00, 0xFFFF00, 0xa98753, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Yellow on turquoise MIP
         if(theme == 1 ) { return [0x005555, 0xAA55AA, 0x005555, 0xFF55AA, 0xFF55AA, 0xFFFFFF, 0xa95399, 0xFF55AA, 0xFF55AA, 0x00FFAA, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Hot pink MIP
@@ -720,6 +727,8 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:AMOLED)
     hidden function setColorTheme(theme as Number) as Array<Graphics.ColorType> {
+        if(theme == 30) { return customColorTheme1(); }
+        if(theme == 31) { return customColorTheme2(); }
 
         //                       fieldBg,   fieldLbl, clockBg,  clock,    clockDim, date,     dateDim,  notif,    stress,   bodybatt, bg,       dataVal,  moon,     lowBatt
         if(theme == 0 ) { return [0x0e333c, 0x55AAAA, 0x0d333c, 0xfbcb77, 0xcca561, 0xfbcb77, 0xa98753, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Yellow on turquoise AMOLED
@@ -746,6 +755,66 @@ class Segment34View extends WatchUi.WatchFace {
         if(theme == 21) { return [0xCCCCCC, 0xAA00FF, 0xCCCCCC, 0xAA00FF, 0xAA00FF, 0x000000, 0x555555, 0x000000, 0xFF5500, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555, 0xFF0000]; } // Purple on White AMOLED
         if(theme == 22) { return [0x282828, 0xAA55AA, 0x282828, 0xAA55AA, 0xAA55AA, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF, 0xFF0000]; } // Purple on black AMOLED
                           return [0x2c2721, 0xffac3f, 0x2c2721, 0xff960c, 0xb0630d, 0xffb759, 0x725939, 0xa8d6fd, 0xfdb500, 0xa8d6fd, 0x000000, 0xffdeb4, 0xe3efd2, 0xFF0000]; // Amber AMOLED
+        //                       fieldBg,   fieldLbl, clockBg,  clock,    clockDim, date,     dateDim,  notif,    stress,   bodybatt, bg,       dataVal,  moon,     lowBatt
+
+    }
+
+    hidden function customColorTheme1() as Array<Graphics.ColorType> {
+        var h1 = 0;
+        var s1 = 0;
+        var h2 = 0;
+        var s2 = 0;
+
+        if(propCustomHue1 >= 0 and propCustomHue1 <= 365) { h1 = propCustomHue1 / 365.0; }
+        if(propCustomSaturation1 >= 0 and propCustomSaturation1 <= 300) { s1 = propCustomSaturation1 / 100.0; }
+        if(propCustomHue2 >= 0 and propCustomHue2 <= 365) { h2 = propCustomHue2 / 365.0; }
+        if(propCustomSaturation2 >= 0 and propCustomSaturation2 <= 300) { s2 = propCustomSaturation2 / 100.0; }
+
+        return [
+            hsv2rgb(h2, 0.25 * s2, 0.20), // fieldBg
+            hsv2rgb(h1, 0.75 * s1, 1.0), // fieldLbl
+            hsv2rgb(h2, 0.25 * s2, 0.20), // clockBg
+            hsv2rgb(h1, 0.95 * s1, 1.0), // clock
+            hsv2rgb(h1, 0.93 * s1, 0.69), // clockDim
+            hsv2rgb(h1, 0.65 * s1, 1.0), // date
+            hsv2rgb(h1, 0.50 * s1, 0.45), // dateDim
+            0x55AAFF, // notif
+            0xFFAA00, // stress
+            0x55AAFF, // bodybatt
+            0x000000, // bg
+            hsv2rgb(h1, 0.29 * s1, 1.0), // dataVal
+            0xFFFFFF, // moon
+            0xFF0000, // lowBatt
+        ];
+    }
+
+    hidden function customColorTheme2() as Array<Graphics.ColorType> {
+        var h1 = 0;
+        var s1 = 0;
+        var h2 = 0;
+        var s2 = 0;
+
+        if(propCustomHue1 >= 0 and propCustomHue1 <= 365) { h1 = propCustomHue1 / 365.0; }
+        if(propCustomSaturation1 >= 0 and propCustomSaturation1 <= 300) { s1 = propCustomSaturation1 / 100.0; }
+        if(propCustomHue2 >= 0 and propCustomHue2 <= 365) { h2 = propCustomHue2 / 365.0; }
+        if(propCustomSaturation2 >= 0 and propCustomSaturation2 <= 300) { s2 = propCustomSaturation2 / 100.0; }
+
+        return [
+            hsv2rgb(h2, 0.95 * s2, 0.33), // fieldBg
+            hsv2rgb(h2, 0.95 * s2, 0.95), // fieldLbl
+            hsv2rgb(h2, 0.95 * s2, 0.33), // clockBg
+            hsv2rgb(h1, 0.25 * s1, 0.95), // clock
+            hsv2rgb(h1, 0.15 * s1, 0.75), // clockDim
+            hsv2rgb(h1, 0.25 * s1, 0.95), // date
+            hsv2rgb(h1, 0.15 * s1, 0.60), // dateDim
+            0x55AAFF, // notif
+            0xFFAA00, // stress
+            0x55AAFF, // bodybatt
+            0x000000, // bg
+            hsv2rgb(h1, 0.10 * s1, 1.0), // dataVal
+            0xFFFFFF, // moon
+            0xFF0000, // lowBatt
+        ];
     }
 
     hidden function updateColorTheme() {
@@ -807,6 +876,10 @@ class Segment34View extends WatchUi.WatchFace {
         propTheme = Application.Properties.getValue("colorTheme") as Number;
         propNightTheme = Application.Properties.getValue("nightColorTheme") as Number;
         propNightThemeActivation = Application.Properties.getValue("nightThemeActivation") as Number;
+        propCustomHue1 = Application.Properties.getValue("customHue1") as Number;
+        propCustomSaturation1 = Application.Properties.getValue("customSaturation1") as Number;
+        propCustomHue2 = Application.Properties.getValue("customHue2") as Number;
+        propCustomSaturation2 = Application.Properties.getValue("customSaturation2") as Number;
 
         propSunriseFieldShows = Application.Properties.getValue("sunriseFieldShows") as Number;
         propSunsetFieldShows = Application.Properties.getValue("sunsetFieldShows") as Number;
@@ -2160,6 +2233,59 @@ class Segment34View extends WatchUi.WatchFace {
         }
         return false;
     }
+
+    hidden function hsv2rgb(h as Float, s as Float, v as Float) as Graphics.ColorType {
+        var r = 0.0f;
+        var g = 0.0f;
+        var b = 0.0f;
+
+        if (h >= 1.0f or h < 0.0f) { h = 0.0f; }
+
+        var i = (h * 6.0f).toNumber();
+        var f = h * 6.0f - i;
+        var p = v * (1.0f - s);
+        var q = v * (1.0f - f * s);
+        var t = v * (1.0f - (1.0f - f) * s);
+
+        switch (i % 6) {
+            case 0:
+                r = v; g = t; b = p;
+                break;
+            case 1:
+                r = q; g = v; b = p;
+                break;
+            case 2:
+                r = p; g = v; b = t;
+                break;
+            case 3:
+                r = p; g = q; b = v;
+                break;
+            case 4:
+                r = t; g = p; b = v;
+                break;
+            case 5:
+                r = v; g = p; b = q;
+                break;
+        }
+
+        // Scale RGB values to [0, 255] and convert to integer Numbers
+        var finalR = (r * 255.0f).toNumber();
+        var finalG = (g * 255.0f).toNumber();
+        var finalB = (b * 255.0f).toNumber();
+
+        // Clamp values to the valid [0, 255] range to safeguard against floating point inaccuracies
+        if (finalR < 0) { finalR = 0; } else if (finalR > 255) { finalR = 255; }
+        if (finalG < 0) { finalG = 0; } else if (finalG > 255) { finalG = 255; }
+        if (finalB < 0) { finalB = 0; } else if (finalB > 255) { finalB = 255; }
+
+        return rgbToDec(finalR, finalG, finalB);
+    }
+
+
+    hidden function rgbToDec( rr, gg, bb ) as Graphics.ColorType {
+        return rr*65536 + gg*256 + bb;
+    }
+
 }
 
 class Segment34Delegate extends WatchUi.WatchFaceDelegate {

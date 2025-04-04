@@ -2,6 +2,10 @@
     <property id="colorTheme" type="number">0</property>
     <property id="nightColorTheme" type="number">-1</property>
     <property id="nightThemeActivation" type="number">0</property>
+    <property id="customHue1" type="number">80</property>
+    <property id="customSaturation1" type="number">100</property>
+    <property id="customHue2" type="number">200</property>
+    <property id="customSaturation2" type="number">100</property>
     <property id="hourFormat" type="number">0</property>
     <property id="zeropadHour" type="boolean">true</property>
     <property id="tempUnit" type="number">0</property>

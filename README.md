@@ -50,12 +50,11 @@ Pull requests are welcome, but please follow the following guidelines:
 - Check what data is available in each field
 - Size of top fields with moon hidden
 - Custom field layout
-- Algoritmic colors
+- What to do about missing data?
 
  ## Things people have asked for
 - Goal completion marker
 - Pressure trend
-- Custom colors
 - Localization of settings
 - Floors climbed for 5 digit field
 - stressScore on watches that support this API
@@ -67,6 +66,11 @@ Lower priority:
 
 
 ## Change log
+2025-04-03 v2.3.0
+- Custom color themes
+- Fixed issue with label for raw pressure
+- Fixed issue with N/A showing up when it shouldn't
+
 2025-04-03 v2.2.0
 - Small layout tweaks on 454 screen sizes (Fenix 8, Epix 51mm, etc)
 - New color: Amber
