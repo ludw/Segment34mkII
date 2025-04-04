@@ -48,6 +48,9 @@ Pull requests are welcome, but please follow the following guidelines:
 
  ## TODO
 - Check what data is available in each field
+- Size of top fields with moon hidden
+- Custom field layout
+- Algoritmic colors
 
  ## Things people have asked for
 - Goal completion marker

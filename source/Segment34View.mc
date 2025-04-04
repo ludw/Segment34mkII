@@ -564,9 +564,9 @@ class Segment34View extends WatchUi.WatchFace {
         if((propLabelVisibility == 1 or propLabelVisibility == 3)) { y4 = y4 - labelHeight; }
         var step_width = 0;
         if(screenHeight == 240) {
-            step_width = drawDataField(dc, centerX - 19, y4 + 3, 0, "", dataBottom, bottomFieldBg, 5, fontBottomData);
+            step_width = drawDataField(dc, centerX - 19, y4 + 3, 0, null, dataBottom, bottomFieldBg, 5, fontBottomData);
         } else {
-            step_width = drawDataField(dc, centerX, y4, 0, "", dataBottom, bottomFieldBg, 5, fontBottomData);
+            step_width = drawDataField(dc, centerX, y4, 0, null, dataBottom, bottomFieldBg, 5, fontBottomData);
         }
 
         // Draw icons
@@ -606,7 +606,7 @@ class Segment34View extends WatchUi.WatchFace {
         dc.drawText(baseX + halfClockWidth - textSideAdj - 2 - (now.min % 3), y1, fontAODData, dataAODRight, Graphics.TEXT_JUSTIFY_RIGHT);
     }
 
-    hidden function drawDataField(dc as Dc, x as Number, y as Number, adjX as Number, label as String, value as String, bgChar as String, width as Number, font as FontResource) as Number {
+    hidden function drawDataField(dc as Dc, x as Number, y as Number, adjX as Number, label as String?, value as String, bgChar as String, width as Number, font as FontResource) as Number {
         if(value.equals("")) { return 0; }
         var valueBg = "";
         for(var i=0; i<width; i++) { valueBg += bgChar; }
@@ -614,7 +614,7 @@ class Segment34View extends WatchUi.WatchFace {
         var value_bg_width = dc.getTextWidthInPixels(valueBg, font);
         var data_y = y;
 
-        if((propLabelVisibility == 0 or propLabelVisibility == 2) and !(label.equals(""))) {
+        if((propLabelVisibility == 0 or propLabelVisibility == 2) and !(label == null)) {
             dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
             dc.drawText(x - (value_bg_width / 2) + adjX, y, fontLabel, label, Graphics.TEXT_JUSTIFY_LEFT);
 
@@ -1511,10 +1511,6 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
 
-        if(val.equals("")) {
-            val = "N/A";
-        }
-
         return val;
     }
 
@@ -1554,6 +1550,7 @@ class Segment34View extends WatchUi.WatchFace {
             case 23: return formatLabel("W KM", "W BIKE KM" , "WEEK BIKE KM", labelSize);
             case 24: return formatLabel("W MI", "W BIKE MI" , "WEEK BIKE MI", labelSize);
             case 25: return "TRAINING:";
+            case 26: return "PRESSURE:";
             case 27: return formatLabel("KG", "WEIGHT", "WEIGHT KG", labelSize);
             case 28: return formatLabel("LBS", "WEIGHT", "WEIGHT LBS", labelSize);
             case 29: return formatLabel("A CAL", "ACT. CAL", "ACT. CALORIES", labelSize);
