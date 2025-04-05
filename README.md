@@ -49,15 +49,11 @@ Pull requests are welcome, but please follow the following guidelines:
  ## TODO
 - Check what data is available in each field
 - Size of top fields with moon hidden
-- Custom field layout
-- What to do about missing data?
 
  ## Things people have asked for
 - Goal completion marker
 - Pressure trend
 - Localization of settings
-- Floors climbed for 5 digit field
-- stressScore on watches that support this API
 
 Lower priority:
 - Race predictions
@@ -68,6 +64,8 @@ Lower priority:
 ## Change log
 2025-04-05 v2.4.1
 - Fixed issue with fields dissapearing when they should now
+- Use stress and body battery from complications API if available
+- A few more options for bottom 5 digit field
 
 2025-04-05 v2.4.0
 - Setting for bottom field layout (number of digits per field)

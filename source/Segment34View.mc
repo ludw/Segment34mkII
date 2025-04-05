@@ -1067,7 +1067,23 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function updateStressAndBodyBatteryData() as Void {
-        if(!propShowStressAndBodyBattery) { return; }
+        if (Toybox has :Complications) {
+            try {
+                var complication_stress = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_STRESS));
+                if (complication_stress != null && complication_stress.value != null) {
+                    dataStress = complication_stress.value;
+                }
+                var complication_bb = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_BODY_BATTERY));
+                if (complication_bb != null && complication_bb.value != null) {
+                    dataBbatt = complication_bb.value;
+                }
+
+                return;
+            } catch(e) {
+                // Complication not found
+            }
+            
+        }
 
         if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
             var bb_iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});

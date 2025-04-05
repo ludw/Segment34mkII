@@ -670,6 +670,8 @@
             <listEntry value="24">Bike distance (miles) / week</listEntry>
             <listEntry value="32">Total distance past 7 days (km)</listEntry>
             <listEntry value="33">Total distance past 7 days (miles)</listEntry>
+            <listEntry value="4">Floors climbed / day</listEntry>
+            <listEntry value="5">Meters climbed / day</listEntry>
             <listEntry value="11">Calories (kcal) / day</listEntry>
             <listEntry value="29">Active calories (kcal) / day</listEntry>
             <listEntry value="10">Heart Rate</listEntry>
@@ -678,6 +680,7 @@
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="16">Alternative Timezone 1</listEntry>
             <listEntry value="41">Alternative Timezone 2</listEntry>
+            <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
 
