@@ -66,10 +66,13 @@ Lower priority:
 
 
 ## Change log
-2025-04-03 v2.4.0
+2025-04-05 v2.4.1
+- Fixed issue with fields dissapearing when they should now
+
+2025-04-05 v2.4.0
 - Setting for bottom field layout (number of digits per field)
 
-2025-04-03 v2.3.0
+2025-04-04 v2.3.0
 - Custom color themes
 - Fixed issue with label for raw pressure
 - Fixed issue with N/A showing up when it shouldn't

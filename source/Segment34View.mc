@@ -651,7 +651,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function drawDataField(dc as Dc, x as Number, y as Number, adjX as Number, label as String?, value as String, bgChar as String, width as Number, font as FontResource) as Number {
-        if(value.equals("")) { return 0; }
+        if(value.equals("") and (label == null or label.equals(""))) { return 0; }
         if(width == 0) { return 0; }
         var valueBg = "";
         for(var i=0; i<width; i++) { valueBg += bgChar; }
@@ -972,6 +972,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function updateData(now as Gregorian.Info) as Void {
         dataClock = getClockData(now);
+        updateStressAndBodyBatteryData();
         var fieldWidths = getFieldWidths();
 
         dataMoon = moonPhase(now);
@@ -999,8 +1000,6 @@ class Segment34View extends WatchUi.WatchFace {
         dataLabelBottomMiddle = getLabelByType(propMiddleValueShows, fieldWidths[1] - 1);
         dataLabelBottomRight = getLabelByType(propRightValueShows, fieldWidths[2] - 1);
         dataLabelBottomFourth = getLabelByType(propFourthValueShows, fieldWidths[3] - 1);
-
-        updateStressAndBodyBatteryData();
 
         updateColorTheme();
     }
@@ -1304,20 +1303,12 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 13) { // Stress
-            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getStressHistory)) {
-                var st_iterator = Toybox.SensorHistory.getStressHistory({:period => 1});
-                var st = st_iterator.next();
-                if(st != null and st.data != null) {
-                    val = st.data.format(numberFormat);
-                }
+            if(dataStress != null) {
+                val = dataStress.format(numberFormat);
             }
         } else if(complicationType == 14) { // Body battery
-            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getBodyBatteryHistory)) {
-                var bb_iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});
-                var bb = bb_iterator.next();
-                if(bb != null and bb.data != null) {
-                    val = bb.data.format(numberFormat);
-                }
+            if(dataBbatt != null) {
+                val = dataBbatt.format(numberFormat);
             }
         } else if(complicationType == 15) { // Altitude (ft)
             if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {

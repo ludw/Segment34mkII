@@ -379,6 +379,7 @@
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="25">Training status</listEntry>
             <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
+            <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
 
@@ -450,7 +451,7 @@
             <listEntry value="8">4, 4, 4</listEntry>
             <listEntry value="9">3, 3, 3, 3</listEntry>
             <listEntry value="10">3, 3, 3, 4</listEntry>
-            <listEntry value="11">4, 3, 3, 4</listEntry>
+            <listEntry value="11">4, 3, 3, 3</listEntry>
         </settingConfig>
     </setting>
 
@@ -724,6 +725,7 @@
             <listEntry value="16">Alternative Timezone 1</listEntry>
             <listEntry value="41">Alternative Timezone 2</listEntry>
             <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
+            <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
 
