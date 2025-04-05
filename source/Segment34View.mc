@@ -59,6 +59,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var dataBottomLeft as String = "";
     hidden var dataBottomMiddle as String = "";
     hidden var dataBottomRight as String = "";
+    hidden var dataBottomFourth as String = "";
     hidden var dataBottom as String = "";
     hidden var dataIcon1 as String = "";
     hidden var dataIcon2 as String = "";
@@ -73,6 +74,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var dataLabelBottomLeft as String = "";
     hidden var dataLabelBottomMiddle as String = "";
     hidden var dataLabelBottomRight as String = "";
+    hidden var dataLabelBottomFourth as String = "";
 
     hidden var themeColors as Array<Graphics.ColorType> = [];
     hidden var nightMode as Boolean?;
@@ -92,9 +94,11 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propCustomSaturation2 as Number = 0;
     hidden var propBatteryVariant as Number = 3;
     hidden var propShowSeconds as Boolean = true;
+    hidden var propFieldLayout as Number = 0;
     hidden var propLeftValueShows as Number = 6;
     hidden var propMiddleValueShows as Number = 10;
     hidden var propRightValueShows as Number = 0;
+    hidden var propFourthValueShows as Number = 0;
     hidden var propAlwaysShowSeconds as Boolean = false;
     hidden var propUpdateFreq as Number = 5;
     hidden var propShowClockBg as Boolean = true;
@@ -154,13 +158,13 @@ class Segment34View extends WatchUi.WatchFace {
     (:Round454) const bottomFieldBg = "#";
     (:Round360) const bottomFieldBg = "$";
 
-    (:Round240) const bottomFieldWidths = [3, 3, 3];
-    (:Round260) const bottomFieldWidths = [3, 4, 3];
-    (:Round280) const bottomFieldWidths = [4, 3, 4];
-    (:Round360) const bottomFieldWidths = [3, 4, 3];
-    (:Round390) const bottomFieldWidths = [4, 3, 4];
-    (:Round416) const bottomFieldWidths = [4, 4, 4];
-    (:Round454) const bottomFieldWidths = [4, 4, 4];
+    (:Round240) const bottomFieldWidths = [3, 3, 3, 0];
+    (:Round260) const bottomFieldWidths = [3, 4, 3, 0];
+    (:Round280) const bottomFieldWidths = [4, 3, 4, 0];
+    (:Round360) const bottomFieldWidths = [3, 4, 3, 0];
+    (:Round390) const bottomFieldWidths = [4, 3, 4, 0];
+    (:Round416) const bottomFieldWidths = [4, 4, 4, 0];
+    (:Round454) const bottomFieldWidths = [4, 4, 4, 0];
 
     (:Round240) const barWidth = 3;
     (:Round260) const barWidth = 3;
@@ -558,10 +562,18 @@ class Segment34View extends WatchUi.WatchFace {
         var y2 = y1 + smallDataHeight + marginY;
         var y3 = y2 + labelHeight + labelMargin + largeDataHeight;
         var data_width = Math.sqrt(centerY*centerY - (y3 - centerY)*(y3 - centerY)) * 2 + fieldSpaceingAdj;
-        var data_x = Math.ceil(data_width / 3);
-        drawDataField(dc, centerX - data_x, y2, 3, dataLabelBottomLeft, dataBottomLeft, "#", bottomFieldWidths[0], fontLargeData);
-        drawDataField(dc, centerX, y2, 3, dataLabelBottomMiddle, dataBottomMiddle, "#", bottomFieldWidths[1], fontLargeData);
-        drawDataField(dc, centerX + data_x, y2, 3, dataLabelBottomRight, dataBottomRight, "#", bottomFieldWidths[2], fontLargeData);
+        var left_edge = Math.round((screenWidth - data_width) / 2);
+        var digits = getFieldWidths();
+        var tot_digits = digits[0] + digits[1] + digits[2] + digits[3];
+        var dw1 = Math.round(digits[0] * data_width / tot_digits);
+        var dw2 = Math.round(digits[1] * data_width / tot_digits);
+        var dw3 = Math.round(digits[2] * data_width / tot_digits);
+        var dw4 = Math.round(digits[3] * data_width / tot_digits);
+
+        drawDataField(dc, left_edge + Math.round(dw1 / 2), y2, 3, dataLabelBottomLeft, dataBottomLeft, "#", digits[0], fontLargeData);
+        drawDataField(dc, left_edge + Math.round(dw1 + (dw2 / 2)), y2, 3, dataLabelBottomMiddle, dataBottomMiddle, "#", digits[1], fontLargeData);
+        drawDataField(dc, left_edge + Math.round(dw1 + dw2 + (dw3 / 2)), y2, 3, dataLabelBottomRight, dataBottomRight, "#", digits[2], fontLargeData);
+        drawDataField(dc, left_edge + Math.round(dw1 + dw2 + dw3 + (dw4 / 2)), y2, 3, dataLabelBottomFourth, dataBottomFourth, "#", digits[3], fontLargeData);
 
         // Draw the 5 digit bottom field
         var y4 = y3 + halfMarginY + bottomFiveAdj;
@@ -610,8 +622,37 @@ class Segment34View extends WatchUi.WatchFace {
         dc.drawText(baseX + halfClockWidth - textSideAdj - 2 - (now.min % 3), y1, fontAODData, dataAODRight, Graphics.TEXT_JUSTIFY_RIGHT);
     }
 
+    hidden function getFieldWidths() as Array<Number> {
+        if(propFieldLayout == 0) { // Auto
+            return bottomFieldWidths;
+        } else if(propFieldLayout == 1) {
+            return [3, 3, 3, 0];
+        } else if(propFieldLayout == 2) {
+            return [3, 4, 3, 0];
+        } else if(propFieldLayout == 3) {
+            return [3, 3, 4, 0];
+        } else if(propFieldLayout == 4) {
+            return [4, 3, 3, 0];
+        } else if(propFieldLayout == 5) {
+            return [4, 3, 4, 0];
+        } else if(propFieldLayout == 6) {
+            return [3, 4, 4, 0];
+        } else if(propFieldLayout == 7) {
+            return [4, 4, 3, 0];
+        } else if(propFieldLayout == 8) {
+            return [4, 4, 4, 0];
+        } else if(propFieldLayout == 9) {
+            return [3, 3, 3, 3];
+        } else if(propFieldLayout == 10) {
+            return [3, 3, 3, 4];
+        } else {
+            return [4, 3, 3, 3];
+        }
+    }
+
     hidden function drawDataField(dc as Dc, x as Number, y as Number, adjX as Number, label as String?, value as String, bgChar as String, width as Number, font as FontResource) as Number {
         if(value.equals("")) { return 0; }
+        if(width == 0) { return 0; }
         var valueBg = "";
         for(var i=0; i<width; i++) { valueBg += bgChar; }
 
@@ -889,9 +930,11 @@ class Segment34View extends WatchUi.WatchFace {
         propDateFieldShows = Application.Properties.getValue("dateFieldShows") as Number;
         propShowSeconds = Application.Properties.getValue("showSeconds") as Boolean;
         propAlwaysShowSeconds = Application.Properties.getValue("alwaysShowSeconds") as Boolean;
+        propFieldLayout = Application.Properties.getValue("fieldLayout") as Number;
         propLeftValueShows = Application.Properties.getValue("leftValueShows") as Number;
         propMiddleValueShows = Application.Properties.getValue("middleValueShows") as Number;
         propRightValueShows = Application.Properties.getValue("rightValueShows") as Number;
+        propFourthValueShows = Application.Properties.getValue("fourthValueShows") as Number;
         propBottomFieldShows = Application.Properties.getValue("bottomFieldShows") as Number;
         propIcon1 = Application.Properties.getValue("icon1") as Number;
         propIcon2 = Application.Properties.getValue("icon2") as Number;
@@ -929,6 +972,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function updateData(now as Gregorian.Info) as Void {
         dataClock = getClockData(now);
+        var fieldWidths = getFieldWidths();
 
         dataMoon = moonPhase(now);
         dataTopLeft = getValueByType(propSunriseFieldShows, 5);
@@ -938,9 +982,10 @@ class Segment34View extends WatchUi.WatchFace {
         dataClock = getClockData(now);
         dataBelow = getValueByTypeWithUnit(propDateFieldShows, 10);
         dataNotifications = getNotificationsData();
-        dataBottomLeft = getValueByType(propLeftValueShows, bottomFieldWidths[0]);
-        dataBottomMiddle = getValueByType(propMiddleValueShows, bottomFieldWidths[1]);
-        dataBottomRight = getValueByType(propRightValueShows, bottomFieldWidths[2]);
+        dataBottomLeft = getValueByType(propLeftValueShows, fieldWidths[0]);
+        dataBottomMiddle = getValueByType(propMiddleValueShows, fieldWidths[1]);
+        dataBottomRight = getValueByType(propRightValueShows, fieldWidths[2]);
+        dataBottomFourth = getValueByType(propFourthValueShows, fieldWidths[3]);
         dataBottom = getValueByType(propBottomFieldShows, 5);
         dataIcon1 = getIconState(propIcon1);
         dataIcon2 = getIconState(propIcon2);
@@ -950,9 +995,10 @@ class Segment34View extends WatchUi.WatchFace {
 
         dataLabelTopLeft = getLabelByType(propSunriseFieldShows, 1);
         dataLabelTopRight = getLabelByType(propSunsetFieldShows, 1);
-        dataLabelBottomLeft = getLabelByType(propLeftValueShows, bottomFieldWidths[0] - 1);
-        dataLabelBottomMiddle = getLabelByType(propMiddleValueShows, bottomFieldWidths[1] - 1);
-        dataLabelBottomRight = getLabelByType(propRightValueShows, bottomFieldWidths[2] - 1);
+        dataLabelBottomLeft = getLabelByType(propLeftValueShows, fieldWidths[0] - 1);
+        dataLabelBottomMiddle = getLabelByType(propMiddleValueShows, fieldWidths[1] - 1);
+        dataLabelBottomRight = getLabelByType(propRightValueShows, fieldWidths[2] - 1);
+        dataLabelBottomFourth = getLabelByType(propFourthValueShows, fieldWidths[3] - 1);
 
         updateStressAndBodyBatteryData();
 

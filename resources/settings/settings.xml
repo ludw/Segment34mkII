@@ -436,7 +436,25 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.leftValueShows" title="Bottom Left value:">
+    
+    <setting propertyKey="@Properties.fieldLayout" title="Bottom field layout (number of digits per field)">
+        <settingConfig type="list">
+            <listEntry value="0">Auto - Default layout depending on screen size</listEntry>
+            <listEntry value="1">3, 3, 3</listEntry>
+            <listEntry value="2">3, 4, 3</listEntry>
+            <listEntry value="3">3, 3, 4</listEntry>
+            <listEntry value="4">4, 3, 3</listEntry>
+            <listEntry value="5">4, 3, 4</listEntry>
+            <listEntry value="6">3, 4, 4</listEntry>
+            <listEntry value="7">4, 4, 3</listEntry>
+            <listEntry value="8">4, 4, 4</listEntry>
+            <listEntry value="9">3, 3, 3, 3</listEntry>
+            <listEntry value="10">3, 3, 3, 4</listEntry>
+            <listEntry value="11">4, 3, 3, 4</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.leftValueShows" title="Bottom value 1 (left):">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
             <listEntry value="0">Active min / week</listEntry>
@@ -487,7 +505,7 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.middleValueShows" title="Bottom Middle value:">
+    <setting propertyKey="@Properties.middleValueShows" title="Bottom value 2:">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
             <listEntry value="0">Active min / week</listEntry>
@@ -538,7 +556,58 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.rightValueShows" title="Bottom Right value:">
+    <setting propertyKey="@Properties.rightValueShows" title="Bottom value 3:">
+        <settingConfig type="list">
+            <listEntry value="-2">Hidden</listEntry>
+            <listEntry value="0">Active min / week</listEntry>
+            <listEntry value="1">Active min / day</listEntry>
+            <listEntry value="2">Distance (km) / day</listEntry>
+            <listEntry value="3">Distance (miles) / day</listEntry>
+            <listEntry value="21">Run distance (km) / week</listEntry>
+            <listEntry value="22">Run distance (miles) / week</listEntry>
+            <listEntry value="23">Bike distance (km) / week</listEntry>
+            <listEntry value="24">Bike distance (miles) / week</listEntry>
+            <listEntry value="32">Total distance past 7 days (km)</listEntry>
+            <listEntry value="33">Total distance past 7 days (miles)</listEntry>
+            <listEntry value="4">Floors climbed / day</listEntry>
+            <listEntry value="5">Meters climbed / day</listEntry>
+            <listEntry value="6">Time to Recovery (h)</listEntry>
+            <listEntry value="7">VO2 Max Running</listEntry>
+            <listEntry value="8">VO2 Max Cycling</listEntry>
+            <listEntry value="9">Respiration Rate</listEntry>
+            <listEntry value="10">Heart Rate</listEntry>
+            <listEntry value="59">Pulse Ox</listEntry>
+            <listEntry value="11">Calories (kcal) / day</listEntry>
+            <listEntry value="29">Active calories (kcal) / day</listEntry>
+            <listEntry value="12">Altitude (m)</listEntry>
+            <listEntry value="15">Altitude (ft)</listEntry>
+            <listEntry value="13">Stress score</listEntry>
+            <listEntry value="14">Body battery</listEntry>
+            <listEntry value="39">Sunrise time</listEntry>
+            <listEntry value="40">Sunset time</listEntry>
+            <listEntry value="55">Next sun event time</listEntry>
+            <listEntry value="16">Alternative Timezone 1</listEntry>
+            <listEntry value="41">Alternative Timezone 2</listEntry>
+            <listEntry value="26">Barometric Pressure, raw</listEntry>
+            <listEntry value="30">Barometric Pressure, sea level</listEntry>
+            <listEntry value="27">Weight (kg)</listEntry>
+            <listEntry value="28">Weight (lbs)</listEntry>
+            <listEntry value="31">Week number</listEntry>
+            <listEntry value="34">Battery percentage</listEntry>
+            <listEntry value="35">Battery days remaining</listEntry>
+            <listEntry value="36">Notification count</listEntry>
+            <listEntry value="37">Solar intensity</listEntry>
+            <listEntry value="38">Sensor temperature</listEntry>
+            <listEntry value="42">Alarms (count)</listEntry>
+            <listEntry value="43">Weather: Daily high temperature</listEntry>
+            <listEntry value="44">Weather: Daily low temperature</listEntry>
+            <listEntry value="53">Weather: Temperature</listEntry>
+            <listEntry value="54">Weather: Chance of Precipitation</listEntry>
+            <listEntry value="57">Next calendar event time</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.fourthValueShows" title="Bottom value 4 (if available):">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
             <listEntry value="0">Active min / week</listEntry>
