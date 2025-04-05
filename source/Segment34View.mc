@@ -495,21 +495,29 @@ class Segment34View extends WatchUi.WatchFace {
 
         // Draw Top data fields
         var top_data_height = 0;
+        var top_field_font = fontTinyData;
+        var top_field_center_offset = 20;
+        if(!propShowMoonPhase) { top_field_center_offset = 10; }
         if(propLabelVisibility == 0 or propLabelVisibility == 3) {
             dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
-            dc.drawText(centerX - 20, marginY, fontLabel, dataLabelTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
-            dc.drawText(centerX + 20, marginY, fontLabel, dataLabelTopRight, Graphics.TEXT_JUSTIFY_LEFT);
+            dc.drawText(centerX - top_field_center_offset, marginY, fontLabel, dataLabelTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
+            dc.drawText(centerX + top_field_center_offset, marginY, fontLabel, dataLabelTopRight, Graphics.TEXT_JUSTIFY_LEFT);
 
             top_data_height = labelHeight + halfMarginY;
         }
+        
         dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
-        dc.drawText(centerX - 20, marginY + top_data_height, fontTinyData, dataTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
-        dc.drawText(centerX + 20, marginY + top_data_height, fontTinyData, dataTopRight, Graphics.TEXT_JUSTIFY_LEFT);
-
-        // Draw Moon
         if(propShowMoonPhase) {
+            dc.drawText(centerX - top_field_center_offset, marginY + top_data_height, top_field_font, dataTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
+            dc.drawText(centerX + top_field_center_offset, marginY + top_data_height, top_field_font, dataTopRight, Graphics.TEXT_JUSTIFY_LEFT);
+
+            // Draw Moon
             dc.setColor(themeColors[moon], Graphics.COLOR_TRANSPARENT);
             dc.drawText(centerX, marginY + ((top_data_height + tinyDataHeight) / 2), fontMoon, dataMoon, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        } else {
+            if(top_data_height == 0) { top_field_font = fontSmallData; }
+            dc.drawText(centerX - top_field_center_offset, marginY + top_data_height, top_field_font, dataTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
+            dc.drawText(centerX + top_field_center_offset, marginY + top_data_height, top_field_font, dataTopRight, Graphics.TEXT_JUSTIFY_LEFT);
         }
 
         // Draw Lines above clock

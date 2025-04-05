@@ -46,11 +46,7 @@ Pull requests are welcome, but please follow the following guidelines:
 
  Connect your watch via usb and transfer the Segment34.prg file to the GARMIN/Apps folder on the watch. 
 
- ## TODO
-- Check what data is available in each field
-- Size of top fields with moon hidden
-
- ## Things people have asked for
+ ## TODO / Things people have asked for
 - Goal completion marker
 - Pressure trend
 - Localization of settings
@@ -66,6 +62,7 @@ Lower priority:
 - Fixed issue with fields dissapearing when they should now
 - Use stress and body battery from complications API if available
 - A few more options for bottom 5 digit field
+- Larger top field font when both moon and labels are hidden
 
 2025-04-05 v2.4.0
 - Setting for bottom field layout (number of digits per field)
