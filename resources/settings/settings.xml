@@ -379,6 +379,9 @@
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="25">Training status</listEntry>
             <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
+            <listEntry value="60">Current Location (Lat Long in Decimal Degrees)</listEntry>
+            <listEntry value="61">Current Location (Military Grid Reference System)</listEntry>
+            <listEntry value="62">Current Location Accuracy</listEntry>
             <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
@@ -408,6 +411,9 @@
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="25">Training status</listEntry>
             <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
+            <listEntry value="60">Current Location (Lat Long in Decimal Degrees)</listEntry>
+            <listEntry value="61">Current Location (Military Grid Reference System)</listEntry>
+            <listEntry value="62">Current Location Accuracy</listEntry>
             <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
@@ -433,6 +439,9 @@
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="25">Training status</listEntry>
             <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
+            <listEntry value="60">Current Location (Lat Long in Decimal Degrees)</listEntry>
+            <listEntry value="61">Current Location (Military Grid Reference System)</listEntry>
+            <listEntry value="62">Current Location Accuracy</listEntry>
             <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
@@ -502,6 +511,7 @@
             <listEntry value="44">Weather: Daily low temperature</listEntry>
             <listEntry value="53">Weather: Temperature</listEntry>
             <listEntry value="54">Weather: Chance of Precipitation</listEntry>
+            <listEntry value="62">Current Location Accuracy</listEntry>
             <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
@@ -553,6 +563,7 @@
             <listEntry value="44">Weather: Daily low temperature</listEntry>
             <listEntry value="53">Weather: Temperature</listEntry>
             <listEntry value="54">Weather: Chance of Precipitation</listEntry>
+            <listEntry value="62">Current Location Accuracy</listEntry>
             <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
@@ -604,6 +615,7 @@
             <listEntry value="44">Weather: Daily low temperature</listEntry>
             <listEntry value="53">Weather: Temperature</listEntry>
             <listEntry value="54">Weather: Chance of Precipitation</listEntry>
+            <listEntry value="62">Current Location Accuracy</listEntry>
             <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
@@ -655,6 +667,7 @@
             <listEntry value="44">Weather: Daily low temperature</listEntry>
             <listEntry value="53">Weather: Temperature</listEntry>
             <listEntry value="54">Weather: Chance of Precipitation</listEntry>
+            <listEntry value="62">Current Location Accuracy</listEntry>
             <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
@@ -680,6 +693,7 @@
             <listEntry value="15">Altitude (ft)</listEntry>
             <listEntry value="16">Alternative Timezone 1</listEntry>
             <listEntry value="41">Alternative Timezone 2</listEntry>
+            <listEntry value="62">Current Location Accuracy</listEntry>
             <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
@@ -728,6 +742,8 @@
             <listEntry value="16">Alternative Timezone 1</listEntry>
             <listEntry value="41">Alternative Timezone 2</listEntry>
             <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
+            <listEntry value="60">Current Location (Lat Long in Decimal Degrees)</listEntry>
+            <listEntry value="61">Current Location (Military Grid Reference System)</listEntry>
             <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>
@@ -780,6 +796,7 @@
             <listEntry value="44">Weather: Daily low temperature</listEntry>
             <listEntry value="53">Weather: Temperature</listEntry>
             <listEntry value="54">Weather: Chance of Precipitation</listEntry>
+            <listEntry value="62">Current Location Accuracy</listEntry>
             <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
     </setting>

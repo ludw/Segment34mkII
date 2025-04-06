@@ -57,6 +57,10 @@ Pull requests are welcome, but please follow the following guidelines:
 
 
 ## Change log
+2025-04-06 v2.5.0
+- Added current location as option
+- Fixed issue with next calendar time when system setting is millitary time
+
 2025-04-05 v2.4.1
 - Fixed issue with fields dissapearing when they should now
 - Use stress and body battery from complications API if available

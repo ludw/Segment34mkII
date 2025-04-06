@@ -6,6 +6,7 @@ import Toybox.WatchUi;
 import Toybox.Time;
 import Toybox.Weather;
 import Toybox.Complications;
+using Toybox.Position;
 
 class Segment34View extends WatchUi.WatchFace {
 
@@ -1606,16 +1607,17 @@ class Segment34View extends WatchUi.WatchFace {
             if (Toybox has :Complications) {
                 try {
                     var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_CALENDAR_EVENTS));
+                    var colon_index = null;
                     if (complication != null && complication.value != null) {
                         val = complication.value;
-                        var colon_index = val.find(":");
+                        colon_index = val.find(":");
                         if (colon_index != null && colon_index < 2) {
                             val = "0" + val;
                         }
                     } else {
                         val = "--:--";
                     }
-                    if (width < 5) {
+                    if (width < 5 and colon_index != null) {
                         val = val.substring(0, 2) + val.substring(3, 5);
                     }
                 } catch(e) {
@@ -1641,6 +1643,31 @@ class Segment34View extends WatchUi.WatchFace {
                     }
                 } catch(e) {
                     // Complication not found
+                }
+            }
+        } else if(complicationType == 60) { // Location Long Lat dec deg
+            var pos = Activity.getActivityInfo().currentLocation;
+            if(pos != null) {
+                val = Lang.format("$1$ $2$", [pos.toDegrees()[0], pos.toDegrees()[1]]);
+            } else {
+                val = "POSITION N/A";
+            }
+            
+        } else if(complicationType == 61) { // Location Millitary format
+            var pos = Activity.getActivityInfo().currentLocation;
+            if(pos != null) {
+                val = pos.toGeoString(Position.GEO_MGRS);
+            } else {
+                val = "POSITION N/A";
+            }
+            
+        }  else if(complicationType == 62) { // Location Accuracy
+            var acc = Activity.getActivityInfo().currentLocationAccuracy;
+            if(acc != null) {
+                if(width < 4) {
+                    val = (acc as Number).format("%d");
+                } else {
+                    val = ["N/A", "LAST", "POOR", "USBL", "GOOD"][acc];
                 }
             }
         }
@@ -1708,6 +1735,7 @@ class Segment34View extends WatchUi.WatchFace {
             case 55: return formatLabel("SUN", "NEXT SUN", "NEXT SUN EVNT", labelSize);
             case 57: return formatLabel("CAL", "NEXT CAL", "NEXT CAL EVNT", labelSize);
             case 59: return formatLabel("OX", "PULSE OX", "PULSE OX", labelSize);
+            case 62: return formatLabel("ACC", "POS ACC", "POS ACCURACY", labelSize);
         }
         
         return "";
