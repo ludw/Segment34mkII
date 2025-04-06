@@ -47,14 +47,13 @@ Pull requests are welcome, but please follow the following guidelines:
  Connect your watch via usb and transfer the Segment34.prg file to the GARMIN/Apps folder on the watch. 
 
  ## TODO / Things people have asked for
+- FAQ page
+- GPS Coordinates
+- Localization
+- Adjustable font size
 - Goal completion marker
 - Pressure trend
-- Localization of settings
-
-Lower priority:
 - Race predictions
-- GPS Coordinates (tricky)
-- Localization
 
 
 ## Change log
