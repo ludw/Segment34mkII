@@ -18,6 +18,10 @@ The watchface features the following:
 - Always on mode
 - Settings in the Garmin app
 
+
+## Frequently Asked Questions
+https://github.com/ludw/Segment34mkII/blob/main/FAQ.md
+
 ## IQ Store Listing
 https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 
