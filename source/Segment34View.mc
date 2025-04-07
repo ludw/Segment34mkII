@@ -315,7 +315,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round390)
     hidden function loadResources() as Void {
-        fontClock = Application.loadResource(Rez.Fonts.segments125narrow);
+        fontClock = Application.loadResource(Rez.Fonts.segments125);
         fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
         if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
         if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_inbetween); }
@@ -330,7 +330,7 @@ class Segment34View extends WatchUi.WatchFace {
         drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
 
         clockHeight = 125;
-        clockWidth = 345;
+        clockWidth = 355;
         labelHeight = 10;
         labelMargin = 5;
         tinyDataHeight = 13;
@@ -1347,7 +1347,17 @@ class Segment34View extends WatchUi.WatchFace {
             val = secondaryTimezone(propTzOffset1, width);
         } else if(complicationType == 17) { // Steps / day
             if(ActivityMonitor.getInfo().steps != null) {
-                val = ActivityMonitor.getInfo().steps.format(numberFormat);
+                if(width >= 5) {
+                    val = ActivityMonitor.getInfo().steps.format(numberFormat);
+                } else {
+                    var steps_k = ActivityMonitor.getInfo().steps / 1000.0;
+                    if(steps_k < 10 and width == 4) {
+                        val = Lang.format("$1$K", [steps_k.format("%.1f")]);
+                    } else {
+                        val = Lang.format("$1$K", [steps_k.format("%d")]);
+                    }
+                }
+                
             }
         } else if(complicationType == 18) { // Distance (m) / day
             if(ActivityMonitor.getInfo().distance != null) {

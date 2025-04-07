@@ -467,6 +467,7 @@
     <setting propertyKey="@Properties.leftValueShows" title="Bottom value 1 (left):">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
+            <listEntry value="17">Steps / day</listEntry>
             <listEntry value="0">Active min / week</listEntry>
             <listEntry value="1">Active min / day</listEntry>
             <listEntry value="2">Distance (km) / day</listEntry>
@@ -519,6 +520,7 @@
     <setting propertyKey="@Properties.middleValueShows" title="Bottom value 2:">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
+            <listEntry value="17">Steps / day</listEntry>
             <listEntry value="0">Active min / week</listEntry>
             <listEntry value="1">Active min / day</listEntry>
             <listEntry value="2">Distance (km) / day</listEntry>
@@ -571,6 +573,7 @@
     <setting propertyKey="@Properties.rightValueShows" title="Bottom value 3:">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
+            <listEntry value="17">Steps / day</listEntry>
             <listEntry value="0">Active min / week</listEntry>
             <listEntry value="1">Active min / day</listEntry>
             <listEntry value="2">Distance (km) / day</listEntry>
@@ -623,6 +626,7 @@
     <setting propertyKey="@Properties.fourthValueShows" title="Bottom value 4 (if available):">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
+            <listEntry value="17">Steps / day</listEntry>
             <listEntry value="0">Active min / week</listEntry>
             <listEntry value="1">Active min / day</listEntry>
             <listEntry value="2">Distance (km) / day</listEntry>
