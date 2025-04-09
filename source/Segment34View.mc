@@ -1848,6 +1848,9 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function join(array as Array<String>) as String {
         var ret = "";
         for(var i=0; i<array.size(); i++) {
+            if(array[i].equals("")) {
+                continue;
+            }
             if(ret.equals("")) {
                 ret = array[i];
             } else {
