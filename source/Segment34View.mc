@@ -1494,15 +1494,8 @@ class Segment34View extends WatchUi.WatchFace {
                 val = notif_count.format(numberFormat);
             }
         } else if(complicationType == 37) { // Solar intensity
-            if (Toybox has :Complications) {
-                try {
-                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_SOLAR_INPUT));
-                    if (complication != null && complication.value != null) {
-                        val = complication.value.format(numberFormat);
-                    }
-                } catch(e) {
-                    // Complication not found
-                }
+            if(System.getSystemStats() has :solarIntensity and System.getSystemStats().solarIntensity != null) {
+                val = System.getSystemStats().solarIntensity.format(numberFormat);
             }
         } else if(complicationType == 38) { // Sensor temperature
             if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getTemperatureHistory)) {

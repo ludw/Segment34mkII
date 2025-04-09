@@ -59,8 +59,10 @@ Pull requests are welcome, but please follow the following guidelines:
 - Pressure trend
 - Race predictions
 
-
 ## Change log
+2025-05-09 v2.5.1
+- Changed API for Solar intensity
+
 2025-04-06 v2.5.0
 - Added current location as option
 - Fixed issue with next calendar time when system setting is millitary time
