@@ -60,8 +60,10 @@ Pull requests are welcome, but please follow the following guidelines:
 - Weather caching
 
 ## Change log
-2025-05-09 v2.5.1
+2025-05-10 v2.5.1
 - Changed API for Solar intensity
+- Issue with empty spots in mixed weather values fixed thanks to debugloop
+- Vivoactive 6 support added
 
 2025-04-06 v2.5.0
 - Added current location as option

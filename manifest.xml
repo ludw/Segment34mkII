@@ -82,6 +82,7 @@
             <iq:product id="venu3s"/>
             <iq:product id="vivoactive4"/>
             <iq:product id="vivoactive5"/>
+            <iq:product id="vivoactive6"/>
         </iq:products>
         <!--
             Use "Monkey C: Edit Permissions" from the Visual Studio Code command
