@@ -52,12 +52,12 @@ Pull requests are welcome, but please follow the following guidelines:
 
  ## TODO / Things people have asked for
 - FAQ page
-- GPS Coordinates
 - Localization
 - Adjustable font size
 - Goal completion marker
 - Pressure trend
 - Race predictions
+- Weather caching
 
 ## Change log
 2025-05-09 v2.5.1
