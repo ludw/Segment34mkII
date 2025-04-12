@@ -28,6 +28,7 @@
             <listEntry value="21">Purple on white (not recommended for AMOLED)</listEntry>
             <listEntry value="30">Custom theme, variant 1</listEntry>
             <listEntry value="31">Custom theme, variant 2</listEntry>
+            <listEntry value="32">Custom theme, variant 3</listEntry>
         </settingConfig>
     </setting>
 
@@ -60,6 +61,7 @@
             <listEntry value="21">Purple on white (not recommended for AMOLED)</listEntry>
             <listEntry value="30">Custom theme, variant 1</listEntry>
             <listEntry value="31">Custom theme, variant 2</listEntry>
+            <listEntry value="32">Custom theme, variant 3</listEntry>
         </settingConfig>
     </setting>
 

@@ -819,6 +819,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function setColorTheme(theme as Number) as Array<Graphics.ColorType> {
         if(theme == 30) { return customColorTheme1(); }
         if(theme == 31) { return customColorTheme2(); }
+        if(theme == 32) { return customColorTheme3(); }
 
         //                       fieldBg,   fieldLbl, clockBg,  clock,    date,     dateDim,  notif,    stress,   bodybatt, bg,       dataVal,  moon
         if(theme == 0 ) { return [0x0e333c, 0x55AAAA, 0x0d333c, 0xfbcb77, 0xfbcb77, 0xa98753, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Yellow on turquoise AMOLED
@@ -901,6 +902,34 @@ class Segment34View extends WatchUi.WatchFace {
             0x000000, // bg
             hsv2rgb(h1, 0.10 * s1, 1.0), // dataVal
             0xFFFFFF, // moon
+            0xFF0000, // lowBatt
+        ];
+    }
+
+    hidden function customColorTheme3() as Array<Graphics.ColorType> {
+        var h1 = 0;
+        var s1 = 0;
+        var h2 = 0;
+        var s2 = 0;
+
+        if(propCustomHue1 >= 0 and propCustomHue1 <= 365) { h1 = propCustomHue1 / 365.0; }
+        if(propCustomSaturation1 >= 0 and propCustomSaturation1 <= 300) { s1 = propCustomSaturation1 / 100.0; }
+        if(propCustomHue2 >= 0 and propCustomHue2 <= 365) { h2 = propCustomHue2 / 365.0; }
+        if(propCustomSaturation2 >= 0 and propCustomSaturation2 <= 300) { s2 = propCustomSaturation2 / 100.0; }
+
+        return [
+            hsv2rgb(h2, 0.95 * s2, 0.25), // fieldBg
+            hsv2rgb(h2, 0.95 * s2, 1.0), // fieldLbl
+            hsv2rgb(h2, 0.95 * s2, 0.25), // clockBg
+            hsv2rgb(h1, 1.0 * s1, 1.0), // clock
+            hsv2rgb(h1, 0.75 * s1, 0.95), // date
+            hsv2rgb(h1, 0.75 * s1, 0.60), // dateDim
+            0x6da3d8, // notif
+            0xe5be72, // stress
+            0x6da3d8, // bodybatt
+            0x000000, // bg
+            hsv2rgb(h1, 0.75 * s1, 1.0), // dataVal
+            hsv2rgb(h1, 0.10 * s1, 1.0), // moon
             0xFF0000, // lowBatt
         ];
     }
