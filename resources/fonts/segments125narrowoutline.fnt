@@ -1,6 +1,6 @@
-info face="Segments 125" size=125 bold=0 italic=0 smooth=1 spacing=2,2
+info face="Segments 125 Narrow Outline" size=125 bold=0 italic=0 smooth=1 spacing=2,2
 common lineHeight=125 base=125 scaleW=804 scaleH=125 pages=1
-page id=0 file="segments125.png"
+page id=0 file="segments125outline.png"
 chars count=11
 char id=32 x=0 y=0 width=0 height=125 xoffset=0 yoffset=0 xadvance=69 page=0
 char id=35 x=0 y=0 width=66 height=125 xoffset=2 yoffset=0 xadvance=69 page=0

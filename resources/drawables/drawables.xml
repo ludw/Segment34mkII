@@ -2,4 +2,5 @@
     <bitmap id="LauncherIcon" filename="launcher_icon.png" />
     <bitmap id="gradient" filename="gradient.png" />
     <bitmap id="aod" filename="aod.png" />
+    <bitmap id="aod2" filename="aod2.png" />
 </drawables>

@@ -87,6 +87,15 @@
         <settingConfig type="numeric" errorMessage="Enter a value between 0 and 100" />
     </setting>
 
+    <setting propertyKey="@Properties.clockOutlineStyle" title="Clock outline style (AMOLED only)">
+        <settingConfig type="list">
+            <listEntry value="0">Filled numbers no outline, same in AOD</listEntry>
+            <listEntry value="1">Filled numbers no outline, only outline in AOD</listEntry>
+            <listEntry value="2">Filled numbers with outline, same in AOD</listEntry>
+            <listEntry value="3">Filled numbers with outline, only outline in AOD</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.updateFreq" title="Update frequency for data">
         <settingConfig type="list">
             <listEntry value="60">Every minute</listEntry>
