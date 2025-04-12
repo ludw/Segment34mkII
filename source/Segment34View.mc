@@ -690,9 +690,11 @@ class Segment34View extends WatchUi.WatchFace {
             return [3, 3, 3, 3];
         } else if(propFieldLayout == 10) {
             return [3, 3, 3, 4];
-        } else {
+        } else if(propFieldLayout == 11) {
             return [4, 3, 3, 3];
-        }
+        } else {
+            return [4, 4, 0, 0];
+        } 
     }
 
     hidden function drawDataField(dc as Dc, x as Number, y as Number, adjX as Number, label as String?, value as String, bgChar as String, width as Number, font as FontResource) as Number {

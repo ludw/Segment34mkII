@@ -459,6 +459,7 @@
     <setting propertyKey="@Properties.fieldLayout" title="Bottom field layout (number of digits per field)">
         <settingConfig type="list">
             <listEntry value="0">Auto - Default layout depending on screen size</listEntry>
+            <listEntry value="12">4, 4</listEntry>
             <listEntry value="1">3, 3, 3</listEntry>
             <listEntry value="2">3, 4, 3</listEntry>
             <listEntry value="3">3, 3, 4</listEntry>
