@@ -45,11 +45,6 @@ Pull requests are welcome, but please follow the following guidelines:
    - use comments only when they add value.
      Explain things that look strange or values that has to be looked up to be understood.
 
-## Builds
- There are some pre-made builds in the builds folder.
-
- Connect your watch via usb and transfer the Segment34.prg file to the GARMIN/Apps folder on the watch. 
-
  ## TODO / Things people have asked for
 - FAQ page
 - Localization
