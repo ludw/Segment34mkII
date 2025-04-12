@@ -644,7 +644,9 @@ class Segment34View extends WatchUi.WatchFace {
 
         if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2) {
             // Draw Clock
-            dc.setColor(themeColors[clock], Graphics.COLOR_TRANSPARENT);
+            var clock_color = themeColors[clock];
+            if(clock_color == 0x000000) { clock_color = 0x555555; }
+            dc.setColor(clock_color, Graphics.COLOR_TRANSPARENT);
             dc.drawText(baseX, baseY, fontClock, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         }
 
@@ -863,7 +865,6 @@ class Segment34View extends WatchUi.WatchFace {
             hsv2rgb(h1, 0.75 * s1, 1.0), // fieldLbl
             hsv2rgb(h2, 0.25 * s2, 0.20), // clockBg
             hsv2rgb(h1, 0.95 * s1, 1.0), // clock
-            hsv2rgb(h1, 0.93 * s1, 0.69), // clockDim
             hsv2rgb(h1, 0.65 * s1, 1.0), // date
             hsv2rgb(h1, 0.50 * s1, 0.45), // dateDim
             0x55AAFF, // notif
@@ -892,7 +893,6 @@ class Segment34View extends WatchUi.WatchFace {
             hsv2rgb(h2, 0.95 * s2, 0.95), // fieldLbl
             hsv2rgb(h2, 0.95 * s2, 0.33), // clockBg
             hsv2rgb(h1, 0.25 * s1, 0.95), // clock
-            hsv2rgb(h1, 0.15 * s1, 0.75), // clockDim
             hsv2rgb(h1, 0.25 * s1, 0.95), // date
             hsv2rgb(h1, 0.15 * s1, 0.60), // dateDim
             0x55AAFF, // notif
