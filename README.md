@@ -60,7 +60,12 @@ Pull requests are welcome, but please follow the following guidelines:
 - Weather caching
 
 ## Change log
-2025-05-10 v2.5.1
+2025-04-12 v2.6.0
+- AOD with outline as an option (Clock outline style)
+- Option for two 4 digit fields in bottom field layout
+- New custom color theme variant 3 with even more of the specified colors
+
+2025-04-10 v2.5.1
 - Changed API for Solar intensity
 - Issue with empty spots in mixed weather values fixed thanks to debugloop
 - Vivoactive 6 support added
