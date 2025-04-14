@@ -977,12 +977,16 @@ class Segment34View extends WatchUi.WatchFace {
                 return false;
             }
 
-            if(propNightThemeActivation == 0) {
-                return (nowAsTimeSinceMidnight.greaterThan(sleepTime) || nowAsTimeSinceMidnight.lessThan(wakeTime));
-            } else { // Start two hours before sleep time
+            if(propNightThemeActivation == 1) {
+                // Start two hours before sleep time
                 var twoHours = new Time.Duration(7200);
                 sleepTime = sleepTime.subtract(twoHours);
+            }
+
+            if(sleepTime.greaterThan(wakeTime)) {
                 return (nowAsTimeSinceMidnight.greaterThan(sleepTime) || nowAsTimeSinceMidnight.lessThan(wakeTime));
+            } else {
+                return (nowAsTimeSinceMidnight.greaterThan(sleepTime) and nowAsTimeSinceMidnight.lessThan(wakeTime));
             }
         }
 

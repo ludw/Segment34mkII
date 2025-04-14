@@ -57,6 +57,7 @@ Pull requests are welcome, but please follow the following guidelines:
 ## Change log
 2025-04-14 v2.7.0
 - Fixed issue with recovery time for some devices
+- Fixed issue with night color theme not working if sleep time was after midnight
 
 2025-04-12 v2.6.0
 - AOD with outline as an option (Clock outline style)
