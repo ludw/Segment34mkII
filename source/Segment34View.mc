@@ -848,7 +848,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(theme == 21) { return [0xCCCCCC, 0xAA00FF, 0xCCCCCC, 0xAA00FF, 0xbb34ff, 0x000000, 0x9a9a9a, 0x000000, 0xFF5500, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555]; } // Purple on White AMOLED
         if(theme == 22) { return [0x282828, 0xAA55AA, 0x282828, 0xAA55AA, 0xaa77aa, 0xFFFFFF, 0x9a9a9a, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Purple on black AMOLED
                           return [0x302b24, 0xffac3f, 0x302b24, 0xff960c, 0xffbf65, 0xffb759, 0x9a784d, 0xa8d6fd, 0xfdb500, 0xa8d6fd, 0x000000, 0xffdeb4, 0xe3efd2]; // Amber AMOLED
-        //                       fieldBg,   fieldLbl, clockBg,  clock,    clock,    date,     dateDim,  notif,    stress,   bodybatt, bg,       dataVal,  moon
+        //                       fieldBg,   fieldLbl, clockBg,  clock,    outline,  date,     dateDim,  notif,    stress,   bodybatt, bg,       dataVal,  moon
 
     }
 
