@@ -46,15 +46,18 @@ Pull requests are welcome, but please follow the following guidelines:
      Explain things that look strange or values that has to be looked up to be understood.
 
  ## TODO / Things people have asked for
-- FAQ page
 - Localization
 - Adjustable font size
 - Goal completion marker
 - Pressure trend
 - Race predictions
 - Weather caching
+- Monthly run/bike distance
 
 ## Change log
+2025-04-14 v2.7.0
+- Fixed issue with recovery time for some devices
+
 2025-04-12 v2.6.0
 - AOD with outline as an option (Clock outline style)
 - Option for two 4 digit fields in bottom field layout

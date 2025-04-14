@@ -85,6 +85,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var isSleeping as Boolean = false;
     hidden var lastUpdate as Number? = null;
     hidden var doesPartialUpdate as Boolean = false;
+    hidden var hasComplications as Boolean = false;
     
     hidden var propIs24H as Boolean = false;
     hidden var propTheme as Integer = 0;
@@ -199,6 +200,8 @@ class Segment34View extends WatchUi.WatchFace {
         halfClockHeight = Math.round(clockHeight / 2);
         halfClockWidth = Math.round(clockWidth / 2);
         halfMarginY = Math.round(marginY / 2);
+
+        hasComplications = Toybox has :Complications;
 
         updateWeather();
     }
@@ -1149,7 +1152,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function updateStressAndBodyBatteryData() as Void {
-        if (Toybox has :Complications) {
+        if (hasComplications) {
             try {
                 var complication_stress = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_STRESS));
                 if (complication_stress != null && complication_stress.value != null) {
@@ -1347,11 +1350,22 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 6) { // Time to Recovery (h)
-            if(ActivityMonitor.getInfo() has :timeToRecovery) {
-                if(ActivityMonitor.getInfo().timeToRecovery != null) {
-                    val = ActivityMonitor.getInfo().timeToRecovery.format(numberFormat);
+            if (hasComplications) {
+                try {
+                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_RECOVERY_TIME));
+                    if (complication != null && complication.value != null) {
+                        var recovery_h = complication.value / 60.0;
+                        if(recovery_h < 10) { val = recovery_h.format("%.1f"); } else { val = recovery_h.format(numberFormat); }
+                    }
+                } catch(e) {}
+            } else {
+                if(ActivityMonitor.getInfo() has :timeToRecovery) {
+                    if(ActivityMonitor.getInfo().timeToRecovery != null) {
+                        val = ActivityMonitor.getInfo().timeToRecovery.format(numberFormat);
+                    }
                 }
             }
+            
         } else if(complicationType == 7) { // VO2 Max Running
             var profile = UserProfile.getProfile();
             if(profile has :vo2maxRunning) {
@@ -1445,7 +1459,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 20) { // Weather condition
             val = getWeatherCondition(true);
         } else if(complicationType == 21) { // Weekly run distance (km)
-            if (Toybox has :Complications) {
+            if (hasComplications) {
                 try {
                     var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
                     if (complication != null && complication.value != null) {
@@ -1457,7 +1471,7 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 22) { // Weekly run distance (miles)
-            if (Toybox has :Complications) {
+            if (hasComplications) {
                 try {
                     var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
                     if (complication != null && complication.value != null) {
@@ -1469,7 +1483,7 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 23) { // Weekly bike distance (km)
-            if (Toybox has :Complications) {
+            if (hasComplications) {
                 try {
                     var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
                     if (complication != null && complication.value != null) {
@@ -1481,7 +1495,7 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 24) { // Weekly bike distance (miles)
-            if (Toybox has :Complications) {
+            if (hasComplications) {
                 try {
                     var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
                     if (complication != null && complication.value != null) {
@@ -1493,7 +1507,7 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 25) { // Training status
-            if (Toybox has :Complications) {
+            if (hasComplications) {
                 try {
                     var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_TRAINING_STATUS));
                     if (complication != null && complication.value != null) {
@@ -1680,7 +1694,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 56) { // Millitary Date Time Group
             val = getDateTimeGroup();
         } else if(complicationType == 57) { // Time of the next Calendar Event
-            if (Toybox has :Complications) {
+            if (hasComplications) {
                 try {
                     var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_CALENDAR_EVENTS));
                     var colon_index = null;
@@ -1711,7 +1725,7 @@ class Segment34View extends WatchUi.WatchFace {
             active_calories = (active_calories > 0) ? active_calories : 0; // Ensure active calories is not negative
             val = active_calories.format(numberFormat) + "/" + total_calories.format(numberFormat);
         } else if(complicationType == 59) { // PulseOx
-            if (Toybox has :Complications) {
+            if (hasComplications) {
                 try {
                     var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_PULSE_OX));
                     if (complication != null && complication.value != null) {
