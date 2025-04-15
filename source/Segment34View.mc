@@ -788,7 +788,6 @@ class Segment34View extends WatchUi.WatchFace {
         for(var i=0; i<data.size(); i++) {
             if(data[i] == null) { break; }
             bar_height = Math.round(data[i] / scale);
-            System.println([y, h, bar_height, data[i], scale]);
             dc.drawRectangle(x - half_width + i * (histogramBarWidth + histogramBarSpacing), y + (h - bar_height), histogramBarWidth, bar_height);
         }
     }
@@ -1816,19 +1815,19 @@ class Segment34View extends WatchUi.WatchFace {
         var iterator = null;
         var ret = new Array<Number>[30];
         if(dataSource == 0) {
-            iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 30});
+            iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 30, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
         } else if(dataSource == 1) {
-            iterator = Toybox.SensorHistory.getElevationHistory({:period => 30});
+            iterator = Toybox.SensorHistory.getElevationHistory({:period => 30, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
         } else if(dataSource == 2) {
-            iterator = Toybox.SensorHistory.getHeartRateHistory({:period => 30});
+            iterator = Toybox.SensorHistory.getHeartRateHistory({:period => 30, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
         } else if(dataSource == 3) {
-            iterator = Toybox.SensorHistory.getOxygenSaturationHistory({:period => 30});
+            iterator = Toybox.SensorHistory.getOxygenSaturationHistory({:period => 30, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
         } else if(dataSource == 4) {
-            iterator = Toybox.SensorHistory.getPressureHistory({:period => 30});
+            iterator = Toybox.SensorHistory.getPressureHistory({:period => 30, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
         } else if(dataSource == 5) {
-            iterator = Toybox.SensorHistory.getStressHistory({:period => 30});
+            iterator = Toybox.SensorHistory.getStressHistory({:period => 30, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
         } else if(dataSource == 6) {
-            iterator = Toybox.SensorHistory.getTemperatureHistory({:period => 30});
+            iterator = Toybox.SensorHistory.getTemperatureHistory({:period => 30, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
         }
 
         if(iterator == null) { return ret; }
@@ -1836,12 +1835,13 @@ class Segment34View extends WatchUi.WatchFace {
         var max = iterator.getMax();
         var sample = iterator.next();
         var count = 0;
-        while(sample != null and sample.data != null) {
-            ret[count] = Math.round(sample.data / max * 100);
+        while(sample != null) {
+            if(sample.data != null) {
+                ret[count] = Math.round(sample.data / max * 100);
+            }
             sample = iterator.next();
             count++;
         }
-
         return ret;
     } 
 

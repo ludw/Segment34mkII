@@ -55,7 +55,10 @@ Pull requests are welcome, but please follow the following guidelines:
 - Monthly run/bike distance
 
 ## Change log
-2025-04-14 v2.7.0
+2025-04-15 v2.7.1
+- Histogram was wrong way around
+
+2025-04-15 v2.7.0
 - Option to show histogram at the top instead of two data fields and moon phase
 - Fixed issue with recovery time for some devices
 - Fixed issue with night color theme not working if sleep time was after midnight
