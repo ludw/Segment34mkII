@@ -33,6 +33,9 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var fieldSpaceingAdj as Number = 0;
     hidden var textSideAdj as Number = 0;
     hidden var iconYAdj as Number = 0;
+    hidden var histogramBarWidth as Number = 2;
+    hidden var histogramBarSpacing as Number = 2;
+    hidden var histogramHeight as Number = 20;
 
     hidden var fontMoon as WatchUi.FontResource;
     hidden var fontIcons as WatchUi.FontResource;
@@ -68,8 +71,9 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var dataBattery as String = "";
     hidden var dataAODLeft as String = "";
     hidden var dataAODRight as String = "";
-    private var dataBbatt as Number = 0;
-    private var dataStress as Number = 0;
+    hidden var dataBbatt as Number = 0;
+    hidden var dataStress as Number = 0;
+    hidden var graphData1 as Array<Number>?;
 
     hidden var dataLabelTopLeft as String = "";
     hidden var dataLabelTopRight as String = "";
@@ -119,14 +123,15 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propHemisphere as Number = 0;
     hidden var propHourFormat as Number = 0;
     hidden var propZeropadHour as Boolean = true;
-    hidden var propShowMoonPhase as Boolean = true;
     hidden var propTempUnit as Number = 0;
     hidden var propWindUnit as Number = 0;
     hidden var propPressureUnit as Number = 0;
-    hidden var propWeatherLine1Shows as Number = 49;
-    hidden var propWeatherLine2Shows as Number = 50;
+    hidden var propTopPartShows as Number = 0;
+    hidden var propHistogramData as Number = 0;
     hidden var propSunriseFieldShows as Number = 39;
     hidden var propSunsetFieldShows as Number = 40;
+    hidden var propWeatherLine1Shows as Number = 49;
+    hidden var propWeatherLine2Shows as Number = 50;
     hidden var propDateFormat as Number = 0;
     hidden var propShowStressAndBodyBattery as Boolean = true;
     hidden var propShowNotificationCount as Boolean = true;
@@ -230,6 +235,9 @@ class Segment34View extends WatchUi.WatchFace {
         baseY = centerY - smallDataHeight + 4;
         fieldSpaceingAdj = 10;
         barBottomAdj = 1;
+        histogramBarWidth = 1;
+        histogramBarSpacing = 1;
+        histogramHeight = 15;
     }
 
     (:Round260)
@@ -257,6 +265,9 @@ class Segment34View extends WatchUi.WatchFace {
         fieldSpaceingAdj = 15;
         bottomFiveAdj = 2;
         barBottomAdj = 1;
+        histogramBarWidth = 1;
+        histogramBarSpacing = 1;
+        histogramHeight = 18;
     }
 
     (:Round280)
@@ -283,6 +294,9 @@ class Segment34View extends WatchUi.WatchFace {
         baseY = centerY - smallDataHeight - 4;
         bottomFiveAdj = 5;
         barBottomAdj = 1;
+        histogramBarWidth = 1;
+        histogramBarSpacing = 1;
+        histogramHeight = 20;
     }
 
     (:Round360)
@@ -321,6 +335,7 @@ class Segment34View extends WatchUi.WatchFace {
         textSideAdj = 10;
         iconYAdj = -4;
         marginY = 10;
+        histogramHeight = 20;
     }
 
     (:Round390)
@@ -357,6 +372,7 @@ class Segment34View extends WatchUi.WatchFace {
         barBottomAdj = 2;
         bottomFiveAdj = 6;
         marginY = 10;
+        histogramHeight = 25;
     }
 
     (:Round416)
@@ -392,6 +408,7 @@ class Segment34View extends WatchUi.WatchFace {
         baseY = centerY - smallDataHeight - 5;
         barBottomAdj = 2;
         bottomFiveAdj = 8;
+        histogramHeight = 25;
     }
 
     (:Round454)
@@ -430,6 +447,7 @@ class Segment34View extends WatchUi.WatchFace {
         bottomFiveAdj = 4;
         barBottomAdj = 2;
         marginY = 17;
+        histogramHeight = 30;
     }
 
     // Load your resources here
@@ -518,37 +536,42 @@ class Segment34View extends WatchUi.WatchFace {
         // Clear
         dc.setColor(themeColors[bg], themeColors[bg]);
         dc.clear();
+        var yn1 = baseY - halfClockHeight - marginY - smallDataHeight;
+        var yn2 = yn1 - marginY - smallDataHeight;
+        var yn3 = yn2 - marginY - histogramHeight;
 
-        // Draw Top data fields
-        var top_data_height = 0;
-        var top_field_font = fontTinyData;
-        var top_field_center_offset = 20;
-        if(!propShowMoonPhase) { top_field_center_offset = 10; }
-        if(propLabelVisibility == 0 or propLabelVisibility == 3) {
-            dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
-            dc.drawText(centerX - top_field_center_offset, marginY, fontLabel, dataLabelTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
-            dc.drawText(centerX + top_field_center_offset, marginY, fontLabel, dataLabelTopRight, Graphics.TEXT_JUSTIFY_LEFT);
-
-            top_data_height = labelHeight + halfMarginY;
-        }
-        
-        dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
-        if(propShowMoonPhase) {
-            dc.drawText(centerX - top_field_center_offset, marginY + top_data_height, top_field_font, dataTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
-            dc.drawText(centerX + top_field_center_offset, marginY + top_data_height, top_field_font, dataTopRight, Graphics.TEXT_JUSTIFY_LEFT);
-
-            // Draw Moon
-            dc.setColor(themeColors[moon], Graphics.COLOR_TRANSPARENT);
-            dc.drawText(centerX, marginY + ((top_data_height + tinyDataHeight) / 2), fontMoon, dataMoon, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        // Draw Top data fields or histogram
+        if(propTopPartShows == 2) {
+            drawHistogram(dc, graphData1, centerX, yn3, histogramHeight);
         } else {
-            if(top_data_height == 0) { top_field_font = fontSmallData; }
-            dc.drawText(centerX - top_field_center_offset, marginY + top_data_height, top_field_font, dataTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
-            dc.drawText(centerX + top_field_center_offset, marginY + top_data_height, top_field_font, dataTopRight, Graphics.TEXT_JUSTIFY_LEFT);
+            var top_data_height = 0;
+            var top_field_font = fontTinyData;
+            var top_field_center_offset = 20;
+            if(propTopPartShows == 1) { top_field_center_offset = labelHeight; }
+            if(propLabelVisibility == 0 or propLabelVisibility == 3) {
+                dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
+                dc.drawText(centerX - top_field_center_offset, marginY, fontLabel, dataLabelTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
+                dc.drawText(centerX + top_field_center_offset, marginY, fontLabel, dataLabelTopRight, Graphics.TEXT_JUSTIFY_LEFT);
+
+                top_data_height = labelHeight + halfMarginY;
+            }
+
+            dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+            if(propTopPartShows == 0) {
+                dc.drawText(centerX - top_field_center_offset, marginY + top_data_height, top_field_font, dataTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
+                dc.drawText(centerX + top_field_center_offset, marginY + top_data_height, top_field_font, dataTopRight, Graphics.TEXT_JUSTIFY_LEFT);
+
+                // Draw Moon
+                dc.setColor(themeColors[moon], Graphics.COLOR_TRANSPARENT);
+                dc.drawText(centerX, marginY + ((top_data_height + tinyDataHeight) / 2), fontMoon, dataMoon, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            } else {
+                if(top_data_height == 0) { top_field_font = fontSmallData; }
+                dc.drawText(centerX - top_field_center_offset, marginY + top_data_height, top_field_font, dataTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
+                dc.drawText(centerX + top_field_center_offset, marginY + top_data_height, top_field_font, dataTopRight, Graphics.TEXT_JUSTIFY_LEFT);
+            }
         }
 
         // Draw Lines above clock
-        var yn1 = baseY - halfClockHeight - marginY - smallDataHeight;
-        var yn2 = yn1 - marginY - smallDataHeight;
         dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
         dc.drawText(centerX, yn2, fontSmallData, dataAboveLine1, Graphics.TEXT_JUSTIFY_CENTER);
         dc.drawText(centerX, yn1, fontSmallData, dataAboveLine2, Graphics.TEXT_JUSTIFY_CENTER);        
@@ -752,6 +775,21 @@ class Segment34View extends WatchUi.WatchFace {
             var stress_bar = Math.round(dataStress * (clockHeight / 100.0));
             dc.setColor(themeColors[stress], Graphics.COLOR_TRANSPARENT);
             dc.fillRectangle(centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - stress_bar + barBottomAdj, barWidth, stress_bar);
+        }
+    }
+
+    hidden function drawHistogram(dc as Dc, data as Array<Number>?, x as Number, y as Number, h as Number) as Void {
+        if(data == null) { return; }
+        var scale = 100.0 / h;
+        var half_width = Math.round((data.size() * (histogramBarWidth + histogramBarSpacing)) / 2);
+        var bar_height = 0;
+
+        dc.setColor(themeColors[clock], Graphics.COLOR_TRANSPARENT);
+        for(var i=0; i<data.size(); i++) {
+            if(data[i] == null) { break; }
+            bar_height = Math.round(data[i] / scale);
+            System.println([y, h, bar_height, data[i], scale]);
+            dc.drawRectangle(x - half_width + i * (histogramBarWidth + histogramBarSpacing), y + (h - bar_height), histogramBarWidth, bar_height);
         }
     }
 
@@ -1011,9 +1049,10 @@ class Segment34View extends WatchUi.WatchFace {
         propCustomSaturation2 = Application.Properties.getValue("customSaturation2") as Number;
         propClockOutlineStyle = Application.Properties.getValue("clockOutlineStyle") as Number;
 
+        propTopPartShows = Application.Properties.getValue("topPartShows") as Number;
+        propHistogramData = Application.Properties.getValue("histogramData") as Number;
         propSunriseFieldShows = Application.Properties.getValue("sunriseFieldShows") as Number;
         propSunsetFieldShows = Application.Properties.getValue("sunsetFieldShows") as Number;
-        propShowMoonPhase = Application.Properties.getValue("showMoonPhase") as Boolean;
         propWeatherLine1Shows = Application.Properties.getValue("weatherLine1Shows") as Number;
         propWeatherLine2Shows = Application.Properties.getValue("weatherLine2Shows") as Number;
         propDateFieldShows = Application.Properties.getValue("dateFieldShows") as Number;
@@ -1082,6 +1121,10 @@ class Segment34View extends WatchUi.WatchFace {
         dataBattery = getBattData();
         dataAODLeft = getValueByType(propAodFieldShows, 10);
         dataAODRight = getValueByType(propAodRightFieldShows, 5);
+
+        if(propTopPartShows == 2) {
+            graphData1 = getDataArrayByType(propHistogramData);
+        }
 
         dataLabelTopLeft = getLabelByType(propSunriseFieldShows, 1);
         dataLabelTopRight = getLabelByType(propSunsetFieldShows, 1);
@@ -1769,7 +1812,40 @@ class Segment34View extends WatchUi.WatchFace {
         return val;
     }
 
-    hidden function getLabelByType(complicationType, labelSize as Number) as String {
+    hidden function getDataArrayByType(dataSource as Number) as Array<Number> {
+        var iterator = null;
+        var ret = new Array<Number>[30];
+        if(dataSource == 0) {
+            iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 30});
+        } else if(dataSource == 1) {
+            iterator = Toybox.SensorHistory.getElevationHistory({:period => 30});
+        } else if(dataSource == 2) {
+            iterator = Toybox.SensorHistory.getHeartRateHistory({:period => 30});
+        } else if(dataSource == 3) {
+            iterator = Toybox.SensorHistory.getOxygenSaturationHistory({:period => 30});
+        } else if(dataSource == 4) {
+            iterator = Toybox.SensorHistory.getPressureHistory({:period => 30});
+        } else if(dataSource == 5) {
+            iterator = Toybox.SensorHistory.getStressHistory({:period => 30});
+        } else if(dataSource == 6) {
+            iterator = Toybox.SensorHistory.getTemperatureHistory({:period => 30});
+        }
+
+        if(iterator == null) { return ret; }
+
+        var max = iterator.getMax();
+        var sample = iterator.next();
+        var count = 0;
+        while(sample != null and sample.data != null) {
+            ret[count] = Math.round(sample.data / max * 100);
+            sample = iterator.next();
+            count++;
+        }
+
+        return ret;
+    } 
+
+    hidden function getLabelByType(complicationType as Number, labelSize as Number) as String {
         // labelSize 1 = short, 2 = mid, 3 = long
 
         // Handle HR special case

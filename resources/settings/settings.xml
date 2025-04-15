@@ -110,7 +110,15 @@
         <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.sunriseFieldShows" title="Sunrise field shows:">
+    <setting propertyKey="@Properties.topPartShows" title="Top Part shows">
+            <settingConfig type="list">
+                <listEntry value="0">Two small data fields and Moon phase</listEntry>
+                <listEntry value="1">Two small data fields</listEntry>
+                <listEntry value="2">A histogram graph</listEntry>
+            </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.sunriseFieldShows" title="Top left small data field:">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
             <listEntry value="0">Active min / week</listEntry>
@@ -161,7 +169,7 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.sunsetFieldShows" title="Sunset field shows:">
+    <setting propertyKey="@Properties.sunsetFieldShows" title="Top right small data field:">
         <settingConfig type="list">
             <listEntry value="-2">Hidden</listEntry>
             <listEntry value="0">Active min / week</listEntry>
@@ -210,6 +218,18 @@
             <listEntry value="54">Weather: Chance of Precipitation</listEntry>
             <listEntry value="57">Next calendar event time</listEntry>
         </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.histogramData" title="Histogram shows (must be enabled in Top Part shows)">
+            <settingConfig type="list">
+                <listEntry value="0">Body battery history</listEntry>
+                <listEntry value="1">Elevation history</listEntry>
+                <listEntry value="2">Heart rate history</listEntry>
+                <listEntry value="3">Oxygen saturation history</listEntry>
+                <listEntry value="4">Pressure history</listEntry>
+                <listEntry value="5">Stress history</listEntry>
+                <listEntry value="6">Temperature sensor history</listEntry>
+            </settingConfig>
     </setting>
 
     <setting propertyKey="@Properties.smallFontVariant" title="Small dot matrix font variant:">
@@ -1000,10 +1020,6 @@
     </setting>
 
     <setting propertyKey="@Properties.showStressAndBodyBattery" title="Show Stress (orange) and Body Battery (blue) bars">
-        <settingConfig type="boolean" />
-    </setting>
-
-    <setting propertyKey="@Properties.showMoonPhase" title="Show Moon Phase">
         <settingConfig type="boolean" />
     </setting>
 
