@@ -1812,35 +1812,59 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getDataArrayByType(dataSource as Number) as Array<Number> {
+        var ret = [];
         var iterator = null;
-        var ret = new Array<Number>[30];
+        var max = null;
+        var twoHours = new Time.Duration(7200);
+        
         if(dataSource == 0) {
-            iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 30, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
+            iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
+            max = 100;
         } else if(dataSource == 1) {
-            iterator = Toybox.SensorHistory.getElevationHistory({:period => 30, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
+            iterator = Toybox.SensorHistory.getElevationHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
         } else if(dataSource == 2) {
-            iterator = Toybox.SensorHistory.getHeartRateHistory({:period => 30, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
+            if(Toybox.ActivityMonitor has :getHeartRateHistory) {
+                iterator = Toybox.ActivityMonitor.getHeartRateHistory(twoHours, false);
+            }
         } else if(dataSource == 3) {
-            iterator = Toybox.SensorHistory.getOxygenSaturationHistory({:period => 30, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
+            iterator = Toybox.SensorHistory.getOxygenSaturationHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
+            max = 100;
         } else if(dataSource == 4) {
-            iterator = Toybox.SensorHistory.getPressureHistory({:period => 30, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
+            iterator = Toybox.SensorHistory.getPressureHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
         } else if(dataSource == 5) {
-            iterator = Toybox.SensorHistory.getStressHistory({:period => 30, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
+            iterator = Toybox.SensorHistory.getStressHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
+            max = 100;
         } else if(dataSource == 6) {
-            iterator = Toybox.SensorHistory.getTemperatureHistory({:period => 30, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
+            iterator = Toybox.SensorHistory.getTemperatureHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
         }
 
         if(iterator == null) { return ret; }
-
-        var max = iterator.getMax();
+        if(max == null) {
+            max = iterator.getMax();
+        }
         var sample = iterator.next();
         var count = 0;
         while(sample != null) {
-            if(sample.data != null) {
-                ret[count] = Math.round(sample.data / max * 100);
+            if(dataSource == 2) {
+                if(sample.heartRate != null) {
+                    ret.add(Math.round(sample.heartRate / max * 100));
+                }
+            } else {
+                if(sample.data != null) {
+                    ret.add(Math.round(sample.data / max * 100));
+                }
             }
             sample = iterator.next();
             count++;
+        }
+        
+        if(ret.size() > 45) {
+            var reduced_ret = [];
+            var step = Math.ceil((ret.size() as Float) / 40.0).toNumber();
+            for(var i=0; i<ret.size(); i += step) {
+                reduced_ret.add(ret[i]);
+            }
+            return reduced_ret;
         }
         return ret;
     } 
