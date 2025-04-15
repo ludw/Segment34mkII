@@ -108,10 +108,6 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.zeropadHour" title="Zeropad hour on clock">
-        <settingConfig type="boolean" />
-    </setting>
-
     <setting propertyKey="@Properties.topPartShows" title="Top Part shows">
             <settingConfig type="list">
                 <listEntry value="0">Two small data fields and Moon phase</listEntry>
@@ -240,151 +236,6 @@
                 <listEntry value="1">Blended</listEntry>
                 <listEntry value="2">Lines (highest contrast)</listEntry>
             </settingConfig>
-    </setting>
-    <setting propertyKey="@Properties.hemisphere" title="Hemisphere (for Moon icon)">
-            <settingConfig type="list">
-                <listEntry value="0">Northern</listEntry>
-                <listEntry value="1">Southern</listEntry>
-            </settingConfig>
-    </setting>
-    <setting propertyKey="@Properties.hourFormat" title="Time format (12/24h)">
-        <settingConfig type="list">
-            <listEntry value="0">Auto - Use system setting</listEntry>
-            <listEntry value="1">24h</listEntry>
-            <listEntry value="2">12h</listEntry>
-        </settingConfig>
-    </setting>
-    <setting propertyKey="@Properties.dateFormat" title="Date format">
-        <settingConfig type="list">
-            <listEntry value="0">WEEKDAY, DD MONTH YYYY</listEntry>
-            <listEntry value="6">WEEKDAY, DD MONTH</listEntry>
-            <listEntry value="1">YYYY-MM-DD</listEntry>
-            <listEntry value="2">MM/DD/YYYY</listEntry>
-            <listEntry value="3">DD.MM.YYYY</listEntry>
-            <listEntry value="7">WEEKDAY, YYYY-MM-DD</listEntry>
-            <listEntry value="8">WEEKDAY, MM/DD/YYYY</listEntry>
-            <listEntry value="9">WEEKDAY, DD.MM.YYYY</listEntry>
-            <listEntry value="4">WEEKDAY, DD MONTH (Week)</listEntry>
-            <listEntry value="5">WEEKDAY, DD MONTH YYYY (Week)</listEntry>
-        </settingConfig>
-    </setting>
-
-    <setting propertyKey="@Properties.tzName1" title="Alternative Timezone 1 label">
-        <settingConfig type="alphaNumeric" />
-    </setting>
-    <setting propertyKey="@Properties.tzOffset1" title="Alternative Timezone 1 offset">
-        <settingConfig type="list">
-            <listEntry value="-720">UTC-12:00</listEntry>
-            <listEntry value="-660">UTC-11:00</listEntry>
-            <listEntry value="-600">UTC-10:00</listEntry>
-            <listEntry value="-570">UTC-09:30</listEntry>
-            <listEntry value="-540">UTC-09:00</listEntry>
-            <listEntry value="-480">UTC-08:00</listEntry>
-            <listEntry value="-420">UTC-07:00</listEntry>
-            <listEntry value="-360">UTC-06:00</listEntry>
-            <listEntry value="-300">UTC-05:00</listEntry>
-            <listEntry value="-240">UTC-04:00</listEntry>
-            <listEntry value="-210">UTC-03:30</listEntry>
-            <listEntry value="-180">UTC-03:00</listEntry>
-            <listEntry value="-120">UTC-02:00</listEntry>
-            <listEntry value="-60">UTC-01:00</listEntry>
-            <listEntry value="0">UTC+0</listEntry>
-            <listEntry value="60">UTC+01:00</listEntry>
-            <listEntry value="120">UTC+02:00</listEntry>
-            <listEntry value="180">UTC+03:00</listEntry>
-            <listEntry value="210">UTC+03:30</listEntry>
-            <listEntry value="240">UTC+04:00</listEntry>
-            <listEntry value="270">UTC+04:30</listEntry>
-            <listEntry value="300">UTC+05:00</listEntry>
-            <listEntry value="330">UTC+05:30</listEntry>
-            <listEntry value="345">UTC+05:45</listEntry>
-            <listEntry value="360">UTC+06:00</listEntry>
-            <listEntry value="390">UTC+06:30</listEntry>
-            <listEntry value="420">UTC+07:00</listEntry>
-            <listEntry value="480">UTC+08:00</listEntry>
-            <listEntry value="525">UTC+08:45</listEntry>
-            <listEntry value="540">UTC+09:00</listEntry>
-            <listEntry value="570">UTC+09:30</listEntry>
-            <listEntry value="600">UTC+10:00</listEntry>
-            <listEntry value="630">UTC+10:30</listEntry>
-            <listEntry value="660">UTC+11:00</listEntry>
-            <listEntry value="720">UTC+12:00</listEntry>
-            <listEntry value="765">UTC+12:45</listEntry>
-            <listEntry value="780">UTC+13:00</listEntry>
-            <listEntry value="840">UTC+14:00</listEntry>
-        </settingConfig>
-    </setting>
-
-    <setting propertyKey="@Properties.tzName2" title="Alternative Timezone 2 label">
-        <settingConfig type="alphaNumeric" />
-    </setting>
-   <setting propertyKey="@Properties.tzOffset2" title="Alternative Timezone 2 offset">
-        <settingConfig type="list">
-            <listEntry value="-720">UTC-12:00</listEntry>
-            <listEntry value="-660">UTC-11:00</listEntry>
-            <listEntry value="-600">UTC-10:00</listEntry>
-            <listEntry value="-570">UTC-09:30</listEntry>
-            <listEntry value="-540">UTC-09:00</listEntry>
-            <listEntry value="-480">UTC-08:00</listEntry>
-            <listEntry value="-420">UTC-07:00</listEntry>
-            <listEntry value="-360">UTC-06:00</listEntry>
-            <listEntry value="-300">UTC-05:00</listEntry>
-            <listEntry value="-240">UTC-04:00</listEntry>
-            <listEntry value="-210">UTC-03:30</listEntry>
-            <listEntry value="-180">UTC-03:00</listEntry>
-            <listEntry value="-120">UTC-02:00</listEntry>
-            <listEntry value="-60">UTC-01:00</listEntry>
-            <listEntry value="0">UTC+0</listEntry>
-            <listEntry value="60">UTC+01:00</listEntry>
-            <listEntry value="120">UTC+02:00</listEntry>
-            <listEntry value="180">UTC+03:00</listEntry>
-            <listEntry value="210">UTC+03:30</listEntry>
-            <listEntry value="240">UTC+04:00</listEntry>
-            <listEntry value="270">UTC+04:30</listEntry>
-            <listEntry value="300">UTC+05:00</listEntry>
-            <listEntry value="330">UTC+05:30</listEntry>
-            <listEntry value="345">UTC+05:45</listEntry>
-            <listEntry value="360">UTC+06:00</listEntry>
-            <listEntry value="390">UTC+06:30</listEntry>
-            <listEntry value="420">UTC+07:00</listEntry>
-            <listEntry value="480">UTC+08:00</listEntry>
-            <listEntry value="525">UTC+08:45</listEntry>
-            <listEntry value="540">UTC+09:00</listEntry>
-            <listEntry value="570">UTC+09:30</listEntry>
-            <listEntry value="600">UTC+10:00</listEntry>
-            <listEntry value="630">UTC+10:30</listEntry>
-            <listEntry value="660">UTC+11:00</listEntry>
-            <listEntry value="720">UTC+12:00</listEntry>
-            <listEntry value="765">UTC+12:45</listEntry>
-            <listEntry value="780">UTC+13:00</listEntry>
-            <listEntry value="840">UTC+14:00</listEntry>
-        </settingConfig>
-    </setting>
-
-    <setting propertyKey="@Properties.tempUnit" title="Temperature unit">
-        <settingConfig type="list">
-            <listEntry value="0">Auto - Use system setting</listEntry>
-            <listEntry value="1">C</listEntry>
-            <listEntry value="2">F</listEntry>
-        </settingConfig>
-    </setting>
-
-    <setting propertyKey="@Properties.windUnit" title="Wind speed unit">
-        <settingConfig type="list">
-            <listEntry value="0">m/s</listEntry>
-            <listEntry value="1">km/h</listEntry>
-            <listEntry value="2">mph</listEntry>
-            <listEntry value="3">knots</listEntry>
-            <listEntry value="4">beufort</listEntry>
-        </settingConfig>
-    </setting>
-
-    <setting propertyKey="@Properties.pressureUnit" title="Pressure unit">
-        <settingConfig type="list">
-            <listEntry value="0">hPA</listEntry>
-            <listEntry value="1">mmHG</listEntry>
-            <listEntry value="2">inHG</listEntry>
-        </settingConfig>
     </setting>
 
     <setting propertyKey="@Properties.weatherLine1Shows" title="Line 1 above clock shows:">
@@ -865,10 +716,6 @@
             </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.weekOffset" title="Week number offset (0 = normal week number)">
-        <settingConfig type="numeric" />
-    </setting>
-
     <setting propertyKey="@Properties.pressToOpenTop" title="Press top third to open:">
         <settingConfig type="list">
             <listEntry value="0">Nothing</listEntry>
@@ -1003,6 +850,156 @@
             <listEntry value="37">Solar Input</listEntry>
         </settingConfig>
     </setting>
+
+    <setting propertyKey="@Properties.hemisphere" title="Hemisphere (for Moon icon)">
+            <settingConfig type="list">
+                <listEntry value="0">Northern</listEntry>
+                <listEntry value="1">Southern</listEntry>
+            </settingConfig>
+    </setting>
+    <setting propertyKey="@Properties.hourFormat" title="Time format (12/24h)">
+        <settingConfig type="list">
+            <listEntry value="0">Auto - Use system setting</listEntry>
+            <listEntry value="1">24h</listEntry>
+            <listEntry value="2">12h</listEntry>
+        </settingConfig>
+    </setting>
+    <setting propertyKey="@Properties.dateFormat" title="Date format">
+        <settingConfig type="list">
+            <listEntry value="0">WEEKDAY, DD MONTH YYYY</listEntry>
+            <listEntry value="6">WEEKDAY, DD MONTH</listEntry>
+            <listEntry value="1">YYYY-MM-DD</listEntry>
+            <listEntry value="2">MM/DD/YYYY</listEntry>
+            <listEntry value="3">DD.MM.YYYY</listEntry>
+            <listEntry value="7">WEEKDAY, YYYY-MM-DD</listEntry>
+            <listEntry value="8">WEEKDAY, MM/DD/YYYY</listEntry>
+            <listEntry value="9">WEEKDAY, DD.MM.YYYY</listEntry>
+            <listEntry value="4">WEEKDAY, DD MONTH (Week)</listEntry>
+            <listEntry value="5">WEEKDAY, DD MONTH YYYY (Week)</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.tzName1" title="Alternative Timezone 1 label">
+        <settingConfig type="alphaNumeric" />
+    </setting>
+    <setting propertyKey="@Properties.tzOffset1" title="Alternative Timezone 1 offset">
+        <settingConfig type="list">
+            <listEntry value="-720">UTC-12:00</listEntry>
+            <listEntry value="-660">UTC-11:00</listEntry>
+            <listEntry value="-600">UTC-10:00</listEntry>
+            <listEntry value="-570">UTC-09:30</listEntry>
+            <listEntry value="-540">UTC-09:00</listEntry>
+            <listEntry value="-480">UTC-08:00</listEntry>
+            <listEntry value="-420">UTC-07:00</listEntry>
+            <listEntry value="-360">UTC-06:00</listEntry>
+            <listEntry value="-300">UTC-05:00</listEntry>
+            <listEntry value="-240">UTC-04:00</listEntry>
+            <listEntry value="-210">UTC-03:30</listEntry>
+            <listEntry value="-180">UTC-03:00</listEntry>
+            <listEntry value="-120">UTC-02:00</listEntry>
+            <listEntry value="-60">UTC-01:00</listEntry>
+            <listEntry value="0">UTC+0</listEntry>
+            <listEntry value="60">UTC+01:00</listEntry>
+            <listEntry value="120">UTC+02:00</listEntry>
+            <listEntry value="180">UTC+03:00</listEntry>
+            <listEntry value="210">UTC+03:30</listEntry>
+            <listEntry value="240">UTC+04:00</listEntry>
+            <listEntry value="270">UTC+04:30</listEntry>
+            <listEntry value="300">UTC+05:00</listEntry>
+            <listEntry value="330">UTC+05:30</listEntry>
+            <listEntry value="345">UTC+05:45</listEntry>
+            <listEntry value="360">UTC+06:00</listEntry>
+            <listEntry value="390">UTC+06:30</listEntry>
+            <listEntry value="420">UTC+07:00</listEntry>
+            <listEntry value="480">UTC+08:00</listEntry>
+            <listEntry value="525">UTC+08:45</listEntry>
+            <listEntry value="540">UTC+09:00</listEntry>
+            <listEntry value="570">UTC+09:30</listEntry>
+            <listEntry value="600">UTC+10:00</listEntry>
+            <listEntry value="630">UTC+10:30</listEntry>
+            <listEntry value="660">UTC+11:00</listEntry>
+            <listEntry value="720">UTC+12:00</listEntry>
+            <listEntry value="765">UTC+12:45</listEntry>
+            <listEntry value="780">UTC+13:00</listEntry>
+            <listEntry value="840">UTC+14:00</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.tzName2" title="Alternative Timezone 2 label">
+        <settingConfig type="alphaNumeric" />
+    </setting>
+   <setting propertyKey="@Properties.tzOffset2" title="Alternative Timezone 2 offset">
+        <settingConfig type="list">
+            <listEntry value="-720">UTC-12:00</listEntry>
+            <listEntry value="-660">UTC-11:00</listEntry>
+            <listEntry value="-600">UTC-10:00</listEntry>
+            <listEntry value="-570">UTC-09:30</listEntry>
+            <listEntry value="-540">UTC-09:00</listEntry>
+            <listEntry value="-480">UTC-08:00</listEntry>
+            <listEntry value="-420">UTC-07:00</listEntry>
+            <listEntry value="-360">UTC-06:00</listEntry>
+            <listEntry value="-300">UTC-05:00</listEntry>
+            <listEntry value="-240">UTC-04:00</listEntry>
+            <listEntry value="-210">UTC-03:30</listEntry>
+            <listEntry value="-180">UTC-03:00</listEntry>
+            <listEntry value="-120">UTC-02:00</listEntry>
+            <listEntry value="-60">UTC-01:00</listEntry>
+            <listEntry value="0">UTC+0</listEntry>
+            <listEntry value="60">UTC+01:00</listEntry>
+            <listEntry value="120">UTC+02:00</listEntry>
+            <listEntry value="180">UTC+03:00</listEntry>
+            <listEntry value="210">UTC+03:30</listEntry>
+            <listEntry value="240">UTC+04:00</listEntry>
+            <listEntry value="270">UTC+04:30</listEntry>
+            <listEntry value="300">UTC+05:00</listEntry>
+            <listEntry value="330">UTC+05:30</listEntry>
+            <listEntry value="345">UTC+05:45</listEntry>
+            <listEntry value="360">UTC+06:00</listEntry>
+            <listEntry value="390">UTC+06:30</listEntry>
+            <listEntry value="420">UTC+07:00</listEntry>
+            <listEntry value="480">UTC+08:00</listEntry>
+            <listEntry value="525">UTC+08:45</listEntry>
+            <listEntry value="540">UTC+09:00</listEntry>
+            <listEntry value="570">UTC+09:30</listEntry>
+            <listEntry value="600">UTC+10:00</listEntry>
+            <listEntry value="630">UTC+10:30</listEntry>
+            <listEntry value="660">UTC+11:00</listEntry>
+            <listEntry value="720">UTC+12:00</listEntry>
+            <listEntry value="765">UTC+12:45</listEntry>
+            <listEntry value="780">UTC+13:00</listEntry>
+            <listEntry value="840">UTC+14:00</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.tempUnit" title="Temperature unit">
+        <settingConfig type="list">
+            <listEntry value="0">Auto - Use system setting</listEntry>
+            <listEntry value="1">C</listEntry>
+            <listEntry value="2">F</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.windUnit" title="Wind speed unit">
+        <settingConfig type="list">
+            <listEntry value="0">m/s</listEntry>
+            <listEntry value="1">km/h</listEntry>
+            <listEntry value="2">mph</listEntry>
+            <listEntry value="3">knots</listEntry>
+            <listEntry value="4">beufort</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.pressureUnit" title="Pressure unit">
+        <settingConfig type="list">
+            <listEntry value="0">hPA</listEntry>
+            <listEntry value="1">mmHG</listEntry>
+            <listEntry value="2">inHG</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.weekOffset" title="Week number offset (0 = normal week number)">
+        <settingConfig type="numeric" />
+    </setting>
     
     <setting propertyKey="@Properties.showClockBg" title="Show clock background">
         <settingConfig type="boolean" />
@@ -1013,6 +1010,10 @@
     </setting>
 
     <setting propertyKey="@Properties.showNotificationCount" title="Show Notification Count">
+        <settingConfig type="boolean" />
+    </setting>
+
+    <setting propertyKey="@Properties.zeropadHour" title="Zeropad hour on clock">
         <settingConfig type="boolean" />
     </setting>
 
