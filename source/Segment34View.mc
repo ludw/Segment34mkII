@@ -1829,7 +1829,7 @@ class Segment34View extends WatchUi.WatchFace {
                 val = "POSITION N/A";
             }
             
-        }  else if(complicationType == 62) { // Location Accuracy
+        } else if(complicationType == 62) { // Location Accuracy
             var acc = Activity.getActivityInfo().currentLocationAccuracy;
             if(acc != null) {
                 if(width < 4) {
@@ -1838,6 +1838,12 @@ class Segment34View extends WatchUi.WatchFace {
                     val = ["N/A", "LAST", "POOR", "USBL", "GOOD"][acc];
                 }
             }
+        } else if(complicationType == 63) { // Temperature, Wind, Humidity, Precipitation chance
+            var temp = getTemperature();
+            var wind = getWind();
+            var humidity = getHumidity();
+            var precip = getPrecip();
+            val = join([temp, wind, humidity, precip]);
         }
 
         return val;
