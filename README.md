@@ -55,6 +55,10 @@ Pull requests are welcome, but please follow the following guidelines:
 - Monthly run/bike distance
 
 ## Change log
+2025-04-16 v2.7.3
+- Better histogram scaling
+- HR histogram is broken, please ignore :)
+
 2025-04-15 v2.7.2
 - Histogram with sensible max values
 - Histogram shows 2 hours of data if possible
