@@ -1866,7 +1866,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(dataSource == 1) {
             iterator = Toybox.SensorHistory.getElevationHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
         } else if(dataSource == 2) {
-            iterator = Toybox.SensorHistory.getHeartRateHistory({:period => 10, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
+            iterator = Toybox.SensorHistory.getHeartRateHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
         } else if(dataSource == 3) {
             iterator = Toybox.SensorHistory.getOxygenSaturationHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
             max = 100;
@@ -1888,6 +1888,8 @@ class Segment34View extends WatchUi.WatchFace {
         while(sample != null) {
             if(sample.data != null) {
                 ret.add(Math.round(sample.data / max * 100));
+            } else {
+                ret.add(0);
             }
             sample = iterator.next();
             count++;
