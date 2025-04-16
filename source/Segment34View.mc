@@ -36,6 +36,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var histogramBarWidth as Number = 2;
     hidden var histogramBarSpacing as Number = 2;
     hidden var histogramHeight as Number = 20;
+    hidden var histogramTargetWidth as Number = 40;
 
     hidden var fontMoon as WatchUi.FontResource;
     hidden var fontIcons as WatchUi.FontResource;
@@ -73,7 +74,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var dataAODRight as String = "";
     hidden var dataBbatt as Number = 0;
     hidden var dataStress as Number = 0;
-    hidden var graphData1 as Array<Number>?;
+    hidden var dataGraph1 as Array<Number>?;
 
     hidden var dataLabelTopLeft as String = "";
     hidden var dataLabelTopRight as String = "";
@@ -85,6 +86,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var themeColors as Array<Graphics.ColorType> = [];
     hidden var nightMode as Boolean?;
     hidden var weatherCondition as CurrentConditions?;
+    hidden var hrHistoryData as Array<Number>?;
     hidden var canBurnIn as Boolean = false;
     hidden var isSleeping as Boolean = false;
     hidden var lastUpdate as Number? = null;
@@ -238,6 +240,7 @@ class Segment34View extends WatchUi.WatchFace {
         histogramBarWidth = 1;
         histogramBarSpacing = 1;
         histogramHeight = 15;
+        histogramTargetWidth = 30;
     }
 
     (:Round260)
@@ -336,6 +339,7 @@ class Segment34View extends WatchUi.WatchFace {
         iconYAdj = -4;
         marginY = 10;
         histogramHeight = 20;
+        histogramTargetWidth = 30;
     }
 
     (:Round390)
@@ -448,6 +452,7 @@ class Segment34View extends WatchUi.WatchFace {
         barBottomAdj = 2;
         marginY = 17;
         histogramHeight = 30;
+        histogramTargetWidth = 45;
     }
 
     // Load your resources here
@@ -542,7 +547,7 @@ class Segment34View extends WatchUi.WatchFace {
 
         // Draw Top data fields or histogram
         if(propTopPartShows == 2) {
-            drawHistogram(dc, graphData1, centerX, yn3, histogramHeight);
+            drawHistogram(dc, dataGraph1, centerX, yn3, histogramHeight);
         } else {
             var top_data_height = 0;
             var top_field_font = fontTinyData;
@@ -1154,7 +1159,7 @@ class Segment34View extends WatchUi.WatchFace {
         dataAODRight = getValueByType(propAodRightFieldShows, 5);
 
         if(propTopPartShows == 2) {
-            graphData1 = getDataArrayByType(propHistogramData);
+            dataGraph1 = getDataArrayByType(propHistogramData);
         }
 
         dataLabelTopLeft = getLabelByType(propSunriseFieldShows, 1);
@@ -1433,7 +1438,7 @@ class Segment34View extends WatchUi.WatchFace {
                     var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_RECOVERY_TIME));
                     if (complication != null && complication.value != null) {
                         var recovery_h = complication.value / 60.0;
-                        if(recovery_h < 10) { val = recovery_h.format("%.1f"); } else { val = recovery_h.format(numberFormat); }
+                        if(recovery_h < 10 and recovery_h != 0) { val = recovery_h.format("%.1f"); } else { val = recovery_h.format(numberFormat); }
                     }
                 } catch(e) {}
             } else {
@@ -1861,9 +1866,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(dataSource == 1) {
             iterator = Toybox.SensorHistory.getElevationHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
         } else if(dataSource == 2) {
-            if(Toybox.ActivityMonitor has :getHeartRateHistory) {
-                iterator = Toybox.ActivityMonitor.getHeartRateHistory(twoHours, false);
-            }
+            iterator = Toybox.SensorHistory.getHeartRateHistory({:period => 10, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
         } else if(dataSource == 3) {
             iterator = Toybox.SensorHistory.getOxygenSaturationHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
             max = 100;
@@ -1883,24 +1886,19 @@ class Segment34View extends WatchUi.WatchFace {
         var sample = iterator.next();
         var count = 0;
         while(sample != null) {
-            if(dataSource == 2) {
-                if(sample.heartRate != null) {
-                    ret.add(Math.round(sample.heartRate / max * 100));
-                }
-            } else {
-                if(sample.data != null) {
-                    ret.add(Math.round(sample.data / max * 100));
-                }
+            if(sample.data != null) {
+                ret.add(Math.round(sample.data / max * 100));
             }
             sample = iterator.next();
             count++;
         }
-        
-        if(ret.size() > 45) {
+        if(ret.size() > histogramTargetWidth) {
             var reduced_ret = [];
-            var step = Math.ceil((ret.size() as Float) / 40.0).toNumber();
-            for(var i=0; i<ret.size(); i += step) {
-                reduced_ret.add(ret[i]);
+            var step = (ret.size() as Float) / histogramTargetWidth.toFloat();
+            var closest_index = 0;
+            for(var i=0; i<histogramTargetWidth; i++) {
+                closest_index = Math.ceil(i * step).toNumber();
+                reduced_ret.add(ret[closest_index]);
             }
             return reduced_ret;
         }
