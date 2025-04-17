@@ -90,9 +90,9 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var canBurnIn as Boolean = false;
     hidden var isSleeping as Boolean = false;
     hidden var lastUpdate as Number? = null;
+    hidden var lastSlowUpdate as Number? = null;
     hidden var doesPartialUpdate as Boolean = false;
     hidden var hasComplications as Boolean = false;
-    hidden var slowDataInitialized as Boolean = false;
     
     hidden var propIs24H as Boolean = false;
     hidden var propTheme as Integer = 0;
@@ -476,15 +476,16 @@ class Segment34View extends WatchUi.WatchFace {
             doesPartialUpdate = false;
         }
 
-        if(now.sec % 60 == 0 or lastUpdate == null or unix_timestamp - lastUpdate >= propUpdateFreq) {
+        if(lastUpdate == null or unix_timestamp - lastUpdate >= propUpdateFreq) {
             lastUpdate = unix_timestamp;
             updateData(now);
+        }
 
-            if(now.sec % 60 == 0 or !slowDataInitialized) {
-                updateSlowData(now);
-                if(now.min % 5 == 0 or weatherCondition == null) {
-                    updateWeather();
-                }
+        if(now.sec % 60 == 0 or lastSlowUpdate == null or unix_timestamp - lastSlowUpdate >= 60) {
+            lastSlowUpdate = unix_timestamp;
+            updateSlowData(now);
+            if(now.min % 5 == 0 or weatherCondition == null) {
+                updateWeather();
             }
         }
 
@@ -504,6 +505,7 @@ class Segment34View extends WatchUi.WatchFace {
     // The user has just looked at their watch. Timers and animations may be started here.
     function onExitSleep() as Void {
         lastUpdate = null;
+        lastSlowUpdate = null;
         isSleeping = false;
         WatchUi.requestUpdate();
     }
@@ -511,6 +513,7 @@ class Segment34View extends WatchUi.WatchFace {
     // Terminate any active timers and prepare for slow updates.
     function onEnterSleep() as Void {
         lastUpdate = null;
+        lastSlowUpdate = null;
         isSleeping = true;
         WatchUi.requestUpdate();
     }
@@ -518,6 +521,7 @@ class Segment34View extends WatchUi.WatchFace {
     function onSettingsChanged() as Void {
         initialize();
         lastUpdate = null;
+        lastSlowUpdate = null;
         WatchUi.requestUpdate();
     }
 
@@ -1139,15 +1143,13 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function updateData(now as Gregorian.Info) as Void {
-        dataClock = getClockData(now);
+        
         updateStressAndBodyBatteryData();
         var fieldWidths = getFieldWidths();
-        
         dataTopLeft = getValueByType(propSunriseFieldShows, 5);
         dataTopRight = getValueByType(propSunsetFieldShows, 5);
         dataAboveLine1 = getValueByTypeWithUnit(propWeatherLine1Shows, 10);
         dataAboveLine2 = getValueByTypeWithUnit(propWeatherLine2Shows, 10);
-        dataClock = getClockData(now);
         dataBelow = getValueByTypeWithUnit(propDateFieldShows, 10);
         dataNotifications = getNotificationsData();
         dataBottomLeft = getValueByType(propLeftValueShows, fieldWidths[0]);
@@ -1167,16 +1169,16 @@ class Segment34View extends WatchUi.WatchFace {
         dataLabelBottomMiddle = getLabelByType(propMiddleValueShows, fieldWidths[1] - 1);
         dataLabelBottomRight = getLabelByType(propRightValueShows, fieldWidths[2] - 1);
         dataLabelBottomFourth = getLabelByType(propFourthValueShows, fieldWidths[3] - 1);
-
-        updateColorTheme();
     }
 
     hidden function updateSlowData(now as Gregorian.Info) as Void {
-        slowDataInitialized = true;
+        dataClock = getClockData(now);
         dataMoon = moonPhase(now);
         if(propTopPartShows == 2) {
             dataGraph1 = getDataArrayByType(propHistogramData);
         }
+
+        updateColorTheme();
     }
 
     hidden function updateSeconds(now as Gregorian.Info) as Void {
