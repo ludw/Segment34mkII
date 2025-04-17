@@ -92,6 +92,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var lastUpdate as Number? = null;
     hidden var doesPartialUpdate as Boolean = false;
     hidden var hasComplications as Boolean = false;
+    hidden var slowDataInitialized as Boolean = false;
     
     hidden var propIs24H as Boolean = false;
     hidden var propTheme as Integer = 0;
@@ -479,8 +480,11 @@ class Segment34View extends WatchUi.WatchFace {
             lastUpdate = unix_timestamp;
             updateData(now);
 
-            if(now.min % 5 == 0 or weatherCondition == null) {
-                updateWeather();
+            if(now.sec % 60 == 0 or !slowDataInitialized) {
+                updateSlowData(now);
+                if(now.min % 5 == 0 or weatherCondition == null) {
+                    updateWeather();
+                }
             }
         }
 
@@ -1138,8 +1142,7 @@ class Segment34View extends WatchUi.WatchFace {
         dataClock = getClockData(now);
         updateStressAndBodyBatteryData();
         var fieldWidths = getFieldWidths();
-
-        dataMoon = moonPhase(now);
+        
         dataTopLeft = getValueByType(propSunriseFieldShows, 5);
         dataTopRight = getValueByType(propSunsetFieldShows, 5);
         dataAboveLine1 = getValueByTypeWithUnit(propWeatherLine1Shows, 10);
@@ -1158,10 +1161,6 @@ class Segment34View extends WatchUi.WatchFace {
         dataAODLeft = getValueByType(propAodFieldShows, 10);
         dataAODRight = getValueByType(propAodRightFieldShows, 5);
 
-        if(propTopPartShows == 2) {
-            dataGraph1 = getDataArrayByType(propHistogramData);
-        }
-
         dataLabelTopLeft = getLabelByType(propSunriseFieldShows, 1);
         dataLabelTopRight = getLabelByType(propSunsetFieldShows, 1);
         dataLabelBottomLeft = getLabelByType(propLeftValueShows, fieldWidths[0] - 1);
@@ -1170,6 +1169,14 @@ class Segment34View extends WatchUi.WatchFace {
         dataLabelBottomFourth = getLabelByType(propFourthValueShows, fieldWidths[3] - 1);
 
         updateColorTheme();
+    }
+
+    hidden function updateSlowData(now as Gregorian.Info) as Void {
+        slowDataInitialized = true;
+        dataMoon = moonPhase(now);
+        if(propTopPartShows == 2) {
+            dataGraph1 = getDataArrayByType(propHistogramData);
+        }
     }
 
     hidden function updateSeconds(now as Gregorian.Info) as Void {
