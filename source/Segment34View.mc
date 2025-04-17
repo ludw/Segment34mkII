@@ -631,8 +631,20 @@ class Segment34View extends WatchUi.WatchFace {
         // Draw Notification count
         dc.setColor(themeColors[notif], Graphics.COLOR_TRANSPARENT);
         if(propDateAlignment == 0) {
-            dc.drawText(baseX + halfClockWidth - (smallDataHeight*3), y1, fontSmallData, dataNotifications, Graphics.TEXT_JUSTIFY_RIGHT);
-        } else {
+            if(!propShowSeconds) { // No seconds, notification on right side
+                dc.drawText(baseX + halfClockWidth - textSideAdj, y1, fontSmallData, dataNotifications, Graphics.TEXT_JUSTIFY_RIGHT);
+            } else {
+                var date_width = dc.getTextWidthInPixels(dataBelow, fontSmallData);
+                var sec_width = dc.getTextWidthInPixels(dataSeconds, fontSmallData); 
+                var date_right_edge = baseX - halfClockWidth + textSideAdj + date_width;
+                var sec_left = baseX + halfClockWidth - textSideAdj - sec_width;
+                var pos = sec_left - marginX;
+                if((sec_left - date_right_edge) < 3 * marginX) {
+                    pos = (date_right_edge + sec_left) / 2;
+                }
+                dc.drawText(pos, y1, fontSmallData, dataNotifications, Graphics.TEXT_JUSTIFY_CENTER);
+            }
+        } else { // Date is centered, notification on left side
             dc.drawText(baseX - halfClockWidth, y1, fontSmallData, dataNotifications, Graphics.TEXT_JUSTIFY_LEFT);
         }
 
