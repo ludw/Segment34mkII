@@ -1904,23 +1904,39 @@ class Segment34View extends WatchUi.WatchFace {
         if(max == null) {
             max = iterator.getMax();
         }
+        var min = iterator.getMin();
+        var diff = max - (min * 0.9);
         var sample = iterator.next();
         var count = 0;
         while(sample != null) {
-            if(sample.data != null) {
-                ret.add(Math.round(sample.data / max * 100));
+            if(dataSource == 2) {
+                if(sample.data != null and sample.data != 0 and sample.data < 255) {
+                    ret.add(Math.round(sample.data.toFloat() / max * 100).toNumber());
+                }
+            } else if(dataSource == 1 or dataSource == 4) {
+                if(sample.data != null) {
+                    ret.add(Math.round((sample.data.toFloat() - Math.round(min * 0.9)) / diff * 100).toNumber());
+                }
+            } else if(dataSource == 3) {
+                if(sample.data != null) {
+                    ret.add(Math.round((sample.data.toFloat() - 50.0) / 50.0 * 100).toNumber());
+                }
             } else {
-                ret.add(0);
+                if(sample.data != null) {
+                    ret.add(Math.round(sample.data.toFloat() / max * 100).toNumber());
+                }
             }
+            
             sample = iterator.next();
             count++;
         }
+
         if(ret.size() > histogramTargetWidth) {
             var reduced_ret = [];
             var step = (ret.size() as Float) / histogramTargetWidth.toFloat();
             var closest_index = 0;
             for(var i=0; i<histogramTargetWidth; i++) {
-                closest_index = Math.ceil(i * step).toNumber();
+                closest_index = Math.round(i * step).toNumber();
                 reduced_ret.add(ret[closest_index]);
             }
             return reduced_ret;

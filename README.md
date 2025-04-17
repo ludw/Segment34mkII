@@ -55,6 +55,10 @@ Pull requests are welcome, but please follow the following guidelines:
 - Monthly run/bike distance
 
 ## Change log
+2025-04-17 v2.7.4
+- Small layout tweaks for notification number
+- Improved histogram, HR might actually work now
+
 2025-04-16 v2.7.3
 - Better histogram scaling
 - HR histogram is broken, please ignore :)
