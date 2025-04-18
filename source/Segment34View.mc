@@ -812,6 +812,13 @@ class Segment34View extends WatchUi.WatchFace {
         dc.setColor(themeColors[clock], Graphics.COLOR_TRANSPARENT);
         for(var i=0; i<data.size(); i++) {
             if(data[i] == null) { break; }
+            if(propHistogramData == 7) {
+                if(data[i] <= 25) {
+                    dc.setColor(themeColors[bodybatt], Graphics.COLOR_TRANSPARENT);
+                } else {
+                    dc.setColor(themeColors[stress], Graphics.COLOR_TRANSPARENT);
+                }
+            }
             bar_height = Math.round(data[i] / scale);
             dc.drawRectangle(x - half_width + i * (histogramBarWidth + histogramBarSpacing), y + (h - bar_height), histogramBarWidth, bar_height);
         }
@@ -1893,7 +1900,7 @@ class Segment34View extends WatchUi.WatchFace {
             max = 100;
         } else if(dataSource == 4) {
             iterator = Toybox.SensorHistory.getPressureHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
-        } else if(dataSource == 5) {
+        } else if(dataSource == 5 or dataSource == 7) {
             iterator = Toybox.SensorHistory.getStressHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
             max = 100;
         } else if(dataSource == 6) {

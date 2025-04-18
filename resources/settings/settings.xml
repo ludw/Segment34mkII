@@ -226,6 +226,7 @@
                 <listEntry value="3">Oxygen saturation history</listEntry>
                 <listEntry value="4">Pressure history</listEntry>
                 <listEntry value="5">Stress history</listEntry>
+                <listEntry value="7">Stress/rest (orange/blue)</listEntry>
                 <listEntry value="6">Temperature sensor history</listEntry>
             </settingConfig>
     </setting>
