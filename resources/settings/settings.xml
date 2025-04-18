@@ -720,6 +720,7 @@
     <setting propertyKey="@Properties.pressToOpenTop" title="Press top third to open:">
         <settingConfig type="list">
             <listEntry value="0">Nothing</listEntry>
+            <listEntry value="-1">Toggle night color theme</listEntry>
             <listEntry value="1">Battery</listEntry>
             <listEntry value="2">Steps</listEntry>
             <listEntry value="3">Calories</listEntry>
@@ -747,6 +748,7 @@
     <setting propertyKey="@Properties.pressToOpenMiddle" title="Press middle (clock) to open:">
         <settingConfig type="list">
             <listEntry value="0">Nothing</listEntry>
+            <listEntry value="-1">Toggle night color theme</listEntry>
             <listEntry value="1">Battery</listEntry>
             <listEntry value="2">Steps</listEntry>
             <listEntry value="3">Calories</listEntry>
@@ -774,6 +776,7 @@
     <setting propertyKey="@Properties.pressToOpenBottomLeft" title="Press bottom left to open:">
         <settingConfig type="list">
             <listEntry value="0">Nothing</listEntry>
+            <listEntry value="-1">Toggle night color theme</listEntry>
             <listEntry value="1">Battery</listEntry>
             <listEntry value="2">Steps</listEntry>
             <listEntry value="3">Calories</listEntry>
@@ -801,6 +804,7 @@
     <setting propertyKey="@Properties.pressToOpenBottomCenter" title="Press bottom center to open:">
         <settingConfig type="list">
             <listEntry value="0">Nothing</listEntry>
+            <listEntry value="-1">Toggle night color theme</listEntry>
             <listEntry value="1">Battery</listEntry>
             <listEntry value="2">Steps</listEntry>
             <listEntry value="3">Calories</listEntry>
@@ -828,6 +832,7 @@
     <setting propertyKey="@Properties.pressToOpenBottomRight" title="Press bottom right to open:">
         <settingConfig type="list">
             <listEntry value="0">Nothing</listEntry>
+            <listEntry value="-1">Toggle night color theme</listEntry>
             <listEntry value="1">Battery</listEntry>
             <listEntry value="2">Steps</listEntry>
             <listEntry value="3">Calories</listEntry>

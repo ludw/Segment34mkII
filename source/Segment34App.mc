@@ -22,7 +22,7 @@ class Segment34App extends Application.AppBase {
     function getInitialView() {
         mView = new Segment34View();
 		onSettingsChanged();
-        var delegate = new Segment34Delegate();
+        var delegate = new Segment34Delegate(mView);
 		return [mView, delegate];
     }
 

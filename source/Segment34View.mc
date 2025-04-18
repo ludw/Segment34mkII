@@ -83,6 +83,8 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var dataLabelBottomRight as String = "";
     hidden var dataLabelBottomFourth as String = "";
 
+    public var infoMessage as String = "";
+    public var nightModeOverride as Number = -1;
     hidden var themeColors as Array<Graphics.ColorType> = [];
     hidden var nightMode as Boolean?;
     hidden var weatherCondition as CurrentConditions?;
@@ -1045,7 +1047,9 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function updateColorTheme() {
         var newValue = getNightModeValue();
-        
+        if(nightModeOverride == 0) { newValue = false; }
+        if(nightModeOverride == 1) { newValue = true; }
+
         if(nightMode != newValue) {
             if(newValue == true) {
                 themeColors = setColorTheme(propNightTheme);
@@ -1162,7 +1166,6 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function updateData(now as Gregorian.Info) as Void {
-        
         updateStressAndBodyBatteryData();
         var fieldWidths = getFieldWidths();
         dataTopLeft = getValueByType(propSunriseFieldShows, 5);
@@ -1188,6 +1191,11 @@ class Segment34View extends WatchUi.WatchFace {
         dataLabelBottomMiddle = getLabelByType(propMiddleValueShows, fieldWidths[1] - 1);
         dataLabelBottomRight = getLabelByType(propRightValueShows, fieldWidths[2] - 1);
         dataLabelBottomFourth = getLabelByType(propFourthValueShows, fieldWidths[3] - 1);
+
+        if(!infoMessage.equals("")) {
+            dataBelow = infoMessage;
+            infoMessage = "";
+        }
     }
 
     hidden function updateSlowData(now as Gregorian.Info) as Void {
@@ -2659,11 +2667,13 @@ class Segment34View extends WatchUi.WatchFace {
 class Segment34Delegate extends WatchUi.WatchFaceDelegate {
     var screenW = null;
     var screenH = null;
+    var view as Segment34View;
 
-    public function initialize() {
+    public function initialize(v as Segment34View) {
         WatchFaceDelegate.initialize();
         screenW = System.getDeviceSettings().screenWidth;
         screenH = System.getDeviceSettings().screenHeight;
+        view = v;
     }
 
     public function onPress(clickEvent as WatchUi.ClickEvent) {
@@ -2688,7 +2698,25 @@ class Segment34Delegate extends WatchUi.WatchFaceDelegate {
 
     function handlePress(areaSetting as String) {
         var cID = Application.Properties.getValue(areaSetting) as Complications.Type;
-        if(cID != null and cID != 0) {
+
+        if(cID == -1) {
+            switch(view.nightModeOverride) {
+                case 1:
+                    view.nightModeOverride = 0;
+                    view.infoMessage = "DAY THEME";
+                    break;
+                case 0:
+                    view.nightModeOverride = -1;
+                    view.infoMessage = "THEME AUTO";
+                    break;
+                default:
+                    view.nightModeOverride = 1;
+                    view.infoMessage = "NIGHT THEME";
+            }
+            view.onSettingsChanged();
+        }
+
+        if(cID != null and cID > 0) {
             try {
                 Complications.exitTo(new Id(cID));
             } catch (e) {}
