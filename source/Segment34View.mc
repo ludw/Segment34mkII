@@ -1371,15 +1371,6 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function updateWeather() as Void {
         if(!(Toybox has :Weather) or !(Weather has :getCurrentConditions)) { return; }
 
-        var now = Time.now().value();
-
-        // Clear cached weather if older than 3 hours
-        if(weatherCondition != null 
-           and weatherCondition.observationTime != null 
-           and (now - weatherCondition.observationTime.value() > 3600 * 3)) {
-            weatherCondition = null;
-        }
-
         if(Weather.getCurrentConditions != null) {
             weatherCondition = Weather.getCurrentConditions();
         }

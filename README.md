@@ -53,8 +53,13 @@ Pull requests are welcome, but please follow the following guidelines:
 - Race predictions
 - Weather caching
 - Monthly run/bike distance
+- Notifications as icon
 
 ## Change log
+2025-04-18 v2.8.0
+- Stress/rest option for histogram
+- Option to toggle night mode manually with long press
+
 2025-04-17 v2.7.4
 - Small layout tweaks for notification number
 - Improved histogram, HR might actually work now
