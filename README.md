@@ -56,6 +56,9 @@ Pull requests are welcome, but please follow the following guidelines:
 - Notifications as icon
 
 ## Change log
+2025-04-23 v2.9.0
+- Weather data is stored for offline use, using forecasted values for up to 12h
+
 2025-04-18 v2.8.0
 - Stress/rest option for histogram
 - Option to toggle night mode manually with long press
