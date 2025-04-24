@@ -1421,7 +1421,9 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function readWeatherData() as StoredWeather {
         var ret = new StoredWeather();
         var now = Time.now().value();
-        var cc_data = Application.Storage.getValue("current_conditions") as Dictionary<String, Application.PropertyValueType>;
+        var cc_data = Application.Storage.getValue("current_conditions") as Dictionary<String, Application.PropertyValueType>?;
+        if(cc_data == null) { return ret; }
+        
         var data_age_s = now - (cc_data.get("timestamp") as Number);
         var pos = cc_data.get("observationLocationPosition") as Array;
         ret.observationLocationPosition = new Position.Location({:latitude => pos[0], :longitude => pos[1], :format => :degrees});

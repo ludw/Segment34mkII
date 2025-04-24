@@ -56,6 +56,9 @@ Pull requests are welcome, but please follow the following guidelines:
 - Notifications as icon
 
 ## Change log
+2025-04-24 v2.9.1
+- Fixed crash if watch face is installed when weather data is not available
+
 2025-04-23 v2.9.0
 - Weather data is stored for offline use, using forecasted values for up to 12h
 
