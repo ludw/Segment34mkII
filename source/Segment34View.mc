@@ -1373,9 +1373,14 @@ class Segment34View extends WatchUi.WatchFace {
 
         if(Weather.getCurrentConditions() != null) {
             weatherCondition = Weather.getCurrentConditions();
-            storeWeatherData();
+            try {
+                storeWeatherData();
+            } catch(e) {}
         } else {
-            weatherCondition = readWeatherData();
+            try {
+                weatherCondition = readWeatherData();
+            } catch(e) {}
+            
         }
         
     }
@@ -1438,7 +1443,8 @@ class Segment34View extends WatchUi.WatchFace {
             ret.windBearing = cc_data.get("windBearing") as Number;
             ret.windSpeed = cc_data.get("windSpeed") as Float;
         } else {
-            var hf_data = Application.Storage.getValue("hourly_forecast") as Array;
+            var hf_data = Application.Storage.getValue("hourly_forecast") as Array?;
+            if(hf_data == null) { return ret; }
             for(var i=0; i<hf_data.size(); i++) {
                 var forecast_age = now - (hf_data[i].get("forecastTime") as Number);
                 if(forecast_age > 0 and forecast_age < 3600) {
