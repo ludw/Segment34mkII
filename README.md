@@ -56,6 +56,9 @@ Pull requests are welcome, but please follow the following guidelines:
 - Notifications as icon
 
 ## Change log
+2025-04-29 v2.9.3
+- Fixed crash with histogram
+
 2025-04-24 v2.9.2
 - Possible crash fix
 

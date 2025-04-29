@@ -1995,6 +1995,9 @@ class Segment34View extends WatchUi.WatchFace {
             max = iterator.getMax();
         }
         var min = iterator.getMin();
+        if(min == null or max == null) {
+            return ret;
+        }
         var diff = max - (min * 0.9);
         var sample = iterator.next();
         var count = 0;
