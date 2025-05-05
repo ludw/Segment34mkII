@@ -20,6 +20,18 @@ Yes, but you have to configure what to open in settings (it's towards the bottom
 
 ![image explaining the areas that can be configured to open things](press_to_open.png)
 
+### How does the custom themes work? What's the difference between them?
+All four custom themes use two colors the used can specify as Hue and Saturation, from those values all the colors of the theme is calculated.
+Hue and Saturation are in HSV format, so you can use [a normal colorpicker](https://www.selecolor.com/en/hsv-color-picker/) to see what color a number represents (set brightness to max). 
+
+![the four custom color themes](colorthemes.jpg)
+
+Here are the four custom color themes with color 1 set as 100% saturated red and color 2 set to 100% saturated green.
+Custom theme 1 uses a bright color 1 for the clock and a dark color 2 as background. The data fields and line below the clock uses less saturated versions of color 1.
+Custom theme 2 uses a desaturated version of color 1 for the clock and the line below the clock. The background uses a slightly less dark version of color 2.
+Custom theme 3 uses quite saturated and bright versions of color 1 and 2.
+Custom theme 4 uses a bright color 1 for the clock, and a bright color 2 for the line below the clock.
+
 ## Dissapearing or hidden fields
 
 ### Why are seconds disappearing?
@@ -42,4 +54,4 @@ I might do that in the future, but it's a lot of work, especially for languages 
 Not short term at least. I don't want to add the complexity having multiple weather data sources would mean. I've also seen that other watch faces with support for it have recieved quite a lot of negative reviews from users that can't figure out how to get a API token which makes me a bit less keen on working on this...
 
 ### Can you make the font larger / configurable?
-This is another commonly requested feature that unfortunately would require a lot of work. If the text is larger less of it will fit on the screen and I have to write code to decide what to do about that. It adds a lot of complexity. For the largest screen sizes I would also need to draw some new fonts (more work!). I'm aware that people want this, we'll see if I make it happen some day.
+You can check out my other watchface Segment34 MAX, it is basically the same but with larger text.
