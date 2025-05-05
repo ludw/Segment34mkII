@@ -60,10 +60,10 @@
             <listEntry value="16">Green on white (not recommended for AMOLED)</listEntry>
             <listEntry value="17">Orange on white (not recommended for AMOLED)</listEntry>
             <listEntry value="21">Purple on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="30">Custom theme, variant 1</listEntry>
-            <listEntry value="31">Custom theme, variant 2</listEntry>
-            <listEntry value="32">Custom theme, variant 3</listEntry>
-            <listEntry value="33">Custom theme, variant 4</listEntry>
+            <listEntry value="30">Custom theme, variant 1, see FAQ for details</listEntry>
+            <listEntry value="31">Custom theme, variant 2, see FAQ for details</listEntry>
+            <listEntry value="32">Custom theme, variant 3, see FAQ for details</listEntry>
+            <listEntry value="33">Custom theme, variant 4, see FAQ for details</listEntry>
         </settingConfig>
     </setting>
 
@@ -75,7 +75,7 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.customHue1" title="Custom theme color 1, hue (0-365)">
+    <setting propertyKey="@Properties.customHue1" title="Custom theme color 1, hue (0-365), see FAQ for details">
         <settingConfig type="numeric" errorMessage="Enter a value between 0 and 365" />
     </setting>
 
@@ -112,7 +112,7 @@
             <settingConfig type="list">
                 <listEntry value="0">Two small data fields and Moon phase</listEntry>
                 <listEntry value="1">Two small data fields</listEntry>
-                <listEntry value="2">A histogram graph</listEntry>
+                <listEntry value="2">A histogram graph (last 2 hours of data)</listEntry>
             </settingConfig>
     </setting>
 
