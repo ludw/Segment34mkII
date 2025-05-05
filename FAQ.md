@@ -27,10 +27,10 @@ Hue and Saturation are in HSV format, so you can use [a normal colorpicker](http
 ![the four custom color themes](colorthemes.jpg)
 
 Here are the four custom color themes with color 1 set as 100% saturated red and color 2 set to 100% saturated green.
-Custom theme 1 uses a bright color 1 for the clock and a dark color 2 as background. The data fields and line below the clock uses less saturated versions of color 1.
-Custom theme 2 uses a desaturated version of color 1 for the clock and the line below the clock. The background uses a slightly less dark version of color 2.
-Custom theme 3 uses quite saturated and bright versions of color 1 and 2.
-Custom theme 4 uses a bright color 1 for the clock, and a bright color 2 for the line below the clock.
+ - Custom theme 1 uses a bright color 1 for the clock and a dark color 2 as background. The data fields and line below the clock uses less saturated versions of color 1.
+ - Custom theme 2 uses a desaturated version of color 1 for the clock and the line below the clock. The background uses a slightly less dark version of color 2.
+ - Custom theme 3 uses quite saturated and bright versions of color 1 and 2.
+ - Custom theme 4 uses a bright color 1 for the clock, and a bright color 2 for the line below the clock.
 
 ## Dissapearing or hidden fields
 
