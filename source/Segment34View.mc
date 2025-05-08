@@ -1928,6 +1928,14 @@ class Segment34View extends WatchUi.WatchFace {
                 } catch(e) {
                     // Complication not found
                 }
+            } else {
+                if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getOxygenSaturationHistory)) {
+                    var it = Toybox.SensorHistory.getOxygenSaturationHistory({:period => 1});
+                    var ox = it.next();
+                    if(ox != null and ox.data != null) {
+                        val = ox.data.format("%d");
+                    }
+                }
             }
         } else if(complicationType == 60) { // Location Long Lat dec deg
             var pos = Activity.getActivityInfo().currentLocation;

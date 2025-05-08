@@ -54,8 +54,12 @@ Pull requests are welcome, but please follow the following guidelines:
 - Weather caching
 - Monthly run/bike distance
 - Notifications as icon
+- Fully custom themes
 
 ## Change log
+2025-05-08 v2.9.4
+- PulseOX data supported on older watches
+
 2025-04-29 v2.9.3
 - Fixed crash with histogram
 
