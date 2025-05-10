@@ -2121,6 +2121,8 @@ class Segment34View extends WatchUi.WatchFace {
             case 57: return formatLabel("CAL", "NEXT CAL", "NEXT CAL EVNT", labelSize);
             case 59: return formatLabel("OX", "PULSE OX", "PULSE OX", labelSize);
             case 62: return formatLabel("ACC", "POS ACC", "POS ACCURACY", labelSize);
+            case 64: return formatLabel("UV", "UV INDEX", "UV INDEX", labelSize);
+            case 66: return formatLabel("HUM", "HUMIDITY", "HUMIDITY", labelSize);
         }
         
         return "";
