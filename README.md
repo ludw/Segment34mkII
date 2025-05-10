@@ -57,6 +57,10 @@ Pull requests are welcome, but please follow the following guidelines:
 - Fully custom themes
 
 ## Change log
+2025-05-10 v.2.10.0
+- Added UV Index as option for many fields
+- Added Humidity as option where it was missing
+
 2025-05-08 v2.9.4
 - PulseOX data supported on older watches
 
