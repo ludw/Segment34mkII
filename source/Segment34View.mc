@@ -104,6 +104,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propCustomSaturation1 as Number = 0;
     hidden var propCustomHue2 as Number = 0;
     hidden var propCustomSaturation2 as Number = 0;
+    hidden var propColorOverride as String = "";
     hidden var propClockOutlineStyle as Number = 0;
     hidden var propBatteryVariant as Number = 3;
     hidden var propShowSeconds as Boolean = true;
@@ -149,18 +150,18 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propSmallFontVariant as Number = 0;
 
     enum colorNames {
-        fieldBg = 0,
+        bg = 0,
+        dataVal,
+        fieldBg,
         fieldLbl,
-        clockBg,
         clock,
+        clockBg,
         outline,
         date,
         dateDim,
         notif,
         stress,
         bodybatt,
-        bg,
-        dataVal,
         moon,
         lowBatt
     }
@@ -319,7 +320,11 @@ class Segment34View extends WatchUi.WatchFace {
         fontAODData = fontBottomData;
         fontBattery = Application.loadResource(Rez.Fonts.led_small_lines);
 
-        drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
+        if(themeColors[bg] == 0x000000) {
+             drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
+        } else {
+             drawGradient = Application.loadResource(Rez.Drawables.gradient2) as BitmapResource;
+        }
         if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2) {
             drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
         } else {
@@ -359,7 +364,11 @@ class Segment34View extends WatchUi.WatchFace {
         fontAODData = Application.loadResource(Rez.Fonts.led);
         fontBattery = fontTinyData;
 
-        drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
+        if(themeColors[bg] == 0x000000) {
+             drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
+        } else {
+             drawGradient = Application.loadResource(Rez.Drawables.gradient2) as BitmapResource;
+        }
         if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2) {
             drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
         } else {
@@ -396,7 +405,11 @@ class Segment34View extends WatchUi.WatchFace {
         fontAODData = Application.loadResource(Rez.Fonts.led);
         fontBattery = fontTinyData;
 
-        drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
+        if(themeColors[bg] == 0x000000) {
+             drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
+        } else {
+             drawGradient = Application.loadResource(Rez.Drawables.gradient2) as BitmapResource;
+        }
         if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2) {
             drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
         } else {
@@ -432,7 +445,11 @@ class Segment34View extends WatchUi.WatchFace {
         fontAODData = Application.loadResource(Rez.Fonts.led);
         fontBattery = fontTinyData;
 
-        drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
+        if(themeColors[bg] == 0x000000) {
+             drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
+        } else {
+             drawGradient = Application.loadResource(Rez.Drawables.gradient2) as BitmapResource;
+        }
         if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2) {
             drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
         } else {
@@ -602,6 +619,8 @@ class Segment34View extends WatchUi.WatchFace {
         // Draw clock gradient
         if(drawGradient != null and themeColors[bg] == 0x000000) {
             dc.drawBitmap(centerX - halfClockWidth, baseY - halfClockHeight, drawGradient);
+        } else if (drawGradient != null and dc has :drawBitmap2) {
+            dc.drawBitmap2(centerX - halfClockWidth, baseY - halfClockHeight, drawGradient, {:tintColor => themeColors[bg]});
         }
 
         if(propClockOutlineStyle == 2 or propClockOutlineStyle == 3) {
@@ -866,31 +885,31 @@ class Segment34View extends WatchUi.WatchFace {
         if(theme == 32) { return customColorTheme3(); }
         if(theme == 33) { return customColorTheme4(); }
 
-        //                       fieldBg,   fieldLbl, clockBg,  clock,    outline,    date,     dateDim,  notif,    stress,   bodybatt, bg,       dataVal,  moon
-        if(theme == 0 ) { return [0x005555, 0x55AAAA, 0x005555, 0xFFFF00, 0xFFFF00, 0xFFFF00, 0xa98753, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Yellow on turquoise MIP
-        if(theme == 1 ) { return [0x005555, 0xAA55AA, 0x005555, 0xFF55AA, 0xFF55AA, 0xFFFFFF, 0xa95399, 0xFF55AA, 0xFF55AA, 0x00FFAA, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Hot pink MIP
-        if(theme == 2 ) { return [0x0055AA, 0x55AAAA, 0x0055AA, 0x00FFFF, 0x00FFFF, 0x00FFFF, 0x5ca28f, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Blueish green MIP
-        if(theme == 3 ) { return [0x005500, 0x00AA55, 0x005500, 0x00FF00, 0x00FF00, 0x00FF00, 0x5ca28f, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Very green MIP
-        if(theme == 4 ) { return [0x005555, 0x55AAAA, 0x005555, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0x114a5a, 0xAAAAAA, 0xFFAA55, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // White on turquoise MIP
-        if(theme == 5 ) { return [0x5500AA, 0xFFAAAA, 0x5500AA, 0xFF5500, 0xFF5500, 0xFFAAAA, 0xaa6e56, 0xFFFFFF, 0xFF5555, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Peachy Orange MIP
-        if(theme == 6 ) { return [0xAA0000, 0xFF0000, 0xAA0000, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xAA0000, 0xFF0000, 0xAA0000, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Red and White MIP
-        if(theme == 7 ) { return [0x0055AA, 0x0055AA, 0x0055AA, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // White on Blue MIP
-        if(theme == 8 ) { return [0x0055AA, 0x0055AA, 0x0055AA, 0xFFFF00, 0xFFFF00, 0xFFFF00, 0xa98753, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Yellow on Blue MIP
-        if(theme == 9 ) { return [0xaa5500, 0xFF5500, 0xaa5500, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xAA5500, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // White and Orange MIP
-        if(theme == 10) { return [0x555555, 0x0055AA, 0x000055, 0x0055AA, 0x0055AA, 0xFFFFFF, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Blue MIP
-        if(theme == 11) { return [0x555555, 0xFFAA00, 0x555555, 0xFFAA00, 0xFFAA00, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Orange MIP
-        if(theme == 12) { return [0x555555, 0xFFFFFF, 0x555555, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // White on black MIP
-        if(theme == 13) { return [0xAAAAAA, 0x000000, 0xAAAAAA, 0x000000, 0x000000, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555]; } // Black on White MIP
-        if(theme == 14) { return [0xAAAAAA, 0xAA0000, 0xAAAAAA, 0xAA0000, 0xAA0000, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555]; } // Red on White MIP
-        if(theme == 15) { return [0xAAAAAA, 0x0000AA, 0xAAAAAA, 0x0000AA, 0x0000AA, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555]; } // Blue on White MIP
-        if(theme == 16) { return [0xAAAAAA, 0x00AA00, 0xAAAAAA, 0x00AA00, 0x00AA00, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555]; } // Green on White MIP
-        if(theme == 17) { return [0xAAAAAA, 0x555555, 0xAAAAAA, 0xFF5500, 0xFF5500, 0x000000, 0x555555, 0x000000, 0xFF5500, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555]; } // Orange on White MIP
-        if(theme == 18) { return [0x005500, 0xFF5500, 0x005500, 0xFF5500, 0xFF5500, 0x00FF00, 0x5ca28f, 0x55FF55, 0xFF5500, 0x00AAFF, 0x000000, 0x00FF00, 0xFFFFFF]; } // Green and Orange MIP
-        if(theme == 19) { return [0x005500, 0xAAAA00, 0x005500, 0xAAAA55, 0xAAAA55, 0xAAAA55, 0x546a36, 0x00FF55, 0xAAAA55, 0x00FF00, 0x000000, 0x00FF00, 0xFFFFFF]; } // Green Camo MIP
-        if(theme == 20) { return [0x555555, 0xFF0000, 0x555555, 0xFF0000, 0xFF0000, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFF5555, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Red on Black MIP
-        if(theme == 21) { return [0xAAAAAA, 0xAA00FF, 0xAAAAAA, 0xAA00FF, 0xAA00FF, 0x000000, 0x555555, 0x000000, 0xFF5500, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555]; } // Purple on White MIP
-        if(theme == 22) { return [0x555555, 0xAA00FF, 0x555555, 0xAA00FF, 0xAA00FF, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Purple on black MIP
-                          return [0x555555, 0xFFAA00, 0x555555, 0xFFAA00, 0xFFAA00, 0xFFAA55, 0x555555, 0x55AAAA, 0xFFAA00, 0x55AAAA, 0x000000, 0xFFAA55, 0xFFFFFF]; // Amber MIP
+        //                        bg,       dataVal,  fieldBg,  fieldLbl, clock,    clockBg,  outline,  date,     dateDim,  notif,    stress,   bodybatt, moon
+        if(theme == 0 ) { return [0x000000, 0xFFFFFF, 0x005555, 0x55AAAA, 0xFFFF00, 0x005555, 0xFFFF00, 0xFFFF00, 0xa98753, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0xFFFFFF]; } // Yellow on turquoise MIP
+        if(theme == 1 ) { return [0x000000, 0xFFFFFF, 0x005555, 0xAA55AA, 0xFF55AA, 0x005555, 0xFF55AA, 0xFFFFFF, 0xa95399, 0xFF55AA, 0xFF55AA, 0x00FFAA, 0xFFFFFF]; } // Hot pink MIP
+        if(theme == 2 ) { return [0x000000, 0xFFFFFF, 0x0055AA, 0x55AAAA, 0x00FFFF, 0x0055AA, 0x00FFFF, 0x00FFFF, 0x5ca28f, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0xFFFFFF]; } // Blueish green MIP
+        if(theme == 3 ) { return [0x000000, 0xFFFFFF, 0x005500, 0x00AA55, 0x00FF00, 0x005500, 0x00FF00, 0x00FF00, 0x5ca28f, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0xFFFFFF]; } // Very green MIP
+        if(theme == 4 ) { return [0x000000, 0xFFFFFF, 0x005555, 0x55AAAA, 0xFFFFFF, 0x005555, 0xFFFFFF, 0xFFFFFF, 0x114a5a, 0xAAAAAA, 0xFFAA55, 0x55AAFF, 0xFFFFFF]; } // White on turquoise MIP
+        if(theme == 5 ) { return [0x000000, 0xFFFFFF, 0x5500AA, 0xFFAAAA, 0xFF5500, 0x5500AA, 0xFF5500, 0xFFAAAA, 0xaa6e56, 0xFFFFFF, 0xFF5555, 0x00AAFF, 0xFFFFFF]; } // Peachy Orange MIP
+        if(theme == 6 ) { return [0x000000, 0xFFFFFF, 0xAA0000, 0xFF0000, 0xFFFFFF, 0xAA0000, 0xFFFFFF, 0xFFFFFF, 0xAA0000, 0xFF0000, 0xAA0000, 0x00AAFF, 0xFFFFFF]; } // Red and White MIP
+        if(theme == 7 ) { return [0x000000, 0xFFFFFF, 0x0055AA, 0x0055AA, 0xFFFFFF, 0x0055AA, 0xFFFFFF, 0xFFFFFF, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // White on Blue MIP
+        if(theme == 8 ) { return [0x000000, 0xFFFFFF, 0x0055AA, 0x0055AA, 0xFFFF00, 0x0055AA, 0xFFFF00, 0xFFFF00, 0xa98753, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Yellow on Blue MIP
+        if(theme == 9 ) { return [0x000000, 0xFFFFFF, 0xaa5500, 0xFF5500, 0xFFFFFF, 0xaa5500, 0xFFFFFF, 0xFFFFFF, 0xAA5500, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0xFFFFFF]; } // White and Orange MIP
+        if(theme == 10) { return [0x000000, 0xFFFFFF, 0x555555, 0x0055AA, 0x0055AA, 0x000055, 0x0055AA, 0xFFFFFF, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Blue MIP
+        if(theme == 11) { return [0x000000, 0xFFFFFF, 0x555555, 0xFFAA00, 0xFFAA00, 0x555555, 0xFFAA00, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Orange MIP
+        if(theme == 12) { return [0x000000, 0xFFFFFF, 0x555555, 0xFFFFFF, 0xFFFFFF, 0x555555, 0xFFFFFF, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // White on black MIP
+        if(theme == 13) { return [0xFFFFFF, 0x000000, 0xAAAAAA, 0x000000, 0x000000, 0xAAAAAA, 0x000000, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Black on White MIP
+        if(theme == 14) { return [0xFFFFFF, 0x000000, 0xAAAAAA, 0xAA0000, 0xAA0000, 0xAAAAAA, 0xAA0000, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Red on White MIP
+        if(theme == 15) { return [0xFFFFFF, 0x000000, 0xAAAAAA, 0x0000AA, 0x0000AA, 0xAAAAAA, 0x0000AA, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Blue on White MIP
+        if(theme == 16) { return [0xFFFFFF, 0x000000, 0xAAAAAA, 0x00AA00, 0x00AA00, 0xAAAAAA, 0x00AA00, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Green on White MIP
+        if(theme == 17) { return [0xFFFFFF, 0x000000, 0xAAAAAA, 0x555555, 0xFF5500, 0xAAAAAA, 0xFF5500, 0x000000, 0x555555, 0x000000, 0xFF5500, 0x55AAFF, 0x555555]; } // Orange on White MIP
+        if(theme == 18) { return [0x000000, 0x00FF00, 0x005500, 0xFF5500, 0xFF5500, 0x005500, 0xFF5500, 0x00FF00, 0x5ca28f, 0x55FF55, 0xFF5500, 0x00AAFF, 0xFFFFFF]; } // Green and Orange MIP
+        if(theme == 19) { return [0x000000, 0x00FF00, 0x005500, 0xAAAA00, 0xAAAA55, 0x005500, 0xAAAA55, 0xAAAA55, 0x546a36, 0x00FF55, 0xAAAA55, 0x00FF00, 0xFFFFFF]; } // Green Camo MIP
+        if(theme == 20) { return [0x000000, 0xFFFFFF, 0x555555, 0xFF0000, 0xFF0000, 0x555555, 0xFF0000, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFF5555, 0x55AAFF, 0xFFFFFF]; } // Red on Black MIP
+        if(theme == 21) { return [0xFFFFFF, 0x000000, 0xAAAAAA, 0xAA00FF, 0xAA00FF, 0xAAAAAA, 0xAA00FF, 0x000000, 0x555555, 0x000000, 0xFF5500, 0x55AAFF, 0x555555]; } // Purple on White MIP
+        if(theme == 22) { return [0x000000, 0xFFFFFF, 0x555555, 0xAA00FF, 0xAA00FF, 0x555555, 0xAA00FF, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Purple on black MIP
+                          return [0x000000, 0xFFAA55, 0x555555, 0xFFAA00, 0xFFAA00, 0x555555, 0xFFAA00, 0xFFAA55, 0x555555, 0x55AAAA, 0xFFAA00, 0x55AAAA, 0xFFFFFF]; // Amber MIP
     }
 
     (:AMOLED)
@@ -900,33 +919,33 @@ class Segment34View extends WatchUi.WatchFace {
         if(theme == 32) { return customColorTheme3(); }
         if(theme == 33) { return customColorTheme4(); }
 
-        //                       fieldBg,   fieldLbl, clockBg,  clock,    outline,    date,     dateDim,  notif,    stress,   bodybatt, bg,       dataVal,  moon
-        if(theme == 0 ) { return [0x0e333c, 0x55AAAA, 0x0d333c, 0xfbcb77, 0xffeac4, 0xfbcb77, 0xa98753, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Yellow on turquoise AMOLED
-        if(theme == 1 ) { return [0x0e333c, 0xAA55AA, 0x0f3b46, 0xffa5f9, 0xffd9fc, 0xFFFFFF, 0x984a8a, 0xFF55AA, 0xFF55AA, 0x00FFAA, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Hot pink AMOLED
-        if(theme == 2 ) { return [0x0f2246, 0x55AAAA, 0x0f2246, 0x89efd2, 0xb8efdf, 0x89efd2, 0x5ca28f, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Blueish green AMOLED
-        if(theme == 3 ) { return [0x152b19, 0x00AA55, 0x152b19, 0x96e0ac, 0xc3e0cc, 0x96e0ac, 0x5ca28f, 0x00AAFF, 0xffc884, 0x59b9fe, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Very green AMOLED
-        if(theme == 4 ) { return [0x0e333c, 0x55AAAA, 0x0d333c, 0xFFFFFF, 0xadeffe, 0xFFFFFF, 0x1d7e99, 0xAAAAAA, 0xFFAA55, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // White on turquoise AMOLED
-        if(theme == 5 ) { return [0x1b263d, 0xFFAAAA, 0x1b263d, 0xff9161, 0xffb494, 0xffb383, 0xaa6e56, 0xFFFFFF, 0xFF5555, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Peachy Orange AMOLED
-        if(theme == 6 ) { return [0x550000, 0xFF0000, 0x550000, 0xffffff, 0xc00003, 0xffffff, 0xAA0000, 0xFF0000, 0xAA0000, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Red and White AMOLED
-        if(theme == 7 ) { return [0x152a53, 0x0055AA, 0x152a53, 0xffffff, 0xaecaff, 0xffffff, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // White on Blue AMOLED
-        if(theme == 8 ) { return [0x152a53, 0x0055AA, 0x152a53, 0xfbcb77, 0xfbdda8, 0xffeac4, 0xa98753, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Yellow on Blue AMOLED
-        if(theme == 9 ) { return [0x58250b, 0xFF5500, 0x7d3f01, 0xffffff, 0xffd6ae, 0xffffff, 0xAA5500, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // White and Orange AMOLED
-        if(theme == 10) { return [0x191b33, 0x0055AA, 0x191b33, 0x3495d4, 0x5fa6d4, 0xffffff, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Blue AMOLED
-        if(theme == 11) { return [0x333333, 0xFFAA00, 0x333333, 0xff7600, 0xff9133, 0xffffff, 0x9a9a9a, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Orange AMOLED
-        if(theme == 12) { return [0x333333, 0xFFFFFF, 0x333333, 0xFFFFFF, 0xcbcbcb, 0xFFFFFF, 0x9a9a9a, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // White on black AMOLED
-        if(theme == 13) { return [0xCCCCCC, 0x000000, 0xCCCCCC, 0x000000, 0x666666, 0x000000, 0x9a9a9a, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555]; } // Black on White AMOLED
-        if(theme == 14) { return [0xCCCCCC, 0xAA0000, 0xCCCCCC, 0xAA0000, 0xaa2325, 0x000000, 0x9a9a9a, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555]; } // Red on White AMOLED
-        if(theme == 15) { return [0xCCCCCC, 0x0000AA, 0xCCCCCC, 0x0000AA, 0x2222aa, 0x000000, 0x9a9a9a, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555]; } // Blue on White AMOLED
-        if(theme == 16) { return [0xCCCCCC, 0x00AA00, 0xCCCCCC, 0x00AA00, 0x22aa22, 0x000000, 0x9a9a9a, 0x000000, 0xFFAA00, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555]; } // Green on White AMOLED
-        if(theme == 17) { return [0xCCCCCC, 0x555555, 0xCCCCCC, 0xFF5500, 0xff7632, 0x000000, 0x9a9a9a, 0x000000, 0xFF5500, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555]; } // Orange on White AMOLED
-        if(theme == 18) { return [0x152b19, 0xFF5500, 0x152b19, 0xff7600, 0xe64322, 0x41cb41, 0x5f9956, 0x41cb41, 0xff7600, 0x59b9fe, 0x000000, 0x41cb41, 0xFFFFFF]; } // Green and Orange AMOLED
-        if(theme == 19) { return [0x152b19, 0xa8aa6c, 0x152b19, 0x889f4a, 0x919f6b, 0x889f4a, 0x7a9a4e, 0x00FF55, 0x889f4a, 0x55AA55, 0x000000, 0x55AA55, 0xe3efd2]; } // Green Camo AMOLED
-        if(theme == 20) { return [0x282828, 0xFF0000, 0x282828, 0xFF0000, 0xff3236, 0xFFFFFF, 0x9a9a9a, 0x55AAFF, 0xFF5555, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Red on Black AMOLED
-        if(theme == 21) { return [0xCCCCCC, 0xAA00FF, 0xCCCCCC, 0xAA00FF, 0xbb34ff, 0x000000, 0x9a9a9a, 0x000000, 0xFF5500, 0x55AAFF, 0xFFFFFF, 0x000000, 0x555555]; } // Purple on White AMOLED
-        if(theme == 22) { return [0x282828, 0xAA55AA, 0x282828, 0xAA55AA, 0xaa77aa, 0xFFFFFF, 0x9a9a9a, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0x000000, 0xFFFFFF, 0xFFFFFF]; } // Purple on black AMOLED
-                          return [0x302b24, 0xffac3f, 0x302b24, 0xff960c, 0xffbf65, 0xffb759, 0x9a784d, 0xa8d6fd, 0xfdb500, 0xa8d6fd, 0x000000, 0xffdeb4, 0xe3efd2]; // Amber AMOLED
-        //                       fieldBg,   fieldLbl, clockBg,  clock,    outline,  date,     dateDim,  notif,    stress,   bodybatt, bg,       dataVal,  moon
-
+        //                        bg,       dataVal,  fieldBg,  fieldLbl, clock,    clockBg,  outline,    date,   dateDim,  notif,   stress,    bodybatt, moon
+        if(theme == 0 ) { return [0x000000, 0xFFFFFF, 0x0e333c, 0x55AAAA, 0xfbcb77, 0x0d333c, 0xffeac4, 0xfbcb77, 0xa98753, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0xFFFFFF]; } // Yellow on turquoise AMOLED
+        if(theme == 1 ) { return [0x000000, 0xFFFFFF, 0x0e333c, 0xAA55AA, 0xffa5f9, 0x0f3b46, 0xffd9fc, 0xFFFFFF, 0x984a8a, 0xFF55AA, 0xFF55AA, 0x00FFAA, 0xFFFFFF]; } // Hot pink AMOLED
+        if(theme == 2 ) { return [0x000000, 0xFFFFFF, 0x0f2246, 0x55AAAA, 0x89efd2, 0x0f2246, 0xb8efdf, 0x89efd2, 0x5ca28f, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0xFFFFFF]; } // Blueish green AMOLED
+        if(theme == 3 ) { return [0x000000, 0xFFFFFF, 0x152b19, 0x00AA55, 0x96e0ac, 0x152b19, 0xc3e0cc, 0x96e0ac, 0x5ca28f, 0x00AAFF, 0xffc884, 0x59b9fe, 0xFFFFFF]; } // Very green AMOLED
+        if(theme == 4 ) { return [0x000000, 0xFFFFFF, 0x0e333c, 0x55AAAA, 0xFFFFFF, 0x0d333c, 0xadeffe, 0xFFFFFF, 0x1d7e99, 0xAAAAAA, 0xFFAA55, 0x55AAFF, 0xFFFFFF]; } // White on turquoise AMOLED
+        if(theme == 5 ) { return [0x000000, 0xFFFFFF, 0x1b263d, 0xFFAAAA, 0xff9161, 0x1b263d, 0xffb494, 0xffb383, 0xaa6e56, 0xFFFFFF, 0xFF5555, 0x00AAFF, 0xFFFFFF]; } // Peachy Orange AMOLED
+        if(theme == 6 ) { return [0x000000, 0xFFFFFF, 0x550000, 0xFF0000, 0xffffff, 0x550000, 0xc00003, 0xffffff, 0xAA0000, 0xFF0000, 0xAA0000, 0x00AAFF, 0xFFFFFF]; } // Red and White AMOLED
+        if(theme == 7 ) { return [0x000000, 0xFFFFFF, 0x152a53, 0x0055AA, 0xffffff, 0x152a53, 0xaecaff, 0xffffff, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // White on Blue AMOLED
+        if(theme == 8 ) { return [0x000000, 0xFFFFFF, 0x152a53, 0x0055AA, 0xfbcb77, 0x152a53, 0xfbdda8, 0xffeac4, 0xa98753, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Yellow on Blue AMOLED
+        if(theme == 9 ) { return [0x000000, 0xFFFFFF, 0x58250b, 0xFF5500, 0xffffff, 0x7d3f01, 0xffd6ae, 0xffffff, 0xAA5500, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0xFFFFFF]; } // White and Orange AMOLED
+        if(theme == 10) { return [0x000000, 0xFFFFFF, 0x191b33, 0x0055AA, 0x3495d4, 0x191b33, 0x5fa6d4, 0xffffff, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Blue AMOLED
+        if(theme == 11) { return [0x000000, 0xFFFFFF, 0x333333, 0xFFAA00, 0xff7600, 0x333333, 0xff9133, 0xffffff, 0x9a9a9a, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Orange AMOLED
+        if(theme == 12) { return [0x000000, 0xFFFFFF, 0x333333, 0xFFFFFF, 0xFFFFFF, 0x333333, 0xcbcbcb, 0xFFFFFF, 0x9a9a9a, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // White on black AMOLED
+        if(theme == 13) { return [0xFFFFFF, 0x000000, 0xCCCCCC, 0x000000, 0x000000, 0xCCCCCC, 0x666666, 0x000000, 0x9a9a9a, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Black on White AMOLED
+        if(theme == 14) { return [0xFFFFFF, 0x000000, 0xCCCCCC, 0xAA0000, 0xAA0000, 0xCCCCCC, 0xaa2325, 0x000000, 0x9a9a9a, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Red on White AMOLED
+        if(theme == 15) { return [0xFFFFFF, 0x000000, 0xCCCCCC, 0x0000AA, 0x0000AA, 0xCCCCCC, 0x2222aa, 0x000000, 0x9a9a9a, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Blue on White AMOLED
+        if(theme == 16) { return [0xFFFFFF, 0x000000, 0xCCCCCC, 0x00AA00, 0x00AA00, 0xCCCCCC, 0x22aa22, 0x000000, 0x9a9a9a, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Green on White AMOLED
+        if(theme == 17) { return [0xFFFFFF, 0x000000, 0xCCCCCC, 0x555555, 0xFF5500, 0xCCCCCC, 0xff7632, 0x000000, 0x9a9a9a, 0x000000, 0xFF5500, 0x55AAFF, 0x555555]; } // Orange on White AMOLED
+        if(theme == 18) { return [0x000000, 0x41cb41, 0x152b19, 0xFF5500, 0xff7600, 0x152b19, 0xe64322, 0x41cb41, 0x5f9956, 0x41cb41, 0xff7600, 0x59b9fe, 0xFFFFFF]; } // Green and Orange AMOLED
+        if(theme == 19) { return [0x000000, 0x55AA55, 0x152b19, 0xa8aa6c, 0x889f4a, 0x152b19, 0x919f6b, 0x889f4a, 0x7a9a4e, 0x00FF55, 0x889f4a, 0x55AA55, 0xe3efd2]; } // Green Camo AMOLED
+        if(theme == 20) { return [0x000000, 0xFFFFFF, 0x282828, 0xFF0000, 0xFF0000, 0x282828, 0xff3236, 0xFFFFFF, 0x9a9a9a, 0x55AAFF, 0xFF5555, 0x55AAFF, 0xFFFFFF]; } // Red on Black AMOLED
+        if(theme == 21) { return [0xFFFFFF, 0x000000, 0xCCCCCC, 0xAA00FF, 0xAA00FF, 0xCCCCCC, 0xbb34ff, 0x000000, 0x9a9a9a, 0x000000, 0xFF5500, 0x55AAFF, 0x555555]; } // Purple on White AMOLED
+        if(theme == 22) { return [0x000000, 0xFFFFFF, 0x282828, 0xAA55AA, 0xAA55AA, 0x282828, 0xaa77aa, 0xFFFFFF, 0x9a9a9a, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Purple on black AMOLED
+                          return [0x000000, 0xffdeb4, 0x302b24, 0xffac3f, 0xff960c, 0x302b24, 0xffbf65, 0xffb759, 0x9a784d, 0xa8d6fd, 0xfdb500, 0xa8d6fd, 0xe3efd2]; // Amber AMOLED
+        //                        bg,       dataVal,  fieldBg,  fieldLbl, clock,    clockBg,  outline,  date,     dateDim,  notif,    stress,   bodybatt, moon
+        //#302b24 #ffac3f #302b24 #ff960c #ffbf65 #ffb759 #9a784d #a8d6fd #fdb500 #a8d6fd #000000 #ffdeb4 #e3efd2
     }
 
     hidden function customColorTheme1() as Array<Graphics.ColorType> {
@@ -1045,6 +1064,19 @@ class Segment34View extends WatchUi.WatchFace {
         ];
     }
 
+    hidden function applyColorOverrides() {
+        if(propColorOverride.equals("")) { return; }
+        var color_str = "";
+        var color = null;
+        var index = 0;
+        for(var i=0; i<propColorOverride.length(); i += 8) {
+            color_str = Lang.format("0x$1$", [propColorOverride.substring(i+1, i+7)]);
+            color = color_str.toNumberWithBase(16);
+            themeColors[index] = color;
+            index++;
+        }
+    }
+
     hidden function updateColorTheme() {
         var newValue = getNightModeValue();
         if(nightModeOverride == 0) { newValue = false; }
@@ -1057,6 +1089,8 @@ class Segment34View extends WatchUi.WatchFace {
                 themeColors = setColorTheme(propTheme);
             }
             nightMode = newValue;
+
+            applyColorOverrides();
         }
     }
 
@@ -1114,6 +1148,7 @@ class Segment34View extends WatchUi.WatchFace {
         propCustomSaturation1 = Application.Properties.getValue("customSaturation1") as Number;
         propCustomHue2 = Application.Properties.getValue("customHue2") as Number;
         propCustomSaturation2 = Application.Properties.getValue("customSaturation2") as Number;
+        propColorOverride = Application.Properties.getValue("colorOverride") as String;
         propClockOutlineStyle = Application.Properties.getValue("clockOutlineStyle") as Number;
 
         propTopPartShows = Application.Properties.getValue("topPartShows") as Number;

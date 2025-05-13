@@ -91,6 +91,10 @@
         <settingConfig type="numeric" errorMessage="Enter a value between 0 and 100" />
     </setting>
 
+    <setting propertyKey="@Properties.colorOverride" title="Override colors, read FAQ first">
+        <settingConfig type="alphanumeric" errorMessage="Enter 13 values separated by spaces, #FFFFFF format or -" />
+    </setting>
+
     <setting propertyKey="@Properties.clockOutlineStyle" title="Clock outline style (AMOLED only)">
         <settingConfig type="list">
             <listEntry value="0">Filled numbers no outline, same in AOD</listEntry>

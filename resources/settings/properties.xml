@@ -6,6 +6,7 @@
     <property id="customSaturation1" type="number">100</property>
     <property id="customHue2" type="number">200</property>
     <property id="customSaturation2" type="number">100</property>
+    <property id="colorOverride" type="string"></property>
     <property id="hourFormat" type="number">0</property>
     <property id="zeropadHour" type="boolean">true</property>
     <property id="tempUnit" type="number">0</property>
