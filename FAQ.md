@@ -8,6 +8,9 @@ The settings can not be changed on the watch itself.
 ### Do I need to buy you a coffee to unlock features of the watch face?
 **No, everything is included for free**. Donating money / buying coffee through ko-fi does not unlock anything as there is nothing to unlock, everything is already included. You are however very welcome to support me anyway if you like the watch face: [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M51A1RGV)
 
+### How does the custom themes work?
+Custom themes are best created with the [Theme designer](ludw.github.io). When it looks they way you want just copy the string of color codes at the bottom and enter them into the "Custom colors" field in settings for the watchface. Make sure to also select "Custom colors" as the theme.
+
 ### What are that field called in settings? What is that number?
 Most fields can be configures in settings what data they should display. This picture explains what everything is called:
 
@@ -19,18 +22,6 @@ For watches with an AMOLED screen you have two more fields shown in the Always O
 Yes, but you have to configure what to open in settings (it's towards the bottom on the settings screen). There are 5 areas that when pressed can open something:
 
 ![image explaining the areas that can be configured to open things](press_to_open.png)
-
-### How does the custom themes work? What's the difference between them?
-All four custom themes use two colors the used can specify as Hue and Saturation, from those values all the colors of the theme is calculated.
-Hue and Saturation are in HSV format, so you can use [a normal colorpicker](https://www.selecolor.com/en/hsv-color-picker/) to see what color a number represents (set brightness to max). 
-
-![the four custom color themes](colorthemes.jpg)
-
-Here are the four custom color themes with color 1 set as 100% saturated red and color 2 set to 100% saturated green.
- - Custom theme 1 uses a bright color 1 for the clock and a dark color 2 as background. The data fields and line below the clock uses less saturated versions of color 1.
- - Custom theme 2 uses a desaturated version of color 1 for the clock and the line below the clock. The background uses a slightly less dark version of color 2.
- - Custom theme 3 uses quite saturated and bright versions of color 1 and 2.
- - Custom theme 4 uses a bright color 1 for the clock, and a bright color 2 for the line below the clock.
 
 ## Dissapearing or hidden fields
 

@@ -26,10 +26,7 @@
             <listEntry value="16">Green on white (not recommended for AMOLED)</listEntry>
             <listEntry value="17">Orange on white (not recommended for AMOLED)</listEntry>
             <listEntry value="21">Purple on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="30">Custom theme, variant 1</listEntry>
-            <listEntry value="31">Custom theme, variant 2</listEntry>
-            <listEntry value="32">Custom theme, variant 3</listEntry>
-            <listEntry value="33">Custom theme, variant 4</listEntry>
+            <listEntry value="30">Custom colors, see FAQ for details</listEntry>
         </settingConfig>
     </setting>
 
@@ -60,10 +57,7 @@
             <listEntry value="16">Green on white (not recommended for AMOLED)</listEntry>
             <listEntry value="17">Orange on white (not recommended for AMOLED)</listEntry>
             <listEntry value="21">Purple on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="30">Custom theme, variant 1, see FAQ for details</listEntry>
-            <listEntry value="31">Custom theme, variant 2, see FAQ for details</listEntry>
-            <listEntry value="32">Custom theme, variant 3, see FAQ for details</listEntry>
-            <listEntry value="33">Custom theme, variant 4, see FAQ for details</listEntry>
+            <listEntry value="30">Custom colors, see FAQ for details</listEntry>
         </settingConfig>
     </setting>
 
@@ -75,23 +69,7 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.customHue1" title="Custom theme color 1, hue (0-365), see FAQ for details">
-        <settingConfig type="numeric" errorMessage="Enter a value between 0 and 365" />
-    </setting>
-
-    <setting propertyKey="@Properties.customSaturation1" title="Custom theme color 1, saturation (0-100)">
-        <settingConfig type="numeric" errorMessage="Enter a value between 0 and 100" />
-    </setting>
-
-    <setting propertyKey="@Properties.customHue2" title="Custom theme color 2, hue (0-365)">
-        <settingConfig type="numeric" errorMessage="Enter a value between 0 and 365" />
-    </setting>
-
-    <setting propertyKey="@Properties.customSaturation2" title="Custom theme color 2, saturation (0-100)">
-        <settingConfig type="numeric" errorMessage="Enter a value between 0 and 100" />
-    </setting>
-
-    <setting propertyKey="@Properties.colorOverride" title="Override colors, read FAQ first">
+    <setting propertyKey="@Properties.colorOverride" title="Custom colors, read FAQ first">
         <settingConfig type="alphanumeric" errorMessage="Enter 13 values separated by spaces, #FFFFFF format or -" />
     </setting>
 
