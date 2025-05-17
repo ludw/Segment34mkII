@@ -9,7 +9,7 @@ The settings can not be changed on the watch itself.
 **No, everything is included for free**. Donating money / buying coffee through ko-fi does not unlock anything as there is nothing to unlock, everything is already included. You are however very welcome to support me anyway if you like the watch face: [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M51A1RGV)
 
 ### How does the custom themes work?
-Custom themes are best created with the [Theme designer](ludw.github.io). When it looks they way you want just copy the string of color codes at the bottom and enter them into the "Custom colors" field in settings for the watchface. Make sure to also select "Custom colors" as the theme.
+Custom themes are best created with the [Theme designer](https://ludw.github.io). When it looks they way you want just copy the string of color codes at the bottom and enter them into the "Custom colors" field in settings for the watchface. Make sure to also select "Custom colors" as the theme.
 
 ### What are that field called in settings? What is that number?
 Most fields can be configures in settings what data they should display. This picture explains what everything is called:
