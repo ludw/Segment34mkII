@@ -57,6 +57,10 @@ Pull requests are welcome, but please follow the following guidelines:
 - Fully custom themes
 
 ## Change log
+2025-05-17 v3.0.0
+- Custom themes replaced with a online theme designer, all colors can now be customized. If you have usef custom color themes 1-4 you must unfortunately recreate the theme you want at https://ludw.github.io/ and then copy over the color codes to the watchface settings after you have updated.
+
+
 2025-05-10 v.2.10.0
 - Added UV Index as option for many fields
 - Added Humidity as option where it was missing
