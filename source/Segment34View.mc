@@ -948,7 +948,7 @@ class Segment34View extends WatchUi.WatchFace {
         var color_str = "";
         var color = null;
         for(var i=0; i<propColorOverride.length(); i += 8) {
-            color_str = Lang.format("0x$1$", [propColorOverride.substring(i+1, i+7)]);
+            color_str = propColorOverride.substring(i+1, i+7);
             color = color_str.toNumberWithBase(16) as Graphics.ColorType;
             ret.add(color);
         }
@@ -958,7 +958,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
 
         for(var j=0; j<ret.size(); j++) {
-            if(ret[j] < 0 or ret[j] > 16777215) {
+            if(ret[j] == null or ret[j] < 0 or ret[j] > 16777215) {
                 ret = setColorTheme(-1);
                 break;
             }
