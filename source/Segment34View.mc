@@ -904,6 +904,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(theme == 21) { return [0xFFFFFF, 0xAA00FF, 0xAAAAAA, 0xAA00FF, 0x000000, 0xAAAAAA, 0xAA00FF, 0x000000, 0x555555, 0x000000, 0xFF5500, 0x55AAFF, 0x555555]; } // Purple on White MIP
         if(theme == 22) { return [0x000000, 0xAA00FF, 0x555555, 0xAA00FF, 0xFFFFFF, 0x555555, 0xAA00FF, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Purple on black MIP
         if(theme == 23) { return [0x000000, 0xFFAA00, 0x555555, 0xFFAA00, 0xFFAA55, 0x555555, 0xFFAA00, 0xFFAA55, 0x555555, 0x55AAAA, 0xFFAA00, 0x55AAAA, 0xFFFFFF]; } // Amber MIP
+        infoMessage = "THEME ERROR";
         return [0xff0000, 0x00ff00, 0x0000ff, 0x550000, 0x005500, 0x000055, 0xff00ff, 0x00ffff, 0xffff00, 0x005555, 0x550055, 0x555500, 0xffffff]; // error case
     }
 
@@ -936,6 +937,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(theme == 21) { return [0xFFFFFF, 0xAA00FF, 0xCCCCCC, 0xbb34ff, 0x000000, 0xCCCCCC, 0xAA00FF, 0x000000, 0x9a9a9a, 0x000000, 0xFF5500, 0x55AAFF, 0x555555]; } // Purple on White AMOLED
         if(theme == 22) { return [0x000000, 0xAA55AA, 0x282828, 0xaa77aa, 0xFFFFFF, 0x282828, 0xAA55AA, 0xFFFFFF, 0x9a9a9a, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Purple on black AMOLED
         if(theme == 23) { return [0x000000, 0xff960c, 0x302b24, 0xffbf65, 0xffdeb4, 0x302b24, 0xffac3f, 0xffb759, 0x9a784d, 0xa8d6fd, 0xfdb500, 0xa8d6fd, 0xe3efd2]; } // Amber AMOLED
+        infoMessage = "THEME ERROR";
         return [0xff0000, 0x00ff00, 0x0000ff, 0xff00ff, 0x00ffff, 0xffff00, 0x550000, 0x005500, 0x000055, 0x005555, 0x550055, 0x555500, 0xffffff];
 
     }
@@ -947,15 +949,22 @@ class Segment34View extends WatchUi.WatchFace {
         var color = null;
         for(var i=0; i<propColorOverride.length(); i += 8) {
             color_str = Lang.format("0x$1$", [propColorOverride.substring(i+1, i+7)]);
-            color = color_str.toNumberWithBase(16);
+            color = color_str.toNumberWithBase(16) as Graphics.ColorType;
             ret.add(color);
         }
 
-        if(ret.size() == 13) {
-            return ret;
-        } else {
-            return setColorTheme(-1);
+        if(ret.size() != 13) {
+            ret = setColorTheme(-1);
         }
+
+        for(var j=0; j<ret.size(); j++) {
+            if(ret[j] < 0 or ret[j] > 16777215) {
+                ret = setColorTheme(-1);
+                break;
+            }
+        }
+
+        return ret;
     }
 
     hidden function updateColorTheme() {
