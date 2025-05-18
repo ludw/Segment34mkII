@@ -57,6 +57,9 @@ Pull requests are welcome, but please follow the following guidelines:
 - Fully custom themes
 
 ## Change log
+2025-05-18 v3.1.0
+- Added support for Descent G2
+
 2025-05-17 v3.0.2
 - Handle invalid custom color themes better
 
