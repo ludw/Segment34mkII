@@ -483,9 +483,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(now.sec % 60 == 0 or lastSlowUpdate == null or unix_timestamp - lastSlowUpdate >= 60) {
             lastSlowUpdate = unix_timestamp;
             updateSlowData(now);
-            if(now.min % 5 == 0 or weatherCondition == null) {
-                updateWeather();
-            }
+            updateWeather();
         }
 
         if(isSleeping and canBurnIn) {

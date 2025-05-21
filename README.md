@@ -54,9 +54,12 @@ Pull requests are welcome, but please follow the following guidelines:
 - Weather caching
 - Monthly run/bike distance
 - Notifications as icon
-- Fully custom themes
+- Altitude, history value might not be accurate, use sensor value?
 
 ## Change log
+2025-05-21 v3.1.1
+- Fixed issue with weather not always updating properly
+
 2025-05-18 v3.1.0
 - Added support for Descent G2
 
