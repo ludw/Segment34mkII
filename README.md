@@ -57,8 +57,13 @@ Pull requests are welcome, but please follow the following guidelines:
 - Altitude, history value might not be accurate, use sensor value?
 
 ## Change log
-2025-05-21 v3.1.1
+2025-05-29 v3.2.1
+- Support for fr570
+- Fixed bug with press to toggle night theme
+
+2025-05-21 v3.2.0
 - Fixed issue with weather not always updating properly
+- Added support for Fr970
 
 2025-05-18 v3.1.0
 - Added support for Descent G2

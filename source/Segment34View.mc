@@ -953,7 +953,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(nightModeOverride == 1) { newValue = true; }
 
         if(nightMode != newValue) {
-            if(newValue == true) {
+            if(newValue == true and propNightTheme != -1) {
                 themeColors = setColorTheme(propNightTheme);
             } else {
                 themeColors = setColorTheme(propTheme);
