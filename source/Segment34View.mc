@@ -1896,6 +1896,11 @@ class Segment34View extends WatchUi.WatchFace {
             val = join([temp, uv, highlow]);
         } else if(complicationType == 66) { // Humidity
             val = getHumidity();
+        } else if(complicationType == 67) { // Temperature, Feels like, High/Low
+            var temp = getTemperature();
+            var fl = getFeelsLike();
+            var highlow = getHighLow();
+            val = join([temp, fl, highlow]);
         }
 
         return val;

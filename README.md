@@ -58,8 +58,9 @@ Pull requests are welcome, but please follow the following guidelines:
 
 ## Change log
 2025-06-01 v3.3.0
-- Slightly adjusted clock font on some watches for more symetrical number width
+- Slightly adjusted clock font on some watches for more symetrical numbers
 - Option to hide the : between HH and MM (Military time)
+- Data option: Temperature, Feels Like, High/Low
 
 2025-05-29 v3.2.1
 - Support for fr570

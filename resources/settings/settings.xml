@@ -237,6 +237,7 @@
             <listEntry value="63">Temperature, Wind, Humidity, Precipitation chance</listEntry>
             <listEntry value="51">Temperature, Humidity, High/Low</listEntry>
             <listEntry value="65">Temperature, UV Index, High/Low</listEntry>
+            <listEntry value="67">Temperature, Feels like, High/Low</listEntry>
             <listEntry value="52">Temperature, Percipitation chance, High/Low</listEntry>
             <listEntry value="20">Weather conditions, Precipitation chance</listEntry>
             <listEntry value="50">Weather conditions</listEntry>
@@ -271,6 +272,7 @@
             <listEntry value="63">Temperature, Wind, Humidity, Precipitation chance</listEntry>
             <listEntry value="51">Temperature, Humidity, High/Low</listEntry>
             <listEntry value="65">Temperature, UV Index, High/Low</listEntry>
+            <listEntry value="67">Temperature, Feels like, High/Low</listEntry>
             <listEntry value="52">Temperature, Percipitation chance, High/Low</listEntry>
             <listEntry value="20">Weather conditions + Percipitation chance</listEntry>
             <listEntry value="50">Weather conditions</listEntry>
@@ -305,6 +307,7 @@
             <listEntry value="63">Temperature, Wind, Humidity, Precipitation chance</listEntry>
             <listEntry value="51">Temperature, Humidity, High/Low</listEntry>
             <listEntry value="65">Temperature, UV Index, High/Low</listEntry>
+            <listEntry value="67">Temperature, Feels like, High/Low</listEntry>
             <listEntry value="52">Temperature, Percipitation chance, High/Low</listEntry>
             <listEntry value="20">Weather conditions + Percipitation chance</listEntry>
             <listEntry value="50">Weather conditions</listEntry>
