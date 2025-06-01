@@ -57,6 +57,10 @@ Pull requests are welcome, but please follow the following guidelines:
 - Altitude, history value might not be accurate, use sensor value?
 
 ## Change log
+2025-06-01 v3.3.0
+- Slightly adjusted clock font on some watches for more symetrical number width
+- Option to hide the : between HH and MM (Military time)
+
 2025-05-29 v3.2.1
 - Support for fr570
 - Fixed bug with press to toggle night theme
