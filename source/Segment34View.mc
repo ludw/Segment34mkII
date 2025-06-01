@@ -125,6 +125,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propHemisphere as Number = 0;
     hidden var propHourFormat as Number = 0;
     hidden var propZeropadHour as Boolean = true;
+    hidden var propTimeSeparator as Number = 0;
     hidden var propTempUnit as Number = 0;
     hidden var propWindUnit as Number = 0;
     hidden var propPressureUnit as Number = 0;
@@ -162,7 +163,7 @@ class Segment34View extends WatchUi.WatchFace {
         lowBatt
     }
 
-    const clockBgText = "#####";
+    var clockBgText = "#####";
     (:MIP) const bottomFieldBg = "#";
     (:Round390) const bottomFieldBg = "#";
     (:Round416) const bottomFieldBg = "#";
@@ -205,7 +206,13 @@ class Segment34View extends WatchUi.WatchFace {
         loadResources();
 
         halfClockHeight = Math.round(clockHeight / 2);
-        halfClockWidth = Math.round(clockWidth / 2);
+
+        if(clockBgText.length() == 4) {
+            halfClockWidth = Math.round((clockWidth / 5 * 4.2) / 2);
+        } else {
+            halfClockWidth = Math.round(clockWidth / 2);
+        }
+        
         halfMarginY = Math.round(marginY / 2);
 
         hasComplications = Toybox has :Complications;
@@ -1045,6 +1052,7 @@ class Segment34View extends WatchUi.WatchFace {
         propHemisphere = Application.Properties.getValue("hemisphere") as Number;
         propHourFormat = Application.Properties.getValue("hourFormat") as Number;
         propZeropadHour = Application.Properties.getValue("zeropadHour") as Boolean;
+        propTimeSeparator = Application.Properties.getValue("timeSeparator") as Number;
         propTempUnit = Application.Properties.getValue("tempUnit") as Number;
         propWindUnit = Application.Properties.getValue("windUnit") as Number;
         propPressureUnit = Application.Properties.getValue("pressureUnit") as Number;
@@ -1062,6 +1070,8 @@ class Segment34View extends WatchUi.WatchFace {
         
         nightMode = null; // force update color theme
         updateColorTheme();
+
+        if(propTimeSeparator == 2) { clockBgText = "####"; } else { clockBgText = "#####"; }
     }
 
     hidden function updateData(now as Gregorian.Info) as Void {
@@ -1116,10 +1126,14 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getClockData(now as Gregorian.Info) as String {
+        var separator = ":";
+        if(propTimeSeparator == 1) { separator = " "; }
+        if(propTimeSeparator == 2) { separator = ""; }
+
         if(propZeropadHour) {
-            return Lang.format("$1$:$2$", [formatHour(now.hour).format("%02d"), now.min.format("%02d")]);
+            return Lang.format("$1$$2$$3$", [formatHour(now.hour).format("%02d"), separator, now.min.format("%02d")]);
         } else {
-            return Lang.format("$1$:$2$", [formatHour(now.hour).format("%2d"), now.min.format("%02d")]);
+            return Lang.format("$1$$2$$3$", [formatHour(now.hour).format("%2d"), separator, now.min.format("%02d")]);
         }
     }
 

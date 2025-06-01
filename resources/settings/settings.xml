@@ -1022,6 +1022,14 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.timeSeparator" title="Separator between Hours and Minutes">
+            <settingConfig type="list">
+                <listEntry value="0">:</listEntry>
+                <listEntry value="1">Blank space</listEntry>
+                <listEntry value="2">No separator</listEntry>
+            </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.showSeconds" title="Show Seconds in Active mode">
         <settingConfig type="boolean" />
     </setting>

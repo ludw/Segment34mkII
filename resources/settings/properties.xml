@@ -5,6 +5,7 @@
     <property id="colorOverride" type="string"></property>
     <property id="hourFormat" type="number">0</property>
     <property id="zeropadHour" type="boolean">true</property>
+    <property id="timeSeparator" type="number">0</property>
     <property id="tempUnit" type="number">0</property>
     <property id="windUnit" type="number">0</property>
     <property id="pressureUnit" type="number">0</property>
