@@ -324,7 +324,7 @@ class Segment34View extends WatchUi.WatchFace {
         fontBattery = Application.loadResource(Rez.Fonts.led_small_lines);
 
         drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
-        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2) {
+        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2 or propClockOutlineStyle == 4) {
             drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
         } else {
             drawAODPattern = Application.loadResource(Rez.Drawables.aod2) as BitmapResource;
@@ -364,7 +364,7 @@ class Segment34View extends WatchUi.WatchFace {
         fontBattery = fontTinyData;
 
         drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
-        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2) {
+        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2 or propClockOutlineStyle == 4) {
             drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
         } else {
             drawAODPattern = Application.loadResource(Rez.Drawables.aod2) as BitmapResource;
@@ -401,7 +401,7 @@ class Segment34View extends WatchUi.WatchFace {
         fontBattery = fontTinyData;
 
         drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
-        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2) {
+        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2 or propClockOutlineStyle == 4) {
             drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
         } else {
             drawAODPattern = Application.loadResource(Rez.Drawables.aod2) as BitmapResource;
@@ -437,7 +437,7 @@ class Segment34View extends WatchUi.WatchFace {
         fontBattery = fontTinyData;
 
         drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
-        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2) {
+        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2 or propClockOutlineStyle == 4) {
             drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
         } else {
             drawAODPattern = Application.loadResource(Rez.Drawables.aod2) as BitmapResource;
@@ -710,6 +710,12 @@ class Segment34View extends WatchUi.WatchFace {
         if(propClockOutlineStyle == 1 or propClockOutlineStyle == 2 or propClockOutlineStyle == 3) {
             dc.setColor(themeColors[outline], Graphics.COLOR_TRANSPARENT);
             dc.drawText(baseX, baseY, fontClockOutline, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        }
+
+        if(propClockOutlineStyle == 4) {
+            // Filled clock but outline color
+            dc.setColor(themeColors[outline], Graphics.COLOR_TRANSPARENT);
+            dc.drawText(baseX, baseY, fontClock, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         }
 
         // Draw clock gradient
@@ -1015,57 +1021,65 @@ class Segment34View extends WatchUi.WatchFace {
         return false;
     }
 
-    hidden function updateProperties() as Void {
-        propTheme = Application.Properties.getValue("colorTheme") as Number;
-        propNightTheme = Application.Properties.getValue("nightColorTheme") as Number;
-        propNightThemeActivation = Application.Properties.getValue("nightThemeActivation") as Number;
-        propColorOverride = Application.Properties.getValue("colorOverride") as String;
-        propClockOutlineStyle = Application.Properties.getValue("clockOutlineStyle") as Number;
+    hidden function getValueOrDefault(propName as String, defaultVal as PropertyValueType) as PropertyValueType {
+        var val = Application.Properties.getValue(propName);
+        if(val == null) {
+            return defaultVal;
+        }
+        return val;
+    }
 
-        propTopPartShows = Application.Properties.getValue("topPartShows") as Number;
-        propHistogramData = Application.Properties.getValue("histogramData") as Number;
-        propSunriseFieldShows = Application.Properties.getValue("sunriseFieldShows") as Number;
-        propSunsetFieldShows = Application.Properties.getValue("sunsetFieldShows") as Number;
-        propWeatherLine1Shows = Application.Properties.getValue("weatherLine1Shows") as Number;
-        propWeatherLine2Shows = Application.Properties.getValue("weatherLine2Shows") as Number;
-        propDateFieldShows = Application.Properties.getValue("dateFieldShows") as Number;
-        propShowSeconds = Application.Properties.getValue("showSeconds") as Boolean;
-        propAlwaysShowSeconds = Application.Properties.getValue("alwaysShowSeconds") as Boolean;
-        propFieldLayout = Application.Properties.getValue("fieldLayout") as Number;
-        propLeftValueShows = Application.Properties.getValue("leftValueShows") as Number;
-        propMiddleValueShows = Application.Properties.getValue("middleValueShows") as Number;
-        propRightValueShows = Application.Properties.getValue("rightValueShows") as Number;
-        propFourthValueShows = Application.Properties.getValue("fourthValueShows") as Number;
-        propBottomFieldShows = Application.Properties.getValue("bottomFieldShows") as Number;
-        propIcon1 = Application.Properties.getValue("icon1") as Number;
-        propIcon2 = Application.Properties.getValue("icon2") as Number;
-        propBatteryVariant = Application.Properties.getValue("batteryVariant") as Number;
+    hidden function updateProperties() as Void {
+        propTheme = getValueOrDefault("colorTheme", 0) as Number;
+        propNightTheme = getValueOrDefault("nightColorTheme", -1) as Number;
+        propNightThemeActivation = getValueOrDefault("nightThemeActivation", 0) as Number;
+        propColorOverride = getValueOrDefault("colorOverride", "") as String;
+        propClockOutlineStyle = getValueOrDefault("clockOutlineStyle", 0) as Number;
+
+        propTopPartShows = getValueOrDefault("topPartShows", 0) as Number;
+        propHistogramData = getValueOrDefault("histogramData", 0) as Number;
+        propSunriseFieldShows = getValueOrDefault("sunriseFieldShows", 39) as Number;
+        propSunsetFieldShows = getValueOrDefault("sunsetFieldShows", 40) as Number;
+        propWeatherLine1Shows = getValueOrDefault("weatherLine1Shows", 49) as Number;
+        propWeatherLine2Shows = getValueOrDefault("weatherLine2Shows", 50) as Number;
+        propDateFieldShows = getValueOrDefault("dateFieldShows", -1) as Number;
+        propShowSeconds = getValueOrDefault("showSeconds", true) as Boolean;
+        propAlwaysShowSeconds = getValueOrDefault("alwaysShowSeconds", false) as Boolean;
+        propFieldLayout = getValueOrDefault("fieldLayout", 0) as Number;
+        propLeftValueShows = getValueOrDefault("leftValueShows", 6) as Number;
+        propMiddleValueShows = getValueOrDefault("middleValueShows", 10) as Number;
+        propRightValueShows = getValueOrDefault("rightValueShows", 0) as Number;
+        propFourthValueShows = getValueOrDefault("fourthValueShows", -2) as Number;
+        propBottomFieldShows = getValueOrDefault("bottomFieldShows", 17) as Number;
+        propIcon1 = getValueOrDefault("icon1", 1) as Number;
+        propIcon2 = getValueOrDefault("icon2", 2) as Number;
+        propBatteryVariant = getValueOrDefault("batteryVariant", 3) as Number;
         
-        propUpdateFreq = Application.Properties.getValue("updateFreq") as Number;
-        propShowClockBg = Application.Properties.getValue("showClockBg") as Boolean;
-        propShowDataBg = Application.Properties.getValue("showDataBg") as Boolean;
-        propAodFieldShows = Application.Properties.getValue("aodFieldShows") as Number;
-        propAodRightFieldShows = Application.Properties.getValue("aodRightFieldShows") as Number;
-        propAodAlignment = Application.Properties.getValue("aodAlignment") as Number;
-        propDateAlignment = Application.Properties.getValue("dateAlignment") as Number;
-        propBottomFieldAlignment = Application.Properties.getValue("bottomFieldAlignment") as Number;
-        propHemisphere = Application.Properties.getValue("hemisphere") as Number;
-        propHourFormat = Application.Properties.getValue("hourFormat") as Number;
-        propZeropadHour = Application.Properties.getValue("zeropadHour") as Boolean;
-        propTimeSeparator = Application.Properties.getValue("timeSeparator") as Number;
-        propTempUnit = Application.Properties.getValue("tempUnit") as Number;
-        propWindUnit = Application.Properties.getValue("windUnit") as Number;
-        propPressureUnit = Application.Properties.getValue("pressureUnit") as Number;
-        propLabelVisibility = Application.Properties.getValue("labelVisibility") as Number;
-        propDateFormat = Application.Properties.getValue("dateFormat") as Number;
-        propShowStressAndBodyBattery = Application.Properties.getValue("showStressAndBodyBattery") as Boolean;
-        propShowNotificationCount = Application.Properties.getValue("showNotificationCount") as Boolean;
-        propTzOffset1 = Application.Properties.getValue("tzOffset1") as Number;
-        propTzOffset2 = Application.Properties.getValue("tzOffset2") as Number;
-        propTzName1 = Application.Properties.getValue("tzName1") as String;
-        propTzName2 = Application.Properties.getValue("tzName2") as String;
-        propWeekOffset = Application.Properties.getValue("weekOffset") as Number;
-        propSmallFontVariant = Application.Properties.getValue("smallFontVariant") as Number;
+        propUpdateFreq = getValueOrDefault("updateFreq", 5) as Number;
+        propShowClockBg = getValueOrDefault("showClockBg", true) as Boolean;
+        propShowDataBg = getValueOrDefault("showDataBg", true) as Boolean;
+        propAodFieldShows = getValueOrDefault("aodFieldShows", -1) as Number;
+        propAodRightFieldShows = getValueOrDefault("aodRightFieldShows", -2) as Number;
+        propAodAlignment = getValueOrDefault("aodAlignment", 0) as Number;
+        propDateAlignment = getValueOrDefault("dateAlignment", 0) as Number;
+        propBottomFieldAlignment = getValueOrDefault("bottomFieldAlignment", 2) as Number;
+        propHemisphere = getValueOrDefault("hemisphere", 0) as Number;
+        propHourFormat = getValueOrDefault("hourFormat", 0) as Number;
+        propZeropadHour = getValueOrDefault("zeropadHour", true) as Boolean;
+        propTimeSeparator = getValueOrDefault("timeSeparator", 0) as Number;
+        propTempUnit = getValueOrDefault("tempUnit", 0) as Number;
+        propWindUnit = getValueOrDefault("windUnit", 0) as Number;
+        propPressureUnit = getValueOrDefault("pressureUnit", 0) as Number;
+        propLabelVisibility = getValueOrDefault("labelVisibility", 0) as Number;
+        propDateFormat = getValueOrDefault("dateFormat", 0) as Number;
+        propShowStressAndBodyBattery = getValueOrDefault("showStressAndBodyBattery", true) as Boolean;
+        propShowNotificationCount = getValueOrDefault("showNotificationCount", true) as Boolean;
+        propTzOffset1 = getValueOrDefault("tzOffset1", 0) as Number;
+        propTzOffset2 = getValueOrDefault("tzOffset2", 0) as Number;
+        propTzName1 = getValueOrDefault("tzName1", "UTC TIME") as String;
+        propTzName2 = getValueOrDefault("tzName2", "TZ2") as String;
+        propWeekOffset = getValueOrDefault("weekOffset", 0) as Number;
+        propSmallFontVariant = getValueOrDefault("smallFontVariant", 2) as Number;
         propIs24H = System.getDeviceSettings().is24Hour;
         
         nightMode = null; // force update color theme

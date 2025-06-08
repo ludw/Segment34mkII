@@ -26,7 +26,7 @@
             <listEntry value="16">Green on white (not recommended for AMOLED)</listEntry>
             <listEntry value="17">Orange on white (not recommended for AMOLED)</listEntry>
             <listEntry value="21">Purple on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="30">Custom colors, see FAQ for details</listEntry>
+            <listEntry value="30">Custom colors, see FAQ 1.2.0 for details</listEntry>
         </settingConfig>
     </setting>
 
@@ -77,6 +77,7 @@
         <settingConfig type="list">
             <listEntry value="0">Filled numbers no outline, same in AOD</listEntry>
             <listEntry value="1">Filled numbers no outline, only outline in AOD</listEntry>
+            <listEntry value="4">Filled numbers no outline, filled using outline color in AOD</listEntry>
             <listEntry value="2">Filled numbers with outline, same in AOD</listEntry>
             <listEntry value="3">Filled numbers with outline, only outline in AOD</listEntry>
         </settingConfig>

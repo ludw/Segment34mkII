@@ -57,6 +57,12 @@ Pull requests are welcome, but please follow the following guidelines:
 - Altitude, history value might not be accurate, use sensor value?
 
 ## Change log
+
+
+2025-06-08 v3.4.0
+- Option to use outline color for clock in AOD
+- Stability improvements
+
 2025-06-01 v3.3.0
 - Slightly adjusted clock font on some watches for more symetrical numbers
 - Option to hide the : between HH and MM (Military time)
