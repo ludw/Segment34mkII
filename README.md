@@ -58,6 +58,8 @@ Pull requests are welcome, but please follow the following guidelines:
 
 ## Change log
 
+2025-06-08 v3.4.1
+- Fixed issue with sunset/sunrise in areas where the sun never set
 
 2025-06-08 v3.4.0
 - Option to use outline color for clock in AOD

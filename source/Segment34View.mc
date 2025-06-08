@@ -1725,12 +1725,17 @@ class Segment34View extends WatchUi.WatchFace {
             if(weatherCondition != null) {
                 var loc = weatherCondition.observationLocationPosition;
                 if(loc != null) {
-                    var sunrise = Time.Gregorian.info(Weather.getSunrise(loc, now), Time.FORMAT_SHORT);
-                    var sunriseHour = formatHour(sunrise.hour);
-                    if(width < 5) {
-                        val = Lang.format("$1$$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]);
+                    var s = Weather.getSunrise(loc, now);
+                    if(s != null) {
+                        var sunrise = Time.Gregorian.info(s, Time.FORMAT_SHORT);
+                        var sunriseHour = formatHour(sunrise.hour);
+                        if(width < 5) {
+                            val = Lang.format("$1$$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]);
+                        } else {
+                            val = Lang.format("$1$:$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]);
+                        }
                     } else {
-                        val = Lang.format("$1$:$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]);
+                        val = "N/A";
                     }
                 }
             }
@@ -1739,12 +1744,17 @@ class Segment34View extends WatchUi.WatchFace {
             if(weatherCondition != null) {
                 var loc = weatherCondition.observationLocationPosition;
                 if(loc != null) {
-                    var sunset = Time.Gregorian.info(Weather.getSunset(loc, now), Time.FORMAT_SHORT);
-                    var sunsetHour = formatHour(sunset.hour);
-                    if(width < 5) {
-                        val = Lang.format("$1$$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]);
+                    var s = Weather.getSunset(loc, now);
+                    if(s != null) {
+                        var sunset = Time.Gregorian.info(s, Time.FORMAT_SHORT);
+                        var sunsetHour = formatHour(sunset.hour);
+                        if(width < 5) {
+                            val = Lang.format("$1$$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]);
+                        } else {
+                            val = Lang.format("$1$:$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]);
+                        }
                     } else {
-                        val = Lang.format("$1$:$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]);
+                        val = "N/A";
                     }
                 }
             }
