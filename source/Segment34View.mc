@@ -2007,7 +2007,7 @@ class Segment34View extends WatchUi.WatchFace {
 
         // Handle HR special case
         if(complicationType == 10) {
-            var isLive = (Activity.getActivityInfo().currentHeartRate != null);
+            var isLive = (Activity.getActivityInfo() != null and Activity.getActivityInfo().currentHeartRate != null);
             return (labelSize == 1) ? "HR:" : (isLive ? "LIVE HR:" : "LAST HR:");
         }
         
