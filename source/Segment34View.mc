@@ -2269,64 +2269,63 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
 
-        var weatherNames = [
-            "CLEAR",
-            "PARTLY CLOUDY",
-            "MOSTLY CLOUDY",
-            "RAIN",
-            "SNOW",
-            "WINDY",
-            "THUNDERSTORMS",
-            "WINTRY MIX",
-            "FOG",
-            "HAZY",
-            "HAIL",
-            "SCATTERED SHOWERS",
-            "SCT. THUNDERSTORMS",
-            "UNKNOWN PRECIPITATION",
-            "LIGHT RAIN",
-            "HEAVY RAIN",
-            "LIGHT SNOW",
-            "HEAVY SNOW",
-            "LIGHT RAIN SNOW",
-            "HEAVY RAIN SNOW",
-            "CLOUDY",
-            "RAIN SNOW",
-            "PARTLY CLEAR",
-            "MOSTLY CLEAR",
-            "LIGHT SHOWERS",
-            "SHOWERS",
-            "HEAVY SHOWERS",
-            "CHANCE OF SHOWERS",
-            "CH. OF THUNDERSTORMS",
-            "MIST",
-            "DUST",
-            "DRIZZLE",
-            "TORNADO",
-            "SMOKE",
-            "ICE",
-            "SAND",
-            "SQUALL",
-            "SANDSTORM",
-            "VOLCANIC ASH",
-            "HAZE",
-            "FAIR",
-            "HURRICANE",
-            "TROPICAL STORM",
-            "CHANCE OF SNOW",
-            "CHANCE OF RAIN SNOW",
-            "CLOUDY CHANCE OF RAIN",
-            "CLOUDY CHANCE OF SNOW",
-            "CLOUDY CHANCE OF RAIN SNOW",
-            "FLURRIES",
-            "FREEZING RAIN",
-            "SLEET",
-            "ICE SNOW",
-            "THIN CLOUDS",
-            "UNKNOWN"
-        ];
-
-        return weatherNames[weatherCondition.condition] + perp;
+        switch (weatherCondition.condition) {
+            case 0: return Application.loadResource(Rez.Strings.WEATHER_0) + perp;
+            case 1: return Application.loadResource(Rez.Strings.WEATHER_1) + perp;
+            case 2: return Application.loadResource(Rez.Strings.WEATHER_2) + perp;
+            case 3: return Application.loadResource(Rez.Strings.WEATHER_3) + perp;
+            case 4: return Application.loadResource(Rez.Strings.WEATHER_4) + perp;
+            case 5: return Application.loadResource(Rez.Strings.WEATHER_5) + perp;
+            case 6: return Application.loadResource(Rez.Strings.WEATHER_6) + perp;
+            case 7: return Application.loadResource(Rez.Strings.WEATHER_7) + perp;
+            case 8: return Application.loadResource(Rez.Strings.WEATHER_8) + perp;
+            case 9: return Application.loadResource(Rez.Strings.WEATHER_9) + perp;
+            case 10: return Application.loadResource(Rez.Strings.WEATHER_10) + perp;
+            case 11: return Application.loadResource(Rez.Strings.WEATHER_11) + perp;
+            case 12: return Application.loadResource(Rez.Strings.WEATHER_12) + perp;
+            case 13: return Application.loadResource(Rez.Strings.WEATHER_13) + perp;
+            case 14: return Application.loadResource(Rez.Strings.WEATHER_14) + perp;
+            case 15: return Application.loadResource(Rez.Strings.WEATHER_15) + perp;
+            case 16: return Application.loadResource(Rez.Strings.WEATHER_16) + perp;
+            case 17: return Application.loadResource(Rez.Strings.WEATHER_17) + perp;
+            case 18: return Application.loadResource(Rez.Strings.WEATHER_18) + perp;
+            case 19: return Application.loadResource(Rez.Strings.WEATHER_19) + perp;
+            case 20: return Application.loadResource(Rez.Strings.WEATHER_20) + perp;
+            case 21: return Application.loadResource(Rez.Strings.WEATHER_21) + perp;
+            case 22: return Application.loadResource(Rez.Strings.WEATHER_22) + perp;
+            case 23: return Application.loadResource(Rez.Strings.WEATHER_23) + perp;
+            case 24: return Application.loadResource(Rez.Strings.WEATHER_24) + perp;
+            case 25: return Application.loadResource(Rez.Strings.WEATHER_25) + perp;
+            case 26: return Application.loadResource(Rez.Strings.WEATHER_26) + perp;
+            case 27: return Application.loadResource(Rez.Strings.WEATHER_27) + perp;
+            case 28: return Application.loadResource(Rez.Strings.WEATHER_28) + perp;
+            case 29: return Application.loadResource(Rez.Strings.WEATHER_29) + perp;
+            case 30: return Application.loadResource(Rez.Strings.WEATHER_30) + perp;
+            case 31: return Application.loadResource(Rez.Strings.WEATHER_31) + perp;
+            case 32: return Application.loadResource(Rez.Strings.WEATHER_32) + perp;
+            case 33: return Application.loadResource(Rez.Strings.WEATHER_33) + perp;
+            case 34: return Application.loadResource(Rez.Strings.WEATHER_34) + perp;
+            case 35: return Application.loadResource(Rez.Strings.WEATHER_35) + perp;
+            case 36: return Application.loadResource(Rez.Strings.WEATHER_36) + perp;
+            case 37: return Application.loadResource(Rez.Strings.WEATHER_37) + perp;
+            case 38: return Application.loadResource(Rez.Strings.WEATHER_38) + perp;
+            case 39: return Application.loadResource(Rez.Strings.WEATHER_39) + perp;
+            case 40: return Application.loadResource(Rez.Strings.WEATHER_40) + perp;
+            case 41: return Application.loadResource(Rez.Strings.WEATHER_41) + perp;
+            case 42: return Application.loadResource(Rez.Strings.WEATHER_42) + perp;
+            case 43: return Application.loadResource(Rez.Strings.WEATHER_43) + perp;
+            case 44: return Application.loadResource(Rez.Strings.WEATHER_44) + perp;
+            case 45: return Application.loadResource(Rez.Strings.WEATHER_45) + perp;
+            case 46: return Application.loadResource(Rez.Strings.WEATHER_46) + perp;
+            case 47: return Application.loadResource(Rez.Strings.WEATHER_47) + perp;
+            case 48: return Application.loadResource(Rez.Strings.WEATHER_48) + perp;
+            case 49: return Application.loadResource(Rez.Strings.WEATHER_49) + perp;
+            case 50: return Application.loadResource(Rez.Strings.WEATHER_50) + perp;
+            case 51: return Application.loadResource(Rez.Strings.WEATHER_51) + perp;
+            case 52: return Application.loadResource(Rez.Strings.WEATHER_52) + perp;
+            case 53: return Application.loadResource(Rez.Strings.WEATHER_53) + perp;
+        }
+        return "";
     }
 
     hidden function getTemperature() as String {
@@ -2578,34 +2577,34 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function dayName(day_of_week as Number) as String {
-        var names = [
-            "SUN",
-            "MON",
-            "TUE",
-            "WED",
-            "THU",
-            "FRI",
-            "SAT",
-        ];
-        return names[day_of_week - 1];
+        switch (day_of_week) {
+            case 1: return Application.loadResource(Rez.Strings.DAY_OF_WEEK_SUN);
+            case 2: return Application.loadResource(Rez.Strings.DAY_OF_WEEK_MON);
+            case 3: return Application.loadResource(Rez.Strings.DAY_OF_WEEK_TUE);
+            case 4: return Application.loadResource(Rez.Strings.DAY_OF_WEEK_WED);
+            case 5: return Application.loadResource(Rez.Strings.DAY_OF_WEEK_THU);
+            case 6: return Application.loadResource(Rez.Strings.DAY_OF_WEEK_FRI);
+            case 7: return Application.loadResource(Rez.Strings.DAY_OF_WEEK_SAT);
+        }
+        return "";
     }
 
     hidden function monthName(month as Number) as String {
-        var names = [
-            "JAN",
-            "FEB",
-            "MAR",
-            "APR",
-            "MAY",
-            "JUN",
-            "JUL",
-            "AUG",
-            "SEP",
-            "OCT",
-            "NOV",
-            "DEC"
-        ];
-        return names[month - 1];
+        switch (month) {
+            case 1:  return Application.loadResource(Rez.Strings.MONTH_JAN);
+            case 2:  return Application.loadResource(Rez.Strings.MONTH_FEB);
+            case 3:  return Application.loadResource(Rez.Strings.MONTH_MAR);
+            case 4:  return Application.loadResource(Rez.Strings.MONTH_APR);
+            case 5:  return Application.loadResource(Rez.Strings.MONTH_MAY);
+            case 6:  return Application.loadResource(Rez.Strings.MONTH_JUN);
+            case 7:  return Application.loadResource(Rez.Strings.MONTH_JUL);
+            case 8:  return Application.loadResource(Rez.Strings.MONTH_AUG);
+            case 9:  return Application.loadResource(Rez.Strings.MONTH_SEP);
+            case 10: return Application.loadResource(Rez.Strings.MONTH_OCT);
+            case 11: return Application.loadResource(Rez.Strings.MONTH_NOV);
+            case 12: return Application.loadResource(Rez.Strings.MONTH_DEC);
+        }
+        return "";
     }
 
     hidden function isoWeekNumber(year as Number, month as Number, day as Number) as Number {
