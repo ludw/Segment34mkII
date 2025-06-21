@@ -1,3 +1,12 @@
 <strings>
     <string id="AppName">Segment34 MkII</string>
+
+    <string id="UNIT_KCAL">KCAL</string>
+    <string id="UNIT_M">M</string>
+    <string id="UNIT_FT">FT</string>
+    <string id="UNIT_STEPS">STEPS</string>
+    <string id="UNIT_PUSHES">PUSHES</string>
+    <string id="LABEL_FL">FL</string>
+    <string id="LABEL_NA">N/A</string>
+    <string id="LABEL_POS_NA">POSITION N/A</string>
 </strings>

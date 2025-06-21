@@ -1432,19 +1432,19 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getUnitByType(complicationType) as String {
         var unit = "";
         if(complicationType == 11) { // Calories / day
-            unit = "KCAL";
+            unit = Application.loadResource(Rez.Strings.UNIT_KCAL);
         } else if(complicationType == 12) { // Altitude (m)
-            unit = "M";
+            unit = Application.loadResource(Rez.Strings.UNIT_M);
         } else if(complicationType == 15) { // Altitude (ft)
-            unit = "FT";
+            unit = Application.loadResource(Rez.Strings.UNIT_FT);
         } else if(complicationType == 17) { // Steps / day
-            unit = "STEPS";
+            unit = Application.loadResource(Rez.Strings.UNIT_STEPS);
         } else if(complicationType == 19) { // Wheelchair pushes
-            unit = "PUSHES";
+            unit = Application.loadResource(Rez.Strings.UNIT_PUSHES);
         } else if(complicationType == 29) { // Active calories / day
-            unit = "KCAL";
+            unit = Application.loadResource(Rez.Strings.UNIT_KCAL);
         } else if(complicationType == 58) { // Active/Total calories / day
-            unit = "KCAL";
+            unit = Application.loadResource(Rez.Strings.UNIT_KCAL);
         }
         return unit;
     }
@@ -1754,7 +1754,7 @@ class Segment34View extends WatchUi.WatchFace {
                             val = Lang.format("$1$:$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]);
                         }
                     } else {
-                        val = "N/A";
+                        val = Application.loadResource(Rez.Strings.LABEL_NA);
                     }
                 }
             }
@@ -1773,7 +1773,7 @@ class Segment34View extends WatchUi.WatchFace {
                             val = Lang.format("$1$:$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]);
                         }
                     } else {
-                        val = "N/A";
+                        val = Application.loadResource(Rez.Strings.LABEL_NA);
                     }
                 }
             }
@@ -1904,7 +1904,7 @@ class Segment34View extends WatchUi.WatchFace {
             if(pos != null) {
                 val = Lang.format("$1$ $2$", [pos.toDegrees()[0], pos.toDegrees()[1]]);
             } else {
-                val = "POSITION N/A";
+                val = Application.loadResource(Rez.Strings.LABEL_POS_NA);
             }
             
         } else if(complicationType == 61) { // Location Millitary format
@@ -1912,7 +1912,7 @@ class Segment34View extends WatchUi.WatchFace {
             if(pos != null) {
                 val = pos.toGeoString(Position.GEO_MGRS);
             } else {
-                val = "POSITION N/A";
+                val = Application.loadResource(Rez.Strings.LABEL_POS_NA);
             }
             
         } else if(complicationType == 62) { // Location Accuracy
@@ -1921,7 +1921,8 @@ class Segment34View extends WatchUi.WatchFace {
                 if(width < 4) {
                     val = (acc as Number).format("%d");
                 } else {
-                    val = ["N/A", "LAST", "POOR", "USBL", "GOOD"][acc];
+                    var locAcc = Application.loadResource(Rez.JsonData.locationAccuracy) as Array<String>;
+                    val = locAcc[acc];
                 }
             }
         } else if(complicationType == 63) { // Temperature, Wind, Humidity, Precipitation chance
@@ -2027,7 +2028,7 @@ class Segment34View extends WatchUi.WatchFace {
         // Handle HR special case
         if(complicationType == 10) {
             var isLive = (Activity.getActivityInfo() != null and Activity.getActivityInfo().currentHeartRate != null);
-            return (labelSize == 1) ? "HR:" : (isLive ? "LIVE HR:" : "LAST HR:");
+            return (labelSize == 1) ? fieldLabelsShort[10]: (isLive ? fieldLabelsMedium[10] : fieldLabelsLong[10]) + ":" ;
         }
 
         if(complicationType == 16) {
@@ -2353,7 +2354,8 @@ class Segment34View extends WatchUi.WatchFace {
         var tempUnit = getTempUnit();
         if(weatherCondition != null and weatherCondition.feelsLikeTemperature != null) {
             var fltemp = formatTemperatureFloat(weatherCondition.feelsLikeTemperature, tempUnit);
-            fl = Lang.format("FL:$1$$2$", [fltemp.format("%d"), tempUnit]);
+            var fllabel = Application.loadResource(Rez.Strings.LABEL_FL);
+            fl = Lang.format("$1$:$2$$3$", [fllabel, fltemp.format("%d"), tempUnit]);
         }
 
         return fl;
