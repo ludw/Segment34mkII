@@ -49,6 +49,9 @@ class Segment34View extends WatchUi.WatchFace {
     (:initialized) hidden var fontAODData as WatchUi.FontResource;
     (:initialized) hidden var fontBottomData as WatchUi.FontResource;
     (:initialized) hidden var fontBattery as WatchUi.FontResource;
+    (:initialized) hidden var weatherNames as Array<String>;
+    (:initialized) hidden var weekNames as Array<String>;
+    (:initialized) hidden var monthNames as Array<String>;
 
     hidden var drawGradient as BitmapResource?;
     hidden var drawAODPattern as BitmapResource?;
@@ -197,6 +200,9 @@ class Segment34View extends WatchUi.WatchFace {
 
         fontMoon = Application.loadResource(Rez.Fonts.moon);
         fontIcons = Application.loadResource(Rez.Fonts.icons);
+        weatherNames = Application.loadResource(Rez.JsonData.weatherConditions) as Array<String>;
+        weekNames = Application.loadResource(Rez.JsonData.weekNames) as Array<String>;
+        monthNames = Application.loadResource(Rez.JsonData.monthNames) as Array<String>;
 
         centerX = Math.round(screenWidth / 2);
         centerY = Math.round(screenHeight / 2);
@@ -2023,12 +2029,13 @@ class Segment34View extends WatchUi.WatchFace {
             case 7: return formatLabel("V02", "V02 MAX", "RUN V02 MAX", labelSize);  
             case 8: return formatLabel("V02", "V02 MAX", "BIKE V02 MAX", labelSize);
             case 9: return formatLabel("RESP", "RESP RATE", "RESP. RATE", labelSize);
+            case 10: return "";
             case 11: return formatLabel("CAL", "CALORIES", "DLY CALORIES", labelSize);
             case 12: return formatLabel("ALT", "ALTITUDE", "ALTITUDE M", labelSize);
             case 13: return "STRESS:";
+            case 14: return formatLabel("B BAT", "BODY BATT", "BODY BATTERY", labelSize);
             case 15: return formatLabel("ALT", "ALTITUDE", "ALTITUDE FT", labelSize);
             case 16: return Lang.format("$1$:", [propTzName1.toUpper()]);
-            case 14: return formatLabel("B BAT", "BODY BATT", "BODY BATTERY", labelSize);
             case 17: return "STEPS:";
             case 18: return formatLabel("DIST", "M TODAY", "METERS TODAY", labelSize);
             case 19: return "PUSHES:";
@@ -2057,13 +2064,27 @@ class Segment34View extends WatchUi.WatchFace {
             case 42: return formatLabel("ALARM", "ALARMS", "ALARMS", labelSize);
             case 43: return formatLabel("HIGH", "DAILY HIGH", "DAILY HIGH", labelSize);
             case 44: return formatLabel("LOW", "DAILY LOW", "DAILY LOW", labelSize);
+            case 45: return "";
+            case 46: return "";
+            case 47: return "";
+            case 48: return "";
+            case 49: return "";
+            case 50: return "";
+            case 51: return "";
+            case 52: return "";
             case 53: return formatLabel("TEMP", "TEMP", "TEMPERATURE", labelSize);
             case 54: return formatLabel("PRECIP", "PRECIP", "PRECIPITATION", labelSize);
             case 55: return formatLabel("SUN", "NEXT SUN", "NEXT SUN EVNT", labelSize);
+            case 56: return "";
             case 57: return formatLabel("CAL", "NEXT CAL", "NEXT CAL EVNT", labelSize);
+            case 58: return "";
             case 59: return formatLabel("OX", "PULSE OX", "PULSE OX", labelSize);
+            case 60: return "";
+            case 61: return "";
             case 62: return formatLabel("ACC", "POS ACC", "POS ACCURACY", labelSize);
+            case 63: return "";
             case 64: return formatLabel("UV", "UV INDEX", "UV INDEX", labelSize);
+            case 65: return "";
             case 66: return formatLabel("HUM", "HUMIDITY", "HUMIDITY", labelSize);
         }
         
@@ -2278,63 +2299,6 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         }
-
-        var weatherNames = [
-            "CLEAR",
-            "PARTLY CLOUDY",
-            "MOSTLY CLOUDY",
-            "RAIN",
-            "SNOW",
-            "WINDY",
-            "THUNDERSTORMS",
-            "WINTRY MIX",
-            "FOG",
-            "HAZY",
-            "HAIL",
-            "SCATTERED SHOWERS",
-            "SCT. THUNDERSTORMS",
-            "UNKNOWN PRECIPITATION",
-            "LIGHT RAIN",
-            "HEAVY RAIN",
-            "LIGHT SNOW",
-            "HEAVY SNOW",
-            "LIGHT RAIN SNOW",
-            "HEAVY RAIN SNOW",
-            "CLOUDY",
-            "RAIN SNOW",
-            "PARTLY CLEAR",
-            "MOSTLY CLEAR",
-            "LIGHT SHOWERS",
-            "SHOWERS",
-            "HEAVY SHOWERS",
-            "CHANCE OF SHOWERS",
-            "CH. OF THUNDERSTORMS",
-            "MIST",
-            "DUST",
-            "DRIZZLE",
-            "TORNADO",
-            "SMOKE",
-            "ICE",
-            "SAND",
-            "SQUALL",
-            "SANDSTORM",
-            "VOLCANIC ASH",
-            "HAZE",
-            "FAIR",
-            "HURRICANE",
-            "TROPICAL STORM",
-            "CHANCE OF SNOW",
-            "CHANCE OF RAIN SNOW",
-            "CLOUDY CHANCE OF RAIN",
-            "CLOUDY CHANCE OF SNOW",
-            "CLOUDY CHANCE OF RAIN SNOW",
-            "FLURRIES",
-            "FREEZING RAIN",
-            "SLEET",
-            "ICE SNOW",
-            "THIN CLOUDS",
-            "UNKNOWN"
-        ];
 
         return weatherNames[weatherCondition.condition] + perp;
     }
@@ -2588,34 +2552,11 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function dayName(day_of_week as Number) as String {
-        var names = [
-            "SUN",
-            "MON",
-            "TUE",
-            "WED",
-            "THU",
-            "FRI",
-            "SAT",
-        ];
-        return names[day_of_week - 1];
+        return weekNames[day_of_week - 1];
     }
 
     hidden function monthName(month as Number) as String {
-        var names = [
-            "JAN",
-            "FEB",
-            "MAR",
-            "APR",
-            "MAY",
-            "JUN",
-            "JUL",
-            "AUG",
-            "SEP",
-            "OCT",
-            "NOV",
-            "DEC"
-        ];
-        return names[month - 1];
+        return monthNames[month - 1];
     }
 
     hidden function isoWeekNumber(year as Number, month as Number, day as Number) as Number {
