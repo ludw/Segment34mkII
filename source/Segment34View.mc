@@ -52,6 +52,9 @@ class Segment34View extends WatchUi.WatchFace {
     (:initialized) hidden var weatherNames as Array<String>;
     (:initialized) hidden var weekNames as Array<String>;
     (:initialized) hidden var monthNames as Array<String>;
+    (:initialized) hidden var fieldLabelsShort as Array<String>;
+    (:initialized) hidden var fieldLabelsMedium as Array<String>;
+    (:initialized) hidden var fieldLabelsLong as Array<String>;
 
     hidden var drawGradient as BitmapResource?;
     hidden var drawAODPattern as BitmapResource?;
@@ -203,6 +206,9 @@ class Segment34View extends WatchUi.WatchFace {
         weatherNames = Application.loadResource(Rez.JsonData.weatherConditions) as Array<String>;
         weekNames = Application.loadResource(Rez.JsonData.weekNames) as Array<String>;
         monthNames = Application.loadResource(Rez.JsonData.monthNames) as Array<String>;
+        fieldLabelsShort = Application.loadResource(Rez.JsonData.fieldLabelsShort) as Array<String>;
+        fieldLabelsMedium = Application.loadResource(Rez.JsonData.fieldLabelsMedium) as Array<String>;
+        fieldLabelsLong = Application.loadResource(Rez.JsonData.fieldLabelsLong) as Array<String>;
 
         centerX = Math.round(screenWidth / 2);
         centerY = Math.round(screenHeight / 2);
@@ -699,6 +705,10 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
+    (:MIP)
+    hidden function drawAOD(dc as Dc, now as Gregorian.Info) as Void { }
+
+    (:AMOLED)
     hidden function drawAOD(dc as Dc, now as Gregorian.Info) as Void {
         // Clear
         dc.setColor(0x000000, 0x000000);
@@ -877,32 +887,35 @@ class Segment34View extends WatchUi.WatchFace {
     (:MIP)
     hidden function setColorTheme(theme as Number) as Array<Graphics.ColorType> {
         if(theme == 30) { return customColorTheme(); }
+        var skip = Graphics.COLOR_TRANSPARENT;
+        var colBlack = Graphics.COLOR_BLACK;
+        var colWhite = Graphics.COLOR_WHITE;
 
-        //                        bg,       clock,    clockBg,  outline,  dataVal,  fieldBg,  fieldLbl, date,     dateDim,  notif,    stress,   bodybatt, moon
-        if(theme == 0 ) { return [0x000000, 0xFFFF00, 0x005555, 0xFFFF00, 0xFFFFFF, 0x005555, 0x55AAAA, 0xFFFF00, 0xa98753, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0xFFFFFF]; } // Yellow on turquoise MIP
-        if(theme == 1 ) { return [0x000000, 0xFF55AA, 0x005555, 0xFF55AA, 0xFFFFFF, 0x005555, 0xAA55AA, 0xFFFFFF, 0xa95399, 0xFF55AA, 0xFF55AA, 0x00FFAA, 0xFFFFFF]; } // Hot pink MIP
-        if(theme == 2 ) { return [0x000000, 0x00FFFF, 0x0055AA, 0x00FFFF, 0xFFFFFF, 0x0055AA, 0x55AAAA, 0x00FFFF, 0x5ca28f, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0xFFFFFF]; } // Blueish green MIP
-        if(theme == 3 ) { return [0x000000, 0x00FF00, 0x005500, 0x00FF00, 0xFFFFFF, 0x005500, 0x00AA55, 0x00FF00, 0x5ca28f, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0xFFFFFF]; } // Very green MIP
-        if(theme == 4 ) { return [0x000000, 0xFFFFFF, 0x005555, 0xFFFFFF, 0xFFFFFF, 0x005555, 0x55AAAA, 0xFFFFFF, 0x114a5a, 0xAAAAAA, 0xFFAA55, 0x55AAFF, 0xFFFFFF]; } // White on turquoise MIP
-        if(theme == 5 ) { return [0x000000, 0xFF5500, 0x5500AA, 0xFF5500, 0xFFFFFF, 0x5500AA, 0xFFAAAA, 0xFFAAAA, 0xaa6e56, 0xFFFFFF, 0xFF5555, 0x00AAFF, 0xFFFFFF]; } // Peachy Orange MIP
-        if(theme == 6 ) { return [0x000000, 0xFFFFFF, 0xAA0000, 0xFFFFFF, 0xFFFFFF, 0xAA0000, 0xFF0000, 0xFFFFFF, 0xAA0000, 0xFF0000, 0xAA0000, 0x00AAFF, 0xFFFFFF]; } // Red and White MIP
-        if(theme == 7 ) { return [0x000000, 0xFFFFFF, 0x0055AA, 0xFFFFFF, 0xFFFFFF, 0x0055AA, 0x0055AA, 0xFFFFFF, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // White on Blue MIP
-        if(theme == 8 ) { return [0x000000, 0xFFFF00, 0x0055AA, 0xFFFF00, 0xFFFFFF, 0x0055AA, 0x0055AA, 0xFFFF00, 0xa98753, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Yellow on Blue MIP
-        if(theme == 9 ) { return [0x000000, 0xFFFFFF, 0xaa5500, 0xFFFFFF, 0xFFFFFF, 0xaa5500, 0xFF5500, 0xFFFFFF, 0xAA5500, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0xFFFFFF]; } // White and Orange MIP
-        if(theme == 10) { return [0x000000, 0x0055AA, 0x000055, 0x0055AA, 0xFFFFFF, 0x555555, 0x0055AA, 0xFFFFFF, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Blue MIP
-        if(theme == 11) { return [0x000000, 0xFFAA00, 0x555555, 0xFFAA00, 0xFFFFFF, 0x555555, 0xFFAA00, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Orange MIP
-        if(theme == 12) { return [0x000000, 0xFFFFFF, 0x555555, 0xFFFFFF, 0xFFFFFF, 0x555555, 0xFFFFFF, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // White on black MIP
-        if(theme == 13) { return [0xFFFFFF, 0x000000, 0xAAAAAA, 0x000000, 0x000000, 0xAAAAAA, 0x000000, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Black on White MIP
-        if(theme == 14) { return [0xFFFFFF, 0xAA0000, 0xAAAAAA, 0xAA0000, 0x000000, 0xAAAAAA, 0xAA0000, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Red on White MIP
-        if(theme == 15) { return [0xFFFFFF, 0x0000AA, 0xAAAAAA, 0x0000AA, 0x000000, 0xAAAAAA, 0x0000AA, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Blue on White MIP
-        if(theme == 16) { return [0xFFFFFF, 0x00AA00, 0xAAAAAA, 0x00AA00, 0x000000, 0xAAAAAA, 0x00AA00, 0x000000, 0x555555, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Green on White MIP
-        if(theme == 17) { return [0xFFFFFF, 0xFF5500, 0xAAAAAA, 0xFF5500, 0x000000, 0xAAAAAA, 0x555555, 0x000000, 0x555555, 0x000000, 0xFF5500, 0x55AAFF, 0x555555]; } // Orange on White MIP
-        if(theme == 18) { return [0x000000, 0xFF5500, 0x005500, 0xFF5500, 0x00FF00, 0x005500, 0xFF5500, 0x00FF00, 0x5ca28f, 0x55FF55, 0xFF5500, 0x00AAFF, 0xFFFFFF]; } // Green and Orange MIP
-        if(theme == 19) { return [0x000000, 0xAAAA55, 0x005500, 0xAAAA55, 0x00FF00, 0x005500, 0xAAAA00, 0xAAAA55, 0x546a36, 0x00FF55, 0xAAAA55, 0x00FF00, 0xFFFFFF]; } // Green Camo MIP
-        if(theme == 20) { return [0x000000, 0xFF0000, 0x555555, 0xFF0000, 0xFFFFFF, 0x555555, 0xFF0000, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFF5555, 0x55AAFF, 0xFFFFFF]; } // Red on Black MIP
-        if(theme == 21) { return [0xFFFFFF, 0xAA00FF, 0xAAAAAA, 0xAA00FF, 0x000000, 0xAAAAAA, 0xAA00FF, 0x000000, 0x555555, 0x000000, 0xFF5500, 0x55AAFF, 0x555555]; } // Purple on White MIP
-        if(theme == 22) { return [0x000000, 0xAA00FF, 0x555555, 0xAA00FF, 0xFFFFFF, 0x555555, 0xAA00FF, 0xFFFFFF, 0x555555, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Purple on black MIP
-        if(theme == 23) { return [0x000000, 0xFFAA00, 0x555555, 0xFFAA00, 0xFFAA55, 0x555555, 0xFFAA00, 0xFFAA55, 0x555555, 0x55AAAA, 0xFFAA00, 0x55AAAA, 0xFFFFFF]; } // Amber MIP
+        //                        bg,       clock,    clockBg,  outl, dataVal,  fieldBg,  fieldLbl, date,     dDim, notif,    stress,   bodybatt, moon
+        if(theme == 0 ) { return [colBlack, 0xFFFF00, 0x005555, skip, colWhite, 0x005555, 0x55AAAA, 0xFFFF00, skip, 0x00AAFF, 0xFFAA00, 0x00AAFF, colWhite]; } // Yellow on turquoise MIP
+        if(theme == 1 ) { return [colBlack, 0xFF55AA, 0x005555, skip, colWhite, 0x005555, 0xAA55AA, colWhite, skip, 0xFF55AA, 0xFF55AA, 0x00FFAA, colWhite]; } // Hot pink MIP
+        if(theme == 2 ) { return [colBlack, 0x00FFFF, 0x0055AA, skip, colWhite, 0x0055AA, 0x55AAAA, 0x00FFFF, skip, 0x00AAFF, 0xFFAA00, 0x00AAFF, colWhite]; } // Blueish green MIP
+        if(theme == 3 ) { return [colBlack, 0x00FF00, 0x005500, skip, colWhite, 0x005500, 0x00AA55, 0x00FF00, skip, 0x00AAFF, 0xFFAA00, 0x00AAFF, colWhite]; } // Very green MIP
+        if(theme == 4 ) { return [colBlack, colWhite, 0x005555, skip, colWhite, 0x005555, 0x55AAAA, colWhite, skip, 0xAAAAAA, 0xFFAA55, 0x55AAFF, colWhite]; } // White on turquoise MIP
+        if(theme == 5 ) { return [colBlack, 0xFF5500, 0x5500AA, skip, colWhite, 0x5500AA, 0xFFAAAA, 0xFFAAAA, skip, colWhite, 0xFF5555, 0x00AAFF, colWhite]; } // Peachy Orange MIP
+        if(theme == 6 ) { return [colBlack, colWhite, 0xAA0000, skip, colWhite, 0xAA0000, 0xFF0000, colWhite, skip, 0xFF0000, 0xAA0000, 0x00AAFF, colWhite]; } // Red and White MIP
+        if(theme == 7 ) { return [colBlack, colWhite, 0x0055AA, skip, colWhite, 0x0055AA, 0x0055AA, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // White on Blue MIP
+        if(theme == 8 ) { return [colBlack, 0xFFFF00, 0x0055AA, skip, colWhite, 0x0055AA, 0x0055AA, 0xFFFF00, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Yellow on Blue MIP
+        if(theme == 9 ) { return [colBlack, colWhite, 0xaa5500, skip, colWhite, 0xaa5500, 0xFF5500, colWhite, skip, 0x00AAFF, 0xFFAA00, 0x00AAFF, colWhite]; } // White and Orange MIP
+        if(theme == 10) { return [colBlack, 0x0055AA, 0x000055, skip, colWhite, 0x555555, 0x0055AA, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Blue MIP
+        if(theme == 11) { return [colBlack, 0xFFAA00, 0x555555, skip, colWhite, 0x555555, 0xFFAA00, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Orange MIP
+        if(theme == 12) { return [colBlack, colWhite, 0x555555, skip, colWhite, 0x555555, colWhite, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // White on black MIP
+        if(theme == 13) { return [colWhite, colBlack, 0xAAAAAA, skip, colBlack, 0xAAAAAA, colBlack, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, 0x555555]; } // Black on White MIP
+        if(theme == 14) { return [colWhite, 0xAA0000, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0xAA0000, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, 0x555555]; } // Red on White MIP
+        if(theme == 15) { return [colWhite, 0x0000AA, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0x0000AA, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, 0x555555]; } // Blue on White MIP
+        if(theme == 16) { return [colWhite, 0x00AA00, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0x00AA00, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, 0x555555]; } // Green on White MIP
+        if(theme == 17) { return [colWhite, 0xFF5500, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0x555555, colBlack, skip, colBlack, 0xFF5500, 0x55AAFF, 0x555555]; } // Orange on White MIP
+        if(theme == 18) { return [colBlack, 0xFF5500, 0x005500, skip, 0x00FF00, 0x005500, 0xFF5500, 0x00FF00, skip, 0x55FF55, 0xFF5500, 0x00AAFF, colWhite]; } // Green and Orange MIP
+        if(theme == 19) { return [colBlack, 0xAAAA55, 0x005500, skip, 0x00FF00, 0x005500, 0xAAAA00, 0xAAAA55, skip, 0x00FF55, 0xAAAA55, 0x00FF00, colWhite]; } // Green Camo MIP
+        if(theme == 20) { return [colBlack, 0xFF0000, 0x555555, skip, colWhite, 0x555555, 0xFF0000, colWhite, skip, 0x55AAFF, 0xFF5555, 0x55AAFF, colWhite]; } // Red on Black MIP
+        if(theme == 21) { return [colWhite, 0xAA00FF, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0xAA00FF, colBlack, skip, colBlack, 0xFF5500, 0x55AAFF, 0x555555]; } // Purple on White MIP
+        if(theme == 22) { return [colBlack, 0xAA00FF, 0x555555, skip, colWhite, 0x555555, 0xAA00FF, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Purple on black MIP
+        if(theme == 23) { return [colBlack, 0xFFAA00, 0x555555, skip, 0xFFAA55, 0x555555, 0xFFAA00, 0xFFAA55, skip, 0x55AAAA, 0xFFAA00, 0x55AAAA, colWhite]; } // Amber MIP
         infoMessage = "THEME ERROR";
         return [0xff0000, 0x00ff00, 0x0000ff, 0x550000, 0x005500, 0x000055, 0xff00ff, 0x00ffff, 0xffff00, 0x005555, 0x550055, 0x555500, 0xffffff]; // error case
     }
@@ -2016,85 +2029,27 @@ class Segment34View extends WatchUi.WatchFace {
             var isLive = (Activity.getActivityInfo() != null and Activity.getActivityInfo().currentHeartRate != null);
             return (labelSize == 1) ? "HR:" : (isLive ? "LIVE HR:" : "LAST HR:");
         }
-        
-        // Handle all other cases with standard patterns
-        switch(complicationType) {
-            case 0: return formatLabel("W MIN", "WEEK MIN", "WEEK ACT MIN", labelSize);
-            case 1: return formatLabel("D MIN", "MIN TODAY", "DAY ACT MIN", labelSize);
-            case 2: return formatLabel("D KM", "KM TODAY", "KM TODAY", labelSize);
-            case 3: return formatLabel("D MI", "MI TODAY", "MILES TODAY", labelSize);
-            case 4: return "FLOORS:";
-            case 5: return formatLabel("CLIMB", "M CLIMBED", "M CLIMBED", labelSize);
-            case 6: return formatLabel("RECOV", "RECOV HRS", "RECOVERY HRS", labelSize);
-            case 7: return formatLabel("V02", "V02 MAX", "RUN V02 MAX", labelSize);  
-            case 8: return formatLabel("V02", "V02 MAX", "BIKE V02 MAX", labelSize);
-            case 9: return formatLabel("RESP", "RESP RATE", "RESP. RATE", labelSize);
-            case 10: return "";
-            case 11: return formatLabel("CAL", "CALORIES", "DLY CALORIES", labelSize);
-            case 12: return formatLabel("ALT", "ALTITUDE", "ALTITUDE M", labelSize);
-            case 13: return "STRESS:";
-            case 14: return formatLabel("B BAT", "BODY BATT", "BODY BATTERY", labelSize);
-            case 15: return formatLabel("ALT", "ALTITUDE", "ALTITUDE FT", labelSize);
-            case 16: return Lang.format("$1$:", [propTzName1.toUpper()]);
-            case 17: return "STEPS:";
-            case 18: return formatLabel("DIST", "M TODAY", "METERS TODAY", labelSize);
-            case 19: return "PUSHES:";
-            case 20: return "";
-            case 21: return formatLabel("W KM", "W RUN KM" , "WEEK RUN KM", labelSize);
-            case 22: return formatLabel("W MI", "W RUN MI" , "WEEK RUN MI", labelSize);
-            case 23: return formatLabel("W KM", "W BIKE KM" , "WEEK BIKE KM", labelSize);
-            case 24: return formatLabel("W MI", "W BIKE MI" , "WEEK BIKE MI", labelSize);
-            case 25: return "TRAINING:";
-            case 26: return "PRESSURE:";
-            case 27: return formatLabel("KG", "WEIGHT", "WEIGHT KG", labelSize);
-            case 28: return formatLabel("LBS", "WEIGHT", "WEIGHT LBS", labelSize);
-            case 29: return formatLabel("A CAL", "ACT. CAL", "ACT. CALORIES", labelSize);
-            case 30: return "PRESSURE:";
-            case 31: return "WEEK:";
-            case 32: return formatLabel("W KM", "WEEK KM", "WEEK DIST KM", labelSize);
-            case 33: return formatLabel("W MI", "WEEK MI", "WEEKLY MILES", labelSize);
-            case 34: return formatLabel("BATT", "BATT %", "BATTERY %", labelSize);
-            case 35: return formatLabel("BATT D", "BATT DAYS", "BATTERY DAYS", labelSize);
-            case 36: return formatLabel("NOTIFS", "NOTIFS", "NOTIFICATIONS", labelSize);
-            case 37: return formatLabel("SUN", "SUN INT", "SUN INTENSITY", labelSize);
-            case 38: return formatLabel("TEMP", "TEMP", "SENSOR TEMP", labelSize);
-            case 39: return formatLabel("DAWN", "SUNRISE", "SUNRISE", labelSize);
-            case 40: return formatLabel("DUSK", "SUNSET", "SUNSET", labelSize);
-            case 41: return Lang.format("$1$:", [propTzName2.toUpper()]);
-            case 42: return formatLabel("ALARM", "ALARMS", "ALARMS", labelSize);
-            case 43: return formatLabel("HIGH", "DAILY HIGH", "DAILY HIGH", labelSize);
-            case 44: return formatLabel("LOW", "DAILY LOW", "DAILY LOW", labelSize);
-            case 45: return "";
-            case 46: return "";
-            case 47: return "";
-            case 48: return "";
-            case 49: return "";
-            case 50: return "";
-            case 51: return "";
-            case 52: return "";
-            case 53: return formatLabel("TEMP", "TEMP", "TEMPERATURE", labelSize);
-            case 54: return formatLabel("PRECIP", "PRECIP", "PRECIPITATION", labelSize);
-            case 55: return formatLabel("SUN", "NEXT SUN", "NEXT SUN EVNT", labelSize);
-            case 56: return "";
-            case 57: return formatLabel("CAL", "NEXT CAL", "NEXT CAL EVNT", labelSize);
-            case 58: return "";
-            case 59: return formatLabel("OX", "PULSE OX", "PULSE OX", labelSize);
-            case 60: return "";
-            case 61: return "";
-            case 62: return formatLabel("ACC", "POS ACC", "POS ACCURACY", labelSize);
-            case 63: return "";
-            case 64: return formatLabel("UV", "UV INDEX", "UV INDEX", labelSize);
-            case 65: return "";
-            case 66: return formatLabel("HUM", "HUMIDITY", "HUMIDITY", labelSize);
+
+        if(complicationType == 16) {
+            return Lang.format("$1$:", [propTzName1.toUpper()]);
+        }
+
+        if(complicationType == 41) {
+            return Lang.format("$1$:", [propTzName2.toUpper()]);
         }
         
-        return "";
-    }
+        if(labelSize == 1) {
+            if(complicationType < 0 or complicationType >= fieldLabelsShort.size()) { return ""; }
+            return fieldLabelsShort[complicationType] + ":";
+        }
 
-    hidden function formatLabel(short as String, mid as String, long as String, size as Number) as String {
-        if(size == 1) { return short + ":"; }
-        if(size == 2) { return mid + ":"; }
-        return long + ":";
+        if(labelSize == 2) {
+            if(complicationType < 0 or complicationType >= fieldLabelsMedium.size()) { return ""; }
+            return fieldLabelsMedium[complicationType] + ":";
+        }
+
+        if(complicationType < 0 or complicationType >= fieldLabelsLong.size()) { return ""; }
+        return fieldLabelsLong[complicationType] + ":";
     }
 
     hidden function formatDate() as String {
@@ -2602,58 +2557,6 @@ class Segment34View extends WatchUi.WatchFace {
             return true;
         }
         return false;
-    }
-
-    hidden function hsv2rgb(h as Float, s as Float, v as Float) as Graphics.ColorType {
-        var r = 0.0f;
-        var g = 0.0f;
-        var b = 0.0f;
-
-        if (h >= 1.0f or h < 0.0f) { h = 0.0f; }
-
-        var i = (h * 6.0f).toNumber();
-        var f = h * 6.0f - i;
-        var p = v * (1.0f - s);
-        var q = v * (1.0f - f * s);
-        var t = v * (1.0f - (1.0f - f) * s);
-
-        switch (i % 6) {
-            case 0:
-                r = v; g = t; b = p;
-                break;
-            case 1:
-                r = q; g = v; b = p;
-                break;
-            case 2:
-                r = p; g = v; b = t;
-                break;
-            case 3:
-                r = p; g = q; b = v;
-                break;
-            case 4:
-                r = t; g = p; b = v;
-                break;
-            case 5:
-                r = v; g = p; b = q;
-                break;
-        }
-
-        // Scale RGB values to [0, 255] and convert to integer Numbers
-        var finalR = (r * 255.0f).toNumber();
-        var finalG = (g * 255.0f).toNumber();
-        var finalB = (b * 255.0f).toNumber();
-
-        // Clamp values to the valid [0, 255] range to safeguard against floating point inaccuracies
-        if (finalR < 0) { finalR = 0; } else if (finalR > 255) { finalR = 255; }
-        if (finalG < 0) { finalG = 0; } else if (finalG > 255) { finalG = 255; }
-        if (finalB < 0) { finalB = 0; } else if (finalB > 255) { finalB = 255; }
-
-        return rgbToDec(finalR, finalG, finalB);
-    }
-
-
-    hidden function rgbToDec( rr, gg, bb ) as Graphics.ColorType {
-        return rr*65536 + gg*256 + bb;
     }
 
 }
