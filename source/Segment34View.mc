@@ -204,8 +204,14 @@ class Segment34View extends WatchUi.WatchFace {
         fontMoon = Application.loadResource(Rez.Fonts.moon);
         fontIcons = Application.loadResource(Rez.Fonts.icons);
         weatherNames = Application.loadResource(Rez.JsonData.weatherConditions) as Array<String>;
-        weekNames = Application.loadResource(Rez.JsonData.weekNames) as Array<String>;
-        monthNames = Application.loadResource(Rez.JsonData.monthNames) as Array<String>;
+        weekNames = [Application.loadResource(Rez.Strings.DAY_OF_WEEK_SUN), Application.loadResource(Rez.Strings.DAY_OF_WEEK_MON),
+                     Application.loadResource(Rez.Strings.DAY_OF_WEEK_TUE), Application.loadResource(Rez.Strings.DAY_OF_WEEK_WED),
+                     Application.loadResource(Rez.Strings.DAY_OF_WEEK_THU), Application.loadResource(Rez.Strings.DAY_OF_WEEK_FRI),
+                     Application.loadResource(Rez.Strings.DAY_OF_WEEK_SAT)];
+        monthNames = [Application.loadResource(Rez.Strings.MONTH_JAN), Application.loadResource(Rez.Strings.MONTH_FEB), Application.loadResource(Rez.Strings.MONTH_MAR),
+                      Application.loadResource(Rez.Strings.MONTH_APR), Application.loadResource(Rez.Strings.MONTH_MAY), Application.loadResource(Rez.Strings.MONTH_JUN),
+                      Application.loadResource(Rez.Strings.MONTH_JUL), Application.loadResource(Rez.Strings.MONTH_AUG), Application.loadResource(Rez.Strings.MONTH_SEP),
+                      Application.loadResource(Rez.Strings.MONTH_OCT), Application.loadResource(Rez.Strings.MONTH_NOV), Application.loadResource(Rez.Strings.MONTH_DEC)];
         fieldLabelsShort = Application.loadResource(Rez.JsonData.fieldLabelsShort) as Array<String>;
         fieldLabelsMedium = Application.loadResource(Rez.JsonData.fieldLabelsMedium) as Array<String>;
         fieldLabelsLong = Application.loadResource(Rez.JsonData.fieldLabelsLong) as Array<String>;
@@ -2039,18 +2045,67 @@ class Segment34View extends WatchUi.WatchFace {
             return Lang.format("$1$:", [propTzName2.toUpper()]);
         }
         
-        if(labelSize == 1) {
-            if(complicationType < 0 or complicationType >= fieldLabelsShort.size()) { return ""; }
-            return fieldLabelsShort[complicationType] + ":";
+        // Handle all other cases with standard patterns
+        switch(complicationType) {
+            case 0: return formatLabel("W MIN", "WEEK MIN", "WEEK ACT MIN", labelSize);
+            case 1: return formatLabel("D MIN", "MIN TODAY", "DAY ACT MIN", labelSize);
+            case 2: return formatLabel("D KM", "KM TODAY", "KM TODAY", labelSize);
+            case 3: return formatLabel("D MI", "MI TODAY", "MILES TODAY", labelSize);
+            case 4: return "FLOORS:";
+            case 5: return formatLabel("CLIMB", "M CLIMBED", "M CLIMBED", labelSize);
+            case 6: return formatLabel("RECOV", "RECOV HRS", "RECOVERY HRS", labelSize);
+            case 7: return formatLabel("V02", "V02 MAX", "RUN V02 MAX", labelSize);  
+            case 8: return formatLabel("V02", "V02 MAX", "BIKE V02 MAX", labelSize);
+            case 9: return formatLabel("RESP", "RESP RATE", "RESP. RATE", labelSize);
+            case 11: return formatLabel("CAL", "CALORIES", "DLY CALORIES", labelSize);
+            case 12: return formatLabel("ALT", "ALTITUDE", "ALTITUDE M", labelSize);
+            case 13: return "STRESS:";
+            case 15: return formatLabel("ALT", "ALTITUDE", "ALTITUDE FT", labelSize);
+            case 14: return formatLabel("B BAT", "BODY BATT", "BODY BATTERY", labelSize);
+            case 17: return "STEPS:";
+            case 18: return formatLabel("DIST", "M TODAY", "METERS TODAY", labelSize);
+            case 19: return "PUSHES:";
+            case 20: return "";
+            case 21: return formatLabel("W KM", "W RUN KM" , "WEEK RUN KM", labelSize);
+            case 22: return formatLabel("W MI", "W RUN MI" , "WEEK RUN MI", labelSize);
+            case 23: return formatLabel("W KM", "W BIKE KM" , "WEEK BIKE KM", labelSize);
+            case 24: return formatLabel("W MI", "W BIKE MI" , "WEEK BIKE MI", labelSize);
+            case 25: return "TRAINING:";
+            case 26: return "PRESSURE:";
+            case 27: return formatLabel("KG", "WEIGHT", "WEIGHT KG", labelSize);
+            case 28: return formatLabel("LBS", "WEIGHT", "WEIGHT LBS", labelSize);
+            case 29: return formatLabel("A CAL", "ACT. CAL", "ACT. CALORIES", labelSize);
+            case 30: return "PRESSURE:";
+            case 31: return "WEEK:";
+            case 32: return formatLabel("W KM", "WEEK KM", "WEEK DIST KM", labelSize);
+            case 33: return formatLabel("W MI", "WEEK MI", "WEEKLY MILES", labelSize);
+            case 34: return formatLabel("BATT", "BATT %", "BATTERY %", labelSize);
+            case 35: return formatLabel("BATT D", "BATT DAYS", "BATTERY DAYS", labelSize);
+            case 36: return formatLabel("NOTIFS", "NOTIFS", "NOTIFICATIONS", labelSize);
+            case 37: return formatLabel("SUN", "SUN INT", "SUN INTENSITY", labelSize);
+            case 38: return formatLabel("TEMP", "TEMP", "SENSOR TEMP", labelSize);
+            case 39: return formatLabel("DAWN", "SUNRISE", "SUNRISE", labelSize);
+            case 40: return formatLabel("DUSK", "SUNSET", "SUNSET", labelSize);
+            case 42: return formatLabel("ALARM", "ALARMS", "ALARMS", labelSize);
+            case 43: return formatLabel("HIGH", "DAILY HIGH", "DAILY HIGH", labelSize);
+            case 44: return formatLabel("LOW", "DAILY LOW", "DAILY LOW", labelSize);
+            case 53: return formatLabel("TEMP", "TEMP", "TEMPERATURE", labelSize);
+            case 54: return formatLabel("PRECIP", "PRECIP", "PRECIPITATION", labelSize);
+            case 55: return formatLabel("SUN", "NEXT SUN", "NEXT SUN EVNT", labelSize);
+            case 57: return formatLabel("CAL", "NEXT CAL", "NEXT CAL EVNT", labelSize);
+            case 59: return formatLabel("OX", "PULSE OX", "PULSE OX", labelSize);
+            case 62: return formatLabel("ACC", "POS ACC", "POS ACCURACY", labelSize);
+            case 64: return formatLabel("UV", "UV INDEX", "UV INDEX", labelSize);
+            case 66: return formatLabel("HUM", "HUMIDITY", "HUMIDITY", labelSize);
         }
+        
+        return "";
+    }
 
-        if(labelSize == 2) {
-            if(complicationType < 0 or complicationType >= fieldLabelsMedium.size()) { return ""; }
-            return fieldLabelsMedium[complicationType] + ":";
-        }
-
-        if(complicationType < 0 or complicationType >= fieldLabelsLong.size()) { return ""; }
-        return fieldLabelsLong[complicationType] + ":";
+    hidden function formatLabel(short as String, mid as String, long as String, size as Number) as String {
+        if(size == 1) { return short + ":"; }
+        if(size == 2) { return mid + ":"; }
+        return long + ":";
     }
 
     hidden function formatDate() as String {
@@ -2256,7 +2311,64 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
 
-        return weatherNames[weatherCondition.condition] + perp;
+        switch (weatherCondition.condition) {
+            case 0: return Application.loadResource(Rez.Strings.WEATHER_0) + perp;
+            case 1: return Application.loadResource(Rez.Strings.WEATHER_1) + perp;
+            case 2: return Application.loadResource(Rez.Strings.WEATHER_2) + perp;
+            case 3: return Application.loadResource(Rez.Strings.WEATHER_3) + perp;
+            case 4: return Application.loadResource(Rez.Strings.WEATHER_4) + perp;
+            case 5: return Application.loadResource(Rez.Strings.WEATHER_5) + perp;
+            case 6: return Application.loadResource(Rez.Strings.WEATHER_6) + perp;
+            case 7: return Application.loadResource(Rez.Strings.WEATHER_7) + perp;
+            case 8: return Application.loadResource(Rez.Strings.WEATHER_8) + perp;
+            case 9: return Application.loadResource(Rez.Strings.WEATHER_9) + perp;
+            case 10: return Application.loadResource(Rez.Strings.WEATHER_10) + perp;
+            case 11: return Application.loadResource(Rez.Strings.WEATHER_11) + perp;
+            case 12: return Application.loadResource(Rez.Strings.WEATHER_12) + perp;
+            case 13: return Application.loadResource(Rez.Strings.WEATHER_13) + perp;
+            case 14: return Application.loadResource(Rez.Strings.WEATHER_14) + perp;
+            case 15: return Application.loadResource(Rez.Strings.WEATHER_15) + perp;
+            case 16: return Application.loadResource(Rez.Strings.WEATHER_16) + perp;
+            case 17: return Application.loadResource(Rez.Strings.WEATHER_17) + perp;
+            case 18: return Application.loadResource(Rez.Strings.WEATHER_18) + perp;
+            case 19: return Application.loadResource(Rez.Strings.WEATHER_19) + perp;
+            case 20: return Application.loadResource(Rez.Strings.WEATHER_20) + perp;
+            case 21: return Application.loadResource(Rez.Strings.WEATHER_21) + perp;
+            case 22: return Application.loadResource(Rez.Strings.WEATHER_22) + perp;
+            case 23: return Application.loadResource(Rez.Strings.WEATHER_23) + perp;
+            case 24: return Application.loadResource(Rez.Strings.WEATHER_24) + perp;
+            case 25: return Application.loadResource(Rez.Strings.WEATHER_25) + perp;
+            case 26: return Application.loadResource(Rez.Strings.WEATHER_26) + perp;
+            case 27: return Application.loadResource(Rez.Strings.WEATHER_27) + perp;
+            case 28: return Application.loadResource(Rez.Strings.WEATHER_28) + perp;
+            case 29: return Application.loadResource(Rez.Strings.WEATHER_29) + perp;
+            case 30: return Application.loadResource(Rez.Strings.WEATHER_30) + perp;
+            case 31: return Application.loadResource(Rez.Strings.WEATHER_31) + perp;
+            case 32: return Application.loadResource(Rez.Strings.WEATHER_32) + perp;
+            case 33: return Application.loadResource(Rez.Strings.WEATHER_33) + perp;
+            case 34: return Application.loadResource(Rez.Strings.WEATHER_34) + perp;
+            case 35: return Application.loadResource(Rez.Strings.WEATHER_35) + perp;
+            case 36: return Application.loadResource(Rez.Strings.WEATHER_36) + perp;
+            case 37: return Application.loadResource(Rez.Strings.WEATHER_37) + perp;
+            case 38: return Application.loadResource(Rez.Strings.WEATHER_38) + perp;
+            case 39: return Application.loadResource(Rez.Strings.WEATHER_39) + perp;
+            case 40: return Application.loadResource(Rez.Strings.WEATHER_40) + perp;
+            case 41: return Application.loadResource(Rez.Strings.WEATHER_41) + perp;
+            case 42: return Application.loadResource(Rez.Strings.WEATHER_42) + perp;
+            case 43: return Application.loadResource(Rez.Strings.WEATHER_43) + perp;
+            case 44: return Application.loadResource(Rez.Strings.WEATHER_44) + perp;
+            case 45: return Application.loadResource(Rez.Strings.WEATHER_45) + perp;
+            case 46: return Application.loadResource(Rez.Strings.WEATHER_46) + perp;
+            case 47: return Application.loadResource(Rez.Strings.WEATHER_47) + perp;
+            case 48: return Application.loadResource(Rez.Strings.WEATHER_48) + perp;
+            case 49: return Application.loadResource(Rez.Strings.WEATHER_49) + perp;
+            case 50: return Application.loadResource(Rez.Strings.WEATHER_50) + perp;
+            case 51: return Application.loadResource(Rez.Strings.WEATHER_51) + perp;
+            case 52: return Application.loadResource(Rez.Strings.WEATHER_52) + perp;
+            case 53: return Application.loadResource(Rez.Strings.WEATHER_53) + perp;
+        }
+
+        return "";
     }
 
     hidden function getTemperature() as String {

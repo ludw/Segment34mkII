@@ -62,3 +62,7 @@ char id=35 x=845 y=0 width=14 height=20 xoffset=0 yoffset=0 xadvance=18 page=0
 char id=47 x=860 y=0 width=14 height=20 xoffset=0 yoffset=0 xadvance=18 page=0
 char id=92 x=875 y=0 width=14 height=20 xoffset=0 yoffset=0 xadvance=18 page=0
 char id=36 x=890 y=0 width=14 height=20 xoffset=0 yoffset=0 xadvance=18 page=0
+
+char id=143 x=905 y=0 width=14 height=20 xoffset=0 yoffset=0 xadvance=18 page=0
+char id=142 x=920 y=0 width=14 height=20 xoffset=0 yoffset=0 xadvance=18 page=0
+char id=153 x=935 y=0 width=14 height=20 xoffset=0 yoffset=0 xadvance=18 page=0
