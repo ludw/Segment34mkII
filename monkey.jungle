@@ -9,3 +9,5 @@ round-360x360.excludeAnnotations = Round240;Round260;Round280;Round390;Round416;
 round-390x390.excludeAnnotations = Round240;Round260;Round280;Round360;Round416;Round454;MIP
 round-416x416.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round454;MIP
 round-454x454.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round416;MIP
+rectangle-448x486.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round416;MIP
+
