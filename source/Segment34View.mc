@@ -245,7 +245,7 @@ class Segment34View extends WatchUi.WatchFace {
         clockHeight = 80;
         clockWidth = 220;
         labelHeight = 5;
-        labelMargin = 3;
+        labelMargin = 6;
         tinyDataHeight = 8;
         smallDataHeight = 13;
         largeDataHeight = 20;
@@ -275,7 +275,7 @@ class Segment34View extends WatchUi.WatchFace {
         clockHeight = 80;
         clockWidth = 227;
         labelHeight = 5;
-        labelMargin = 3;
+        labelMargin = 6;
         tinyDataHeight = 8;
         smallDataHeight = 13;
         largeDataHeight = 20;
@@ -305,7 +305,7 @@ class Segment34View extends WatchUi.WatchFace {
         clockHeight = 80;
         clockWidth = 236;
         labelHeight = 8;
-        labelMargin = 3;
+        labelMargin = 6;
         tinyDataHeight = 10;
         smallDataHeight = 13;
         largeDataHeight = 20;
@@ -343,7 +343,7 @@ class Segment34View extends WatchUi.WatchFace {
         clockHeight = 125;
         clockWidth = 345;
         labelHeight = 8;
-        labelMargin = 5;
+        labelMargin = 8;
         tinyDataHeight = 10;
         smallDataHeight = 20;
         largeDataHeight = 27;
@@ -383,7 +383,7 @@ class Segment34View extends WatchUi.WatchFace {
         clockHeight = 125;
         clockWidth = 355;
         labelHeight = 10;
-        labelMargin = 5;
+        labelMargin = 8;
         tinyDataHeight = 13;
         smallDataHeight = 20;
         largeDataHeight = 27;
@@ -420,7 +420,7 @@ class Segment34View extends WatchUi.WatchFace {
         clockHeight = 125;
         clockWidth = 360;
         labelHeight = 10;
-        labelMargin = 5;
+        labelMargin = 8;
         tinyDataHeight = 13;
         smallDataHeight = 20;
         largeDataHeight = 27;
