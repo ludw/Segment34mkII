@@ -162,7 +162,7 @@
     <string id="LABEL_NOTIFS_3">NOTIF.</string>
     <string id="LABEL_SUN_1">SOLEIL</string>
     <string id="LABEL_SUNINT_2">INT. SOLEIL</string>
-    <string id="LABEL_SUNINT_3">INTENSITÉ SOLEIL</string>
+    <string id="LABEL_SUNINT_3">INTENS. SOLEIL</string>
     <string id="LABEL_TEMP_1">TEMP</string>
     <string id="LABEL_STEMP_3">TEMP. CAPTEUR</string>
     <string id="LABEL_DAWN_1">AUBE</string>
