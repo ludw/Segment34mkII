@@ -193,4 +193,271 @@
     <string id="LABEL_UV_2">INDICE UV</string>
     <string id="LABEL_HUM_1">HUM</string>
     <string id="LABEL_HUM_2">HUMIDITÉ</string>
+
+    <string id="settings_color_theme" scope="settings">Thème de couleur</string>
+    <string id="settings_yellow_on_turquoise" scope="settings">Jaune sur turquoise</string>
+    <string id="settings_yellow_on_blue" scope="settings">Jaune sur bleu</string>
+    <string id="settings_hot_pink" scope="settings">Rose vif</string>
+    <string id="settings_blue" scope="settings">Bleu</string>
+    <string id="settings_blueish_green" scope="settings">Vert bleuté</string>
+    <string id="settings_green" scope="settings">Vert</string>
+    <string id="settings_green_camo" scope="settings">Vert camouflage</string>
+    <string id="settings_green_and_orange" scope="settings">Vert et orange</string>
+    <string id="settings_orange" scope="settings">Orange</string>
+    <string id="settings_amber" scope="settings">Ambre</string>
+    <string id="settings_peachy_orange" scope="settings">Orange pêche</string>
+    <string id="settings_red" scope="settings">Rouge</string>
+    <string id="settings_purple" scope="settings">Violet</string>
+    <string id="settings_white_on_turquoise" scope="settings">Blanc sur turquoise</string>
+    <string id="settings_white_on_red" scope="settings">Blanc sur rouge</string>
+    <string id="settings_white_on_blue" scope="settings">Blanc sur bleu</string>
+    <string id="settings_white_on_orange" scope="settings">Blanc sur orange</string>
+    <string id="settings_white_on_black" scope="settings">Blanc sur noir</string>
+    <string id="settings_black_on_white" scope="settings">Noir sur blanc (non recommandé pour AMOLED)</string>
+    <string id="settings_red_on_white" scope="settings">Rouge sur blanc (non recommandé pour AMOLED)</string>
+    <string id="settings_blue_on_white" scope="settings">Bleu sur blanc (non recommandé pour AMOLED)</string>
+    <string id="settings_green_on_white" scope="settings">Vert sur blanc (non recommandé pour AMOLED)</string>
+    <string id="settings_orange_on_white" scope="settings">Orange sur blanc (non recommandé pour AMOLED)</string>
+    <string id="settings_purple_on_white" scope="settings">Violet sur blanc (non recommandé pour AMOLED)</string>
+    <string id="settings_custom_colors" scope="settings">Couleurs personnalisées, voir FAQ 1.2.0 pour détails</string>
+    <string id="settings_custom_colors_faq" scope="settings">Couleurs personnalisées, voir FAQ pour détails</string>
+    <string id="settings_night_color_theme" scope="settings">Thème de couleur nocturne</string>
+    <string id="settings_no_change" scope="settings">Aucun changement</string>
+    <string id="settings_night_theme_activation" scope="settings">Activer le thème de couleur nocturne :</string>
+    <string id="settings_during_scheduled_sleep" scope="settings">Pendant les heures de sommeil programmées</string>
+    <string id="settings_two_hours_before" scope="settings">2 heures avant les heures de sommeil programmées</string>
+    <string id="settings_from_sunset_sunrise" scope="settings">Du coucher au lever du soleil (nécessite les données météo)</string>
+    <string id="settings_custom_colors_read" scope="settings">Couleurs personnalisées, lire FAQ d'abord</string>
+    <string id="settings_enter_13_values" scope="settings">Entrer 13 valeurs séparées par des espaces, format #FFFFFF ou -</string>
+    <string id="settings_clock_outline_style" scope="settings">Style de contour d'horloge (AMOLED uniquement)</string>
+    <string id="settings_filled_numbers_no_outline" scope="settings">Chiffres pleins sans contour, identique en AOD</string>
+    <string id="settings_filled_numbers_no_outline_aod" scope="settings">Chiffres pleins sans contour, contour uniquement en AOD</string>
+    <string id="settings_filled_numbers_no_outline_filled" scope="settings">Chiffres pleins sans contour, rempli avec la couleur de contour en AOD</string>
+    <string id="settings_filled_numbers_with_outline" scope="settings">Chiffres pleins avec contour, identique en AOD</string>
+    <string id="settings_filled_numbers_with_outline_aod" scope="settings">Chiffres pleins avec contour, contour uniquement en AOD</string>
+    <string id="settings_update_frequency" scope="settings">Fréquence de mise à jour des données</string>
+    <string id="settings_every_minute" scope="settings">Toutes les minutes</string>
+    <string id="settings_every_5_seconds" scope="settings">Toutes les 5 secondes</string>
+    <string id="settings_every_second" scope="settings">Toutes les secondes</string>
+    <string id="settings_top_part_shows" scope="settings">La partie supérieure affiche</string>
+    <string id="settings_two_small_data" scope="settings">Deux petits champs de données et phase lunaire</string>
+    <string id="settings_two_small_data_fields" scope="settings">Deux petits champs de données</string>
+    <string id="settings_histogram_graph" scope="settings">Un graphique histogramme (dernières 2 heures de données)</string>
+    <string id="settings_top_left_small" scope="settings">Petit champ de données en haut à gauche :</string>
+    <string id="settings_hidden" scope="settings">Masqué</string>
+    <string id="settings_active_min_week" scope="settings">Minutes actives / semaine</string>
+    <string id="settings_active_min_day" scope="settings">Minutes actives / jour</string>
+    <string id="settings_distance_km_day" scope="settings">Distance (km) / jour</string>
+    <string id="settings_distance_miles_day" scope="settings">Distance (miles) / jour</string>
+    <string id="settings_run_distance_km_week" scope="settings">Distance de course (km) / semaine</string>
+    <string id="settings_run_distance_miles_week" scope="settings">Distance de course (miles) / semaine</string>
+    <string id="settings_bike_distance_km_week" scope="settings">Distance vélo (km) / semaine</string>
+    <string id="settings_bike_distance_miles_week" scope="settings">Distance vélo (miles) / semaine</string>
+    <string id="settings_total_distance_7_days_km" scope="settings">Distance totale 7 derniers jours (km)</string>
+    <string id="settings_total_distance_7_days_miles" scope="settings">Distance totale 7 derniers jours (miles)</string>
+    <string id="settings_floors_climbed_day" scope="settings">Étages montés / jour</string>
+    <string id="settings_meters_climbed_day" scope="settings">Mètres montés / jour</string>
+    <string id="settings_time_to_recovery" scope="settings">Temps de récupération (h)</string>
+    <string id="settings_vo2_max_running" scope="settings">VO2 Max Course</string>
+    <string id="settings_vo2_max_cycling" scope="settings">VO2 Max Cyclisme</string>
+    <string id="settings_respiration_rate" scope="settings">Fréquence respiratoire</string>
+    <string id="settings_heart_rate" scope="settings">Fréquence cardiaque</string>
+    <string id="settings_pulse_ox" scope="settings">Oxymétrie</string>
+    <string id="settings_calories_kcal_day" scope="settings">Calories (kcal) / jour</string>
+    <string id="settings_active_calories_kcal_day" scope="settings">Calories actives (kcal) / jour</string>
+    <string id="settings_altitude_m" scope="settings">Altitude (m)</string>
+    <string id="settings_altitude_ft" scope="settings">Altitude (pi)</string>
+    <string id="settings_stress_score" scope="settings">Score de stress</string>
+    <string id="settings_body_battery" scope="settings">Batterie corporelle</string>
+    <string id="settings_sunrise_time" scope="settings">Heure de lever du soleil</string>
+    <string id="settings_sunset_time" scope="settings">Heure de coucher du soleil</string>
+    <string id="settings_next_sun_event" scope="settings">Heure du prochain événement solaire</string>
+    <string id="settings_alternative_timezone_1" scope="settings">Fuseau horaire alternatif 1</string>
+    <string id="settings_alternative_timezone_2" scope="settings">Fuseau horaire alternatif 2</string>
+    <string id="settings_barometric_pressure_raw" scope="settings">Pression barométrique, brute</string>
+    <string id="settings_barometric_pressure_sea" scope="settings">Pression barométrique, niveau mer</string>
+    <string id="settings_weight_kg" scope="settings">Poids (kg)</string>
+    <string id="settings_weight_lbs" scope="settings">Poids (lbs)</string>
+    <string id="settings_week_number" scope="settings">Numéro de semaine</string>
+    <string id="settings_battery_percentage" scope="settings">Pourcentage de batterie</string>
+    <string id="settings_battery_days_remaining" scope="settings">Jours de batterie restants</string>
+    <string id="settings_notification_count" scope="settings">Nombre de notifications</string>
+    <string id="settings_solar_intensity" scope="settings">Intensité solaire</string>
+    <string id="settings_sensor_temperature" scope="settings">Température du capteur</string>
+    <string id="settings_alarms_count" scope="settings">Alarmes (nombre)</string>
+    <string id="settings_weather_daily_high" scope="settings">Météo : Température maximale quotidienne</string>
+    <string id="settings_weather_daily_low" scope="settings">Météo : Température minimale quotidienne</string>
+    <string id="settings_weather_temperature" scope="settings">Météo : Température</string>
+    <string id="settings_weather_chance_precipitation" scope="settings">Météo : Risque de précipitations</string>
+    <string id="settings_weather_humidity" scope="settings">Météo : Humidité</string>
+    <string id="settings_weather_uv_index" scope="settings">Météo : Indice UV</string>
+    <string id="settings_next_calendar_event" scope="settings">Heure du prochain événement calendrier</string>
+    <string id="settings_next_calendar_event_time" scope="settings">Heure du prochain événement calendrier</string>
+    <string id="settings_top_right_small" scope="settings">Petit champ de données en haut à droite :</string>
+    <string id="settings_histogram_shows" scope="settings">L'histogramme affiche (doit être activé dans Partie supérieure affiche)</string>
+    <string id="settings_body_battery_history" scope="settings">Historique de la batterie corporelle</string>
+    <string id="settings_elevation_history" scope="settings">Historique d'altitude</string>
+    <string id="settings_heart_rate_history" scope="settings">Historique de fréquence cardiaque</string>
+    <string id="settings_oxygen_saturation_history" scope="settings">Historique de saturation en oxygène</string>
+    <string id="settings_pressure_history" scope="settings">Historique de pression</string>
+    <string id="settings_stress_history" scope="settings">Historique de stress</string>
+    <string id="settings_stress_rest_orange_blue" scope="settings">Stress/repos (orange/bleu)</string>
+    <string id="settings_temperature_sensor_history" scope="settings">Historique de température du capteur</string>
+    <string id="settings_small_font_variant" scope="settings">Variante de police à petits points :</string>
+    <string id="settings_dots" scope="settings">Points</string>
+    <string id="settings_blended" scope="settings">Mélangé</string>
+    <string id="settings_lines_highest_contrast" scope="settings">Lignes (contraste maximal)</string>
+    <string id="settings_line_1_above_clock" scope="settings">Ligne 1 au-dessus de l'horloge affiche :</string>
+    <string id="settings_date" scope="settings">Date</string>
+    <string id="settings_temperature_wind_feels" scope="settings">Température, Vent, Ressenti</string>
+    <string id="settings_temperature_wind" scope="settings">Température, Vent</string>
+    <string id="settings_temperature_wind_humidity" scope="settings">Température, Vent, Humidité</string>
+    <string id="settings_temperature_wind_high_low" scope="settings">Température, Vent, Max/Min</string>
+    <string id="settings_temperature_wind_precipitation" scope="settings">Température, Vent, Risque de précipitations</string>
+    <string id="settings_temperature_wind_humidity_precipitation" scope="settings">Température, Vent, Humidité, Risque de précipitations</string>
+    <string id="settings_temperature_humidity_high_low" scope="settings">Température, Humidité, Max/Min</string>
+    <string id="settings_temperature_uv_high_low" scope="settings">Température, Indice UV, Max/Min</string>
+    <string id="settings_temperature_feels_high_low" scope="settings">Température, Ressenti, Max/Min</string>
+    <string id="settings_temperature_precipitation_high_low" scope="settings">Température, Risque de précipitations, Max/Min</string>
+    <string id="settings_weather_conditions_precipitation" scope="settings">Conditions météo, Risque de précipitations</string>
+    <string id="settings_weather_conditions" scope="settings">Conditions météo</string>
+    <string id="settings_daily_high_temperature" scope="settings">Température maximale quotidienne</string>
+    <string id="settings_daily_low_temperature" scope="settings">Température minimale quotidienne</string>
+    <string id="settings_temperature" scope="settings">Température</string>
+    <string id="settings_chance_of_precipitation" scope="settings">Risque de précipitations</string>
+    <string id="settings_steps_day" scope="settings">Pas / jour</string>
+    <string id="settings_wheelchair_pushes_day" scope="settings">Poussées fauteuil / jour</string>
+    <string id="settings_calories_kcal_day_2" scope="settings">Calories (kcal) / jour</string>
+    <string id="settings_active_total_calories" scope="settings">Calories actives/totales (kcal) / jour</string>
+    <string id="settings_altitude_m_2" scope="settings">Altitude (m)</string>
+    <string id="settings_altitude_ft_2" scope="settings">Altitude (pi)</string>
+    <string id="settings_training_status" scope="settings">Statut d'entraînement</string>
+    <string id="settings_military_date_time" scope="settings">Groupe Date Heure Militaire (UTC)</string>
+    <string id="settings_current_location_lat_long" scope="settings">Localisation actuelle (Lat Long en degrés décimaux)</string>
+    <string id="settings_current_location_military" scope="settings">Localisation actuelle (Système de référence de grille militaire)</string>
+    <string id="settings_current_location_accuracy" scope="settings">Précision de localisation actuelle</string>
+    <string id="settings_line_2_above_clock" scope="settings">Ligne 2 au-dessus de l'horloge affiche :</string>
+    <string id="settings_weather_conditions_precipitation_chance" scope="settings">Conditions météo + Risque de précipitations</string>
+    <string id="settings_line_below_clock" scope="settings">Ligne sous l'horloge affiche :</string>
+    <string id="settings_bottom_field_layout" scope="settings">Disposition des champs inférieurs (nombre de chiffres par champ)</string>
+    <string id="settings_auto_default_layout" scope="settings">Auto - Disposition par défaut selon la taille d'écran</string>
+    <string id="settings_4_4" scope="settings">4, 4</string>
+    <string id="settings_3_3_3" scope="settings">3, 3, 3</string>
+    <string id="settings_3_4_3" scope="settings">3, 4, 3</string>
+    <string id="settings_3_3_4" scope="settings">3, 3, 4</string>
+    <string id="settings_4_3_3" scope="settings">4, 3, 3</string>
+    <string id="settings_4_3_4" scope="settings">4, 3, 4</string>
+    <string id="settings_3_4_4" scope="settings">3, 4, 4</string>
+    <string id="settings_4_4_3" scope="settings">4, 4, 3</string>
+    <string id="settings_4_4_4" scope="settings">4, 4, 4</string>
+    <string id="settings_3_3_3_3" scope="settings">3, 3, 3, 3</string>
+    <string id="settings_3_3_3_4" scope="settings">3, 3, 3, 4</string>
+    <string id="settings_4_3_3_3" scope="settings">4, 3, 3, 3</string>
+    <string id="settings_bottom_value_1_left" scope="settings">Valeur inférieure 1 (gauche) :</string>
+    <string id="settings_bottom_value_2" scope="settings">Valeur inférieure 2 :</string>
+    <string id="settings_bottom_value_3" scope="settings">Valeur inférieure 3 :</string>
+    <string id="settings_bottom_value_4" scope="settings">Valeur inférieure 4 (si disponible) :</string>
+    <string id="settings_bottom_5_digit" scope="settings">Valeur à 5 chiffres inférieure :</string>
+    <string id="settings_bottom_5_digit_value" scope="settings">Valeur à 5 chiffres inférieure :</string>
+    <string id="settings_distance_meter_day" scope="settings">Distance (mètres) / jour</string>
+    <string id="settings_battery_display" scope="settings">Affichage de la batterie :</string>
+    <string id="settings_remaining_days" scope="settings">Jours restants</string>
+    <string id="settings_percentage_remaining" scope="settings">Pourcentage restant</string>
+    <string id="settings_bar" scope="settings">Barre</string>
+    <string id="settings_left_icon_indicates" scope="settings">L'icône gauche indique :</string>
+    <string id="settings_alarm" scope="settings">Alarme</string>
+    <string id="settings_do_not_disturb" scope="settings">Ne pas déranger</string>
+    <string id="settings_bluetooth_on_off" scope="settings">Bluetooth (activé/désactivé)</string>
+    <string id="settings_bluetooth_just_when_off" scope="settings">Bluetooth (seulement quand désactivé)</string>
+    <string id="settings_move_bar" scope="settings">Barre de mouvement</string>
+    <string id="settings_right_icon_indicates" scope="settings">L'icône droite indique :</string>
+    <string id="settings_always_on_below" scope="settings">Toujours allumé (sous l'horloge) :</string>
+    <string id="settings_second_always_on" scope="settings">Deuxième champ toujours allumé (à droite) :</string>
+    <string id="settings_text_alignment_always" scope="settings">Alignement du texte pour la ligne toujours allumé (sous l'horloge) :</string>
+    <string id="settings_left" scope="settings">Gauche</string>
+    <string id="settings_center" scope="settings">Centre</string>
+    <string id="settings_text_alignment_date" scope="settings">Alignement du texte pour la date :</string>
+    <string id="settings_text_alignment_bottom" scope="settings">Alignement du texte pour les champs de données inférieurs :</string>
+    <string id="settings_right" scope="settings">Droite</string>
+    <string id="settings_left_center_5_digit" scope="settings">Gauche, mais centrer le champ à 5 chiffres</string>
+    <string id="settings_press_top_third" scope="settings">Appuyer sur le tiers supérieur pour ouvrir :</string>
+    <string id="settings_nothing" scope="settings">Rien</string>
+    <string id="settings_toggle_night_color" scope="settings">Basculer le thème de couleur nocturne</string>
+    <string id="settings_battery" scope="settings">Batterie</string>
+    <string id="settings_steps" scope="settings">Pas</string>
+    <string id="settings_calories" scope="settings">Calories</string>
+    <string id="settings_floors_climbed" scope="settings">Étages montés</string>
+    <string id="settings_intensity_minutes" scope="settings">Minutes d'intensité</string>
+    <string id="settings_date_2" scope="settings">Date</string>
+    <string id="settings_weather" scope="settings">Météo</string>
+    <string id="settings_calendar" scope="settings">Calendrier</string>
+    <string id="settings_sunrise" scope="settings">Lever du soleil</string>
+    <string id="settings_altitude" scope="settings">Altitude</string>
+    <string id="settings_notifications" scope="settings">Notifications</string>
+    <string id="settings_heart_rate_2" scope="settings">Fréquence cardiaque</string>
+    <string id="settings_weekly_run_distance" scope="settings">Distance de course hebdomadaire</string>
+    <string id="settings_weekly_bike_distance" scope="settings">Distance vélo hebdomadaire</string>
+    <string id="settings_recovery_time" scope="settings">Temps de récupération</string>
+    <string id="settings_stress" scope="settings">Stress</string>
+    <string id="settings_body_battery_2" scope="settings">Batterie corporelle</string>
+    <string id="settings_training_status_2" scope="settings">Statut d'entraînement</string>
+    <string id="settings_race_predictor_5k" scope="settings">Prédicteur de course 5k</string>
+    <string id="settings_pulse_ox_2" scope="settings">Oxymétrie</string>
+    <string id="settings_solar_input" scope="settings">Entrée solaire</string>
+    <string id="settings_press_middle_clock" scope="settings">Appuyer au milieu (horloge) pour ouvrir :</string>
+    <string id="settings_press_bottom_left" scope="settings">Appuyer en bas à gauche pour ouvrir :</string>
+    <string id="settings_press_bottom_center" scope="settings">Appuyer en bas au centre pour ouvrir :</string>
+    <string id="settings_press_bottom_right" scope="settings">Appuyer en bas à droite pour ouvrir :</string>
+    <string id="settings_hemisphere_moon" scope="settings">Hémisphère (pour l'icône de lune)</string>
+    <string id="settings_northern" scope="settings">Nord</string>
+    <string id="settings_southern" scope="settings">Sud</string>
+    <string id="settings_time_format" scope="settings">Format d'heure (12/24h)</string>
+    <string id="settings_auto_use_system" scope="settings">Auto - Utiliser le paramètre système</string>
+    <string id="settings_24h" scope="settings">24h</string>
+    <string id="settings_12h" scope="settings">12h</string>
+    <string id="settings_date_format" scope="settings">Format de date</string>
+    <string id="settings_weekday_dd_month_yyyy" scope="settings">JOUR, JJ MOIS AAAA</string>
+    <string id="settings_weekday_dd_month" scope="settings">JOUR, JJ MOIS</string>
+    <string id="settings_yyyy_mm_dd" scope="settings">AAAA-MM-JJ</string>
+    <string id="settings_mm_dd_yyyy" scope="settings">MM/JJ/AAAA</string>
+    <string id="settings_dd_mm_yyyy" scope="settings">JJ.MM.AAAA</string>
+    <string id="settings_weekday_yyyy_mm_dd" scope="settings">JOUR, AAAA-MM-JJ</string>
+    <string id="settings_weekday_mm_dd_yyyy" scope="settings">JOUR, MM/JJ/AAAA</string>
+    <string id="settings_weekday_dd_mm_yyyy" scope="settings">JOUR, JJ.MM.AAAA</string>
+    <string id="settings_weekday_dd_month_week" scope="settings">JOUR, JJ MOIS (Semaine)</string>
+    <string id="settings_weekday_dd_month_yyyy_week" scope="settings">JOUR, JJ MOIS AAAA (Semaine)</string>
+    <string id="settings_alternative_timezone_1_label" scope="settings">Libellé du fuseau horaire alternatif 1</string>
+    <string id="settings_alternative_timezone_1_offset" scope="settings">Décalage du fuseau horaire alternatif 1</string>
+    <string id="settings_alternative_timezone_2_label" scope="settings">Libellé du fuseau horaire alternatif 2</string>
+    <string id="settings_alternative_timezone_2_offset" scope="settings">Décalage du fuseau horaire alternatif 2</string>
+    <string id="settings_temperature_unit" scope="settings">Unité de température</string>
+    <string id="settings_c" scope="settings">C</string>
+    <string id="settings_f" scope="settings">F</string>
+    <string id="settings_wind_speed_unit" scope="settings">Unité de vitesse du vent</string>
+    <string id="settings_ms" scope="settings">m/s</string>
+    <string id="settings_kmh" scope="settings">km/h</string>
+    <string id="settings_mph" scope="settings">mph</string>
+    <string id="settings_knots" scope="settings">nœuds</string>
+    <string id="settings_beufort" scope="settings">beaufort</string>
+    <string id="settings_pressure_unit" scope="settings">Unité de pression</string>
+    <string id="settings_hpa" scope="settings">hPA</string>
+    <string id="settings_mmhg" scope="settings">mmHG</string>
+    <string id="settings_inhg" scope="settings">inHG</string>
+    <string id="settings_week_number_offset" scope="settings">Décalage du numéro de semaine (0 = numéro de semaine normal)</string>
+    <string id="settings_show_clock_background" scope="settings">Afficher l'arrière-plan de l'horloge</string>
+    <string id="settings_show_data_fields_background" scope="settings">Afficher l'arrière-plan des champs de données</string>
+    <string id="settings_show_notification_count" scope="settings">Afficher le nombre de notifications</string>
+    <string id="settings_zeropad_hour_clock" scope="settings">Zéro-padding de l'heure sur l'horloge</string>
+    <string id="settings_separator_hours_minutes" scope="settings">Séparateur entre heures et minutes</string>
+    <string id="settings_colon" scope="settings">:</string>
+    <string id="settings_blank_space" scope="settings">Espace vide</string>
+    <string id="settings_no_separator" scope="settings">Aucun séparateur</string>
+    <string id="settings_show_seconds_active" scope="settings">Afficher les secondes en mode actif</string>
+    <string id="settings_show_seconds_inactive" scope="settings">Afficher les secondes en mode inactif (écrans MIP uniquement)</string>
+    <string id="settings_show_stress_body_battery" scope="settings">Afficher les barres de stress (orange) et de batterie corporelle (bleu)</string>
+    <string id="settings_show_hide_labels" scope="settings">Afficher/Masquer les étiquettes</string>
+    <string id="settings_show_all_labels" scope="settings">Afficher toutes les étiquettes</string>
+    <string id="settings_hide_all_labels" scope="settings">Masquer toutes les étiquettes</string>
+    <string id="settings_hide_top_labels" scope="settings">Masquer les étiquettes supérieures</string>
+    <string id="settings_hide_bottom_labels" scope="settings">Masquer les étiquettes inférieures</string>
 </strings>
