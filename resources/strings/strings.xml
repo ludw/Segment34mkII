@@ -222,35 +222,28 @@
     <string id="settings_purple_on_white" scope="settings">Purple on white (not recommended for AMOLED)</string>
     <string id="settings_custom_colors" scope="settings">Custom colors, see FAQ 1.2.0 for details</string>
     <string id="settings_custom_colors_faq" scope="settings">Custom colors, see FAQ for details</string>
-    
     <string id="settings_night_color_theme" scope="settings">Night Color Theme</string>
     <string id="settings_no_change" scope="settings">No change</string>
-    
     <string id="settings_night_theme_activation" scope="settings">Activate Night Color Theme:</string>
     <string id="settings_during_scheduled_sleep" scope="settings">During scheduled sleep hours</string>
     <string id="settings_two_hours_before" scope="settings">2 hours before scheduled sleep hours</string>
     <string id="settings_from_sunset_sunrise" scope="settings">From Sunset to Sunrise (requires weather data)</string>
-    
     <string id="settings_custom_colors_read" scope="settings">Custom colors, read FAQ first</string>
     <string id="settings_enter_13_values" scope="settings">Enter 13 values separated by spaces, #FFFFFF format or -</string>
-    
     <string id="settings_clock_outline_style" scope="settings">Clock outline style (AMOLED only)</string>
     <string id="settings_filled_numbers_no_outline" scope="settings">Filled numbers no outline, same in AOD</string>
     <string id="settings_filled_numbers_no_outline_aod" scope="settings">Filled numbers no outline, only outline in AOD</string>
     <string id="settings_filled_numbers_no_outline_filled" scope="settings">Filled numbers no outline, filled using outline color in AOD</string>
     <string id="settings_filled_numbers_with_outline" scope="settings">Filled numbers with outline, same in AOD</string>
     <string id="settings_filled_numbers_with_outline_aod" scope="settings">Filled numbers with outline, only outline in AOD</string>
-    
     <string id="settings_update_frequency" scope="settings">Update frequency for data</string>
     <string id="settings_every_minute" scope="settings">Every minute</string>
     <string id="settings_every_5_seconds" scope="settings">Every 5 seconds</string>
     <string id="settings_every_second" scope="settings">Every second</string>
-    
     <string id="settings_top_part_shows" scope="settings">Top Part shows</string>
     <string id="settings_two_small_data" scope="settings">Two small data fields and Moon phase</string>
     <string id="settings_two_small_data_fields" scope="settings">Two small data fields</string>
     <string id="settings_histogram_graph" scope="settings">A histogram graph (last 2 hours of data)</string>
-    
     <string id="settings_top_left_small" scope="settings">Top left small data field:</string>
     <string id="settings_hidden" scope="settings">Hidden</string>
     <string id="settings_active_min_week" scope="settings">Active min / week</string>
@@ -301,9 +294,7 @@
     <string id="settings_weather_uv_index" scope="settings">Weather: UV index</string>
     <string id="settings_next_calendar_event" scope="settings">Next calendar event time</string>
     <string id="settings_next_calendar_event_time" scope="settings">Next calendar event time</string>
-    
     <string id="settings_top_right_small" scope="settings">Top right small data field:</string>
-    
     <string id="settings_histogram_shows" scope="settings">Histogram shows (must be enabled in Top Part shows)</string>
     <string id="settings_body_battery_history" scope="settings">Body battery history</string>
     <string id="settings_elevation_history" scope="settings">Elevation history</string>
@@ -313,12 +304,10 @@
     <string id="settings_stress_history" scope="settings">Stress history</string>
     <string id="settings_stress_rest_orange_blue" scope="settings">Stress/rest (orange/blue)</string>
     <string id="settings_temperature_sensor_history" scope="settings">Temperature sensor history</string>
-    
     <string id="settings_small_font_variant" scope="settings">Small dot matrix font variant:</string>
     <string id="settings_dots" scope="settings">Dots</string>
     <string id="settings_blended" scope="settings">Blended</string>
     <string id="settings_lines_highest_contrast" scope="settings">Lines (highest contrast)</string>
-    
     <string id="settings_line_1_above_clock" scope="settings">Line 1 above clock shows:</string>
     <string id="settings_date" scope="settings">Date</string>
     <string id="settings_temperature_wind_feels" scope="settings">Temperature, Wind, Feels like</string>
@@ -348,12 +337,9 @@
     <string id="settings_current_location_lat_long" scope="settings">Current Location (Lat Long in Decimal Degrees)</string>
     <string id="settings_current_location_military" scope="settings">Current Location (Military Grid Reference System)</string>
     <string id="settings_current_location_accuracy" scope="settings">Current Location Accuracy</string>
-    
     <string id="settings_line_2_above_clock" scope="settings">Line 2 above clock shows:</string>
     <string id="settings_weather_conditions_precipitation_chance" scope="settings">Weather conditions + Percipitation chance</string>
-    
     <string id="settings_line_below_clock" scope="settings">Line below clock shows:</string>
-    
     <string id="settings_bottom_field_layout" scope="settings">Bottom field layout (number of digits per field)</string>
     <string id="settings_auto_default_layout" scope="settings">Auto - Default layout depending on screen size</string>
     <string id="settings_4_4" scope="settings">4, 4</string>
@@ -368,43 +354,33 @@
     <string id="settings_3_3_3_3" scope="settings">3, 3, 3, 3</string>
     <string id="settings_3_3_3_4" scope="settings">3, 3, 3, 4</string>
     <string id="settings_4_3_3_3" scope="settings">4, 3, 3, 3</string>
-    
     <string id="settings_bottom_value_1_left" scope="settings">Bottom value 1 (left):</string>
     <string id="settings_bottom_value_2" scope="settings">Bottom value 2:</string>
     <string id="settings_bottom_value_3" scope="settings">Bottom value 3:</string>
     <string id="settings_bottom_value_4" scope="settings">Bottom value 4 (if available):</string>
-    
     <string id="settings_bottom_5_digit" scope="settings">Bottom 5 digit value:</string>
     <string id="settings_bottom_5_digit_value" scope="settings">Bottom 5 digit value:</string>
     <string id="settings_distance_meter_day" scope="settings">Distance (meter) / day</string>
-    
     <string id="settings_battery_display" scope="settings">Battery display:</string>
     <string id="settings_remaining_days" scope="settings">Remaining days</string>
     <string id="settings_percentage_remaining" scope="settings">Percentage remaining</string>
     <string id="settings_bar" scope="settings">Bar</string>
-    
     <string id="settings_left_icon_indicates" scope="settings">Left Icon indicates:</string>
     <string id="settings_alarm" scope="settings">Alarm</string>
     <string id="settings_do_not_disturb" scope="settings">Do Not Disturb</string>
     <string id="settings_bluetooth_on_off" scope="settings">Bluetooth (on/off)</string>
     <string id="settings_bluetooth_just_when_off" scope="settings">Bluetooth (just when off)</string>
     <string id="settings_move_bar" scope="settings">Move Bar</string>
-    
     <string id="settings_right_icon_indicates" scope="settings">Right Icon indicates:</string>
-    
     <string id="settings_always_on_below" scope="settings">Always On (below clock):</string>
     <string id="settings_second_always_on" scope="settings">Second Always On Field (to the right):</string>
-    
     <string id="settings_text_alignment_always" scope="settings">Text alignment for Always On line (below clock):</string>
     <string id="settings_left" scope="settings">Left</string>
     <string id="settings_center" scope="settings">Center</string>
-    
     <string id="settings_text_alignment_date" scope="settings">Text alignment for Date:</string>
-    
     <string id="settings_text_alignment_bottom" scope="settings">Text alignment for bottom data fields:</string>
     <string id="settings_right" scope="settings">Right</string>
     <string id="settings_left_center_5_digit" scope="settings">Left, but center the 5 digit field</string>
-    
     <string id="settings_press_top_third" scope="settings">Press top third to open:</string>
     <string id="settings_nothing" scope="settings">Nothing</string>
     <string id="settings_toggle_night_color" scope="settings">Toggle night color theme</string>
@@ -429,21 +405,17 @@
     <string id="settings_race_predictor_5k" scope="settings">Race predictor 5k</string>
     <string id="settings_pulse_ox_2" scope="settings">Pulse OX</string>
     <string id="settings_solar_input" scope="settings">Solar Input</string>
-    
     <string id="settings_press_middle_clock" scope="settings">Press middle (clock) to open:</string>
     <string id="settings_press_bottom_left" scope="settings">Press bottom left to open:</string>
     <string id="settings_press_bottom_center" scope="settings">Press bottom center to open:</string>
     <string id="settings_press_bottom_right" scope="settings">Press bottom right to open:</string>
-    
     <string id="settings_hemisphere_moon" scope="settings">Hemisphere (for Moon icon)</string>
     <string id="settings_northern" scope="settings">Northern</string>
     <string id="settings_southern" scope="settings">Southern</string>
-    
     <string id="settings_time_format" scope="settings">Time format (12/24h)</string>
     <string id="settings_auto_use_system" scope="settings">Auto - Use system setting</string>
     <string id="settings_24h" scope="settings">24h</string>
     <string id="settings_12h" scope="settings">12h</string>
-    
     <string id="settings_date_format" scope="settings">Date format</string>
     <string id="settings_weekday_dd_month_yyyy" scope="settings">WEEKDAY, DD MONTH YYYY</string>
     <string id="settings_weekday_dd_month" scope="settings">WEEKDAY, DD MONTH</string>
@@ -455,44 +427,35 @@
     <string id="settings_weekday_dd_mm_yyyy" scope="settings">WEEKDAY, DD.MM.YYYY</string>
     <string id="settings_weekday_dd_month_week" scope="settings">WEEKDAY, DD MONTH (Week)</string>
     <string id="settings_weekday_dd_month_yyyy_week" scope="settings">WEEKDAY, DD MONTH YYYY (Week)</string>
-    
     <string id="settings_alternative_timezone_1_label" scope="settings">Alternative Timezone 1 label</string>
     <string id="settings_alternative_timezone_1_offset" scope="settings">Alternative Timezone 1 offset</string>
     <string id="settings_alternative_timezone_2_label" scope="settings">Alternative Timezone 2 label</string>
     <string id="settings_alternative_timezone_2_offset" scope="settings">Alternative Timezone 2 offset</string>
-    
     <string id="settings_temperature_unit" scope="settings">Temperature unit</string>
     <string id="settings_c" scope="settings">C</string>
     <string id="settings_f" scope="settings">F</string>
-    
     <string id="settings_wind_speed_unit" scope="settings">Wind speed unit</string>
     <string id="settings_ms" scope="settings">m/s</string>
     <string id="settings_kmh" scope="settings">km/h</string>
     <string id="settings_mph" scope="settings">mph</string>
     <string id="settings_knots" scope="settings">knots</string>
     <string id="settings_beufort" scope="settings">beufort</string>
-    
     <string id="settings_pressure_unit" scope="settings">Pressure unit</string>
     <string id="settings_hpa" scope="settings">hPA</string>
     <string id="settings_mmhg" scope="settings">mmHG</string>
     <string id="settings_inhg" scope="settings">inHG</string>
-    
     <string id="settings_week_number_offset" scope="settings">Week number offset (0 = normal week number)</string>
-    
     <string id="settings_show_clock_background" scope="settings">Show clock background</string>
     <string id="settings_show_data_fields_background" scope="settings">Show data fields background</string>
     <string id="settings_show_notification_count" scope="settings">Show Notification Count</string>
     <string id="settings_zeropad_hour_clock" scope="settings">Zeropad hour on clock</string>
-    
     <string id="settings_separator_hours_minutes" scope="settings">Separator between Hours and Minutes</string>
     <string id="settings_colon" scope="settings">:</string>
     <string id="settings_blank_space" scope="settings">Blank space</string>
     <string id="settings_no_separator" scope="settings">No separator</string>
-    
     <string id="settings_show_seconds_active" scope="settings">Show Seconds in Active mode</string>
     <string id="settings_show_seconds_inactive" scope="settings">Show seconds in Inactive mode (MIP screens only)</string>
     <string id="settings_show_stress_body_battery" scope="settings">Show Stress (orange) and Body Battery (blue) bars</string>
-    
     <string id="settings_show_hide_labels" scope="settings">Show/Hide Labels</string>
     <string id="settings_show_all_labels" scope="settings">Show All Labels</string>
     <string id="settings_hide_all_labels" scope="settings">Hide All Labels</string>
