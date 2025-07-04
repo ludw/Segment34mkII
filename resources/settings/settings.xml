@@ -1,897 +1,897 @@
 <settings>
 
-    <setting propertyKey="@Properties.colorTheme" title="Color Theme">
+    <setting propertyKey="@Properties.colorTheme" title="@Strings.settings_color_theme">
         <settingConfig type="list">
-            <listEntry value="0">Yellow on turquoise</listEntry>
-            <listEntry value="8">Yellow on blue</listEntry>
-            <listEntry value="1">Hot pink</listEntry>
-            <listEntry value="10">Blue</listEntry>
-            <listEntry value="2">Blueish green</listEntry>
-            <listEntry value="3">Green</listEntry>
-            <listEntry value="19">Green camo</listEntry>
-            <listEntry value="18">Green and Orange</listEntry>
-            <listEntry value="11">Orange</listEntry>
-            <listEntry value="23">Amber</listEntry>
-            <listEntry value="5">Peachy Orange</listEntry>
-            <listEntry value="20">Red</listEntry>
-            <listEntry value="22">Purple</listEntry>
-            <listEntry value="4">White on turquoise</listEntry>
-            <listEntry value="6">White on red</listEntry>
-            <listEntry value="7">White on blue</listEntry>
-            <listEntry value="9">White on orange</listEntry>
-            <listEntry value="12">White on black</listEntry>
-            <listEntry value="13">Black on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="14">Red on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="15">Blue on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="16">Green on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="17">Orange on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="21">Purple on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="30">Custom colors, see FAQ 1.2.0 for details</listEntry>
+            <listEntry value="0">@Strings.settings_yellow_on_turquoise</listEntry>
+            <listEntry value="8">@Strings.settings_yellow_on_blue</listEntry>
+            <listEntry value="1">@Strings.settings_hot_pink</listEntry>
+            <listEntry value="10">@Strings.settings_blue</listEntry>
+            <listEntry value="2">@Strings.settings_blueish_green</listEntry>
+            <listEntry value="3">@Strings.settings_green</listEntry>
+            <listEntry value="19">@Strings.settings_green_camo</listEntry>
+            <listEntry value="18">@Strings.settings_green_and_orange</listEntry>
+            <listEntry value="11">@Strings.settings_orange</listEntry>
+            <listEntry value="23">@Strings.settings_amber</listEntry>
+            <listEntry value="5">@Strings.settings_peachy_orange</listEntry>
+            <listEntry value="20">@Strings.settings_red</listEntry>
+            <listEntry value="22">@Strings.settings_purple</listEntry>
+            <listEntry value="4">@Strings.settings_white_on_turquoise</listEntry>
+            <listEntry value="6">@Strings.settings_white_on_red</listEntry>
+            <listEntry value="7">@Strings.settings_white_on_blue</listEntry>
+            <listEntry value="9">@Strings.settings_white_on_orange</listEntry>
+            <listEntry value="12">@Strings.settings_white_on_black</listEntry>
+            <listEntry value="13">@Strings.settings_black_on_white</listEntry>
+            <listEntry value="14">@Strings.settings_red_on_white</listEntry>
+            <listEntry value="15">@Strings.settings_blue_on_white</listEntry>
+            <listEntry value="16">@Strings.settings_green_on_white</listEntry>
+            <listEntry value="17">@Strings.settings_orange_on_white</listEntry>
+            <listEntry value="21">@Strings.settings_purple_on_white</listEntry>
+            <listEntry value="30">@Strings.settings_custom_colors</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.nightColorTheme" title="Night Color Theme">
+    <setting propertyKey="@Properties.nightColorTheme" title="@Strings.settings_night_color_theme">
         <settingConfig type="list">
-            <listEntry value="-1">No change</listEntry>
-            <listEntry value="0">Yellow on turquoise</listEntry>
-            <listEntry value="8">Yellow on blue</listEntry>
-            <listEntry value="1">Hot pink</listEntry>
-            <listEntry value="10">Blue</listEntry>
-            <listEntry value="2">Blueish green</listEntry>
-            <listEntry value="3">Green</listEntry>
-            <listEntry value="19">Green camo</listEntry>
-            <listEntry value="18">Green and Orange</listEntry>
-            <listEntry value="11">Orange</listEntry>
-            <listEntry value="23">Amber</listEntry>
-            <listEntry value="5">Peachy Orange</listEntry>
-            <listEntry value="20">Red</listEntry>
-            <listEntry value="22">Purple</listEntry>
-            <listEntry value="4">White on turquoise</listEntry>
-            <listEntry value="6">White on red</listEntry>
-            <listEntry value="7">White on blue</listEntry>
-            <listEntry value="9">White on orange</listEntry>
-            <listEntry value="12">White on black</listEntry>
-            <listEntry value="13">Black on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="14">Red on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="15">Blue on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="16">Green on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="17">Orange on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="21">Purple on white (not recommended for AMOLED)</listEntry>
-            <listEntry value="30">Custom colors, see FAQ for details</listEntry>
+            <listEntry value="-1">@Strings.settings_no_change</listEntry>
+            <listEntry value="0">@Strings.settings_yellow_on_turquoise</listEntry>
+            <listEntry value="8">@Strings.settings_yellow_on_blue</listEntry>
+            <listEntry value="1">@Strings.settings_hot_pink</listEntry>
+            <listEntry value="10">@Strings.settings_blue</listEntry>
+            <listEntry value="2">@Strings.settings_blueish_green</listEntry>
+            <listEntry value="3">@Strings.settings_green</listEntry>
+            <listEntry value="19">@Strings.settings_green_camo</listEntry>
+            <listEntry value="18">@Strings.settings_green_and_orange</listEntry>
+            <listEntry value="11">@Strings.settings_orange</listEntry>
+            <listEntry value="23">@Strings.settings_amber</listEntry>
+            <listEntry value="5">@Strings.settings_peachy_orange</listEntry>
+            <listEntry value="20">@Strings.settings_red</listEntry>
+            <listEntry value="22">@Strings.settings_purple</listEntry>
+            <listEntry value="4">@Strings.settings_white_on_turquoise</listEntry>
+            <listEntry value="6">@Strings.settings_white_on_red</listEntry>
+            <listEntry value="7">@Strings.settings_white_on_blue</listEntry>
+            <listEntry value="9">@Strings.settings_white_on_orange</listEntry>
+            <listEntry value="12">@Strings.settings_white_on_black</listEntry>
+            <listEntry value="13">@Strings.settings_black_on_white</listEntry>
+            <listEntry value="14">@Strings.settings_red_on_white</listEntry>
+            <listEntry value="15">@Strings.settings_blue_on_white</listEntry>
+            <listEntry value="16">@Strings.settings_green_on_white</listEntry>
+            <listEntry value="17">@Strings.settings_orange_on_white</listEntry>
+            <listEntry value="21">@Strings.settings_purple_on_white</listEntry>
+            <listEntry value="30">@Strings.settings_custom_colors_faq</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.nightThemeActivation" title="Activate Night Color Theme:">
+    <setting propertyKey="@Properties.nightThemeActivation" title="@Strings.settings_night_theme_activation">
         <settingConfig type="list">
-            <listEntry value="0">During scheduled sleep hours</listEntry>
-            <listEntry value="1">2 hours before scheduled sleep hours</listEntry>
-            <listEntry value="2">From Sunset to Sunrise (requires weather data)</listEntry>
+            <listEntry value="0">@Strings.settings_during_scheduled_sleep</listEntry>
+            <listEntry value="1">@Strings.settings_two_hours_before</listEntry>
+            <listEntry value="2">@Strings.settings_from_sunset_sunrise</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.colorOverride" title="Custom colors, read FAQ first">
-        <settingConfig type="alphanumeric" errorMessage="Enter 13 values separated by spaces, #FFFFFF format or -" />
+    <setting propertyKey="@Properties.colorOverride" title="@Strings.settings_custom_colors_read">
+        <settingConfig type="alphanumeric" errorMessage="@Strings.settings_enter_13_values" />
     </setting>
 
-    <setting propertyKey="@Properties.clockOutlineStyle" title="Clock outline style (AMOLED only)">
+    <setting propertyKey="@Properties.clockOutlineStyle" title="@Strings.settings_clock_outline_style">
         <settingConfig type="list">
-            <listEntry value="0">Filled numbers no outline, same in AOD</listEntry>
-            <listEntry value="1">Filled numbers no outline, only outline in AOD</listEntry>
-            <listEntry value="4">Filled numbers no outline, filled using outline color in AOD</listEntry>
-            <listEntry value="2">Filled numbers with outline, same in AOD</listEntry>
-            <listEntry value="3">Filled numbers with outline, only outline in AOD</listEntry>
+            <listEntry value="0">@Strings.settings_filled_numbers_no_outline</listEntry>
+            <listEntry value="1">@Strings.settings_filled_numbers_no_outline_aod</listEntry>
+            <listEntry value="4">@Strings.settings_filled_numbers_no_outline_filled</listEntry>
+            <listEntry value="2">@Strings.settings_filled_numbers_with_outline</listEntry>
+            <listEntry value="3">@Strings.settings_filled_numbers_with_outline_aod</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.updateFreq" title="Update frequency for data">
+    <setting propertyKey="@Properties.updateFreq" title="@Strings.settings_update_frequency">
         <settingConfig type="list">
-            <listEntry value="60">Every minute</listEntry>
-            <listEntry value="5">Every 5 seconds</listEntry>
-            <listEntry value="1">Every second</listEntry>
+            <listEntry value="60">@Strings.settings_every_minute</listEntry>
+            <listEntry value="5">@Strings.settings_every_5_seconds</listEntry>
+            <listEntry value="1">@Strings.settings_every_second</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.topPartShows" title="Top Part shows">
+    <setting propertyKey="@Properties.topPartShows" title="@Strings.settings_top_part_shows">
             <settingConfig type="list">
-                <listEntry value="0">Two small data fields and Moon phase</listEntry>
-                <listEntry value="1">Two small data fields</listEntry>
-                <listEntry value="2">A histogram graph (last 2 hours of data)</listEntry>
+                <listEntry value="0">@Strings.settings_two_small_data</listEntry>
+                <listEntry value="1">@Strings.settings_two_small_data_fields</listEntry>
+                <listEntry value="2">@Strings.settings_histogram_graph</listEntry>
             </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.sunriseFieldShows" title="Top left small data field:">
+    <setting propertyKey="@Properties.sunriseFieldShows" title="@Strings.settings_top_left_small">
         <settingConfig type="list">
-            <listEntry value="-2">Hidden</listEntry>
-            <listEntry value="0">Active min / week</listEntry>
-            <listEntry value="1">Active min / day</listEntry>
-            <listEntry value="2">Distance (km) / day</listEntry>
-            <listEntry value="3">Distance (miles) / day</listEntry>
-            <listEntry value="21">Run distance (km) / week</listEntry>
-            <listEntry value="22">Run distance (miles) / week</listEntry>
-            <listEntry value="23">Bike distance (km) / week</listEntry>
-            <listEntry value="24">Bike distance (miles) / week</listEntry>
-            <listEntry value="32">Total distance past 7 days (km)</listEntry>
-            <listEntry value="33">Total distance past 7 days (miles)</listEntry>
-            <listEntry value="4">Floors climbed / day</listEntry>
-            <listEntry value="5">Meters climbed / day</listEntry>
-            <listEntry value="6">Time to Recovery (h)</listEntry>
-            <listEntry value="7">VO2 Max Running</listEntry>
-            <listEntry value="8">VO2 Max Cycling</listEntry>
-            <listEntry value="9">Respiration Rate</listEntry>
-            <listEntry value="10">Heart Rate</listEntry>
-            <listEntry value="59">Pulse Ox</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="29">Active calories (kcal) / day</listEntry>
-            <listEntry value="12">Altitude (m)</listEntry>
-            <listEntry value="15">Altitude (ft)</listEntry>
-            <listEntry value="13">Stress score</listEntry>
-            <listEntry value="14">Body battery</listEntry>
-            <listEntry value="39">Sunrise time</listEntry>
-            <listEntry value="40">Sunset time</listEntry>
-            <listEntry value="55">Next sun event time</listEntry>
-            <listEntry value="16">Alternative Timezone 1</listEntry>
-            <listEntry value="41">Alternative Timezone 2</listEntry>
-            <listEntry value="26">Barometric Pressure, raw</listEntry>
-            <listEntry value="30">Barometric Pressure, sea level</listEntry>
-            <listEntry value="27">Weight (kg)</listEntry>
-            <listEntry value="28">Weight (lbs)</listEntry>
-            <listEntry value="31">Week number</listEntry>
-            <listEntry value="34">Battery percentage</listEntry>
-            <listEntry value="35">Battery days remaining</listEntry>
-            <listEntry value="36">Notification count</listEntry>
-            <listEntry value="37">Solar intensity</listEntry>
-            <listEntry value="38">Sensor temperature</listEntry>
-            <listEntry value="42">Alarms (count)</listEntry>
-            <listEntry value="43">Weather: Daily high temperature</listEntry>
-            <listEntry value="44">Weather: Daily low temperature</listEntry>
-            <listEntry value="53">Weather: Temperature</listEntry>
-            <listEntry value="54">Weather: Chance of Precipitation</listEntry>
-            <listEntry value="66">Weather: Humidity</listEntry>
-            <listEntry value="64">Weather: UV index</listEntry>
-            <listEntry value="57">Next calendar event time</listEntry>
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="0">@Strings.settings_active_min_week</listEntry>
+            <listEntry value="1">@Strings.settings_active_min_day</listEntry>
+            <listEntry value="2">@Strings.settings_distance_km_day</listEntry>
+            <listEntry value="3">@Strings.settings_distance_miles_day</listEntry>
+            <listEntry value="21">@Strings.settings_run_distance_km_week</listEntry>
+            <listEntry value="22">@Strings.settings_run_distance_miles_week</listEntry>
+            <listEntry value="23">@Strings.settings_bike_distance_km_week</listEntry>
+            <listEntry value="24">@Strings.settings_bike_distance_miles_week</listEntry>
+            <listEntry value="32">@Strings.settings_total_distance_7_days_km</listEntry>
+            <listEntry value="33">@Strings.settings_total_distance_7_days_miles</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed_day</listEntry>
+            <listEntry value="5">@Strings.settings_meters_climbed_day</listEntry>
+            <listEntry value="6">@Strings.settings_time_to_recovery</listEntry>
+            <listEntry value="7">@Strings.settings_vo2_max_running</listEntry>
+            <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
+            <listEntry value="9">@Strings.settings_respiration_rate</listEntry>
+            <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
+            <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
+            <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
+            <listEntry value="12">@Strings.settings_altitude_m</listEntry>
+            <listEntry value="15">@Strings.settings_altitude_ft</listEntry>
+            <listEntry value="13">@Strings.settings_stress_score</listEntry>
+            <listEntry value="14">@Strings.settings_body_battery</listEntry>
+            <listEntry value="39">@Strings.settings_sunrise_time</listEntry>
+            <listEntry value="40">@Strings.settings_sunset_time</listEntry>
+            <listEntry value="55">@Strings.settings_next_sun_event</listEntry>
+            <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
+            <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
+            <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
+            <listEntry value="30">@Strings.settings_barometric_pressure_sea</listEntry>
+            <listEntry value="27">@Strings.settings_weight_kg</listEntry>
+            <listEntry value="28">@Strings.settings_weight_lbs</listEntry>
+            <listEntry value="31">@Strings.settings_week_number</listEntry>
+            <listEntry value="34">@Strings.settings_battery_percentage</listEntry>
+            <listEntry value="35">@Strings.settings_battery_days_remaining</listEntry>
+            <listEntry value="36">@Strings.settings_notification_count</listEntry>
+            <listEntry value="37">@Strings.settings_solar_intensity</listEntry>
+            <listEntry value="38">@Strings.settings_sensor_temperature</listEntry>
+            <listEntry value="42">@Strings.settings_alarms_count</listEntry>
+            <listEntry value="43">@Strings.settings_weather_daily_high</listEntry>
+            <listEntry value="44">@Strings.settings_weather_daily_low</listEntry>
+            <listEntry value="53">@Strings.settings_weather_temperature</listEntry>
+            <listEntry value="54">@Strings.settings_weather_chance_precipitation</listEntry>
+            <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
+            <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
+            <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.sunsetFieldShows" title="Top right small data field:">
+    <setting propertyKey="@Properties.sunsetFieldShows" title="@Strings.settings_top_right_small">
         <settingConfig type="list">
-            <listEntry value="-2">Hidden</listEntry>
-            <listEntry value="0">Active min / week</listEntry>
-            <listEntry value="1">Active min / day</listEntry>
-            <listEntry value="2">Distance (km) / day</listEntry>
-            <listEntry value="3">Distance (miles) / day</listEntry>
-            <listEntry value="21">Run distance (km) / week</listEntry>
-            <listEntry value="22">Run distance (miles) / week</listEntry>
-            <listEntry value="23">Bike distance (km) / week</listEntry>
-            <listEntry value="24">Bike distance (miles) / week</listEntry>
-            <listEntry value="32">Total distance past 7 days (km)</listEntry>
-            <listEntry value="33">Total distance past 7 days (miles)</listEntry>
-            <listEntry value="4">Floors climbed / day</listEntry>
-            <listEntry value="5">Meters climbed / day</listEntry>
-            <listEntry value="6">Time to Recovery (h)</listEntry>
-            <listEntry value="7">VO2 Max Running</listEntry>
-            <listEntry value="8">VO2 Max Cycling</listEntry>
-            <listEntry value="9">Respiration Rate</listEntry>
-            <listEntry value="10">Heart Rate</listEntry>
-            <listEntry value="59">Pulse Ox</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="29">Active calories (kcal) / day</listEntry>
-            <listEntry value="12">Altitude (m)</listEntry>
-            <listEntry value="15">Altitude (ft)</listEntry>
-            <listEntry value="13">Stress score</listEntry>
-            <listEntry value="14">Body battery</listEntry>
-            <listEntry value="39">Sunrise time</listEntry>
-            <listEntry value="40">Sunset time</listEntry>
-            <listEntry value="55">Next sun event time</listEntry>
-            <listEntry value="16">Alternative Timezone 1</listEntry>
-            <listEntry value="41">Alternative Timezone 2</listEntry>
-            <listEntry value="26">Barometric Pressure, raw</listEntry>
-            <listEntry value="30">Barometric Pressure, sea level</listEntry>
-            <listEntry value="27">Weight (kg)</listEntry>
-            <listEntry value="28">Weight (lbs)</listEntry>
-            <listEntry value="31">Week number</listEntry>
-            <listEntry value="34">Battery percentage</listEntry>
-            <listEntry value="35">Battery days remaining</listEntry>
-            <listEntry value="36">Notification count</listEntry>
-            <listEntry value="37">Solar intensity</listEntry>
-            <listEntry value="38">Sensor temperature</listEntry>
-            <listEntry value="42">Alarms (count)</listEntry>
-            <listEntry value="43">Weather: Daily high temperature</listEntry>
-            <listEntry value="44">Weather: Daily low temperature</listEntry>
-            <listEntry value="53">Weather: Temperature</listEntry>
-            <listEntry value="54">Weather: Chance of Precipitation</listEntry>
-            <listEntry value="66">Weather: Humidity</listEntry>
-            <listEntry value="64">Weather: UV index</listEntry>
-            <listEntry value="57">Next calendar event time</listEntry>
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="0">@Strings.settings_active_min_week</listEntry>
+            <listEntry value="1">@Strings.settings_active_min_day</listEntry>
+            <listEntry value="2">@Strings.settings_distance_km_day</listEntry>
+            <listEntry value="3">@Strings.settings_distance_miles_day</listEntry>
+            <listEntry value="21">@Strings.settings_run_distance_km_week</listEntry>
+            <listEntry value="22">@Strings.settings_run_distance_miles_week</listEntry>
+            <listEntry value="23">@Strings.settings_bike_distance_km_week</listEntry>
+            <listEntry value="24">@Strings.settings_bike_distance_miles_week</listEntry>
+            <listEntry value="32">@Strings.settings_total_distance_7_days_km</listEntry>
+            <listEntry value="33">@Strings.settings_total_distance_7_days_miles</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed_day</listEntry>
+            <listEntry value="5">@Strings.settings_meters_climbed_day</listEntry>
+            <listEntry value="6">@Strings.settings_time_to_recovery</listEntry>
+            <listEntry value="7">@Strings.settings_vo2_max_running</listEntry>
+            <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
+            <listEntry value="9">@Strings.settings_respiration_rate</listEntry>
+            <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
+            <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
+            <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
+            <listEntry value="12">@Strings.settings_altitude_m</listEntry>
+            <listEntry value="15">@Strings.settings_altitude_ft</listEntry>
+            <listEntry value="13">@Strings.settings_stress_score</listEntry>
+            <listEntry value="14">@Strings.settings_body_battery</listEntry>
+            <listEntry value="39">@Strings.settings_sunrise_time</listEntry>
+            <listEntry value="40">@Strings.settings_sunset_time</listEntry>
+            <listEntry value="55">@Strings.settings_next_sun_event</listEntry>
+            <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
+            <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
+            <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
+            <listEntry value="30">@Strings.settings_barometric_pressure_sea</listEntry>
+            <listEntry value="27">@Strings.settings_weight_kg</listEntry>
+            <listEntry value="28">@Strings.settings_weight_lbs</listEntry>
+            <listEntry value="31">@Strings.settings_week_number</listEntry>
+            <listEntry value="34">@Strings.settings_battery_percentage</listEntry>
+            <listEntry value="35">@Strings.settings_battery_days_remaining</listEntry>
+            <listEntry value="36">@Strings.settings_notification_count</listEntry>
+            <listEntry value="37">@Strings.settings_solar_intensity</listEntry>
+            <listEntry value="38">@Strings.settings_sensor_temperature</listEntry>
+            <listEntry value="42">@Strings.settings_alarms_count</listEntry>
+            <listEntry value="43">@Strings.settings_weather_daily_high</listEntry>
+            <listEntry value="44">@Strings.settings_weather_daily_low</listEntry>
+            <listEntry value="53">@Strings.settings_weather_temperature</listEntry>
+            <listEntry value="54">@Strings.settings_weather_chance_precipitation</listEntry>
+            <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
+            <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
+            <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.histogramData" title="Histogram shows (must be enabled in Top Part shows)">
+    <setting propertyKey="@Properties.histogramData" title="@Strings.settings_histogram_shows">
             <settingConfig type="list">
-                <listEntry value="0">Body battery history</listEntry>
-                <listEntry value="1">Elevation history</listEntry>
-                <listEntry value="2">Heart rate history</listEntry>
-                <listEntry value="3">Oxygen saturation history</listEntry>
-                <listEntry value="4">Pressure history</listEntry>
-                <listEntry value="5">Stress history</listEntry>
-                <listEntry value="7">Stress/rest (orange/blue)</listEntry>
-                <listEntry value="6">Temperature sensor history</listEntry>
+                <listEntry value="0">@Strings.settings_body_battery_history</listEntry>
+                <listEntry value="1">@Strings.settings_elevation_history</listEntry>
+                <listEntry value="2">@Strings.settings_heart_rate_history</listEntry>
+                <listEntry value="3">@Strings.settings_oxygen_saturation_history</listEntry>
+                <listEntry value="4">@Strings.settings_pressure_history</listEntry>
+                <listEntry value="5">@Strings.settings_stress_history</listEntry>
+                <listEntry value="7">@Strings.settings_stress_rest_orange_blue</listEntry>
+                <listEntry value="6">@Strings.settings_temperature_sensor_history</listEntry>
             </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.smallFontVariant" title="Small dot matrix font variant:">
+    <setting propertyKey="@Properties.smallFontVariant" title="@Strings.settings_small_font_variant">
             <settingConfig type="list">
-                <listEntry value="0">Dots</listEntry>
-                <listEntry value="1">Blended</listEntry>
-                <listEntry value="2">Lines (highest contrast)</listEntry>
+                <listEntry value="0">@Strings.settings_dots</listEntry>
+                <listEntry value="1">@Strings.settings_blended</listEntry>
+                <listEntry value="2">@Strings.settings_lines_highest_contrast</listEntry>
             </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.weatherLine1Shows" title="Line 1 above clock shows:">
+    <setting propertyKey="@Properties.weatherLine1Shows" title="@Strings.settings_line_1_above_clock">
         <settingConfig type="list">
-            <listEntry value="-2">Hidden</listEntry>
-            <listEntry value="-1">Date</listEntry>
-            <listEntry value="45">Temperature, Wind, Feels like</listEntry>
-            <listEntry value="46">Temperature, Wind</listEntry>
-            <listEntry value="47">Temperature, Wind, Humidity</listEntry>
-            <listEntry value="48">Temperature, Wind, High/Low</listEntry>
-            <listEntry value="49">Temperature, Wind, Precipitation chance</listEntry>
-            <listEntry value="63">Temperature, Wind, Humidity, Precipitation chance</listEntry>
-            <listEntry value="51">Temperature, Humidity, High/Low</listEntry>
-            <listEntry value="65">Temperature, UV Index, High/Low</listEntry>
-            <listEntry value="67">Temperature, Feels like, High/Low</listEntry>
-            <listEntry value="52">Temperature, Percipitation chance, High/Low</listEntry>
-            <listEntry value="20">Weather conditions, Precipitation chance</listEntry>
-            <listEntry value="50">Weather conditions</listEntry>
-            <listEntry value="43">Daily high temperature</listEntry>
-            <listEntry value="44">Daily low temperature</listEntry>
-            <listEntry value="53">Temperature</listEntry>
-            <listEntry value="54">Chance of Precipitation</listEntry>
-            <listEntry value="17">Steps / day</listEntry>
-            <listEntry value="19">Wheelchair pushes / day</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="58">Active/Total Calories (kcal) / day</listEntry>
-            <listEntry value="12">Altitude (m)</listEntry>
-            <listEntry value="15">Altitude (ft)</listEntry>
-            <listEntry value="25">Training status</listEntry>
-            <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
-            <listEntry value="60">Current Location (Lat Long in Decimal Degrees)</listEntry>
-            <listEntry value="61">Current Location (Military Grid Reference System)</listEntry>
-            <listEntry value="62">Current Location Accuracy</listEntry>
-            <listEntry value="57">Next calendar event time</listEntry>
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="-1">@Strings.settings_date</listEntry>
+            <listEntry value="45">@Strings.settings_temperature_wind_feels</listEntry>
+            <listEntry value="46">@Strings.settings_temperature_wind</listEntry>
+            <listEntry value="47">@Strings.settings_temperature_wind_humidity</listEntry>
+            <listEntry value="48">@Strings.settings_temperature_wind_high_low</listEntry>
+            <listEntry value="49">@Strings.settings_temperature_wind_precipitation</listEntry>
+            <listEntry value="63">@Strings.settings_temperature_wind_humidity_precipitation</listEntry>
+            <listEntry value="51">@Strings.settings_temperature_humidity_high_low</listEntry>
+            <listEntry value="65">@Strings.settings_temperature_uv_high_low</listEntry>
+            <listEntry value="67">@Strings.settings_temperature_feels_high_low</listEntry>
+            <listEntry value="52">@Strings.settings_temperature_precipitation_high_low</listEntry>
+            <listEntry value="20">@Strings.settings_weather_conditions_precipitation</listEntry>
+            <listEntry value="50">@Strings.settings_weather_conditions</listEntry>
+            <listEntry value="43">@Strings.settings_daily_high_temperature</listEntry>
+            <listEntry value="44">@Strings.settings_daily_low_temperature</listEntry>
+            <listEntry value="53">@Strings.settings_temperature</listEntry>
+            <listEntry value="54">@Strings.settings_chance_of_precipitation</listEntry>
+            <listEntry value="17">@Strings.settings_steps_day</listEntry>
+            <listEntry value="19">@Strings.settings_wheelchair_pushes_day</listEntry>
+            <listEntry value="11">@Strings.settings_calories_kcal_day_2</listEntry>
+            <listEntry value="58">@Strings.settings_active_total_calories</listEntry>
+            <listEntry value="12">@Strings.settings_altitude_m_2</listEntry>
+            <listEntry value="15">@Strings.settings_altitude_ft_2</listEntry>
+            <listEntry value="25">@Strings.settings_training_status</listEntry>
+            <listEntry value="56">@Strings.settings_military_date_time</listEntry>
+            <listEntry value="60">@Strings.settings_current_location_lat_long</listEntry>
+            <listEntry value="61">@Strings.settings_current_location_military</listEntry>
+            <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
+            <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.weatherLine2Shows" title="Line 2 above clock shows:">
+    <setting propertyKey="@Properties.weatherLine2Shows" title="@Strings.settings_line_2_above_clock">
         <settingConfig type="list">
-            <listEntry value="-2">Hidden</listEntry>
-            <listEntry value="-1">Date</listEntry>
-            <listEntry value="45">Temperature, Wind, Feels like</listEntry>
-            <listEntry value="46">Temperature, Wind</listEntry>
-            <listEntry value="47">Temperature, Wind, Humidity</listEntry>
-            <listEntry value="48">Temperature, Wind, High/Low</listEntry>
-            <listEntry value="49">Temperature, Wind, Percipitation chance</listEntry>
-            <listEntry value="63">Temperature, Wind, Humidity, Precipitation chance</listEntry>
-            <listEntry value="51">Temperature, Humidity, High/Low</listEntry>
-            <listEntry value="65">Temperature, UV Index, High/Low</listEntry>
-            <listEntry value="67">Temperature, Feels like, High/Low</listEntry>
-            <listEntry value="52">Temperature, Percipitation chance, High/Low</listEntry>
-            <listEntry value="20">Weather conditions + Percipitation chance</listEntry>
-            <listEntry value="50">Weather conditions</listEntry>
-            <listEntry value="43">Daily high temperature</listEntry>
-            <listEntry value="44">Daily low temperature</listEntry>
-            <listEntry value="53">Temperature</listEntry>
-            <listEntry value="54">Chance of Precipitation</listEntry>
-            <listEntry value="17">Steps / day</listEntry>
-            <listEntry value="19">Wheelchair pushes / day</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="58">Active/Total Calories (kcal) / day</listEntry>
-            <listEntry value="12">Altitude (m)</listEntry>
-            <listEntry value="15">Altitude (ft)</listEntry>
-            <listEntry value="25">Training status</listEntry>
-            <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
-            <listEntry value="60">Current Location (Lat Long in Decimal Degrees)</listEntry>
-            <listEntry value="61">Current Location (Military Grid Reference System)</listEntry>
-            <listEntry value="62">Current Location Accuracy</listEntry>
-            <listEntry value="57">Next calendar event time</listEntry>
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="-1">@Strings.settings_date</listEntry>
+            <listEntry value="45">@Strings.settings_temperature_wind_feels</listEntry>
+            <listEntry value="46">@Strings.settings_temperature_wind</listEntry>
+            <listEntry value="47">@Strings.settings_temperature_wind_humidity</listEntry>
+            <listEntry value="48">@Strings.settings_temperature_wind_high_low</listEntry>
+            <listEntry value="49">@Strings.settings_temperature_wind_precipitation</listEntry>
+            <listEntry value="63">@Strings.settings_temperature_wind_humidity_precipitation</listEntry>
+            <listEntry value="51">@Strings.settings_temperature_humidity_high_low</listEntry>
+            <listEntry value="65">@Strings.settings_temperature_uv_high_low</listEntry>
+            <listEntry value="67">@Strings.settings_temperature_feels_high_low</listEntry>
+            <listEntry value="52">@Strings.settings_temperature_precipitation_high_low</listEntry>
+            <listEntry value="20">@Strings.settings_weather_conditions_precipitation_chance</listEntry>
+            <listEntry value="50">@Strings.settings_weather_conditions</listEntry>
+            <listEntry value="43">@Strings.settings_daily_high_temperature</listEntry>
+            <listEntry value="44">@Strings.settings_daily_low_temperature</listEntry>
+            <listEntry value="53">@Strings.settings_temperature</listEntry>
+            <listEntry value="54">@Strings.settings_chance_of_precipitation</listEntry>
+            <listEntry value="17">@Strings.settings_steps_day</listEntry>
+            <listEntry value="19">@Strings.settings_wheelchair_pushes_day</listEntry>
+            <listEntry value="11">@Strings.settings_calories_kcal_day_2</listEntry>
+            <listEntry value="58">@Strings.settings_active_total_calories</listEntry>
+            <listEntry value="12">@Strings.settings_altitude_m_2</listEntry>
+            <listEntry value="15">@Strings.settings_altitude_ft_2</listEntry>
+            <listEntry value="25">@Strings.settings_training_status</listEntry>
+            <listEntry value="56">@Strings.settings_military_date_time</listEntry>
+            <listEntry value="60">@Strings.settings_current_location_lat_long</listEntry>
+            <listEntry value="61">@Strings.settings_current_location_military</listEntry>
+            <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
+            <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.dateFieldShows" title="Line below clock shows:">
+    <setting propertyKey="@Properties.dateFieldShows" title="@Strings.settings_line_below_clock">
         <settingConfig type="list">
-            <listEntry value="-2">Hidden</listEntry>
-            <listEntry value="-1">Date</listEntry>
-            <listEntry value="45">Temperature, Wind, Feels like</listEntry>
-            <listEntry value="46">Temperature, Wind</listEntry>
-            <listEntry value="47">Temperature, Wind, Humidity</listEntry>
-            <listEntry value="48">Temperature, Wind, High/Low</listEntry>
-            <listEntry value="49">Temperature, Wind, Percipitation chance</listEntry>
-            <listEntry value="63">Temperature, Wind, Humidity, Precipitation chance</listEntry>
-            <listEntry value="51">Temperature, Humidity, High/Low</listEntry>
-            <listEntry value="65">Temperature, UV Index, High/Low</listEntry>
-            <listEntry value="67">Temperature, Feels like, High/Low</listEntry>
-            <listEntry value="52">Temperature, Percipitation chance, High/Low</listEntry>
-            <listEntry value="20">Weather conditions + Percipitation chance</listEntry>
-            <listEntry value="50">Weather conditions</listEntry>
-            <listEntry value="17">Steps / day</listEntry>
-            <listEntry value="19">Wheelchair pushes / day</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="58">Active/Total Calories (kcal) / day</listEntry>
-            <listEntry value="12">Altitude (m)</listEntry>
-            <listEntry value="15">Altitude (ft)</listEntry>
-            <listEntry value="25">Training status</listEntry>
-            <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
-            <listEntry value="60">Current Location (Lat Long in Decimal Degrees)</listEntry>
-            <listEntry value="61">Current Location (Military Grid Reference System)</listEntry>
-            <listEntry value="62">Current Location Accuracy</listEntry>
-            <listEntry value="57">Next calendar event time</listEntry>
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="-1">@Strings.settings_date</listEntry>
+            <listEntry value="45">@Strings.settings_temperature_wind_feels</listEntry>
+            <listEntry value="46">@Strings.settings_temperature_wind</listEntry>
+            <listEntry value="47">@Strings.settings_temperature_wind_humidity</listEntry>
+            <listEntry value="48">@Strings.settings_temperature_wind_high_low</listEntry>
+            <listEntry value="49">@Strings.settings_temperature_wind_precipitation</listEntry>
+            <listEntry value="63">@Strings.settings_temperature_wind_humidity_precipitation</listEntry>
+            <listEntry value="51">@Strings.settings_temperature_humidity_high_low</listEntry>
+            <listEntry value="65">@Strings.settings_temperature_uv_high_low</listEntry>
+            <listEntry value="67">@Strings.settings_temperature_feels_high_low</listEntry>
+            <listEntry value="52">@Strings.settings_temperature_precipitation_high_low</listEntry>
+            <listEntry value="20">@Strings.settings_weather_conditions_precipitation_chance</listEntry>
+            <listEntry value="50">@Strings.settings_weather_conditions</listEntry>
+            <listEntry value="17">@Strings.settings_steps_day</listEntry>
+            <listEntry value="19">@Strings.settings_wheelchair_pushes_day</listEntry>
+            <listEntry value="11">@Strings.settings_calories_kcal_day_2</listEntry>
+            <listEntry value="58">@Strings.settings_active_total_calories</listEntry>
+            <listEntry value="12">@Strings.settings_altitude_m_2</listEntry>
+            <listEntry value="15">@Strings.settings_altitude_ft_2</listEntry>
+            <listEntry value="25">@Strings.settings_training_status</listEntry>
+            <listEntry value="56">@Strings.settings_military_date_time</listEntry>
+            <listEntry value="60">@Strings.settings_current_location_lat_long</listEntry>
+            <listEntry value="61">@Strings.settings_current_location_military</listEntry>
+            <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
+            <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
         </settingConfig>
     </setting>
 
     
-    <setting propertyKey="@Properties.fieldLayout" title="Bottom field layout (number of digits per field)">
+    <setting propertyKey="@Properties.fieldLayout" title="@Strings.settings_bottom_field_layout">
         <settingConfig type="list">
-            <listEntry value="0">Auto - Default layout depending on screen size</listEntry>
-            <listEntry value="12">4, 4</listEntry>
-            <listEntry value="1">3, 3, 3</listEntry>
-            <listEntry value="2">3, 4, 3</listEntry>
-            <listEntry value="3">3, 3, 4</listEntry>
-            <listEntry value="4">4, 3, 3</listEntry>
-            <listEntry value="5">4, 3, 4</listEntry>
-            <listEntry value="6">3, 4, 4</listEntry>
-            <listEntry value="7">4, 4, 3</listEntry>
-            <listEntry value="8">4, 4, 4</listEntry>
-            <listEntry value="9">3, 3, 3, 3</listEntry>
-            <listEntry value="10">3, 3, 3, 4</listEntry>
-            <listEntry value="11">4, 3, 3, 3</listEntry>
+            <listEntry value="0">@Strings.settings_auto_default_layout</listEntry>
+            <listEntry value="12">@Strings.settings_4_4</listEntry>
+            <listEntry value="1">@Strings.settings_3_3_3</listEntry>
+            <listEntry value="2">@Strings.settings_3_4_3</listEntry>
+            <listEntry value="3">@Strings.settings_3_3_4</listEntry>
+            <listEntry value="4">@Strings.settings_4_3_3</listEntry>
+            <listEntry value="5">@Strings.settings_4_3_4</listEntry>
+            <listEntry value="6">@Strings.settings_3_4_4</listEntry>
+            <listEntry value="7">@Strings.settings_4_4_3</listEntry>
+            <listEntry value="8">@Strings.settings_4_4_4</listEntry>
+            <listEntry value="9">@Strings.settings_3_3_3_3</listEntry>
+            <listEntry value="10">@Strings.settings_3_3_3_4</listEntry>
+            <listEntry value="11">@Strings.settings_4_3_3_3</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.leftValueShows" title="Bottom value 1 (left):">
+    <setting propertyKey="@Properties.leftValueShows" title="@Strings.settings_bottom_value_1_left">
         <settingConfig type="list">
-            <listEntry value="-2">Hidden</listEntry>
-            <listEntry value="17">Steps / day</listEntry>
-            <listEntry value="0">Active min / week</listEntry>
-            <listEntry value="1">Active min / day</listEntry>
-            <listEntry value="2">Distance (km) / day</listEntry>
-            <listEntry value="3">Distance (miles) / day</listEntry>
-            <listEntry value="21">Run distance (km) / week</listEntry>
-            <listEntry value="22">Run distance (miles) / week</listEntry>
-            <listEntry value="23">Bike distance (km) / week</listEntry>
-            <listEntry value="24">Bike distance (miles) / week</listEntry>
-            <listEntry value="32">Total distance past 7 days (km)</listEntry>
-            <listEntry value="33">Total distance past 7 days (miles)</listEntry>
-            <listEntry value="4">Floors climbed / day</listEntry>
-            <listEntry value="5">Meters climbed / day</listEntry>
-            <listEntry value="6">Time to Recovery (h)</listEntry>
-            <listEntry value="7">VO2 Max Running</listEntry>
-            <listEntry value="8">VO2 Max Cycling</listEntry>
-            <listEntry value="9">Respiration Rate</listEntry>
-            <listEntry value="10">Heart Rate</listEntry>
-            <listEntry value="59">Pulse Ox</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="29">Active calories (kcal) / day</listEntry>
-            <listEntry value="12">Altitude (m)</listEntry>
-            <listEntry value="15">Altitude (ft)</listEntry>
-            <listEntry value="13">Stress score</listEntry>
-            <listEntry value="14">Body battery</listEntry>
-            <listEntry value="39">Sunrise time</listEntry>
-            <listEntry value="40">Sunset time</listEntry>
-            <listEntry value="55">Next sun event time</listEntry>
-            <listEntry value="16">Alternative Timezone 1</listEntry>
-            <listEntry value="41">Alternative Timezone 2</listEntry>
-            <listEntry value="26">Barometric Pressure, raw</listEntry>
-            <listEntry value="30">Barometric Pressure, sea level</listEntry>
-            <listEntry value="27">Weight (kg)</listEntry>
-            <listEntry value="28">Weight (lbs)</listEntry>
-            <listEntry value="31">Week number</listEntry>
-            <listEntry value="34">Battery percentage</listEntry>
-            <listEntry value="35">Battery days remaining</listEntry>
-            <listEntry value="36">Notification count</listEntry>
-            <listEntry value="37">Solar intensity</listEntry>
-            <listEntry value="38">Sensor temperature</listEntry>
-            <listEntry value="42">Alarms (count)</listEntry>
-            <listEntry value="43">Weather: Daily high temperature</listEntry>
-            <listEntry value="44">Weather: Daily low temperature</listEntry>
-            <listEntry value="53">Weather: Temperature</listEntry>
-            <listEntry value="54">Weather: Chance of Precipitation</listEntry>
-            <listEntry value="66">Weather: Humidity</listEntry>
-            <listEntry value="64">Weather: UV index</listEntry>
-            <listEntry value="62">Current Location Accuracy</listEntry>
-            <listEntry value="57">Next calendar event time</listEntry>
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="17">@Strings.settings_steps_day</listEntry>
+            <listEntry value="0">@Strings.settings_active_min_week</listEntry>
+            <listEntry value="1">@Strings.settings_active_min_day</listEntry>
+            <listEntry value="2">@Strings.settings_distance_km_day</listEntry>
+            <listEntry value="3">@Strings.settings_distance_miles_day</listEntry>
+            <listEntry value="21">@Strings.settings_run_distance_km_week</listEntry>
+            <listEntry value="22">@Strings.settings_run_distance_miles_week</listEntry>
+            <listEntry value="23">@Strings.settings_bike_distance_km_week</listEntry>
+            <listEntry value="24">@Strings.settings_bike_distance_miles_week</listEntry>
+            <listEntry value="32">@Strings.settings_total_distance_7_days_km</listEntry>
+            <listEntry value="33">@Strings.settings_total_distance_7_days_miles</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed_day</listEntry>
+            <listEntry value="5">@Strings.settings_meters_climbed_day</listEntry>
+            <listEntry value="6">@Strings.settings_time_to_recovery</listEntry>
+            <listEntry value="7">@Strings.settings_vo2_max_running</listEntry>
+            <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
+            <listEntry value="9">@Strings.settings_respiration_rate</listEntry>
+            <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
+            <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
+            <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
+            <listEntry value="12">@Strings.settings_altitude_m</listEntry>
+            <listEntry value="15">@Strings.settings_altitude_ft</listEntry>
+            <listEntry value="13">@Strings.settings_stress_score</listEntry>
+            <listEntry value="14">@Strings.settings_body_battery</listEntry>
+            <listEntry value="39">@Strings.settings_sunrise_time</listEntry>
+            <listEntry value="40">@Strings.settings_sunset_time</listEntry>
+            <listEntry value="55">@Strings.settings_next_sun_event</listEntry>
+            <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
+            <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
+            <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
+            <listEntry value="30">@Strings.settings_barometric_pressure_sea</listEntry>
+            <listEntry value="27">@Strings.settings_weight_kg</listEntry>
+            <listEntry value="28">@Strings.settings_weight_lbs</listEntry>
+            <listEntry value="31">@Strings.settings_week_number</listEntry>
+            <listEntry value="34">@Strings.settings_battery_percentage</listEntry>
+            <listEntry value="35">@Strings.settings_battery_days_remaining</listEntry>
+            <listEntry value="36">@Strings.settings_notification_count</listEntry>
+            <listEntry value="37">@Strings.settings_solar_intensity</listEntry>
+            <listEntry value="38">@Strings.settings_sensor_temperature</listEntry>
+            <listEntry value="42">@Strings.settings_alarms_count</listEntry>
+            <listEntry value="43">@Strings.settings_weather_daily_high</listEntry>
+            <listEntry value="44">@Strings.settings_weather_daily_low</listEntry>
+            <listEntry value="53">@Strings.settings_weather_temperature</listEntry>
+            <listEntry value="54">@Strings.settings_weather_chance_precipitation</listEntry>
+            <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
+            <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
+            <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
+            <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.middleValueShows" title="Bottom value 2:">
+    <setting propertyKey="@Properties.middleValueShows" title="@Strings.settings_bottom_value_2">
         <settingConfig type="list">
-            <listEntry value="-2">Hidden</listEntry>
-            <listEntry value="17">Steps / day</listEntry>
-            <listEntry value="0">Active min / week</listEntry>
-            <listEntry value="1">Active min / day</listEntry>
-            <listEntry value="2">Distance (km) / day</listEntry>
-            <listEntry value="3">Distance (miles) / day</listEntry>
-            <listEntry value="21">Run distance (km) / week</listEntry>
-            <listEntry value="22">Run distance (miles) / week</listEntry>
-            <listEntry value="23">Bike distance (km) / week</listEntry>
-            <listEntry value="24">Bike distance (miles) / week</listEntry>
-            <listEntry value="32">Total distance past 7 days (km)</listEntry>
-            <listEntry value="33">Total distance past 7 days (miles)</listEntry>
-            <listEntry value="4">Floors climbed / day</listEntry>
-            <listEntry value="5">Meters climbed / day</listEntry>
-            <listEntry value="6">Time to Recovery (h)</listEntry>
-            <listEntry value="7">VO2 Max Running</listEntry>
-            <listEntry value="8">VO2 Max Cycling</listEntry>
-            <listEntry value="9">Respiration Rate</listEntry>
-            <listEntry value="10">Heart Rate</listEntry>
-            <listEntry value="59">Pulse Ox</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="29">Active calories (kcal) / day</listEntry>
-            <listEntry value="12">Altitude (m)</listEntry>
-            <listEntry value="15">Altitude (ft)</listEntry>
-            <listEntry value="13">Stress score</listEntry>
-            <listEntry value="14">Body battery</listEntry>
-            <listEntry value="39">Sunrise time</listEntry>
-            <listEntry value="40">Sunset time</listEntry>
-            <listEntry value="55">Next sun event time</listEntry>
-            <listEntry value="16">Alternative Timezone 1</listEntry>
-            <listEntry value="41">Alternative Timezone 2</listEntry>
-            <listEntry value="26">Barometric Pressure, raw</listEntry>
-            <listEntry value="30">Barometric Pressure, sea level</listEntry>
-            <listEntry value="27">Weight (kg)</listEntry>
-            <listEntry value="28">Weight (lbs)</listEntry>
-            <listEntry value="31">Week number</listEntry>
-            <listEntry value="34">Battery percentage</listEntry>
-            <listEntry value="35">Battery days remaining</listEntry>
-            <listEntry value="36">Notification count</listEntry>
-            <listEntry value="37">Solar intensity</listEntry>
-            <listEntry value="38">Sensor temperature</listEntry>
-            <listEntry value="42">Alarms (count)</listEntry>
-            <listEntry value="43">Weather: Daily high temperature</listEntry>
-            <listEntry value="44">Weather: Daily low temperature</listEntry>
-            <listEntry value="53">Weather: Temperature</listEntry>
-            <listEntry value="54">Weather: Chance of Precipitation</listEntry>
-            <listEntry value="66">Weather: Humidity</listEntry>
-            <listEntry value="64">Weather: UV index</listEntry>
-            <listEntry value="62">Current Location Accuracy</listEntry>
-            <listEntry value="57">Next calendar event time</listEntry>
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="17">@Strings.settings_steps_day</listEntry>
+            <listEntry value="0">@Strings.settings_active_min_week</listEntry>
+            <listEntry value="1">@Strings.settings_active_min_day</listEntry>
+            <listEntry value="2">@Strings.settings_distance_km_day</listEntry>
+            <listEntry value="3">@Strings.settings_distance_miles_day</listEntry>
+            <listEntry value="21">@Strings.settings_run_distance_km_week</listEntry>
+            <listEntry value="22">@Strings.settings_run_distance_miles_week</listEntry>
+            <listEntry value="23">@Strings.settings_bike_distance_km_week</listEntry>
+            <listEntry value="24">@Strings.settings_bike_distance_miles_week</listEntry>
+            <listEntry value="32">@Strings.settings_total_distance_7_days_km</listEntry>
+            <listEntry value="33">@Strings.settings_total_distance_7_days_miles</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed_day</listEntry>
+            <listEntry value="5">@Strings.settings_meters_climbed_day</listEntry>
+            <listEntry value="6">@Strings.settings_time_to_recovery</listEntry>
+            <listEntry value="7">@Strings.settings_vo2_max_running</listEntry>
+            <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
+            <listEntry value="9">@Strings.settings_respiration_rate</listEntry>
+            <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
+            <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
+            <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
+            <listEntry value="12">@Strings.settings_altitude_m</listEntry>
+            <listEntry value="15">@Strings.settings_altitude_ft</listEntry>
+            <listEntry value="13">@Strings.settings_stress_score</listEntry>
+            <listEntry value="14">@Strings.settings_body_battery</listEntry>
+            <listEntry value="39">@Strings.settings_sunrise_time</listEntry>
+            <listEntry value="40">@Strings.settings_sunset_time</listEntry>
+            <listEntry value="55">@Strings.settings_next_sun_event</listEntry>
+            <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
+            <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
+            <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
+            <listEntry value="30">@Strings.settings_barometric_pressure_sea</listEntry>
+            <listEntry value="27">@Strings.settings_weight_kg</listEntry>
+            <listEntry value="28">@Strings.settings_weight_lbs</listEntry>
+            <listEntry value="31">@Strings.settings_week_number</listEntry>
+            <listEntry value="34">@Strings.settings_battery_percentage</listEntry>
+            <listEntry value="35">@Strings.settings_battery_days_remaining</listEntry>
+            <listEntry value="36">@Strings.settings_notification_count</listEntry>
+            <listEntry value="37">@Strings.settings_solar_intensity</listEntry>
+            <listEntry value="38">@Strings.settings_sensor_temperature</listEntry>
+            <listEntry value="42">@Strings.settings_alarms_count</listEntry>
+            <listEntry value="43">@Strings.settings_weather_daily_high</listEntry>
+            <listEntry value="44">@Strings.settings_weather_daily_low</listEntry>
+            <listEntry value="53">@Strings.settings_weather_temperature</listEntry>
+            <listEntry value="54">@Strings.settings_weather_chance_precipitation</listEntry>
+            <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
+            <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
+            <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
+            <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.rightValueShows" title="Bottom value 3:">
+    <setting propertyKey="@Properties.rightValueShows" title="@Strings.settings_bottom_value_3">
         <settingConfig type="list">
-            <listEntry value="-2">Hidden</listEntry>
-            <listEntry value="17">Steps / day</listEntry>
-            <listEntry value="0">Active min / week</listEntry>
-            <listEntry value="1">Active min / day</listEntry>
-            <listEntry value="2">Distance (km) / day</listEntry>
-            <listEntry value="3">Distance (miles) / day</listEntry>
-            <listEntry value="21">Run distance (km) / week</listEntry>
-            <listEntry value="22">Run distance (miles) / week</listEntry>
-            <listEntry value="23">Bike distance (km) / week</listEntry>
-            <listEntry value="24">Bike distance (miles) / week</listEntry>
-            <listEntry value="32">Total distance past 7 days (km)</listEntry>
-            <listEntry value="33">Total distance past 7 days (miles)</listEntry>
-            <listEntry value="4">Floors climbed / day</listEntry>
-            <listEntry value="5">Meters climbed / day</listEntry>
-            <listEntry value="6">Time to Recovery (h)</listEntry>
-            <listEntry value="7">VO2 Max Running</listEntry>
-            <listEntry value="8">VO2 Max Cycling</listEntry>
-            <listEntry value="9">Respiration Rate</listEntry>
-            <listEntry value="10">Heart Rate</listEntry>
-            <listEntry value="59">Pulse Ox</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="29">Active calories (kcal) / day</listEntry>
-            <listEntry value="12">Altitude (m)</listEntry>
-            <listEntry value="15">Altitude (ft)</listEntry>
-            <listEntry value="13">Stress score</listEntry>
-            <listEntry value="14">Body battery</listEntry>
-            <listEntry value="39">Sunrise time</listEntry>
-            <listEntry value="40">Sunset time</listEntry>
-            <listEntry value="55">Next sun event time</listEntry>
-            <listEntry value="16">Alternative Timezone 1</listEntry>
-            <listEntry value="41">Alternative Timezone 2</listEntry>
-            <listEntry value="26">Barometric Pressure, raw</listEntry>
-            <listEntry value="30">Barometric Pressure, sea level</listEntry>
-            <listEntry value="27">Weight (kg)</listEntry>
-            <listEntry value="28">Weight (lbs)</listEntry>
-            <listEntry value="31">Week number</listEntry>
-            <listEntry value="34">Battery percentage</listEntry>
-            <listEntry value="35">Battery days remaining</listEntry>
-            <listEntry value="36">Notification count</listEntry>
-            <listEntry value="37">Solar intensity</listEntry>
-            <listEntry value="38">Sensor temperature</listEntry>
-            <listEntry value="42">Alarms (count)</listEntry>
-            <listEntry value="43">Weather: Daily high temperature</listEntry>
-            <listEntry value="44">Weather: Daily low temperature</listEntry>
-            <listEntry value="53">Weather: Temperature</listEntry>
-            <listEntry value="54">Weather: Chance of Precipitation</listEntry>
-            <listEntry value="66">Weather: Humidity</listEntry>
-            <listEntry value="64">Weather: UV index</listEntry>
-            <listEntry value="62">Current Location Accuracy</listEntry>
-            <listEntry value="57">Next calendar event time</listEntry>
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="17">@Strings.settings_steps_day</listEntry>
+            <listEntry value="0">@Strings.settings_active_min_week</listEntry>
+            <listEntry value="1">@Strings.settings_active_min_day</listEntry>
+            <listEntry value="2">@Strings.settings_distance_km_day</listEntry>
+            <listEntry value="3">@Strings.settings_distance_miles_day</listEntry>
+            <listEntry value="21">@Strings.settings_run_distance_km_week</listEntry>
+            <listEntry value="22">@Strings.settings_run_distance_miles_week</listEntry>
+            <listEntry value="23">@Strings.settings_bike_distance_km_week</listEntry>
+            <listEntry value="24">@Strings.settings_bike_distance_miles_week</listEntry>
+            <listEntry value="32">@Strings.settings_total_distance_7_days_km</listEntry>
+            <listEntry value="33">@Strings.settings_total_distance_7_days_miles</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed_day</listEntry>
+            <listEntry value="5">@Strings.settings_meters_climbed_day</listEntry>
+            <listEntry value="6">@Strings.settings_time_to_recovery</listEntry>
+            <listEntry value="7">@Strings.settings_vo2_max_running</listEntry>
+            <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
+            <listEntry value="9">@Strings.settings_respiration_rate</listEntry>
+            <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
+            <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
+            <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
+            <listEntry value="12">@Strings.settings_altitude_m</listEntry>
+            <listEntry value="15">@Strings.settings_altitude_ft</listEntry>
+            <listEntry value="13">@Strings.settings_stress_score</listEntry>
+            <listEntry value="14">@Strings.settings_body_battery</listEntry>
+            <listEntry value="39">@Strings.settings_sunrise_time</listEntry>
+            <listEntry value="40">@Strings.settings_sunset_time</listEntry>
+            <listEntry value="55">@Strings.settings_next_sun_event</listEntry>
+            <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
+            <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
+            <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
+            <listEntry value="30">@Strings.settings_barometric_pressure_sea</listEntry>
+            <listEntry value="27">@Strings.settings_weight_kg</listEntry>
+            <listEntry value="28">@Strings.settings_weight_lbs</listEntry>
+            <listEntry value="31">@Strings.settings_week_number</listEntry>
+            <listEntry value="34">@Strings.settings_battery_percentage</listEntry>
+            <listEntry value="35">@Strings.settings_battery_days_remaining</listEntry>
+            <listEntry value="36">@Strings.settings_notification_count</listEntry>
+            <listEntry value="37">@Strings.settings_solar_intensity</listEntry>
+            <listEntry value="38">@Strings.settings_sensor_temperature</listEntry>
+            <listEntry value="42">@Strings.settings_alarms_count</listEntry>
+            <listEntry value="43">@Strings.settings_weather_daily_high</listEntry>
+            <listEntry value="44">@Strings.settings_weather_daily_low</listEntry>
+            <listEntry value="53">@Strings.settings_weather_temperature</listEntry>
+            <listEntry value="54">@Strings.settings_weather_chance_precipitation</listEntry>
+            <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
+            <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
+            <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
+            <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.fourthValueShows" title="Bottom value 4 (if available):">
+    <setting propertyKey="@Properties.fourthValueShows" title="@Strings.settings_bottom_value_4">
         <settingConfig type="list">
-            <listEntry value="-2">Hidden</listEntry>
-            <listEntry value="17">Steps / day</listEntry>
-            <listEntry value="0">Active min / week</listEntry>
-            <listEntry value="1">Active min / day</listEntry>
-            <listEntry value="2">Distance (km) / day</listEntry>
-            <listEntry value="3">Distance (miles) / day</listEntry>
-            <listEntry value="21">Run distance (km) / week</listEntry>
-            <listEntry value="22">Run distance (miles) / week</listEntry>
-            <listEntry value="23">Bike distance (km) / week</listEntry>
-            <listEntry value="24">Bike distance (miles) / week</listEntry>
-            <listEntry value="32">Total distance past 7 days (km)</listEntry>
-            <listEntry value="33">Total distance past 7 days (miles)</listEntry>
-            <listEntry value="4">Floors climbed / day</listEntry>
-            <listEntry value="5">Meters climbed / day</listEntry>
-            <listEntry value="6">Time to Recovery (h)</listEntry>
-            <listEntry value="7">VO2 Max Running</listEntry>
-            <listEntry value="8">VO2 Max Cycling</listEntry>
-            <listEntry value="9">Respiration Rate</listEntry>
-            <listEntry value="10">Heart Rate</listEntry>
-            <listEntry value="59">Pulse Ox</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="29">Active calories (kcal) / day</listEntry>
-            <listEntry value="12">Altitude (m)</listEntry>
-            <listEntry value="15">Altitude (ft)</listEntry>
-            <listEntry value="13">Stress score</listEntry>
-            <listEntry value="14">Body battery</listEntry>
-            <listEntry value="39">Sunrise time</listEntry>
-            <listEntry value="40">Sunset time</listEntry>
-            <listEntry value="55">Next sun event time</listEntry>
-            <listEntry value="16">Alternative Timezone 1</listEntry>
-            <listEntry value="41">Alternative Timezone 2</listEntry>
-            <listEntry value="26">Barometric Pressure, raw</listEntry>
-            <listEntry value="30">Barometric Pressure, sea level</listEntry>
-            <listEntry value="27">Weight (kg)</listEntry>
-            <listEntry value="28">Weight (lbs)</listEntry>
-            <listEntry value="31">Week number</listEntry>
-            <listEntry value="34">Battery percentage</listEntry>
-            <listEntry value="35">Battery days remaining</listEntry>
-            <listEntry value="36">Notification count</listEntry>
-            <listEntry value="37">Solar intensity</listEntry>
-            <listEntry value="38">Sensor temperature</listEntry>
-            <listEntry value="42">Alarms (count)</listEntry>
-            <listEntry value="43">Weather: Daily high temperature</listEntry>
-            <listEntry value="44">Weather: Daily low temperature</listEntry>
-            <listEntry value="53">Weather: Temperature</listEntry>
-            <listEntry value="54">Weather: Chance of Precipitation</listEntry>
-            <listEntry value="66">Weather: Humidity</listEntry>
-            <listEntry value="64">Weather: UV index</listEntry>
-            <listEntry value="62">Current Location Accuracy</listEntry>
-            <listEntry value="57">Next calendar event time</listEntry>
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="17">@Strings.settings_steps_day</listEntry>
+            <listEntry value="0">@Strings.settings_active_min_week</listEntry>
+            <listEntry value="1">@Strings.settings_active_min_day</listEntry>
+            <listEntry value="2">@Strings.settings_distance_km_day</listEntry>
+            <listEntry value="3">@Strings.settings_distance_miles_day</listEntry>
+            <listEntry value="21">@Strings.settings_run_distance_km_week</listEntry>
+            <listEntry value="22">@Strings.settings_run_distance_miles_week</listEntry>
+            <listEntry value="23">@Strings.settings_bike_distance_km_week</listEntry>
+            <listEntry value="24">@Strings.settings_bike_distance_miles_week</listEntry>
+            <listEntry value="32">@Strings.settings_total_distance_7_days_km</listEntry>
+            <listEntry value="33">@Strings.settings_total_distance_7_days_miles</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed_day</listEntry>
+            <listEntry value="5">@Strings.settings_meters_climbed_day</listEntry>
+            <listEntry value="6">@Strings.settings_time_to_recovery</listEntry>
+            <listEntry value="7">@Strings.settings_vo2_max_running</listEntry>
+            <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
+            <listEntry value="9">@Strings.settings_respiration_rate</listEntry>
+            <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
+            <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
+            <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
+            <listEntry value="12">@Strings.settings_altitude_m</listEntry>
+            <listEntry value="15">@Strings.settings_altitude_ft</listEntry>
+            <listEntry value="13">@Strings.settings_stress_score</listEntry>
+            <listEntry value="14">@Strings.settings_body_battery</listEntry>
+            <listEntry value="39">@Strings.settings_sunrise_time</listEntry>
+            <listEntry value="40">@Strings.settings_sunset_time</listEntry>
+            <listEntry value="55">@Strings.settings_next_sun_event</listEntry>
+            <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
+            <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
+            <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
+            <listEntry value="30">@Strings.settings_barometric_pressure_sea</listEntry>
+            <listEntry value="27">@Strings.settings_weight_kg</listEntry>
+            <listEntry value="28">@Strings.settings_weight_lbs</listEntry>
+            <listEntry value="31">@Strings.settings_week_number</listEntry>
+            <listEntry value="34">@Strings.settings_battery_percentage</listEntry>
+            <listEntry value="35">@Strings.settings_battery_days_remaining</listEntry>
+            <listEntry value="36">@Strings.settings_notification_count</listEntry>
+            <listEntry value="37">@Strings.settings_solar_intensity</listEntry>
+            <listEntry value="38">@Strings.settings_sensor_temperature</listEntry>
+            <listEntry value="42">@Strings.settings_alarms_count</listEntry>
+            <listEntry value="43">@Strings.settings_weather_daily_high</listEntry>
+            <listEntry value="44">@Strings.settings_weather_daily_low</listEntry>
+            <listEntry value="53">@Strings.settings_weather_temperature</listEntry>
+            <listEntry value="54">@Strings.settings_weather_chance_precipitation</listEntry>
+            <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
+            <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
+            <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
+            <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.bottomFieldShows" title="Bottom 5 digit value:">
+    <setting propertyKey="@Properties.bottomFieldShows" title="@Strings.settings_bottom_5_digit_value">
         <settingConfig type="list">
-            <listEntry value="-2">Hidden</listEntry>
-            <listEntry value="17">Steps / day</listEntry>
-            <listEntry value="18">Distance (meter) / day</listEntry>
-            <listEntry value="21">Run distance (km) / week</listEntry>
-            <listEntry value="22">Run distance (miles) / week</listEntry>
-            <listEntry value="23">Bike distance (km) / week</listEntry>
-            <listEntry value="24">Bike distance (miles) / week</listEntry>
-            <listEntry value="32">Total distance past 7 days (km)</listEntry>
-            <listEntry value="33">Total distance past 7 days (miles)</listEntry>
-            <listEntry value="4">Floors climbed / day</listEntry>
-            <listEntry value="5">Meters climbed / day</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="29">Active calories (kcal) / day</listEntry>
-            <listEntry value="10">Heart Rate</listEntry>
-            <listEntry value="19">Wheelchair pushes / day</listEntry>
-            <listEntry value="12">Altitude (m)</listEntry>
-            <listEntry value="15">Altitude (ft)</listEntry>
-            <listEntry value="16">Alternative Timezone 1</listEntry>
-            <listEntry value="41">Alternative Timezone 2</listEntry>
-            <listEntry value="62">Current Location Accuracy</listEntry>
-            <listEntry value="57">Next calendar event time</listEntry>
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="17">@Strings.settings_steps_day</listEntry>
+            <listEntry value="18">@Strings.settings_distance_meter_day</listEntry>
+            <listEntry value="21">@Strings.settings_run_distance_km_week</listEntry>
+            <listEntry value="22">@Strings.settings_run_distance_miles_week</listEntry>
+            <listEntry value="23">@Strings.settings_bike_distance_km_week</listEntry>
+            <listEntry value="24">@Strings.settings_bike_distance_miles_week</listEntry>
+            <listEntry value="32">@Strings.settings_total_distance_7_days_km</listEntry>
+            <listEntry value="33">@Strings.settings_total_distance_7_days_miles</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed_day</listEntry>
+            <listEntry value="5">@Strings.settings_meters_climbed_day</listEntry>
+            <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
+            <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
+            <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="19">@Strings.settings_wheelchair_pushes_day</listEntry>
+            <listEntry value="12">@Strings.settings_altitude_m</listEntry>
+            <listEntry value="15">@Strings.settings_altitude_ft</listEntry>
+            <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
+            <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
+            <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
+            <listEntry value="57">@Strings.settings_next_calendar_event_time</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.batteryVariant" title="Battery display:">
+    <setting propertyKey="@Properties.batteryVariant" title="@Strings.settings_battery_display">
             <settingConfig type="list">
-                <listEntry value="0">Remaining days</listEntry>
-                <listEntry value="1">Percentage remaining</listEntry>
-                <listEntry value="3">Bar</listEntry>
-                <listEntry value="2">Hidden</listEntry>
+                <listEntry value="0">@Strings.settings_remaining_days</listEntry>
+                <listEntry value="1">@Strings.settings_percentage_remaining</listEntry>
+                <listEntry value="3">@Strings.settings_bar</listEntry>
+                <listEntry value="2">@Strings.settings_hidden</listEntry>
             </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.icon1" title="Left Icon indicates:">
+    <setting propertyKey="@Properties.icon1" title="@Strings.settings_left_icon_indicates">
             <settingConfig type="list">
-                <listEntry value="-2">Hidden</listEntry>
-                <listEntry value="1">Alarm</listEntry>
-                <listEntry value="2">Do Not Disturb</listEntry>
-                <listEntry value="3">Bluetooth (on/off)</listEntry>
-                <listEntry value="4">Bluetooth (just when off)</listEntry>
-                <listEntry value="5">Move Bar</listEntry>
+                <listEntry value="-2">@Strings.settings_hidden</listEntry>
+                <listEntry value="1">@Strings.settings_alarm</listEntry>
+                <listEntry value="2">@Strings.settings_do_not_disturb</listEntry>
+                <listEntry value="3">@Strings.settings_bluetooth_on_off</listEntry>
+                <listEntry value="4">@Strings.settings_bluetooth_just_when_off</listEntry>
+                <listEntry value="5">@Strings.settings_move_bar</listEntry>
             </settingConfig>
     </setting>
 
-        <setting propertyKey="@Properties.icon2" title="Right Icon indicates:">
+        <setting propertyKey="@Properties.icon2" title="@Strings.settings_right_icon_indicates">
             <settingConfig type="list">
-                <listEntry value="-2">Hidden</listEntry>
-                <listEntry value="1">Alarm</listEntry>
-                <listEntry value="2">Do Not Disturb</listEntry>
-                <listEntry value="3">Bluetooth (on/off)</listEntry>
-                <listEntry value="4">Bluetooth (just when off)</listEntry>
-                <listEntry value="5">Move Bar</listEntry>
+                <listEntry value="-2">@Strings.settings_hidden</listEntry>
+                <listEntry value="1">@Strings.settings_alarm</listEntry>
+                <listEntry value="2">@Strings.settings_do_not_disturb</listEntry>
+                <listEntry value="3">@Strings.settings_bluetooth_on_off</listEntry>
+                <listEntry value="4">@Strings.settings_bluetooth_just_when_off</listEntry>
+                <listEntry value="5">@Strings.settings_move_bar</listEntry>
             </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.aodFieldShows" title="Always On (below clock):">
+    <setting propertyKey="@Properties.aodFieldShows" title="@Strings.settings_always_on_below">
         <settingConfig type="list">
-            <listEntry value="-2">Hidden</listEntry>
-            <listEntry value="-1">Date</listEntry>
-            <listEntry value="20">Weather conditions</listEntry>
-            <listEntry value="17">Steps / day</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="29">Active calories (kcal) / day</listEntry>
-            <listEntry value="19">Wheelchair pushes / day</listEntry>
-            <listEntry value="25">Training status</listEntry>
-            <listEntry value="16">Alternative Timezone 1</listEntry>
-            <listEntry value="41">Alternative Timezone 2</listEntry>
-            <listEntry value="56">Millitary Date Time Group (UTC)</listEntry>
-            <listEntry value="60">Current Location (Lat Long in Decimal Degrees)</listEntry>
-            <listEntry value="61">Current Location (Military Grid Reference System)</listEntry>
-            <listEntry value="57">Next calendar event time</listEntry>
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="-1">@Strings.settings_date</listEntry>
+            <listEntry value="20">@Strings.settings_weather_conditions</listEntry>
+            <listEntry value="17">@Strings.settings_steps_day</listEntry>
+            <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
+            <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
+            <listEntry value="19">@Strings.settings_wheelchair_pushes_day</listEntry>
+            <listEntry value="25">@Strings.settings_training_status</listEntry>
+            <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
+            <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
+            <listEntry value="56">@Strings.settings_military_date_time</listEntry>
+            <listEntry value="60">@Strings.settings_current_location_lat_long</listEntry>
+            <listEntry value="61">@Strings.settings_current_location_military</listEntry>
+            <listEntry value="57">@Strings.settings_next_calendar_event_time</listEntry>
         </settingConfig>
     </setting>
 
     <setting propertyKey="@Properties.aodRightFieldShows" title="Second Always On Field (to the right):">
         <settingConfig type="list">
-            <listEntry value="-2">Hidden</listEntry>
-            <listEntry value="17">Steps / day</listEntry>
-            <listEntry value="0">Active min / week</listEntry>
-            <listEntry value="1">Active min / day</listEntry>
-            <listEntry value="2">Distance (km) / day</listEntry>
-            <listEntry value="3">Distance (miles) / day</listEntry>
-            <listEntry value="21">Run distance (km) / week</listEntry>
-            <listEntry value="22">Run distance (miles) / week</listEntry>
-            <listEntry value="23">Bike distance (km) / week</listEntry>
-            <listEntry value="24">Bike distance (miles) / week</listEntry>
-            <listEntry value="32">Total distance past 7 days (km)</listEntry>
-            <listEntry value="33">Total distance past 7 days (miles)</listEntry>
-            <listEntry value="4">Floors climbed / day</listEntry>
-            <listEntry value="5">Meters climbed / day</listEntry>
-            <listEntry value="6">Time to Recovery (h)</listEntry>
-            <listEntry value="7">VO2 Max Running</listEntry>
-            <listEntry value="8">VO2 Max Cycling</listEntry>
-            <listEntry value="9">Respiration Rate</listEntry>
-            <listEntry value="10">Heart Rate</listEntry>
-            <listEntry value="59">Pulse Ox</listEntry>
-            <listEntry value="11">Calories (kcal) / day</listEntry>
-            <listEntry value="29">Active calories (kcal) / day</listEntry>
-            <listEntry value="12">Altitude (m)</listEntry>
-            <listEntry value="15">Altitude (ft)</listEntry>
-            <listEntry value="13">Stress score</listEntry>
-            <listEntry value="14">Body battery</listEntry>
-            <listEntry value="39">Sunrise time</listEntry>
-            <listEntry value="40">Sunset time</listEntry>
-            <listEntry value="55">Next sun event time</listEntry>
-            <listEntry value="16">Alternative Timezone 1</listEntry>
-            <listEntry value="41">Alternative Timezone 2</listEntry>
-            <listEntry value="26">Barometric Pressure, raw</listEntry>
-            <listEntry value="30">Barometric Pressure, sea level</listEntry>
-            <listEntry value="27">Weight (kg)</listEntry>
-            <listEntry value="28">Weight (lbs)</listEntry>
-            <listEntry value="31">Week number</listEntry>
-            <listEntry value="34">Battery percentage</listEntry>
-            <listEntry value="35">Battery days remaining</listEntry>
-            <listEntry value="36">Notification count</listEntry>
-            <listEntry value="37">Solar intensity</listEntry>
-            <listEntry value="38">Sensor temperature</listEntry>
-            <listEntry value="42">Alarms (count)</listEntry>
-            <listEntry value="43">Weather: Daily high temperature</listEntry>
-            <listEntry value="44">Weather: Daily low temperature</listEntry>
-            <listEntry value="53">Weather: Temperature</listEntry>
-            <listEntry value="54">Weather: Chance of Precipitation</listEntry>
-            <listEntry value="66">Weather: Humidity</listEntry>
-            <listEntry value="64">Weather: UV index</listEntry>
-            <listEntry value="62">Current Location Accuracy</listEntry>
-            <listEntry value="57">Next calendar event time</listEntry>
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="17">@Strings.settings_steps_day</listEntry>
+            <listEntry value="0">@Strings.settings_active_min_week</listEntry>
+            <listEntry value="1">@Strings.settings_active_min_day</listEntry>
+            <listEntry value="2">@Strings.settings_distance_km_day</listEntry>
+            <listEntry value="3">@Strings.settings_distance_miles_day</listEntry>
+            <listEntry value="21">@Strings.settings_run_distance_km_week</listEntry>
+            <listEntry value="22">@Strings.settings_run_distance_miles_week</listEntry>
+            <listEntry value="23">@Strings.settings_bike_distance_km_week</listEntry>
+            <listEntry value="24">@Strings.settings_bike_distance_miles_week</listEntry>
+            <listEntry value="32">@Strings.settings_total_distance_7_days_km</listEntry>
+            <listEntry value="33">@Strings.settings_total_distance_7_days_miles</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed_day</listEntry>
+            <listEntry value="5">@Strings.settings_meters_climbed_day</listEntry>
+            <listEntry value="6">@Strings.settings_time_to_recovery</listEntry>
+            <listEntry value="7">@Strings.settings_vo2_max_running</listEntry>
+            <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
+            <listEntry value="9">@Strings.settings_respiration_rate</listEntry>
+            <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
+            <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
+            <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
+            <listEntry value="12">@Strings.settings_altitude_m</listEntry>
+            <listEntry value="15">@Strings.settings_altitude_ft</listEntry>
+            <listEntry value="13">@Strings.settings_stress_score</listEntry>
+            <listEntry value="14">@Strings.settings_body_battery</listEntry>
+            <listEntry value="39">@Strings.settings_sunrise_time</listEntry>
+            <listEntry value="40">@Strings.settings_sunset_time</listEntry>
+            <listEntry value="55">@Strings.settings_next_sun_event</listEntry>
+            <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
+            <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
+            <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
+            <listEntry value="30">@Strings.settings_barometric_pressure_sea</listEntry>
+            <listEntry value="27">@Strings.settings_weight_kg</listEntry>
+            <listEntry value="28">@Strings.settings_weight_lbs</listEntry>
+            <listEntry value="31">@Strings.settings_week_number</listEntry>
+            <listEntry value="34">@Strings.settings_battery_percentage</listEntry>
+            <listEntry value="35">@Strings.settings_battery_days_remaining</listEntry>
+            <listEntry value="36">@Strings.settings_notification_count</listEntry>
+            <listEntry value="37">@Strings.settings_solar_intensity</listEntry>
+            <listEntry value="38">@Strings.settings_sensor_temperature</listEntry>
+            <listEntry value="42">@Strings.settings_alarms_count</listEntry>
+            <listEntry value="43">@Strings.settings_weather_daily_high</listEntry>
+            <listEntry value="44">@Strings.settings_weather_daily_low</listEntry>
+            <listEntry value="53">@Strings.settings_weather_temperature</listEntry>
+            <listEntry value="54">@Strings.settings_weather_chance_precipitation</listEntry>
+            <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
+            <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
+            <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
+            <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.aodAlignment" title="Text alignment for Always On line (below clock):">
+    <setting propertyKey="@Properties.aodAlignment" title="@Strings.settings_text_alignment_always">
             <settingConfig type="list">
-                <listEntry value="0">Left</listEntry>
-                <listEntry value="1">Center</listEntry>
+                <listEntry value="0">@Strings.settings_left</listEntry>
+                <listEntry value="1">@Strings.settings_center</listEntry>
             </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.dateAlignment" title="Text alignment for Date:">
+    <setting propertyKey="@Properties.dateAlignment" title="@Strings.settings_text_alignment_date">
             <settingConfig type="list">
-                <listEntry value="0">Left</listEntry>
-                <listEntry value="1">Center</listEntry>
+                <listEntry value="0">@Strings.settings_left</listEntry>
+                <listEntry value="1">@Strings.settings_center</listEntry>
             </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.bottomFieldAlignment" title="Text alignment for bottom data fields:">
+    <setting propertyKey="@Properties.bottomFieldAlignment" title="@Strings.settings_text_alignment_bottom">
             <settingConfig type="list">
-                <listEntry value="0">Left</listEntry>
-                <listEntry value="1">Center</listEntry>
-                <listEntry value="2">Right</listEntry>
-                <listEntry value="3">Left, but center the 5 digit field</listEntry>
+                <listEntry value="0">@Strings.settings_left</listEntry>
+                <listEntry value="1">@Strings.settings_center</listEntry>
+                <listEntry value="2">@Strings.settings_right</listEntry>
+                <listEntry value="3">@Strings.settings_left_center_5_digit</listEntry>
             </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.pressToOpenTop" title="Press top third to open:">
+    <setting propertyKey="@Properties.pressToOpenTop" title="@Strings.settings_press_top_third">
         <settingConfig type="list">
-            <listEntry value="0">Nothing</listEntry>
-            <listEntry value="-1">Toggle night color theme</listEntry>
-            <listEntry value="1">Battery</listEntry>
-            <listEntry value="2">Steps</listEntry>
-            <listEntry value="3">Calories</listEntry>
-            <listEntry value="4">Floors climbed</listEntry>
-            <listEntry value="5">Intensiy minutes</listEntry>
-            <listEntry value="6">Date</listEntry>
-            <listEntry value="8">Weather</listEntry>
-            <listEntry value="12">Calendar</listEntry>
-            <listEntry value="13">Sunrise</listEntry>
-            <listEntry value="15">Altitude</listEntry>
-            <listEntry value="17">Notifications</listEntry>
-            <listEntry value="18">Heart rate</listEntry>
-            <listEntry value="19">Weekly Run distance</listEntry>
-            <listEntry value="20">Weekly Bike distance</listEntry>
-            <listEntry value="21">Recovery time</listEntry>
-            <listEntry value="22">Stress</listEntry>
-            <listEntry value="23">Body battery</listEntry>
-            <listEntry value="26">Training status</listEntry>
-            <listEntry value="27">Race predictor 5k</listEntry>
-            <listEntry value="35">Pulse OX</listEntry>
-            <listEntry value="37">Solar Input</listEntry>
+            <listEntry value="0">@Strings.settings_nothing</listEntry>
+            <listEntry value="-1">@Strings.settings_toggle_night_color</listEntry>
+            <listEntry value="1">@Strings.settings_battery</listEntry>
+            <listEntry value="2">@Strings.settings_steps</listEntry>
+            <listEntry value="3">@Strings.settings_calories</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed</listEntry>
+            <listEntry value="5">@Strings.settings_intensity_minutes</listEntry>
+            <listEntry value="6">@Strings.settings_date_2</listEntry>
+            <listEntry value="8">@Strings.settings_weather</listEntry>
+            <listEntry value="12">@Strings.settings_calendar</listEntry>
+            <listEntry value="13">@Strings.settings_sunrise</listEntry>
+            <listEntry value="15">@Strings.settings_altitude</listEntry>
+            <listEntry value="17">@Strings.settings_notifications</listEntry>
+            <listEntry value="18">@Strings.settings_heart_rate_2</listEntry>
+            <listEntry value="19">@Strings.settings_weekly_run_distance</listEntry>
+            <listEntry value="20">@Strings.settings_weekly_bike_distance</listEntry>
+            <listEntry value="21">@Strings.settings_recovery_time</listEntry>
+            <listEntry value="22">@Strings.settings_stress</listEntry>
+            <listEntry value="23">@Strings.settings_body_battery_2</listEntry>
+            <listEntry value="26">@Strings.settings_training_status_2</listEntry>
+            <listEntry value="27">@Strings.settings_race_predictor_5k</listEntry>
+            <listEntry value="35">@Strings.settings_pulse_ox_2</listEntry>
+            <listEntry value="37">@Strings.settings_solar_input</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.pressToOpenMiddle" title="Press middle (clock) to open:">
+    <setting propertyKey="@Properties.pressToOpenMiddle" title="@Strings.settings_press_middle_clock">
         <settingConfig type="list">
-            <listEntry value="0">Nothing</listEntry>
-            <listEntry value="-1">Toggle night color theme</listEntry>
-            <listEntry value="1">Battery</listEntry>
-            <listEntry value="2">Steps</listEntry>
-            <listEntry value="3">Calories</listEntry>
-            <listEntry value="4">Floors climbed</listEntry>
-            <listEntry value="5">Intensiy minutes</listEntry>
-            <listEntry value="6">Date</listEntry>
-            <listEntry value="8">Weather</listEntry>
-            <listEntry value="12">Calendar</listEntry>
-            <listEntry value="13">Sunrise</listEntry>
-            <listEntry value="15">Altitude</listEntry>
-            <listEntry value="17">Notifications</listEntry>
-            <listEntry value="18">Heart rate</listEntry>
-            <listEntry value="19">Weekly Run distance</listEntry>
-            <listEntry value="20">Weekly Bike distance</listEntry>
-            <listEntry value="21">Recovery time</listEntry>
-            <listEntry value="22">Stress</listEntry>
-            <listEntry value="23">Body battery</listEntry>
-            <listEntry value="26">Training status</listEntry>
-            <listEntry value="27">Race predictor 5k</listEntry>
-            <listEntry value="35">Pulse OX</listEntry>
-            <listEntry value="37">Solar Input</listEntry>
+            <listEntry value="0">@Strings.settings_nothing</listEntry>
+            <listEntry value="-1">@Strings.settings_toggle_night_color</listEntry>
+            <listEntry value="1">@Strings.settings_battery</listEntry>
+            <listEntry value="2">@Strings.settings_steps</listEntry>
+            <listEntry value="3">@Strings.settings_calories</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed</listEntry>
+            <listEntry value="5">@Strings.settings_intensity_minutes</listEntry>
+            <listEntry value="6">@Strings.settings_date_2</listEntry>
+            <listEntry value="8">@Strings.settings_weather</listEntry>
+            <listEntry value="12">@Strings.settings_calendar</listEntry>
+            <listEntry value="13">@Strings.settings_sunrise</listEntry>
+            <listEntry value="15">@Strings.settings_altitude</listEntry>
+            <listEntry value="17">@Strings.settings_notifications</listEntry>
+            <listEntry value="18">@Strings.settings_heart_rate_2</listEntry>
+            <listEntry value="19">@Strings.settings_weekly_run_distance</listEntry>
+            <listEntry value="20">@Strings.settings_weekly_bike_distance</listEntry>
+            <listEntry value="21">@Strings.settings_recovery_time</listEntry>
+            <listEntry value="22">@Strings.settings_stress</listEntry>
+            <listEntry value="23">@Strings.settings_body_battery_2</listEntry>
+            <listEntry value="26">@Strings.settings_training_status_2</listEntry>
+            <listEntry value="27">@Strings.settings_race_predictor_5k</listEntry>
+            <listEntry value="35">@Strings.settings_pulse_ox_2</listEntry>
+            <listEntry value="37">@Strings.settings_solar_input</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.pressToOpenBottomLeft" title="Press bottom left to open:">
+    <setting propertyKey="@Properties.pressToOpenBottomLeft" title="@Strings.settings_press_bottom_left">
         <settingConfig type="list">
-            <listEntry value="0">Nothing</listEntry>
-            <listEntry value="-1">Toggle night color theme</listEntry>
-            <listEntry value="1">Battery</listEntry>
-            <listEntry value="2">Steps</listEntry>
-            <listEntry value="3">Calories</listEntry>
-            <listEntry value="4">Floors climbed</listEntry>
-            <listEntry value="5">Intensiy minutes</listEntry>
-            <listEntry value="6">Date</listEntry>
-            <listEntry value="8">Weather</listEntry>
-            <listEntry value="12">Calendar</listEntry>
-            <listEntry value="13">Sunrise</listEntry>
-            <listEntry value="15">Altitude</listEntry>
-            <listEntry value="17">Notifications</listEntry>
-            <listEntry value="18">Heart rate</listEntry>
-            <listEntry value="19">Weekly Run distance</listEntry>
-            <listEntry value="20">Weekly Bike distance</listEntry>
-            <listEntry value="21">Recovery time</listEntry>
-            <listEntry value="22">Stress</listEntry>
-            <listEntry value="23">Body battery</listEntry>
-            <listEntry value="26">Training status</listEntry>
-            <listEntry value="27">Race predictor 5k</listEntry>
-            <listEntry value="35">Pulse OX</listEntry>
-            <listEntry value="37">Solar Input</listEntry>
+            <listEntry value="0">@Strings.settings_nothing</listEntry>
+            <listEntry value="-1">@Strings.settings_toggle_night_color</listEntry>
+            <listEntry value="1">@Strings.settings_battery</listEntry>
+            <listEntry value="2">@Strings.settings_steps</listEntry>
+            <listEntry value="3">@Strings.settings_calories</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed</listEntry>
+            <listEntry value="5">@Strings.settings_intensity_minutes</listEntry>
+            <listEntry value="6">@Strings.settings_date_2</listEntry>
+            <listEntry value="8">@Strings.settings_weather</listEntry>
+            <listEntry value="12">@Strings.settings_calendar</listEntry>
+            <listEntry value="13">@Strings.settings_sunrise</listEntry>
+            <listEntry value="15">@Strings.settings_altitude</listEntry>
+            <listEntry value="17">@Strings.settings_notifications</listEntry>
+            <listEntry value="18">@Strings.settings_heart_rate_2</listEntry>
+            <listEntry value="19">@Strings.settings_weekly_run_distance</listEntry>
+            <listEntry value="20">@Strings.settings_weekly_bike_distance</listEntry>
+            <listEntry value="21">@Strings.settings_recovery_time</listEntry>
+            <listEntry value="22">@Strings.settings_stress</listEntry>
+            <listEntry value="23">@Strings.settings_body_battery_2</listEntry>
+            <listEntry value="26">@Strings.settings_training_status_2</listEntry>
+            <listEntry value="27">@Strings.settings_race_predictor_5k</listEntry>
+            <listEntry value="35">@Strings.settings_pulse_ox_2</listEntry>
+            <listEntry value="37">@Strings.settings_solar_input</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.pressToOpenBottomCenter" title="Press bottom center to open:">
+    <setting propertyKey="@Properties.pressToOpenBottomCenter" title="@Strings.settings_press_bottom_center">
         <settingConfig type="list">
-            <listEntry value="0">Nothing</listEntry>
-            <listEntry value="-1">Toggle night color theme</listEntry>
-            <listEntry value="1">Battery</listEntry>
-            <listEntry value="2">Steps</listEntry>
-            <listEntry value="3">Calories</listEntry>
-            <listEntry value="4">Floors climbed</listEntry>
-            <listEntry value="5">Intensiy minutes</listEntry>
-            <listEntry value="6">Date</listEntry>
-            <listEntry value="8">Weather</listEntry>
-            <listEntry value="12">Calendar</listEntry>
-            <listEntry value="13">Sunrise</listEntry>
-            <listEntry value="15">Altitude</listEntry>
-            <listEntry value="17">Notifications</listEntry>
-            <listEntry value="18">Heart rate</listEntry>
-            <listEntry value="19">Weekly Run distance</listEntry>
-            <listEntry value="20">Weekly Bike distance</listEntry>
-            <listEntry value="21">Recovery time</listEntry>
-            <listEntry value="22">Stress</listEntry>
-            <listEntry value="23">Body battery</listEntry>
-            <listEntry value="26">Training status</listEntry>
-            <listEntry value="27">Race predictor 5k</listEntry>
-            <listEntry value="35">Pulse OX</listEntry>
-            <listEntry value="37">Solar Input</listEntry>
+            <listEntry value="0">@Strings.settings_nothing</listEntry>
+            <listEntry value="-1">@Strings.settings_toggle_night_color</listEntry>
+            <listEntry value="1">@Strings.settings_battery</listEntry>
+            <listEntry value="2">@Strings.settings_steps</listEntry>
+            <listEntry value="3">@Strings.settings_calories</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed</listEntry>
+            <listEntry value="5">@Strings.settings_intensity_minutes</listEntry>
+            <listEntry value="6">@Strings.settings_date_2</listEntry>
+            <listEntry value="8">@Strings.settings_weather</listEntry>
+            <listEntry value="12">@Strings.settings_calendar</listEntry>
+            <listEntry value="13">@Strings.settings_sunrise</listEntry>
+            <listEntry value="15">@Strings.settings_altitude</listEntry>
+            <listEntry value="17">@Strings.settings_notifications</listEntry>
+            <listEntry value="18">@Strings.settings_heart_rate_2</listEntry>
+            <listEntry value="19">@Strings.settings_weekly_run_distance</listEntry>
+            <listEntry value="20">@Strings.settings_weekly_bike_distance</listEntry>
+            <listEntry value="21">@Strings.settings_recovery_time</listEntry>
+            <listEntry value="22">@Strings.settings_stress</listEntry>
+            <listEntry value="23">@Strings.settings_body_battery_2</listEntry>
+            <listEntry value="26">@Strings.settings_training_status_2</listEntry>
+            <listEntry value="27">@Strings.settings_race_predictor_5k</listEntry>
+            <listEntry value="35">@Strings.settings_pulse_ox_2</listEntry>
+            <listEntry value="37">@Strings.settings_solar_input</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.pressToOpenBottomRight" title="Press bottom right to open:">
+    <setting propertyKey="@Properties.pressToOpenBottomRight" title="@Strings.settings_press_bottom_right">
         <settingConfig type="list">
-            <listEntry value="0">Nothing</listEntry>
-            <listEntry value="-1">Toggle night color theme</listEntry>
-            <listEntry value="1">Battery</listEntry>
-            <listEntry value="2">Steps</listEntry>
-            <listEntry value="3">Calories</listEntry>
-            <listEntry value="4">Floors climbed</listEntry>
-            <listEntry value="5">Intensiy minutes</listEntry>
-            <listEntry value="6">Date</listEntry>
-            <listEntry value="8">Weather</listEntry>
-            <listEntry value="12">Calendar</listEntry>
-            <listEntry value="13">Sunrise</listEntry>
-            <listEntry value="15">Altitude</listEntry>
-            <listEntry value="17">Notifications</listEntry>
-            <listEntry value="18">Heart rate</listEntry>
-            <listEntry value="19">Weekly Run distance</listEntry>
-            <listEntry value="20">Weekly Bike distance</listEntry>
-            <listEntry value="21">Recovery time</listEntry>
-            <listEntry value="22">Stress</listEntry>
-            <listEntry value="23">Body battery</listEntry>
-            <listEntry value="26">Training status</listEntry>
-            <listEntry value="27">Race predictor 5k</listEntry>
-            <listEntry value="35">Pulse OX</listEntry>
-            <listEntry value="37">Solar Input</listEntry>
+            <listEntry value="0">@Strings.settings_nothing</listEntry>
+            <listEntry value="-1">@Strings.settings_toggle_night_color</listEntry>
+            <listEntry value="1">@Strings.settings_battery</listEntry>
+            <listEntry value="2">@Strings.settings_steps</listEntry>
+            <listEntry value="3">@Strings.settings_calories</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed</listEntry>
+            <listEntry value="5">@Strings.settings_intensity_minutes</listEntry>
+            <listEntry value="6">@Strings.settings_date_2</listEntry>
+            <listEntry value="8">@Strings.settings_weather</listEntry>
+            <listEntry value="12">@Strings.settings_calendar</listEntry>
+            <listEntry value="13">@Strings.settings_sunrise</listEntry>
+            <listEntry value="15">@Strings.settings_altitude</listEntry>
+            <listEntry value="17">@Strings.settings_notifications</listEntry>
+            <listEntry value="18">@Strings.settings_heart_rate_2</listEntry>
+            <listEntry value="19">@Strings.settings_weekly_run_distance</listEntry>
+            <listEntry value="20">@Strings.settings_weekly_bike_distance</listEntry>
+            <listEntry value="21">@Strings.settings_recovery_time</listEntry>
+            <listEntry value="22">@Strings.settings_stress</listEntry>
+            <listEntry value="23">@Strings.settings_body_battery_2</listEntry>
+            <listEntry value="26">@Strings.settings_training_status_2</listEntry>
+            <listEntry value="27">@Strings.settings_race_predictor_5k</listEntry>
+            <listEntry value="35">@Strings.settings_pulse_ox_2</listEntry>
+            <listEntry value="37">@Strings.settings_solar_input</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.hemisphere" title="Hemisphere (for Moon icon)">
+    <setting propertyKey="@Properties.hemisphere" title="@Strings.settings_hemisphere_moon">
             <settingConfig type="list">
-                <listEntry value="0">Northern</listEntry>
-                <listEntry value="1">Southern</listEntry>
+                <listEntry value="0">@Strings.settings_northern</listEntry>
+                <listEntry value="1">@Strings.settings_southern</listEntry>
             </settingConfig>
     </setting>
-    <setting propertyKey="@Properties.hourFormat" title="Time format (12/24h)">
+    <setting propertyKey="@Properties.hourFormat" title="@Strings.settings_time_format">
         <settingConfig type="list">
-            <listEntry value="0">Auto - Use system setting</listEntry>
-            <listEntry value="1">24h</listEntry>
-            <listEntry value="2">12h</listEntry>
+            <listEntry value="0">@Strings.settings_auto_use_system</listEntry>
+            <listEntry value="1">@Strings.settings_24h</listEntry>
+            <listEntry value="2">@Strings.settings_12h</listEntry>
         </settingConfig>
     </setting>
-    <setting propertyKey="@Properties.dateFormat" title="Date format">
+    <setting propertyKey="@Properties.dateFormat" title="@Strings.settings_date_format">
         <settingConfig type="list">
-            <listEntry value="0">WEEKDAY, DD MONTH YYYY</listEntry>
-            <listEntry value="6">WEEKDAY, DD MONTH</listEntry>
-            <listEntry value="1">YYYY-MM-DD</listEntry>
-            <listEntry value="2">MM/DD/YYYY</listEntry>
-            <listEntry value="3">DD.MM.YYYY</listEntry>
-            <listEntry value="7">WEEKDAY, YYYY-MM-DD</listEntry>
-            <listEntry value="8">WEEKDAY, MM/DD/YYYY</listEntry>
-            <listEntry value="9">WEEKDAY, DD.MM.YYYY</listEntry>
-            <listEntry value="4">WEEKDAY, DD MONTH (Week)</listEntry>
-            <listEntry value="5">WEEKDAY, DD MONTH YYYY (Week)</listEntry>
+            <listEntry value="0">@Strings.settings_weekday_dd_month_yyyy</listEntry>
+            <listEntry value="6">@Strings.settings_weekday_dd_month</listEntry>
+            <listEntry value="1">@Strings.settings_yyyy_mm_dd</listEntry>
+            <listEntry value="2">@Strings.settings_mm_dd_yyyy</listEntry>
+            <listEntry value="3">@Strings.settings_dd_mm_yyyy</listEntry>
+            <listEntry value="7">@Strings.settings_weekday_yyyy_mm_dd</listEntry>
+            <listEntry value="8">@Strings.settings_weekday_mm_dd_yyyy</listEntry>
+            <listEntry value="9">@Strings.settings_weekday_dd_mm_yyyy</listEntry>
+            <listEntry value="4">@Strings.settings_weekday_dd_month_week</listEntry>
+            <listEntry value="5">@Strings.settings_weekday_dd_month_yyyy_week</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.tzName1" title="Alternative Timezone 1 label">
+    <setting propertyKey="@Properties.tzName1" title="@Strings.settings_alternative_timezone_1_label">
         <settingConfig type="alphaNumeric" />
     </setting>
-    <setting propertyKey="@Properties.tzOffset1" title="Alternative Timezone 1 offset">
+    <setting propertyKey="@Properties.tzOffset1" title="@Strings.settings_alternative_timezone_1_offset">
         <settingConfig type="list">
             <listEntry value="-720">UTC-12:00</listEntry>
             <listEntry value="-660">UTC-11:00</listEntry>
@@ -934,10 +934,10 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.tzName2" title="Alternative Timezone 2 label">
+    <setting propertyKey="@Properties.tzName2" title="@Strings.settings_alternative_timezone_2_label">
         <settingConfig type="alphaNumeric" />
     </setting>
-   <setting propertyKey="@Properties.tzOffset2" title="Alternative Timezone 2 offset">
+   <setting propertyKey="@Properties.tzOffset2" title="@Strings.settings_alternative_timezone_2_offset">
         <settingConfig type="list">
             <listEntry value="-720">UTC-12:00</listEntry>
             <listEntry value="-660">UTC-11:00</listEntry>
@@ -980,78 +980,78 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.tempUnit" title="Temperature unit">
+    <setting propertyKey="@Properties.tempUnit" title="@Strings.settings_temperature_unit">
         <settingConfig type="list">
-            <listEntry value="0">Auto - Use system setting</listEntry>
-            <listEntry value="1">C</listEntry>
-            <listEntry value="2">F</listEntry>
+            <listEntry value="0">@Strings.settings_auto_use_system</listEntry>
+            <listEntry value="1">@Strings.settings_c</listEntry>
+            <listEntry value="2">@Strings.settings_f</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.windUnit" title="Wind speed unit">
+    <setting propertyKey="@Properties.windUnit" title="@Strings.settings_wind_speed_unit">
         <settingConfig type="list">
-            <listEntry value="0">m/s</listEntry>
-            <listEntry value="1">km/h</listEntry>
-            <listEntry value="2">mph</listEntry>
-            <listEntry value="3">knots</listEntry>
-            <listEntry value="4">beufort</listEntry>
+            <listEntry value="0">@Strings.settings_ms</listEntry>
+            <listEntry value="1">@Strings.settings_kmh</listEntry>
+            <listEntry value="2">@Strings.settings_mph</listEntry>
+            <listEntry value="3">@Strings.settings_knots</listEntry>
+            <listEntry value="4">@Strings.settings_beufort</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.pressureUnit" title="Pressure unit">
+    <setting propertyKey="@Properties.pressureUnit" title="@Strings.settings_pressure_unit">
         <settingConfig type="list">
-            <listEntry value="0">hPA</listEntry>
-            <listEntry value="1">mmHG</listEntry>
-            <listEntry value="2">inHG</listEntry>
+            <listEntry value="0">@Strings.settings_hpa</listEntry>
+            <listEntry value="1">@Strings.settings_mmhg</listEntry>
+            <listEntry value="2">@Strings.settings_inhg</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.weekOffset" title="Week number offset (0 = normal week number)">
+    <setting propertyKey="@Properties.weekOffset" title="@Strings.settings_week_number_offset">
         <settingConfig type="numeric" />
     </setting>
     
-    <setting propertyKey="@Properties.showClockBg" title="Show clock background">
+    <setting propertyKey="@Properties.showClockBg" title="@Strings.settings_show_clock_background">
         <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.showDataBg" title="Show data fields background">
+    <setting propertyKey="@Properties.showDataBg" title="@Strings.settings_show_data_fields_background">
         <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.showNotificationCount" title="Show Notification Count">
+    <setting propertyKey="@Properties.showNotificationCount" title="@Strings.settings_show_notification_count">
         <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.zeropadHour" title="Zeropad hour on clock">
+    <setting propertyKey="@Properties.zeropadHour" title="@Strings.settings_zeropad_hour_clock">
         <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.timeSeparator" title="Separator between Hours and Minutes">
+    <setting propertyKey="@Properties.timeSeparator" title="@Strings.settings_separator_hours_minutes">
             <settingConfig type="list">
-                <listEntry value="0">:</listEntry>
-                <listEntry value="1">Blank space</listEntry>
-                <listEntry value="2">No separator</listEntry>
+                <listEntry value="0">@Strings.settings_colon</listEntry>
+                <listEntry value="1">@Strings.settings_blank_space</listEntry>
+                <listEntry value="2">@Strings.settings_no_separator</listEntry>
             </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.showSeconds" title="Show Seconds in Active mode">
+    <setting propertyKey="@Properties.showSeconds" title="@Strings.settings_show_seconds_active">
         <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.alwaysShowSeconds" title="Show seconds in Inactive mode (MIP screens only)">
+    <setting propertyKey="@Properties.alwaysShowSeconds" title="@Strings.settings_show_seconds_inactive">
         <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.showStressAndBodyBattery" title="Show Stress (orange) and Body Battery (blue) bars">
+    <setting propertyKey="@Properties.showStressAndBodyBattery" title="@Strings.settings_show_stress_body_battery">
         <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.labelVisibility" title="Show/Hide Labels">
+    <setting propertyKey="@Properties.labelVisibility" title="@Strings.settings_show_hide_labels">
             <settingConfig type="list">
-                <listEntry value="0">Show All Labels</listEntry>
-                <listEntry value="1">Hide All Labels</listEntry>
-                <listEntry value="2">Hide Top Labels</listEntry>
-                <listEntry value="3">Hide Bottom Labels</listEntry>
+                <listEntry value="0">@Strings.settings_show_all_labels</listEntry>
+                <listEntry value="1">@Strings.settings_hide_all_labels</listEntry>
+                <listEntry value="2">@Strings.settings_hide_top_labels</listEntry>
+                <listEntry value="3">@Strings.settings_hide_bottom_labels</listEntry>
             </settingConfig>
     </setting>
 

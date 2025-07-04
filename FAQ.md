@@ -41,9 +41,6 @@ The weather fields, including also sunset and sunrise, need weather data to be a
 ### Can you translate the watch to <language>?
 I might do that in the future, but it's a lot of work. I have it on my list but no promises for when this might happen.
 
-### Why are the settings not translated?
-Translating settings uses watch face memory, and all the strings in settings made the watch face too large to work on some watches. So to support more devices settings will have to stay in English only.
-
 ### Will you add support for Open Weather API?
 Not short term at least. I don't want to add the complexity having multiple weather data sources would mean. I've also seen that other watch faces with support for it have recieved quite a lot of negative reviews from users that can't figure out how to get a API token which makes me a bit less keen on working on this...
 
