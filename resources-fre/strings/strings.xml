@@ -235,6 +235,7 @@
     <string id="settings_filled_numbers_no_outline_filled" scope="settings">Chiffres pleins sans contour, rempli avec la couleur de contour en AOD</string>
     <string id="settings_filled_numbers_with_outline" scope="settings">Chiffres pleins avec contour, identique en AOD</string>
     <string id="settings_filled_numbers_with_outline_aod" scope="settings">Chiffres pleins avec contour, contour uniquement en AOD</string>
+    <string id="settings_filled_numbers_plain" scope="settings">Chiffres pleins sans contour, pas de dégradé en AOD (mieux pour le redshift)</string>
     <string id="settings_update_frequency" scope="settings">Fréquence de mise à jour des données</string>
     <string id="settings_every_minute" scope="settings">Toutes les minutes</string>
     <string id="settings_every_5_seconds" scope="settings">Toutes les 5 secondes</string>

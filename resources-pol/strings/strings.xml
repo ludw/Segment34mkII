@@ -235,6 +235,7 @@
     <string id="settings_filled_numbers_no_outline_filled" scope="settings">Wypełnione cyfry bez obramowania, wypełnione kolorem obramowania w AOD</string>
     <string id="settings_filled_numbers_with_outline" scope="settings">Wypełnione cyfry z obramowaniem, to samo w AOD</string>
     <string id="settings_filled_numbers_with_outline_aod" scope="settings">Wypełnione cyfry z obramowaniem, tylko obramowanie w AOD</string>
+    <string id="settings_filled_numbers_plain" scope="settings">Wypełnione cyfry bez obramowania, bez gradientu w AOD (lepsze dla redshift)</string>
     <string id="settings_update_frequency" scope="settings">Częstotliwość aktualizacji danych</string>
     <string id="settings_every_minute" scope="settings">Co minutę</string>
     <string id="settings_every_5_seconds" scope="settings">Co 5 sekund</string>
