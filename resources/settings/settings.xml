@@ -80,6 +80,7 @@
             <listEntry value="4">@Strings.settings_filled_numbers_no_outline_filled</listEntry>
             <listEntry value="2">@Strings.settings_filled_numbers_with_outline</listEntry>
             <listEntry value="3">@Strings.settings_filled_numbers_with_outline_aod</listEntry>
+            <listEntry value="5">@Strings.settings_filled_numbers_plain</listEntry>
         </settingConfig>
     </setting>
 

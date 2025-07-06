@@ -236,6 +236,7 @@
     <string id="settings_filled_numbers_no_outline_filled" scope="settings">Filled numbers no outline, filled using outline color in AOD</string>
     <string id="settings_filled_numbers_with_outline" scope="settings">Filled numbers with outline, same in AOD</string>
     <string id="settings_filled_numbers_with_outline_aod" scope="settings">Filled numbers with outline, only outline in AOD</string>
+    <string id="settings_filled_numbers_plain" scope="settings">Filled numbers no outline, no gradient in AOD (better for redshift)</string>
     <string id="settings_update_frequency" scope="settings">Update frequency for data</string>
     <string id="settings_every_minute" scope="settings">Every minute</string>
     <string id="settings_every_5_seconds" scope="settings">Every 5 seconds</string>

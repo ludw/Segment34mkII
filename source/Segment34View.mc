@@ -717,7 +717,7 @@ class Segment34View extends WatchUi.WatchFace {
         var clock_color = themeColors[clock];
         if(clock_color == 0x000000) { clock_color = 0x555555; }
 
-        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2) {
+        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2 or propClockOutlineStyle == 5) {
             // Draw Clock
             dc.setColor(clock_color, Graphics.COLOR_TRANSPARENT);
             dc.drawText(baseX, baseY, fontClock, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
