@@ -1611,53 +1611,13 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 20) { // Weather condition
             val = getWeatherCondition(true);
         } else if(complicationType == 21) { // Weekly run distance (km)
-            if (hasComplications) {
-                try {
-                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
-                    if (complication != null && complication.value != null) {
-                        var distanceKm = complication.value / 1000.0;  // Convert meters to km
-                        val = formatDistanceByWidth(distanceKm, width);
-                    }
-                } catch(e) {
-                    // Complication not found
-                }
-            }
+            val = getWeeklyDistanceFromComplication(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE, 1000.0, width);
         } else if(complicationType == 22) { // Weekly run distance (miles)
-            if (hasComplications) {
-                try {
-                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE));
-                    if (complication != null && complication.value != null) {
-                        var distanceMiles = complication.value * 0.000621371;  // Convert meters to miles
-                        val = formatDistanceByWidth(distanceMiles, width);
-                    }
-                } catch(e) {
-                    // Complication not found
-                }
-            }
+            val = getWeeklyDistanceFromComplication(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE, 0.000621371, width);
         } else if(complicationType == 23) { // Weekly bike distance (km)
-            if (hasComplications) {
-                try {
-                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
-                    if (complication != null && complication.value != null) {
-                        var distanceKm = complication.value / 1000.0;  // Convert meters to km
-                        val = formatDistanceByWidth(distanceKm, width);
-                    }
-                } catch(e) {
-                    // Complication not found
-                }
-            }
+            val = getWeeklyDistanceFromComplication(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE, 1000.0, width);
         } else if(complicationType == 24) { // Weekly bike distance (miles)
-            if (hasComplications) {
-                try {
-                    var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE));
-                    if (complication != null && complication.value != null) {
-                        var distanceMiles = complication.value * 0.000621371;  // Convert meters to miles
-                        val = formatDistanceByWidth(distanceMiles, width);
-                    }
-                } catch(e) {
-                    // Complication not found
-                }
-            }
+            val = getWeeklyDistanceFromComplication(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE, 0.000621371, width);
         } else if(complicationType == 25) { // Training status
             if (hasComplications) {
                 try {
@@ -2304,64 +2264,66 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
 
+        var ret = null;
         switch (weatherCondition.condition) {
-            case 0: return Application.loadResource(Rez.Strings.WEATHER_0) + perp;
-            case 1: return Application.loadResource(Rez.Strings.WEATHER_1) + perp;
-            case 2: return Application.loadResource(Rez.Strings.WEATHER_2) + perp;
-            case 3: return Application.loadResource(Rez.Strings.WEATHER_3) + perp;
-            case 4: return Application.loadResource(Rez.Strings.WEATHER_4) + perp;
-            case 5: return Application.loadResource(Rez.Strings.WEATHER_5) + perp;
-            case 6: return Application.loadResource(Rez.Strings.WEATHER_6) + perp;
-            case 7: return Application.loadResource(Rez.Strings.WEATHER_7) + perp;
-            case 8: return Application.loadResource(Rez.Strings.WEATHER_8) + perp;
-            case 9: return Application.loadResource(Rez.Strings.WEATHER_9) + perp;
-            case 10: return Application.loadResource(Rez.Strings.WEATHER_10) + perp;
-            case 11: return Application.loadResource(Rez.Strings.WEATHER_11) + perp;
-            case 12: return Application.loadResource(Rez.Strings.WEATHER_12) + perp;
-            case 13: return Application.loadResource(Rez.Strings.WEATHER_13) + perp;
-            case 14: return Application.loadResource(Rez.Strings.WEATHER_14) + perp;
-            case 15: return Application.loadResource(Rez.Strings.WEATHER_15) + perp;
-            case 16: return Application.loadResource(Rez.Strings.WEATHER_16) + perp;
-            case 17: return Application.loadResource(Rez.Strings.WEATHER_17) + perp;
-            case 18: return Application.loadResource(Rez.Strings.WEATHER_18) + perp;
-            case 19: return Application.loadResource(Rez.Strings.WEATHER_19) + perp;
-            case 20: return Application.loadResource(Rez.Strings.WEATHER_20) + perp;
-            case 21: return Application.loadResource(Rez.Strings.WEATHER_21) + perp;
-            case 22: return Application.loadResource(Rez.Strings.WEATHER_22) + perp;
-            case 23: return Application.loadResource(Rez.Strings.WEATHER_23) + perp;
-            case 24: return Application.loadResource(Rez.Strings.WEATHER_24) + perp;
-            case 25: return Application.loadResource(Rez.Strings.WEATHER_25) + perp;
-            case 26: return Application.loadResource(Rez.Strings.WEATHER_26) + perp;
-            case 27: return Application.loadResource(Rez.Strings.WEATHER_27) + perp;
-            case 28: return Application.loadResource(Rez.Strings.WEATHER_28) + perp;
-            case 29: return Application.loadResource(Rez.Strings.WEATHER_29) + perp;
-            case 30: return Application.loadResource(Rez.Strings.WEATHER_30) + perp;
-            case 31: return Application.loadResource(Rez.Strings.WEATHER_31) + perp;
-            case 32: return Application.loadResource(Rez.Strings.WEATHER_32) + perp;
-            case 33: return Application.loadResource(Rez.Strings.WEATHER_33) + perp;
-            case 34: return Application.loadResource(Rez.Strings.WEATHER_34) + perp;
-            case 35: return Application.loadResource(Rez.Strings.WEATHER_35) + perp;
-            case 36: return Application.loadResource(Rez.Strings.WEATHER_36) + perp;
-            case 37: return Application.loadResource(Rez.Strings.WEATHER_37) + perp;
-            case 38: return Application.loadResource(Rez.Strings.WEATHER_38) + perp;
-            case 39: return Application.loadResource(Rez.Strings.WEATHER_39) + perp;
-            case 40: return Application.loadResource(Rez.Strings.WEATHER_40) + perp;
-            case 41: return Application.loadResource(Rez.Strings.WEATHER_41) + perp;
-            case 42: return Application.loadResource(Rez.Strings.WEATHER_42) + perp;
-            case 43: return Application.loadResource(Rez.Strings.WEATHER_43) + perp;
-            case 44: return Application.loadResource(Rez.Strings.WEATHER_44) + perp;
-            case 45: return Application.loadResource(Rez.Strings.WEATHER_45) + perp;
-            case 46: return Application.loadResource(Rez.Strings.WEATHER_46) + perp;
-            case 47: return Application.loadResource(Rez.Strings.WEATHER_47) + perp;
-            case 48: return Application.loadResource(Rez.Strings.WEATHER_48) + perp;
-            case 49: return Application.loadResource(Rez.Strings.WEATHER_49) + perp;
-            case 50: return Application.loadResource(Rez.Strings.WEATHER_50) + perp;
-            case 51: return Application.loadResource(Rez.Strings.WEATHER_51) + perp;
-            case 52: return Application.loadResource(Rez.Strings.WEATHER_52) + perp;
-            case 53: return Application.loadResource(Rez.Strings.WEATHER_53) + perp;
+            case 0: ret = Rez.Strings.WEATHER_0; break;
+            case 1: ret = Rez.Strings.WEATHER_1; break;
+            case 2: ret = Rez.Strings.WEATHER_2; break;
+            case 3: ret = Rez.Strings.WEATHER_3; break;
+            case 4: ret = Rez.Strings.WEATHER_4; break;
+            case 5: ret = Rez.Strings.WEATHER_5; break;
+            case 6: ret = Rez.Strings.WEATHER_6; break;
+            case 7: ret = Rez.Strings.WEATHER_7; break;
+            case 8: ret = Rez.Strings.WEATHER_8; break;
+            case 9: ret = Rez.Strings.WEATHER_9; break;
+            case 10: ret = Rez.Strings.WEATHER_10; break;
+            case 11: ret = Rez.Strings.WEATHER_11; break;
+            case 12: ret = Rez.Strings.WEATHER_12; break;
+            case 13: ret = Rez.Strings.WEATHER_13; break;
+            case 14: ret = Rez.Strings.WEATHER_14; break;
+            case 15: ret = Rez.Strings.WEATHER_15; break;
+            case 16: ret = Rez.Strings.WEATHER_16; break;
+            case 17: ret = Rez.Strings.WEATHER_17; break;
+            case 18: ret = Rez.Strings.WEATHER_18; break;
+            case 19: ret = Rez.Strings.WEATHER_19; break;
+            case 20: ret = Rez.Strings.WEATHER_20; break;
+            case 21: ret = Rez.Strings.WEATHER_21; break;
+            case 22: ret = Rez.Strings.WEATHER_22; break;
+            case 23: ret = Rez.Strings.WEATHER_23; break;
+            case 24: ret = Rez.Strings.WEATHER_24; break;
+            case 25: ret = Rez.Strings.WEATHER_25; break;
+            case 26: ret = Rez.Strings.WEATHER_26; break;
+            case 27: ret = Rez.Strings.WEATHER_27; break;
+            case 28: ret = Rez.Strings.WEATHER_28; break;
+            case 29: ret = Rez.Strings.WEATHER_29; break;
+            case 30: ret = Rez.Strings.WEATHER_30; break;
+            case 31: ret = Rez.Strings.WEATHER_31; break;
+            case 32: ret = Rez.Strings.WEATHER_32; break;
+            case 33: ret = Rez.Strings.WEATHER_33; break;
+            case 34: ret = Rez.Strings.WEATHER_34; break;
+            case 35: ret = Rez.Strings.WEATHER_35; break;
+            case 36: ret = Rez.Strings.WEATHER_36; break;
+            case 37: ret = Rez.Strings.WEATHER_37; break;
+            case 38: ret = Rez.Strings.WEATHER_38; break;
+            case 39: ret = Rez.Strings.WEATHER_39; break;
+            case 40: ret = Rez.Strings.WEATHER_40; break;
+            case 41: ret = Rez.Strings.WEATHER_41; break;
+            case 42: ret = Rez.Strings.WEATHER_42; break;
+            case 43: ret = Rez.Strings.WEATHER_43; break;
+            case 44: ret = Rez.Strings.WEATHER_44; break;
+            case 45: ret = Rez.Strings.WEATHER_45; break;
+            case 46: ret = Rez.Strings.WEATHER_46; break;
+            case 47: ret = Rez.Strings.WEATHER_47; break;
+            case 48: ret = Rez.Strings.WEATHER_48; break;
+            case 49: ret = Rez.Strings.WEATHER_49; break;
+            case 50: ret = Rez.Strings.WEATHER_50; break;
+            case 51: ret = Rez.Strings.WEATHER_51; break;
+            case 52: ret = Rez.Strings.WEATHER_52; break;
+            case 53: ret = Rez.Strings.WEATHER_53; break;
         }
 
-        return "";
+        if(ret == null) { return ""; }
+        return Application.loadResource(ret) + perp;
     }
 
     hidden function getTemperature() as String {
@@ -2579,6 +2541,22 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
         return weekly_distance;
+    }
+
+    hidden function getWeeklyDistanceFromComplication(complicationType as Complications.Type, conversionFactor as Float, width as Number) as String {
+        var val = "";
+        if (hasComplications) {
+            try {
+                var complication = Complications.getComplication(new Id(complicationType));
+                if (complication != null && complication.value != null) {
+                    var distance = complication.value * conversionFactor;
+                    val = formatDistanceByWidth(distance, width);
+                }
+            } catch(e) {
+                // Complication not found
+            }
+        }
+        return val;
     }
 
     hidden function secondaryTimezone(offset, width) as String {

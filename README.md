@@ -57,10 +57,12 @@ Pull requests are welcome, but please follow the following guidelines:
 - Altitude, history value might not be accurate, use sensor value?
 
 ## Change log
-2025-07-03 v3.5.0
+2025-07-06 v3.5.0
 - Translations for Polish and French (watchface, not settings)
 - Support for Venu X1
-- Fixed battery bar position on MIP screens 
+- Fixed battery bar position on MIP screens
+- Potential fix for an edge case when minutes did not update
+- Potential fix for issues with redshift, use special setting for outline style
 
 2025-06-08 v3.4.1
 - Fixed issue with sunset/sunrise in areas where the sun never set
