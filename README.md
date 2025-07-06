@@ -58,7 +58,7 @@ Pull requests are welcome, but please follow the following guidelines:
 
 ## Change log
 2025-07-06 v3.5.0
-- Translations for Polish and French (watchface, not settings)
+- Translations for Italian, Polish, French, thanks traycold for helping with the Italian (weather, months, weekdays)
 - Support for Venu X1
 - Fixed battery bar position on MIP screens
 - Potential fix for an edge case when minutes did not update
