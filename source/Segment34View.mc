@@ -881,7 +881,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
         }
-        dc.drawText(x - 11, y + 6, fontBattery, dataBattery, Graphics.TEXT_JUSTIFY_LEFT);
+        dc.drawText(x - 11, y + 3, fontBattery, dataBattery, Graphics.TEXT_JUSTIFY_LEFT);
     }
 
     (:MIP)
