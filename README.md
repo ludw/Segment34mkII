@@ -57,6 +57,12 @@ Pull requests are welcome, but please follow the following guidelines:
 - Altitude, history value might not be accurate, use sensor value?
 
 ## Change log
+2025-07-07 v3.5.2
+- Added 5, 3, 3 as field layout
+- Added air pressure as option for bottom field
+- Some translation fixes
+- Bugfixes
+
 2025-07-06 v3.5.0
 - Translations for Italian, Polish, French, thanks traycold for helping with the Italian (weather, months, weekdays)
 - Support for Venu X1
