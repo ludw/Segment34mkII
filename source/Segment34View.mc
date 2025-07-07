@@ -1982,6 +1982,9 @@ class Segment34View extends WatchUi.WatchFace {
             var closest_index = 0;
             for(var i=0; i<histogramTargetWidth; i++) {
                 closest_index = Math.round(i * step).toNumber();
+                if (closest_index >= ret.size()) {
+                    closest_index = ret.size() - 1;
+                }
                 reduced_ret.add(ret[closest_index]);
             }
             return reduced_ret;
