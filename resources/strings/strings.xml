@@ -343,18 +343,6 @@
     <string id="settings_line_below_clock" scope="settings">Line below clock shows:</string>
     <string id="settings_bottom_field_layout" scope="settings">Bottom field layout (number of digits per field)</string>
     <string id="settings_auto_default_layout" scope="settings">Auto - Default layout depending on screen size</string>
-    <string id="settings_4_4" scope="settings">4, 4</string>
-    <string id="settings_3_3_3" scope="settings">3, 3, 3</string>
-    <string id="settings_3_4_3" scope="settings">3, 4, 3</string>
-    <string id="settings_3_3_4" scope="settings">3, 3, 4</string>
-    <string id="settings_4_3_3" scope="settings">4, 3, 3</string>
-    <string id="settings_4_3_4" scope="settings">4, 3, 4</string>
-    <string id="settings_3_4_4" scope="settings">3, 4, 4</string>
-    <string id="settings_4_4_3" scope="settings">4, 4, 3</string>
-    <string id="settings_4_4_4" scope="settings">4, 4, 4</string>
-    <string id="settings_3_3_3_3" scope="settings">3, 3, 3, 3</string>
-    <string id="settings_3_3_3_4" scope="settings">3, 3, 3, 4</string>
-    <string id="settings_4_3_3_3" scope="settings">4, 3, 3, 3</string>
     <string id="settings_bottom_value_1_left" scope="settings">Bottom value 1 (left):</string>
     <string id="settings_bottom_value_2" scope="settings">Bottom value 2:</string>
     <string id="settings_bottom_value_3" scope="settings">Bottom value 3:</string>

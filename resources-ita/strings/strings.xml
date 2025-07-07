@@ -343,18 +343,6 @@
     <string id="settings_line_below_clock" scope="settings">Riga sotto l'orologio mostra:</string>
     <string id="settings_bottom_field_layout" scope="settings">Layout campo inferiore (numero di cifre per campo)</string>
     <string id="settings_auto_default_layout" scope="settings">Auto - Layout predefinito in base alla dimensione dello schermo</string>
-    <string id="settings_4_4" scope="settings">4, 4</string>
-    <string id="settings_3_3_3" scope="settings">3, 3, 3</string>
-    <string id="settings_3_4_3" scope="settings">3, 4, 3</string>
-    <string id="settings_3_3_4" scope="settings">3, 3, 4</string>
-    <string id="settings_4_3_3" scope="settings">4, 3, 3</string>
-    <string id="settings_4_3_4" scope="settings">4, 3, 4</string>
-    <string id="settings_3_4_4" scope="settings">3, 4, 4</string>
-    <string id="settings_4_4_3" scope="settings">4, 4, 3</string>
-    <string id="settings_4_4_4" scope="settings">4, 4, 4</string>
-    <string id="settings_3_3_3_3" scope="settings">3, 3, 3, 3</string>
-    <string id="settings_3_3_3_4" scope="settings">3, 3, 3, 4</string>
-    <string id="settings_4_3_3_3" scope="settings">4, 3, 3, 3</string>
     <string id="settings_bottom_value_1_left" scope="settings">Valore inferiore 1 (sinistra):</string>
     <string id="settings_bottom_value_2" scope="settings">Valore inferiore 2:</string>
     <string id="settings_bottom_value_3" scope="settings">Valore inferiore 3:</string>

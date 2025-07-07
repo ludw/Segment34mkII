@@ -332,18 +332,19 @@
     <setting propertyKey="@Properties.fieldLayout" title="@Strings.settings_bottom_field_layout">
         <settingConfig type="list">
             <listEntry value="0">@Strings.settings_auto_default_layout</listEntry>
-            <listEntry value="12">@Strings.settings_4_4</listEntry>
-            <listEntry value="1">@Strings.settings_3_3_3</listEntry>
-            <listEntry value="2">@Strings.settings_3_4_3</listEntry>
-            <listEntry value="3">@Strings.settings_3_3_4</listEntry>
-            <listEntry value="4">@Strings.settings_4_3_3</listEntry>
-            <listEntry value="5">@Strings.settings_4_3_4</listEntry>
-            <listEntry value="6">@Strings.settings_3_4_4</listEntry>
-            <listEntry value="7">@Strings.settings_4_4_3</listEntry>
-            <listEntry value="8">@Strings.settings_4_4_4</listEntry>
-            <listEntry value="9">@Strings.settings_3_3_3_3</listEntry>
-            <listEntry value="10">@Strings.settings_3_3_3_4</listEntry>
-            <listEntry value="11">@Strings.settings_4_3_3_3</listEntry>
+            <listEntry value="12">4, 4</listEntry>
+            <listEntry value="1">3, 3, 3</listEntry>
+            <listEntry value="2">3, 4, 3</listEntry>
+            <listEntry value="3">3, 3, 4</listEntry>
+            <listEntry value="4">4, 3, 3</listEntry>
+            <listEntry value="5">4, 3, 4</listEntry>
+            <listEntry value="6">3, 4, 4</listEntry>
+            <listEntry value="7">4, 4, 3</listEntry>
+            <listEntry value="8">4, 4, 4</listEntry>
+            <listEntry value="9">3, 3, 3, 3</listEntry>
+            <listEntry value="10">3, 3, 3, 4</listEntry>
+            <listEntry value="11">4, 3, 3, 3</listEntry>
+            <listEntry value="13">5, 3, 3</listEntry>
         </settingConfig>
     </setting>
 
@@ -586,6 +587,8 @@
             <listEntry value="19">@Strings.settings_wheelchair_pushes_day</listEntry>
             <listEntry value="12">@Strings.settings_altitude_m</listEntry>
             <listEntry value="15">@Strings.settings_altitude_ft</listEntry>
+            <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
+            <listEntry value="30">@Strings.settings_barometric_pressure_sea</listEntry>
             <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
             <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
             <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>

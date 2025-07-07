@@ -342,18 +342,6 @@
     <string id="settings_line_below_clock" scope="settings">Ligne sous l'horloge affiche :</string>
     <string id="settings_bottom_field_layout" scope="settings">Disposition des champs inférieurs (nombre de chiffres par champ)</string>
     <string id="settings_auto_default_layout" scope="settings">Auto - Disposition par défaut selon la taille d'écran</string>
-    <string id="settings_4_4" scope="settings">4, 4</string>
-    <string id="settings_3_3_3" scope="settings">3, 3, 3</string>
-    <string id="settings_3_4_3" scope="settings">3, 4, 3</string>
-    <string id="settings_3_3_4" scope="settings">3, 3, 4</string>
-    <string id="settings_4_3_3" scope="settings">4, 3, 3</string>
-    <string id="settings_4_3_4" scope="settings">4, 3, 4</string>
-    <string id="settings_3_4_4" scope="settings">3, 4, 4</string>
-    <string id="settings_4_4_3" scope="settings">4, 4, 3</string>
-    <string id="settings_4_4_4" scope="settings">4, 4, 4</string>
-    <string id="settings_3_3_3_3" scope="settings">3, 3, 3, 3</string>
-    <string id="settings_3_3_3_4" scope="settings">3, 3, 3, 4</string>
-    <string id="settings_4_3_3_3" scope="settings">4, 3, 3, 3</string>
     <string id="settings_bottom_value_1_left" scope="settings">Valeur inférieure 1 (gauche) :</string>
     <string id="settings_bottom_value_2" scope="settings">Valeur inférieure 2 :</string>
     <string id="settings_bottom_value_3" scope="settings">Valeur inférieure 3 :</string>
