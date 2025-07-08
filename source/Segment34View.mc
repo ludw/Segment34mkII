@@ -2324,10 +2324,9 @@ class Segment34View extends WatchUi.WatchFace {
             case 50: ret = Rez.Strings.WEATHER_50; break;
             case 51: ret = Rez.Strings.WEATHER_51; break;
             case 52: ret = Rez.Strings.WEATHER_52; break;
-            case 53: ret = Rez.Strings.WEATHER_53; break;
+            default: ret = Rez.Strings.WEATHER_53;
         }
 
-        if(ret == null) { return ""; }
         return Application.loadResource(ret) + perp;
     }
 
