@@ -165,9 +165,9 @@
     <string id="LABEL_SUNINT_3">INTENS. SOLEIL</string>
     <string id="LABEL_TEMP_1">TEMP</string>
     <string id="LABEL_STEMP_3">TEMP. CAPTEUR</string>
-    <string id="LABEL_DAWN_1">AUBE</string>
+    <string id="LABEL_DAWN_1">LEVER</string>
     <string id="LABEL_DAWN_2">LEVER</string>
-    <string id="LABEL_DUSK_1">CRÉPUS</string>
+    <string id="LABEL_DUSK_1">COUC</string>
     <string id="LABEL_DUSK_2">COUCHER</string>
     <string id="LABEL_ALARM_1">ALARME</string>
     <string id="LABEL_ALARM_2">ALARMES</string>
