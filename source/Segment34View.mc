@@ -1634,7 +1634,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 26) { // Raw Barometric pressure (hPA)
             var info = Activity.getActivityInfo();
             if (info has :rawAmbientPressure && info.rawAmbientPressure != null) {
-                val = formatPressure(info.rawAmbientPressure / 100.0, numberFormat);
+                val = formatPressure(info.rawAmbientPressure / 100.0, width);
             }
         } else if(complicationType == 27) { // Weight kg
             var profile = UserProfile.getProfile();
@@ -1667,7 +1667,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 30) { // Sea level pressure (hPA)
             var info = Activity.getActivityInfo();
             if (info has :meanSeaLevelPressure && info.meanSeaLevelPressure != null) {
-                val = formatPressure(info.meanSeaLevelPressure / 100.0, numberFormat);
+                val = formatPressure(info.meanSeaLevelPressure / 100.0, width);
             }
         } else if(complicationType == 31) { // Week number
             var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
@@ -2185,15 +2185,20 @@ class Segment34View extends WatchUi.WatchFace {
         return value;
     }
 
-    hidden function formatPressure(pressureHpa as Float, numberFormat as String) as String {
+    hidden function formatPressure(pressureHpa as Float, width as Number) as String {
         var val = "";
+        var nf = "%d";
 
         if (propPressureUnit == 0) { // hPA
-            val = pressureHpa.format(numberFormat);
+            val = pressureHpa.format(nf);
         } else if (propPressureUnit == 1) { // mmHG
-            val = (pressureHpa * 0.750062).format(numberFormat);
+            val = (pressureHpa * 0.750062).format(nf);
         } else if (propPressureUnit == 2) { // inHG
-            val = (pressureHpa * 0.02953).format("%.1f");
+            if(width == 5) {
+                val = (pressureHpa * 0.02953).format("%.2f");
+            } else {
+                val = (pressureHpa * 0.02953).format("%.1f");
+            }
         }
 
         return val;

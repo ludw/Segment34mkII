@@ -59,6 +59,8 @@ Pull requests are welcome, but please follow the following guidelines:
 ## Change log
 2025-07-- v3.5.4
 - Option for steps or pushes in the top small fields
+- Changed labels for dawn/dusk to more correct terms (it's actually showing sunrise/sunset)
+- Pressure in inHg now uses 2 decimals if put in a 5 digit field
 
 2025-07-09 v3.5.3
 - Translation fixes for PL thanks to Rafal
