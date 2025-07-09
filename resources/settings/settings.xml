@@ -115,6 +115,8 @@
             <listEntry value="33">@Strings.settings_total_distance_7_days_miles</listEntry>
             <listEntry value="4">@Strings.settings_floors_climbed_day</listEntry>
             <listEntry value="5">@Strings.settings_meters_climbed_day</listEntry>
+            <listEntry value="17">@Strings.settings_steps_day</listEntry>
+            <listEntry value="19">@Strings.settings_wheelchair_pushes_day</listEntry>
             <listEntry value="6">@Strings.settings_time_to_recovery</listEntry>
             <listEntry value="7">@Strings.settings_vo2_max_running</listEntry>
             <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
@@ -168,6 +170,8 @@
             <listEntry value="33">@Strings.settings_total_distance_7_days_miles</listEntry>
             <listEntry value="4">@Strings.settings_floors_climbed_day</listEntry>
             <listEntry value="5">@Strings.settings_meters_climbed_day</listEntry>
+            <listEntry value="17">@Strings.settings_steps_day</listEntry>
+            <listEntry value="19">@Strings.settings_wheelchair_pushes_day</listEntry>
             <listEntry value="6">@Strings.settings_time_to_recovery</listEntry>
             <listEntry value="7">@Strings.settings_vo2_max_running</listEntry>
             <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>

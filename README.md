@@ -57,6 +57,13 @@ Pull requests are welcome, but please follow the following guidelines:
 - Altitude, history value might not be accurate, use sensor value?
 
 ## Change log
+2025-07-- v3.5.4
+- Option for steps or pushes in the top small fields
+
+2025-07-09 v3.5.3
+- Translation fixes for PL thanks to Rafal
+- Potential fix for a crash
+
 2025-07-07 v3.5.2
 - Added 5, 3, 3 as field layout
 - Added air pressure as option for bottom field
