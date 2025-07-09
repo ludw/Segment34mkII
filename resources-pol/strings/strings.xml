@@ -65,12 +65,12 @@
     <string id="WEATHER_52">CIENKIE CHMURY</string>
     <string id="WEATHER_53">NIEZNANE</string>
 
-    <string id="DAY_OF_WEEK_SUN">NDZ</string>
+    <string id="DAY_OF_WEEK_SUN">NIE</string>
     <string id="DAY_OF_WEEK_MON">PON</string>
-    <string id="DAY_OF_WEEK_TUE">WT</string>
-    <string id="DAY_OF_WEEK_WED">ŚR</string>
+    <string id="DAY_OF_WEEK_TUE">WTO</string>
+    <string id="DAY_OF_WEEK_WED">ŚRO</string>
     <string id="DAY_OF_WEEK_THU">CZW</string>
-    <string id="DAY_OF_WEEK_FRI">PT</string>
+    <string id="DAY_OF_WEEK_FRI">PIĄ</string>
     <string id="DAY_OF_WEEK_SAT">SOB</string>
 
     <string id="MONTH_JAN">STY</string>
