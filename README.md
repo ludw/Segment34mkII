@@ -46,12 +46,10 @@ Pull requests are welcome, but please follow the following guidelines:
      Explain things that look strange or values that has to be looked up to be understood.
 
  ## TODO / Things people have asked for
-- Localization
 - Adjustable font size
 - Goal completion marker
 - Pressure trend
 - Race predictions
-- Weather caching
 - Monthly run/bike distance
 - Notifications as icon
 - Altitude, history value might not be accurate, use sensor value?
@@ -61,6 +59,7 @@ Pull requests are welcome, but please follow the following guidelines:
 - Option for steps or pushes in the top small fields
 - Changed labels for dawn/dusk to more correct terms (it's actually showing sunrise/sunset)
 - Pressure in inHg now uses 2 decimals if put in a 5 digit field
+- Position tweak for case when top part shows two small fields and no labels
 
 2025-07-09 v3.5.3
 - Translation fixes for PL thanks to Rafal

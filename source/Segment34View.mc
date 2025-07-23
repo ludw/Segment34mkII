@@ -573,7 +573,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(propTopPartShows == 2) {
             drawHistogram(dc, dataGraph1, centerX, yn3, histogramHeight);
         } else {
-            var top_data_height = 0;
+            var top_data_height = halfMarginY;
             var top_field_font = fontTinyData;
             var top_field_center_offset = 20;
             if(propTopPartShows == 1) { top_field_center_offset = labelHeight; }
@@ -594,7 +594,7 @@ class Segment34View extends WatchUi.WatchFace {
                 dc.setColor(themeColors[moon], Graphics.COLOR_TRANSPARENT);
                 dc.drawText(centerX, marginY + ((top_data_height + tinyDataHeight) / 2), fontMoon, dataMoon, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             } else {
-                if(top_data_height == 0) { top_field_font = fontSmallData; }
+                if(top_data_height == halfMarginY) { top_field_font = fontSmallData; }
                 dc.drawText(centerX - top_field_center_offset, marginY + top_data_height, top_field_font, dataTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
                 dc.drawText(centerX + top_field_center_offset, marginY + top_data_height, top_field_font, dataTopRight, Graphics.TEXT_JUSTIFY_LEFT);
             }
