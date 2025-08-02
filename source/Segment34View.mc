@@ -867,7 +867,11 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
         }
-        dc.drawText(x - 19, y + 4, fontBattery, dataBattery, Graphics.TEXT_JUSTIFY_LEFT);
+        if(propBatteryVariant == 3) {
+            dc.drawText(x - 19, y + 4, fontBattery, dataBattery, Graphics.TEXT_JUSTIFY_LEFT);
+        } else { // centered when not a bar
+            dc.drawText(x - 1, y + 4, fontBattery, dataBattery, Graphics.TEXT_JUSTIFY_CENTER);
+        }
     }
 
     (:MIP)
@@ -883,7 +887,11 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
         }
-        dc.drawText(x - 11, y + 3, fontBattery, dataBattery, Graphics.TEXT_JUSTIFY_LEFT);
+        if(propBatteryVariant == 3) {
+            dc.drawText(x - 11, y + 3, fontBattery, dataBattery, Graphics.TEXT_JUSTIFY_LEFT);
+        } else {
+            dc.drawText(x - 1, y + 3, fontBattery, dataBattery, Graphics.TEXT_JUSTIFY_CENTER);
+        }
     }
 
     (:MIP)
