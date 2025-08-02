@@ -1670,7 +1670,7 @@ class Segment34View extends WatchUi.WatchFace {
                 var active_calories = ActivityMonitor.getInfo().calories - rest_calories;
                 if (active_calories > 0) {
                     val = active_calories.format(numberFormat);
-                }
+                } else { val = "0"; }
             }
         } else if(complicationType == 30) { // Sea level pressure (hPA)
             var info = Activity.getActivityInfo();
