@@ -52,17 +52,18 @@ Pull requests are welcome, but please follow the following guidelines:
 - Monthly run/bike distance
 - Notifications as icon
 - Altitude, history value might not be accurate, use sensor value?
-- Customizable side bars. Move bar, step goal
+- Customizable side bars. Move bar, step goal, HR
 - Stress bar colors like garmin does
-- Center battery text
 - 7 day rolling run distance
 - Line font for bottom fields
 - AOD that shows every field
+- Min, max HR
 
 ## Change log
 
-2025-08-01 v3.5.5
+2025-08-02 v3.5.5
 - Fixed issue with month display in French
+- Centered battery text
 
 2025-07-23 v3.5.4
 - Option for steps or pushes in the top small fields
