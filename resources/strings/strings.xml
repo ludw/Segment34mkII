@@ -450,8 +450,8 @@
     <string id="settings_hide_all_labels" scope="settings">Hide All Labels</string>
     <string id="settings_hide_top_labels" scope="settings">Hide Top Labels</string>
     <string id="settings_hide_bottom_labels" scope="settings">Hide Bottom Labels</string>
-
     <string id="settings_left_bar_shows" scope="settings">Left Bar Shows</string>
     <string id="settings_right_bar_shows" scope="settings">Right Bar Shows</string>
     <string id="settings_step_goal_progress" scope="settings">Step Goal Progress</string>
+    <string id="settings_floor_climb_progress" scope="settings">Floors Climbed Progress</string>
 </strings>

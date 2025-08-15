@@ -52,7 +52,6 @@ Pull requests are welcome, but please follow the following guidelines:
 - Monthly run/bike distance
 - Notifications as icon
 - Altitude, history value might not be accurate, use sensor value?
-- Customizable side bars. Move bar, step goal, HR
 - Stress bar colors like garmin does
 - 7 day rolling run distance
 - Line font for bottom fields
@@ -62,8 +61,10 @@ Pull requests are welcome, but please follow the following guidelines:
 
 ## Change log
 v3.6.0
+- Option to change what the left and right bar (previously stress and body battery) shows
+- Option to show step goal progress in one of the side bars
+- Option to show floors climbed progress in one of the side bars
 - Fixed bug where recovery hours were overflowing
-- 
 
 
 2025-08-02 v3.5.5

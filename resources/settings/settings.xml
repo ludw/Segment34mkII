@@ -711,6 +711,7 @@
             <listEntry value="1">@Strings.settings_stress</listEntry>
             <listEntry value="2">@Strings.settings_body_battery</listEntry>
             <listEntry value="3">@Strings.settings_step_goal_progress</listEntry>
+            <listEntry value="4">@Strings.settings_floor_climb_progress</listEntry>
         </settingConfig>
     </setting>
 
@@ -720,6 +721,7 @@
             <listEntry value="1">@Strings.settings_stress</listEntry>
             <listEntry value="2">@Strings.settings_body_battery</listEntry>
             <listEntry value="3">@Strings.settings_step_goal_progress</listEntry>
+            <listEntry value="4">@Strings.settings_floor_climb_progress</listEntry>
         </settingConfig>
     </setting>
 
