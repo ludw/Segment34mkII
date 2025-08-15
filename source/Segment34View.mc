@@ -1244,6 +1244,8 @@ class Segment34View extends WatchUi.WatchFace {
             return getStepGoalProgress();
         } else if (data_source == 4) {
             return getFloorGoalProgress();
+        } else if (data_source == 5) {
+            return getActMinGoalProgress();
         }
         return null;
     }
@@ -1304,10 +1306,20 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getFloorGoalProgress() as Number? {
-        if(ActivityMonitor.getInfo().steps != null and ActivityMonitor.getInfo().stepGoal != null) {
+        if(ActivityMonitor.getInfo().floorsClimbed != null and ActivityMonitor.getInfo().floorsClimbedGoal != null) {
             var floors = ActivityMonitor.getInfo().floorsClimbed;
             var goal = ActivityMonitor.getInfo().floorsClimbedGoal;
             return Math.round(floors.toFloat() / goal.toFloat() * 100.0);
+        }
+        return null;
+    }
+
+    hidden function getActMinGoalProgress() as Number? {
+        if(ActivityMonitor.getInfo().activeMinutesWeek != null and ActivityMonitor.getInfo().activeMinutesWeekGoal != null) {
+            var actmin = ActivityMonitor.getInfo().activeMinutesWeek;
+            var val = actmin.total;
+            var goal = ActivityMonitor.getInfo().activeMinutesWeekGoal;
+            return Math.round(val.toFloat() / goal.toFloat() * 100.0);
         }
         return null;
     }

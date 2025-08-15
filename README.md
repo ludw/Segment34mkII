@@ -56,13 +56,13 @@ Pull requests are welcome, but please follow the following guidelines:
 - 7 day rolling run distance
 - Line font for bottom fields
 - AOD that shows every field
-- Min, max HR
 
 ## Change log
-v3.6.0
+2025-08-15 v3.6.0
 - Option to change what the left and right bar (previously stress and body battery) shows
 - Option to show step goal progress in one of the side bars
 - Option to show floors climbed progress in one of the side bars
+- Option to show active minutes weekly progress in one of the side bars
 - Bottom field labels can now be either left aligned or centered
 - Layout adjustments on small screens (6S and similar)
 - Fixed bug where recovery hours were overflowing
