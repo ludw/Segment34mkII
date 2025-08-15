@@ -58,8 +58,13 @@ Pull requests are welcome, but please follow the following guidelines:
 - Line font for bottom fields
 - AOD that shows every field
 - Min, max HR
+- Option to align labels
 
 ## Change log
+v3.6.0
+- Fixed bug where recovery hours were overflowing
+- 
+
 
 2025-08-02 v3.5.5
 - Fixed issue with month display in French

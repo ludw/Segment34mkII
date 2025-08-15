@@ -1517,7 +1517,7 @@ class Segment34View extends WatchUi.WatchFace {
                     var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_RECOVERY_TIME));
                     if (complication != null && complication.value != null) {
                         var recovery_h = complication.value / 60.0;
-                        if(recovery_h < 10 and recovery_h != 0) { val = recovery_h.format("%.1f"); } else { val = recovery_h.format(numberFormat); }
+                        if(recovery_h < 9.9 and recovery_h != 0) { val = recovery_h.format("%.1f"); } else { val = Math.round(recovery_h).format(numberFormat); }
                     }
                 } catch(e) {}
             } else {
@@ -2256,7 +2256,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function formatDistanceByWidth(distance as Float, width as Number) as String {
         if (width == 3) {
-            return distance < 10 ? distance.format("%.1f") : distance.format("%d");
+            return distance < 9.9 ? distance.format("%.1f") : Math.round(distance).format("%d");
         } else if (width == 4) {
             return distance < 100 ? distance.format("%.1f") : distance.format("%d");
         } else {  // width == 5
