@@ -57,7 +57,6 @@ Pull requests are welcome, but please follow the following guidelines:
 - Line font for bottom fields
 - AOD that shows every field
 - Min, max HR
-- Option to align labels
 
 ## Change log
 v3.6.0
@@ -65,6 +64,7 @@ v3.6.0
 - Option to show step goal progress in one of the side bars
 - Option to show floors climbed progress in one of the side bars
 - Bottom field labels can now be either left aligned or centered
+- Layout adjustments on small screens (6S and similar)
 - Fixed bug where recovery hours were overflowing
 
 

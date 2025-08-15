@@ -254,6 +254,7 @@ class Segment34View extends WatchUi.WatchFace {
 
         baseX = centerX;
         baseY = centerY - smallDataHeight + 4;
+        marginY = Math.round(screenHeight / 35);
         fieldSpaceingAdj = 10;
         barBottomAdj = 1;
         histogramBarWidth = 1;
@@ -700,7 +701,7 @@ class Segment34View extends WatchUi.WatchFace {
         dc.drawText(centerX + (step_width / 2) + (marginX / 2) - 2, y4 + (largeDataHeight / 2) + iconYAdj, fontIcons, dataIcon2, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
         
         // Draw battery icon
-        if(screenHeight == 240) {
+        if(screenHeight == 240 and propBottomFieldShows != -2) {
             drawBatteryIcon(dc, centerX + 32, y4);
         } else {
             drawBatteryIcon(dc, null, null);
