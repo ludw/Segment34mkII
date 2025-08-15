@@ -748,6 +748,13 @@
             </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.bottomFieldLabelAlignment" title="@Strings.settings_text_alignment_bottom_labels">
+            <settingConfig type="list">
+                <listEntry value="0">@Strings.settings_left</listEntry>
+                <listEntry value="1">@Strings.settings_center</listEntry>
+            </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.pressToOpenTop" title="@Strings.settings_press_top_third">
         <settingConfig type="list">
             <listEntry value="0">@Strings.settings_nothing</listEntry>

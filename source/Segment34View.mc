@@ -122,6 +122,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propAodAlignment as Number = 0;
     hidden var propDateAlignment as Number = 0;
     hidden var propBottomFieldAlignment as Number = 2;
+    hidden var propBottomFieldLabelAlignment as Number = 0;
     hidden var propLeftBarShows as Number = 1;
     hidden var propRightBarShows as Number = 2;
     hidden var propIcon1 as Number = 1;
@@ -793,8 +794,11 @@ class Segment34View extends WatchUi.WatchFace {
 
         if((propLabelVisibility == 0 or propLabelVisibility == 2) and !(label == null)) {
             dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
-            dc.drawText(x - half_bg_width + adjX, y, fontLabel, label, Graphics.TEXT_JUSTIFY_LEFT);
-
+            if(propBottomFieldLabelAlignment == 0) {
+                dc.drawText(x - half_bg_width + adjX, y, fontLabel, label, Graphics.TEXT_JUSTIFY_LEFT);
+            } else {
+                dc.drawText(x, y, fontLabel, label, Graphics.TEXT_JUSTIFY_CENTER);
+            }
             data_y += labelHeight + labelMargin;
         }
 
@@ -1094,6 +1098,7 @@ class Segment34View extends WatchUi.WatchFace {
         propAodAlignment = getValueOrDefault("aodAlignment", 0) as Number;
         propDateAlignment = getValueOrDefault("dateAlignment", 0) as Number;
         propBottomFieldAlignment = getValueOrDefault("bottomFieldAlignment", 2) as Number;
+        propBottomFieldLabelAlignment = getValueOrDefault("bottomFieldLabelAlignment", 0) as Number;
         propHemisphere = getValueOrDefault("hemisphere", 0) as Number;
         propHourFormat = getValueOrDefault("hourFormat", 0) as Number;
         propZeropadHour = getValueOrDefault("zeropadHour", true) as Boolean;

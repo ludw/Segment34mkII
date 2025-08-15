@@ -454,4 +454,6 @@
     <string id="settings_right_bar_shows" scope="settings">Right Bar Shows</string>
     <string id="settings_step_goal_progress" scope="settings">Step Goal Progress</string>
     <string id="settings_floor_climb_progress" scope="settings">Floors Climbed Progress</string>
+    <string id="settings_text_alignment_bottom_labels" scope="settings">Text alignment for bottom field labels:</string>
+    
 </strings>

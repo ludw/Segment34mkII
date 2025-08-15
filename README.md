@@ -64,6 +64,7 @@ v3.6.0
 - Option to change what the left and right bar (previously stress and body battery) shows
 - Option to show step goal progress in one of the side bars
 - Option to show floors climbed progress in one of the side bars
+- Bottom field labels can now be either left aligned or centered
 - Fixed bug where recovery hours were overflowing
 
 
