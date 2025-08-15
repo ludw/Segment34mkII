@@ -74,8 +74,8 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var dataBattery as String = "";
     hidden var dataAODLeft as String = "";
     hidden var dataAODRight as String = "";
-    hidden var dataBbatt as Number = 0;
-    hidden var dataStress as Number = 0;
+    hidden var dataRightBar as Number = 0;
+    hidden var dataLeftBar as Number = 0;
     hidden var dataGraph1 as Array<Number>?;
 
     hidden var dataLabelTopLeft as String = "";
@@ -122,6 +122,8 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propAodAlignment as Number = 0;
     hidden var propDateAlignment as Number = 0;
     hidden var propBottomFieldAlignment as Number = 2;
+    hidden var propLeftBarShows as Number = 1;
+    hidden var propRightBarShows as Number = 2;
     hidden var propIcon1 as Number = 1;
     hidden var propIcon2 as Number = 2;
     hidden var propHemisphere as Number = 0;
@@ -138,7 +140,6 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propWeatherLine1Shows as Number = 49;
     hidden var propWeatherLine2Shows as Number = 50;
     hidden var propDateFormat as Number = 0;
-    hidden var propShowStressAndBodyBattery as Boolean = true;
     hidden var propShowNotificationCount as Boolean = true;
     hidden var propTzOffset1 as Number = 0;
     hidden var propTzOffset2 as Number = 0;
@@ -627,7 +628,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
 
         // Draw stress and body battery bars
-        drawStressAndBodyBattery(dc);
+        drawSideBars(dc);
 
         // Draw Line below clock
         var y1 = baseY + halfClockHeight + marginY;
@@ -818,17 +819,16 @@ class Segment34View extends WatchUi.WatchFace {
         return value_bg_width;
     }
 
-    hidden function drawStressAndBodyBattery(dc as Dc) as Void {
-        if(!propShowStressAndBodyBattery) { return; }
-
-        if (dataBbatt != null and dataStress != null) {
-            var batt_bar = Math.round(dataBbatt * (clockHeight / 100.0));
-            dc.setColor(themeColors[bodybatt], Graphics.COLOR_TRANSPARENT);
-            dc.fillRectangle(centerX + halfClockWidth + barWidth, baseY + halfClockHeight - batt_bar + barBottomAdj, barWidth, batt_bar);
-
-            var stress_bar = Math.round(dataStress * (clockHeight / 100.0));
+    hidden function drawSideBars(dc as Dc) as Void {
+        if (dataLeftBar != null) {
+            var lbar = Math.round(dataLeftBar * (clockHeight / 100.0));
             dc.setColor(themeColors[stress], Graphics.COLOR_TRANSPARENT);
-            dc.fillRectangle(centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - stress_bar + barBottomAdj, barWidth, stress_bar);
+            dc.fillRectangle(centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - lbar + barBottomAdj, barWidth, lbar);
+        }
+        if (dataRightBar != null) {
+            var rbar = Math.round(dataRightBar * (clockHeight / 100.0));
+            dc.setColor(themeColors[bodybatt], Graphics.COLOR_TRANSPARENT);
+            dc.fillRectangle(centerX + halfClockWidth + barWidth, baseY + halfClockHeight - rbar + barBottomAdj, barWidth, rbar);
         }
     }
 
@@ -1080,6 +1080,8 @@ class Segment34View extends WatchUi.WatchFace {
         propRightValueShows = getValueOrDefault("rightValueShows", 0) as Number;
         propFourthValueShows = getValueOrDefault("fourthValueShows", -2) as Number;
         propBottomFieldShows = getValueOrDefault("bottomFieldShows", 17) as Number;
+        propLeftBarShows = getValueOrDefault("leftBarShows", 1) as Number;
+        propRightBarShows = getValueOrDefault("rightBarShows", 2) as Number;
         propIcon1 = getValueOrDefault("icon1", 1) as Number;
         propIcon2 = getValueOrDefault("icon2", 2) as Number;
         propBatteryVariant = getValueOrDefault("batteryVariant", 3) as Number;
@@ -1101,7 +1103,6 @@ class Segment34View extends WatchUi.WatchFace {
         propPressureUnit = getValueOrDefault("pressureUnit", 0) as Number;
         propLabelVisibility = getValueOrDefault("labelVisibility", 0) as Number;
         propDateFormat = getValueOrDefault("dateFormat", 0) as Number;
-        propShowStressAndBodyBattery = getValueOrDefault("showStressAndBodyBattery", true) as Boolean;
         propShowNotificationCount = getValueOrDefault("showNotificationCount", true) as Boolean;
         propTzOffset1 = getValueOrDefault("tzOffset1", 0) as Number;
         propTzOffset2 = getValueOrDefault("tzOffset2", 0) as Number;
@@ -1118,7 +1119,6 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function updateData(now as Gregorian.Info) as Void {
-        updateStressAndBodyBatteryData();
         var fieldWidths = getFieldWidths();
         dataTopLeft = getValueByType(propSunriseFieldShows, 5);
         dataTopRight = getValueByType(propSunsetFieldShows, 5);
@@ -1136,6 +1136,8 @@ class Segment34View extends WatchUi.WatchFace {
         dataBattery = getBattData();
         dataAODLeft = getValueByType(propAodFieldShows, 10);
         dataAODRight = getValueByType(propAodRightFieldShows, 5);
+        dataLeftBar = getBarData(propLeftBarShows);
+        dataRightBar = getBarData(propRightBarShows);
 
         if(!infoMessage.equals("")) {
             dataBelow = infoMessage;
@@ -1227,38 +1229,71 @@ class Segment34View extends WatchUi.WatchFace {
         return "";
     }
 
-    hidden function updateStressAndBodyBatteryData() as Void {
+    hidden function getBarData(data_source as Number) as Number? {
+        if(data_source == 1) {
+            return getStressData();
+        } else if (data_source == 2) {
+            return getBBData();
+        } else if (data_source == 3) {
+            return getStepGoalProgress();
+        }
+        return null;
+    }
+
+    hidden function getStressData() as Number? {
         if (hasComplications) {
             try {
                 var complication_stress = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_STRESS));
                 if (complication_stress != null && complication_stress.value != null) {
-                    dataStress = complication_stress.value;
+                    return complication_stress.value;
                 }
-                var complication_bb = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_BODY_BATTERY));
-                if (complication_bb != null && complication_bb.value != null) {
-                    dataBbatt = complication_bb.value;
-                }
-
-                return;
             } catch(e) {
                 // Complication not found
             }
-            
+        }
+
+        if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
+            var st_iterator = Toybox.SensorHistory.getStressHistory({:period => 1});
+            var st = st_iterator.next();
+
+            if(st != null) {
+                return st.data;
+            }
+        }
+        return null;
+    }
+
+    hidden function getBBData() as Number? {
+        if (hasComplications) {
+            try {
+                var complication_bb = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_BODY_BATTERY));
+                if (complication_bb != null && complication_bb.value != null) {
+                    return complication_bb.value;
+                }
+            } catch(e) {
+                // Complication not found
+            }
         }
 
         if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
             var bb_iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});
-            var st_iterator = Toybox.SensorHistory.getStressHistory({:period => 1});
             var bb = bb_iterator.next();
-            var st = st_iterator.next();
 
             if(bb != null) {
-                dataBbatt = bb.data;
-            }
-            if(st != null) {
-                dataStress = st.data;
+                return bb.data;
             }
         }
+        return null;
+    }
+
+    hidden function getStepGoalProgress() as Number? {
+        if(ActivityMonitor.getInfo().steps != null and ActivityMonitor.getInfo().stepGoal != null) {
+            var steps = ActivityMonitor.getInfo().steps;
+            var goal = ActivityMonitor.getInfo().stepGoal;
+            System.println(steps.toFloat() / goal.toFloat() * 100.0);
+            return Math.round(steps.toFloat() / goal.toFloat() * 100.0);
+        }
+        return null;
     }
 
     hidden function getBattData() as String {
@@ -1577,12 +1612,14 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 13) { // Stress
-            if(dataStress != null) {
-                val = dataStress.format(numberFormat);
+        var st = getStressData();
+            if(st != null) {
+                val = st.format(numberFormat);
             }
         } else if(complicationType == 14) { // Body battery
-            if(dataBbatt != null) {
-                val = dataBbatt.format(numberFormat);
+            var bb = getBBData();
+            if(bb != null) {
+                val = bb.format(numberFormat);
             }
         } else if(complicationType == 15) { // Altitude (ft)
             if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {

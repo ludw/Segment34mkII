@@ -705,6 +705,24 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.leftBarShows" title="@Strings.settings_left_bar_shows">
+        <settingConfig type="list">
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="1">@Strings.settings_stress</listEntry>
+            <listEntry value="2">@Strings.settings_body_battery</listEntry>
+            <listEntry value="3">@Strings.settings_step_goal_progress</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.rightBarShows" title="@Strings.settings_right_bar_shows">
+        <settingConfig type="list">
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="1">@Strings.settings_stress</listEntry>
+            <listEntry value="2">@Strings.settings_body_battery</listEntry>
+            <listEntry value="3">@Strings.settings_step_goal_progress</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.aodAlignment" title="@Strings.settings_text_alignment_always">
             <settingConfig type="list">
                 <listEntry value="0">@Strings.settings_left</listEntry>
@@ -1047,10 +1065,6 @@
     </setting>
 
     <setting propertyKey="@Properties.alwaysShowSeconds" title="@Strings.settings_show_seconds_inactive">
-        <settingConfig type="boolean" />
-    </setting>
-
-    <setting propertyKey="@Properties.showStressAndBodyBattery" title="@Strings.settings_show_stress_body_battery">
         <settingConfig type="boolean" />
     </setting>
 
