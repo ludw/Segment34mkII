@@ -1985,6 +1985,16 @@ class Segment34View extends WatchUi.WatchFace {
             var fl = getFeelsLike();
             var highlow = getHighLow();
             val = join([temp, fl, highlow]);
+        } else if(complicationType == 68) { // Temperature, UV, Precip
+            var temp = getTemperature();
+            var uv = getUVIndex();
+            var precip = getPrecip();
+            val = join([temp, uv, precip]);
+        } else if(complicationType == 69) { // Temperature, UV, Wind
+            var temp = getTemperature();
+            var uv = getUVIndex();
+            var wind = getWind();
+            val = join([temp, uv, wind]);
         }
 
         return val;

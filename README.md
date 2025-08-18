@@ -56,8 +56,12 @@ Pull requests are welcome, but please follow the following guidelines:
 - 7 day rolling run distance
 - Line font for bottom fields
 - AOD that shows every field
+- AM/PM indicator
 
 ## Change log
+v3.6.1
+- Added two new options with UV index: Temp, UV, Precipitation change and Temp, UV, Wind
+
 2025-08-15 v3.6.0
 - Option to change what the left and right bar (previously stress and body battery) shows
 - Option to show step goal progress in one of the side bars

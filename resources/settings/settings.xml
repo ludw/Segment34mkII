@@ -243,6 +243,8 @@
             <listEntry value="63">@Strings.settings_temperature_wind_humidity_precipitation</listEntry>
             <listEntry value="51">@Strings.settings_temperature_humidity_high_low</listEntry>
             <listEntry value="65">@Strings.settings_temperature_uv_high_low</listEntry>
+            <listEntry value="68">@Strings.settings_temperature_uv_precipitation</listEntry>
+            <listEntry value="69">@Strings.settings_temperature_uv_wind</listEntry>
             <listEntry value="67">@Strings.settings_temperature_feels_high_low</listEntry>
             <listEntry value="52">@Strings.settings_temperature_precipitation_high_low</listEntry>
             <listEntry value="20">@Strings.settings_weather_conditions_precipitation</listEntry>
@@ -278,6 +280,8 @@
             <listEntry value="63">@Strings.settings_temperature_wind_humidity_precipitation</listEntry>
             <listEntry value="51">@Strings.settings_temperature_humidity_high_low</listEntry>
             <listEntry value="65">@Strings.settings_temperature_uv_high_low</listEntry>
+            <listEntry value="68">@Strings.settings_temperature_uv_precipitation</listEntry>
+            <listEntry value="69">@Strings.settings_temperature_uv_wind</listEntry>
             <listEntry value="67">@Strings.settings_temperature_feels_high_low</listEntry>
             <listEntry value="52">@Strings.settings_temperature_precipitation_high_low</listEntry>
             <listEntry value="20">@Strings.settings_weather_conditions_precipitation_chance</listEntry>
@@ -313,6 +317,8 @@
             <listEntry value="63">@Strings.settings_temperature_wind_humidity_precipitation</listEntry>
             <listEntry value="51">@Strings.settings_temperature_humidity_high_low</listEntry>
             <listEntry value="65">@Strings.settings_temperature_uv_high_low</listEntry>
+            <listEntry value="68">@Strings.settings_temperature_uv_precipitation</listEntry>
+            <listEntry value="69">@Strings.settings_temperature_uv_wind</listEntry>
             <listEntry value="67">@Strings.settings_temperature_feels_high_low</listEntry>
             <listEntry value="52">@Strings.settings_temperature_precipitation_high_low</listEntry>
             <listEntry value="20">@Strings.settings_weather_conditions_precipitation_chance</listEntry>

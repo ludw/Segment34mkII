@@ -456,4 +456,6 @@
     <string id="settings_floor_climb_progress" scope="settings">Floors Climbed Progress</string>
     <string id="settings_act_min_progress" scope="settings">Active minutes goal, weekly progress</string>
     <string id="settings_text_alignment_bottom_labels" scope="settings">Text alignment for bottom field labels:</string>
+    <string id="settings_temperature_uv_precipitation" scope="settings">Temperature, UV Index, Precipitation chance</string>
+    <string id="settings_temperature_uv_wind" scope="settings">Temperature, UV Index, Wind</string>
 </strings>
