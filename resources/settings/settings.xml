@@ -719,6 +719,7 @@
             <listEntry value="3">@Strings.settings_step_goal_progress</listEntry>
             <listEntry value="4">@Strings.settings_floor_climb_progress</listEntry>
             <listEntry value="5">@Strings.settings_act_min_progress</listEntry>
+            <listEntry value="6">@Strings.settings_move_bar</listEntry>
         </settingConfig>
     </setting>
 
@@ -730,6 +731,7 @@
             <listEntry value="3">@Strings.settings_step_goal_progress</listEntry>
             <listEntry value="4">@Strings.settings_floor_climb_progress</listEntry>
             <listEntry value="5">@Strings.settings_act_min_progress</listEntry>
+            <listEntry value="6">@Strings.settings_move_bar</listEntry>
         </settingConfig>
     </setting>
 

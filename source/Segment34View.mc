@@ -49,8 +49,8 @@ class Segment34View extends WatchUi.WatchFace {
     (:initialized) hidden var fontAODData as WatchUi.FontResource;
     (:initialized) hidden var fontBottomData as WatchUi.FontResource;
     (:initialized) hidden var fontBattery as WatchUi.FontResource;
-    (:initialized) hidden var weekNames as Array<String>;
-    (:initialized) hidden var monthNames as Array<String>;
+    hidden var weekNames as Array<String>?;
+    hidden var monthNames as Array<String>?;
 
     hidden var drawGradient as BitmapResource?;
     hidden var drawAODPattern as BitmapResource?;
@@ -198,18 +198,8 @@ class Segment34View extends WatchUi.WatchFace {
         
         screenHeight = Toybox.System.getDeviceSettings().screenHeight;
         screenWidth = Toybox.System.getDeviceSettings().screenWidth;
-
         fontMoon = Application.loadResource(Rez.Fonts.moon);
         fontIcons = Application.loadResource(Rez.Fonts.icons);
-        weekNames = [Application.loadResource(Rez.Strings.DAY_OF_WEEK_SUN), Application.loadResource(Rez.Strings.DAY_OF_WEEK_MON),
-                     Application.loadResource(Rez.Strings.DAY_OF_WEEK_TUE), Application.loadResource(Rez.Strings.DAY_OF_WEEK_WED),
-                     Application.loadResource(Rez.Strings.DAY_OF_WEEK_THU), Application.loadResource(Rez.Strings.DAY_OF_WEEK_FRI),
-                     Application.loadResource(Rez.Strings.DAY_OF_WEEK_SAT)];
-        monthNames = [Application.loadResource(Rez.Strings.MONTH_JAN), Application.loadResource(Rez.Strings.MONTH_FEB), Application.loadResource(Rez.Strings.MONTH_MAR),
-                      Application.loadResource(Rez.Strings.MONTH_APR), Application.loadResource(Rez.Strings.MONTH_MAY), Application.loadResource(Rez.Strings.MONTH_JUN),
-                      Application.loadResource(Rez.Strings.MONTH_JUL), Application.loadResource(Rez.Strings.MONTH_AUG), Application.loadResource(Rez.Strings.MONTH_SEP),
-                      Application.loadResource(Rez.Strings.MONTH_OCT), Application.loadResource(Rez.Strings.MONTH_NOV), Application.loadResource(Rez.Strings.MONTH_DEC)];
-
         centerX = Math.round(screenWidth / 2);
         centerY = Math.round(screenHeight / 2);
         marginY = Math.round(screenHeight / 30);
@@ -218,7 +208,6 @@ class Segment34View extends WatchUi.WatchFace {
         loadResources();
 
         halfClockHeight = Math.round(clockHeight / 2);
-
         if(clockBgText.length() == 4) {
             halfClockWidth = Math.round((clockWidth / 5 * 4.2) / 2);
         } else {
@@ -226,7 +215,6 @@ class Segment34View extends WatchUi.WatchFace {
         }
         
         halfMarginY = Math.round(marginY / 2);
-
         hasComplications = Toybox has :Complications;
 
         updateWeather();
@@ -829,12 +817,28 @@ class Segment34View extends WatchUi.WatchFace {
             var lbar = Math.round(dataLeftBar * (clockHeight / 100.0));
             dc.setColor(themeColors[stress], Graphics.COLOR_TRANSPARENT);
             dc.fillRectangle(centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - lbar + barBottomAdj, barWidth, lbar);
+            if(propLeftBarShows == 6) { // Move bar, draw ticks
+                drawMoveBarTicks(dc, centerX - halfClockWidth - barWidth - barWidth, centerX - halfClockWidth);
+            }
         }
         if (dataRightBar != null) {
             var rbar = Math.round(dataRightBar * (clockHeight / 100.0));
             dc.setColor(themeColors[bodybatt], Graphics.COLOR_TRANSPARENT);
             dc.fillRectangle(centerX + halfClockWidth + barWidth, baseY + halfClockHeight - rbar + barBottomAdj, barWidth, rbar);
+            if(propRightBarShows == 6) { // Move bar, draw ticks
+                drawMoveBarTicks(dc, centerX + halfClockWidth + barWidth + barWidth, centerX + halfClockWidth);
+            }
         }
+    }
+
+    hidden function drawMoveBarTicks(dc as Dc, x1, x2) as Void {
+        dc.setColor(themeColors[bg], Graphics.COLOR_TRANSPARENT);
+        dc.setPenWidth(2);
+        dc.drawLine(x1, baseY + halfClockHeight - (40 * (clockHeight / 100.0)), x2, baseY + halfClockHeight - (40 * (clockHeight / 100.0)));
+        dc.drawLine(x1, baseY + halfClockHeight - (55 * (clockHeight / 100.0)), x2, baseY + halfClockHeight - (55 * (clockHeight / 100.0)));
+        dc.drawLine(x1, baseY + halfClockHeight - (70 * (clockHeight / 100.0)), x2, baseY + halfClockHeight - (70 * (clockHeight / 100.0)));
+        dc.drawLine(x1, baseY + halfClockHeight - (85 * (clockHeight / 100.0)), x2, baseY + halfClockHeight - (85 * (clockHeight / 100.0)));
+        dc.setPenWidth(1);
     }
 
     hidden function drawHistogram(dc as Dc, data as Array<Number>?, x as Number, y as Number, h as Number) as Void {
@@ -905,6 +909,7 @@ class Segment34View extends WatchUi.WatchFace {
         var skip = Graphics.COLOR_TRANSPARENT;
         var colBlack = Graphics.COLOR_BLACK;
         var colWhite = Graphics.COLOR_WHITE;
+        var colrGray = 0x555555;
 
         //                        bg,       clock,    clockBg,  outl, dataVal,  fieldBg,  fieldLbl, date,     dDim, notif,    stress,   bodybatt, moon
         if(theme == 0 ) { return [colBlack, 0xFFFF00, 0x005555, skip, colWhite, 0x005555, 0x55AAAA, 0xFFFF00, skip, 0x00AAFF, 0xFFAA00, 0x00AAFF, colWhite]; } // Yellow on turquoise MIP
@@ -917,20 +922,20 @@ class Segment34View extends WatchUi.WatchFace {
         if(theme == 7 ) { return [colBlack, colWhite, 0x0055AA, skip, colWhite, 0x0055AA, 0x0055AA, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // White on Blue MIP
         if(theme == 8 ) { return [colBlack, 0xFFFF00, 0x0055AA, skip, colWhite, 0x0055AA, 0x0055AA, 0xFFFF00, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Yellow on Blue MIP
         if(theme == 9 ) { return [colBlack, colWhite, 0xaa5500, skip, colWhite, 0xaa5500, 0xFF5500, colWhite, skip, 0x00AAFF, 0xFFAA00, 0x00AAFF, colWhite]; } // White and Orange MIP
-        if(theme == 10) { return [colBlack, 0x0055AA, 0x000055, skip, colWhite, 0x555555, 0x0055AA, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Blue MIP
-        if(theme == 11) { return [colBlack, 0xFFAA00, 0x555555, skip, colWhite, 0x555555, 0xFFAA00, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Orange MIP
-        if(theme == 12) { return [colBlack, colWhite, 0x555555, skip, colWhite, 0x555555, colWhite, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // White on black MIP
-        if(theme == 13) { return [colWhite, colBlack, 0xAAAAAA, skip, colBlack, 0xAAAAAA, colBlack, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, 0x555555]; } // Black on White MIP
-        if(theme == 14) { return [colWhite, 0xAA0000, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0xAA0000, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, 0x555555]; } // Red on White MIP
-        if(theme == 15) { return [colWhite, 0x0000AA, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0x0000AA, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, 0x555555]; } // Blue on White MIP
-        if(theme == 16) { return [colWhite, 0x00AA00, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0x00AA00, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, 0x555555]; } // Green on White MIP
-        if(theme == 17) { return [colWhite, 0xFF5500, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0x555555, colBlack, skip, colBlack, 0xFF5500, 0x55AAFF, 0x555555]; } // Orange on White MIP
+        if(theme == 10) { return [colBlack, 0x0055AA, 0x000055, skip, colWhite, colrGray, 0x0055AA, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Blue MIP
+        if(theme == 11) { return [colBlack, 0xFFAA00, colrGray, skip, colWhite, colrGray, 0xFFAA00, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Orange MIP
+        if(theme == 12) { return [colBlack, colWhite, colrGray, skip, colWhite, colrGray, colWhite, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // White on black MIP
+        if(theme == 13) { return [colWhite, colBlack, 0xAAAAAA, skip, colBlack, 0xAAAAAA, colBlack, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, colrGray]; } // Black on White MIP
+        if(theme == 14) { return [colWhite, 0xAA0000, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0xAA0000, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, colrGray]; } // Red on White MIP
+        if(theme == 15) { return [colWhite, 0x0000AA, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0x0000AA, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, colrGray]; } // Blue on White MIP
+        if(theme == 16) { return [colWhite, 0x00AA00, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0x00AA00, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, colrGray]; } // Green on White MIP
+        if(theme == 17) { return [colWhite, 0xFF5500, 0xAAAAAA, skip, colBlack, 0xAAAAAA, colrGray, colBlack, skip, colBlack, 0xFF5500, 0x55AAFF, colrGray]; } // Orange on White MIP
         if(theme == 18) { return [colBlack, 0xFF5500, 0x005500, skip, 0x00FF00, 0x005500, 0xFF5500, 0x00FF00, skip, 0x55FF55, 0xFF5500, 0x00AAFF, colWhite]; } // Green and Orange MIP
         if(theme == 19) { return [colBlack, 0xAAAA55, 0x005500, skip, 0x00FF00, 0x005500, 0xAAAA00, 0xAAAA55, skip, 0x00FF55, 0xAAAA55, 0x00FF00, colWhite]; } // Green Camo MIP
-        if(theme == 20) { return [colBlack, 0xFF0000, 0x555555, skip, colWhite, 0x555555, 0xFF0000, colWhite, skip, 0x55AAFF, 0xFF5555, 0x55AAFF, colWhite]; } // Red on Black MIP
-        if(theme == 21) { return [colWhite, 0xAA00FF, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0xAA00FF, colBlack, skip, colBlack, 0xFF5500, 0x55AAFF, 0x555555]; } // Purple on White MIP
-        if(theme == 22) { return [colBlack, 0xAA00FF, 0x555555, skip, colWhite, 0x555555, 0xAA00FF, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Purple on black MIP
-        if(theme == 23) { return [colBlack, 0xFFAA00, 0x555555, skip, 0xFFAA55, 0x555555, 0xFFAA00, 0xFFAA55, skip, 0x55AAAA, 0xFFAA00, 0x55AAAA, colWhite]; } // Amber MIP
+        if(theme == 20) { return [colBlack, 0xFF0000, colrGray, skip, colWhite, colrGray, 0xFF0000, colWhite, skip, 0x55AAFF, 0xFF5555, 0x55AAFF, colWhite]; } // Red on Black MIP
+        if(theme == 21) { return [colWhite, 0xAA00FF, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0xAA00FF, colBlack, skip, colBlack, 0xFF5500, 0x55AAFF, colrGray]; } // Purple on White MIP
+        if(theme == 22) { return [colBlack, 0xAA00FF, colrGray, skip, colWhite, colrGray, 0xAA00FF, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Purple on black MIP
+        if(theme == 23) { return [colBlack, 0xFFAA00, colrGray, skip, 0xFFAA55, colrGray, 0xFFAA00, 0xFFAA55, skip, 0x55AAAA, 0xFFAA00, 0x55AAAA, colWhite]; } // Amber MIP
         infoMessage = "THEME ERROR";
         return [0xff0000, 0x00ff00, 0x0000ff, 0x550000, 0x005500, 0x000055, 0xff00ff, 0x00ffff, 0xffff00, 0x005555, 0x550055, 0x555500, 0xffffff]; // error case
     }
@@ -1246,6 +1251,8 @@ class Segment34View extends WatchUi.WatchFace {
             return getFloorGoalProgress();
         } else if (data_source == 5) {
             return getActMinGoalProgress();
+        } else if (data_source == 6) {
+            return getMoveBar();
         }
         return null;
     }
@@ -1320,6 +1327,20 @@ class Segment34View extends WatchUi.WatchFace {
             var val = actmin.total;
             var goal = ActivityMonitor.getInfo().activeMinutesWeekGoal;
             return Math.round(val.toFloat() / goal.toFloat() * 100.0);
+        }
+        return null;
+    }
+
+    hidden function getMoveBar() as Number? {
+        if(ActivityMonitor.getInfo() has :moveBarLevel) {
+            if(ActivityMonitor.getInfo().moveBarLevel != null) {
+                var mov = ActivityMonitor.getInfo().moveBarLevel;
+                if(mov == 1) { return 40; }
+                if(mov == 2) { return 55; }
+                if(mov == 3) { return 70; }
+                if(mov == 4) { return 85; }
+                if(mov == 5) { return 100; }
+            }
         }
         return null;
     }
@@ -2684,11 +2705,24 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function dayName(day_of_week as Number) as String {
+        if(weekNames == null) { init_week_month_names(); }
         return weekNames[day_of_week - 1];
     }
 
     hidden function monthName(month as Number) as String {
+        if(monthNames == null) { init_week_month_names(); }
         return monthNames[month - 1];
+    }
+
+    hidden function init_week_month_names() as Void {
+        weekNames = [Application.loadResource(Rez.Strings.DAY_OF_WEEK_SUN), Application.loadResource(Rez.Strings.DAY_OF_WEEK_MON),
+                     Application.loadResource(Rez.Strings.DAY_OF_WEEK_TUE), Application.loadResource(Rez.Strings.DAY_OF_WEEK_WED),
+                     Application.loadResource(Rez.Strings.DAY_OF_WEEK_THU), Application.loadResource(Rez.Strings.DAY_OF_WEEK_FRI),
+                     Application.loadResource(Rez.Strings.DAY_OF_WEEK_SAT)];
+        monthNames = [Application.loadResource(Rez.Strings.MONTH_JAN), Application.loadResource(Rez.Strings.MONTH_FEB), Application.loadResource(Rez.Strings.MONTH_MAR),
+                      Application.loadResource(Rez.Strings.MONTH_APR), Application.loadResource(Rez.Strings.MONTH_MAY), Application.loadResource(Rez.Strings.MONTH_JUN),
+                      Application.loadResource(Rez.Strings.MONTH_JUL), Application.loadResource(Rez.Strings.MONTH_AUG), Application.loadResource(Rez.Strings.MONTH_SEP),
+                      Application.loadResource(Rez.Strings.MONTH_OCT), Application.loadResource(Rez.Strings.MONTH_NOV), Application.loadResource(Rez.Strings.MONTH_DEC)];
     }
 
     hidden function isoWeekNumber(year as Number, month as Number, day as Number) as Number {
