@@ -626,15 +626,23 @@
             </settingConfig>
     </setting>
 
-        <setting propertyKey="@Properties.icon2" title="@Strings.settings_right_icon_indicates">
-            <settingConfig type="list">
-                <listEntry value="-2">@Strings.settings_hidden</listEntry>
-                <listEntry value="1">@Strings.settings_alarm</listEntry>
-                <listEntry value="2">@Strings.settings_do_not_disturb</listEntry>
-                <listEntry value="3">@Strings.settings_bluetooth_on_off</listEntry>
-                <listEntry value="4">@Strings.settings_bluetooth_just_when_off</listEntry>
-                <listEntry value="5">@Strings.settings_move_bar</listEntry>
-            </settingConfig>
+    <setting propertyKey="@Properties.icon2" title="@Strings.settings_right_icon_indicates">
+        <settingConfig type="list">
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="1">@Strings.settings_alarm</listEntry>
+            <listEntry value="2">@Strings.settings_do_not_disturb</listEntry>
+            <listEntry value="3">@Strings.settings_bluetooth_on_off</listEntry>
+            <listEntry value="4">@Strings.settings_bluetooth_just_when_off</listEntry>
+            <listEntry value="5">@Strings.settings_move_bar</listEntry>
+        </settingConfig>
+    </setting>
+    
+    <setting propertyKey="@Properties.aodStyle" title="AOD Style">
+        <settingConfig type="list">
+            <listEntry value="0">Disabled (also disable in watch settings for best battery life)</listEntry>
+            <listEntry value="1">Clock + two fields (defined below)</listEntry>
+            <listEntry value="2">Full watchface (uses most battery)</listEntry>
+        </settingConfig>
     </setting>
 
     <setting propertyKey="@Properties.aodFieldShows" title="@Strings.settings_always_on_below">

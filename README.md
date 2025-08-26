@@ -61,6 +61,7 @@ Pull requests are welcome, but please follow the following guidelines:
 ## Change log
 v3.6.1
 - Added two new options with UV index: Temp, UV, Precipitation change and Temp, UV, Wind
+- Side bars can show a move bar
 
 2025-08-15 v3.6.0
 - Option to change what the left and right bar (previously stress and body battery) shows

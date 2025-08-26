@@ -115,6 +115,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propUpdateFreq as Number = 5;
     hidden var propShowClockBg as Boolean = true;
     hidden var propShowDataBg as Boolean = false;
+    hidden var propAodStyle as Number = 1;
     hidden var propAodFieldShows as Number = -1;
     hidden var propAodRightFieldShows as Number = -2;
     hidden var propDateFieldShows as Number = -1;
@@ -598,14 +599,14 @@ class Segment34View extends WatchUi.WatchFace {
 
         // Draw Clock
         dc.setColor(themeColors[clockBg], Graphics.COLOR_TRANSPARENT);
-        if(propShowClockBg) {
+        if(propShowClockBg and !isSleeping) {
             dc.drawText(baseX, baseY, fontClock, clockBgText, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         }
         dc.setColor(themeColors[clock], Graphics.COLOR_TRANSPARENT);
         dc.drawText(baseX, baseY, fontClock, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
         // Draw clock gradient
-        if(drawGradient != null and themeColors[bg] == 0x000000) {
+        if(drawGradient != null and themeColors[bg] == 0x000000 and !isSleeping) {
             dc.drawBitmap(centerX - halfClockWidth, baseY - halfClockHeight, drawGradient);
         }
 
@@ -701,42 +702,61 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:AMOLED)
     hidden function drawAOD(dc as Dc, now as Gregorian.Info) as Void {
-        // Clear
         dc.setColor(0x000000, 0x000000);
         dc.clear();
 
-        var clock_color = themeColors[clock];
-        if(clock_color == 0x000000) { clock_color = 0x555555; }
+        if(propAodStyle == 2) {
+            drawWatchface(dc, now);
+            drawPattern(dc, 0x000000, (now.min % 3));
+        } else if (propAodStyle == 1) {
+            var clock_color = themeColors[clock];
+            if(clock_color == 0x000000) { clock_color = 0x555555; }
 
-        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2 or propClockOutlineStyle == 5) {
-            // Draw Clock
-            dc.setColor(clock_color, Graphics.COLOR_TRANSPARENT);
-            dc.drawText(baseX, baseY, fontClock, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2 or propClockOutlineStyle == 5) {
+                // Draw Clock
+                dc.setColor(clock_color, Graphics.COLOR_TRANSPARENT);
+                dc.drawText(baseX, baseY, fontClock, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            }
+
+            if(propClockOutlineStyle == 1 or propClockOutlineStyle == 2 or propClockOutlineStyle == 3) {
+                dc.setColor(themeColors[outline], Graphics.COLOR_TRANSPARENT);
+                dc.drawText(baseX, baseY, fontClockOutline, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            }
+
+            if(propClockOutlineStyle == 4) {
+                // Filled clock but outline color
+                dc.setColor(themeColors[outline], Graphics.COLOR_TRANSPARENT);
+                dc.drawText(baseX, baseY, fontClock, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            }
+
+            // Draw clock gradient
+            dc.drawBitmap(centerX - halfClockWidth - (now.min % 2), baseY - halfClockHeight, drawAODPattern);
+
+            // Draw Line below clock
+            var y1 = baseY + halfClockHeight + marginY;
+            dc.setColor(themeColors[dateDim], Graphics.COLOR_TRANSPARENT);
+            if(propAodAlignment == 0) {
+                dc.drawText(baseX - halfClockWidth + textSideAdj - (now.min % 3), y1, fontAODData, dataAODLeft, Graphics.TEXT_JUSTIFY_LEFT);
+            } else {
+                dc.drawText(baseX - (now.min % 3), y1, fontAODData, dataAODLeft, Graphics.TEXT_JUSTIFY_CENTER);
+            }
+            dc.drawText(baseX + halfClockWidth - textSideAdj - 2 - (now.min % 3), y1, fontAODData, dataAODRight, Graphics.TEXT_JUSTIFY_RIGHT);
+        }
+    }
+
+    (:AMOLED)
+    hidden function drawPattern(dc as Dc, color as ColorType, offset as Number) as Void {
+        var text = "";
+        for(var i = 0; i < Math.ceil(screenWidth / 20) + 1; i++) {
+                text += "S";
         }
 
-        if(propClockOutlineStyle == 1 or propClockOutlineStyle == 2 or propClockOutlineStyle == 3) {
-            dc.setColor(themeColors[outline], Graphics.COLOR_TRANSPARENT);
-            dc.drawText(baseX, baseY, fontClockOutline, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+        var i = 0;
+        while(i < Math.ceil(screenHeight / 20) + 1) {
+            dc.drawText(0, i*20 + offset, fontIcons, text, Graphics.TEXT_JUSTIFY_LEFT);
+            i++;
         }
-
-        if(propClockOutlineStyle == 4) {
-            // Filled clock but outline color
-            dc.setColor(themeColors[outline], Graphics.COLOR_TRANSPARENT);
-            dc.drawText(baseX, baseY, fontClock, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-        }
-
-        // Draw clock gradient
-        dc.drawBitmap(centerX - halfClockWidth - (now.min % 2), baseY - halfClockHeight, drawAODPattern);
-
-        // Draw Line below clock
-        var y1 = baseY + halfClockHeight + marginY;
-        dc.setColor(themeColors[dateDim], Graphics.COLOR_TRANSPARENT);
-        if(propAodAlignment == 0) {
-            dc.drawText(baseX - halfClockWidth + textSideAdj - (now.min % 3), y1, fontAODData, dataAODLeft, Graphics.TEXT_JUSTIFY_LEFT);
-        } else {
-            dc.drawText(baseX - (now.min % 3), y1, fontAODData, dataAODLeft, Graphics.TEXT_JUSTIFY_CENTER);
-        }
-        dc.drawText(baseX + halfClockWidth - textSideAdj - 2 - (now.min % 3), y1, fontAODData, dataAODRight, Graphics.TEXT_JUSTIFY_RIGHT);
     }
 
     hidden function getFieldWidths() as Array<Number> {
@@ -864,8 +884,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:AMOLED)
     hidden function drawBatteryIcon(dc as Dc, x as Number?, y as Number?) {
-        var visible = (!isSleeping) && propBatteryVariant != 2;  // Only show if not in AOD and battery is not hidden
-        if(!visible) { return; }
+        if(propBatteryVariant == 2) { return; }
         if(x == null) { x = centerX; }
         if(y == null) { y =  screenHeight - 25; }
 
@@ -1099,6 +1118,7 @@ class Segment34View extends WatchUi.WatchFace {
         propUpdateFreq = getValueOrDefault("updateFreq", 5) as Number;
         propShowClockBg = getValueOrDefault("showClockBg", true) as Boolean;
         propShowDataBg = getValueOrDefault("showDataBg", true) as Boolean;
+        propAodStyle = getValueOrDefault("aodStyle", 1) as Number;
         propAodFieldShows = getValueOrDefault("aodFieldShows", -1) as Number;
         propAodRightFieldShows = getValueOrDefault("aodRightFieldShows", -2) as Number;
         propAodAlignment = getValueOrDefault("aodAlignment", 0) as Number;
