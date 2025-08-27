@@ -59,7 +59,8 @@ Pull requests are welcome, but please follow the following guidelines:
 - AM/PM indicator
 
 ## Change log
-v3.6.1
+2025-08-27 v3.7.0
+- AOD mode that shows all the fields (must be enabled in settings)
 - Added two new options with UV index: Temp, UV, Precipitation change and Temp, UV, Wind
 - Side bars can show a move bar
 
