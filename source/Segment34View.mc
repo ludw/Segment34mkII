@@ -1327,6 +1327,8 @@ class Segment34View extends WatchUi.WatchFace {
         if(ActivityMonitor.getInfo().steps != null and ActivityMonitor.getInfo().stepGoal != null) {
             var steps = ActivityMonitor.getInfo().steps;
             var goal = ActivityMonitor.getInfo().stepGoal;
+            if(goal == null or goal == 0) { return 0; }
+            if(steps == null or steps == 0) { return 0; }
             return Math.round(steps.toFloat() / goal.toFloat() * 100.0);
         }
         return null;
@@ -1336,6 +1338,8 @@ class Segment34View extends WatchUi.WatchFace {
         if(ActivityMonitor.getInfo().floorsClimbed != null and ActivityMonitor.getInfo().floorsClimbedGoal != null) {
             var floors = ActivityMonitor.getInfo().floorsClimbed;
             var goal = ActivityMonitor.getInfo().floorsClimbedGoal;
+            if(goal == null or goal == 0) { return 0; }
+            if(floors == null or floors == 0) { return 0; }
             return Math.round(floors.toFloat() / goal.toFloat() * 100.0);
         }
         return null;
@@ -1346,6 +1350,8 @@ class Segment34View extends WatchUi.WatchFace {
             var actmin = ActivityMonitor.getInfo().activeMinutesWeek;
             var val = actmin.total;
             var goal = ActivityMonitor.getInfo().activeMinutesWeekGoal;
+            if(goal == null or goal == 0) { return 0; }
+            if(val == null or val == 0) { return 0; }
             return Math.round(val.toFloat() / goal.toFloat() * 100.0);
         }
         return null;
