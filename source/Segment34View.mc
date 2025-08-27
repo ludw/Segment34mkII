@@ -1208,9 +1208,9 @@ class Segment34View extends WatchUi.WatchFace {
         if(propTimeSeparator == 2) { separator = ""; }
 
         if(propZeropadHour) {
-            return Lang.format("$1$$2$$3$", [formatHour(now.hour).format("%02d"), separator, now.min.format("%02d")]);
+            return formatHour(now.hour).format("%02d") + separator + now.min.format("%02d");
         } else {
-            return Lang.format("$1$$2$$3$", [formatHour(now.hour).format("%2d"), separator, now.min.format("%02d")]);
+            return formatHour(now.hour).format("%2d") + separator + now.min.format("%02d");
         }
     }
 
@@ -1372,7 +1372,7 @@ class Segment34View extends WatchUi.WatchFace {
             if(System.getSystemStats() has :batteryInDays) {
                 if (System.getSystemStats().batteryInDays != null){
                     var sample = Math.round(System.getSystemStats().batteryInDays);
-                    value = Lang.format("$1$D", [sample.format("%0d")]);
+                    value = sample.format("%0d") + "D";
                 }
             } else {
                 propBatteryVariant = 1;  // Fall back to percentage if days not available
@@ -1381,9 +1381,9 @@ class Segment34View extends WatchUi.WatchFace {
         if(propBatteryVariant == 1) {
             var sample = System.getSystemStats().battery;
             if(sample < 100) {
-                value = Lang.format("$1$%", [sample.format("%d")]);
+                value = sample.format("%d") + "%";
             } else {
-                value = Lang.format("$1$", [sample.format("%d")]);
+                value = sample.format("%d");
             }
         } else if(propBatteryVariant == 3) {
             var sample = 0;
@@ -1544,9 +1544,9 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getValueByTypeWithUnit(complicationType as Number, width as Number) as String {
         var unit = getUnitByType(complicationType);
         if (unit.length() > 0) {
-            unit = Lang.format(" $1$", [unit]);
+            unit = " " + unit;
         }
-        return Lang.format("$1$$2$", [getValueByType(complicationType, width), unit]);
+        return getValueByType(complicationType, width) + unit;
     }
 
     hidden function getUnitByType(complicationType) as String {
@@ -1707,9 +1707,9 @@ class Segment34View extends WatchUi.WatchFace {
                 } else {
                     var steps_k = ActivityMonitor.getInfo().steps / 1000.0;
                     if(steps_k < 10 and width == 4) {
-                        val = Lang.format("$1$K", [steps_k.format("%.1f")]);
+                        val = steps_k.format("%.1f") + "K";
                     } else {
-                        val = Lang.format("$1$K", [steps_k.format("%d")]);
+                        val = steps_k.format("%d") + "K";
                     }
                 }
                 
@@ -1795,12 +1795,12 @@ class Segment34View extends WatchUi.WatchFace {
             val = formatDistanceByWidth(weekly_distance, width);
         } else if(complicationType == 34) { // Battery percentage
             var battery = System.getSystemStats().battery;
-            val = Lang.format("$1$", [battery.format("%d")]);
+            val = battery.format("%d");
         } else if(complicationType == 35) { // Battery days remaining
             if(System.getSystemStats() has :batteryInDays) {
                 if (System.getSystemStats().batteryInDays != null){
                     var sample = Math.round(System.getSystemStats().batteryInDays);
-                    val = Lang.format("$1$", [sample.format(numberFormat)]);
+                    val = sample.format(numberFormat);
                 }
             }
         } else if(complicationType == 36) { // Notification count
@@ -1818,7 +1818,7 @@ class Segment34View extends WatchUi.WatchFace {
                 var temp = tempIterator.next();
                 if(temp != null and temp.data != null) {
                     var tempUnit = getTempUnit();
-                    val = Lang.format("$1$$2$", [formatTemperature(temp.data, tempUnit).format(numberFormat), tempUnit]);
+                    val = formatTemperature(temp.data, tempUnit).format(numberFormat) + tempUnit;
                 }
             }
         } else if(complicationType == 39) { // Sunrise
@@ -1831,9 +1831,9 @@ class Segment34View extends WatchUi.WatchFace {
                         var sunrise = Time.Gregorian.info(s, Time.FORMAT_SHORT);
                         var sunriseHour = formatHour(sunrise.hour);
                         if(width < 5) {
-                            val = Lang.format("$1$$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]);
+                            val = sunriseHour.format("%02d") + sunrise.min.format("%02d");
                         } else {
-                            val = Lang.format("$1$:$2$", [sunriseHour.format("%02d"), sunrise.min.format("%02d")]);
+                            val = sunriseHour.format("%02d") + ":" + sunrise.min.format("%02d");
                         }
                     } else {
                         val = Application.loadResource(Rez.Strings.LABEL_NA);
@@ -1850,9 +1850,9 @@ class Segment34View extends WatchUi.WatchFace {
                         var sunset = Time.Gregorian.info(s, Time.FORMAT_SHORT);
                         var sunsetHour = formatHour(sunset.hour);
                         if(width < 5) {
-                            val = Lang.format("$1$$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]);
+                            val = sunsetHour.format("%02d") + sunset.min.format("%02d");
                         } else {
-                            val = Lang.format("$1$:$2$", [sunsetHour.format("%02d"), sunset.min.format("%02d")]);
+                            val = sunsetHour.format("%02d") + ":" + sunset.min.format("%02d");
                         }
                     } else {
                         val = Application.loadResource(Rez.Strings.LABEL_NA);
@@ -1868,14 +1868,14 @@ class Segment34View extends WatchUi.WatchFace {
                 var tempVal = weatherCondition.highTemperature;
                 var tempUnit = getTempUnit();
                 var temp = formatTemperature(tempVal, tempUnit).format("%01d");
-                val = Lang.format("$1$$2$", [temp, tempUnit]);
+                val = temp + tempUnit;
             }
         } else if(complicationType == 44) { // Low temp
             if(weatherCondition != null and weatherCondition.lowTemperature != null) {
                 var tempVal = weatherCondition.lowTemperature;
                 var tempUnit = getTempUnit();
                 var temp = formatTemperature(tempVal, tempUnit).format("%01d");
-                val = Lang.format("$1$$2$", [temp, tempUnit]);
+                val = temp + tempUnit;
             }
         } else if(complicationType == 45) { // Temperature, Wind, Feels like
             var temp = getTemperature();
@@ -1924,9 +1924,9 @@ class Segment34View extends WatchUi.WatchFace {
                 var nextSunEvent = Time.Gregorian.info(nextSunEventArray[0], Time.FORMAT_SHORT);
                 var nextSunEventHour = formatHour(nextSunEvent.hour);
                 if(width < 5) {
-                    val = Lang.format("$1$$2$", [nextSunEventHour.format("%02d"), nextSunEvent.min.format("%02d")]);
+                    val = nextSunEventHour.format("%02d") + nextSunEvent.min.format("%02d");
                 } else {
-                    val = Lang.format("$1$:$2$", [nextSunEventHour.format("%02d"), nextSunEvent.min.format("%02d")]);
+                    val = nextSunEventHour.format("%02d") + ":" + nextSunEvent.min.format("%02d");
                 }
             }
         } else if(complicationType == 56) { // Millitary Date Time Group
@@ -1984,7 +1984,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 60) { // Location Long Lat dec deg
             var pos = Activity.getActivityInfo().currentLocation;
             if(pos != null) {
-                val = Lang.format("$1$ $2$", [pos.toDegrees()[0], pos.toDegrees()[1]]);
+                val = pos.toDegrees()[0] + " " + pos.toDegrees()[1];
             } else {
                 val = Application.loadResource(Rez.Strings.LABEL_POS_NA);
             }
@@ -2120,11 +2120,11 @@ class Segment34View extends WatchUi.WatchFace {
         // labelSize 1 = short, 2 = mid, 3 = long
 
         if(complicationType == 16) {
-            return Lang.format("$1$:", [propTzName1.toUpper()]);
+            return propTzName1.toUpper() + ":";
         }
 
         if(complicationType == 41) {
-            return Lang.format("$1$:", [propTzName2.toUpper()]);
+            return propTzName2.toUpper() + ":";
         }
         
         switch(complicationType) {
@@ -2197,81 +2197,34 @@ class Segment34View extends WatchUi.WatchFace {
 
         switch(propDateFormat) {
             case 0: // Default: THU, 14 MAR 2024
-                value = Lang.format("$1$, $2$ $3$ $4$", [
-                    dayName(today.day_of_week),
-                    today.day,
-                    monthName(today.month),
-                    today.year
-                ]);
+                value = dayName(today.day_of_week) + ", " + today.day + " " + monthName(today.month) + " " + today.year;
                 break;
             case 1: // ISO: 2024-03-14
-                value = Lang.format("$1$-$2$-$3$", [
-                    today.year,
-                    today.month.format("%02d"),
-                    today.day.format("%02d")
-                ]);
+                value = today.year + "-" + today.month.format("%02d") + "-" + today.day.format("%02d");
                 break;
             case 2: // US: 03/14/2024
-                value = Lang.format("$1$/$2$/$3$", [
-                    today.month.format("%02d"),
-                    today.day.format("%02d"),
-                    today.year
-                ]);
+                value = today.month.format("%02d") + "/" + today.day.format("%02d") + "/" + today.year;
                 break;
             case 3: // EU: 14.03.2024
-                value = Lang.format("$1$.$2$.$3$", [
-                    today.day.format("%02d"),
-                    today.month.format("%02d"),
-                    today.year
-                ]);
+                value = today.day.format("%02d") + "." + today.month.format("%02d") + "." + today.year;
                 break;
             case 4: // THU, 14 MAR (Week number)
-                value = Lang.format("$1$, $2$ $3$ (W$4$)", [
-                    dayName(today.day_of_week),
-                    today.day,
-                    monthName(today.month),
-                    isoWeekNumber(today.year, today.month, today.day)
-                ]);
+                value = dayName(today.day_of_week) + ", " + today.day + " " + monthName(today.month) + " (W" + isoWeekNumber(today.year, today.month, today.day) + ")";
                 break;
             case 5: // THU, 14 MAR 2024 (Week number)
-                value = Lang.format("$1$, $2$ $3$ $4$ (W$5$)", [
-                    dayName(today.day_of_week),
-                    today.day,
-                    monthName(today.month),
-                    today.year,
-                    isoWeekNumber(today.year, today.month, today.day)
-                ]);
+                value = dayName(today.day_of_week) + ", " + today.day + " " + monthName(today.month) + " " + today.year + " (W" + isoWeekNumber(today.year, today.month, today.day) + ")";
                 break;
             case 6: // WEEKDAY, DD MONTH
-                value = Lang.format("$1$, $2$ $3$", [
-                    dayName(today.day_of_week),
-                    today.day,
-                    monthName(today.month)
-                ]);
+                value = dayName(today.day_of_week) + ", " + today.day + " " + monthName(today.month);
                 break;
             case 7: // WEEKDAY, YYYY-MM-DD
-                value = Lang.format("$1$, $2$-$3$-$4$", [
-                    dayName(today.day_of_week),
-                    today.year,
-                    today.month.format("%02d"),
-                    today.day.format("%02d")
-                ]);
+                value = dayName(today.day_of_week) + ", " + today.year + "-" + today.month.format("%02d") + "-" + today.day.format("%02d");
                 break;
             case 8: // WEEKDAY, MM/DD/YYYY
-                value = Lang.format("$1$, $2$/$3$/$4$", [
-                    dayName(today.day_of_week),
-                    today.month.format("%02d"),
-                    today.day.format("%02d"),
-                    today.year
-                ]);
+                value = dayName(today.day_of_week) + ", " + today.month.format("%02d") + "/" + today.day.format("%02d") + "/" + today.year;
                 break;
             case 9: // WEEKDAY, DD.MM.YYYY
-                value = Lang.format("$1$, $2$.$3$.$4$", [
-                    dayName(today.day_of_week),
-                    today.day.format("%02d"),
-                    today.month.format("%02d"),
-                    today.year
-                ]);
+                value = dayName(today.day_of_week) + ", " + today.day.format("%02d") + "." + today.month.format("%02d") + "." + today.year;
                 break;
         }
 
@@ -2298,13 +2251,7 @@ class Segment34View extends WatchUi.WatchFace {
         // DDHHMMZmmmYY
         var now = Time.now();
         var utc = Time.Gregorian.utcInfo(now, Time.FORMAT_SHORT);
-        var value = Lang.format("$1$$2$$3$Z$4$$5$", [
-                    utc.day.format("%02d"),
-                    utc.hour.format("%02d"),
-                    utc.min.format("%02d"),
-                    monthName(utc.month),
-                    utc.year.toString().substring(2,4)
-                ]);
+        var value = utc.day.format("%02d") + utc.hour.format("%02d") + utc.min.format("%02d") + "Z" + monthName(utc.month) + utc.year.toString().substring(2,4);
 
         return value;
     }
@@ -2393,7 +2340,7 @@ class Segment34View extends WatchUi.WatchFace {
                 weatherCondition.precipitationChance != null &&
                 weatherCondition.precipitationChance instanceof Number) {
                 if(weatherCondition.precipitationChance > 0) {
-                    perp = Lang.format(" ($1$%)", [weatherCondition.precipitationChance.format("%02d")]);
+                    perp = " (" + weatherCondition.precipitationChance.format("%02d") + "%)";
                 }
             }
         }
@@ -2464,7 +2411,7 @@ class Segment34View extends WatchUi.WatchFace {
             var temp_unit = getTempUnit();
             var temp_val = weatherCondition.temperature;
             var temp = formatTemperature(temp_val, temp_unit).format("%01d");
-            return Lang.format("$1$$2$", [temp, temp_unit]);
+            return temp + temp_unit;
         }
         return "";
     }
@@ -2546,7 +2493,7 @@ class Segment34View extends WatchUi.WatchFace {
             bearing = ((Math.round((weatherCondition.windBearing.toFloat() + 180) / 45.0).toNumber() % 8) + 97).toChar().toString();
         }
 
-        return Lang.format("$1$$2$", [bearing, windspeed]);
+        return bearing + windspeed;
     }
 
     hidden function getFeelsLike() as String {
@@ -2555,7 +2502,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(weatherCondition != null and weatherCondition.feelsLikeTemperature != null) {
             var fltemp = formatTemperatureFloat(weatherCondition.feelsLikeTemperature, tempUnit);
             var fllabel = Application.loadResource(Rez.Strings.LABEL_FL);
-            fl = Lang.format("$1$:$2$$3$", [fllabel, fltemp.format("%d"), tempUnit]);
+            fl = fllabel + fltemp.format("%d") + tempUnit;
         }
 
         return fl;
@@ -2564,7 +2511,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getHumidity() as String {
         var ret = "";
         if(weatherCondition != null and weatherCondition.relativeHumidity != null) {
-            ret = Lang.format("$1$%", [weatherCondition.relativeHumidity]);
+            ret = weatherCondition.relativeHumidity.format("%d") + "%";
         }
         return ret;
     }
@@ -2584,7 +2531,7 @@ class Segment34View extends WatchUi.WatchFace {
                 var tempUnit = getTempUnit();
                 var high = formatTemperature(weatherCondition.highTemperature, tempUnit);
                 var low = formatTemperature(weatherCondition.lowTemperature, tempUnit);
-                ret = Lang.format("$1$$2$/$3$$2$", [high.format("%d"), tempUnit, low.format("%d")]);
+                ret = high.format("%d") + tempUnit + "/" + low.format("%d") + tempUnit;
             }
         }
         return ret;
@@ -2593,7 +2540,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getPrecip() as String {
         var ret = "";
         if(weatherCondition != null and weatherCondition.precipitationChance != null) {
-            ret = Lang.format("$1$%", [weatherCondition.precipitationChance.format("%d")]);
+            ret = weatherCondition.precipitationChance.format("%d") + "%";
         }
         return ret;
     }
@@ -2717,9 +2664,9 @@ class Segment34View extends WatchUi.WatchFace {
         }
         hour = formatHour(hour);
         if(width < 5) {
-            val = Lang.format("$1$$2$", [hour.format("%02d"), min.format("%02d")]);
+            val = hour.format("%02d") + min.format("%02d");
         } else {
-            val = Lang.format("$1$:$2$", [hour.format("%02d"), min.format("%02d")]);
+            val = hour.format("%02d") + ":" + min.format("%02d");
         }
         return val;
     }
