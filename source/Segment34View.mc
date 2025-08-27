@@ -10,6 +10,7 @@ using Toybox.Position;
 
 class Segment34View extends WatchUi.WatchFace {
 
+    hidden var visible as Boolean = true;
     hidden var screenHeight as Number;
     hidden var screenWidth as Number;
     (:initialized) hidden var clockHeight as Number;
@@ -19,6 +20,8 @@ class Segment34View extends WatchUi.WatchFace {
     (:initialized) hidden var tinyDataHeight as Number;
     (:initialized) hidden var smallDataHeight as Number;
     (:initialized) hidden var largeDataHeight as Number;
+    (:initialized) hidden var largeDataWidth as Number;
+    (:initialized) hidden var bottomDataWidth as Number;
     (:initialized) hidden var baseX as Number;
     (:initialized) hidden var baseY as Number;
     hidden var centerX as Number;
@@ -169,11 +172,6 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     var clockBgText = "#####";
-    (:MIP) const bottomFieldBg = "#";
-    (:Round390) const bottomFieldBg = "#";
-    (:Round416) const bottomFieldBg = "#";
-    (:Round454) const bottomFieldBg = "#";
-    (:Round360) const bottomFieldBg = "$";
 
     (:Round240) const bottomFieldWidths = [3, 3, 3, 0];
     (:Round260) const bottomFieldWidths = [3, 4, 3, 0];
@@ -240,6 +238,8 @@ class Segment34View extends WatchUi.WatchFace {
         tinyDataHeight = 8;
         smallDataHeight = 13;
         largeDataHeight = 20;
+        largeDataWidth = 18;
+        bottomDataWidth = 12;
 
         baseX = centerX;
         baseY = centerY - smallDataHeight + 4;
@@ -271,6 +271,8 @@ class Segment34View extends WatchUi.WatchFace {
         tinyDataHeight = 8;
         smallDataHeight = 13;
         largeDataHeight = 20;
+        largeDataWidth = 18;
+        bottomDataWidth = 18;
 
         baseX = centerX + 1;
         baseY = centerY - smallDataHeight - 1;
@@ -301,6 +303,8 @@ class Segment34View extends WatchUi.WatchFace {
         tinyDataHeight = 10;
         smallDataHeight = 13;
         largeDataHeight = 20;
+        largeDataWidth = 18;
+        bottomDataWidth = 18;
 
         baseX = centerX;
         baseY = centerY - smallDataHeight - 4;
@@ -339,6 +343,8 @@ class Segment34View extends WatchUi.WatchFace {
         tinyDataHeight = 10;
         smallDataHeight = 20;
         largeDataHeight = 27;
+        largeDataWidth = 24;
+        bottomDataWidth = 18;
 
         baseX = centerX;
         baseY = centerY - smallDataHeight + 4;
@@ -379,6 +385,8 @@ class Segment34View extends WatchUi.WatchFace {
         tinyDataHeight = 13;
         smallDataHeight = 20;
         largeDataHeight = 27;
+        largeDataWidth = 24;
+        bottomDataWidth = 24;
 
         baseX = centerX;
         baseY = centerY - smallDataHeight - 3;
@@ -416,6 +424,8 @@ class Segment34View extends WatchUi.WatchFace {
         tinyDataHeight = 13;
         smallDataHeight = 20;
         largeDataHeight = 27;
+        largeDataWidth = 24;
+        bottomDataWidth = 24;
 
         baseX = centerX;
         baseY = centerY - smallDataHeight - 5;
@@ -452,6 +462,8 @@ class Segment34View extends WatchUi.WatchFace {
         tinyDataHeight = 13;
         smallDataHeight = 20;
         largeDataHeight = 27;
+        largeDataWidth = 24;
+        bottomDataWidth = 24;
 
         baseX = centerX + 3;
         baseY = centerY - smallDataHeight + 4;
@@ -472,12 +484,15 @@ class Segment34View extends WatchUi.WatchFace {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() as Void {
+        visible = true;
         lastUpdate = null;
         lastSlowUpdate = null;
     }
 
     // Update the view
     function onUpdate(dc as Dc) as Void {
+        if(!visible) { return; }
+
         var now = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
         var unix_timestamp = Time.now().value();
 
@@ -508,6 +523,7 @@ class Segment34View extends WatchUi.WatchFace {
     // state of this View here. This includes freeing resources from
     // memory.
     function onHide() as Void {
+        visible = false;
     }
 
     // The user has just looked at their watch. Timers and animations may be started here.
@@ -668,19 +684,19 @@ class Segment34View extends WatchUi.WatchFace {
         var dw3 = Math.round(digits[2] * data_width / tot_digits);
         var dw4 = Math.round(digits[3] * data_width / tot_digits);
 
-        drawDataField(dc, left_edge + Math.round(dw1 / 2), y2, 3, dataLabelBottomLeft, dataBottomLeft, "#", digits[0], fontLargeData);
-        drawDataField(dc, left_edge + Math.round(dw1 + (dw2 / 2)), y2, 3, dataLabelBottomMiddle, dataBottomMiddle, "#", digits[1], fontLargeData);
-        drawDataField(dc, left_edge + Math.round(dw1 + dw2 + (dw3 / 2)), y2, 3, dataLabelBottomRight, dataBottomRight, "#", digits[2], fontLargeData);
-        drawDataField(dc, left_edge + Math.round(dw1 + dw2 + dw3 + (dw4 / 2)), y2, 3, dataLabelBottomFourth, dataBottomFourth, "#", digits[3], fontLargeData);
+        drawDataField(dc, left_edge + Math.round(dw1 / 2), y2, 3, dataLabelBottomLeft, dataBottomLeft, digits[0], fontLargeData, largeDataWidth * digits[0]);
+        drawDataField(dc, left_edge + Math.round(dw1 + (dw2 / 2)), y2, 3, dataLabelBottomMiddle, dataBottomMiddle, digits[1], fontLargeData, largeDataWidth * digits[1]);
+        drawDataField(dc, left_edge + Math.round(dw1 + dw2 + (dw3 / 2)), y2, 3, dataLabelBottomRight, dataBottomRight, digits[2], fontLargeData, largeDataWidth * digits[2]);
+        drawDataField(dc, left_edge + Math.round(dw1 + dw2 + dw3 + (dw4 / 2)), y2, 3, dataLabelBottomFourth, dataBottomFourth, digits[3], fontLargeData, largeDataWidth * digits[3]);
 
         // Draw the 5 digit bottom field
         var y4 = y3 + halfMarginY + bottomFiveAdj;
         if((propLabelVisibility == 1 or propLabelVisibility == 3)) { y4 = y4 - labelHeight; }
         var step_width = 0;
         if(screenHeight == 240) {
-            step_width = drawDataField(dc, centerX - 19, y4 + 3, 0, null, dataBottom, bottomFieldBg, 5, fontBottomData);
+            step_width = drawDataField(dc, centerX - 19, y4 + 3, 0, null, dataBottom, 5, fontBottomData, bottomDataWidth * 5);
         } else {
-            step_width = drawDataField(dc, centerX, y4, 0, null, dataBottom, bottomFieldBg, 5, fontBottomData);
+            step_width = drawDataField(dc, centerX, y4, 0, null, dataBottom, 5, fontBottomData, bottomDataWidth * 5);
         }
 
         // Draw icons
@@ -791,13 +807,15 @@ class Segment34View extends WatchUi.WatchFace {
         } 
     }
 
-    hidden function drawDataField(dc as Dc, x as Number, y as Number, adjX as Number, label as String?, value as String, bgChar as String, width as Number, font as FontResource) as Number {
+    hidden function drawDataField(dc as Dc, x as Number, y as Number, adjX as Number, label as String?, value as String, width as Number, font as FontResource, bgwidth as Number) as Number {
         if(value.equals("") and (label == null or label.equals(""))) { return 0; }
         if(width == 0) { return 0; }
         var valueBg = "";
+        var bgChar = "#";
+        if(screenHeight == 360 and width == 5 and label == null) { bgChar = "$"; }
         for(var i=0; i<width; i++) { valueBg += bgChar; }
 
-        var value_bg_width = dc.getTextWidthInPixels(valueBg, font);
+        var value_bg_width = bgwidth;//dc.getTextWidthInPixels(valueBg, font);
         var half_bg_width = Math.round(value_bg_width / 2);
         var data_y = y;
 
