@@ -21,7 +21,7 @@
     <string id="WEATHER_8">BROUILLARD</string>
     <string id="WEATHER_9">BRUMEUX</string>
     <string id="WEATHER_10">GRÊLE</string>
-    <string id="WEATHER_11">AVERS. ÉPARSES</string>
+    <string id="WEATHER_11">AVERSES ÉPARSES</string>
     <string id="WEATHER_12">ORAGES ÉPARSES</string>
     <string id="WEATHER_13">PRÉCIP. INCONNUES</string>
     <string id="WEATHER_14">PLUIE LÉGÈRE</string>
@@ -35,8 +35,8 @@
     <string id="WEATHER_22">PART. CLAIR</string>
     <string id="WEATHER_23">TRÈS CLAIR</string>
     <string id="WEATHER_24">PETITES AVERSES</string>
-    <string id="WEATHER_25">AVERS.</string>
-    <string id="WEATHER_26">FORTES AVERS.</string>
+    <string id="WEATHER_25">AVERSES</string>
+    <string id="WEATHER_26">FORTES AVERSES</string>
     <string id="WEATHER_27">RISQUE AVERSES</string>
     <string id="WEATHER_28">RISQUE ORAGES</string>
     <string id="WEATHER_29">BRUME</string>
@@ -48,11 +48,11 @@
     <string id="WEATHER_35">SABLE</string>
     <string id="WEATHER_36">GRAIN</string>
     <string id="WEATHER_37">TEMPÊTE SABLE</string>
-    <string id="WEATHER_38">CENDRES VOLCANIQ.</string>
+    <string id="WEATHER_38">CENDRES VOLCANIQUES</string>
     <string id="WEATHER_39">BRUME</string>
     <string id="WEATHER_40">BEAU</string>
     <string id="WEATHER_41">OURAGAN</string>
-    <string id="WEATHER_42">TEMP. TROPICALE</string>
+    <string id="WEATHER_42">TEMPÊTE TROPICALE</string>
     <string id="WEATHER_43">RISQUE NEIGE</string>
     <string id="WEATHER_44">PLUIE/NEIGE?</string>
     <string id="WEATHER_45">NUAGEUX, PLUIE?</string>

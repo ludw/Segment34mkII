@@ -515,7 +515,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(isSleeping and canBurnIn) {
             drawAOD(dc, now);
         } else {
-            drawWatchface(dc, now);
+            drawWatchface(dc, now, false);
         }
     }
 
@@ -569,7 +569,7 @@ class Segment34View extends WatchUi.WatchFace {
         dc.drawText(baseX + halfClockWidth - textSideAdj, y1, fontSmallData, dataSeconds, Graphics.TEXT_JUSTIFY_RIGHT);
     }
 
-    hidden function drawWatchface(dc as Dc, now as Gregorian.Info) as Void {
+    hidden function drawWatchface(dc as Dc, now as Gregorian.Info, aod as Boolean) as Void {
         // Clear
         dc.setColor(themeColors[bg], themeColors[bg]);
         dc.clear();
@@ -615,14 +615,14 @@ class Segment34View extends WatchUi.WatchFace {
 
         // Draw Clock
         dc.setColor(themeColors[clockBg], Graphics.COLOR_TRANSPARENT);
-        if(propShowClockBg and !isSleeping) {
+        if(propShowClockBg and !aod) {
             dc.drawText(baseX, baseY, fontClock, clockBgText, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         }
         dc.setColor(themeColors[clock], Graphics.COLOR_TRANSPARENT);
         dc.drawText(baseX, baseY, fontClock, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
         // Draw clock gradient
-        if(drawGradient != null and themeColors[bg] == 0x000000 and !isSleeping) {
+        if(drawGradient != null and themeColors[bg] == 0x000000 and !aod) {
             dc.drawBitmap(centerX - halfClockWidth, baseY - halfClockHeight, drawGradient);
         }
 
@@ -722,7 +722,7 @@ class Segment34View extends WatchUi.WatchFace {
         dc.clear();
 
         if(propAodStyle == 2) {
-            drawWatchface(dc, now);
+            drawWatchface(dc, now, true);
             drawPattern(dc, 0x000000, (now.min % 3));
         } else if (propAodStyle == 1) {
             var clock_color = themeColors[clock];
