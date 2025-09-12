@@ -55,10 +55,12 @@ Pull requests are welcome, but please follow the following guidelines:
 - Stress bar colors like garmin does
 - 7 day rolling run distance
 - Line font for bottom fields
-- AOD that shows every field
 - AM/PM indicator
 
 ## Change log
+2025-09-12 v3.7.2
+- Support for Fenix 8 Pro
+
 2025-09-01 v3.7.1
 - Fixed issuw with clockbg on MIP displays
 - Adjustments to French translations
