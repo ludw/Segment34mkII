@@ -56,8 +56,13 @@ Pull requests are welcome, but please follow the following guidelines:
 - 7 day rolling run distance
 - Line font for bottom fields
 - AM/PM indicator
+- clock font without segments
+- separate 24h mode for alt tz
 
 ## Change log
+2025-09-26 v3.7.3
+- Support for Venu 4
+
 2025-09-12 v3.7.2
 - Support for Fenix 8 Pro
 
