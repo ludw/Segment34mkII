@@ -853,6 +853,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function drawSideBars(dc as Dc) as Void {
         if (dataLeftBar != null) {
             var lbar = Math.round(dataLeftBar * (clockHeight / 100.0));
+            if(lbar > clockHeight) { lbar = clockHeight; }
             dc.setColor(themeColors[stress], Graphics.COLOR_TRANSPARENT);
             dc.fillRectangle(centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - lbar + barBottomAdj, barWidth, lbar);
             if(propLeftBarShows == 6) { // Move bar, draw ticks
@@ -861,6 +862,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
         if (dataRightBar != null) {
             var rbar = Math.round(dataRightBar * (clockHeight / 100.0));
+            if(rbar > clockHeight) { rbar = clockHeight; }
             dc.setColor(themeColors[bodybatt], Graphics.COLOR_TRANSPARENT);
             dc.fillRectangle(centerX + halfClockWidth + barWidth, baseY + halfClockHeight - rbar + barBottomAdj, barWidth, rbar);
             if(propRightBarShows == 6) { // Move bar, draw ticks
