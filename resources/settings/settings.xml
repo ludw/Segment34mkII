@@ -1079,6 +1079,10 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.linesFontforBottomData" title="@Strings.settings_use_lines_font_bottom_data">
+        <settingConfig type="boolean" />
+    </setting>
+
     <setting propertyKey="@Properties.timeSeparator" title="@Strings.settings_separator_hours_minutes">
             <settingConfig type="list">
                 <listEntry value="0">@Strings.settings_colon</listEntry>
