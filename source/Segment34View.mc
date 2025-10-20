@@ -41,17 +41,17 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var histogramHeight as Number = 20;
     hidden var histogramTargetWidth as Number = 40;
 
-    hidden var fontMoon as WatchUi.FontResource;
-    hidden var fontIcons as WatchUi.FontResource;
-    (:initialized) hidden var fontClock as WatchUi.FontResource;
-    (:initialized) hidden var fontClockOutline as WatchUi.FontResource;
-    (:initialized) hidden var fontLabel as WatchUi.FontResource;
-    (:initialized) hidden var fontTinyData as WatchUi.FontResource;
-    (:initialized) hidden var fontSmallData as WatchUi.FontResource;
-    (:initialized) hidden var fontLargeData as WatchUi.FontResource;
-    (:initialized) hidden var fontAODData as WatchUi.FontResource;
-    (:initialized) hidden var fontBottomData as WatchUi.FontResource;
-    (:initialized) hidden var fontBattery as WatchUi.FontResource;
+    hidden var fontMoon as FontType;
+    hidden var fontIcons as FontType;
+    (:initialized) hidden var fontClock as FontType;
+    (:initialized) hidden var fontClockOutline as FontType;
+    (:initialized) hidden var fontLabel as FontType;;
+    (:initialized) hidden var fontTinyData as FontType;
+    (:initialized) hidden var fontSmallData as FontType;
+    (:initialized) hidden var fontLargeData as FontType;
+    (:initialized) hidden var fontAODData as FontType;
+    (:initialized) hidden var fontBottomData as FontType;
+    (:initialized) hidden var fontBattery as FontType;
     hidden var weekNames as Array<String>?;
     hidden var monthNames as Array<String>?;
 
@@ -118,6 +118,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propUpdateFreq as Number = 5;
     hidden var propShowClockBg as Boolean = true;
     hidden var propShowDataBg as Boolean = false;
+    hidden var propUseSystemFonts as Boolean = false;
     hidden var propAodStyle as Number = 1;
     hidden var propAodFieldShows as Number = -1;
     hidden var propAodRightFieldShows as Number = -2;
@@ -222,7 +223,12 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round240)
     hidden function loadResources() as Void {
-        fontClock = Application.loadResource(Rez.Fonts.segments80narrow);
+        if(propUseSystemFonts) {
+            fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
+            propShowClockBg = false;
+        }else{
+             fontClock = Application.loadResource(Rez.Fonts.segments80);
+        }
         fontTinyData = Application.loadResource(Rez.Fonts.smol);
         if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led_small); }
         if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_readable); }
@@ -259,7 +265,12 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round260)
     hidden function loadResources() as Void {
-        fontClock = Application.loadResource(Rez.Fonts.segments80);
+        if(propUseSystemFonts) {
+            fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
+            propShowClockBg = false;
+        }else{
+             fontClock = Application.loadResource(Rez.Fonts.segments80);
+        }
         fontTinyData = Application.loadResource(Rez.Fonts.smol);
         if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led_small); }
         if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_readable); }
@@ -273,6 +284,8 @@ class Segment34View extends WatchUi.WatchFace {
         fontBottomData = fontLargeData;
         fontLabel = Application.loadResource(Rez.Fonts.xsmol);
         fontBattery = fontTinyData;
+
+        
 
         clockHeight = 80;
         clockWidth = 227;
@@ -296,7 +309,12 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round280)
     hidden function loadResources() as Void {
-        fontClock = Application.loadResource(Rez.Fonts.segments80wide);
+        if(propUseSystemFonts) {
+            fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
+            propShowClockBg = false;
+        }else{
+             fontClock = Application.loadResource(Rez.Fonts.segments80);
+        }
         fontTinyData = Application.loadResource(Rez.Fonts.storre);
         if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led_small); }
         if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_readable); }
@@ -331,7 +349,12 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round360)
     hidden function loadResources() as Void {
-        fontClock = Application.loadResource(Rez.Fonts.segments125narrow);
+        if(propUseSystemFonts) {
+            fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
+            propShowClockBg = false;
+        }else{
+             fontClock = Application.loadResource(Rez.Fonts.segments80);
+        }
         fontClockOutline = Application.loadResource(Rez.Fonts.segments125narrowoutline);
         fontTinyData = Application.loadResource(Rez.Fonts.storre);
         if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
@@ -379,7 +402,12 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round390)
     hidden function loadResources() as Void {
-        fontClock = Application.loadResource(Rez.Fonts.segments125);
+        if(propUseSystemFonts) {
+            fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
+            propShowClockBg = false;
+        }else{
+             fontClock = Application.loadResource(Rez.Fonts.segments80);
+        }
         fontClockOutline = Application.loadResource(Rez.Fonts.segments125outline);
         fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
         if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
@@ -422,7 +450,12 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round416)
     hidden function loadResources() as Void {
-        fontClock = Application.loadResource(Rez.Fonts.segments125);
+        if(propUseSystemFonts) {
+            fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
+            propShowClockBg = false;
+        }else{
+             fontClock = Application.loadResource(Rez.Fonts.segments80);
+        }
         fontClockOutline = Application.loadResource(Rez.Fonts.segments125outline);
         fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
         if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
@@ -464,7 +497,12 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round454)
     hidden function loadResources() as Void {
-        fontClock = Application.loadResource(Rez.Fonts.segments145);
+        if(propUseSystemFonts) {
+            fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
+            propShowClockBg = false;
+        }else{
+             fontClock = Application.loadResource(Rez.Fonts.segments80);
+        }
         fontClockOutline = Application.loadResource(Rez.Fonts.segments145outline);
         fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
         if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
@@ -650,6 +688,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(propShowClockBg and !aod) {
             dc.drawText(baseX, baseY, fontClock, clockBgText, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         }
+
         dc.setColor(themeColors[clock], Graphics.COLOR_TRANSPARENT);
         dc.drawText(baseX, baseY, fontClock, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
@@ -1168,6 +1207,7 @@ class Segment34View extends WatchUi.WatchFace {
         propUpdateFreq = getValueOrDefault("updateFreq", 5) as Number;
         propShowClockBg = getValueOrDefault("showClockBg", true) as Boolean;
         propShowDataBg = getValueOrDefault("showDataBg", true) as Boolean;
+        propUseSystemFonts = getValueOrDefault("useSystemFonts", false) as Boolean;
         propAodStyle = getValueOrDefault("aodStyle", 1) as Number;
         propAodFieldShows = getValueOrDefault("aodFieldShows", -1) as Number;
         propAodRightFieldShows = getValueOrDefault("aodRightFieldShows", -2) as Number;

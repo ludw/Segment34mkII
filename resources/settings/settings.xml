@@ -1071,6 +1071,11 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.useSystemFonts" title="@Strings.settings_use_system_fonts">
+        <settingConfig type="boolean" />
+    </setting>
+
+
     <setting propertyKey="@Properties.showNotificationCount" title="@Strings.settings_show_notification_count">
         <settingConfig type="boolean" />
     </setting>

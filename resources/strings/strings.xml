@@ -436,6 +436,7 @@
     <string id="settings_week_number_offset" scope="settings">Week number offset (0 = normal week number)</string>
     <string id="settings_show_clock_background" scope="settings">Show clock background</string>
     <string id="settings_show_data_fields_background" scope="settings">Show data fields background</string>
+    <string id="settings_use_system_fonts" scope="settings">Use system font instead of segments (deactivates background)</string>
     <string id="settings_show_notification_count" scope="settings">Show Notification Count</string>
     <string id="settings_zeropad_hour_clock" scope="settings">Zeropad hour on clock</string>
     <string id="settings_use_lines_font_bottom_data" scope="settings">Apply lines font variant to bottom data</string>
