@@ -1,5 +1,5 @@
 <strings>
-    <string id="AppName">Segment34 MkII</string>
+    <string id="AppName">Bold0 MkII</string>
 
     <string id="UNIT_KCAL">KCAL</string>
     <string id="UNIT_M">M</string>
@@ -341,6 +341,7 @@
     <string id="settings_line_2_above_clock" scope="settings">Riga 2 sopra l'orologio mostra:</string>
     <string id="settings_weather_conditions_precipitation_chance" scope="settings">Condizioni meteo + Probabilità precipitazioni</string>
     <string id="settings_line_below_clock" scope="settings">Riga sotto l'orologio mostra:</string>
+    <string id="settings_value_instead_of_seconds" scope="settings">Campo da mostrare invece dei secondi:</string>
     <string id="settings_bottom_field_layout" scope="settings">Layout campo inferiore (numero di cifre per campo)</string>
     <string id="settings_auto_default_layout" scope="settings">Auto - Layout predefinito in base alla dimensione dello schermo</string>
     <string id="settings_bottom_value_1_left" scope="settings">Valore inferiore 1 (sinistra):</string>
@@ -370,6 +371,7 @@
     <string id="settings_text_alignment_bottom" scope="settings">Allineamento testo per campi dati inferiori:</string>
     <string id="settings_right" scope="settings">Destra</string>
     <string id="settings_left_center_5_digit" scope="settings">Sinistra, ma centra il campo 5 cifre</string>
+    <string id="settings_right_center_5_digit" scope="settings">Destra, ma centra il campo 5 cifre</string>
     <string id="settings_press_top_third" scope="settings">Premi il terzo superiore per aprire:</string>
     <string id="settings_nothing" scope="settings">Niente</string>
     <string id="settings_toggle_night_color" scope="settings">Cambia tema colore notturno</string>

@@ -8,12 +8,16 @@ import Toybox.Weather;
 import Toybox.Complications;
 using Toybox.Position;
 
-class Segment34View extends WatchUi.WatchFace {
+class Bold0View extends WatchUi.WatchFace {
 
     hidden var visible as Boolean = true;
     hidden var screenHeight as Number;
     hidden var screenWidth as Number;
     (:initialized) hidden var clockHeight as Number;
+    (:initialized) hidden var clockYOffset as Number = 0;
+    (:initialized) hidden var dateLineYOffset as Number = 0;
+    (:initialized) hidden var topDataYOffset as Number = 0;
+    (:initialized) hidden var bottomLargeDataHeightOffset as Number = 0;
     (:initialized) hidden var clockWidth as Number;
     (:initialized) hidden var labelHeight as Number;
     (:initialized) hidden var labelMargin as Number;
@@ -67,6 +71,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var dataBelow as String = "";
     hidden var dataNotifications as String = "";
     hidden var dataSeconds as String = "";
+    hidden var dataNoSeconds as String = "";
     hidden var dataBottomLeft as String = "";
     hidden var dataBottomMiddle as String = "";
     hidden var dataBottomRight as String = "";
@@ -114,11 +119,12 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propMiddleValueShows as Number = 10;
     hidden var propRightValueShows as Number = 0;
     hidden var propFourthValueShows as Number = 0;
+    hidden var propValueInsteadOfSeconds as Number = 0;
     hidden var propAlwaysShowSeconds as Boolean = false;
     hidden var propUpdateFreq as Number = 5;
     hidden var propShowClockBg as Boolean = true;
     hidden var propShowDataBg as Boolean = false;
-    hidden var propUseSystemFonts as Boolean = false;
+
     hidden var propAodStyle as Number = 1;
     hidden var propAodFieldShows as Number = -1;
     hidden var propAodRightFieldShows as Number = -2;
@@ -223,12 +229,11 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round240)
     hidden function loadResources() as Void {
-        if(propUseSystemFonts) {
-            fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
-            propShowClockBg = false;
-        }else{
-             fontClock = Application.loadResource(Rez.Fonts.segments80);
-        }
+        
+        //fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
+        fontClock = Graphics.getVectorFont({:face=>["BionicBold"], :size=>130});
+        propShowClockBg = false;
+        
         fontTinyData = Application.loadResource(Rez.Fonts.smol);
         if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led_small); }
         if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_readable); }
@@ -265,41 +270,52 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round260)
     hidden function loadResources() as Void {
-        if(propUseSystemFonts) {
-            fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
-            propShowClockBg = false;
-        }else{
-             fontClock = Application.loadResource(Rez.Fonts.segments80);
-        }
-        fontTinyData = Application.loadResource(Rez.Fonts.smol);
+        // HERE HERE HERE HERE HERE HEREHERE HERE HEREHERE HERE HEREHERE HERE HEREHERE HERE HEREHERE HERE HERE
+        // HERE HERE HERE HERE HERE HEREHERE HERE HEREHERE HERE HEREHERE HERE HEREHERE HERE HEREHERE HERE HERE
+        // HERE HERE HERE HERE HERE HEREHERE HERE HEREHERE HERE HEREHERE HERE HEREHERE HERE HEREHERE HERE HERE
+        // HERE HERE HERE HERE HERE HEREHERE HERE HEREHERE HERE HEREHERE HERE HEREHERE HERE HEREHERE HERE HERE
+     
+        
+        //fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
+        fontClock = Graphics.getVectorFont({:face=>["BionicBold"], :size=>130});
+        propShowClockBg = false;
+        clockYOffset = 11;
+        topDataYOffset = 5; 
+        smallDataHeight = 17;
+        dateLineYOffset = -6;
+        clockHeight = 80;
+        labelMargin = 3;
+        bottomLargeDataHeightOffset = 3;
+        iconYAdj = 6;
+        fieldSpaceingAdj = 0;
+        
+        fontTinyData = Application.loadResource(Rez.Fonts.roboto_condensed_bold_13px);
+        //fontTinyData = Application.loadResource(Rez.Fonts.smol);
         if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led_small); }
         if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_readable); }
-        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_lines); }
+        if(propSmallFontVariant == 2) { fontSmallData =  Graphics.FONT_SYSTEM_SMALL; }
         fontLargeData = Application.loadResource(Rez.Fonts.led);
         if(propLinesFontforBottomData == true) { 
-            fontLargeData = Application.loadResource(Rez.Fonts.led_lines);
+            fontLargeData = Graphics.FONT_SYSTEM_SMALL;
+            propShowDataBg = false;
         } else {
             fontLargeData = Application.loadResource(Rez.Fonts.led);
         }
         fontBottomData = fontLargeData;
-        fontLabel = Application.loadResource(Rez.Fonts.xsmol);
+        fontLabel = fontTinyData;
         fontBattery = fontTinyData;
-
         
-
-        clockHeight = 80;
         clockWidth = 227;
         labelHeight = 5;
-        labelMargin = 6;
         tinyDataHeight = 8;
-        smallDataHeight = 13;
+    
         largeDataHeight = 20;
         largeDataWidth = 18;
         bottomDataWidth = 18;
 
         baseX = centerX + 1;
         baseY = centerY - smallDataHeight - 1;
-        fieldSpaceingAdj = 15;
+        
         bottomFiveAdj = 2;
         barBottomAdj = 1;
         histogramBarWidth = 1;
@@ -309,12 +325,10 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round280)
     hidden function loadResources() as Void {
-        if(propUseSystemFonts) {
+        
             fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
             propShowClockBg = false;
-        }else{
-             fontClock = Application.loadResource(Rez.Fonts.segments80);
-        }
+       
         fontTinyData = Application.loadResource(Rez.Fonts.storre);
         if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led_small); }
         if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_readable); }
@@ -349,13 +363,12 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round360)
     hidden function loadResources() as Void {
-        if(propUseSystemFonts) {
-            fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
-            propShowClockBg = false;
-        }else{
-             fontClock = Application.loadResource(Rez.Fonts.segments80);
-        }
-        fontClockOutline = Application.loadResource(Rez.Fonts.segments125narrowoutline);
+        
+        //fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
+        fontClock = Graphics.getVectorFont({:face=>["BionicBold"], :size=>130});
+        propShowClockBg = false;
+        
+        fontClockOutline = Graphics.getVectorFont({:face=>["BionicBold"], :size=>130});
         fontTinyData = Application.loadResource(Rez.Fonts.storre);
         if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
         if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_inbetween); }
@@ -402,13 +415,12 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round390)
     hidden function loadResources() as Void {
-        if(propUseSystemFonts) {
-            fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
-            propShowClockBg = false;
-        }else{
-             fontClock = Application.loadResource(Rez.Fonts.segments80);
-        }
-        fontClockOutline = Application.loadResource(Rez.Fonts.segments125outline);
+       
+        //fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
+        fontClock = Graphics.getVectorFont({:face=>["BionicBold"], :size=>130});
+        propShowClockBg = false;
+        
+        fontClockOutline = Graphics.getVectorFont({:face=>["BionicBold"], :size=>130});
         fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
         if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
         if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_inbetween); }
@@ -450,13 +462,12 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round416)
     hidden function loadResources() as Void {
-        if(propUseSystemFonts) {
-            fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
-            propShowClockBg = false;
-        }else{
-             fontClock = Application.loadResource(Rez.Fonts.segments80);
-        }
-        fontClockOutline = Application.loadResource(Rez.Fonts.segments125outline);
+        
+        //fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
+        fontClock = Graphics.getVectorFont({:face=>["BionicBold"], :size=>130});
+        propShowClockBg = false;
+        
+        fontClockOutline = Graphics.getVectorFont({:face=>["BionicBold"], :size=>130});
         fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
         if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
         if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_inbetween); }
@@ -497,13 +508,12 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round454)
     hidden function loadResources() as Void {
-        if(propUseSystemFonts) {
-            fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
-            propShowClockBg = false;
-        }else{
-             fontClock = Application.loadResource(Rez.Fonts.segments80);
-        }
-        fontClockOutline = Application.loadResource(Rez.Fonts.segments145outline);
+        
+        //fontClock = Graphics.FONT_SYSTEM_NUMBER_THAI_HOT;
+        fontClock = Graphics.getVectorFont({:face=>["BionicBold"], :size=>130});
+        propShowClockBg = false;
+        
+        fontClockOutline = Graphics.getVectorFont({:face=>["BionicBold"], :size=>130});
         fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
         if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
         if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_inbetween); }
@@ -643,7 +653,7 @@ class Segment34View extends WatchUi.WatchFace {
         // Clear
         dc.setColor(themeColors[bg], themeColors[bg]);
         dc.clear();
-        var yn1 = baseY - halfClockHeight - marginY - smallDataHeight;
+        var yn1 = baseY + (topDataYOffset) - halfClockHeight - marginY - smallDataHeight;
         var yn2 = yn1 - marginY - smallDataHeight;
         var yn3 = yn2 - marginY - histogramHeight;
 
@@ -686,11 +696,11 @@ class Segment34View extends WatchUi.WatchFace {
         // Draw Clock
         dc.setColor(themeColors[clockBg], Graphics.COLOR_TRANSPARENT);
         if(propShowClockBg and !aod) {
-            dc.drawText(baseX, baseY, fontClock, clockBgText, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            dc.drawText(baseX, baseY + clockYOffset, fontClock, clockBgText, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         }
 
         dc.setColor(themeColors[clock], Graphics.COLOR_TRANSPARENT);
-        dc.drawText(baseX, baseY, fontClock, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(baseX, baseY + clockYOffset, fontClock, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
         // Draw clock gradient
         if(drawGradient != null and themeColors[bg] == 0x000000 and !aod) {
@@ -701,7 +711,7 @@ class Segment34View extends WatchUi.WatchFace {
             if(fontClockOutline != null) { // Someone has only bothered to draw this font for AMOLED sizes
                 // Draw outline
                 dc.setColor(themeColors[outline], Graphics.COLOR_TRANSPARENT);
-                dc.drawText(baseX, baseY, fontClockOutline, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(baseX, baseY + clockYOffset, fontClockOutline, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             }
         }
 
@@ -712,42 +722,66 @@ class Segment34View extends WatchUi.WatchFace {
         var y1 = baseY + halfClockHeight + marginY;
         dc.setColor(themeColors[date], Graphics.COLOR_TRANSPARENT);
         if(propDateAlignment == 0) {
-            dc.drawText(baseX - halfClockWidth + textSideAdj, y1, fontSmallData, dataBelow, Graphics.TEXT_JUSTIFY_LEFT);
+            dc.drawText(baseX - halfClockWidth + textSideAdj, y1 + dateLineYOffset, fontSmallData, dataBelow, Graphics.TEXT_JUSTIFY_LEFT);
         } else {
-            dc.drawText(baseX, y1, fontSmallData, dataBelow, Graphics.TEXT_JUSTIFY_CENTER);
+            dc.drawText(baseX, y1 + dateLineYOffset, fontSmallData, dataBelow, Graphics.TEXT_JUSTIFY_CENTER);
         }
         
         // Draw seconds
         if(propShowSeconds) {
             updateSeconds(now);
-            dc.drawText(baseX + halfClockWidth - textSideAdj, y1, fontSmallData, dataSeconds, Graphics.TEXT_JUSTIFY_RIGHT);
+            dc.drawText(baseX + halfClockWidth - textSideAdj, y1 + dateLineYOffset, fontSmallData, dataSeconds, Graphics.TEXT_JUSTIFY_RIGHT);
+        } else{
+            dc.drawText(baseX + halfClockWidth - textSideAdj, y1 + dateLineYOffset, fontSmallData, dataNoSeconds, Graphics.TEXT_JUSTIFY_RIGHT);
         }
 
         // Draw Notification count
-        dc.setColor(themeColors[notif], Graphics.COLOR_TRANSPARENT);
-        if(propDateAlignment == 0) {
-            if(!propShowSeconds) { // No seconds, notification on right side
-                dc.drawText(baseX + halfClockWidth - textSideAdj, y1, fontSmallData, dataNotifications, Graphics.TEXT_JUSTIFY_RIGHT);
-            } else {
-                var date_width = dc.getTextWidthInPixels(dataBelow, fontSmallData);
-                var sec_width = dc.getTextWidthInPixels(dataSeconds, fontSmallData); 
-                var date_right_edge = baseX - halfClockWidth + textSideAdj + date_width;
-                var sec_left = baseX + halfClockWidth - textSideAdj - sec_width;
-                var pos = sec_left - marginX;
-                if((sec_left - date_right_edge) < 3 * marginX) {
-                    pos = (date_right_edge + sec_left) / 2;
+        dataNotifications = "2";
+        if(!dataNotifications.equals("") and propShowNotificationCount) {
+            dc.setColor(themeColors[notif], Graphics.COLOR_TRANSPARENT);
+            var notificationWith = dc.getTextWidthInPixels(dataNotifications, fontSmallData) + 2;
+            if(propDateAlignment == 0) {
+                if(!propShowSeconds && propValueInsteadOfSeconds<0) { // No seconds, notification on right sid
+                    var pos = baseX + halfClockWidth - textSideAdj;
+                    dc.fillRectangle(pos - (notificationWith/2), y1 + dateLineYOffset + ((largeDataHeight+2)/2)-5,notificationWith,(largeDataHeight+2)); 
+                    dc.setColor(0x000000, Graphics.COLOR_TRANSPARENT);
+                    dc.drawText(pos, y1 + dateLineYOffset, fontSmallData, dataNotifications, Graphics.TEXT_JUSTIFY_RIGHT);
+                } else {
+                    var date_width = dc.getTextWidthInPixels(dataBelow, fontSmallData);
+                    var sec_width = 0;
+                    if(propValueInsteadOfSeconds>=0){
+                        sec_width = dc.getTextWidthInPixels(dataNoSeconds, fontSmallData); 
+                    }else{
+                        sec_width = dc.getTextWidthInPixels(dataSeconds, fontSmallData); 
+                    }
+                
+                    var date_right_edge = baseX - halfClockWidth + textSideAdj + date_width;
+                    var sec_left = baseX + halfClockWidth - textSideAdj - sec_width;
+                    var pos = sec_left - marginX;
+                    if((sec_left - date_right_edge) < 3 * marginX) {
+                        pos = (date_right_edge + sec_left) / 2;
+                    }
+                    dc.fillRectangle(pos - (notificationWith/2), y1 + dateLineYOffset + ((largeDataHeight+2)/2)-5,notificationWith,(largeDataHeight+2)); 
+                    dc.setColor(0x000000, Graphics.COLOR_TRANSPARENT);
+                    dc.drawText(pos, y1 + dateLineYOffset, fontSmallData, dataNotifications, Graphics.TEXT_JUSTIFY_CENTER);
                 }
-                dc.drawText(pos, y1, fontSmallData, dataNotifications, Graphics.TEXT_JUSTIFY_CENTER);
-            }
-        } else { // Date is centered, notification on left side
-            dc.drawText(baseX - halfClockWidth, y1, fontSmallData, dataNotifications, Graphics.TEXT_JUSTIFY_LEFT);
-        }
+            } else { // Date is centered, notification on left side
 
+                var pos = baseX + halfClockWidth;
+                dc.fillRectangle(pos - (notificationWith/2), y1 + dateLineYOffset + ((largeDataHeight+2)/2)-5,notificationWith,(largeDataHeight+2)); 
+                dc.setColor(0x000000, Graphics.COLOR_TRANSPARENT);
+                dc.drawText(pos, y1 + dateLineYOffset, fontSmallData, dataNotifications, Graphics.TEXT_JUSTIFY_LEFT);
+            }
+        }
         // Draw the three bottom data fields
         var y2 = y1 + smallDataHeight + marginY;
         var y3 = y2 + labelHeight + labelMargin + largeDataHeight;
         var data_width = Math.sqrt(centerY*centerY - (y3 - centerY)*(y3 - centerY)) * 2 + fieldSpaceingAdj;
+        y3 = y3 - bottomLargeDataHeightOffset;
         var left_edge = Math.round((screenWidth - data_width) / 2);
+        if(propLinesFontforBottomData == true){
+            left_edge = left_edge - 6;
+        }
         var digits = getFieldWidths();
         var tot_digits = digits[0] + digits[1] + digits[2] + digits[3];
         var dw1 = Math.round(digits[0] * data_width / tot_digits);
@@ -765,9 +799,9 @@ class Segment34View extends WatchUi.WatchFace {
         if((propLabelVisibility == 1 or propLabelVisibility == 3)) { y4 = y4 - labelHeight; }
         var step_width = 0;
         if(screenHeight == 240) {
-            step_width = drawDataField(dc, centerX - 19, y4 + 3, 0, null, dataBottom, 5, fontBottomData, bottomDataWidth * 5);
+            step_width = drawDataField(dc, centerX - 19, y4 + 3, 0, null, dataBottom, 7, fontBottomData, bottomDataWidth * 5);
         } else {
-            step_width = drawDataField(dc, centerX, y4, 0, null, dataBottom, 5, fontBottomData, bottomDataWidth * 5);
+            step_width = drawDataField(dc, centerX, y4, 0, null, dataBottom, 7, fontBottomData, bottomDataWidth * 5);
         }
 
         // Draw icons
@@ -879,6 +913,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function drawDataField(dc as Dc, x as Number, y as Number, adjX as Number, label as String?, value as String, width as Number, font as FontResource, bgwidth as Number) as Number {
+    
         if(value.equals("") and (label == null or label.equals(""))) { return 0; }
         if(width == 0) { return 0; }
         var valueBg = "";
@@ -893,9 +928,11 @@ class Segment34View extends WatchUi.WatchFace {
         if((propLabelVisibility == 0 or propLabelVisibility == 2) and !(label == null)) {
             dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
             if(propBottomFieldLabelAlignment == 0) {
-                dc.drawText(x - half_bg_width + adjX, y, fontLabel, label, Graphics.TEXT_JUSTIFY_LEFT);
+                dc.drawText(x + half_bg_width - 1 + adjX, y, fontLabel, label, Graphics.TEXT_JUSTIFY_RIGHT);
+            } else if (propBottomFieldLabelAlignment == 2) {
+                dc.drawText(x + half_bg_width - 1 + adjX, y, fontLabel, label, Graphics.TEXT_JUSTIFY_RIGHT);
             } else {
-                dc.drawText(x, y, fontLabel, label, Graphics.TEXT_JUSTIFY_CENTER);
+                dc.drawText(x, y, fontLabel, label, Graphics.TEXT_JUSTIFY_RIGHT);
             }
             data_y += labelHeight + labelMargin;
         }
@@ -912,9 +949,13 @@ class Segment34View extends WatchUi.WatchFace {
             dc.drawText(x + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_CENTER);
         } else if (propBottomFieldAlignment == 2) {
             dc.drawText(x + half_bg_width - 1 + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_RIGHT);
-        } else if (propBottomFieldAlignment == 3 and width != 5) {
+        } else if (propBottomFieldAlignment == 3 and width != 7) {
             dc.drawText(x - half_bg_width + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_LEFT);
-        } else if (propBottomFieldAlignment == 3 and width == 5) {
+        } else if (propBottomFieldAlignment == 3 and width == 7) {
+            dc.drawText(x + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_CENTER);
+        } else if (propBottomFieldAlignment == 4 and width != 7) {
+            dc.drawText(x + half_bg_width - 1 + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_RIGHT);
+        } else if (propBottomFieldAlignment == 4 and width == 7) {
             dc.drawText(x + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_CENTER);
         }
 
@@ -944,7 +985,7 @@ class Segment34View extends WatchUi.WatchFace {
         dc.setColor(themeColors[bg], Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(2);
         dc.drawLine(x1, baseY + halfClockHeight - (40 * (clockHeight / 100.0)), x2, baseY + halfClockHeight - (40 * (clockHeight / 100.0)));
-        dc.drawLine(x1, baseY + halfClockHeight - (55 * (clockHeight / 100.0)), x2, baseY + halfClockHeight - (55 * (clockHeight / 100.0)));
+        dc.drawLine(x1, baseY + halfClockHeight - (65 * (clockHeight / 100.0)), x2, baseY + halfClockHeight - (65 * (clockHeight / 100.0)));
         dc.drawLine(x1, baseY + halfClockHeight - (70 * (clockHeight / 100.0)), x2, baseY + halfClockHeight - (70 * (clockHeight / 100.0)));
         dc.drawLine(x1, baseY + halfClockHeight - (85 * (clockHeight / 100.0)), x2, baseY + halfClockHeight - (85 * (clockHeight / 100.0)));
         dc.setPenWidth(1);
@@ -1032,7 +1073,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(theme == 9 ) { return [colBlack, colWhite, 0xaa5500, skip, colWhite, 0xaa5500, 0xFF5500, colWhite, skip, 0x00AAFF, 0xFFAA00, 0x00AAFF, colWhite]; } // White and Orange MIP
         if(theme == 10) { return [colBlack, 0x0055AA, 0x000055, skip, colWhite, colrGray, 0x0055AA, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Blue MIP
         if(theme == 11) { return [colBlack, 0xFFAA00, colrGray, skip, colWhite, colrGray, 0xFFAA00, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Orange MIP
-        if(theme == 12) { return [colBlack, colWhite, colrGray, skip, colWhite, colrGray, colWhite, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // White on black MIP
+        if(theme == 12) { return [colBlack, colWhite, colrGray, skip, colWhite, colrGray, colWhite, colWhite, skip, colWhite, 0xFFAA00, 0x55AAFF, colWhite]; } // White on black MIP
         if(theme == 13) { return [colWhite, colBlack, 0xAAAAAA, skip, colBlack, 0xAAAAAA, colBlack, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, colrGray]; } // Black on White MIP
         if(theme == 14) { return [colWhite, 0xAA0000, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0xAA0000, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, colrGray]; } // Red on White MIP
         if(theme == 15) { return [colWhite, 0x0000AA, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0x0000AA, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, colrGray]; } // Blue on White MIP
@@ -1197,6 +1238,7 @@ class Segment34View extends WatchUi.WatchFace {
         propMiddleValueShows = getValueOrDefault("middleValueShows", 10) as Number;
         propRightValueShows = getValueOrDefault("rightValueShows", 0) as Number;
         propFourthValueShows = getValueOrDefault("fourthValueShows", -2) as Number;
+        propValueInsteadOfSeconds = getValueOrDefault("valueInsteadOfSeconds", -2) as Number;
         propBottomFieldShows = getValueOrDefault("bottomFieldShows", 17) as Number;
         propLeftBarShows = getValueOrDefault("leftBarShows", 1) as Number;
         propRightBarShows = getValueOrDefault("rightBarShows", 2) as Number;
@@ -1207,7 +1249,6 @@ class Segment34View extends WatchUi.WatchFace {
         propUpdateFreq = getValueOrDefault("updateFreq", 5) as Number;
         propShowClockBg = getValueOrDefault("showClockBg", true) as Boolean;
         propShowDataBg = getValueOrDefault("showDataBg", true) as Boolean;
-        propUseSystemFonts = getValueOrDefault("useSystemFonts", false) as Boolean;
         propAodStyle = getValueOrDefault("aodStyle", 1) as Number;
         propAodFieldShows = getValueOrDefault("aodFieldShows", -1) as Number;
         propAodRightFieldShows = getValueOrDefault("aodRightFieldShows", -2) as Number;
@@ -1248,11 +1289,12 @@ class Segment34View extends WatchUi.WatchFace {
         dataAboveLine2 = getValueByTypeWithUnit(propWeatherLine2Shows, 10);
         dataBelow = getValueByTypeWithUnit(propDateFieldShows, 10);
         dataNotifications = getNotificationsData();
+        dataNoSeconds = getValueByType(propValueInsteadOfSeconds,5);
         dataBottomLeft = getValueByType(propLeftValueShows, fieldWidths[0]);
         dataBottomMiddle = getValueByType(propMiddleValueShows, fieldWidths[1]);
         dataBottomRight = getValueByType(propRightValueShows, fieldWidths[2]);
         dataBottomFourth = getValueByType(propFourthValueShows, fieldWidths[3]);
-        dataBottom = getValueByType(propBottomFieldShows, 5);
+        dataBottom = getValueByType(propBottomFieldShows, 7);
         dataIcon1 = getIconState(propIcon1);
         dataIcon2 = getIconState(propIcon2);
         dataBattery = getBattData();
@@ -1836,7 +1878,12 @@ class Segment34View extends WatchUi.WatchFace {
                 try {
                     var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_TRAINING_STATUS));
                     if (complication != null && complication.value != null) {
-                        val = complication.value.toUpper();
+                        val = complication.value.toLower();
+                        if(val.length() > width) {
+                            val = val.substring(0, width);
+                        }
+                        
+                        val = val.substring(0, 1).toUpper() + val.substring(1, val.length());
                     }
                 } catch(e) {
                     // Complication not found
@@ -2836,12 +2883,12 @@ class Segment34View extends WatchUi.WatchFace {
 
 }
 
-class Segment34Delegate extends WatchUi.WatchFaceDelegate {
+class Bold0Delegate extends WatchUi.WatchFaceDelegate {
     var screenW = null;
     var screenH = null;
-    var view as Segment34View;
+    var view as Bold0View;
 
-    public function initialize(v as Segment34View) {
+    public function initialize(v as Bold0View) {
         WatchFaceDelegate.initialize();
         screenW = System.getDeviceSettings().screenWidth;
         screenH = System.getDeviceSettings().screenHeight;

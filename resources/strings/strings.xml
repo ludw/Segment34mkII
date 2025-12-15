@@ -1,5 +1,5 @@
 <strings>
-    <string id="AppName">Segment34 MkII</string>
+    <string id="AppName">Bold0 MkII</string>
 
     <string id="UNIT_KCAL">KCAL</string>
     <string id="UNIT_M">M</string>
@@ -7,63 +7,63 @@
     <string id="UNIT_STEPS">STEPS</string>
     <string id="UNIT_PUSHES">PUSHES</string>
     <string id="LABEL_FL">FL</string>
-    <string id="LABEL_NA">N/A</string>
-    <string id="LABEL_POS_NA">POSITION N/A</string>
+    <string id="LABEL_NA">N/a</string>
+    <string id="LABEL_POS_NA">Position N/a</string>
 
-    <string id="WEATHER_0">CLEAR</string>
-    <string id="WEATHER_1">PARTLY CLOUDY</string>
-    <string id="WEATHER_2">MOSTLY CLOUDY</string>
-    <string id="WEATHER_3">RAIN</string>
-    <string id="WEATHER_4">SNOW</string>
-    <string id="WEATHER_5">WINDY</string>
-    <string id="WEATHER_6">THUNDERSTORMS</string>
-    <string id="WEATHER_7">WINTRY MIX</string>
-    <string id="WEATHER_8">FOG</string>
-    <string id="WEATHER_9">HAZY</string>
-    <string id="WEATHER_10">HAIL</string>
-    <string id="WEATHER_11">SCATTERED SHOWERS</string>
-    <string id="WEATHER_12">SCT. THUNDERSTORMS</string>
-    <string id="WEATHER_13">UNKNOWN PRECIPITATION</string>
-    <string id="WEATHER_14">LIGHT RAIN</string>
-    <string id="WEATHER_15">HEAVY RAIN</string>
-    <string id="WEATHER_16">LIGHT SNOW</string>
-    <string id="WEATHER_17">HEAVY SNOW</string>
-    <string id="WEATHER_18">LIGHT RAIN SNOW</string>
-    <string id="WEATHER_19">HEAVY RAIN SNOW</string>
-    <string id="WEATHER_20">CLOUDY</string>
-    <string id="WEATHER_21">RAIN SNOW</string>
-    <string id="WEATHER_22">PARTLY CLEAR</string>
-    <string id="WEATHER_23">MOSTLY CLEAR</string>
-    <string id="WEATHER_24">LIGHT SHOWERS</string>
-    <string id="WEATHER_25">SHOWERS</string>
-    <string id="WEATHER_26">HEAVY SHOWERS</string>
-    <string id="WEATHER_27">CHANCE OF SHOWERS</string>
-    <string id="WEATHER_28">CH. OF THUNDERSTORMS</string>
-    <string id="WEATHER_29">MIST</string>
-    <string id="WEATHER_30">DUST</string>
-    <string id="WEATHER_31">DRIZZLE</string>
-    <string id="WEATHER_32">TORNADO</string>
-    <string id="WEATHER_33">SMOKE</string>
-    <string id="WEATHER_34">ICE</string>
-    <string id="WEATHER_35">SAND</string>
-    <string id="WEATHER_36">SQUALL</string>
-    <string id="WEATHER_37">SANDSTORM</string>
-    <string id="WEATHER_38">VOLCANIC ASH</string>
-    <string id="WEATHER_39">HAZE</string>
-    <string id="WEATHER_40">FAIR</string>
-    <string id="WEATHER_41">HURRICANE</string>
-    <string id="WEATHER_42">TROPICAL STORM</string>
-    <string id="WEATHER_43">CHANCE OF SNOW</string>
-    <string id="WEATHER_44">CHANCE OF RAIN SNOW</string>
-    <string id="WEATHER_45">CLOUDY CHANCE OF RAIN</string>
-    <string id="WEATHER_46">CLOUDY CHANCE OF SNOW</string>
-    <string id="WEATHER_47">CLOUDY CHANCE OF RAIN SNOW</string>
-    <string id="WEATHER_48">FLURRIES</string>
-    <string id="WEATHER_49">FREEZING RAIN</string>
-    <string id="WEATHER_50">SLEET</string>
-    <string id="WEATHER_51">ICE SNOW</string>
-    <string id="WEATHER_52">THIN CLOUDS</string>
-    <string id="WEATHER_53">UNKNOWN</string>
+    <string id="WEATHER_0">Clear</string>
+    <string id="WEATHER_1">Partly Cloudy</string>
+    <string id="WEATHER_2">Mostly Cloudy</string>
+    <string id="WEATHER_3">Rain</string>
+    <string id="WEATHER_4">Snow</string>
+    <string id="WEATHER_5">Windy</string>
+    <string id="WEATHER_6">Thunderstorms</string>
+    <string id="WEATHER_7">Wintry Mix</string>
+    <string id="WEATHER_8">Fog</string>
+    <string id="WEATHER_9">Hazy</string>
+    <string id="WEATHER_10">Hail</string>
+    <string id="WEATHER_11">Scattered Showers</string>
+    <string id="WEATHER_12">Sct. Thunderstorms</string>
+    <string id="WEATHER_13">Unknown Precipitation</string>
+    <string id="WEATHER_14">Light Rain</string>
+    <string id="WEATHER_15">Heavy Rain</string>
+    <string id="WEATHER_16">Light Snow</string>
+    <string id="WEATHER_17">Heavy Snow</string>
+    <string id="WEATHER_18">Light Rain Snow</string>
+    <string id="WEATHER_19">Heavy Rain Snow</string>
+    <string id="WEATHER_20">Cloudy</string>
+    <string id="WEATHER_21">Rain Snow</string>
+    <string id="WEATHER_22">Partly Clear</string>
+    <string id="WEATHER_23">Mostly Clear</string>
+    <string id="WEATHER_24">Light Showers</string>
+    <string id="WEATHER_25">Showers</string>
+    <string id="WEATHER_26">Heavy Showers</string>
+    <string id="WEATHER_27">Chance Of Showers</string>
+    <string id="WEATHER_28">Ch. Of Thunderstorms</string>
+    <string id="WEATHER_29">Mist</string>
+    <string id="WEATHER_30">Dust</string>
+    <string id="WEATHER_31">Drizzle</string>
+    <string id="WEATHER_32">Tornado</string>
+    <string id="WEATHER_33">Smoke</string>
+    <string id="WEATHER_34">Ice</string>
+    <string id="WEATHER_35">Sand</string>
+    <string id="WEATHER_36">Squall</string>
+    <string id="WEATHER_37">Sandstorm</string>
+    <string id="WEATHER_38">Volcanic Ash</string>
+    <string id="WEATHER_39">Haze</string>
+    <string id="WEATHER_40">Fair</string>
+    <string id="WEATHER_41">Hurricane</string>
+    <string id="WEATHER_42">Tropical Storm</string>
+    <string id="WEATHER_43">Chance Of Snow</string>
+    <string id="WEATHER_44">Chance Of Rain Snow</string>
+    <string id="WEATHER_45">Cloudy Chance Of Rain</string>
+    <string id="WEATHER_46">Cloudy Chance Of Snow</string>
+    <string id="WEATHER_47">Cloudy Chance Of Rain Snow</string>
+    <string id="WEATHER_48">Flurries</string>
+    <string id="WEATHER_49">Freezing Rain</string>
+    <string id="WEATHER_50">Sleet</string>
+    <string id="WEATHER_51">Ice Snow</string>
+    <string id="WEATHER_52">Thin Clouds</string>
+    <string id="WEATHER_53">Unknown</string>
 
     <string id="DAY_OF_WEEK_SUN">SUN</string>
     <string id="DAY_OF_WEEK_MON">MON</string>
@@ -341,6 +341,7 @@
     <string id="settings_line_2_above_clock" scope="settings">Line 2 above clock shows:</string>
     <string id="settings_weather_conditions_precipitation_chance" scope="settings">Weather conditions + Percipitation chance</string>
     <string id="settings_line_below_clock" scope="settings">Line below clock shows:</string>
+    <string id="settings_value_instead_of_seconds" scope="settings">Field to show instead of seconds:</string>
     <string id="settings_bottom_field_layout" scope="settings">Bottom field layout (number of digits per field)</string>
     <string id="settings_auto_default_layout" scope="settings">Auto - Default layout depending on screen size</string>
     <string id="settings_bottom_value_1_left" scope="settings">Bottom value 1 (left):</string>
@@ -370,6 +371,7 @@
     <string id="settings_text_alignment_bottom" scope="settings">Text alignment for bottom data fields:</string>
     <string id="settings_right" scope="settings">Right</string>
     <string id="settings_left_center_5_digit" scope="settings">Left, but center the 5 digit field</string>
+    <string id="settings_right_center_5_digit" scope="settings">Right, but center the 5 digit field</string>
     <string id="settings_press_top_third" scope="settings">Press top third to open:</string>
     <string id="settings_nothing" scope="settings">Nothing</string>
     <string id="settings_toggle_night_color" scope="settings">Toggle night color theme</string>

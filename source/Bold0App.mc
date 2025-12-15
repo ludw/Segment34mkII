@@ -2,7 +2,7 @@ import Toybox.Application;
 import Toybox.Lang;
 import Toybox.WatchUi;
 
-class Segment34App extends Application.AppBase {
+class Bold0App extends Application.AppBase {
     
     var mView;
     
@@ -20,9 +20,9 @@ class Segment34App extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() {
-        mView = new Segment34View();
+        mView = new Bold0View();
 		onSettingsChanged();
-        var delegate = new Segment34Delegate(mView);
+        var delegate = new Bold0Delegate(mView);
 		return [mView, delegate];
     }
 
@@ -33,6 +33,6 @@ class Segment34App extends Application.AppBase {
 
 }
 
-function getApp() as Segment34App {
-    return Application.getApp() as Segment34App;
+function getApp() as Bold0App {
+    return Application.getApp() as Bold0App;
 }

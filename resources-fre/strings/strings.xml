@@ -1,5 +1,5 @@
 <strings>
-    <string id="AppName">Segment34 MkII</string>
+    <string id="AppName">Bold0 MkII</string>
 
     <string id="UNIT_KCAL">KCAL</string>
     <string id="UNIT_M">M</string>
@@ -340,6 +340,7 @@
     <string id="settings_line_2_above_clock" scope="settings">Ligne 2 au-dessus de l'horloge affiche :</string>
     <string id="settings_weather_conditions_precipitation_chance" scope="settings">Conditions météo + Risque de précipitations</string>
     <string id="settings_line_below_clock" scope="settings">Ligne sous l'horloge affiche :</string>
+    <string id="settings_value_instead_of_seconds" scope="settings">Champ à afficher à la place des secondes :</string>
     <string id="settings_bottom_field_layout" scope="settings">Disposition des champs inférieurs (nombre de chiffres par champ)</string>
     <string id="settings_auto_default_layout" scope="settings">Auto - Disposition par défaut selon la taille d'écran</string>
     <string id="settings_bottom_value_1_left" scope="settings">Valeur inférieure 1 (gauche) :</string>
@@ -369,6 +370,7 @@
     <string id="settings_text_alignment_bottom" scope="settings">Alignement du texte pour les champs de données inférieurs :</string>
     <string id="settings_right" scope="settings">Droite</string>
     <string id="settings_left_center_5_digit" scope="settings">Gauche, mais centrer le champ à 5 chiffres</string>
+    <string id="settings_right_center_5_digit" scope="settings">Droite, mais centrer le champ à 5 chiffres</string>
     <string id="settings_press_top_third" scope="settings">Appuyer sur le tiers supérieur pour ouvrir :</string>
     <string id="settings_nothing" scope="settings">Rien</string>
     <string id="settings_toggle_night_color" scope="settings">Basculer le thème de couleur nocturne</string>
