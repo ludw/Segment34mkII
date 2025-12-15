@@ -1,7 +1,7 @@
 # Bold0
 This is a fork of Segment34 mkII with stock fonts.
 
-![Screenshot of the watchface](screenshot.png "Screenshot")
+![Screenshot of the watchface](screenshotBold0.png "Screenshot")
 
 The watchface features the following (because this was included in Segment34):
 
