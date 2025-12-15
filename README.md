@@ -1,5 +1,5 @@
 # Bold0
-This is a fork of Segment34 mkII with stock fonts.
+This is a fork of Segment34 mkII with stock fonts. WARNING: AT THE MOMENT, this works only properly for watches with a 240x240 resolution like Fenix 7 Pro.
 
 ![Screenshot of the watchface](screenshotBold0.png "Screenshot")
 

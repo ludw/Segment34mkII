@@ -8,7 +8,7 @@ import Toybox.Weather;
 import Toybox.Complications;
 using Toybox.Position;
 
-class Bold0View extends WatchUi.WatchFace {
+class Segment34View extends WatchUi.WatchFace {
 
     hidden var visible as Boolean = true;
     hidden var screenHeight as Number;
@@ -2883,12 +2883,12 @@ class Bold0View extends WatchUi.WatchFace {
 
 }
 
-class Bold0Delegate extends WatchUi.WatchFaceDelegate {
+class Segment34Delegate extends WatchUi.WatchFaceDelegate {
     var screenW = null;
     var screenH = null;
-    var view as Bold0View;
+    var view as Segment34View;
 
-    public function initialize(v as Bold0View) {
+    public function initialize(v as Segment34View) {
         WatchFaceDelegate.initialize();
         screenW = System.getDeviceSettings().screenWidth;
         screenH = System.getDeviceSettings().screenHeight;
