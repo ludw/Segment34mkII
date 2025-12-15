@@ -1,5 +1,5 @@
 <properties>
-    <property id="colorTheme" type="number">0</property>
+    <property id="colorTheme" type="number">12</property>
     <property id="nightColorTheme" type="number">-1</property>
     <property id="nightThemeActivation" type="number">0</property>
     <property id="colorOverride" type="string"></property>
@@ -10,37 +10,39 @@
     <property id="windUnit" type="number">0</property>
     <property id="pressureUnit" type="number">0</property>
     <property id="showNotificationCount" type="boolean">true</property>
-    <property id="showSeconds" type="boolean">true</property>
+    <property id="showSeconds" type="boolean">false</property>
     <property id="topPartShows" type="number">0</property>
     <property id="sunriseFieldShows" type="number">39</property>
     <property id="sunsetFieldShows" type="number">40</property>
     <property id="histogramData" type="number">0</property>
     <property id="clockOutlineStyle" type="number">0</property>
     <property id="showClockBg" type="boolean">true</property>
-    <property id="linesFontforBottomData" type="boolean">false</property>
-    <property id="showDataBg" type="boolean">true</property>
+    <property id="linesFontforBottomData" type="boolean">true</property>
+    <property id="showDataBg" type="boolean">false</property>
+    <property id="useSystemFonts" type="boolean">true</property>
     <property id="alwaysShowSeconds" type="boolean">false</property>
-    <property id="updateFreq" type="number">5</property>
+    <property id="updateFreq" type="number">60</property>
     <property id="batteryVariant" type="number">3</property>
-    <property id="weatherLine1Shows" type="number">49</property>
-    <property id="weatherLine2Shows" type="number">50</property>
-    <property id="fieldLayout" type="number">0</property>
+    <property id="weatherLine1Shows" type="number">50</property>
+    <property id="weatherLine2Shows" type="number">52</property>
+    <property id="fieldLayout" type="number">2</property>
+    <property id="valueInsteadOfSeconds" type="number">57</property>
     <property id="leftValueShows" type="number">6</property>
-    <property id="middleValueShows" type="number">10</property>
-    <property id="rightValueShows" type="number">0</property>
+    <property id="middleValueShows" type="number">0</property>
+    <property id="rightValueShows" type="number">17</property>
     <property id="fourthValueShows" type="number">-2</property>
-    <property id="bottomFieldShows" type="number">17</property>
+    <property id="bottomFieldShows" type="number">25</property>
     <property id="aodStyle" type="number">1</property>
     <property id="aodFieldShows" type="number">-1</property>
     <property id="aodRightFieldShows" type="number">-2</property>
     <property id="dateFieldShows" type="number">-1</property>
-    <property id="leftBarShows" type="number">1</property>
-    <property id="rightBarShows" type="number">2</property>
+    <property id="leftBarShows" type="number">-2</property>
+    <property id="rightBarShows" type="number">-2</property>
     <property id="aodAlignment" type="number">0</property>
     <property id="dateAlignment" type="number">0</property>
-    <property id="bottomFieldAlignment" type="number">2</property>
-    <property id="bottomFieldLabelAlignment" type="number">0</property>
-    <property id="dateFormat" type="number">0</property>
+    <property id="bottomFieldAlignment" type="number">4</property>
+    <property id="bottomFieldLabelAlignment" type="number">2</property>
+    <property id="dateFormat" type="number">6</property>
     <property id="smallFontVariant" type="number">2</property>
     <property id="hemisphere" type="number">0</property>
     <property id="tzOffset1" type="number">0</property>

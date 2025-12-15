@@ -358,6 +358,61 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.valueInsteadOfSeconds" title="@Strings.settings_value_instead_of_seconds">
+        <settingConfig type="list">
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="17">@Strings.settings_steps_day</listEntry>
+            <listEntry value="0">@Strings.settings_active_min_week</listEntry>
+            <listEntry value="1">@Strings.settings_active_min_day</listEntry>
+            <listEntry value="2">@Strings.settings_distance_km_day</listEntry>
+            <listEntry value="3">@Strings.settings_distance_miles_day</listEntry>
+            <listEntry value="21">@Strings.settings_run_distance_km_week</listEntry>
+            <listEntry value="22">@Strings.settings_run_distance_miles_week</listEntry>
+            <listEntry value="23">@Strings.settings_bike_distance_km_week</listEntry>
+            <listEntry value="24">@Strings.settings_bike_distance_miles_week</listEntry>
+            <listEntry value="32">@Strings.settings_total_distance_7_days_km</listEntry>
+            <listEntry value="33">@Strings.settings_total_distance_7_days_miles</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed_day</listEntry>
+            <listEntry value="5">@Strings.settings_meters_climbed_day</listEntry>
+            <listEntry value="6">@Strings.settings_time_to_recovery</listEntry>
+            <listEntry value="7">@Strings.settings_vo2_max_running</listEntry>
+            <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
+            <listEntry value="9">@Strings.settings_respiration_rate</listEntry>
+            <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
+            <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
+            <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
+            <listEntry value="12">@Strings.settings_altitude_m</listEntry>
+            <listEntry value="15">@Strings.settings_altitude_ft</listEntry>
+            <listEntry value="13">@Strings.settings_stress_score</listEntry>
+            <listEntry value="14">@Strings.settings_body_battery</listEntry>
+            <listEntry value="39">@Strings.settings_sunrise_time</listEntry>
+            <listEntry value="40">@Strings.settings_sunset_time</listEntry>
+            <listEntry value="55">@Strings.settings_next_sun_event</listEntry>
+            <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
+            <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
+            <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
+            <listEntry value="30">@Strings.settings_barometric_pressure_sea</listEntry>
+            <listEntry value="27">@Strings.settings_weight_kg</listEntry>
+            <listEntry value="28">@Strings.settings_weight_lbs</listEntry>
+            <listEntry value="31">@Strings.settings_week_number</listEntry>
+            <listEntry value="34">@Strings.settings_battery_percentage</listEntry>
+            <listEntry value="35">@Strings.settings_battery_days_remaining</listEntry>
+            <listEntry value="36">@Strings.settings_notification_count</listEntry>
+            <listEntry value="37">@Strings.settings_solar_intensity</listEntry>
+            <listEntry value="38">@Strings.settings_sensor_temperature</listEntry>
+            <listEntry value="42">@Strings.settings_alarms_count</listEntry>
+            <listEntry value="43">@Strings.settings_weather_daily_high</listEntry>
+            <listEntry value="44">@Strings.settings_weather_daily_low</listEntry>
+            <listEntry value="53">@Strings.settings_weather_temperature</listEntry>
+            <listEntry value="54">@Strings.settings_weather_chance_precipitation</listEntry>
+            <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
+            <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
+            <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
+            <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.leftValueShows" title="@Strings.settings_bottom_value_1_left">
         <settingConfig type="list">
             <listEntry value="-2">@Strings.settings_hidden</listEntry>
@@ -589,6 +644,7 @@
             <listEntry value="24">@Strings.settings_bike_distance_miles_week</listEntry>
             <listEntry value="32">@Strings.settings_total_distance_7_days_km</listEntry>
             <listEntry value="33">@Strings.settings_total_distance_7_days_miles</listEntry>
+            <listEntry value="25">@Strings.settings_training_status</listEntry>
             <listEntry value="4">@Strings.settings_floors_climbed_day</listEntry>
             <listEntry value="5">@Strings.settings_meters_climbed_day</listEntry>
             <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
@@ -763,6 +819,7 @@
                 <listEntry value="1">@Strings.settings_center</listEntry>
                 <listEntry value="2">@Strings.settings_right</listEntry>
                 <listEntry value="3">@Strings.settings_left_center_5_digit</listEntry>
+                <listEntry value="4">@Strings.settings_right_center_5_digit</listEntry>
             </settingConfig>
     </setting>
 
@@ -770,6 +827,7 @@
             <settingConfig type="list">
                 <listEntry value="0">@Strings.settings_left</listEntry>
                 <listEntry value="1">@Strings.settings_center</listEntry>
+                <listEntry value="2">@Strings.settings_right</listEntry>
             </settingConfig>
     </setting>
 
@@ -1070,6 +1128,11 @@
     <setting propertyKey="@Properties.showDataBg" title="@Strings.settings_show_data_fields_background">
         <settingConfig type="boolean" />
     </setting>
+
+    <setting propertyKey="@Properties.useSystemFonts" title="@Strings.settings_use_system_fonts">
+        <settingConfig type="boolean" />
+    </setting>
+
 
     <setting propertyKey="@Properties.showNotificationCount" title="@Strings.settings_show_notification_count">
         <settingConfig type="boolean" />

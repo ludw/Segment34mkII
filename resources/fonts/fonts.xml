@@ -1,13 +1,4 @@
 <fonts>
-    <font id="segments80" filename="segments80.fnt" antialias="true" filter=" #1234567890:" />
-    <font id="segments80wide" filename="segments80wide.fnt" antialias="true" filter=" #1234567890:" />
-    <font id="segments80narrow" filename="segments80narrow.fnt" antialias="true" filter=" #1234567890:" />
-    <font id="segments125" filename="segments125.fnt" antialias="false" filter=" #1234567890:" />
-    <font id="segments125outline" filename="segments125outline.fnt" antialias="false" filter=" #1234567890:" />
-    <font id="segments125narrow" filename="segments125narrow.fnt" antialias="false" filter=" #1234567890:" />
-    <font id="segments125narrowoutline" filename="segments125narrowoutline.fnt" antialias="false" filter=" #1234567890:" />
-    <font id="segments145" filename="segments145.fnt" antialias="false" filter=" #1234567890:" />
-    <font id="segments145outline" filename="segments145outline.fnt" antialias="true" filter=" #1234567890:" />
     <font id="icons" filename="icons.fnt" antialias="true" />
     <font id="led" filename="led.fnt" antialias="false" />
     <font id="led_inbetween" filename="led_inbetween.fnt" antialias="true" />
@@ -18,6 +9,7 @@
     <font id="led_big" filename="led_big.fnt" antialias="false"/>
     <font id="led_big_lines" filename="led_big_lines.fnt" antialias="false"/>
     <font id="smol" filename="smol.fnt" antialias="false" />
+    <font id="roboto_condensed_bold_13px" filename="roboto_condensed_bold_13px.fnt" antialias="true" />
     <font id="xsmol" filename="xsmol.fnt" antialias="false" />
     <font id="moon" filename="moon.fnt" antialias="true" />
     <font id="storre" filename="storre.fnt" antialias="false" />

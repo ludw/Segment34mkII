@@ -1,5 +1,5 @@
 <strings>
-    <string id="AppName">Segment34 MkII</string>
+    <string id="AppName">Bold0 MkII</string>
 
     <string id="UNIT_KCAL">KCAL</string>
     <string id="UNIT_M">M</string>
@@ -340,6 +340,7 @@
     <string id="settings_line_2_above_clock" scope="settings">Linia 2 nad zegarem pokazuje:</string>
     <string id="settings_weather_conditions_precipitation_chance" scope="settings">Warunki pogodowe + Szansa opadów</string>
     <string id="settings_line_below_clock" scope="settings">Linia pod zegarem pokazuje:</string>
+    <string id="settings_value_instead_of_seconds" scope="settings">Pole do wyświetlenia zamiast sekund:</string>
     <string id="settings_bottom_field_layout" scope="settings">Układ pól dolnych (liczba cyfr na pole)</string>
     <string id="settings_auto_default_layout" scope="settings">Auto - Domyślny układ w zależności od rozmiaru ekranu</string>
     <string id="settings_bottom_value_1_left" scope="settings">Wartość dolna 1 (lewa):</string>
@@ -369,6 +370,7 @@
     <string id="settings_text_alignment_bottom" scope="settings">Wyrównanie tekstu dla dolnych pól danych:</string>
     <string id="settings_right" scope="settings">Prawe</string>
     <string id="settings_left_center_5_digit" scope="settings">Lewe, ale wyśrodkuj pole 5 cyfr</string>
+    <string id="settings_right_center_5_digit" scope="settings">Prawe, ale wyśrodkuj pole 5 cyfr</string>
     <string id="settings_press_top_third" scope="settings">Naciśnij górną trzecią część aby otworzyć:</string>
     <string id="settings_nothing" scope="settings">Nic</string>
     <string id="settings_toggle_night_color" scope="settings">Przełącz nocny motyw kolorystyczny</string>
