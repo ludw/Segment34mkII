@@ -112,6 +112,7 @@
             <iq:language>fre</iq:language>
             <iq:language>ita</iq:language>
             <iq:language>pol</iq:language>
+            <iq:language>swe</iq:language>
         </iq:languages>
         <!--
             Use "Monkey C: Configure Monkey Barrel" from the Visual Studio Code
