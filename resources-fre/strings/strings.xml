@@ -87,7 +87,7 @@
     <string id="MONTH_DEC">DÉC</string>
 
     <string id="LABEL_WMIN_1">MIN SEM</string>
-    <string id="LABEL_WMIN_2">MIN SEMAINE</string>
+    <string id="LABEL_WMIN_2">MIN SEM</string>
     <string id="LABEL_WMIN_3">MIN ACT. SEM</string>
     <string id="LABEL_DMIN_1">MIN J</string>
     <string id="LABEL_DMIN_2">MIN AUJ</string>
@@ -128,14 +128,14 @@
     <string id="LABEL_DIST_3">MÈTRES AUJ</string>
     <string id="LABEL_PUSHES">POUSS:</string>
     <string id="LABEL_WKM_1">KM SEM</string>
-    <string id="LABEL_WRUNM_2">KM COUR. SEM</string>
-    <string id="LABEL_WRUNM_3">KM COUR. SEM</string>
+    <string id="LABEL_WRUNM_2">KM COUR SEM</string>
+    <string id="LABEL_WRUNM_3">KM COUR SEM</string>
     <string id="LABEL_WMI_1">MI SEM</string>
-    <string id="LABEL_WRUNMI_2">MI COUR. SEM</string>
-    <string id="LABEL_WRUNMI_3">MI COUR. SEM</string>
-    <string id="LABEL_WBIKEKM_2">KM VÉLO SEM</string>
+    <string id="LABEL_WRUNMI_2">MI COUR SEM</string>
+    <string id="LABEL_WRUNMI_3">MI COUR SEM</string>
+    <string id="LABEL_WBIKEKM_2">KM VÉLO</string>
     <string id="LABEL_WBIKEKM_3">KM VÉLO SEM</string>
-    <string id="LABEL_WBIKEMI_2">MI VÉLO SEM</string>
+    <string id="LABEL_WBIKEMI_2">MI VÉLO</string>
     <string id="LABEL_WBIKEMI_3">MI VÉLO SEM</string>
     <string id="LABEL_TRAINING">ENTRAÎN.:</string>
     <string id="LABEL_PRESSURE">PRESSION:</string>
@@ -162,7 +162,7 @@
     <string id="LABEL_NOTIFS_3">NOTIF.</string>
     <string id="LABEL_SUN_1">SOLEIL</string>
     <string id="LABEL_SUNINT_2">INT. SOLEIL</string>
-    <string id="LABEL_SUNINT_3">INTENS. SOLEIL</string>
+    <string id="LABEL_SUNINT_3">INTENS SOLEIL</string>
     <string id="LABEL_TEMP_1">TEMP</string>
     <string id="LABEL_STEMP_3">TEMP. CAPTEUR</string>
     <string id="LABEL_DAWN_1">LEVER</string>
@@ -177,10 +177,10 @@
     <string id="LABEL_LOW_2">BAS JOUR</string>
     <string id="LABEL_TEMP_3">TEMPÉRATURE</string>
     <string id="LABEL_PRECIP_1">PRÉCIP</string>
-    <string id="LABEL_PRECIP_3">PRÉCIPITATION</string>
+    <string id="LABEL_PRECIP_3">PRÉCIP</string>
     <string id="LABEL_NEXTSUN_1">SOLEIL</string>
     <string id="LABEL_NEXTSUN_2">SOLEIL SUIV</string>
-    <string id="LABEL_NEXTSUN_3">ÉV. SOLEIL SUIV</string>
+    <string id="LABEL_NEXTSUN_3">SOLEIL SUIV</string>
     <string id="LABEL_NEXTCAL_1">CAL</string>
     <string id="LABEL_NEXTCAL_2">CAL SUIV</string>
     <string id="LABEL_NEXTCAL_3">ÉV. CAL SUIV</string>

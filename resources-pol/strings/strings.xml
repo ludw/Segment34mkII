@@ -108,8 +108,8 @@
     <string id="LABEL_VO2RUN_3">BIEG VO2 MAX</string>
     <string id="LABEL_VO2BIKE_3">ROWER VO2 MAX</string>
     <string id="LABEL_RESP_1">ODDECH</string>
-    <string id="LABEL_RESP_2">CZĘST. ODDECHU</string>
-    <string id="LABEL_RESP_3">CZĘST. ODDECHU</string>
+    <string id="LABEL_RESP_2">CZĘST ODD</string>
+    <string id="LABEL_RESP_3">CZĘST ODDECHU</string>
     <string id="LABEL_HR">TĘTNO:</string>
     <string id="LABEL_CAL_1">KAL</string>
     <string id="LABEL_CAL_2">KALORIE</string>
@@ -164,7 +164,7 @@
     <string id="LABEL_SUNINT_2">INT SŁON</string>
     <string id="LABEL_SUNINT_3">INT. SŁOŃCA</string>
     <string id="LABEL_TEMP_1">TEMP</string>
-    <string id="LABEL_STEMP_3">TEMP. CZUJNIKA</string>
+    <string id="LABEL_STEMP_3">TEMP CZUJNIKA</string>
     <string id="LABEL_DAWN_1">WSCH</string>
     <string id="LABEL_DAWN_2">WSCHÓD</string>
     <string id="LABEL_DUSK_1">ZACH</string>
@@ -172,9 +172,9 @@
     <string id="LABEL_ALARM_1">ALARM</string>
     <string id="LABEL_ALARM_2">ALARMY</string>
     <string id="LABEL_HIGH_1">WYSOKA</string>
-    <string id="LABEL_HIGH_2">DZIENNA WYSOKA</string>
+    <string id="LABEL_HIGH_2">MAKS DZIŚ</string>
     <string id="LABEL_LOW_1">NISKA</string>
-    <string id="LABEL_LOW_2">DZIENNA NISKA</string>
+    <string id="LABEL_LOW_2">MIN DZIŚ</string>
     <string id="LABEL_TEMP_3">TEMPERATURA</string>
     <string id="LABEL_PRECIP_1">OPADY</string>
     <string id="LABEL_PRECIP_3">OPADY</string>

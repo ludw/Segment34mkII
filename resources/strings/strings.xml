@@ -103,10 +103,10 @@
     <string id="LABEL_RECOV_1">RECOV</string>
     <string id="LABEL_RECOV_2">RECOV HRS</string>
     <string id="LABEL_RECOV_3">RECOVERY HRS</string>
-    <string id="LABEL_VO2_1">V02</string>
-    <string id="LABEL_VO2_2">V02 MAX</string>
-    <string id="LABEL_VO2RUN_3">RUN V02 MAX</string>
-    <string id="LABEL_VO2BIKE_3">BIKE V02 MAX</string>
+    <string id="LABEL_VO2_1">VO2</string>
+    <string id="LABEL_VO2_2">VO2 MAX</string>
+    <string id="LABEL_VO2RUN_3">RUN VO2 MAX</string>
+    <string id="LABEL_VO2BIKE_3">BIKE VO2 MAX</string>
     <string id="LABEL_RESP_1">RESP</string>
     <string id="LABEL_RESP_2">RESP RATE</string>
     <string id="LABEL_RESP_3">RESP. RATE</string>
@@ -159,7 +159,7 @@
     <string id="LABEL_BATTD_2">BATT DAYS</string>
     <string id="LABEL_BATTD_3">BATTERY DAYS</string>
     <string id="LABEL_NOTIFS_1">NOTIFS</string>
-    <string id="LABEL_NOTIFS_3">NOTIFICATIONS</string>
+    <string id="LABEL_NOTIFS_3">NOTIFS</string>
     <string id="LABEL_SUN_1">SUN</string>
     <string id="LABEL_SUNINT_2">SUN INT</string>
     <string id="LABEL_SUNINT_3">SUN INTENSITY</string>
@@ -177,7 +177,7 @@
     <string id="LABEL_LOW_2">DAILY LOW</string>
     <string id="LABEL_TEMP_3">TEMPERATURE</string>
     <string id="LABEL_PRECIP_1">PRECIP</string>
-    <string id="LABEL_PRECIP_3">PRECIPITATION</string>
+    <string id="LABEL_PRECIP_3">PRECIP</string>
     <string id="LABEL_NEXTSUN_1">SUN</string>
     <string id="LABEL_NEXTSUN_2">NEXT SUN</string>
     <string id="LABEL_NEXTSUN_3">NEXT SUN EVNT</string>

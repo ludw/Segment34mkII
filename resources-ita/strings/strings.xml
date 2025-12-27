@@ -91,7 +91,7 @@
     <string id="LABEL_WMIN_3">MIN ATT SETT</string>
     <string id="LABEL_DMIN_1">MIN G</string>
     <string id="LABEL_DMIN_2">MIN OGGI</string>
-    <string id="LABEL_DMIN_3">MIN ATT GIORNO</string>
+    <string id="LABEL_DMIN_3">MIN ATT G</string>
     <string id="LABEL_DKM_1">KM G</string>
     <string id="LABEL_DKM_2">KM OGGI</string>
     <string id="LABEL_DMI_1">MI G</string>
@@ -103,10 +103,10 @@
     <string id="LABEL_RECOV_1">RECUP</string>
     <string id="LABEL_RECOV_2">ORE RECUP</string>
     <string id="LABEL_RECOV_3">ORE RECUPERO</string>
-    <string id="LABEL_VO2_1">V02</string>
-    <string id="LABEL_VO2_2">V02 MAX</string>
-    <string id="LABEL_VO2RUN_3">V02 MAX CORSA</string>
-    <string id="LABEL_VO2BIKE_3">V02 MAX BICI</string>
+    <string id="LABEL_VO2_1">VO2</string>
+    <string id="LABEL_VO2_2">VO2 MAX</string>
+    <string id="LABEL_VO2RUN_3">VO2 MAX CORSA</string>
+    <string id="LABEL_VO2BIKE_3">VO2 MAX BICI</string>
     <string id="LABEL_RESP_1">RESP</string>
     <string id="LABEL_RESP_2">FREQ RESP</string>
     <string id="LABEL_RESP_3">FREQ RESPIR</string>
@@ -121,7 +121,7 @@
     <string id="LABEL_ALTFT_3">ALTITUD PIEDI</string>
     <string id="LABEL_BBAT_1">BAT C</string>
     <string id="LABEL_BBAT_2">BAT CORPO</string>
-    <string id="LABEL_BBAT_3">BATTERIA CORPO</string>
+    <string id="LABEL_BBAT_3">BATT CORPO</string>
     <string id="LABEL_STEPS">PASSI:</string>
     <string id="LABEL_DIST_1">DIST</string>
     <string id="LABEL_DIST_2">M OGGI</string>
@@ -129,10 +129,10 @@
     <string id="LABEL_PUSHES">SPINTE:</string>
     <string id="LABEL_WKM_1">KM S</string>
     <string id="LABEL_WRUNM_2">KM CORSA S</string>
-    <string id="LABEL_WRUNM_3">KM CORSA SETT</string>
+    <string id="LABEL_WRUNM_3">KM CORSA S</string>
     <string id="LABEL_WMI_1">MI S</string>
     <string id="LABEL_WRUNMI_2">MI CORSA S</string>
-    <string id="LABEL_WRUNMI_3">MI CORSA SETT</string>
+    <string id="LABEL_WRUNMI_3">MI CORSA S</string>
     <string id="LABEL_WBIKEKM_2">KM BICI S</string>
     <string id="LABEL_WBIKEKM_3">KM BICI SETT</string>
     <string id="LABEL_WBIKEMI_2">MI BICI S</string>

@@ -98,18 +98,18 @@
     <string id="LABEL_DMI_2">MI IDAG</string>
     <string id="LABEL_DMI_3">MIL IDAG</string>
     <string id="LABEL_FLOORS">VÅNINGAR:</string>
-    <string id="LABEL_CLIMB_1">KLÄTTRA</string>
+    <string id="LABEL_CLIMB_1">KLÄTT</string>
     <string id="LABEL_CLIMB_2">M KLÄTTRAT</string>
     <string id="LABEL_RECOV_1">ÅTERH</string>
     <string id="LABEL_RECOV_2">ÅTERH TIM</string>
-    <string id="LABEL_RECOV_3">ÅTERHÄMTNING TIM</string>
-    <string id="LABEL_VO2_1">V02</string>
-    <string id="LABEL_VO2_2">V02 MAX</string>
-    <string id="LABEL_VO2RUN_3">SPRING V02 MAX</string>
-    <string id="LABEL_VO2BIKE_3">CYKEL V02 MAX</string>
+    <string id="LABEL_RECOV_3">ÅTERHÄMTN TIM</string>
+    <string id="LABEL_VO2_1">VO2</string>
+    <string id="LABEL_VO2_2">VO2 MAX</string>
+    <string id="LABEL_VO2RUN_3">LÖPN VO2 MAX</string>
+    <string id="LABEL_VO2BIKE_3">CYKEL VO2 MAX</string>
     <string id="LABEL_RESP_1">RESP</string>
-    <string id="LABEL_RESP_2">RESP HASTIGHET</string>
-    <string id="LABEL_RESP_3">RESP. HASTIGHET</string>
+    <string id="LABEL_RESP_2">ANDNING</string>
+    <string id="LABEL_RESP_3">ANDNINGSHAST</string>
     <string id="LABEL_HR">HR:</string>
     <string id="LABEL_CAL_1">KAL</string>
     <string id="LABEL_CAL_2">KALORIER</string>
@@ -120,23 +120,23 @@
     <string id="LABEL_STRESS">STRESS:</string>
     <string id="LABEL_ALTFT_3">ALTITUD FT</string>
     <string id="LABEL_BBAT_1">B BAT</string>
-    <string id="LABEL_BBAT_2">KROPPSBATT</string>
-    <string id="LABEL_BBAT_3">KROPPSBATTERI</string>
+    <string id="LABEL_BBAT_2">BODY BATT</string>
+    <string id="LABEL_BBAT_3">BODY BATTERY</string>
     <string id="LABEL_STEPS">STEG:</string>
     <string id="LABEL_DIST_1">DIST</string>
     <string id="LABEL_DIST_2">M IDAG</string>
     <string id="LABEL_DIST_3">METER IDAG</string>
     <string id="LABEL_PUSHES">SKJUT:</string>
     <string id="LABEL_WKM_1">V KM</string>
-    <string id="LABEL_WRUNM_2">V SPRING KM</string>
-    <string id="LABEL_WRUNM_3">VECKA SPRING KM</string>
+    <string id="LABEL_WRUNM_2">V LÖPN KM</string>
+    <string id="LABEL_WRUNM_3">VECKA LÖPN KM</string>
     <string id="LABEL_WMI_1">V MI</string>
-    <string id="LABEL_WRUNMI_2">V SPRING MI</string>
-    <string id="LABEL_WRUNMI_3">VECKA SPRING MI</string>
+    <string id="LABEL_WRUNMI_2">V LÖPN MI</string>
+    <string id="LABEL_WRUNMI_3">VECKA LÖPN MI</string>
     <string id="LABEL_WBIKEKM_2">V CYKEL KM</string>
-    <string id="LABEL_WBIKEKM_3">VECKA CYKEL KM</string>
+    <string id="LABEL_WBIKEKM_3">V CYKEL KM</string>
     <string id="LABEL_WBIKEMI_2">V CYKEL MI</string>
-    <string id="LABEL_WBIKEMI_3">VECKA CYKEL MI</string>
+    <string id="LABEL_WBIKEMI_3">V CYKEL MI</string>
     <string id="LABEL_TRAINING">TRÄNING:</string>
     <string id="LABEL_PRESSURE">TRYCK:</string>
     <string id="LABEL_KG_1">KG</string>
@@ -158,16 +158,16 @@
     <string id="LABEL_BATTD_1">BATTD</string>
     <string id="LABEL_BATTD_2">BATTDAGAR</string>
     <string id="LABEL_BATTD_3">BATTERIDAGAR</string>
-    <string id="LABEL_NOTIFS_1">NOTISER</string>
-    <string id="LABEL_NOTIFS_3">NOTIFIERINGAR</string>
+    <string id="LABEL_NOTIFS_1">NOTIS</string>
+    <string id="LABEL_NOTIFS_3">NOTIFIERING</string>
     <string id="LABEL_SUN_1">SOL</string>
     <string id="LABEL_SUNINT_2">SOLINT</string>
-    <string id="LABEL_SUNINT_3">SOLINTENSITET</string>
+    <string id="LABEL_SUNINT_3">SOLINTENS</string>
     <string id="LABEL_TEMP_1">TEMP</string>
     <string id="LABEL_STEMP_3">SENSORTEMP</string>
-    <string id="LABEL_DAWN_1">SOLUPPG</string>
+    <string id="LABEL_DAWN_1">SOLUPP</string>
     <string id="LABEL_DAWN_2">SOLUPPGÅNG</string>
-    <string id="LABEL_DUSK_1">SOLNEDG</string>
+    <string id="LABEL_DUSK_1">SOLNED</string>
     <string id="LABEL_DUSK_2">SOLNEDGÅNG</string>
     <string id="LABEL_ALARM_1">ALARM</string>
     <string id="LABEL_ALARM_2">ALARM</string>
@@ -188,7 +188,7 @@
     <string id="LABEL_OX_2">PULS OX</string>
     <string id="LABEL_ACC_1">NOG</string>
     <string id="LABEL_ACC_2">POS NOG</string>
-    <string id="LABEL_ACC_3">POS NOGGRANNHET</string>
+    <string id="LABEL_ACC_3">POS NOGGR</string>
     <string id="LABEL_UV_1">UV</string>
     <string id="LABEL_UV_2">UV INDEX</string>
     <string id="LABEL_HUM_1">FUKT</string>
@@ -260,7 +260,7 @@
     <string id="settings_floors_climbed_day" scope="settings">Våningar klättrade / dag</string>
     <string id="settings_meters_climbed_day" scope="settings">Meter klättrade / dag</string>
     <string id="settings_time_to_recovery" scope="settings">Tid till återhämtning (h)</string>
-    <string id="settings_vo2_max_running" scope="settings">VO2 Max spring</string>
+    <string id="settings_vo2_max_running" scope="settings">VO2 Max löpning</string>
     <string id="settings_vo2_max_cycling" scope="settings">VO2 Max cykling</string>
     <string id="settings_respiration_rate" scope="settings">Andningsfrekvens</string>
     <string id="settings_heart_rate" scope="settings">Hjärtfrekvens</string>
