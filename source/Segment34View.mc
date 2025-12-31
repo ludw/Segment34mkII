@@ -1309,10 +1309,12 @@ class Segment34View extends WatchUi.WatchFace {
 
         if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
             var st_iterator = Toybox.SensorHistory.getStressHistory({:period => 1});
-            var st = st_iterator.next();
+            if (st_iterator != null) {
+                var st = st_iterator.next();
 
-            if(st != null) {
-                return st.data;
+                if(st != null) {
+                    return st.data;
+                }
             }
         }
         return null;
@@ -1332,10 +1334,12 @@ class Segment34View extends WatchUi.WatchFace {
 
         if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
             var bb_iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});
-            var bb = bb_iterator.next();
+            if (bb_iterator != null) {
+                var bb = bb_iterator.next();
 
-            if(bb != null) {
-                return bb.data;
+                if(bb != null) {
+                    return bb.data;
+                }
             }
         }
         return null;
@@ -1353,12 +1357,14 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getFloorGoalProgress() as Number? {
-        if(ActivityMonitor.getInfo().floorsClimbed != null and ActivityMonitor.getInfo().floorsClimbedGoal != null) {
-            var floors = ActivityMonitor.getInfo().floorsClimbed;
-            var goal = ActivityMonitor.getInfo().floorsClimbedGoal;
-            if(goal == null or goal == 0) { return 0; }
-            if(floors == null or floors == 0) { return 0; }
-            return Math.round(floors.toFloat() / goal.toFloat() * 100.0);
+        if(ActivityMonitor.getInfo() has :floorsClimbed and ActivityMonitor.getInfo() has :floorsClimbedGoal) {
+            if(ActivityMonitor.getInfo().floorsClimbed != null and ActivityMonitor.getInfo().floorsClimbedGoal != null) {
+                var floors = ActivityMonitor.getInfo().floorsClimbed;
+                var goal = ActivityMonitor.getInfo().floorsClimbedGoal;
+                if(goal == null or goal == 0) { return 0; }
+                if(floors == null or floors == 0) { return 0; }
+                return Math.round(floors.toFloat() / goal.toFloat() * 100.0);
+            }
         }
         return null;
     }
@@ -1685,9 +1691,12 @@ class Segment34View extends WatchUi.WatchFace {
                 val = sample.format("%01d");
             } else if (ActivityMonitor has :getHeartRateHistory) {
                 // Falling back to historical HR from ActivityMonitor
-                var hist = ActivityMonitor.getHeartRateHistory(1, /* newestFirst */ true).next();
-                if ((hist != null) && (hist.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)) {
-                    val = hist.heartRate.format("%01d");
+                var history = ActivityMonitor.getHeartRateHistory(1, /* newestFirst */ true);
+                if (history != null) {
+                    var hist = history.next();
+                    if ((hist != null) && (hist.heartRate != ActivityMonitor.INVALID_HR_SAMPLE)) {
+                        val = hist.heartRate.format("%01d");
+                    }
                 }
             }
         } else if(complicationType == 11) { // Calories
@@ -1699,9 +1708,11 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 12) { // Altitude (m)
             if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
                 var elv_iterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
-                var elv = elv_iterator.next();
-                if(elv != null and elv.data != null) {
-                    val = elv.data.format(numberFormat);
+                if (elv_iterator != null) {
+                    var elv = elv_iterator.next();
+                    if(elv != null and elv.data != null) {
+                        val = elv.data.format(numberFormat);
+                    }
                 }
             }
         } else if(complicationType == 13) { // Stress
@@ -1717,9 +1728,11 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 15) { // Altitude (ft)
             if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
                 var elv_iterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
-                var elv = elv_iterator.next();
-                if(elv != null and elv.data != null) {
-                    val = (elv.data * 3.28084).format(numberFormat);
+                if (elv_iterator != null) {
+                    var elv = elv_iterator.next();
+                    if(elv != null and elv.data != null) {
+                        val = (elv.data * 3.28084).format(numberFormat);
+                    }
                 }
             }
         } else if(complicationType == 16) { // Alt TZ 1
@@ -1839,10 +1852,12 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 38) { // Sensor temperature
             if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getTemperatureHistory)) {
                 var tempIterator = Toybox.SensorHistory.getTemperatureHistory({:period => 1});
-                var temp = tempIterator.next();
-                if(temp != null and temp.data != null) {
-                    var tempUnit = getTempUnit();
-                    val = formatTemperature(temp.data, tempUnit).format(numberFormat) + tempUnit;
+                if (tempIterator != null) {
+                    var temp = tempIterator.next();
+                    if(temp != null and temp.data != null) {
+                        var tempUnit = getTempUnit();
+                        val = formatTemperature(temp.data, tempUnit).format(numberFormat) + tempUnit;
+                    }
                 }
             }
         } else if(complicationType == 39) { // Sunrise
@@ -1999,9 +2014,11 @@ class Segment34View extends WatchUi.WatchFace {
             } else {
                 if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getOxygenSaturationHistory)) {
                     var it = Toybox.SensorHistory.getOxygenSaturationHistory({:period => 1});
-                    var ox = it.next();
-                    if(ox != null and ox.data != null) {
-                        val = ox.data.format("%d");
+                    if (it != null) {
+                        var ox = it.next();
+                        if(ox != null and ox.data != null) {
+                            val = ox.data.format("%d");
+                        }
                     }
                 }
             }
@@ -2071,22 +2088,22 @@ class Segment34View extends WatchUi.WatchFace {
         var max = null;
         var twoHours = new Time.Duration(7200);
         
-        if(dataSource == 0) {
+        if(dataSource == 0 and Toybox.SensorHistory has :getBodyBatteryHistory) {
             iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
             max = 100;
-        } else if(dataSource == 1) {
+        } else if(dataSource == 1 and Toybox.SensorHistory has :getElevationHistory) {
             iterator = Toybox.SensorHistory.getElevationHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
-        } else if(dataSource == 2) {
+        } else if(dataSource == 2 and Toybox.SensorHistory has :getHeartRateHistory) {
             iterator = Toybox.SensorHistory.getHeartRateHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
-        } else if(dataSource == 3) {
+        } else if(dataSource == 3 and Toybox.SensorHistory has :getOxygenSaturationHistory) {
             iterator = Toybox.SensorHistory.getOxygenSaturationHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
             max = 100;
-        } else if(dataSource == 4) {
+        } else if(dataSource == 4 and Toybox.SensorHistory has :getPressureHistory) {
             iterator = Toybox.SensorHistory.getPressureHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
-        } else if(dataSource == 5 or dataSource == 7) {
+        } else if((dataSource == 5 or dataSource == 7) and Toybox.SensorHistory has :getStressHistory) {
             iterator = Toybox.SensorHistory.getStressHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
             max = 100;
-        } else if(dataSource == 6) {
+        } else if(dataSource == 6 and Toybox.SensorHistory has :getTemperatureHistory) {
             iterator = Toybox.SensorHistory.getTemperatureHistory({:period => twoHours, :order => Toybox.SensorHistory.ORDER_OLDEST_FIRST});
         }
 
