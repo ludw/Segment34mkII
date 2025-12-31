@@ -109,7 +109,7 @@
     <string id="LABEL_VO2BIKE_3">ROWER VO2 MAX</string>
     <string id="LABEL_RESP_1">ODDECH</string>
     <string id="LABEL_RESP_2">CZĘST ODD</string>
-    <string id="LABEL_RESP_3">CZĘST ODDECHU</string>
+    <string id="LABEL_RESP_3">CZĘST ODD.</string>
     <string id="LABEL_HR">TĘTNO:</string>
     <string id="LABEL_CAL_1">KAL</string>
     <string id="LABEL_CAL_2">KALORIE</string>
@@ -159,7 +159,7 @@
     <string id="LABEL_BATTD_2">BATT DNI</string>
     <string id="LABEL_BATTD_3">BATERIA DNI</string>
     <string id="LABEL_NOTIFS_1">POW</string>
-    <string id="LABEL_NOTIFS_3">POWIADOMIENIA</string>
+    <string id="LABEL_NOTIFS_3">POWIADOM.</string>
     <string id="LABEL_SUN_1">SŁOŃCE</string>
     <string id="LABEL_SUNINT_2">INT SŁON</string>
     <string id="LABEL_SUNINT_3">INT. SŁOŃCA</string>

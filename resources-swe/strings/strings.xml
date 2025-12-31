@@ -102,7 +102,7 @@
     <string id="LABEL_CLIMB_2">M KLÄTTRAT</string>
     <string id="LABEL_RECOV_1">ÅTERH</string>
     <string id="LABEL_RECOV_2">ÅTERH TIM</string>
-    <string id="LABEL_RECOV_3">ÅTERHÄMTN TIM</string>
+    <string id="LABEL_RECOV_3">ÅTERHÄMT TIM</string>
     <string id="LABEL_VO2_1">VO2</string>
     <string id="LABEL_VO2_2">VO2 MAX</string>
     <string id="LABEL_VO2RUN_3">LÖPN VO2 MAX</string>
@@ -180,10 +180,10 @@
     <string id="LABEL_PRECIP_3">NEDERBÖRD</string>
     <string id="LABEL_NEXTSUN_1">SOL</string>
     <string id="LABEL_NEXTSUN_2">NÄSTA SOL</string>
-    <string id="LABEL_NEXTSUN_3">NÄSTA SOLHÄND</string>
+    <string id="LABEL_NEXTSUN_3">NÄSTA SOLH.</string>
     <string id="LABEL_NEXTCAL_1">KAL</string>
     <string id="LABEL_NEXTCAL_2">NÄSTA KAL</string>
-    <string id="LABEL_NEXTCAL_3">NÄSTA KALHÄND</string>
+    <string id="LABEL_NEXTCAL_3">NÄSTA KAL</string>
     <string id="LABEL_OX_1">OX</string>
     <string id="LABEL_OX_2">PULS OX</string>
     <string id="LABEL_ACC_1">NOG</string>
