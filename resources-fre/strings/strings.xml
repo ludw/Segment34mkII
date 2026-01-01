@@ -322,6 +322,7 @@
     <string id="settings_temperature_precipitation_high_low" scope="settings">Température, Risque de précipitations, Max/Min</string>
     <string id="settings_weather_conditions_precipitation" scope="settings">Conditions météo, Risque de précipitations</string>
     <string id="settings_weather_conditions" scope="settings">Conditions météo</string>
+    <string id="settings_weather_conditions_temperature" scope="settings">Conditions météo, Température</string>
     <string id="settings_daily_high_temperature" scope="settings">Température maximale quotidienne</string>
     <string id="settings_daily_low_temperature" scope="settings">Température minimale quotidienne</string>
     <string id="settings_temperature" scope="settings">Température</string>

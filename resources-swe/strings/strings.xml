@@ -323,6 +323,7 @@
     <string id="settings_temperature_precipitation_high_low" scope="settings">Temperatur, nederbörd risk, hög/låg</string>
     <string id="settings_weather_conditions_precipitation" scope="settings">Väderförhållanden, nederbörd risk</string>
     <string id="settings_weather_conditions" scope="settings">Väderförhållanden</string>
+    <string id="settings_weather_conditions_temperature" scope="settings">Väderförhållanden, Temperatur</string>
     <string id="settings_daily_high_temperature" scope="settings">Dagens högsta temperatur</string>
     <string id="settings_daily_low_temperature" scope="settings">Dagens lägsta temperatur</string>
     <string id="settings_temperature" scope="settings">Temperatur</string>

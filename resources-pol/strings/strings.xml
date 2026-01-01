@@ -322,6 +322,7 @@
     <string id="settings_temperature_precipitation_high_low" scope="settings">Temperatura, Szansa opadów, Maks/Min</string>
     <string id="settings_weather_conditions_precipitation" scope="settings">Warunki pogodowe, Szansa opadów</string>
     <string id="settings_weather_conditions" scope="settings">Warunki pogodowe</string>
+    <string id="settings_weather_conditions_temperature" scope="settings">Warunki pogodowe, Temperatura</string>
     <string id="settings_daily_high_temperature" scope="settings">Dzienna temperatura maksymalna</string>
     <string id="settings_daily_low_temperature" scope="settings">Dzienna temperatura minimalna</string>
     <string id="settings_temperature" scope="settings">Temperatura</string>

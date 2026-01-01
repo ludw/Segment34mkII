@@ -2077,6 +2077,10 @@ class Segment34View extends WatchUi.WatchFace {
             var uv = getUVIndex();
             var wind = getWind();
             val = join([temp, uv, wind]);
+        } else if(complicationType == 70) { // Weather condition, Temperature
+            var condition = getWeatherCondition(false);
+            var temp = getTemperature();
+            val = join([condition, temp]);
         }
 
         return val;
