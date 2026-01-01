@@ -60,6 +60,12 @@ Pull requests are welcome, but please follow the following guidelines:
 - separate 24h mode for alt tz
 
 ## Change log
+2025-12-31 v.3.8.0
+- German language added
+- Swedish language added
+- Stability improvements, fixed some crashes
+- Shortened some labels that were too long
+
 2025-09-26 v3.7.3
 - Support for Venu 4
 
