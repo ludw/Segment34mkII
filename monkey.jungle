@@ -2,12 +2,12 @@ project.manifest = manifest.xml
 project.typecheck = 1
 project.optimization = 3p
 
-round-240x240.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED
-round-260x260.excludeAnnotations = Round240;Round280;Round360;Round390;Round416;Round454;AMOLED
-round-280x280.excludeAnnotations = Round240;Round260;Round360;Round390;Round416;Round454;AMOLED
-round-360x360.excludeAnnotations = Round240;Round260;Round280;Round390;Round416;Round454;MIP
-round-390x390.excludeAnnotations = Round240;Round260;Round280;Round360;Round416;Round454;MIP
-round-416x416.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round454;MIP
-round-454x454.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round416;MIP
-rectangle-448x486.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round416;MIP
-
+round-240x240.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover
+round-260x260.excludeAnnotations = Round240;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover
+round-280x280.excludeAnnotations = Round240;Round260;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover
+round-360x360.excludeAnnotations = Round240;Round260;Round280;Round390;Round416;Round454;MIP;InstinctCrossover
+round-390x390.excludeAnnotations = Round240;Round260;Round280;Round360;Round416;Round454;MIP;InstinctCrossover
+round-416x416.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round454;MIP;InstinctCrossover
+round-454x454.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round416;MIP;InstinctCrossover
+rectangle-448x486.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round416;MIP;InstinctCrossover
+instinctcrossoveramoled.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round416;Round454;MIP;DefaultLayout

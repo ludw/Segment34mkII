@@ -178,6 +178,7 @@ class Segment34View extends WatchUi.WatchFace {
     (:Round280) const bottomFieldWidths = [4, 3, 4, 0];
     (:Round360) const bottomFieldWidths = [3, 4, 3, 0];
     (:Round390) const bottomFieldWidths = [4, 3, 4, 0];
+    (:InstinctCrossover) const bottomFieldWidths = [4, 3, 4, 0];
     (:Round416) const bottomFieldWidths = [4, 4, 4, 0];
     (:Round454) const bottomFieldWidths = [4, 4, 4, 0];
 
@@ -186,6 +187,7 @@ class Segment34View extends WatchUi.WatchFace {
     (:Round280) const barWidth = 3;
     (:Round360) const barWidth = 3;
     (:Round390) const barWidth = 4;
+    (:InstinctCrossover) const barWidth = 4;
     (:Round416) const barWidth = 4;
     (:Round454) const barWidth = 4;
 
@@ -396,6 +398,45 @@ class Segment34View extends WatchUi.WatchFace {
         histogramHeight = 25;
     }
 
+    (:InstinctCrossover)
+    hidden function loadResources() as Void {
+        fontClock = Application.loadResource(Rez.Fonts.segments125);
+        fontClockOutline = Application.loadResource(Rez.Fonts.segments125outline);
+        fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
+        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
+        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_inbetween); }
+        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_lines); }
+        fontLargeData = Application.loadResource(Rez.Fonts.led_big);
+        fontBottomData = fontLargeData;
+        fontLabel = Application.loadResource(Rez.Fonts.storre);
+        fontAODData = Application.loadResource(Rez.Fonts.led);
+        fontBattery = fontTinyData;
+
+        drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
+        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2 or propClockOutlineStyle == 4) {
+            drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
+        } else {
+            drawAODPattern = Application.loadResource(Rez.Drawables.aod2) as BitmapResource;
+        }
+
+        clockHeight = 125;
+        clockWidth = 350;
+        labelHeight = 10;
+        labelMargin = 8;
+        tinyDataHeight = 15;
+        smallDataHeight = 20;
+        largeDataHeight = 27;
+        largeDataWidth = 24;
+        bottomDataWidth = 24;
+
+        baseX = centerX;
+        baseY = centerY;  // Centered for analog hands
+        barBottomAdj = 2;
+        bottomFiveAdj = 10;
+        marginY = 9;
+        histogramHeight = 25;
+    }
+
     (:Round416)
     hidden function loadResources() as Void {
         fontClock = Application.loadResource(Rez.Fonts.segments125);
@@ -569,6 +610,7 @@ class Segment34View extends WatchUi.WatchFace {
         dc.drawText(baseX + halfClockWidth - textSideAdj, y1, fontSmallData, dataSeconds, Graphics.TEXT_JUSTIFY_RIGHT);
     }
 
+    (:DefaultLayout)
     hidden function drawWatchface(dc as Dc, now as Gregorian.Info, aod as Boolean) as Void {
         // Clear
         dc.setColor(themeColors[bg], themeColors[bg]);
@@ -711,6 +753,142 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             drawBatteryIcon(dc, null, null);
         }
+    }
+
+    (:InstinctCrossover)
+    hidden function drawWatchface(dc as Dc, now as Gregorian.Info, aod as Boolean) as Void {
+        // Clear
+        dc.setColor(themeColors[bg], themeColors[bg]);
+        dc.clear();
+
+        // Shifted positions: date line is now above clock
+        var yn0 = baseY - halfClockHeight - marginY - smallDataHeight;  // date line (above clock)
+        var yn1 = yn0 - marginY - smallDataHeight;  // weather line 2
+        var yn2 = yn1 - marginY - smallDataHeight;  // weather line 1
+        var yn3 = yn2 - marginY - histogramHeight;
+
+        // Draw Top data fields or histogram
+        if(propTopPartShows == 2) {
+            drawHistogram(dc, dataGraph1, centerX, yn3, histogramHeight);
+        } else {
+            var top_data_height = halfMarginY;
+            var top_field_font = fontTinyData;
+            var top_field_center_offset = 20;
+            if(propTopPartShows == 1) { top_field_center_offset = labelHeight; }
+            if(propLabelVisibility == 0 or propLabelVisibility == 3) {
+                dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
+                dc.drawText(centerX - top_field_center_offset, marginY, fontLabel, dataLabelTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
+                dc.drawText(centerX + top_field_center_offset, marginY, fontLabel, dataLabelTopRight, Graphics.TEXT_JUSTIFY_LEFT);
+
+                top_data_height = labelHeight + halfMarginY + 2;
+            }
+
+            dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+            if(propTopPartShows == 0) {
+                dc.drawText(centerX - top_field_center_offset, marginY + top_data_height, top_field_font, dataTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
+                dc.drawText(centerX + top_field_center_offset, marginY + top_data_height, top_field_font, dataTopRight, Graphics.TEXT_JUSTIFY_LEFT);
+
+                // Draw Moon
+                dc.setColor(themeColors[moon], Graphics.COLOR_TRANSPARENT);
+                dc.drawText(centerX, marginY + ((top_data_height + tinyDataHeight) / 2), fontMoon, dataMoon, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            } else {
+                if(top_data_height == halfMarginY) { top_field_font = fontSmallData; }
+                dc.drawText(centerX - top_field_center_offset, marginY + top_data_height, top_field_font, dataTopLeft, Graphics.TEXT_JUSTIFY_RIGHT);
+                dc.drawText(centerX + top_field_center_offset, marginY + top_data_height, top_field_font, dataTopRight, Graphics.TEXT_JUSTIFY_LEFT);
+            }
+        }
+
+        // Draw Lines above clock (shifted up by one row)
+        dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+        dc.drawText(centerX, yn2, fontSmallData, dataAboveLine1, Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(centerX, yn1, fontSmallData, dataAboveLine2, Graphics.TEXT_JUSTIFY_CENTER);
+
+        // Draw date line ABOVE clock (at yn0)
+        dc.setColor(themeColors[date], Graphics.COLOR_TRANSPARENT);
+        if(propDateAlignment == 0) {
+            dc.drawText(baseX - halfClockWidth + textSideAdj, yn0, fontSmallData, dataBelow, Graphics.TEXT_JUSTIFY_LEFT);
+        } else {
+            dc.drawText(baseX, yn0, fontSmallData, dataBelow, Graphics.TEXT_JUSTIFY_CENTER);
+        }
+
+        // Draw seconds (above clock)
+        if(propShowSeconds) {
+            updateSeconds(now);
+            dc.drawText(baseX + halfClockWidth - textSideAdj, yn0, fontSmallData, dataSeconds, Graphics.TEXT_JUSTIFY_RIGHT);
+        }
+
+        // Draw Notification count (above clock)
+        dc.setColor(themeColors[notif], Graphics.COLOR_TRANSPARENT);
+        if(propDateAlignment == 0) {
+            if(!propShowSeconds) {
+                dc.drawText(baseX + halfClockWidth - textSideAdj, yn0, fontSmallData, dataNotifications, Graphics.TEXT_JUSTIFY_RIGHT);
+            } else {
+                var date_width = dc.getTextWidthInPixels(dataBelow, fontSmallData);
+                var sec_width = dc.getTextWidthInPixels(dataSeconds, fontSmallData);
+                var date_right_edge = baseX - halfClockWidth + textSideAdj + date_width;
+                var sec_left = baseX + halfClockWidth - textSideAdj - sec_width;
+                var pos = sec_left - marginX;
+                if((sec_left - date_right_edge) < 3 * marginX) {
+                    pos = (date_right_edge + sec_left) / 2;
+                }
+                dc.drawText(pos, yn0, fontSmallData, dataNotifications, Graphics.TEXT_JUSTIFY_CENTER);
+            }
+        } else {
+            dc.drawText(baseX - halfClockWidth, yn0, fontSmallData, dataNotifications, Graphics.TEXT_JUSTIFY_LEFT);
+        }
+
+        // Draw Clock
+        dc.setColor(themeColors[clockBg], Graphics.COLOR_TRANSPARENT);
+        if(propShowClockBg and !aod) {
+            dc.drawText(baseX, baseY, fontClock, clockBgText, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        }
+        dc.setColor(themeColors[clock], Graphics.COLOR_TRANSPARENT);
+        dc.drawText(baseX, baseY, fontClock, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+
+        // Draw clock gradient
+        if(drawGradient != null and themeColors[bg] == 0x000000 and !aod) {
+            dc.drawBitmap(centerX - halfClockWidth, baseY - halfClockHeight, drawGradient);
+        }
+
+        if(propClockOutlineStyle == 2 or propClockOutlineStyle == 3) {
+            if(fontClockOutline != null) {
+                dc.setColor(themeColors[outline], Graphics.COLOR_TRANSPARENT);
+                dc.drawText(baseX, baseY, fontClockOutline, dataClock, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            }
+        }
+
+        // Draw stress and body battery bars
+        drawSideBars(dc);
+
+        // Draw the three bottom data fields (directly below clock, no date row)
+        var y1 = baseY + halfClockHeight + marginY;
+        var y2 = y1 + labelHeight + labelMargin + largeDataHeight;
+        var data_width = Math.sqrt(centerY*centerY - (y2 - centerY)*(y2 - centerY)) * 2 + fieldSpaceingAdj;
+        var left_edge = Math.round((screenWidth - data_width) / 2);
+        var digits = getFieldWidths();
+        var tot_digits = digits[0] + digits[1] + digits[2] + digits[3];
+        var dw1 = Math.round(digits[0] * data_width / tot_digits);
+        var dw2 = Math.round(digits[1] * data_width / tot_digits);
+        var dw3 = Math.round(digits[2] * data_width / tot_digits);
+        var dw4 = Math.round(digits[3] * data_width / tot_digits);
+
+        drawDataField(dc, left_edge + Math.round(dw1 / 2), y1, 3, dataLabelBottomLeft, dataBottomLeft, digits[0], fontLargeData, largeDataWidth * digits[0]);
+        drawDataField(dc, left_edge + Math.round(dw1 + (dw2 / 2)), y1, 3, dataLabelBottomMiddle, dataBottomMiddle, digits[1], fontLargeData, largeDataWidth * digits[1]);
+        drawDataField(dc, left_edge + Math.round(dw1 + dw2 + (dw3 / 2)), y1, 3, dataLabelBottomRight, dataBottomRight, digits[2], fontLargeData, largeDataWidth * digits[2]);
+        drawDataField(dc, left_edge + Math.round(dw1 + dw2 + dw3 + (dw4 / 2)), y1, 3, dataLabelBottomFourth, dataBottomFourth, digits[3], fontLargeData, largeDataWidth * digits[3]);
+
+        // Draw the 5 digit bottom field
+        var y3 = y2 + halfMarginY + bottomFiveAdj;
+        if((propLabelVisibility == 1 or propLabelVisibility == 3)) { y3 = y3 - labelHeight; }
+        var step_width = drawDataField(dc, centerX, y3, 0, null, dataBottom, 5, fontBottomData, bottomDataWidth * 5);
+
+        // Draw icons
+        dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+        dc.drawText(centerX - (step_width / 2) - (marginX / 2), y3 + (largeDataHeight / 2) + iconYAdj, fontIcons, dataIcon1, Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(centerX + (step_width / 2) + (marginX / 2) - 2, y3 + (largeDataHeight / 2) + iconYAdj, fontIcons, dataIcon2, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+
+        // Draw battery icon
+        drawBatteryIcon(dc, null, null);
     }
 
     (:MIP)
