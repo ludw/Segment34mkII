@@ -60,6 +60,12 @@ Pull requests are welcome, but please follow the following guidelines:
 - separate 24h mode for alt tz
 
 ## Change log
+2026-01-05 v3.9.0
+- Support for Instinct Crossover AMOLED
+- Support for D2 Mach 2
+- Option for weather + temp on same line
+
+
 2025-12-31 v.3.8.0
 - German language added
 - Swedish language added
