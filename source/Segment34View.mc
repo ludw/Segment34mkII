@@ -1172,96 +1172,69 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    (:MIP)
-    hidden function setColorTheme(theme as Number) as Array<Graphics.ColorType> {
-        if(theme == 30) { return customColorTheme(); }
-        var skip = Graphics.COLOR_TRANSPARENT;
-        var colBlack = Graphics.COLOR_BLACK;
-        var colWhite = Graphics.COLOR_WHITE;
-        var colrGray = 0x555555;
+        hidden function setColorTheme(theme as Number) as Array<Graphics.ColorType> {
+        if(theme == 30) { return parseCustomThemeString(propColorOverride); }
 
-        //                        bg,       clock,    clockBg,  outl, dataVal,  fieldBg,  fieldLbl, date,     dDim, notif,    stress,   bodybatt, moon
-        if(theme == 0 ) { return [colBlack, 0xFFFF00, 0x005555, skip, colWhite, 0x005555, 0x55AAAA, 0xFFFF00, skip, 0x00AAFF, 0xFFAA00, 0x00AAFF, colWhite]; } // Yellow on turquoise MIP
-        if(theme == 1 ) { return [colBlack, 0xFF55AA, 0x005555, skip, colWhite, 0x005555, 0xAA55AA, colWhite, skip, 0xFF55AA, 0xFF55AA, 0x00FFAA, colWhite]; } // Hot pink MIP
-        if(theme == 2 ) { return [colBlack, 0x00FFFF, 0x0055AA, skip, colWhite, 0x0055AA, 0x55AAAA, 0x00FFFF, skip, 0x00AAFF, 0xFFAA00, 0x00AAFF, colWhite]; } // Blueish green MIP
-        if(theme == 3 ) { return [colBlack, 0x00FF00, 0x005500, skip, colWhite, 0x005500, 0x00AA55, 0x00FF00, skip, 0x00AAFF, 0xFFAA00, 0x00AAFF, colWhite]; } // Very green MIP
-        if(theme == 4 ) { return [colBlack, colWhite, 0x005555, skip, colWhite, 0x005555, 0x55AAAA, colWhite, skip, 0xAAAAAA, 0xFFAA55, 0x55AAFF, colWhite]; } // White on turquoise MIP
-        if(theme == 5 ) { return [colBlack, 0xFF5500, 0x5500AA, skip, colWhite, 0x5500AA, 0xFFAAAA, 0xFFAAAA, skip, colWhite, 0xFF5555, 0x00AAFF, colWhite]; } // Peachy Orange MIP
-        if(theme == 6 ) { return [colBlack, colWhite, 0xAA0000, skip, colWhite, 0xAA0000, 0xFF0000, colWhite, skip, 0xFF0000, 0xAA0000, 0x00AAFF, colWhite]; } // Red and White MIP
-        if(theme == 7 ) { return [colBlack, colWhite, 0x0055AA, skip, colWhite, 0x0055AA, 0x0055AA, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // White on Blue MIP
-        if(theme == 8 ) { return [colBlack, 0xFFFF00, 0x0055AA, skip, colWhite, 0x0055AA, 0x0055AA, 0xFFFF00, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Yellow on Blue MIP
-        if(theme == 9 ) { return [colBlack, colWhite, 0xaa5500, skip, colWhite, 0xaa5500, 0xFF5500, colWhite, skip, 0x00AAFF, 0xFFAA00, 0x00AAFF, colWhite]; } // White and Orange MIP
-        if(theme == 10) { return [colBlack, 0x0055AA, 0x000055, skip, colWhite, colrGray, 0x0055AA, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Blue MIP
-        if(theme == 11) { return [colBlack, 0xFFAA00, colrGray, skip, colWhite, colrGray, 0xFFAA00, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Orange MIP
-        if(theme == 12) { return [colBlack, colWhite, colrGray, skip, colWhite, colrGray, colWhite, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // White on black MIP
-        if(theme == 13) { return [colWhite, colBlack, 0xAAAAAA, skip, colBlack, 0xAAAAAA, colBlack, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, colrGray]; } // Black on White MIP
-        if(theme == 14) { return [colWhite, 0xAA0000, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0xAA0000, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, colrGray]; } // Red on White MIP
-        if(theme == 15) { return [colWhite, 0x0000AA, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0x0000AA, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, colrGray]; } // Blue on White MIP
-        if(theme == 16) { return [colWhite, 0x00AA00, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0x00AA00, colBlack, skip, colBlack, 0xFFAA00, 0x55AAFF, colrGray]; } // Green on White MIP
-        if(theme == 17) { return [colWhite, 0xFF5500, 0xAAAAAA, skip, colBlack, 0xAAAAAA, colrGray, colBlack, skip, colBlack, 0xFF5500, 0x55AAFF, colrGray]; } // Orange on White MIP
-        if(theme == 18) { return [colBlack, 0xFF5500, 0x005500, skip, 0x00FF00, 0x005500, 0xFF5500, 0x00FF00, skip, 0x55FF55, 0xFF5500, 0x00AAFF, colWhite]; } // Green and Orange MIP
-        if(theme == 19) { return [colBlack, 0xAAAA55, 0x005500, skip, 0x00FF00, 0x005500, 0xAAAA00, 0xAAAA55, skip, 0x00FF55, 0xAAAA55, 0x00FF00, colWhite]; } // Green Camo MIP
-        if(theme == 20) { return [colBlack, 0xFF0000, colrGray, skip, colWhite, colrGray, 0xFF0000, colWhite, skip, 0x55AAFF, 0xFF5555, 0x55AAFF, colWhite]; } // Red on Black MIP
-        if(theme == 21) { return [colWhite, 0xAA00FF, 0xAAAAAA, skip, colBlack, 0xAAAAAA, 0xAA00FF, colBlack, skip, colBlack, 0xFF5500, 0x55AAFF, colrGray]; } // Purple on White MIP
-        if(theme == 22) { return [colBlack, 0xAA00FF, colrGray, skip, colWhite, colrGray, 0xAA00FF, colWhite, skip, 0x55AAFF, 0xFFAA00, 0x55AAFF, colWhite]; } // Purple on black MIP
-        if(theme == 23) { return [colBlack, 0xFFAA00, colrGray, skip, 0xFFAA55, colrGray, 0xFFAA00, 0xFFAA55, skip, 0x55AAAA, 0xFFAA00, 0x55AAAA, colWhite]; } // Amber MIP
-        infoMessage = "THEME ERROR";
-        return [0xff0000, 0x00ff00, 0x0000ff, 0x550000, 0x005500, 0x000055, 0xff00ff, 0x00ffff, 0xffff00, 0x005555, 0x550055, 0x555500, 0xffffff]; // error case
+        var themeRes = [
+            Rez.Strings.theme_0, Rez.Strings.theme_1, Rez.Strings.theme_2, Rez.Strings.theme_3,
+            Rez.Strings.theme_4, Rez.Strings.theme_5, Rez.Strings.theme_6, Rez.Strings.theme_7,
+            Rez.Strings.theme_8, Rez.Strings.theme_9, Rez.Strings.theme_10, Rez.Strings.theme_11,
+            Rez.Strings.theme_12, Rez.Strings.theme_13, Rez.Strings.theme_14, Rez.Strings.theme_15,
+            Rez.Strings.theme_16, Rez.Strings.theme_17, Rez.Strings.theme_18, Rez.Strings.theme_19,
+            Rez.Strings.theme_20, Rez.Strings.theme_21, Rez.Strings.theme_22, Rez.Strings.theme_23
+        ];
+
+        var str = "";
+        if(theme >= 0 and theme < themeRes.size()) {
+            str = WatchUi.loadResource(themeRes[theme]);
+        } else {
+            str = WatchUi.loadResource(Rez.Strings.theme_0);
+        }
+
+        return parseThemeString(str);
     }
 
-    (:AMOLED)
-    hidden function setColorTheme(theme as Number) as Array<Graphics.ColorType> {
-        if(theme == 30) { return customColorTheme(); }
-
-        //                        bg,       clock,    clockBg,  outline,  dataVal,  fieldBg,  fieldLbl,   date,   dateDim,  notif,   stress,    bodybatt, moon
-        if(theme == 0 ) { return [0x000000, 0xfbcb77, 0x0d333c, 0xffeac4, 0xFFFFFF, 0x0e333c, 0x55AAAA, 0xfbcb77, 0xa98753, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0xFFFFFF]; } // Yellow on turquoise AMOLED
-        if(theme == 1 ) { return [0x000000, 0xffa5f9, 0x0f3b46, 0xffd9fc, 0xFFFFFF, 0x0e333c, 0xAA55AA, 0xFFFFFF, 0x984a8a, 0xFF55AA, 0xFF55AA, 0x00FFAA, 0xFFFFFF]; } // Hot pink AMOLED
-        if(theme == 2 ) { return [0x000000, 0x89efd2, 0x0f2246, 0xb8efdf, 0xFFFFFF, 0x0f2246, 0x55AAAA, 0x89efd2, 0x5ca28f, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0xFFFFFF]; } // Blueish green AMOLED
-        if(theme == 3 ) { return [0x000000, 0x96e0ac, 0x152b19, 0xc3e0cc, 0xFFFFFF, 0x152b19, 0x00AA55, 0x96e0ac, 0x5ca28f, 0x00AAFF, 0xffc884, 0x59b9fe, 0xFFFFFF]; } // Very green AMOLED
-        if(theme == 4 ) { return [0x000000, 0xFFFFFF, 0x0d333c, 0xadeffe, 0xFFFFFF, 0x0e333c, 0x55AAAA, 0xFFFFFF, 0x1d7e99, 0xAAAAAA, 0xFFAA55, 0x55AAFF, 0xFFFFFF]; } // White on turquoise AMOLED
-        if(theme == 5 ) { return [0x000000, 0xff9161, 0x1b263d, 0xffb494, 0xFFFFFF, 0x1b263d, 0xFFAAAA, 0xffb383, 0xaa6e56, 0xFFFFFF, 0xFF5555, 0x00AAFF, 0xFFFFFF]; } // Peachy Orange AMOLED
-        if(theme == 6 ) { return [0x000000, 0xffffff, 0x550000, 0xc00003, 0xFFFFFF, 0x550000, 0xFF0000, 0xffffff, 0xAA0000, 0xFF0000, 0xAA0000, 0x00AAFF, 0xFFFFFF]; } // Red and White AMOLED
-        if(theme == 7 ) { return [0x000000, 0xffffff, 0x152a53, 0xaecaff, 0xFFFFFF, 0x152a53, 0x0055AA, 0xffffff, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // White on Blue AMOLED
-        if(theme == 8 ) { return [0x000000, 0xfbcb77, 0x152a53, 0xfbdda8, 0xFFFFFF, 0x152a53, 0x0055AA, 0xffeac4, 0xa98753, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Yellow on Blue AMOLED
-        if(theme == 9 ) { return [0x000000, 0xffffff, 0x7d3f01, 0xffd6ae, 0xFFFFFF, 0x58250b, 0xFF5500, 0xffffff, 0xAA5500, 0x00AAFF, 0xFFAA00, 0x00AAFF, 0xFFFFFF]; } // White and Orange AMOLED
-        if(theme == 10) { return [0x000000, 0x3495d4, 0x191b33, 0x5fa6d4, 0xFFFFFF, 0x191b33, 0x0055AA, 0xffffff, 0x0055AA, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Blue AMOLED
-        if(theme == 11) { return [0x000000, 0xff7600, 0x333333, 0xff9133, 0xFFFFFF, 0x333333, 0xFFAA00, 0xffffff, 0x9a9a9a, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Orange AMOLED
-        if(theme == 12) { return [0x000000, 0xFFFFFF, 0x333333, 0xcbcbcb, 0xFFFFFF, 0x333333, 0xFFFFFF, 0xFFFFFF, 0x9a9a9a, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // White on black AMOLED
-        if(theme == 13) { return [0xFFFFFF, 0x000000, 0xCCCCCC, 0x666666, 0x000000, 0xCCCCCC, 0x000000, 0x000000, 0x9a9a9a, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Black on White AMOLED
-        if(theme == 14) { return [0xFFFFFF, 0xAA0000, 0xCCCCCC, 0xaa2325, 0x000000, 0xCCCCCC, 0xAA0000, 0x000000, 0x9a9a9a, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Red on White AMOLED
-        if(theme == 15) { return [0xFFFFFF, 0x0000AA, 0xCCCCCC, 0x2222aa, 0x000000, 0xCCCCCC, 0x0000AA, 0x000000, 0x9a9a9a, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Blue on White AMOLED
-        if(theme == 16) { return [0xFFFFFF, 0x00AA00, 0xCCCCCC, 0x22aa22, 0x000000, 0xCCCCCC, 0x00AA00, 0x000000, 0x9a9a9a, 0x000000, 0xFFAA00, 0x55AAFF, 0x555555]; } // Green on White AMOLED
-        if(theme == 17) { return [0xFFFFFF, 0xFF5500, 0xCCCCCC, 0xff7632, 0x000000, 0xCCCCCC, 0x555555, 0x000000, 0x9a9a9a, 0x000000, 0xFF5500, 0x55AAFF, 0x555555]; } // Orange on White AMOLED
-        if(theme == 18) { return [0x000000, 0xff7600, 0x152b19, 0xe64322, 0x41cb41, 0x152b19, 0xFF5500, 0x41cb41, 0x5f9956, 0x41cb41, 0xff7600, 0x59b9fe, 0xFFFFFF]; } // Green and Orange AMOLED
-        if(theme == 19) { return [0x000000, 0x889f4a, 0x152b19, 0x919f6b, 0x55AA55, 0x152b19, 0xa8aa6c, 0x889f4a, 0x7a9a4e, 0x00FF55, 0x889f4a, 0x55AA55, 0xe3efd2]; } // Green Camo AMOLED
-        if(theme == 20) { return [0x000000, 0xFF0000, 0x282828, 0xff3236, 0xFFFFFF, 0x282828, 0xFF0000, 0xFFFFFF, 0x9a9a9a, 0x55AAFF, 0xFF5555, 0x55AAFF, 0xFFFFFF]; } // Red on Black AMOLED
-        if(theme == 21) { return [0xFFFFFF, 0xAA00FF, 0xCCCCCC, 0xbb34ff, 0x000000, 0xCCCCCC, 0xAA00FF, 0x000000, 0x9a9a9a, 0x000000, 0xFF5500, 0x55AAFF, 0x555555]; } // Purple on White AMOLED
-        if(theme == 22) { return [0x000000, 0xAA55AA, 0x282828, 0xaa77aa, 0xFFFFFF, 0x282828, 0xAA55AA, 0xFFFFFF, 0x9a9a9a, 0x55AAFF, 0xFFAA00, 0x55AAFF, 0xFFFFFF]; } // Purple on black AMOLED
-        if(theme == 23) { return [0x000000, 0xff960c, 0x302b24, 0xffbf65, 0xffdeb4, 0x302b24, 0xffac3f, 0xffb759, 0x9a784d, 0xa8d6fd, 0xfdb500, 0xa8d6fd, 0xe3efd2]; } // Amber AMOLED
-        infoMessage = "THEME ERROR";
-        return [0xff0000, 0x00ff00, 0x0000ff, 0xff00ff, 0x00ffff, 0xffff00, 0x550000, 0x005500, 0x000055, 0x005555, 0x550055, 0x555500, 0xffffff];
-
+    hidden function parseThemeString(csv as String) as Array<Graphics.ColorType> {
+        var res = new [13]; 
+        var comma = 0;
+        for(var i=0; i<13; i++) {
+            comma = csv.find(",");
+            var hex = "";
+            if(comma != null) {
+                hex = csv.substring(0, comma);
+                csv = csv.substring(comma + 1, csv.length());
+            } else {
+                hex = csv;
+            }
+            
+            if(hex.equals("FFFFFFFF")) {
+                res[i] = Graphics.COLOR_TRANSPARENT; 
+            } else {
+                res[i] = hex.toNumberWithBase(16);
+            }
+        }
+        return res;
     }
 
-    hidden function customColorTheme() as Array<Graphics.ColorType>{
+    hidden function parseCustomThemeString(str as String) as Array<Graphics.ColorType> {
         var ret = [];
-        if(propColorOverride.equals("")) { return setColorTheme(-1); }
+        if(str.equals("")) { return setColorTheme(-1); }
         var color_str = "";
         var color = null;
-        for(var i=0; i<propColorOverride.length(); i += 8) {
-            color_str = propColorOverride.substring(i+1, i+7);
-            color = color_str.toNumberWithBase(16) as Graphics.ColorType;
-            ret.add(color);
+        for(var i=0; i<str.length(); i += 8) {
+            if(i+7 > str.length()) { break; }
+            color_str = str.substring(i+1, i+7);
+            color = color_str.toNumberWithBase(16);
+            ret.add(color as Graphics.ColorType);
         }
 
         if(ret.size() != 13) {
-            ret = setColorTheme(-1);
+            return setColorTheme(-1);
         }
 
         for(var j=0; j<ret.size(); j++) {
             if(ret[j] == null or ret[j] < 0 or ret[j] > 16777215) {
-                ret = setColorTheme(-1);
-                break;
+                return setColorTheme(-1);
             }
         }
 
