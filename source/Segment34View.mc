@@ -1217,28 +1217,28 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function parseCustomThemeString(str as String) as Array<Graphics.ColorType> {
-        var ret = [];
         if(str.equals("")) { return setColorTheme(-1); }
+        
+        var ret = [];
         var color_str = "";
         var color = null;
-        for(var i=0; i<str.length(); i += 8) {
-            if(i+7 > str.length()) { break; }
+        var len = str.length();
+
+        for(var i=0; i<len; i += 8) {
+            if(i+7 > len) { break; }
             color_str = str.substring(i+1, i+7);
             color = color_str.toNumberWithBase(16);
+            
+            if(color == null or color < 0 or color > 16777215) {
+                 return setColorTheme(-1);
+            }
             ret.add(color as Graphics.ColorType);
         }
 
         if(ret.size() != 13) {
             return setColorTheme(-1);
         }
-
-        for(var j=0; j<ret.size(); j++) {
-            if(ret[j] == null or ret[j] < 0 or ret[j] > 16777215) {
-                return setColorTheme(-1);
-            }
-        }
-
-        return ret;
+        
     }
 
     hidden function updateColorTheme() {
