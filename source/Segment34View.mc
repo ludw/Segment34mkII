@@ -55,6 +55,11 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var weekNames as Array<String>?;
     hidden var monthNames as Array<String>?;
 
+    // Layout Caching
+    hidden var fieldXCoords as Array<Number> = [0, 0, 0, 0];
+    hidden var fieldY as Number = 0;
+    hidden var bottomFiveY as Number = 0;
+
     hidden var drawGradient as BitmapResource?;
     hidden var drawAODPattern as BitmapResource?;
     
@@ -187,6 +192,8 @@ class Segment34View extends WatchUi.WatchFace {
         
         halfMarginY = Math.round(marginY / 2);
         hasComplications = Toybox has :Complications;
+        
+        calculateLayout();
 
         updateWeather();
     }
@@ -634,6 +641,54 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     (:DefaultLayout)
+    hidden function calculateLayout() as Void {
+        var y1 = baseY + halfClockHeight + marginY;
+        var y2 = y1 + smallDataHeight + marginY;
+        var y3 = y2 + labelHeight + labelMargin + largeDataHeight;
+        
+        fieldY = y2;
+        
+        var data_width = Math.sqrt(centerY*centerY - (y3 - centerY)*(y3 - centerY)) * 2 + fieldSpaceingAdj;
+        var left_edge = Math.round((screenWidth - data_width) / 2);
+        
+        calculateFieldXCoords(data_width, left_edge);
+
+        bottomFiveY = y3 + halfMarginY + bottomFiveAdj;
+        if((propLabelVisibility == 1 or propLabelVisibility == 3)) { bottomFiveY = bottomFiveY - labelHeight; }
+    }
+    
+    (:InstinctCrossover)
+    hidden function calculateLayout() as Void {
+        var y1 = baseY + halfClockHeight + marginY;
+        var y2 = y1 + labelHeight + labelMargin + largeDataHeight;
+        
+        fieldY = y1;
+        
+        var data_width = Math.sqrt(centerY*centerY - (y2 - centerY)*(y2 - centerY)) * 2 + fieldSpaceingAdj;
+        var left_edge = Math.round((screenWidth - data_width) / 2);
+        
+        calculateFieldXCoords(data_width, left_edge);
+
+        bottomFiveY = y2 + halfMarginY + bottomFiveAdj;
+        if((propLabelVisibility == 1 or propLabelVisibility == 3)) { bottomFiveY = bottomFiveY - labelHeight; }
+    }
+    
+    hidden function calculateFieldXCoords(data_width as Float, left_edge as Number) as Void {
+        var digits = getFieldWidths();
+        var tot_digits = digits[0] + digits[1] + digits[2] + digits[3];
+        if (tot_digits == 0) { return; } 
+        var dw1 = Math.round(digits[0] * data_width / tot_digits);
+        var dw2 = Math.round(digits[1] * data_width / tot_digits);
+        var dw3 = Math.round(digits[2] * data_width / tot_digits);
+        var dw4 = Math.round(digits[3] * data_width / tot_digits);
+
+        fieldXCoords[0] = left_edge + Math.round(dw1 / 2);
+        fieldXCoords[1] = left_edge + Math.round(dw1 + (dw2 / 2));
+        fieldXCoords[2] = left_edge + Math.round(dw1 + dw2 + (dw3 / 2));
+        fieldXCoords[3] = left_edge + Math.round(dw1 + dw2 + dw3 + (dw4 / 2));
+    }
+
+    (:DefaultLayout)
     hidden function drawWatchface(dc as Dc, now as Gregorian.Info, aod as Boolean, values as Dictionary) as Void {
         // Clear
         dc.setColor(themeColors[bg], themeColors[bg]);
@@ -737,41 +792,30 @@ class Segment34View extends WatchUi.WatchFace {
         }
 
         // Draw the three bottom data fields
-        var y2 = y1 + smallDataHeight + marginY;
-        var y3 = y2 + labelHeight + labelMargin + largeDataHeight;
-        var data_width = Math.sqrt(centerY*centerY - (y3 - centerY)*(y3 - centerY)) * 2 + fieldSpaceingAdj;
-        var left_edge = Math.round((screenWidth - data_width) / 2);
         var digits = getFieldWidths();
-        var tot_digits = digits[0] + digits[1] + digits[2] + digits[3];
-        var dw1 = Math.round(digits[0] * data_width / tot_digits);
-        var dw2 = Math.round(digits[1] * data_width / tot_digits);
-        var dw3 = Math.round(digits[2] * data_width / tot_digits);
-        var dw4 = Math.round(digits[3] * data_width / tot_digits);
 
-        drawDataField(dc, left_edge + Math.round(dw1 / 2), y2, 3, values[:dataLabelBottomLeft], values[:dataBottomLeft], digits[0], fontLargeData, largeDataWidth * digits[0]);
-        drawDataField(dc, left_edge + Math.round(dw1 + (dw2 / 2)), y2, 3, values[:dataLabelBottomMiddle], values[:dataBottomMiddle], digits[1], fontLargeData, largeDataWidth * digits[1]);
-        drawDataField(dc, left_edge + Math.round(dw1 + dw2 + (dw3 / 2)), y2, 3, values[:dataLabelBottomRight], values[:dataBottomRight], digits[2], fontLargeData, largeDataWidth * digits[2]);
-        drawDataField(dc, left_edge + Math.round(dw1 + dw2 + dw3 + (dw4 / 2)), y2, 3, values[:dataLabelBottomFourth], values[:dataBottomFourth], digits[3], fontLargeData, largeDataWidth * digits[3]);
+        drawDataField(dc, fieldXCoords[0], fieldY, 3, values[:dataLabelBottomLeft], values[:dataBottomLeft], digits[0], fontLargeData, largeDataWidth * digits[0]);
+        drawDataField(dc, fieldXCoords[1], fieldY, 3, values[:dataLabelBottomMiddle], values[:dataBottomMiddle], digits[1], fontLargeData, largeDataWidth * digits[1]);
+        drawDataField(dc, fieldXCoords[2], fieldY, 3, values[:dataLabelBottomRight], values[:dataBottomRight], digits[2], fontLargeData, largeDataWidth * digits[2]);
+        drawDataField(dc, fieldXCoords[3], fieldY, 3, values[:dataLabelBottomFourth], values[:dataBottomFourth], digits[3], fontLargeData, largeDataWidth * digits[3]);
 
         // Draw the 5 digit bottom field
-        var y4 = y3 + halfMarginY + bottomFiveAdj;
-        if((propLabelVisibility == 1 or propLabelVisibility == 3)) { y4 = y4 - labelHeight; }
         var step_width = 0;
         if(screenHeight == 240) {
-            step_width = drawDataField(dc, centerX - 19, y4 + 3, 0, null, values[:dataBottom], 5, fontBottomData, bottomDataWidth * 5);
+            step_width = drawDataField(dc, centerX - 19, bottomFiveY + 3, 0, null, values[:dataBottom], 5, fontBottomData, bottomDataWidth * 5);
         } else {
-            step_width = drawDataField(dc, centerX, y4, 0, null, values[:dataBottom], 5, fontBottomData, bottomDataWidth * 5);
+            step_width = drawDataField(dc, centerX, bottomFiveY, 0, null, values[:dataBottom], 5, fontBottomData, bottomDataWidth * 5);
         }
 
         // Draw icons
         dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
         if(screenHeight == 240) { step_width += 30; }
-        dc.drawText(centerX - (step_width / 2) - (marginX / 2), y4 + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon1], Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
-        dc.drawText(centerX + (step_width / 2) + (marginX / 2) - 2, y4 + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon2], Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(centerX - (step_width / 2) - (marginX / 2), bottomFiveY + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon1], Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(centerX + (step_width / 2) + (marginX / 2) - 2, bottomFiveY + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon2], Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
         
         // Draw battery icon
         if(screenHeight == 240 and propBottomFieldShows != -2) {
-            drawBatteryIcon(dc, centerX + 32, y4, values);
+            drawBatteryIcon(dc, centerX + 32, bottomFiveY, values);
         } else {
             drawBatteryIcon(dc, null, null, values);
         }
@@ -882,31 +926,20 @@ class Segment34View extends WatchUi.WatchFace {
         drawSideBars(dc, values);
 
         // Draw the three bottom data fields (directly below clock, no date row)
-        var y1 = baseY + halfClockHeight + marginY;
-        var y2 = y1 + labelHeight + labelMargin + largeDataHeight;
-        var data_width = Math.sqrt(centerY*centerY - (y2 - centerY)*(y2 - centerY)) * 2 + fieldSpaceingAdj;
-        var left_edge = Math.round((screenWidth - data_width) / 2);
         var digits = getFieldWidths();
-        var tot_digits = digits[0] + digits[1] + digits[2] + digits[3];
-        var dw1 = Math.round(digits[0] * data_width / tot_digits);
-        var dw2 = Math.round(digits[1] * data_width / tot_digits);
-        var dw3 = Math.round(digits[2] * data_width / tot_digits);
-        var dw4 = Math.round(digits[3] * data_width / tot_digits);
 
-        drawDataField(dc, left_edge + Math.round(dw1 / 2), y1, 3, values[:dataLabelBottomLeft], values[:dataBottomLeft], digits[0], fontLargeData, largeDataWidth * digits[0]);
-        drawDataField(dc, left_edge + Math.round(dw1 + (dw2 / 2)), y1, 3, values[:dataLabelBottomMiddle], values[:dataBottomMiddle], digits[1], fontLargeData, largeDataWidth * digits[1]);
-        drawDataField(dc, left_edge + Math.round(dw1 + dw2 + (dw3 / 2)), y1, 3, values[:dataLabelBottomRight], values[:dataBottomRight], digits[2], fontLargeData, largeDataWidth * digits[2]);
-        drawDataField(dc, left_edge + Math.round(dw1 + dw2 + dw3 + (dw4 / 2)), y1, 3, values[:dataLabelBottomFourth], values[:dataBottomFourth], digits[3], fontLargeData, largeDataWidth * digits[3]);
+        drawDataField(dc, fieldXCoords[0], fieldY, 3, values[:dataLabelBottomLeft], values[:dataBottomLeft], digits[0], fontLargeData, largeDataWidth * digits[0]);
+        drawDataField(dc, fieldXCoords[1], fieldY, 3, values[:dataLabelBottomMiddle], values[:dataBottomMiddle], digits[1], fontLargeData, largeDataWidth * digits[1]);
+        drawDataField(dc, fieldXCoords[2], fieldY, 3, values[:dataLabelBottomRight], values[:dataBottomRight], digits[2], fontLargeData, largeDataWidth * digits[2]);
+        drawDataField(dc, fieldXCoords[3], fieldY, 3, values[:dataLabelBottomFourth], values[:dataBottomFourth], digits[3], fontLargeData, largeDataWidth * digits[3]);
 
         // Draw the 5 digit bottom field
-        var y3 = y2 + halfMarginY + bottomFiveAdj;
-        if((propLabelVisibility == 1 or propLabelVisibility == 3)) { y3 = y3 - labelHeight; }
-        var step_width = drawDataField(dc, centerX, y3, 0, null, values[:dataBottom], 5, fontBottomData, bottomDataWidth * 5);
+        var step_width = drawDataField(dc, centerX, bottomFiveY, 0, null, values[:dataBottom], 5, fontBottomData, bottomDataWidth * 5);
 
         // Draw icons
         dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
-        dc.drawText(centerX - (step_width / 2) - (marginX / 2), y3 + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon1], Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
-        dc.drawText(centerX + (step_width / 2) + (marginX / 2) - 2, y3 + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon2], Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(centerX - (step_width / 2) - (marginX / 2), bottomFiveY + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon1], Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(centerX + (step_width / 2) + (marginX / 2) - 2, bottomFiveY + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon2], Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
 
         // Draw battery icon
         drawBatteryIcon(dc, null, null, values);
