@@ -571,9 +571,9 @@ class Segment34View extends WatchUi.WatchFace {
     function onLayout(dc as Dc) as Void {
     }
 
-    // Called when this View is brought to the foreground. Restore
-    // the state of this View and prepare it to be shown. This includes
-    // loading resources into memory.
+    // Called when this View is brought to the foreground.
+    // Restore the state of this View and prepare it to be shown.
+    // This includes loading resources into memory.
     function onShow() as Void {
         visible = true;
         lastUpdate = null;
@@ -608,9 +608,9 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    // Called when this View is removed from the screen. Save the
-    // state of this View here. This includes freeing resources from
-    // memory.
+    // Called when this View is removed from the screen.
+    // Save the state of this View here.
+    // This includes freeing resources from memory.
     function onHide() as Void {
         visible = false;
     }
