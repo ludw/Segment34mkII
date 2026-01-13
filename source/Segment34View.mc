@@ -129,6 +129,14 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propLabelVisibility as Number = 0;
     hidden var propSmallFontVariant as Number = 0;
 
+    // Cached Labels
+    hidden var strLabelTopLeft as String = "";
+    hidden var strLabelTopRight as String = "";
+    hidden var strLabelBottomLeft as String = "";
+    hidden var strLabelBottomMiddle as String = "";
+    hidden var strLabelBottomRight as String = "";
+    hidden var strLabelBottomFourth as String = "";
+
     enum colorNames {
         bg = 0,
         clock,
@@ -196,6 +204,16 @@ class Segment34View extends WatchUi.WatchFace {
         calculateLayout();
 
         updateWeather();
+    }
+
+    hidden function updateActiveLabels() as Void {
+        var fieldWidths = getFieldWidths();
+        strLabelTopLeft = getLabelByType(propSunriseFieldShows, 1);
+        strLabelTopRight = getLabelByType(propSunsetFieldShows, 1);
+        strLabelBottomLeft = getLabelByType(propLeftValueShows, fieldWidths[0] - 1);
+        strLabelBottomMiddle = getLabelByType(propMiddleValueShows, fieldWidths[1] - 1);
+        strLabelBottomRight = getLabelByType(propRightValueShows, fieldWidths[2] - 1);
+        strLabelBottomFourth = getLabelByType(propFourthValueShows, fieldWidths[3] - 1);
     }
 
     (:Round240)
@@ -506,15 +524,15 @@ class Segment34View extends WatchUi.WatchFace {
             values[:dataGraph1] = null;
         }
 
-        var fieldWidths = getFieldWidths();
-        values[:dataLabelTopLeft] = getLabelByType(propSunriseFieldShows, 1);
-        values[:dataLabelTopRight] = getLabelByType(propSunsetFieldShows, 1);
-        values[:dataLabelBottomLeft] = getLabelByType(propLeftValueShows, fieldWidths[0] - 1);
-        values[:dataLabelBottomMiddle] = getLabelByType(propMiddleValueShows, fieldWidths[1] - 1);
-        values[:dataLabelBottomRight] = getLabelByType(propRightValueShows, fieldWidths[2] - 1);
-        values[:dataLabelBottomFourth] = getLabelByType(propFourthValueShows, fieldWidths[3] - 1);
+        values[:dataLabelTopLeft] = strLabelTopLeft;
+        values[:dataLabelTopRight] = strLabelTopRight;
+        values[:dataLabelBottomLeft] = strLabelBottomLeft;
+        values[:dataLabelBottomMiddle] = strLabelBottomMiddle;
+        values[:dataLabelBottomRight] = strLabelBottomRight;
+        values[:dataLabelBottomFourth] = strLabelBottomFourth;
 
         // From updateData logic
+        var fieldWidths = getFieldWidths();
         values[:dataTopLeft] = getValueByType(propSunriseFieldShows, 5);
         values[:dataTopRight] = getValueByType(propSunsetFieldShows, 5);
         values[:dataAboveLine1] = getValueByTypeWithUnit(propWeatherLine1Shows, 10);
@@ -1368,6 +1386,7 @@ class Segment34View extends WatchUi.WatchFace {
         
         nightMode = null; // force update color theme
         updateColorTheme();
+        updateActiveLabels();
 
         if(propTimeSeparator == 2) { clockBgText = "####"; } else { clockBgText = "#####"; }
     }
