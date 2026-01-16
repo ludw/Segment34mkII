@@ -60,6 +60,10 @@ Pull requests are welcome, but please follow the following guidelines:
 - separate 24h mode for alt tz
 
 ## Change log
+2026-01-16 v3.9.1
+- Reduced memory use thanks to yuvalabou
+
+
 2026-01-05 v3.9.0
 - Support for Instinct Crossover AMOLED
 - Support for D2 Mach 2
