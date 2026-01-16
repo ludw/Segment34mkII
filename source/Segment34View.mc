@@ -73,6 +73,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var isSleeping as Boolean = false;
     hidden var lastUpdate as Number? = null;
     hidden var lastSlowUpdate as Number? = null;
+    hidden var cachedValues as Dictionary = {};
     hidden var doesPartialUpdate as Boolean = false;
     hidden var hasComplications as Boolean = false;
     
@@ -594,17 +595,27 @@ class Segment34View extends WatchUi.WatchFace {
 
         if(now.sec % 60 == 0 or lastSlowUpdate == null or unix_timestamp - lastSlowUpdate >= 60) {
             lastSlowUpdate = unix_timestamp;
+            updateColorTheme();
             updateWeather();
         }
-        
-        updateColorTheme();
 
-        var values = computeDisplayValues(now);
+        if(lastUpdate == null or unix_timestamp - lastUpdate >= propUpdateFreq) {
+            lastUpdate = unix_timestamp;
+            cachedValues = computeDisplayValues(now);
+        } else {
+            // Only update time-sensitive values
+            cachedValues[:dataClock] = getClockData(now);
+            if(isSleeping and (!propAlwaysShowSeconds or canBurnIn)) {
+                cachedValues[:dataSeconds] = "";
+            } else {
+                cachedValues[:dataSeconds] = now.sec.format("%02d");
+            }
+        }
 
         if(isSleeping and canBurnIn) {
-            drawAOD(dc, now, values);
+            drawAOD(dc, now, cachedValues);
         } else {
-            drawWatchface(dc, now, false, values);
+            drawWatchface(dc, now, false, cachedValues);
         }
     }
 
@@ -1256,7 +1267,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(ret.size() != 13) {
             return setColorTheme(-1);
         }
-        
+        return ret;
     }
 
     hidden function updateColorTheme() {
