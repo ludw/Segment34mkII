@@ -55,5 +55,5 @@
     <property id="pressToOpenBottomCenter" type="number">0</property>
     <property id="pressToOpenBottomRight" type="number">0</property>
     <property id="labelVisibility" type="number">0</property>
-    <property id="leftBarDynamicColor" type="boolean">false</property>
+    <property id="stressDynamicColor" type="boolean">false</property>
 </properties>

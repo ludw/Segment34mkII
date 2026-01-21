@@ -1106,7 +1106,7 @@
                 <listEntry value="3">@Strings.settings_hide_bottom_labels</listEntry>
             </settingConfig>
     </setting>
-    <setting propertyKey="@Properties.leftBarDynamicColor" title="Dynamic Stress Colors">
+    <setting propertyKey="@Properties.stressDynamicColor" title="Stress: Dynamic Colors">
         <settingConfig type="boolean" />
     </setting>
 

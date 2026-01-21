@@ -129,7 +129,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propWeekOffset as Number = 0;
     hidden var propLabelVisibility as Number = 0;
     hidden var propSmallFontVariant as Number = 0;
-    hidden var propLeftBarDynamicColor as Boolean = false;
+    hidden var propStressDynamicColor as Boolean = false;
 
     // Cached Labels
     hidden var strLabelTopLeft as String = "";
@@ -1117,35 +1117,40 @@ class Segment34View extends WatchUi.WatchFace {
         var barHeight;
         var barColor;
 
+        // --- Left Bar ---
         if (values[:dataLeftBar] != null) {
             barVal = values[:dataLeftBar];
             barHeight = Math.round(barVal * (clockHeight / 100.0));
-            if (propLeftBarShows == 1 && propLeftBarDynamicColor) {
+            
+            // Logic: Is it Stress? Is the Global Dynamic toggle ON?
+            if (propLeftBarShows == 1 && propStressDynamicColor) {
                 barColor = getStressColor(barVal);
             } else {
-                barColor = themeColors[stress];
+                barColor = themeColors[stress]; 
             }
 
             dc.setColor(barColor, Graphics.COLOR_TRANSPARENT);
-            dc.fillRectangle(
-                centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - barHeight + barBottomAdj, barWidth, barHeight
-            );
-            if(propLeftBarShows == 6) { 
-                drawMoveBarTicks(dc, centerX - halfClockWidth - barWidth - barWidth, centerX - halfClockWidth);
-            }
+            dc.fillRectangle(centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - barHeight + barBottomAdj, barWidth, barHeight);
+            
+            if(propLeftBarShows == 6) { drawMoveBarTicks(dc, centerX - halfClockWidth - barWidth - barWidth, centerX - halfClockWidth); }
         }
+
+        // --- Right Bar ---
         if (values[:dataRightBar] != null) {
             barVal = values[:dataRightBar];
             barHeight = Math.round(barVal * (clockHeight / 100.0));
             
-            dc.setColor(themeColors[bodybatt], Graphics.COLOR_TRANSPARENT);
-            dc.fillRectangle(
-                centerX + halfClockWidth + barWidth, baseY + halfClockHeight - barHeight + barBottomAdj, barWidth, barHeight
-            );
-            
-            if(propRightBarShows == 6) { 
-                drawMoveBarTicks(dc, centerX + halfClockWidth + barWidth + barWidth, centerX + halfClockWidth);
+            // Same logic: If the user put Stress here, it respects the same global toggle
+            if (propRightBarShows == 1 && propStressDynamicColor) {
+                barColor = getStressColor(barVal);
+            } else {
+                barColor = themeColors[bodybatt]; 
             }
+
+            dc.setColor(barColor, Graphics.COLOR_TRANSPARENT);
+            dc.fillRectangle(centerX + halfClockWidth + barWidth, baseY + halfClockHeight - barHeight + barBottomAdj, barWidth, barHeight);
+            
+            if(propRightBarShows == 6) { drawMoveBarTicks(dc, centerX + halfClockWidth + barWidth + barWidth, centerX + halfClockWidth); }
         }
     }
 
@@ -1413,7 +1418,7 @@ class Segment34View extends WatchUi.WatchFace {
         propWeekOffset = getValueOrDefault("weekOffset", 0) as Number;
         propSmallFontVariant = getValueOrDefault("smallFontVariant", 2) as Number;
         propIs24H = System.getDeviceSettings().is24Hour;
-        propLeftBarDynamicColor = getValueOrDefault("leftBarDynamicColor", false) as Boolean;
+        propStressDynamicColor = getValueOrDefault("stressDynamicColor", false) as Boolean;
 
         nightMode = null; // force update color theme
         updateColorTheme();
