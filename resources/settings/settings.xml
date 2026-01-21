@@ -73,6 +73,10 @@
         <settingConfig type="alphanumeric" errorMessage="@Strings.settings_enter_13_values" />
     </setting>
 
+    <setting propertyKey="@Properties.stressDynamicColor" title="Dynamic Stress Colors">
+        <settingConfig type="boolean" />
+    </setting>
+
     <setting propertyKey="@Properties.clockOutlineStyle" title="@Strings.settings_clock_outline_style">
         <settingConfig type="list">
             <listEntry value="0">@Strings.settings_filled_numbers_no_outline</listEntry>
@@ -340,7 +344,6 @@
             <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
         </settingConfig>
     </setting>
-
 
     <setting propertyKey="@Properties.fieldLayout" title="@Strings.settings_bottom_field_layout">
         <settingConfig type="list">
@@ -922,6 +925,7 @@
                 <listEntry value="1">@Strings.settings_southern</listEntry>
             </settingConfig>
     </setting>
+
     <setting propertyKey="@Properties.hourFormat" title="@Strings.settings_time_format">
         <settingConfig type="list">
             <listEntry value="0">@Strings.settings_auto_use_system</listEntry>
@@ -929,6 +933,7 @@
             <listEntry value="2">@Strings.settings_12h</listEntry>
         </settingConfig>
     </setting>
+
     <setting propertyKey="@Properties.dateFormat" title="@Strings.settings_date_format">
         <settingConfig type="list">
             <listEntry value="0">@Strings.settings_weekday_dd_month_yyyy</listEntry>
@@ -947,6 +952,7 @@
     <setting propertyKey="@Properties.tzName1" title="@Strings.settings_alternative_timezone_1_label">
         <settingConfig type="alphaNumeric" />
     </setting>
+
     <setting propertyKey="@Properties.tzOffset1" title="@Strings.settings_alternative_timezone_1_offset">
         <settingConfig type="list">
             <listEntry value="-720">UTC-12:00</listEntry>
@@ -993,6 +999,7 @@
     <setting propertyKey="@Properties.tzName2" title="@Strings.settings_alternative_timezone_2_label">
         <settingConfig type="alphaNumeric" />
     </setting>
+
    <setting propertyKey="@Properties.tzOffset2" title="@Strings.settings_alternative_timezone_2_offset">
         <settingConfig type="list">
             <listEntry value="-720">UTC-12:00</listEntry>
@@ -1106,8 +1113,4 @@
                 <listEntry value="3">@Strings.settings_hide_bottom_labels</listEntry>
             </settingConfig>
     </setting>
-    <setting propertyKey="@Properties.stressDynamicColor" title="Stress: Dynamic Colors">
-        <settingConfig type="boolean" />
-    </setting>
-
 </settings>
