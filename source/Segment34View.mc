@@ -1402,7 +1402,36 @@ class Segment34View extends WatchUi.WatchFace {
         if(propTimeSeparator == 2) { clockBgText = "####"; } else { clockBgText = "#####"; }
     }
 
+    hidden function getAltitudeValue() as Float? {
+        // 1. Best: Complications (Modern approach)
+        if (hasComplications) {
+            try {
+                var comp = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_ALTITUDE));
+                if (comp != null && comp.value != null) {
+                    return comp.value.toFloat(); 
+                }
+            } catch(e) {}
+        }
 
+        // 2. From Sensor History
+        if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getElevationHistory)) {
+            var elv_iterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
+            if (elv_iterator != null) {
+                var sample = elv_iterator.next();
+                if (sample != null && sample.data != null) {
+                    return sample.data.toFloat();
+                }
+            }
+        }
+
+        // 3. Fallback: Activity Info
+        var info = Activity.getActivityInfo();
+        if (info != null && info.altitude != null) {
+            return info.altitude.toFloat();
+        }
+
+        return null;
+    }
 
     hidden function getClockData(now as Gregorian.Info) as String {
         var separator = ":";
@@ -1890,14 +1919,9 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 12) { // Altitude (m)
-            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
-                var elv_iterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
-                if (elv_iterator != null) {
-                    var elv = elv_iterator.next();
-                    if(elv != null and elv.data != null) {
-                        val = elv.data.format(numberFormat);
-                    }
-                }
+                var alt = getAltitudeValue();
+                if (alt != null) {
+                    val = alt.format(numberFormat);
             }
         } else if(complicationType == 13) { // Stress
         var st = getStressData();
@@ -1910,14 +1934,9 @@ class Segment34View extends WatchUi.WatchFace {
                 val = bb.format(numberFormat);
             }
         } else if(complicationType == 15) { // Altitude (ft)
-            if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getElevationHistory)) {
-                var elv_iterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
-                if (elv_iterator != null) {
-                    var elv = elv_iterator.next();
-                    if(elv != null and elv.data != null) {
-                        val = (elv.data * 3.28084).format(numberFormat);
-                    }
-                }
+            var alt = getAltitudeValue();
+            if (alt != null) {
+                val = (alt * 3.28084).format(numberFormat);
             }
         } else if(complicationType == 16) { // Alt TZ 1
             val = secondaryTimezone(propTzOffset1, width);
