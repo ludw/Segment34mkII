@@ -1112,10 +1112,20 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function drawSideBars(dc as Dc, values as Dictionary) as Void {
+        var lbar;
         if (values[:dataLeftBar] != null) {
-            var lbar = Math.round(values[:dataLeftBar] * (clockHeight / 100.0));
-            dc.setColor(themeColors[stress], Graphics.COLOR_TRANSPARENT);
-            dc.fillRectangle(centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - lbar + barBottomAdj, barWidth, lbar);
+            lbar = Math.round(values[:dataLeftBar] * (clockHeight / 100.0));
+            if (values[:dataLeftBar] != null) {
+                var stressVal = values[:dataLeftBar];
+                lbar = Math.round(stressVal * (clockHeight / 100.0));
+                dc.setColor(getStressColor(stressVal), Graphics.COLOR_TRANSPARENT);
+                dc.fillRectangle(
+                    centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - lbar + barBottomAdj, barWidth, lbar
+                );
+            }
+            dc.fillRectangle(
+                centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - lbar + barBottomAdj, barWidth, lbar
+            );
             if(propLeftBarShows == 6) { // Move bar, draw ticks
                 drawMoveBarTicks(dc, centerX - halfClockWidth - barWidth - barWidth, centerX - halfClockWidth);
             }
@@ -1502,6 +1512,13 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
         return null;
+    }
+
+    hidden function getStressColor(val as Number) as Graphics.ColorType {
+        if (val <= 25) { return 0x00AAFF; } // Rest (Blue)
+        if (val <= 50) { return 0xFFAA00; } // Low (Yellow/Orange)
+        if (val <= 75) { return 0xFF5500; } // Medium (Orange)
+        return 0xAA0000;                   // High (Red)
     }
 
     hidden function getBBData() as Number? {
