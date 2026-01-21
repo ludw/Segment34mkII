@@ -129,6 +129,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propWeekOffset as Number = 0;
     hidden var propLabelVisibility as Number = 0;
     hidden var propSmallFontVariant as Number = 0;
+    hidden var propLeftBarDynamicColor as Boolean = false;
 
     // Cached Labels
     hidden var strLabelTopLeft as String = "";
@@ -1112,29 +1113,37 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function drawSideBars(dc as Dc, values as Dictionary) as Void {
-        var lbar;
+        var barVal;
+        var barHeight;
+        var barColor;
+
         if (values[:dataLeftBar] != null) {
-            lbar = Math.round(values[:dataLeftBar] * (clockHeight / 100.0));
-            if (values[:dataLeftBar] != null) {
-                var stressVal = values[:dataLeftBar];
-                lbar = Math.round(stressVal * (clockHeight / 100.0));
-                dc.setColor(getStressColor(stressVal), Graphics.COLOR_TRANSPARENT);
-                dc.fillRectangle(
-                    centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - lbar + barBottomAdj, barWidth, lbar
-                );
+            barVal = values[:dataLeftBar];
+            barHeight = Math.round(barVal * (clockHeight / 100.0));
+            if (propLeftBarShows == 1 && propLeftBarDynamicColor) {
+                barColor = getStressColor(barVal);
+            } else {
+                barColor = themeColors[stress];
             }
+
+            dc.setColor(barColor, Graphics.COLOR_TRANSPARENT);
             dc.fillRectangle(
-                centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - lbar + barBottomAdj, barWidth, lbar
+                centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - barHeight + barBottomAdj, barWidth, barHeight
             );
-            if(propLeftBarShows == 6) { // Move bar, draw ticks
+            if(propLeftBarShows == 6) { 
                 drawMoveBarTicks(dc, centerX - halfClockWidth - barWidth - barWidth, centerX - halfClockWidth);
             }
         }
         if (values[:dataRightBar] != null) {
-            var rbar = Math.round(values[:dataRightBar] * (clockHeight / 100.0));
+            barVal = values[:dataRightBar];
+            barHeight = Math.round(barVal * (clockHeight / 100.0));
+            
             dc.setColor(themeColors[bodybatt], Graphics.COLOR_TRANSPARENT);
-            dc.fillRectangle(centerX + halfClockWidth + barWidth, baseY + halfClockHeight - rbar + barBottomAdj, barWidth, rbar);
-            if(propRightBarShows == 6) { // Move bar, draw ticks
+            dc.fillRectangle(
+                centerX + halfClockWidth + barWidth, baseY + halfClockHeight - barHeight + barBottomAdj, barWidth, barHeight
+            );
+            
+            if(propRightBarShows == 6) { 
                 drawMoveBarTicks(dc, centerX + halfClockWidth + barWidth + barWidth, centerX + halfClockWidth);
             }
         }
@@ -1404,7 +1413,8 @@ class Segment34View extends WatchUi.WatchFace {
         propWeekOffset = getValueOrDefault("weekOffset", 0) as Number;
         propSmallFontVariant = getValueOrDefault("smallFontVariant", 2) as Number;
         propIs24H = System.getDeviceSettings().is24Hour;
-        
+        propLeftBarDynamicColor = getValueOrDefault("leftBarDynamicColor", false) as Boolean;
+
         nightMode = null; // force update color theme
         updateColorTheme();
         updateActiveLabels();
