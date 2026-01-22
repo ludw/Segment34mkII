@@ -1117,40 +1117,40 @@ class Segment34View extends WatchUi.WatchFace {
         var barHeight;
         var barColor;
 
-        // --- Left Bar ---
         if (values[:dataLeftBar] != null) {
             barVal = values[:dataLeftBar];
             barHeight = Math.round(barVal * (clockHeight / 100.0));
-            
-            // Logic: Is it Stress? Is the Global Dynamic toggle ON?
             if (propLeftBarShows == 1 && propStressDynamicColor) {
                 barColor = getStressColor(barVal);
             } else {
                 barColor = themeColors[stress]; 
             }
-
             dc.setColor(barColor, Graphics.COLOR_TRANSPARENT);
-            dc.fillRectangle(centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - barHeight + barBottomAdj, barWidth, barHeight);
-            
-            if(propLeftBarShows == 6) { drawMoveBarTicks(dc, centerX - halfClockWidth - barWidth - barWidth, centerX - halfClockWidth); }
+            dc.fillRectangle(
+                centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - barHeight + barBottomAdj, barWidth, barHeight
+            );
+
+            if(propLeftBarShows == 6) {
+                drawMoveBarTicks(dc, centerX - halfClockWidth - barWidth - barWidth, centerX - halfClockWidth);
+            }
         }
 
-        // --- Right Bar ---
         if (values[:dataRightBar] != null) {
             barVal = values[:dataRightBar];
             barHeight = Math.round(barVal * (clockHeight / 100.0));
-            
-            // Same logic: If the user put Stress here, it respects the same global toggle
             if (propRightBarShows == 1 && propStressDynamicColor) {
                 barColor = getStressColor(barVal);
             } else {
                 barColor = themeColors[bodybatt]; 
             }
-
             dc.setColor(barColor, Graphics.COLOR_TRANSPARENT);
-            dc.fillRectangle(centerX + halfClockWidth + barWidth, baseY + halfClockHeight - barHeight + barBottomAdj, barWidth, barHeight);
+            dc.fillRectangle(
+                centerX + halfClockWidth + barWidth, baseY + halfClockHeight - barHeight + barBottomAdj, barWidth, barHeight
+            );
             
-            if(propRightBarShows == 6) { drawMoveBarTicks(dc, centerX + halfClockWidth + barWidth + barWidth, centerX + halfClockWidth); }
+            if(propRightBarShows == 6) {
+                drawMoveBarTicks(dc, centerX + halfClockWidth + barWidth + barWidth, centerX + halfClockWidth);
+            }
         }
     }
 
