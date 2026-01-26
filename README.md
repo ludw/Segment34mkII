@@ -60,9 +60,10 @@ Pull requests are welcome, but please follow the following guidelines:
 - separate 24h mode for alt tz
 
 ## Change log
-2026-01-16 v3.9.1
-- Reduced memory use thanks to yuvalabou
-
+2026-01-26 v3.10.0
+- Reduced memory use, thanks to yuvalabou
+- Dynamic stress bar colors (enable in settings), thanks to yuvalabou
+- Better device support for altitude, thanks to yuvalabou
 
 2026-01-05 v3.9.0
 - Support for Instinct Crossover AMOLED

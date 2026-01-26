@@ -73,10 +73,6 @@
         <settingConfig type="alphanumeric" errorMessage="@Strings.settings_enter_13_values" />
     </setting>
 
-    <setting propertyKey="@Properties.stressDynamicColor" title="Dynamic Stress Colors">
-        <settingConfig type="boolean" />
-    </setting>
-
     <setting propertyKey="@Properties.clockOutlineStyle" title="@Strings.settings_clock_outline_style">
         <settingConfig type="list">
             <listEntry value="0">@Strings.settings_filled_numbers_no_outline</listEntry>
@@ -747,6 +743,10 @@
             <listEntry value="5">@Strings.settings_act_min_progress</listEntry>
             <listEntry value="6">@Strings.settings_move_bar</listEntry>
         </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.stressDynamicColor" title="Dynamic Stress Colors">
+        <settingConfig type="boolean" />
     </setting>
 
     <setting propertyKey="@Properties.aodAlignment" title="@Strings.settings_text_alignment_always">

@@ -1174,11 +1174,7 @@ class Segment34View extends WatchUi.WatchFace {
         for(var i=0; i<data.size(); i++) {
             if(data[i] == null) { break; }
             if(propHistogramData == 7) {
-                if(data[i] <= 25) {
-                    dc.setColor(themeColors[bodybatt], Graphics.COLOR_TRANSPARENT);
-                } else {
-                    dc.setColor(themeColors[stress], Graphics.COLOR_TRANSPARENT);
-                }
+                dc.setColor(getStressColor(data[i]), Graphics.COLOR_TRANSPARENT);
             }
             bar_height = Math.round(data[i] / scale);
             dc.drawRectangle(x - half_width + i * (histogramBarWidth + histogramBarSpacing), y + (h - bar_height), histogramBarWidth, bar_height);
