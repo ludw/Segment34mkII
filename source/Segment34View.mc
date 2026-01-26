@@ -1201,7 +1201,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-        hidden function setColorTheme(theme as Number) as Array<Graphics.ColorType> {
+    hidden function setColorTheme(theme as Number) as Array<Graphics.ColorType> {
         if(theme == 30) { return parseCustomThemeString(propColorOverride); }
 
         var themeRes = [
