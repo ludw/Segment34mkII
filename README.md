@@ -52,6 +52,7 @@ Pull requests are welcome, but please follow the following guidelines:
 - Monthly run/bike distance
 - Notifications as icon
 - Stress bar colors like garmin does
+- Altitude, history value might not be accurate, use sensor value?
 - 7 day rolling run distance
 - Line font for bottom fields
 - AM/PM indicator

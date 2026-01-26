@@ -129,6 +129,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propWeekOffset as Number = 0;
     hidden var propLabelVisibility as Number = 0;
     hidden var propSmallFontVariant as Number = 0;
+    hidden var propStressDynamicColor as Boolean = false;
 
     // Cached Labels
     hidden var strLabelTopLeft as String = "";
@@ -1112,19 +1113,42 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function drawSideBars(dc as Dc, values as Dictionary) as Void {
+        var barVal;
+        var barHeight;
+        var barColor;
+
         if (values[:dataLeftBar] != null) {
-            var lbar = Math.round(values[:dataLeftBar] * (clockHeight / 100.0));
-            dc.setColor(themeColors[stress], Graphics.COLOR_TRANSPARENT);
-            dc.fillRectangle(centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - lbar + barBottomAdj, barWidth, lbar);
-            if(propLeftBarShows == 6) { // Move bar, draw ticks
+            barVal = values[:dataLeftBar];
+            barHeight = Math.round(barVal * (clockHeight / 100.0));
+            if (propLeftBarShows == 1 && propStressDynamicColor) {
+                barColor = getStressColor(barVal);
+            } else {
+                barColor = themeColors[stress]; 
+            }
+            dc.setColor(barColor, Graphics.COLOR_TRANSPARENT);
+            dc.fillRectangle(
+                centerX - halfClockWidth - barWidth - barWidth, baseY + halfClockHeight - barHeight + barBottomAdj, barWidth, barHeight
+            );
+
+            if(propLeftBarShows == 6) {
                 drawMoveBarTicks(dc, centerX - halfClockWidth - barWidth - barWidth, centerX - halfClockWidth);
             }
         }
+
         if (values[:dataRightBar] != null) {
-            var rbar = Math.round(values[:dataRightBar] * (clockHeight / 100.0));
-            dc.setColor(themeColors[bodybatt], Graphics.COLOR_TRANSPARENT);
-            dc.fillRectangle(centerX + halfClockWidth + barWidth, baseY + halfClockHeight - rbar + barBottomAdj, barWidth, rbar);
-            if(propRightBarShows == 6) { // Move bar, draw ticks
+            barVal = values[:dataRightBar];
+            barHeight = Math.round(barVal * (clockHeight / 100.0));
+            if (propRightBarShows == 1 && propStressDynamicColor) {
+                barColor = getStressColor(barVal);
+            } else {
+                barColor = themeColors[bodybatt]; 
+            }
+            dc.setColor(barColor, Graphics.COLOR_TRANSPARENT);
+            dc.fillRectangle(
+                centerX + halfClockWidth + barWidth, baseY + halfClockHeight - barHeight + barBottomAdj, barWidth, barHeight
+            );
+            
+            if(propRightBarShows == 6) {
                 drawMoveBarTicks(dc, centerX + halfClockWidth + barWidth + barWidth, centerX + halfClockWidth);
             }
         }
@@ -1201,7 +1225,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-        hidden function setColorTheme(theme as Number) as Array<Graphics.ColorType> {
+    hidden function setColorTheme(theme as Number) as Array<Graphics.ColorType> {
         if(theme == 30) { return parseCustomThemeString(propColorOverride); }
 
         var themeRes = [
@@ -1394,7 +1418,8 @@ class Segment34View extends WatchUi.WatchFace {
         propWeekOffset = getValueOrDefault("weekOffset", 0) as Number;
         propSmallFontVariant = getValueOrDefault("smallFontVariant", 2) as Number;
         propIs24H = System.getDeviceSettings().is24Hour;
-        
+        propStressDynamicColor = getValueOrDefault("stressDynamicColor", false) as Boolean;
+
         nightMode = null; // force update color theme
         updateColorTheme();
         updateActiveLabels();
@@ -1531,6 +1556,13 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
         return null;
+    }
+
+    hidden function getStressColor(val as Number) as Graphics.ColorType {
+        if (val <= 25) { return 0x00AAFF; } // Rest (Blue)
+        if (val <= 50) { return 0xFFAA00; } // Low (Yellow/Orange)
+        if (val <= 75) { return 0xFF5500; } // Medium (Orange)
+        return 0xAA0000;                   // High (Red)
     }
 
     hidden function getBBData() as Number? {
