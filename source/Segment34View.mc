@@ -139,6 +139,9 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var strLabelBottomRight as String = "";
     hidden var strLabelBottomFourth as String = "";
 
+    const battFull = "|||||||||||||||||||||||||||||||||||";
+    const battEmpty = "{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{";
+
     enum colorNames {
         bg = 0,
         clock,
@@ -1657,24 +1660,25 @@ class Segment34View extends WatchUi.WatchFace {
                 value = sample.format("%d");
             }
         } else if(propBatteryVariant == 3) {
-            var sample = 0;
-            var max = 0;
-            if(screenHeight > 280) {
-                sample = Math.round(System.getSystemStats().battery / 100.0 * 35);
-                max = 35;
-            } else {
-                sample = Math.round(System.getSystemStats().battery / 100.0 * 20);
-                max = 20;
-            }
-            
-            for(var i = 0; i < sample; i++) {
-                value += "|";
-            }
+                var sample = 0;
+                var max = 0;
+                var batLevel = System.getSystemStats().battery; 
 
-            for(var i = 0; i < max - sample; i++) {
-                value += "{"; // rendered as 1px space to always fill the same number of px
+                if(screenHeight > 280) {
+                    sample = Math.round(batLevel / 100.0 * 35).toNumber();
+                    max = 35;
+                } else {
+                    sample = Math.round(batLevel / 100.0 * 20).toNumber();
+                    max = 20;
+                }
+                if (sample > 0) {
+                    value += battFull.substring(0, sample);
+                }
+                
+                if (sample < max) {
+                    value += battEmpty.substring(0, max - sample);
+                }
             }
-        }
         
         return value;
     }
