@@ -1070,7 +1070,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function drawDataField(dc as Dc, x as Number, y as Number, adjX as Number, label as String?, value as String, width as Number, font as FontResource, bgwidth as Number) as Number {
-        if(value.equals("") and (label == null or label.equals(""))) { return 0; }
+        if(value.length() == 0 and (label == null or label.length() == 0)) { return 0; }
         if(width == 0) { return 0; }
         var valueBg = "";
         var bgChar = "#";
