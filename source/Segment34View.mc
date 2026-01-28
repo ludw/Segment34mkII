@@ -1807,15 +1807,6 @@ class Segment34View extends WatchUi.WatchFace {
         return ret;
     }
 
-    hidden function getBatteryBars() as String {
-        var bat = Math.round(System.getSystemStats().battery / 100.0 * 6);
-        var value = "";
-        for(var i = 0; i < bat; i++) {
-            value += "|";
-        }
-        return value;
-    }
-
     hidden function getValueByTypeWithUnit(complicationType as Number, width as Number) as String {
         var unit = getUnitByType(complicationType);
         if (unit.length() > 0) {
