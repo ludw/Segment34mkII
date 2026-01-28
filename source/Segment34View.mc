@@ -557,7 +557,7 @@ class Segment34View extends WatchUi.WatchFace {
         values[:dataLeftBar] = getBarData(propLeftBarShows);
         values[:dataRightBar] = getBarData(propRightBarShows);
 
-        if(!infoMessage.equals("")) {
+        if(!infoMessage.length() == 0) {
             values[:dataBelow] = infoMessage;
             infoMessage = ""; 
         }
@@ -1269,7 +1269,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function parseCustomThemeString(str as String) as Array<Graphics.ColorType> {
-        if(str.equals("")) { return setColorTheme(-1); }
+        if(str.length() == 0) { return setColorTheme(-1); }
         
         var ret = [];
         var color_str = "";
@@ -2514,10 +2514,10 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function join(array as Array<String>) as String {
         var ret = "";
         for(var i=0; i<array.size(); i++) {
-            if(array[i].equals("")) {
+            if(array[i].length() == 0) {
                 continue;
             }
-            if(ret.equals("")) {
+            if(ret.length() == 0) {
                 ret = array[i];
             } else {
                 ret = ret + ", " + array[i];
