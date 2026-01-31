@@ -75,8 +75,9 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var lastSlowUpdate as Number? = null;
     hidden var cachedValues as Dictionary = {};
 
-    hidden var lastSavedCC as Dictionary? = null;
-    hidden var lastSavedHF as Array? = null;
+    hidden var lastHfTime as Number? = null;
+    hidden var lastCcHash as Number? = null;
+    hidden var isLowMem as Boolean = false;
 
     hidden var doesPartialUpdate as Boolean = false;
     hidden var hasComplications as Boolean = false;
@@ -1725,63 +1726,97 @@ class Segment34View extends WatchUi.WatchFace {
         
     }
 
+    hidden function computeCcHash(cc) as Number {
+        if (cc == null) { return 0; }
+        
+        var h = 17;
+
+        var t = (cc.temperature != null) ? cc.temperature : -127;
+        h = 31 * h + t;
+        var c = (cc.condition != null) ? cc.condition : -1;
+        h = 31 * h + c;
+        var w = (cc.windSpeed != null) ? cc.windSpeed.toNumber() : -1;
+        h = 31 * h + w;
+        var b = (cc.windBearing != null) ? cc.windBearing : -1;
+        h = 31 * h + b;
+
+        return h;
+    }
+
     hidden function storeWeatherData() as Void {
+        var now = Time.now().value();
+        var sysStats = System.getSystemStats();
+
+        if (!isLowMem && sysStats.freeMemory < 15000) {
+            isLowMem = true;
+            Application.Storage.setValue("hourly_forecast", []); 
+            lastHfTime = null; 
+        } else if (isLowMem && sysStats.freeMemory > 17000) {
+            isLowMem = false;
+        }
+
         var cc = Weather.getCurrentConditions();
-        var cc_data = {};
-        
-        if(cc != null) {
-            if(cc.observationLocationPosition != null) {
-                cc_data["observationLocationPosition"] = cc.observationLocationPosition.toDegrees();
-            }
-            if(cc.condition != null) { cc_data["condition"] = cc.condition; }
-            if(cc.highTemperature != null) { cc_data["highTemperature"] = cc.highTemperature; }
-            if(cc.lowTemperature != null) { cc_data["lowTemperature"] = cc.lowTemperature; }
-            if(cc.precipitationChance != null) { cc_data["precipitationChance"] = cc.precipitationChance; }
-            if(cc.relativeHumidity != null) { cc_data["relativeHumidity"] = cc.relativeHumidity; }
-            if(cc.temperature != null) { cc_data["temperature"] = cc.temperature; }
-            if(cc.feelsLikeTemperature != null) { cc_data["feelsLikeTemperature"] = cc.feelsLikeTemperature; }
-            if(cc.windBearing != null) { cc_data["windBearing"] = cc.windBearing; }
-            if(cc.windSpeed != null) { cc_data["windSpeed"] = cc.windSpeed; }
-            if(cc has :uvIndex and cc.uvIndex != null) { cc_data["uvIndex"] = cc.uvIndex; }
-        }
+        var newCcHash = computeCcHash(cc);
 
-        if (lastSavedCC == null or !lastSavedCC.equals(cc_data)) {
-            cc_data["timestamp"] = Time.now().value();
-            Application.Storage.setValue("current_conditions", cc_data);
-            cc_data.remove("timestamp");   
-            lastSavedCC = cc_data; 
-        }
-        
-        cc = null; 
-
-        if(System.getSystemStats().freeMemory > 15000) {
-            var hf = Weather.getHourlyForecast();
-            var hf_data = [];
-            
-            if(hf != null) {
-                for(var i=0; i<hf.size(); i++) {
-                    var tmp = {
-                        "forecastTime" => hf[i].forecastTime.value(),
-                        "condition" => hf[i].condition,
-                        "precipitationChance" => hf[i].precipitationChance,
-                        "temperature" => hf[i].temperature,
-                        "windBearing" => hf[i].windBearing,
-                        "windSpeed" => hf[i].windSpeed
-                    };
-                    if(hf[i] has :uvIndex) { tmp["uvIndex"] = hf[i].uvIndex; }
-                    hf_data.add(tmp);
+        if (lastCcHash == null || lastCcHash != newCcHash) {
+            var cc_data = {};
+            if(cc != null) {
+                if(cc.observationLocationPosition != null) {
+                    cc_data["observationLocationPosition"] = cc.observationLocationPosition.toDegrees();
+                }
+                if(cc.condition != null) { cc_data["condition"] = cc.condition; }
+                if(cc.highTemperature != null) { cc_data["highTemperature"] = cc.highTemperature; }
+                if(cc.lowTemperature != null) { cc_data["lowTemperature"] = cc.lowTemperature; }
+                if(cc.precipitationChance != null) { cc_data["precipitationChance"] = cc.precipitationChance; }
+                if(cc.relativeHumidity != null) { cc_data["relativeHumidity"] = cc.relativeHumidity; }
+                if(cc.temperature != null) { cc_data["temperature"] = cc.temperature; }
+                if(cc.feelsLikeTemperature != null) { cc_data["feelsLikeTemperature"] = cc.feelsLikeTemperature; }
+                if(cc.windBearing != null) { cc_data["windBearing"] = cc.windBearing; }
+                if(cc.windSpeed != null) { cc_data["windSpeed"] = cc.windSpeed; }
+                if (cc has :uvIndex && cc.uvIndex != null) {
+                    cc_data["uvIndex"] = cc.uvIndex;
+                } else {
+                    cc_data["uvIndex"] = -1;
                 }
             }
+
+            cc_data["timestamp"] = now;
+            Application.Storage.setValue("current_conditions", cc_data);
             
-            if (lastSavedHF == null or !lastSavedHF.equals(hf_data)) {
-                Application.Storage.setValue("hourly_forecast", hf_data);
-                lastSavedHF = hf_data; 
+            lastCcHash = newCcHash;
+        }
+
+        if (isLowMem) { return; }
+
+        var hf = Weather.getHourlyForecast();
+        
+        if (hf == null || hf.size() == 0) { return; }
+
+        var firstForecastTime = hf[0].forecastTime.value();
+
+        if (lastHfTime == null || lastHfTime != firstForecastTime) {
+            var hf_data = [];
+            
+            for(var i=0; i<hf.size(); i++) {
+                var tmp = {
+                    "forecastTime" => hf[i].forecastTime.value(),
+                    "condition" => hf[i].condition,
+                    "precipitationChance" => hf[i].precipitationChance,
+                    "temperature" => hf[i].temperature,
+                    "windBearing" => hf[i].windBearing,
+                    "windSpeed" => hf[i].windSpeed
+                };
+                if(hf[i] has :uvIndex && hf[i].uvIndex != null) { 
+                    tmp["uvIndex"] = hf[i].uvIndex; 
+                } else {
+                    tmp["uvIndex"] = -1;
+                }
+                
+                hf_data.add(tmp);
             }
-        } else {
-            if (lastSavedHF != null) { 
-                 Application.Storage.setValue("hourly_forecast", []);
-                 lastSavedHF = null; 
-            }
+
+            Application.Storage.setValue("hourly_forecast", hf_data);
+            lastHfTime = firstForecastTime;
         }
     }
 
