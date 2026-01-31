@@ -74,6 +74,10 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var lastUpdate as Number? = null;
     hidden var lastSlowUpdate as Number? = null;
     hidden var cachedValues as Dictionary = {};
+
+    hidden var lastSavedCC as Dictionary? = null;
+    hidden var lastSavedHF as Array? = null;
+
     hidden var doesPartialUpdate as Boolean = false;
     hidden var hasComplications as Boolean = false;
     
@@ -1724,8 +1728,8 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function storeWeatherData() as Void {
         var cc = Weather.getCurrentConditions();
         var cc_data = {};
+        
         if(cc != null) {
-            cc_data["timestamp"] = Time.now().value();
             if(cc.observationLocationPosition != null) {
                 cc_data["observationLocationPosition"] = cc.observationLocationPosition.toDegrees();
             }
@@ -1740,17 +1744,23 @@ class Segment34View extends WatchUi.WatchFace {
             if(cc.windSpeed != null) { cc_data["windSpeed"] = cc.windSpeed; }
             if(cc has :uvIndex and cc.uvIndex != null) { cc_data["uvIndex"] = cc.uvIndex; }
         }
-        Application.Storage.setValue("current_conditions", cc_data);
-        cc_data = null;
+
+        if (lastSavedCC == null or !lastSavedCC.equals(cc_data)) {
+            cc_data["timestamp"] = Time.now().value();
+            Application.Storage.setValue("current_conditions", cc_data);
+            cc_data.remove("timestamp");   
+            lastSavedCC = cc_data; 
+        }
+        
         cc = null; 
 
         if(System.getSystemStats().freeMemory > 15000) {
             var hf = Weather.getHourlyForecast();
             var hf_data = [];
-            var tmp = {};
+            
             if(hf != null) {
                 for(var i=0; i<hf.size(); i++) {
-                    tmp = {
+                    var tmp = {
                         "forecastTime" => hf[i].forecastTime.value(),
                         "condition" => hf[i].condition,
                         "precipitationChance" => hf[i].precipitationChance,
@@ -1762,9 +1772,16 @@ class Segment34View extends WatchUi.WatchFace {
                     hf_data.add(tmp);
                 }
             }
-            Application.Storage.setValue("hourly_forecast", hf_data);
+            
+            if (lastSavedHF == null or !lastSavedHF.equals(hf_data)) {
+                Application.Storage.setValue("hourly_forecast", hf_data);
+                lastSavedHF = hf_data; 
+            }
         } else {
-            Application.Storage.setValue("hourly_forecast", []);
+            if (lastSavedHF != null) { 
+                 Application.Storage.setValue("hourly_forecast", []);
+                 lastSavedHF = null; 
+            }
         }
     }
 
