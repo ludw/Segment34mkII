@@ -139,6 +139,9 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var strLabelBottomRight as String = "";
     hidden var strLabelBottomFourth as String = "";
 
+    const battFull = "|||||||||||||||||||||||||||||||||||";
+    const battEmpty = "{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{";
+
     enum colorNames {
         bg = 0,
         clock,
@@ -554,7 +557,7 @@ class Segment34View extends WatchUi.WatchFace {
         values[:dataLeftBar] = getBarData(propLeftBarShows);
         values[:dataRightBar] = getBarData(propRightBarShows);
 
-        if(!infoMessage.equals("")) {
+        if(!infoMessage.length() == 0) {
             values[:dataBelow] = infoMessage;
             infoMessage = ""; 
         }
@@ -1070,7 +1073,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function drawDataField(dc as Dc, x as Number, y as Number, adjX as Number, label as String?, value as String, width as Number, font as FontResource, bgwidth as Number) as Number {
-        if(value.equals("") and (label == null or label.equals(""))) { return 0; }
+        if(value.length() == 0 and (label == null or label.length() == 0)) { return 0; }
         if(width == 0) { return 0; }
         var valueBg = "";
         var bgChar = "#";
@@ -1266,7 +1269,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function parseCustomThemeString(str as String) as Array<Graphics.ColorType> {
-        if(str.equals("")) { return setColorTheme(-1); }
+        if(str.length() == 0) { return setColorTheme(-1); }
         
         var ret = [];
         var color_str = "";
@@ -1657,24 +1660,25 @@ class Segment34View extends WatchUi.WatchFace {
                 value = sample.format("%d");
             }
         } else if(propBatteryVariant == 3) {
-            var sample = 0;
-            var max = 0;
-            if(screenHeight > 280) {
-                sample = Math.round(System.getSystemStats().battery / 100.0 * 35);
-                max = 35;
-            } else {
-                sample = Math.round(System.getSystemStats().battery / 100.0 * 20);
-                max = 20;
-            }
-            
-            for(var i = 0; i < sample; i++) {
-                value += "|";
-            }
+                var sample = 0;
+                var max = 0;
+                var batLevel = System.getSystemStats().battery; 
 
-            for(var i = 0; i < max - sample; i++) {
-                value += "{"; // rendered as 1px space to always fill the same number of px
+                if(screenHeight > 280) {
+                    sample = Math.round(batLevel / 100.0 * 35).toNumber();
+                    max = 35;
+                } else {
+                    sample = Math.round(batLevel / 100.0 * 20).toNumber();
+                    max = 20;
+                }
+                if (sample > 0) {
+                    value += battFull.substring(0, sample);
+                }
+                
+                if (sample < max) {
+                    value += battEmpty.substring(0, max - sample);
+                }
             }
-        }
         
         return value;
     }
@@ -1801,15 +1805,6 @@ class Segment34View extends WatchUi.WatchFace {
         }
         
         return ret;
-    }
-
-    hidden function getBatteryBars() as String {
-        var bat = Math.round(System.getSystemStats().battery / 100.0 * 6);
-        var value = "";
-        for(var i = 0; i < bat; i++) {
-            value += "|";
-        }
-        return value;
     }
 
     hidden function getValueByTypeWithUnit(complicationType as Number, width as Number) as String {
@@ -2510,10 +2505,10 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function join(array as Array<String>) as String {
         var ret = "";
         for(var i=0; i<array.size(); i++) {
-            if(array[i].equals("")) {
+            if(array[i].length() == 0) {
                 continue;
             }
-            if(ret.equals("")) {
+            if(ret.length() == 0) {
                 ret = array[i];
             } else {
                 ret = ret + ", " + array[i];
