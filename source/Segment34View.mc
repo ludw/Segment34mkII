@@ -75,6 +75,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var lastSlowUpdate as Number? = null;
     hidden var cachedValues as Dictionary = {};
 
+    hidden var isWeatherRequired as Boolean = false;
     hidden var lastHfTime as Number? = null;
     hidden var lastCcHash as Number? = null;
     hidden var isLowMem as Boolean = false;
@@ -1428,6 +1429,34 @@ class Segment34View extends WatchUi.WatchFace {
         updateColorTheme();
         updateActiveLabels();
 
+        isWeatherRequired = false;
+
+        var weatherFields = [
+            propSunriseFieldShows, propSunsetFieldShows,
+            propWeatherLine1Shows, propWeatherLine2Shows,
+            propDateFieldShows,
+            propLeftValueShows, propMiddleValueShows, 
+            propRightValueShows, propFourthValueShows,
+            propBottomFieldShows,
+            propAodFieldShows, propAodRightFieldShows
+        ];
+
+        for(var i=0; i<weatherFields.size(); i++) {
+            if (isWeatherSource(weatherFields[i])) {
+                isWeatherRequired = true;
+                break;
+            }
+        }
+
+        if (isWeatherRequired && weatherCondition == null) {
+            weatherCondition = readWeatherData();
+            if (weatherCondition == null) {
+                if(Toybox has :Weather && Weather has :getCurrentConditions) {
+                    weatherCondition = Weather.getCurrentConditions();
+                }
+            }
+        }
+
         if(propTimeSeparator == 2) { clockBgText = "####"; } else { clockBgText = "#####"; }
     }
 
@@ -1710,6 +1739,8 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function updateWeather() as Void {
+        if (!isWeatherRequired) { return; }
+
         if(!(Toybox has :Weather) or !(Weather has :getCurrentConditions)) { return; }
 
         if(Weather.getCurrentConditions() != null) {
@@ -1724,6 +1755,13 @@ class Segment34View extends WatchUi.WatchFace {
             
         }
         
+    }
+
+    hidden function isWeatherSource(id as Number) as Boolean {
+        if (id == 20 || id == 39 || id == 40 || (id >= 43 && id <= 55) || (id >= 63 && id <= 70)) {
+            return true;
+        }
+        return false;
     }
 
     hidden function computeCcHash(cc) as Number {
