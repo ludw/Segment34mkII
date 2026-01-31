@@ -195,7 +195,7 @@
     <string id="LABEL_HUM_2">LUFTFEUCHTIGKEIT</string>
 
     <string id="LABEL_CGM">CGM</string>
-    <string id="LABEL_CGMAGE">ALTER</string>
+    <string id="LABEL_CGMAGE">CGM ALTER</string>
 
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Farbschema</string>

@@ -195,7 +195,7 @@
     <string id="LABEL_HUM_2">HUMIDITÉ</string>
 
     <string id="LABEL_CGM">CGM</string>
-    <string id="LABEL_CGMAGE">ÂGE</string>
+    <string id="LABEL_CGMAGE">CGM ÂGE</string>
 
     <string id="settings_color_theme" scope="settings">Thème de couleur</string>
     <string id="settings_yellow_on_turquoise" scope="settings">Jaune sur turquoise</string>

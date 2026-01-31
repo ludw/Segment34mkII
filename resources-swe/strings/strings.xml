@@ -195,7 +195,7 @@
     <string id="LABEL_HUM_2">FUKTIGHET</string>
 
     <string id="LABEL_CGM">CGM</string>
-    <string id="LABEL_CGMAGE">ÅLDER</string>
+    <string id="LABEL_CGMAGE">CGM ÅLDER</string>
 
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Färgtema</string>
