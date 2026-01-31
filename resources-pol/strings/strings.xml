@@ -194,6 +194,9 @@
     <string id="LABEL_HUM_1">WILG</string>
     <string id="LABEL_HUM_2">WILG</string>
 
+    <string id="LABEL_CGM">CGM</string>
+    <string id="LABEL_CGMAGE">WIEK</string>
+
     <string id="settings_color_theme" scope="settings">Motyw kolorystyczny</string>
     <string id="settings_yellow_on_turquoise" scope="settings">Żółty na turkusowym</string>
     <string id="settings_yellow_on_blue" scope="settings">Żółty na niebieskim</string>

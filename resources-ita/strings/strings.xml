@@ -194,6 +194,9 @@
     <string id="LABEL_HUM_1">UMID</string>
     <string id="LABEL_HUM_2">UMIDITÀ</string>
 
+    <string id="LABEL_CGM">CGM</string>
+    <string id="LABEL_CGMAGE">ETÀ</string>
+
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Tema Colore</string>
     <string id="settings_yellow_on_turquoise" scope="settings">Giallo su turchese</string>

@@ -194,6 +194,9 @@
     <string id="LABEL_HUM_1">FUKT</string>
     <string id="LABEL_HUM_2">FUKTIGHET</string>
 
+    <string id="LABEL_CGM">CGM</string>
+    <string id="LABEL_CGMAGE">ÅLDER</string>
+
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Färgtema</string>
     <string id="settings_yellow_on_turquoise" scope="settings">Gul på turkos</string>

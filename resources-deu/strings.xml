@@ -194,6 +194,9 @@
     <string id="LABEL_HUM_1">FEUCHT</string>
     <string id="LABEL_HUM_2">LUFTFEUCHTIGKEIT</string>
 
+    <string id="LABEL_CGM">CGM</string>
+    <string id="LABEL_CGMAGE">ALTER</string>
+
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Farbschema</string>
     <string id="settings_yellow_on_turquoise" scope="settings">Gelb auf Türkis</string>
