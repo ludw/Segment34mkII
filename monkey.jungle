@@ -2,29 +2,78 @@ project.manifest = manifest.xml
 project.typecheck = 1
 project.optimization = 3p
 
-round-240x240.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover
+round-240x240.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;NoWeatherCache
 round-240x240.resourcePath = resources;disp-resources/mip
 
-round-260x260.excludeAnnotations = Round240;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover
+round-260x260.excludeAnnotations = Round240;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;NoWeatherCache
 round-260x260.resourcePath = resources;disp-resources/mip
 
-round-280x280.excludeAnnotations = Round240;Round260;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover
+round-280x280.excludeAnnotations = Round240;Round260;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;NoWeatherCache
 round-280x280.resourcePath = resources;disp-resources/mip
 
-round-360x360.excludeAnnotations = Round240;Round260;Round280;Round390;Round416;Round454;MIP;InstinctCrossover
+round-360x360.excludeAnnotations = Round240;Round260;Round280;Round390;Round416;Round454;MIP;InstinctCrossover;NoWeatherCache
 round-360x360.resourcePath = resources;disp-resources/amoled
 
-round-390x390.excludeAnnotations = Round240;Round260;Round280;Round360;Round416;Round454;MIP;InstinctCrossover
+round-390x390.excludeAnnotations = Round240;Round260;Round280;Round360;Round416;Round454;MIP;InstinctCrossover;NoWeatherCache
 round-390x390.resourcePath = resources;disp-resources/amoled
 
-round-416x416.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round454;MIP;InstinctCrossover
+round-416x416.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round454;MIP;InstinctCrossover;NoWeatherCache
 round-416x416.resourcePath = resources;disp-resources/amoled
 
-round-454x454.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round416;MIP;InstinctCrossover
+round-454x454.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round416;MIP;InstinctCrossover;NoWeatherCache
 round-454x454.resourcePath = resources;disp-resources/amoled
 
-rectangle-448x486.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round416;MIP;InstinctCrossover
+rectangle-448x486.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round416;MIP;InstinctCrossover;NoWeatherCache
 rectangle-448x486.resourcePath = resources;disp-resources/amoled
 
-instinctcrossoveramoled.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round416;Round454;MIP;DefaultLayout
+instinctcrossoveramoled.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round416;Round454;MIP;DefaultLayout;NoWeatherCache
 instinctcrossoveramoled.resourcePath = resources;disp-resources/amoled
+
+# LOW-MEMORY DEVICES (96KB) - Exclude weather caching
+fenix6s.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+fenix6s.resourcePath = resources;disp-resources/mip
+
+fenix6spro.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+fenix6spro.resourcePath = resources;disp-resources/mip
+
+descentmk2s.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+descentmk2s.resourcePath = resources;disp-resources/mip
+
+fr245.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+fr245.resourcePath = resources;disp-resources/mip
+
+fr245m.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+fr245m.resourcePath = resources;disp-resources/mip
+
+fr745.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+fr745.resourcePath = resources;disp-resources/mip
+
+fr945.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+fr945.resourcePath = resources;disp-resources/mip
+
+fr945lte.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+fr945lte.resourcePath = resources;disp-resources/mip
+
+marqadventurer.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+marqadventurer.resourcePath = resources;disp-resources/mip
+
+marqathlete.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+marqathlete.resourcePath = resources;disp-resources/mip
+
+marqaviator.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+marqaviator.resourcePath = resources;disp-resources/mip
+
+marqcaptain.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+marqcaptain.resourcePath = resources;disp-resources/mip
+
+marqcommander.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+marqcommander.resourcePath = resources;disp-resources/mip
+
+marqdriver.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+marqdriver.resourcePath = resources;disp-resources/mip
+
+marqexpedition.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+marqexpedition.resourcePath = resources;disp-resources/mip
+
+marqgolfer.excludeAnnotations = Round260;Round280;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;WeatherCache
+marqgolfer.resourcePath = resources;disp-resources/mip

@@ -67,7 +67,8 @@ class Segment34View extends WatchUi.WatchFace {
     public var nightModeOverride as Number = -1;
     hidden var themeColors as Array<Graphics.ColorType> = [];
     hidden var nightMode as Boolean?;
-    hidden var weatherCondition as CurrentConditions or StoredWeather or Null;
+    (:WeatherCache) hidden var weatherCondition as CurrentConditions or StoredWeather or Null;
+    (:NoWeatherCache) hidden var weatherCondition as CurrentConditions or Null;
     hidden var hrHistoryData as Array<Number>?;
     hidden var canBurnIn as Boolean = false;
     hidden var isSleeping as Boolean = false;
@@ -76,8 +77,8 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var cachedValues as Dictionary = {};
 
     hidden var isWeatherRequired as Boolean = false;
-    hidden var lastHfTime as Number? = null;
-    hidden var lastCcHash as Number? = null;
+    (:WeatherCache) hidden var lastHfTime as Number? = null;
+    (:WeatherCache) hidden var lastCcHash as Number? = null;
     hidden var isLowMem as Boolean = false;
 
     hidden var doesPartialUpdate as Boolean = false;
@@ -1452,14 +1453,7 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
 
-        if (isWeatherRequired && weatherCondition == null) {
-            weatherCondition = readWeatherData();
-            if (weatherCondition == null) {
-                if(Toybox has :Weather && Weather has :getCurrentConditions) {
-                    weatherCondition = Weather.getCurrentConditions();
-                }
-            }
-        }
+        initializeWeatherData();
 
         if(propTimeSeparator == 2) { clockBgText = "####"; } else { clockBgText = "#####"; }
     }
@@ -1742,23 +1736,45 @@ class Segment34View extends WatchUi.WatchFace {
         return hour;
     }
 
+    (:WeatherCache)
+    hidden function initializeWeatherData() as Void {
+        if (isWeatherRequired && weatherCondition == null) {
+            weatherCondition = readWeatherData();
+            if (weatherCondition == null) {
+                if(Toybox has :Weather && Weather has :getCurrentConditions) {
+                    weatherCondition = Weather.getCurrentConditions();
+                }
+            }
+        }
+    }
+
+    (:NoWeatherCache)
+    hidden function initializeWeatherData() as Void {
+        if (isWeatherRequired && weatherCondition == null) {
+            if(Toybox has :Weather && Weather has :getCurrentConditions) {
+                weatherCondition = Weather.getCurrentConditions();
+            }
+        }
+    }
+
+    (:WeatherCache)
     hidden function updateWeather() as Void {
         if (!isWeatherRequired) { return; }
-
         if(!(Toybox has :Weather) or !(Weather has :getCurrentConditions)) { return; }
 
         if(Weather.getCurrentConditions() != null) {
             weatherCondition = Weather.getCurrentConditions();
-            try {
-                storeWeatherData();
-            } catch(e) {}
+            try { storeWeatherData(); } catch(e) {}
         } else {
-            try {
-                weatherCondition = readWeatherData();
-            } catch(e) {}
-            
+            try { weatherCondition = readWeatherData(); } catch(e) {}
         }
-        
+    }
+
+    (:NoWeatherCache)
+    hidden function updateWeather() as Void {
+        if (!isWeatherRequired) { return; }
+        if(!(Toybox has :Weather) or !(Weather has :getCurrentConditions)) { return; }
+        weatherCondition = Weather.getCurrentConditions();
     }
 
     hidden function isWeatherSource(id as Number) as Boolean {
@@ -1768,6 +1784,7 @@ class Segment34View extends WatchUi.WatchFace {
         return false;
     }
 
+    (:WeatherCache)
     hidden function computeCcHash(cc) as Number {
         if (cc == null) { return 0; }
         
@@ -1785,6 +1802,7 @@ class Segment34View extends WatchUi.WatchFace {
         return h;
     }
 
+    (:WeatherCache)
     hidden function storeWeatherData() as Void {
         var now = Time.now().value();
         var sysStats = System.getSystemStats();
@@ -1862,6 +1880,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
+    (:WeatherCache)
     hidden function readWeatherData() as StoredWeather {
         var ret = new StoredWeather();
         var now = Time.now().value();
@@ -3207,6 +3226,7 @@ class Segment34Delegate extends WatchUi.WatchFaceDelegate {
 
 }
 
+(:WeatherCache)
 class StoredWeather {
     public var observationLocationPosition as Position.Location or Null;
     public var precipitationChance as Lang.Number or Null;
