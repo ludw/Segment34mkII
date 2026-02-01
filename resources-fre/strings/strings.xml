@@ -194,6 +194,9 @@
     <string id="LABEL_HUM_1">HUM</string>
     <string id="LABEL_HUM_2">HUMIDITÉ</string>
 
+    <string id="LABEL_CGM">CGM</string>
+    <string id="LABEL_CGMAGE">CGM ÂGE</string>
+
     <string id="settings_color_theme" scope="settings">Thème de couleur</string>
     <string id="settings_yellow_on_turquoise" scope="settings">Jaune sur turquoise</string>
     <string id="settings_yellow_on_blue" scope="settings">Jaune sur bleu</string>

@@ -194,6 +194,9 @@
     <string id="LABEL_HUM_1">HUM</string>
     <string id="LABEL_HUM_2">HUMIDITY</string>
 
+    <string id="LABEL_CGM">CGM</string>
+    <string id="LABEL_CGMAGE">CGM AGE</string>
+
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Color Theme</string>
     <string id="settings_yellow_on_turquoise" scope="settings">Yellow on turquoise</string>
@@ -459,4 +462,6 @@
     <string id="settings_text_alignment_bottom_labels" scope="settings">Text alignment for bottom field labels:</string>
     <string id="settings_temperature_uv_precipitation" scope="settings">Temperature, UV Index, Precipitation chance</string>
     <string id="settings_temperature_uv_wind" scope="settings">Temperature, UV Index, Wind</string>
+    <string id="settings_cgm_glucose_trend" scope="settings">CGM Glucose + Trend</string>
+    <string id="settings_cgm_age" scope="settings">CGM Age (minutes)</string>
 </strings>

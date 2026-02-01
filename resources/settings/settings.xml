@@ -152,6 +152,8 @@
             <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
             <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
             <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
+            <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
+            <listEntry value="72">@Strings.settings_cgm_age</listEntry>
         </settingConfig>
     </setting>
 
@@ -207,6 +209,8 @@
             <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
             <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
             <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
+            <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
+            <listEntry value="72">@Strings.settings_cgm_age</listEntry>
         </settingConfig>
     </setting>
 
@@ -412,6 +416,8 @@
             <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
             <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
             <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
+            <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
+            <listEntry value="72">@Strings.settings_cgm_age</listEntry>
         </settingConfig>
     </setting>
 
@@ -467,6 +473,8 @@
             <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
             <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
             <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
+            <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
+            <listEntry value="72">@Strings.settings_cgm_age</listEntry>
         </settingConfig>
     </setting>
 
@@ -522,6 +530,8 @@
             <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
             <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
             <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
+            <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
+            <listEntry value="72">@Strings.settings_cgm_age</listEntry>
         </settingConfig>
     </setting>
 
@@ -577,6 +587,8 @@
             <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
             <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
             <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
+            <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
+            <listEntry value="72">@Strings.settings_cgm_age</listEntry>
         </settingConfig>
     </setting>
 
@@ -718,6 +730,8 @@
             <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
             <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
             <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
+            <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
+            <listEntry value="72">@Strings.settings_cgm_age</listEntry>
         </settingConfig>
     </setting>
 

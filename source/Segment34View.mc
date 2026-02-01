@@ -82,6 +82,10 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden var doesPartialUpdate as Boolean = false;
     hidden var hasComplications as Boolean = false;
+
+    // CGM Connect Widget complication IDs
+    hidden var cgmComplicationId as Complications.Id? = null;
+    hidden var cgmAgeComplicationId as Complications.Id? = null;
     
     hidden var propIs24H as Boolean = false;
     hidden var propTheme as Integer = 0;
@@ -2397,6 +2401,10 @@ class Segment34View extends WatchUi.WatchFace {
             var condition = getWeatherCondition(false);
             var temp = getTemperature();
             val = join([condition, temp]);
+        } else if(complicationType == 71) { // CGM Glucose + Trend
+            val = getCgmReading();
+        } else if(complicationType == 72) { // CGM Age (minutes)
+            val = getCgmAge();
         }
 
         return val;
@@ -2540,8 +2548,10 @@ class Segment34View extends WatchUi.WatchFace {
             case 62: return formatLabel(Rez.Strings.LABEL_ACC_1, Rez.Strings.LABEL_ACC_2, Rez.Strings.LABEL_ACC_3, labelSize);
             case 64: return formatLabel(Rez.Strings.LABEL_UV_1, Rez.Strings.LABEL_UV_2, Rez.Strings.LABEL_UV_2, labelSize);
             case 66: return formatLabel(Rez.Strings.LABEL_HUM_1, Rez.Strings.LABEL_HUM_2, Rez.Strings.LABEL_HUM_2, labelSize);
+            case 71: return WatchUi.loadResource(Rez.Strings.LABEL_CGM) as String;
+            case 72: return WatchUi.loadResource(Rez.Strings.LABEL_CGMAGE) as String;
         }
-        
+
         return "";
     }
 
@@ -2706,63 +2716,25 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
 
-        var ret = null;
-        switch (weatherCondition.condition) {
-            case 0: ret = Rez.Strings.WEATHER_0; break;
-            case 1: ret = Rez.Strings.WEATHER_1; break;
-            case 2: ret = Rez.Strings.WEATHER_2; break;
-            case 3: ret = Rez.Strings.WEATHER_3; break;
-            case 4: ret = Rez.Strings.WEATHER_4; break;
-            case 5: ret = Rez.Strings.WEATHER_5; break;
-            case 6: ret = Rez.Strings.WEATHER_6; break;
-            case 7: ret = Rez.Strings.WEATHER_7; break;
-            case 8: ret = Rez.Strings.WEATHER_8; break;
-            case 9: ret = Rez.Strings.WEATHER_9; break;
-            case 10: ret = Rez.Strings.WEATHER_10; break;
-            case 11: ret = Rez.Strings.WEATHER_11; break;
-            case 12: ret = Rez.Strings.WEATHER_12; break;
-            case 13: ret = Rez.Strings.WEATHER_13; break;
-            case 14: ret = Rez.Strings.WEATHER_14; break;
-            case 15: ret = Rez.Strings.WEATHER_15; break;
-            case 16: ret = Rez.Strings.WEATHER_16; break;
-            case 17: ret = Rez.Strings.WEATHER_17; break;
-            case 18: ret = Rez.Strings.WEATHER_18; break;
-            case 19: ret = Rez.Strings.WEATHER_19; break;
-            case 20: ret = Rez.Strings.WEATHER_20; break;
-            case 21: ret = Rez.Strings.WEATHER_21; break;
-            case 22: ret = Rez.Strings.WEATHER_22; break;
-            case 23: ret = Rez.Strings.WEATHER_23; break;
-            case 24: ret = Rez.Strings.WEATHER_24; break;
-            case 25: ret = Rez.Strings.WEATHER_25; break;
-            case 26: ret = Rez.Strings.WEATHER_26; break;
-            case 27: ret = Rez.Strings.WEATHER_27; break;
-            case 28: ret = Rez.Strings.WEATHER_28; break;
-            case 29: ret = Rez.Strings.WEATHER_29; break;
-            case 30: ret = Rez.Strings.WEATHER_30; break;
-            case 31: ret = Rez.Strings.WEATHER_31; break;
-            case 32: ret = Rez.Strings.WEATHER_32; break;
-            case 33: ret = Rez.Strings.WEATHER_33; break;
-            case 34: ret = Rez.Strings.WEATHER_34; break;
-            case 35: ret = Rez.Strings.WEATHER_35; break;
-            case 36: ret = Rez.Strings.WEATHER_36; break;
-            case 37: ret = Rez.Strings.WEATHER_37; break;
-            case 38: ret = Rez.Strings.WEATHER_38; break;
-            case 39: ret = Rez.Strings.WEATHER_39; break;
-            case 40: ret = Rez.Strings.WEATHER_40; break;
-            case 41: ret = Rez.Strings.WEATHER_41; break;
-            case 42: ret = Rez.Strings.WEATHER_42; break;
-            case 43: ret = Rez.Strings.WEATHER_43; break;
-            case 44: ret = Rez.Strings.WEATHER_44; break;
-            case 45: ret = Rez.Strings.WEATHER_45; break;
-            case 46: ret = Rez.Strings.WEATHER_46; break;
-            case 47: ret = Rez.Strings.WEATHER_47; break;
-            case 48: ret = Rez.Strings.WEATHER_48; break;
-            case 49: ret = Rez.Strings.WEATHER_49; break;
-            case 50: ret = Rez.Strings.WEATHER_50; break;
-            case 51: ret = Rez.Strings.WEATHER_51; break;
-            case 52: ret = Rez.Strings.WEATHER_52; break;
-            default: ret = Rez.Strings.WEATHER_53;
-        }
+        var weatherStrings = [
+            Rez.Strings.WEATHER_0, Rez.Strings.WEATHER_1, Rez.Strings.WEATHER_2, Rez.Strings.WEATHER_3,
+            Rez.Strings.WEATHER_4, Rez.Strings.WEATHER_5, Rez.Strings.WEATHER_6, Rez.Strings.WEATHER_7,
+            Rez.Strings.WEATHER_8, Rez.Strings.WEATHER_9, Rez.Strings.WEATHER_10, Rez.Strings.WEATHER_11,
+            Rez.Strings.WEATHER_12, Rez.Strings.WEATHER_13, Rez.Strings.WEATHER_14, Rez.Strings.WEATHER_15,
+            Rez.Strings.WEATHER_16, Rez.Strings.WEATHER_17, Rez.Strings.WEATHER_18, Rez.Strings.WEATHER_19,
+            Rez.Strings.WEATHER_20, Rez.Strings.WEATHER_21, Rez.Strings.WEATHER_22, Rez.Strings.WEATHER_23,
+            Rez.Strings.WEATHER_24, Rez.Strings.WEATHER_25, Rez.Strings.WEATHER_26, Rez.Strings.WEATHER_27,
+            Rez.Strings.WEATHER_28, Rez.Strings.WEATHER_29, Rez.Strings.WEATHER_30, Rez.Strings.WEATHER_31,
+            Rez.Strings.WEATHER_32, Rez.Strings.WEATHER_33, Rez.Strings.WEATHER_34, Rez.Strings.WEATHER_35,
+            Rez.Strings.WEATHER_36, Rez.Strings.WEATHER_37, Rez.Strings.WEATHER_38, Rez.Strings.WEATHER_39,
+            Rez.Strings.WEATHER_40, Rez.Strings.WEATHER_41, Rez.Strings.WEATHER_42, Rez.Strings.WEATHER_43,
+            Rez.Strings.WEATHER_44, Rez.Strings.WEATHER_45, Rez.Strings.WEATHER_46, Rez.Strings.WEATHER_47,
+            Rez.Strings.WEATHER_48, Rez.Strings.WEATHER_49, Rez.Strings.WEATHER_50, Rez.Strings.WEATHER_51,
+            Rez.Strings.WEATHER_52, Rez.Strings.WEATHER_53
+        ];
+        var idx = weatherCondition.condition;
+        if (idx < 0 || idx >= weatherStrings.size()) { idx = 53; }
+        var ret = weatherStrings[idx];
 
         return Application.loadResource(ret) + perp;
     }
@@ -2998,6 +2970,80 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
         return val;
+    }
+
+    // CGM Connect Widget helper functions
+    hidden function getCgmComplicationByLabel(targetLabel as String) as Complications.Id? {
+        if (!hasComplications) { return null; }
+        try {
+            var iter = Complications.getComplications();
+            if (iter == null) { return null; }
+            var comp = iter.next();
+            while (comp != null) {
+                var compType = comp.getType();
+                var compLabel = comp.shortLabel;
+                if (compType == Complications.COMPLICATION_TYPE_INVALID && compLabel != null) {
+                    if (compLabel.equals(targetLabel)) {
+                        Complications.subscribeToUpdates(comp.complicationId);
+                        return comp.complicationId;
+                    }
+                }
+                comp = iter.next();
+            }
+        } catch (e) {}
+        return null;
+    }
+
+    hidden function convertCgmTrendToArrow(trend as String) as String {
+        if (trend.equals("R")) { return "a"; }  // Rapidly rising ↑
+        if (trend.equals("r")) { return "b"; }  // Rising ↗
+        if (trend.equals("n")) { return "c"; }  // Neutral →
+        if (trend.equals("d")) { return "d"; }  // Falling ↘
+        if (trend.equals("D")) { return "e"; }  // Rapidly falling ↓
+        return "";
+    }
+
+    hidden function getCgmReading() as String {
+        if (!hasComplications) { return ""; }
+        try {
+            if (cgmComplicationId == null) {
+                cgmComplicationId = getCgmComplicationByLabel("CGM");
+            }
+            if (cgmComplicationId == null) { return ""; }
+
+            var comp = Complications.getComplication(cgmComplicationId);
+            if (comp == null || comp.value == null) { return ""; }
+
+            var valueStr = comp.value.toString();
+            if (valueStr.equals("---")) { return "---"; }
+
+            var spaceIndex = valueStr.find(" ");
+            if (spaceIndex == null) { return valueStr; }
+
+            var reading = valueStr.substring(0, spaceIndex);
+            var trend = valueStr.substring(spaceIndex + 1, valueStr.length());
+            var arrow = convertCgmTrendToArrow(trend);
+            return reading + arrow;
+        } catch (e) {}
+        return "";
+    }
+
+    hidden function getCgmAge() as String {
+        if (!hasComplications) { return ""; }
+        try {
+            if (cgmAgeComplicationId == null) {
+                cgmAgeComplicationId = getCgmComplicationByLabel("CGM Age");
+            }
+            if (cgmAgeComplicationId == null) { return ""; }
+            var comp = Complications.getComplication(cgmAgeComplicationId);
+            if (comp == null || comp.value == null) { return ""; }
+            var timestamp = comp.value.toString().toLong();
+            if (timestamp == null || timestamp < 0) { return "---"; }
+            var ageMin = (Time.now().value() - timestamp) / 60;
+            if (ageMin < 0) { return "---"; }
+            return ageMin.format("%d");
+        } catch (e) {}
+        return "";
     }
 
     hidden function secondaryTimezone(offset, width) as String {
