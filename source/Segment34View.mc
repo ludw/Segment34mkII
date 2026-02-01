@@ -1706,12 +1706,12 @@ class Segment34View extends WatchUi.WatchFace {
                 if (sample > 0) {
                     value += battFull.substring(0, sample);
                 }
-                
+
                 if (sample < max) {
                     value += battEmpty.substring(0, max - sample);
                 }
             }
-        
+
         return value;
     }
 
