@@ -345,6 +345,10 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.showNotificationCount" title="@Strings.settings_show_notification_count">
+        <settingConfig type="boolean" />
+    </setting>
+
     <setting propertyKey="@Properties.fieldLayout" title="@Strings.settings_bottom_field_layout">
         <settingConfig type="list">
             <listEntry value="0">@Strings.settings_auto_default_layout</listEntry>
@@ -1092,10 +1096,6 @@
     </setting>
 
     <setting propertyKey="@Properties.showDataBg" title="@Strings.settings_show_data_fields_background">
-        <settingConfig type="boolean" />
-    </setting>
-
-    <setting propertyKey="@Properties.showNotificationCount" title="@Strings.settings_show_notification_count">
         <settingConfig type="boolean" />
     </setting>
 
