@@ -62,9 +62,11 @@ Pull requests are welcome, but please follow the following guidelines:
 ## Change log
 2026-02-01 v4.0.0
 - CPU and storage write optimizations thanks to yuvalabou
+- Possibly a little bit better battery life thanks to the above changes
 - Experimental support for CGM data from the CGM Connect Widget (separate app that has to be installed for it to work)
 - Weather cache disabled on devices with very limited memory
 - Moved Notification count setting to make it easier to find
+- Fixed crash
 
 2026-01-26 v3.10.0
 - Reduced memory use, thanks to yuvalabou
