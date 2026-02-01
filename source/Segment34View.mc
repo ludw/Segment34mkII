@@ -1739,7 +1739,7 @@ class Segment34View extends WatchUi.WatchFace {
     (:WeatherCache)
     hidden function initializeWeatherData() as Void {
         if (isWeatherRequired && weatherCondition == null) {
-            weatherCondition = readWeatherData();
+            try { weatherCondition = readWeatherData(); } catch(e) {}
             if (weatherCondition == null) {
                 if(Toybox has :Weather && Weather has :getCurrentConditions) {
                     weatherCondition = Weather.getCurrentConditions();
@@ -1888,8 +1888,10 @@ class Segment34View extends WatchUi.WatchFace {
         if(cc_data == null) { return ret; }
         
         var data_age_s = now - (cc_data.get("timestamp") as Number);
-        var pos = cc_data.get("observationLocationPosition") as Array;
-        ret.observationLocationPosition = new Position.Location({:latitude => pos[0], :longitude => pos[1], :format => :degrees});
+        var pos = cc_data.get("observationLocationPosition") as Array?;
+        if (pos != null) {
+            ret.observationLocationPosition = new Position.Location({:latitude => pos[0], :longitude => pos[1], :format => :degrees});
+        }
         if(data_age_s > 0 and data_age_s < 3600) {
             ret.condition = cc_data.get("condition") as Number;
             ret.highTemperature = cc_data.get("highTemperature") as Number;
