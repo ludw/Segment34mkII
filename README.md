@@ -56,8 +56,12 @@ Pull requests are welcome, but please follow the following guidelines:
 - AM/PM indicator
 - clock font without segments
 - separate 24h mode for alt tz
+- Configurable data for the notification field, week number and other short info could work
 
 ## Change log
+2026-02-01 v4.0.1
+- Fixed layout issue on many devices
+
 2026-02-01 v4.0.0
 - CPU and storage write optimizations thanks to yuvalabou
 - Possibly a little bit better battery life thanks to the above changes

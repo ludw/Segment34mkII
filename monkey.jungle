@@ -278,7 +278,7 @@ venu445mm.resourcePath = resources;disp-resources/amoled
 # 448x486 RECTANGLE AMOLED DEVICES
 # -----------------------------------------------------------------------------
 
-venux1.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round416;Round454;MIP;InstinctCrossover;NoWeatherCache
+venux1.excludeAnnotations = Round240;Round260;Round280;Round360;Round390;Round416;MIP;InstinctCrossover;NoWeatherCache
 venux1.resourcePath = resources;disp-resources/amoled
 
 # -----------------------------------------------------------------------------
