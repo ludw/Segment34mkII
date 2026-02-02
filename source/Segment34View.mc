@@ -85,6 +85,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var hasComplications as Boolean = false;
 
     // CGM Connect Widget complication IDs
+    hidden var isCgmRequired = false;
     hidden var cgmComplicationId as Complications.Id? = null;
     hidden var cgmAgeComplicationId as Complications.Id? = null;
     
@@ -1435,6 +1436,14 @@ class Segment34View extends WatchUi.WatchFace {
         updateActiveLabels();
 
         isWeatherRequired = false;
+
+        isCgmRequired = (
+            propLeftValueShows == 71 || propLeftValueShows == 72 ||
+            propMiddleValueShows == 71 || propMiddleValueShows == 72 ||
+            propRightValueShows == 71 || propRightValueShows == 72 ||
+            propFourthValueShows == 71 || propFourthValueShows == 72 ||
+            propBottomFieldShows == 71 || propBottomFieldShows == 72
+        );
 
         var weatherFields = [
             propSunriseFieldShows, propSunsetFieldShows,
@@ -2995,7 +3004,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     // CGM Connect Widget helper functions
     hidden function getCgmComplicationByLabel(targetLabel as String) as Complications.Id? {
-        if (!hasComplications) { return null; }
+        if (!isCgmRequired || !hasComplications) { return null; }
         try {
             var iter = Complications.getComplications();
             if (iter == null) { return null; }
@@ -3016,16 +3025,18 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function convertCgmTrendToArrow(trend as String) as String {
-        if (trend.equals("R")) { return "a"; }  // Rapidly rising ↑
-        if (trend.equals("r")) { return "b"; }  // Rising ↗
-        if (trend.equals("n")) { return "c"; }  // Neutral →
-        if (trend.equals("d")) { return "d"; }  // Falling ↘
-        if (trend.equals("D")) { return "e"; }  // Rapidly falling ↓
-        return "";
+        switch (trend) {
+            case "R": return "a"; // Rapidly rising ↑ 
+            case "r": return "b"; // Rising ↗ 
+            case "n": return "c"; // Neutral → 
+            case "d": return "d"; // Falling ↘ 
+            case "D": return "e"; // Rapidly falling ↓ 
+            default:  return "";  // 
+        }
     }
 
     hidden function getCgmReading() as String {
-        if (!hasComplications) { return ""; }
+        if (!isCgmRequired || !hasComplications) { return ""; }
         try {
             if (cgmComplicationId == null) {
                 cgmComplicationId = getCgmComplicationByLabel("CGM");
@@ -3050,7 +3061,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getCgmAge() as String {
-        if (!hasComplications) { return ""; }
+        if (!isCgmRequired || !hasComplications) { return ""; }
         try {
             if (cgmAgeComplicationId == null) {
                 cgmAgeComplicationId = getCgmComplicationByLabel("CGM Age");

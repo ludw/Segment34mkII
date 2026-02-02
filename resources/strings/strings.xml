@@ -464,4 +464,5 @@
     <string id="settings_temperature_uv_wind" scope="settings">Temperature, UV Index, Wind</string>
     <string id="settings_cgm_glucose_trend" scope="settings">CGM Glucose + Trend</string>
     <string id="settings_cgm_age" scope="settings">CGM Age (minutes)</string>
+    <string id="settings_is_cgm_required" scope="settings">Is CGM Required</string>
 </strings>
