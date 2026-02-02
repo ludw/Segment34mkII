@@ -232,13 +232,32 @@ class Segment34View extends WatchUi.WatchFace {
         strLabelBottomFourth = getLabelByType(propFourthValueShows, fieldWidths[3] - 1);
     }
 
+    hidden function loadSmallFont(resDefault, resReadable, resLines) as Void {
+        var selectedRes = resLines;
+        if (propSmallFontVariant == 0) {
+            selectedRes = resDefault;
+        } else if (propSmallFontVariant == 1) {
+            selectedRes = resReadable;
+        }
+        fontSmallData = Application.loadResource(selectedRes);
+    }
+
+    hidden function loadAODGraphics() as Void {
+        drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
+        
+        var outlineStyle = propClockOutlineStyle;
+        if(outlineStyle == 0 or outlineStyle == 2 or outlineStyle == 4) {
+            drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
+        } else {
+            drawAODPattern = Application.loadResource(Rez.Drawables.aod2) as BitmapResource;
+        }
+    }
+
     (:Round240)
     hidden function loadResources() as Void {
         fontClock = Application.loadResource(Rez.Fonts.segments80narrow);
         fontTinyData = Application.loadResource(Rez.Fonts.smol);
-        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led_small); }
-        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_readable); }
-        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_lines); }
+        loadSmallFont(Rez.Fonts.led_small, Rez.Fonts.led_small_readable, Rez.Fonts.led_small_lines);
         fontLargeData = Application.loadResource(Rez.Fonts.led);
         fontBottomData = Application.loadResource(Rez.Fonts.led_small);
         fontLabel = Application.loadResource(Rez.Fonts.xsmol);
@@ -269,9 +288,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function loadResources() as Void {
         fontClock = Application.loadResource(Rez.Fonts.segments80);
         fontTinyData = Application.loadResource(Rez.Fonts.smol);
-        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led_small); }
-        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_readable); }
-        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_lines); }
+        loadSmallFont(Rez.Fonts.led_small, Rez.Fonts.led_small_readable, Rez.Fonts.led_small_lines);
         fontLargeData = Application.loadResource(Rez.Fonts.led);
         fontBottomData = fontLargeData;
         fontLabel = Application.loadResource(Rez.Fonts.xsmol);
@@ -301,9 +318,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function loadResources() as Void {
         fontClock = Application.loadResource(Rez.Fonts.segments80wide);
         fontTinyData = Application.loadResource(Rez.Fonts.storre);
-        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led_small); }
-        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_readable); }
-        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_small_lines); }
+        loadSmallFont(Rez.Fonts.led_small, Rez.Fonts.led_small_readable, Rez.Fonts.led_small_lines);
         fontLargeData = Application.loadResource(Rez.Fonts.led);
         fontBottomData = fontLargeData;
         fontLabel = Application.loadResource(Rez.Fonts.smol);
@@ -333,21 +348,14 @@ class Segment34View extends WatchUi.WatchFace {
         fontClock = Application.loadResource(Rez.Fonts.segments125narrow);
         fontClockOutline = Application.loadResource(Rez.Fonts.segments125narrowoutline);
         fontTinyData = Application.loadResource(Rez.Fonts.storre);
-        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
-        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_inbetween); }
-        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_lines); }
+        loadSmallFont(Rez.Fonts.led, Rez.Fonts.led_inbetween, Rez.Fonts.led_lines);
         fontLargeData = Application.loadResource(Rez.Fonts.led_big);
         fontBottomData = Application.loadResource(Rez.Fonts.led);
         fontLabel = Application.loadResource(Rez.Fonts.smol);
         fontAODData = fontBottomData;
         fontBattery = Application.loadResource(Rez.Fonts.led_small_lines);
 
-        drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
-        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2 or propClockOutlineStyle == 4) {
-            drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
-        } else {
-            drawAODPattern = Application.loadResource(Rez.Drawables.aod2) as BitmapResource;
-        }
+        loadAODGraphics();
 
         clockHeight = 125;
         clockWidth = 345;
@@ -375,21 +383,14 @@ class Segment34View extends WatchUi.WatchFace {
         fontClock = Application.loadResource(Rez.Fonts.segments125);
         fontClockOutline = Application.loadResource(Rez.Fonts.segments125outline);
         fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
-        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
-        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_inbetween); }
-        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_lines); }
+        loadSmallFont(Rez.Fonts.led, Rez.Fonts.led_inbetween, Rez.Fonts.led_lines);
         fontLargeData = Application.loadResource(Rez.Fonts.led_big);
         fontBottomData = fontLargeData;
         fontLabel = Application.loadResource(Rez.Fonts.storre);
         fontAODData = Application.loadResource(Rez.Fonts.led);
         fontBattery = fontTinyData;
 
-        drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
-        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2 or propClockOutlineStyle == 4) {
-            drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
-        } else {
-            drawAODPattern = Application.loadResource(Rez.Drawables.aod2) as BitmapResource;
-        }
+        loadAODGraphics();
 
         clockHeight = 125;
         clockWidth = 355;
@@ -414,21 +415,14 @@ class Segment34View extends WatchUi.WatchFace {
         fontClock = Application.loadResource(Rez.Fonts.segments125);
         fontClockOutline = Application.loadResource(Rez.Fonts.segments125outline);
         fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
-        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
-        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_inbetween); }
-        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_lines); }
+        loadSmallFont(Rez.Fonts.led, Rez.Fonts.led_inbetween, Rez.Fonts.led_lines);
         fontLargeData = Application.loadResource(Rez.Fonts.led_big);
         fontBottomData = fontLargeData;
         fontLabel = Application.loadResource(Rez.Fonts.storre);
         fontAODData = Application.loadResource(Rez.Fonts.led);
         fontBattery = fontTinyData;
 
-        drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
-        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2 or propClockOutlineStyle == 4) {
-            drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
-        } else {
-            drawAODPattern = Application.loadResource(Rez.Drawables.aod2) as BitmapResource;
-        }
+        loadAODGraphics();
 
         clockHeight = 125;
         clockWidth = 350;
@@ -453,21 +447,14 @@ class Segment34View extends WatchUi.WatchFace {
         fontClock = Application.loadResource(Rez.Fonts.segments125);
         fontClockOutline = Application.loadResource(Rez.Fonts.segments125outline);
         fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
-        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
-        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_inbetween); }
-        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_lines); }
+        loadSmallFont(Rez.Fonts.led, Rez.Fonts.led_inbetween, Rez.Fonts.led_lines);
         fontLargeData = Application.loadResource(Rez.Fonts.led_big);
         fontBottomData = fontLargeData;
         fontLabel = Application.loadResource(Rez.Fonts.storre);
         fontAODData = Application.loadResource(Rez.Fonts.led);
         fontBattery = fontTinyData;
 
-        drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
-        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2 or propClockOutlineStyle == 4) {
-            drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
-        } else {
-            drawAODPattern = Application.loadResource(Rez.Drawables.aod2) as BitmapResource;
-        }
+        loadAODGraphics();
 
         clockHeight = 125;
         clockWidth = 360;
@@ -491,21 +478,14 @@ class Segment34View extends WatchUi.WatchFace {
         fontClock = Application.loadResource(Rez.Fonts.segments145);
         fontClockOutline = Application.loadResource(Rez.Fonts.segments145outline);
         fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
-        if(propSmallFontVariant == 0) { fontSmallData = Application.loadResource(Rez.Fonts.led); }
-        if(propSmallFontVariant == 1) { fontSmallData = Application.loadResource(Rez.Fonts.led_inbetween); }
-        if(propSmallFontVariant == 2) { fontSmallData = Application.loadResource(Rez.Fonts.led_lines); }
+        loadSmallFont(Rez.Fonts.led, Rez.Fonts.led_inbetween, Rez.Fonts.led_lines);
         fontLargeData = Application.loadResource(Rez.Fonts.led_big);
         fontBottomData = fontLargeData;
         fontLabel = Application.loadResource(Rez.Fonts.storre);
         fontAODData = Application.loadResource(Rez.Fonts.led);
         fontBattery = fontTinyData;
 
-        drawGradient = Application.loadResource(Rez.Drawables.gradient) as BitmapResource;
-        if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2 or propClockOutlineStyle == 4) {
-            drawAODPattern = Application.loadResource(Rez.Drawables.aod) as BitmapResource;
-        } else {
-            drawAODPattern = Application.loadResource(Rez.Drawables.aod2) as BitmapResource;
-        }
+        loadAODGraphics();
 
         clockHeight = 145;
         clockWidth = 413;
