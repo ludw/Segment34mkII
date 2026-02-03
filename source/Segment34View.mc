@@ -132,7 +132,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propWeatherLine1Shows as Number = 49;
     hidden var propWeatherLine2Shows as Number = 50;
     hidden var propDateFormat as Number = 0;
-    hidden var propShowNotificationCount as Boolean = true;
+    hidden var propNotificationCountShows as Number = 36;
     hidden var propTzOffset1 as Number = 0;
     hidden var propTzOffset2 as Number = 0;
     hidden var propTzName1 as String = "";
@@ -554,7 +554,7 @@ class Segment34View extends WatchUi.WatchFace {
         values[:dataAboveLine1] = getValueByTypeWithUnit(propWeatherLine1Shows, 10);
         values[:dataAboveLine2] = getValueByTypeWithUnit(propWeatherLine2Shows, 10);
         values[:dataBelow] = getValueByTypeWithUnit(propDateFieldShows, 10);
-        values[:dataNotifications] = getNotificationsData();
+        values[:dataNotifications] = getValueByTypeWithUnit(propNotificationCountShows, 2);
         values[:dataBottomLeft] = getValueByType(propLeftValueShows, fieldWidths[0]);
         values[:dataBottomMiddle] = getValueByType(propMiddleValueShows, fieldWidths[1]);
         values[:dataBottomRight] = getValueByType(propRightValueShows, fieldWidths[2]);
@@ -1420,7 +1420,7 @@ class Segment34View extends WatchUi.WatchFace {
         propPressureUnit = getValueOrDefault("pressureUnit", 0) as Number;
         propLabelVisibility = getValueOrDefault("labelVisibility", 0) as Number;
         propDateFormat = getValueOrDefault("dateFormat", 0) as Number;
-        propShowNotificationCount = getValueOrDefault("showNotificationCount", true) as Boolean;
+        propNotificationCountShows = getValueOrDefault("notificationCountShows", 36) as Number;
         propTzOffset1 = getValueOrDefault("tzOffset1", 0) as Number;
         propTzOffset2 = getValueOrDefault("tzOffset2", 0) as Number;
         propTzName1 = getValueOrDefault("tzName1", "UTC TIME") as String;
@@ -1711,19 +1711,6 @@ class Segment34View extends WatchUi.WatchFace {
                     value += battEmpty.substring(0, max - sample);
                 }
             }
-
-        return value;
-    }
-
-    hidden function getNotificationsData() as String {
-        var value = "";
-
-        if(propShowNotificationCount) {
-            var sample = System.getDeviceSettings().notificationCount;
-            if(sample > 0) {
-                value = sample.format("%01d");
-            }
-        }
 
         return value;
     }
@@ -2184,7 +2171,11 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 36) { // Notification count
             var notif_count = System.getDeviceSettings().notificationCount;
             if(notif_count != null) {
-                val = notif_count.format(numberFormat);
+                if(width == 2 and notif_count == 0) {
+                    val = ""; // Hide when shown in the notification field and is zero
+                } else {
+                    val = notif_count.format(numberFormat);
+                }
             }
         } else if(complicationType == 37) { // Solar intensity
             if(System.getSystemStats() has :solarIntensity and System.getSystemStats().solarIntensity != null) {

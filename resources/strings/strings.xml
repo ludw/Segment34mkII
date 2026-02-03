@@ -441,7 +441,7 @@
     <string id="settings_week_number_offset" scope="settings">Week number offset (0 = normal week number)</string>
     <string id="settings_show_clock_background" scope="settings">Show clock background</string>
     <string id="settings_show_data_fields_background" scope="settings">Show data fields background</string>
-    <string id="settings_show_notification_count" scope="settings">Show Notification Count (the number next to seconds)</string>
+    <string id="settings_notification_field_shows" scope="settings">Number left of seconds shows</string>
     <string id="settings_zeropad_hour_clock" scope="settings">Zeropad hour on clock</string>
     <string id="settings_separator_hours_minutes" scope="settings">Separator between Hours and Minutes</string>
     <string id="settings_colon" scope="settings">:</string>

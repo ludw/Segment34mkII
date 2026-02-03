@@ -350,8 +350,16 @@
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.showNotificationCount" title="@Strings.settings_show_notification_count">
-        <settingConfig type="boolean" />
+    <setting propertyKey="@Properties.notificationCountShows" title="@Strings.settings_notification_field_shows">
+        <settingConfig type="list">
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="36">@Strings.settings_notification_count</listEntry>
+            <listEntry value="31">@Strings.settings_week_number</listEntry>
+            <listEntry value="34">@Strings.settings_battery_percentage</listEntry>
+            <listEntry value="35">@Strings.settings_battery_days_remaining</listEntry>
+            <listEntry value="42">@Strings.settings_alarms_count</listEntry>
+            <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
+        </settingConfig>
     </setting>
 
     <setting propertyKey="@Properties.fieldLayout" title="@Strings.settings_bottom_field_layout">
