@@ -327,6 +327,7 @@
     <string id="settings_weather_conditions_precipitation" scope="settings">Weather conditions, Precipitation chance</string>
     <string id="settings_weather_conditions" scope="settings">Weather conditions</string>
     <string id="settings_weather_conditions_temperature" scope="settings">Weather conditions, Temperature</string>
+    <string id="settings_weather_conditions_feelslike" scope="settings">Weather conditions, Feels like</string>
     <string id="settings_daily_high_temperature" scope="settings">Daily high temperature</string>
     <string id="settings_daily_low_temperature" scope="settings">Daily low temperature</string>
     <string id="settings_temperature" scope="settings">Temperature</string>

@@ -254,6 +254,7 @@
             <listEntry value="20">@Strings.settings_weather_conditions_precipitation</listEntry>
             <listEntry value="50">@Strings.settings_weather_conditions</listEntry>
             <listEntry value="70">@Strings.settings_weather_conditions_temperature</listEntry>
+            <listEntry value="73">@Strings.settings_weather_conditions_feelslike</listEntry>
             <listEntry value="43">@Strings.settings_daily_high_temperature</listEntry>
             <listEntry value="44">@Strings.settings_daily_low_temperature</listEntry>
             <listEntry value="53">@Strings.settings_temperature</listEntry>
@@ -293,6 +294,7 @@
             <listEntry value="20">@Strings.settings_weather_conditions_precipitation_chance</listEntry>
             <listEntry value="50">@Strings.settings_weather_conditions</listEntry>
             <listEntry value="70">@Strings.settings_weather_conditions_temperature</listEntry>
+            <listEntry value="73">@Strings.settings_weather_conditions_feelslike</listEntry>
             <listEntry value="43">@Strings.settings_daily_high_temperature</listEntry>
             <listEntry value="44">@Strings.settings_daily_low_temperature</listEntry>
             <listEntry value="53">@Strings.settings_temperature</listEntry>

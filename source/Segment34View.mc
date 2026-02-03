@@ -2260,7 +2260,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 45) { // Temperature, Wind, Feels like
             var temp = getTemperature();
             var wind = getWind();
-            var feelsLike = getFeelsLike();
+            var feelsLike = getFeelsLike(true);
             val = join([temp, wind, feelsLike]);
         } else if(complicationType == 46) { // Temperature, Wind
             var temp = getTemperature();
@@ -2405,7 +2405,7 @@ class Segment34View extends WatchUi.WatchFace {
             val = getHumidity();
         } else if(complicationType == 67) { // Temperature, Feels like, High/Low
             var temp = getTemperature();
-            var fl = getFeelsLike();
+            var fl = getFeelsLike(true);
             var highlow = getHighLow();
             val = join([temp, fl, highlow]);
         } else if(complicationType == 68) { // Temperature, UV, Precip
@@ -2426,6 +2426,10 @@ class Segment34View extends WatchUi.WatchFace {
             val = getCgmReading();
         } else if(complicationType == 72) { // CGM Age (minutes)
             val = getCgmAge();
+        } else if(complicationType == 73) { // Weather condition, Feels like
+            var condition = getWeatherCondition(false);
+            var fl = getFeelsLike(false);
+            val = join([condition, fl]);
         }
 
         return val;
@@ -2850,13 +2854,18 @@ class Segment34View extends WatchUi.WatchFace {
         return bearing + windspeed;
     }
 
-    hidden function getFeelsLike() as String {
+    hidden function getFeelsLike(include_label as Boolean) as String {
         var fl = "";
         var tempUnit = getTempUnit();
         if(weatherCondition != null and weatherCondition.feelsLikeTemperature != null) {
             var fltemp = formatTemperatureFloat(weatherCondition.feelsLikeTemperature, tempUnit);
-            var fllabel = Application.loadResource(Rez.Strings.LABEL_FL);
-            fl = fllabel + fltemp.format("%d") + tempUnit;
+            if(include_label) {
+                var fllabel = Application.loadResource(Rez.Strings.LABEL_FL);
+                fl = fllabel + fltemp.format("%d") + tempUnit;
+            } else {
+                fl = fltemp.format("%d") + tempUnit;
+            }
+            
         }
 
         return fl;
