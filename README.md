@@ -62,6 +62,7 @@ Pull requests are welcome, but please follow the following guidelines:
 2026-02-03 v4.1.0
 - More options for where to show CGM data
 - New option for Weather condition + Feels like temp
+- Option for what to show left of seconds
 
 2026-02-01 v4.0.1
 - Fixed layout issue on many devices
