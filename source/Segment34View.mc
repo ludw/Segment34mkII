@@ -3176,8 +3176,10 @@ class Segment34View extends WatchUi.WatchFace {
             bottomFive1X = centerX - (gap / 2) - (fieldWidth / 2);
             bottomFive2X = centerX + (gap / 2) + (fieldWidth / 2);
 
-            // Shift the entire row DOWN to make room for labels above
-            bottomFiveY = bottomFiveY + labelHeight + labelMargin;
+            // Shift the entire row DOWN to make room for labels above (only if labels visible)
+            if (propLabelVisibility == 0 or propLabelVisibility == 2) {
+                bottomFiveY = bottomFiveY + labelHeight + labelMargin;
+            }
         } else {
             // Single field mode - center position
             bottomFive1X = centerX;
@@ -3194,9 +3196,11 @@ class Segment34View extends WatchUi.WatchFace {
             var field2Left = bottomFive2X - (field2Width / 2);
 
             // Draw labels above fields - left aligned with field edge
-            dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
-            dc.drawText(field1Left, bottomFiveYOriginal, fontLabel, values[:dataLabelBottom], Graphics.TEXT_JUSTIFY_LEFT);
-            dc.drawText(field2Left, bottomFiveYOriginal, fontLabel, values[:dataLabelBottom2], Graphics.TEXT_JUSTIFY_LEFT);
+            if (propLabelVisibility == 0 or propLabelVisibility == 2) {
+                dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
+                dc.drawText(field1Left, bottomFiveYOriginal, fontLabel, values[:dataLabelBottom], Graphics.TEXT_JUSTIFY_LEFT);
+                dc.drawText(field2Left, bottomFiveYOriginal, fontLabel, values[:dataLabelBottom2], Graphics.TEXT_JUSTIFY_LEFT);
+            }
 
             // Draw both fields
             drawDataField(dc, bottomFive1X, bottomFiveY, 0,
