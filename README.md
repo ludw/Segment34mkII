@@ -60,8 +60,9 @@ Pull requests are welcome, but please follow the following guidelines:
 - Second custom theme for easy switching
 
 ## Change log
-2026-02-04 v4.1.1
+2026-02-05 v4.2.0
 - Issue with CGM trend arrow looking like a rectangle on some watches
+- Support for additional 5 digit bottom field on Venu X1
 
 2026-02-03 v4.1.0
 - More options for where to show CGM data

@@ -59,10 +59,10 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var fieldXCoords as Array<Number> = [0, 0, 0, 0];
     hidden var fieldY as Number = 0;
     hidden var bottomFiveY as Number = 0;
-    (:DualBottomField) hidden var bottomFive1X as Number = 0;
-    (:DualBottomField) hidden var bottomFive2X as Number = 0;
-    (:DualBottomField) hidden var dualBottomFieldActive as Boolean = false;
-    (:DualBottomField) hidden var bottomFiveYOriginal as Number = 0;
+    (:Square) hidden var bottomFive1X as Number = 0;
+    (:Square) hidden var bottomFive2X as Number = 0;
+    (:Square) hidden var dualBottomFieldActive as Boolean = false;
+    (:Square) hidden var bottomFiveYOriginal as Number = 0;
 
     hidden var drawGradient as BitmapResource?;
     hidden var drawAODPattern as BitmapResource?;
@@ -79,6 +79,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var lastUpdate as Number? = null;
     hidden var lastSlowUpdate as Number? = null;
     hidden var cachedValues as Dictionary = {};
+    hidden var cachedTempUnit as String = "C";
 
     hidden var isWeatherRequired as Boolean = false;
     (:WeatherCache) hidden var lastHfTime as Number? = null;
@@ -114,7 +115,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propAodRightFieldShows as Number = -2;
     hidden var propDateFieldShows as Number = -1;
     hidden var propBottomFieldShows as Number = 17;
-    (:DualBottomField) hidden var propBottomField2Shows as Number = -2;
+    (:Square) hidden var propBottomField2Shows as Number = -2;
     hidden var propAodAlignment as Number = 0;
     hidden var propDateAlignment as Number = 0;
     hidden var propBottomFieldAlignment as Number = 2;
@@ -185,6 +186,7 @@ class Segment34View extends WatchUi.WatchFace {
     (:InstinctCrossover) const bottomFieldWidths = [4, 3, 4, 0];
     (:Round416) const bottomFieldWidths = [4, 4, 4, 0];
     (:Round454) const bottomFieldWidths = [4, 4, 4, 0];
+    (:Square) const bottomFieldWidths = [4, 4, 4, 0];
 
     (:Round240) const barWidth = 3;
     (:Round260) const barWidth = 3;
@@ -194,6 +196,7 @@ class Segment34View extends WatchUi.WatchFace {
     (:InstinctCrossover) const barWidth = 4;
     (:Round416) const barWidth = 4;
     (:Round454) const barWidth = 4;
+    (:Square) const barWidth = 4;
 
     function initialize() {
         WatchFace.initialize();
@@ -513,6 +516,43 @@ class Segment34View extends WatchUi.WatchFace {
         histogramTargetWidth = 45;
     }
 
+    (:Square)
+    hidden function loadResources() as Void {
+        fontClock = Application.loadResource(Rez.Fonts.segments145);
+        fontClockOutline = Application.loadResource(Rez.Fonts.segments145outline);
+        fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
+        loadSmallFont(Rez.Fonts.led, Rez.Fonts.led_inbetween, Rez.Fonts.led_lines);
+        fontLargeData = Application.loadResource(Rez.Fonts.led_big);
+        fontBottomData = fontLargeData;
+        fontLabel = Application.loadResource(Rez.Fonts.storre);
+        fontAODData = Application.loadResource(Rez.Fonts.led);
+        fontBattery = fontTinyData;
+
+        loadAODGraphics();
+
+        clockHeight = 145;
+        clockWidth = 413;
+        labelHeight = 10;
+        labelMargin = 8;
+        tinyDataHeight = 13;
+        smallDataHeight = 20;
+        largeDataHeight = 27;
+        largeDataWidth = 24;
+        bottomDataWidth = 24;
+
+        baseX = centerX + 3;
+        baseY = centerY - smallDataHeight + 4;
+        fieldSpaceingAdj = 20;
+        textSideAdj = 4;
+        bottomFiveAdj = 4;
+        barBottomAdj = 2;
+        marginY = 17;
+        histogramHeight = 30;
+        histogramTargetWidth = 55;
+        histogramBarWidth = 3;
+        histogramBarSpacing = 3;
+    }
+
     hidden function computeDisplayValues(now as Gregorian.Info) as Dictionary {
         var values = {};
         
@@ -685,7 +725,6 @@ class Segment34View extends WatchUi.WatchFace {
 
         bottomFiveY = y3 + halfMarginY + bottomFiveAdj;
         if((propLabelVisibility == 1 or propLabelVisibility == 3)) { bottomFiveY = bottomFiveY - labelHeight; }
-        initDualBottomFieldLayout();
     }
 
     (:InstinctCrossover)
@@ -1167,7 +1206,7 @@ class Segment34View extends WatchUi.WatchFace {
                 dc.setColor(getStressColor(data[i]), Graphics.COLOR_TRANSPARENT);
             }
             bar_height = Math.round(data[i] / scale);
-            dc.drawRectangle(x - half_width + i * (histogramBarWidth + histogramBarSpacing), y + (h - bar_height), histogramBarWidth, bar_height);
+            dc.fillRectangle(x - half_width + i * (histogramBarWidth + histogramBarSpacing), y + (h - bar_height), histogramBarWidth, bar_height);
         }
     }
 
@@ -1733,6 +1772,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             try { weatherCondition = readWeatherData(); } catch(e) {}
         }
+        cachedTempUnit = getTempUnit();
     }
 
     (:NoWeatherCache)
@@ -1740,6 +1780,7 @@ class Segment34View extends WatchUi.WatchFace {
         if (!isWeatherRequired) { return; }
         if(!(Toybox has :Weather) or !(Weather has :getCurrentConditions)) { return; }
         weatherCondition = Weather.getCurrentConditions();
+        cachedTempUnit = getTempUnit();
     }
 
     hidden function isWeatherSource(id as Number) as Boolean {
@@ -1918,47 +1959,54 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getValueByType(complicationType as Number, width as Number) as String {
         var val = "";
         var numberFormat = "%d";
+        var activityInfo = null;
 
         if(complicationType == -2) { // Hidden
             return "";
         } else if(complicationType == -1) { // Date
             val = formatDate();
         } else if(complicationType == 0) { // Active min / week
-            if(ActivityMonitor.getInfo() has :activeMinutesWeek) {
-                if(ActivityMonitor.getInfo().activeMinutesWeek != null) {
-                    val = ActivityMonitor.getInfo().activeMinutesWeek.total.format(numberFormat);
+            activityInfo = ActivityMonitor.getInfo();
+            if(activityInfo has :activeMinutesWeek) {
+                if(activityInfo.activeMinutesWeek != null) {
+                    val = activityInfo.activeMinutesWeek.total.format(numberFormat);
                 }
             }
         } else if(complicationType == 1) { // Active min / day
-            if(ActivityMonitor.getInfo() has :activeMinutesDay) {
-                if(ActivityMonitor.getInfo().activeMinutesDay != null) {
-                    val = ActivityMonitor.getInfo().activeMinutesDay.total.format(numberFormat);
+            if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
+            if(activityInfo has :activeMinutesDay) {
+                if(activityInfo.activeMinutesDay != null) {
+                    val = activityInfo.activeMinutesDay.total.format(numberFormat);
                 }
             }
         } else if(complicationType == 2) { // distance (km) / day
-            if(ActivityMonitor.getInfo() has :distance) {
-                if(ActivityMonitor.getInfo().distance != null) {
-                    var distance_km = ActivityMonitor.getInfo().distance / 100000.0;
+            if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
+            if(activityInfo has :distance) {
+                if(activityInfo.distance != null) {
+                    var distance_km = activityInfo.distance / 100000.0;
                     val = formatDistanceByWidth(distance_km, width);
                 }
             }
         } else if(complicationType == 3) { // distance (miles) / day
-            if(ActivityMonitor.getInfo() has :distance) {
-                if(ActivityMonitor.getInfo().distance != null) {
-                    var distance_miles = ActivityMonitor.getInfo().distance / 160900.0;
+            if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
+            if(activityInfo has :distance) {
+                if(activityInfo.distance != null) {
+                    var distance_miles = activityInfo.distance / 160900.0;
                     val = formatDistanceByWidth(distance_miles, width);
                 }
             }
         } else if(complicationType == 4) { // floors climbed / day
-            if(ActivityMonitor.getInfo() has :floorsClimbed) {
-                if(ActivityMonitor.getInfo().floorsClimbed != null) {
-                    val = ActivityMonitor.getInfo().floorsClimbed.format(numberFormat);
+            if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
+            if(activityInfo has :floorsClimbed) {
+                if(activityInfo.floorsClimbed != null) {
+                    val = activityInfo.floorsClimbed.format(numberFormat);
                 }
             }
         } else if(complicationType == 5) { // meters climbed / day
-            if(ActivityMonitor.getInfo() has :metersClimbed) {
-                if(ActivityMonitor.getInfo().metersClimbed != null) {
-                    val = ActivityMonitor.getInfo().metersClimbed.format(numberFormat);
+            if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
+            if(activityInfo has :metersClimbed) {
+                if(activityInfo.metersClimbed != null) {
+                    val = activityInfo.metersClimbed.format(numberFormat);
                 }
             }
         } else if(complicationType == 6) { // Time to Recovery (h)
@@ -1971,9 +2019,10 @@ class Segment34View extends WatchUi.WatchFace {
                     }
                 } catch(e) {}
             } else {
-                if(ActivityMonitor.getInfo() has :timeToRecovery) {
-                    if(ActivityMonitor.getInfo().timeToRecovery != null) {
-                        val = ActivityMonitor.getInfo().timeToRecovery.format(numberFormat);
+                if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
+                if(activityInfo has :timeToRecovery) {
+                    if(activityInfo.timeToRecovery != null) {
+                        val = activityInfo.timeToRecovery.format(numberFormat);
                     }
                 }
             }
@@ -1993,8 +2042,9 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 9) { // Respiration rate
-            if(ActivityMonitor.getInfo() has :respirationRate) {
-                var resp_rate = ActivityMonitor.getInfo().respirationRate;
+            if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
+            if(activityInfo has :respirationRate) {
+                var resp_rate = activityInfo.respirationRate;
                 if(resp_rate != null) {
                     val = resp_rate.format(numberFormat);
                 }
@@ -2016,9 +2066,10 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 11) { // Calories
-            if (ActivityMonitor.getInfo() has :calories) {
-                if(ActivityMonitor.getInfo().calories != null) {
-                    val = ActivityMonitor.getInfo().calories.format(numberFormat);
+            if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
+            if (activityInfo has :calories) {
+                if(activityInfo.calories != null) {
+                    val = activityInfo.calories.format(numberFormat);
                 }
             }
         } else if(complicationType == 12) { // Altitude (m)
@@ -2044,27 +2095,30 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 16) { // Alt TZ 1
             val = secondaryTimezone(propTzOffset1, width);
         } else if(complicationType == 17) { // Steps / day
-            if(ActivityMonitor.getInfo().steps != null) {
+            if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
+            if(activityInfo.steps != null) {
                 if(width >= 5) {
-                    val = ActivityMonitor.getInfo().steps.format(numberFormat);
+                    val = activityInfo.steps.format(numberFormat);
                 } else {
-                    var steps_k = ActivityMonitor.getInfo().steps / 1000.0;
+                    var steps_k = activityInfo.steps / 1000.0;
                     if(steps_k < 10 and width == 4) {
                         val = steps_k.format("%.1f") + "K";
                     } else {
                         val = steps_k.format("%d") + "K";
                     }
                 }
-                
+
             }
         } else if(complicationType == 18) { // Distance (m) / day
-            if(ActivityMonitor.getInfo().distance != null) {
-                val = (ActivityMonitor.getInfo().distance / 100).format(numberFormat);
+            if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
+            if(activityInfo.distance != null) {
+                val = (activityInfo.distance / 100).format(numberFormat);
             }
         } else if(complicationType == 19) { // Wheelchair pushes
-            if(ActivityMonitor.getInfo() has :pushes) {
-                if(ActivityMonitor.getInfo().pushes != null) {
-                    val = ActivityMonitor.getInfo().pushes.format(numberFormat);
+            if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
+            if(activityInfo has :pushes) {
+                if(activityInfo.pushes != null) {
+                    val = activityInfo.pushes.format(numberFormat);
                 }
             }
         } else if(complicationType == 20) { // Weather condition
@@ -2113,10 +2167,11 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 29) { // Act Calories
+            if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
             var rest_calories = getRestCalories();
             // Get total calories and subtract rest calories
-            if (ActivityMonitor.getInfo() has :calories && ActivityMonitor.getInfo().calories != null && rest_calories > 0) {
-                var active_calories = ActivityMonitor.getInfo().calories - rest_calories;
+            if (activityInfo has :calories && activityInfo.calories != null && rest_calories > 0) {
+                var active_calories = activityInfo.calories - rest_calories;
                 if (active_calories > 0) {
                     val = active_calories.format(numberFormat);
                 } else { val = "0"; }
@@ -2165,8 +2220,7 @@ class Segment34View extends WatchUi.WatchFace {
                 if (tempIterator != null) {
                     var temp = tempIterator.next();
                     if(temp != null and temp.data != null) {
-                        var tempUnit = getTempUnit();
-                        val = formatTemperature(temp.data, tempUnit).format(numberFormat) + tempUnit;
+                        val = formatTemperature(temp.data, cachedTempUnit).format(numberFormat) + cachedTempUnit;
                     }
                 }
             }
@@ -2215,16 +2269,14 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 43) { // High temp
             if(weatherCondition != null and weatherCondition.highTemperature != null) {
                 var tempVal = weatherCondition.highTemperature;
-                var tempUnit = getTempUnit();
-                var temp = formatTemperature(tempVal, tempUnit).format("%01d");
-                val = temp + tempUnit;
+                var temp = formatTemperature(tempVal, cachedTempUnit).format("%01d");
+                val = temp + cachedTempUnit;
             }
         } else if(complicationType == 44) { // Low temp
             if(weatherCondition != null and weatherCondition.lowTemperature != null) {
                 var tempVal = weatherCondition.lowTemperature;
-                var tempUnit = getTempUnit();
-                var temp = formatTemperature(tempVal, tempUnit).format("%01d");
-                val = temp + tempUnit;
+                var temp = formatTemperature(tempVal, cachedTempUnit).format("%01d");
+                val = temp + cachedTempUnit;
             }
         } else if(complicationType == 45) { // Temperature, Wind, Feels like
             var temp = getTemperature();
@@ -2302,11 +2354,12 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 58) { // Active / Total calories
+            if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
             var rest_calories = getRestCalories();
             var total_calories = 0;
             // Get total calories and subtract rest calories
-            if (ActivityMonitor.getInfo() has :calories && ActivityMonitor.getInfo().calories != null) {
-                total_calories = ActivityMonitor.getInfo().calories;
+            if (activityInfo has :calories && activityInfo.calories != null) {
+                total_calories = activityInfo.calories;
             }
             var active_calories = total_calories - rest_calories;
             active_calories = (active_calories > 0) ? active_calories : 0; // Ensure active calories is not negative
@@ -2735,10 +2788,9 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function getTemperature() as String {
         if(weatherCondition != null and weatherCondition.temperature != null) {
-            var temp_unit = getTempUnit();
             var temp_val = weatherCondition.temperature;
-            var temp = formatTemperature(temp_val, temp_unit).format("%01d");
-            return temp + temp_unit;
+            var temp = formatTemperature(temp_val, cachedTempUnit).format("%01d");
+            return temp + cachedTempUnit;
         }
         return "";
     }
@@ -2825,16 +2877,15 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function getFeelsLike(include_label as Boolean) as String {
         var fl = "";
-        var tempUnit = getTempUnit();
         if(weatherCondition != null and weatherCondition.feelsLikeTemperature != null) {
-            var fltemp = formatTemperatureFloat(weatherCondition.feelsLikeTemperature, tempUnit);
+            var fltemp = formatTemperatureFloat(weatherCondition.feelsLikeTemperature, cachedTempUnit);
             if(include_label) {
                 var fllabel = Application.loadResource(Rez.Strings.LABEL_FL);
-                fl = fllabel + fltemp.format("%d") + tempUnit;
+                fl = fllabel + fltemp.format("%d") + cachedTempUnit;
             } else {
-                fl = fltemp.format("%d") + tempUnit;
+                fl = fltemp.format("%d") + cachedTempUnit;
             }
-            
+
         }
 
         return fl;
@@ -2860,10 +2911,9 @@ class Segment34View extends WatchUi.WatchFace {
         var ret = "";
         if(weatherCondition != null) {
             if(weatherCondition.highTemperature != null or weatherCondition.lowTemperature != null) {
-                var tempUnit = getTempUnit();
-                var high = formatTemperature(weatherCondition.highTemperature, tempUnit);
-                var low = formatTemperature(weatherCondition.lowTemperature, tempUnit);
-                ret = high.format("%d") + tempUnit + "/" + low.format("%d") + tempUnit;
+                var high = formatTemperature(weatherCondition.highTemperature, cachedTempUnit);
+                var low = formatTemperature(weatherCondition.lowTemperature, cachedTempUnit);
+                ret = high.format("%d") + cachedTempUnit + "/" + low.format("%d") + cachedTempUnit;
             }
         }
         return ret;
@@ -3143,18 +3193,18 @@ class Segment34View extends WatchUi.WatchFace {
         return false;
     }
 
-    // DualBottomField helper functions - only compiled for Venu X1
-    (:DualBottomField)
+    // Square helper functions - only compiled for square devices
+    (:Square)
     hidden function loadBottomField2Property() as Void {
         propBottomField2Shows = getValueOrDefault("bottomField2Shows", -2) as Number;
     }
 
-    (:DualBottomField)
+    (:Square)
     hidden function getBottomField2Shows() as Number {
         return propBottomField2Shows;
     }
 
-    (:DualBottomField)
+    (:Square)
     hidden function computeBottomField2Values(values as Dictionary) as Void {
         values[:dataBottom2] = getValueByType(propBottomField2Shows, 5);
         if (propBottomFieldShows != -2 and propBottomField2Shows != -2) {
@@ -3163,8 +3213,8 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    (:DualBottomField)
-    hidden function calculateDualBottomFieldLayout() as Void {
+    (:Square)
+    hidden function calculateSquareLayout() as Void {
         dualBottomFieldActive = (propBottomFieldShows != -2 and propBottomField2Shows != -2);
         bottomFiveYOriginal = bottomFiveY;
 
@@ -3187,8 +3237,8 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    (:DualBottomField)
-    hidden function drawDualBottomFields(dc as Dc, values as Dictionary) as Void {
+    (:Square)
+    hidden function drawSquares(dc as Dc, values as Dictionary) as Void {
         if (dualBottomFieldActive) {
             var field1Width = bottomDataWidth * 5;
             var field2Width = bottomDataWidth * 5;
@@ -3238,38 +3288,28 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    // Non-DualBottomField stubs for other devices
-    (:NoDualBottomField)
+    // Non-Square stubs for other devices
+    (:Round)
     hidden function loadBottomField2Property() as Void {
-        // No-op for non-Venu X1 devices
+        // No-op for non-square devices devices
     }
 
-    (:NoDualBottomField)
+    (:Round)
     hidden function getBottomField2Shows() as Number {
-        return -2; // Hidden by default for non-Venu X1 devices
+        return -2; // Hidden by default for non-square devices devices
     }
 
-    (:NoDualBottomField)
+    (:Round)
     hidden function computeBottomField2Values(values as Dictionary) as Void {
-        // No-op for non-Venu X1 devices
+        // No-op for non-square devices devices
     }
 
-    (:DualBottomField)
-    hidden function initDualBottomFieldLayout() as Void {
-        calculateDualBottomFieldLayout();
-    }
-
-    (:NoDualBottomField)
-    hidden function initDualBottomFieldLayout() as Void {
-        // No-op for non-Venu X1 devices
-    }
-
-    (:DualBottomField)
+    (:Square)
     hidden function drawBottomFieldsWithIcons(dc as Dc, values as Dictionary) as Void {
-        drawDualBottomFields(dc, values);
+        drawSquares(dc, values);
     }
 
-    (:NoDualBottomField)
+    (:Round)
     hidden function drawBottomFieldsWithIcons(dc as Dc, values as Dictionary) as Void {
         // Original single field behavior
         var step_width = 0;
