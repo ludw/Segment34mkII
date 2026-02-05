@@ -29,6 +29,7 @@
     <property id="rightValueShows" type="number">0</property>
     <property id="fourthValueShows" type="number">-2</property>
     <property id="bottomFieldShows" type="number">17</property>
+    <property id="bottomField2Shows" type="number">-2</property>
     <property id="aodStyle" type="number">1</property>
     <property id="aodFieldShows" type="number">-1</property>
     <property id="aodRightFieldShows" type="number">-2</property>

@@ -354,6 +354,7 @@
     <string id="settings_bottom_value_4" scope="settings">Bottom value 4 (if available):</string>
     <string id="settings_bottom_5_digit" scope="settings">Bottom 5 digit value:</string>
     <string id="settings_bottom_5_digit_value" scope="settings">Bottom 5 digit value:</string>
+    <string id="settings_bottom_5_digit_value_2" scope="settings">Bottom 5 digit value 2 (square watches only):</string>
     <string id="settings_distance_meter_day" scope="settings">Distance (meter) / day</string>
     <string id="settings_battery_display" scope="settings">Battery display:</string>
     <string id="settings_remaining_days" scope="settings">Remaining days</string>

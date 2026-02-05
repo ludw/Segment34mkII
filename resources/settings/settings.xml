@@ -638,6 +638,35 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.bottomField2Shows" title="@Strings.settings_bottom_5_digit_value_2">
+        <settingConfig type="list">
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="17">@Strings.settings_steps_day</listEntry>
+            <listEntry value="18">@Strings.settings_distance_meter_day</listEntry>
+            <listEntry value="21">@Strings.settings_run_distance_km_week</listEntry>
+            <listEntry value="22">@Strings.settings_run_distance_miles_week</listEntry>
+            <listEntry value="23">@Strings.settings_bike_distance_km_week</listEntry>
+            <listEntry value="24">@Strings.settings_bike_distance_miles_week</listEntry>
+            <listEntry value="32">@Strings.settings_total_distance_7_days_km</listEntry>
+            <listEntry value="33">@Strings.settings_total_distance_7_days_miles</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed_day</listEntry>
+            <listEntry value="5">@Strings.settings_meters_climbed_day</listEntry>
+            <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
+            <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
+            <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="19">@Strings.settings_wheelchair_pushes_day</listEntry>
+            <listEntry value="12">@Strings.settings_altitude_m</listEntry>
+            <listEntry value="15">@Strings.settings_altitude_ft</listEntry>
+            <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
+            <listEntry value="30">@Strings.settings_barometric_pressure_sea</listEntry>
+            <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
+            <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
+            <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
+            <listEntry value="57">@Strings.settings_next_calendar_event_time</listEntry>
+            <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.batteryVariant" title="@Strings.settings_battery_display">
             <settingConfig type="list">
                 <listEntry value="0">@Strings.settings_remaining_days</listEntry>

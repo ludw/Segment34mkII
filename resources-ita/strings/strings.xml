@@ -327,6 +327,7 @@
     <string id="settings_weather_conditions_precipitation" scope="settings">Condizioni meteo, Probabilità precipitazioni</string>
     <string id="settings_weather_conditions" scope="settings">Condizioni meteo</string>
     <string id="settings_weather_conditions_temperature" scope="settings">Condizioni meteo, Temperatura</string>
+    <string id="settings_weather_conditions_feelslike" scope="settings">Condizioni meteo, Percepita</string>
     <string id="settings_daily_high_temperature" scope="settings">Temperatura massima giornaliera</string>
     <string id="settings_daily_low_temperature" scope="settings">Temperatura minima giornaliera</string>
     <string id="settings_temperature" scope="settings">Temperatura</string>
@@ -353,6 +354,7 @@
     <string id="settings_bottom_value_4" scope="settings">Valore inferiore 4 (se disponibile):</string>
     <string id="settings_bottom_5_digit" scope="settings">Valore 5 cifre inferiore:</string>
     <string id="settings_bottom_5_digit_value" scope="settings">Valore 5 cifre inferiore:</string>
+    <string id="settings_bottom_5_digit_value_2" scope="settings">Valore 5 cifre inferiore 2 (solo quadrato):</string>
     <string id="settings_distance_meter_day" scope="settings">Distanza (metri) / giorno</string>
     <string id="settings_battery_display" scope="settings">Visualizzazione batteria:</string>
     <string id="settings_remaining_days" scope="settings">Giorni rimanenti</string>
@@ -440,7 +442,7 @@
     <string id="settings_week_number_offset" scope="settings">Offset numero settimana (0 = numero settimana normale)</string>
     <string id="settings_show_clock_background" scope="settings">Mostra sfondo orologio</string>
     <string id="settings_show_data_fields_background" scope="settings">Mostra sfondo campi dati</string>
-    <string id="settings_show_notification_count" scope="settings">Mostra Conteggio Notifiche</string>
+    <string id="settings_notification_field_shows" scope="settings">Il numero a sinistra dei secondi mostra</string>
     <string id="settings_zeropad_hour_clock" scope="settings">Aggiungi zero all'ora sull'orologio</string>
     <string id="settings_separator_hours_minutes" scope="settings">Separatore tra Ore e Minuti</string>
     <string id="settings_colon" scope="settings">:</string>
@@ -454,4 +456,14 @@
     <string id="settings_hide_all_labels" scope="settings">Nascondi Tutte le Etichette</string>
     <string id="settings_hide_top_labels" scope="settings">Nascondi Etichette Superiori</string>
     <string id="settings_hide_bottom_labels" scope="settings">Nascondi Etichette Inferiori</string>
+    <string id="settings_left_bar_shows" scope="settings">La barra sinistra mostra</string>
+    <string id="settings_right_bar_shows" scope="settings">La barra destra mostra</string>
+    <string id="settings_step_goal_progress" scope="settings">Progresso obiettivo passi</string>
+    <string id="settings_floor_climb_progress" scope="settings">Progresso piani saliti</string>
+    <string id="settings_act_min_progress" scope="settings">Obiettivo minuti attivi, progresso settimanale</string>
+    <string id="settings_text_alignment_bottom_labels" scope="settings">Allineamento testo per etichette campi inferiori:</string>
+    <string id="settings_temperature_uv_precipitation" scope="settings">Temperatura, Indice UV, Probabilità precipitazioni</string>
+    <string id="settings_temperature_uv_wind" scope="settings">Temperatura, Indice UV, Vento</string>
+    <string id="settings_cgm_glucose_trend" scope="settings">CGM Glicemia + Tendenza</string>
+    <string id="settings_cgm_age" scope="settings">CGM Età (minuti)</string>
 </strings>

@@ -327,6 +327,7 @@
     <string id="settings_weather_conditions_precipitation" scope="settings">Väderförhållanden, nederbörd risk</string>
     <string id="settings_weather_conditions" scope="settings">Väderförhållanden</string>
     <string id="settings_weather_conditions_temperature" scope="settings">Väderförhållanden, Temperatur</string>
+    <string id="settings_weather_conditions_feelslike" scope="settings">Väderförhållanden, Känns som</string>
     <string id="settings_daily_high_temperature" scope="settings">Dagens högsta temperatur</string>
     <string id="settings_daily_low_temperature" scope="settings">Dagens lägsta temperatur</string>
     <string id="settings_temperature" scope="settings">Temperatur</string>
@@ -353,6 +354,7 @@
     <string id="settings_bottom_value_4" scope="settings">Nedre värde 4 (om tillgängligt):</string>
     <string id="settings_bottom_5_digit" scope="settings">Nedre 5-siffrors värde:</string>
     <string id="settings_bottom_5_digit_value" scope="settings">Nedre 5-siffrors värde:</string>
+    <string id="settings_bottom_5_digit_value_2" scope="settings">Nedre 5-siffrors värde 2 (endast kvadrat):</string>
     <string id="settings_distance_meter_day" scope="settings">Distans (meter) / dag</string>
     <string id="settings_battery_display" scope="settings">Batteriindikator:</string>
     <string id="settings_remaining_days" scope="settings">Kvarvarande dagar</string>
@@ -440,7 +442,7 @@
     <string id="settings_week_number_offset" scope="settings">Veckonummer offset (0 = normalt veckonummer)</string>
     <string id="settings_show_clock_background" scope="settings">Visa klockbakgrund</string>
     <string id="settings_show_data_fields_background" scope="settings">Visa datafält bakgrund</string>
-    <string id="settings_show_notification_count" scope="settings">Visa notifieringsantal</string>
+    <string id="settings_notification_field_shows" scope="settings">Nummer till vänster om sekunder visar</string>
     <string id="settings_zeropad_hour_clock" scope="settings">Nollpadda timme på klocka</string>
     <string id="settings_separator_hours_minutes" scope="settings">Separator mellan timmar och minuter</string>
     <string id="settings_colon" scope="settings">:</string>
@@ -454,4 +456,14 @@
     <string id="settings_hide_all_labels" scope="settings">Dölj alla etiketter</string>
     <string id="settings_hide_top_labels" scope="settings">Dölj övre etiketter</string>
     <string id="settings_hide_bottom_labels" scope="settings">Dölj nedre etiketter</string>
+    <string id="settings_left_bar_shows" scope="settings">Vänster stapel visar</string>
+    <string id="settings_right_bar_shows" scope="settings">Höger stapel visar</string>
+    <string id="settings_step_goal_progress" scope="settings">Stegmålsframsteg</string>
+    <string id="settings_floor_climb_progress" scope="settings">Våningsklättringsframsteg</string>
+    <string id="settings_act_min_progress" scope="settings">Aktivminutsmål, veckoframsteg</string>
+    <string id="settings_text_alignment_bottom_labels" scope="settings">Textjustering för nedre fältetiketter:</string>
+    <string id="settings_temperature_uv_precipitation" scope="settings">Temperatur, UV-index, Nederbördsrisk</string>
+    <string id="settings_temperature_uv_wind" scope="settings">Temperatur, UV-index, Vind</string>
+    <string id="settings_cgm_glucose_trend" scope="settings">CGM Glukos + Trend</string>
+    <string id="settings_cgm_age" scope="settings">CGM Ålder (minuter)</string>
 </strings>
