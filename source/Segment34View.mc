@@ -59,6 +59,10 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var fieldXCoords as Array<Number> = [0, 0, 0, 0];
     hidden var fieldY as Number = 0;
     hidden var bottomFiveY as Number = 0;
+    (:DualBottomField) hidden var bottomFive1X as Number = 0;
+    (:DualBottomField) hidden var bottomFive2X as Number = 0;
+    (:DualBottomField) hidden var dualBottomFieldActive as Boolean = false;
+    (:DualBottomField) hidden var bottomFiveYOriginal as Number = 0;
 
     hidden var drawGradient as BitmapResource?;
     hidden var drawAODPattern as BitmapResource?;
@@ -110,6 +114,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propAodRightFieldShows as Number = -2;
     hidden var propDateFieldShows as Number = -1;
     hidden var propBottomFieldShows as Number = 17;
+    (:DualBottomField) hidden var propBottomField2Shows as Number = -2;
     hidden var propAodAlignment as Number = 0;
     hidden var propDateAlignment as Number = 0;
     hidden var propBottomFieldAlignment as Number = 2;
@@ -540,6 +545,7 @@ class Segment34View extends WatchUi.WatchFace {
         values[:dataBottomRight] = getValueByType(propRightValueShows, fieldWidths[2]);
         values[:dataBottomFourth] = getValueByType(propFourthValueShows, fieldWidths[3]);
         values[:dataBottom] = getValueByType(propBottomFieldShows, 5);
+        computeBottomField2Values(values);
         values[:dataIcon1] = getIconState(propIcon1);
         values[:dataIcon2] = getIconState(propIcon2);
         values[:dataBattery] = getBattData();
@@ -679,8 +685,9 @@ class Segment34View extends WatchUi.WatchFace {
 
         bottomFiveY = y3 + halfMarginY + bottomFiveAdj;
         if((propLabelVisibility == 1 or propLabelVisibility == 3)) { bottomFiveY = bottomFiveY - labelHeight; }
+        initDualBottomFieldLayout();
     }
-    
+
     (:InstinctCrossover)
     hidden function calculateLayout() as Void {
         var y1 = baseY + halfClockHeight + marginY;
@@ -823,20 +830,9 @@ class Segment34View extends WatchUi.WatchFace {
         drawDataField(dc, fieldXCoords[2], fieldY, 3, values[:dataLabelBottomRight], values[:dataBottomRight], digits[2], fontLargeData, largeDataWidth * digits[2]);
         drawDataField(dc, fieldXCoords[3], fieldY, 3, values[:dataLabelBottomFourth], values[:dataBottomFourth], digits[3], fontLargeData, largeDataWidth * digits[3]);
 
-        // Draw the 5 digit bottom field
-        var step_width = 0;
-        if(screenHeight == 240) {
-            step_width = drawDataField(dc, centerX - 19, bottomFiveY + 3, 0, null, values[:dataBottom], 5, fontBottomData, bottomDataWidth * 5);
-        } else {
-            step_width = drawDataField(dc, centerX, bottomFiveY, 0, null, values[:dataBottom], 5, fontBottomData, bottomDataWidth * 5);
-        }
+        // Draw the 5 digit bottom field(s) and icons
+        drawBottomFieldsWithIcons(dc, values);
 
-        // Draw icons
-        dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
-        if(screenHeight == 240) { step_width += 30; }
-        dc.drawText(centerX - (step_width / 2) - (marginX / 2), bottomFiveY + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon1], Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
-        dc.drawText(centerX + (step_width / 2) + (marginX / 2) - 2, bottomFiveY + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon2], Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
-        
         // Draw battery icon
         if(screenHeight == 240 and propBottomFieldShows != -2) {
             drawBatteryIcon(dc, centerX + 32, bottomFiveY, values);
@@ -1375,6 +1371,7 @@ class Segment34View extends WatchUi.WatchFace {
         propRightValueShows = getValueOrDefault("rightValueShows", 0) as Number;
         propFourthValueShows = getValueOrDefault("fourthValueShows", -2) as Number;
         propBottomFieldShows = getValueOrDefault("bottomFieldShows", 17) as Number;
+        loadBottomField2Property();
         propLeftBarShows = getValueOrDefault("leftBarShows", 1) as Number;
         propRightBarShows = getValueOrDefault("rightBarShows", 2) as Number;
         propIcon1 = getValueOrDefault("icon1", 1) as Number;
@@ -1423,7 +1420,8 @@ class Segment34View extends WatchUi.WatchFace {
             propLeftValueShows, propMiddleValueShows, 
             propRightValueShows, propFourthValueShows,
             propBottomFieldShows,
-            propAodFieldShows, propAodRightFieldShows
+            propAodFieldShows, propAodRightFieldShows,
+            getBottomField2Shows()
         ];
 
         for(var i=0; i<weatherFields.size(); i++) {
@@ -3143,6 +3141,145 @@ class Segment34View extends WatchUi.WatchFace {
             return true;
         }
         return false;
+    }
+
+    // DualBottomField helper functions - only compiled for Venu X1
+    (:DualBottomField)
+    hidden function loadBottomField2Property() as Void {
+        propBottomField2Shows = getValueOrDefault("bottomField2Shows", -2) as Number;
+    }
+
+    (:DualBottomField)
+    hidden function getBottomField2Shows() as Number {
+        return propBottomField2Shows;
+    }
+
+    (:DualBottomField)
+    hidden function computeBottomField2Values(values as Dictionary) as Void {
+        values[:dataBottom2] = getValueByType(propBottomField2Shows, 5);
+        if (propBottomFieldShows != -2 and propBottomField2Shows != -2) {
+            values[:dataLabelBottom] = getLabelByType(propBottomFieldShows, 2);
+            values[:dataLabelBottom2] = getLabelByType(propBottomField2Shows, 2);
+        }
+    }
+
+    (:DualBottomField)
+    hidden function calculateDualBottomFieldLayout() as Void {
+        dualBottomFieldActive = (propBottomFieldShows != -2 and propBottomField2Shows != -2);
+        bottomFiveYOriginal = bottomFiveY;
+
+        if (dualBottomFieldActive) {
+            // Position two 5-digit fields with 40px gap between them, centered
+            var fieldWidth = bottomDataWidth * 5;
+            var gap = 20;
+
+            bottomFive1X = centerX - (gap / 2) - (fieldWidth / 2);
+            bottomFive2X = centerX + (gap / 2) + (fieldWidth / 2);
+
+            // Shift the entire row DOWN to make room for labels above
+            bottomFiveY = bottomFiveY + labelHeight + labelMargin;
+        } else {
+            // Single field mode - center position
+            bottomFive1X = centerX;
+            bottomFive2X = centerX;
+        }
+    }
+
+    (:DualBottomField)
+    hidden function drawDualBottomFields(dc as Dc, values as Dictionary) as Void {
+        if (dualBottomFieldActive) {
+            var field1Width = bottomDataWidth * 5;
+            var field2Width = bottomDataWidth * 5;
+            var field1Left = bottomFive1X - (field1Width / 2);
+            var field2Left = bottomFive2X - (field2Width / 2);
+
+            // Draw labels above fields - left aligned with field edge
+            dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
+            dc.drawText(field1Left, bottomFiveYOriginal, fontLabel, values[:dataLabelBottom], Graphics.TEXT_JUSTIFY_LEFT);
+            dc.drawText(field2Left, bottomFiveYOriginal, fontLabel, values[:dataLabelBottom2], Graphics.TEXT_JUSTIFY_LEFT);
+
+            // Draw both fields
+            drawDataField(dc, bottomFive1X, bottomFiveY, 0,
+                null, values[:dataBottom], 5,
+                fontBottomData, field1Width);
+
+            drawDataField(dc, bottomFive2X, bottomFiveY, 0,
+                null, values[:dataBottom2], 5,
+                fontBottomData, field2Width);
+
+            // Icons on outer edges
+            dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+            dc.drawText(field1Left - (marginX / 2),
+                bottomFiveY + (largeDataHeight / 2) + iconYAdj,
+                fontIcons, values[:dataIcon1],
+                Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
+            dc.drawText(field2Left + field2Width + (marginX / 2) - 2,
+                bottomFiveY + (largeDataHeight / 2) + iconYAdj,
+                fontIcons, values[:dataIcon2],
+                Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+        } else {
+            // Single field - original behavior
+            var step_width = drawDataField(dc, centerX, bottomFiveY, 0, null,
+                values[:dataBottom], 5, fontBottomData, bottomDataWidth * 5);
+
+            dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+            dc.drawText(centerX - (step_width / 2) - (marginX / 2),
+                bottomFiveY + (largeDataHeight / 2) + iconYAdj,
+                fontIcons, values[:dataIcon1],
+                Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
+            dc.drawText(centerX + (step_width / 2) + (marginX / 2) - 2,
+                bottomFiveY + (largeDataHeight / 2) + iconYAdj,
+                fontIcons, values[:dataIcon2],
+                Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+        }
+    }
+
+    // Non-DualBottomField stubs for other devices
+    (:NoDualBottomField)
+    hidden function loadBottomField2Property() as Void {
+        // No-op for non-Venu X1 devices
+    }
+
+    (:NoDualBottomField)
+    hidden function getBottomField2Shows() as Number {
+        return -2; // Hidden by default for non-Venu X1 devices
+    }
+
+    (:NoDualBottomField)
+    hidden function computeBottomField2Values(values as Dictionary) as Void {
+        // No-op for non-Venu X1 devices
+    }
+
+    (:DualBottomField)
+    hidden function initDualBottomFieldLayout() as Void {
+        calculateDualBottomFieldLayout();
+    }
+
+    (:NoDualBottomField)
+    hidden function initDualBottomFieldLayout() as Void {
+        // No-op for non-Venu X1 devices
+    }
+
+    (:DualBottomField)
+    hidden function drawBottomFieldsWithIcons(dc as Dc, values as Dictionary) as Void {
+        drawDualBottomFields(dc, values);
+    }
+
+    (:NoDualBottomField)
+    hidden function drawBottomFieldsWithIcons(dc as Dc, values as Dictionary) as Void {
+        // Original single field behavior
+        var step_width = 0;
+        if(screenHeight == 240) {
+            step_width = drawDataField(dc, centerX - 19, bottomFiveY + 3, 0, null, values[:dataBottom], 5, fontBottomData, bottomDataWidth * 5);
+        } else {
+            step_width = drawDataField(dc, centerX, bottomFiveY, 0, null, values[:dataBottom], 5, fontBottomData, bottomDataWidth * 5);
+        }
+
+        // Draw icons
+        dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+        if(screenHeight == 240) { step_width += 30; }
+        dc.drawText(centerX - (step_width / 2) - (marginX / 2), bottomFiveY + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon1], Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(centerX + (step_width / 2) + (marginX / 2) - 2, bottomFiveY + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon2], Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
     }
 
 }
