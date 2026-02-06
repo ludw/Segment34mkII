@@ -153,6 +153,13 @@ class Segment34View extends WatchUi.WatchFace {
     const battFull = "|||||||||||||||||||||||||||||||||||";
     const battEmpty = "{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{";
 
+    hidden var offscreenBuffer as BufferedBitmap?; 
+    hidden var useLayer as Boolean = false;
+    hidden var mDrawMode as Number = 0;
+    hidden const modeStatic = 1;
+    hidden const modeDynamic = 2;
+    hidden const modeAll = 3;
+
     enum colorNames {
         bg = 0,
         clock,
@@ -217,6 +224,10 @@ class Segment34View extends WatchUi.WatchFace {
         halfMarginY = Math.round(marginY / 2);
         hasComplications = Toybox has :Complications;
         
+        if (Graphics has :createBufferedBitmap) {
+            useLayer = true;
+        }
+
         calculateLayout();
 
         updateWeather();
@@ -592,6 +603,10 @@ class Segment34View extends WatchUi.WatchFace {
             lastSlowUpdate = unix_timestamp;
             updateColorTheme();
             updateWeather();
+            
+            if (useLayer && offscreenBuffer != null) {
+                offscreenBuffer = null; 
+            }
         }
 
         if(lastUpdate == null or unix_timestamp - lastUpdate >= propUpdateFreq) {
@@ -610,7 +625,25 @@ class Segment34View extends WatchUi.WatchFace {
         if(isSleeping and canBurnIn) {
             drawAOD(dc, now, cachedValues);
         } else {
-            drawWatchface(dc, now, false, cachedValues);
+            var canBuffer = useLayer && !isLowMem;
+
+            if (canBuffer) {
+                if (offscreenBuffer == null) {
+                    createStaticLayer(dc, cachedValues);
+                }
+
+                if (offscreenBuffer != null) {
+                    dc.drawBitmap(0, 0, offscreenBuffer);
+                } else {
+                    drawWatchfaceLayers(dc, now, cachedValues, modeStatic);
+                }
+
+                drawWatchfaceLayers(dc, now, cachedValues, modeDynamic);
+            } else {
+                dc.setColor(themeColors[bg], themeColors[bg]);
+                dc.clear();
+                drawWatchfaceLayers(dc, now, cachedValues, modeAll);
+            }
         }
     }
 
@@ -713,135 +746,126 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     (:DefaultLayout)
-    hidden function drawWatchface(dc as Dc, now as Gregorian.Info, aod as Boolean, values as Dictionary) as Void {
-        // Clear
-        dc.setColor(themeColors[bg], themeColors[bg]);
-        dc.clear();
+    hidden function drawWatchfaceLayers(dc as Dc, now as Gregorian.Info?, values as Dictionary, mode as Number) as Void {
+ 
+        mDrawMode = mode; 
+
         var yn1 = baseY - halfClockHeight - marginY - smallDataHeight;
         var yn2 = yn1 - marginY - smallDataHeight;
         var yn3 = yn2 - marginY - histogramHeight;
+        var yClockBelow = baseY + halfClockHeight + marginY; 
 
-        // Draw Top data fields or histogram
-        if(propTopPartShows == 2) {
-            drawHistogram(dc, values[:dataGraph1], centerX, yn3, histogramHeight);
-        } else {
-            var top_data_height = halfMarginY;
-            var top_field_font = fontTinyData;
-            var top_field_center_offset = 20;
-            if(propTopPartShows == 1) { top_field_center_offset = labelHeight; }
-            if(propLabelVisibility == 0 or propLabelVisibility == 3) {
-                dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
-                dc.drawText(centerX - top_field_center_offset, marginY, fontLabel, values[:dataLabelTopLeft], Graphics.TEXT_JUSTIFY_RIGHT);
-                dc.drawText(centerX + top_field_center_offset, marginY, fontLabel, values[:dataLabelTopRight], Graphics.TEXT_JUSTIFY_LEFT);
-
-                top_data_height = labelHeight + halfMarginY;
+        if (mode & modeStatic) {
+            if(propTopPartShows != 2) {
+                var top_field_center_offset = (propTopPartShows == 1) ? labelHeight : 20;
+                
+                if(propLabelVisibility == 0 or propLabelVisibility == 3) {
+                    dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
+                    dc.drawText(centerX - top_field_center_offset, marginY, fontLabel, values[:dataLabelTopLeft], Graphics.TEXT_JUSTIFY_RIGHT);
+                    dc.drawText(centerX + top_field_center_offset, marginY, fontLabel, values[:dataLabelTopRight], Graphics.TEXT_JUSTIFY_LEFT);
+                }
             }
+        }
 
-            dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
-            if(propTopPartShows == 0) {
-                dc.drawText(centerX - top_field_center_offset, marginY + top_data_height, top_field_font, values[:dataTopLeft], Graphics.TEXT_JUSTIFY_RIGHT);
-                dc.drawText(centerX + top_field_center_offset, marginY + top_data_height, top_field_font, values[:dataTopRight], Graphics.TEXT_JUSTIFY_LEFT);
-
-                // Draw Moon
-                dc.setColor(themeColors[moon], Graphics.COLOR_TRANSPARENT);
-                dc.drawText(centerX, marginY + ((top_data_height + tinyDataHeight) / 2), fontMoon, values[:dataMoon], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        if (mode & modeDynamic) {
+            // Top Data Values
+            if(propTopPartShows == 2) {
+                drawHistogram(dc, values[:dataGraph1], centerX, yn3, histogramHeight);
             } else {
-                if(top_data_height == halfMarginY) { top_field_font = fontSmallData; }
+                var top_data_height = (propLabelVisibility == 0 or propLabelVisibility == 3) ? (labelHeight + halfMarginY) : halfMarginY;
+                var top_field_font = (top_data_height == halfMarginY && propTopPartShows != 0) ? fontSmallData : fontTinyData;
+                var top_field_center_offset = (propTopPartShows == 1) ? labelHeight : 20;
+
+                dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
                 dc.drawText(centerX - top_field_center_offset, marginY + top_data_height, top_field_font, values[:dataTopLeft], Graphics.TEXT_JUSTIFY_RIGHT);
                 dc.drawText(centerX + top_field_center_offset, marginY + top_data_height, top_field_font, values[:dataTopRight], Graphics.TEXT_JUSTIFY_LEFT);
+
+                if(propTopPartShows == 0) {
+                     dc.setColor(themeColors[moon], Graphics.COLOR_TRANSPARENT);
+                     dc.drawText(centerX, marginY + ((top_data_height + tinyDataHeight) / 2), fontMoon, values[:dataMoon], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+                }
             }
-        }
 
-        // Draw Lines above clock
-        dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
-        dc.drawText(centerX, yn2, fontSmallData, values[:dataAboveLine1], Graphics.TEXT_JUSTIFY_CENTER);
-        dc.drawText(centerX, yn1, fontSmallData, values[:dataAboveLine2], Graphics.TEXT_JUSTIFY_CENTER);        
+            // Lines above clock
+            dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+            dc.drawText(centerX, yn2, fontSmallData, values[:dataAboveLine1], Graphics.TEXT_JUSTIFY_CENTER);
+            dc.drawText(centerX, yn1, fontSmallData, values[:dataAboveLine2], Graphics.TEXT_JUSTIFY_CENTER);
 
-        // Draw Clock
-        dc.setColor(themeColors[clockBg], Graphics.COLOR_TRANSPARENT);
-        if(propShowClockBg and !aod) {
-            dc.drawText(baseX, baseY, fontClock, clockBgText, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-        }
-        dc.setColor(themeColors[clock], Graphics.COLOR_TRANSPARENT);
-        dc.drawText(baseX, baseY, fontClock, values[:dataClock], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            // Clock Background
+            if(propShowClockBg) {
+                dc.setColor(themeColors[clockBg], Graphics.COLOR_TRANSPARENT);
+                dc.drawText(baseX, baseY, fontClock, clockBgText, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            }
+            
+            // Gradient
+            if(drawGradient != null and themeColors[bg] == 0x000000) {
+                 dc.drawBitmap(centerX - halfClockWidth, baseY - halfClockHeight, drawGradient);
+            }
 
-        // Draw clock gradient
-        if(drawGradient != null and themeColors[bg] == 0x000000 and !aod) {
-            dc.drawBitmap(centerX - halfClockWidth, baseY - halfClockHeight, drawGradient);
-        }
-
-        if(propClockOutlineStyle == 2 or propClockOutlineStyle == 3) {
-            if(fontClockOutline != null) { // Someone has only bothered to draw this font for AMOLED sizes
-                // Draw outline
+            // The Clock
+            dc.setColor(themeColors[clock], Graphics.COLOR_TRANSPARENT);
+            dc.drawText(baseX, baseY, fontClock, values[:dataClock], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            
+            if((propClockOutlineStyle == 2 or propClockOutlineStyle == 3) && fontClockOutline != null) {
                 dc.setColor(themeColors[outline], Graphics.COLOR_TRANSPARENT);
                 dc.drawText(baseX, baseY, fontClockOutline, values[:dataClock], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             }
-        }
 
-        // Draw stress and body battery bars
-        drawSideBars(dc, values);
-
-        // Draw Line below clock
-        var y1 = baseY + halfClockHeight + marginY;
-        dc.setColor(themeColors[date], Graphics.COLOR_TRANSPARENT);
-        if(propDateAlignment == 0) {
-            dc.drawText(baseX - halfClockWidth + textSideAdj, y1, fontSmallData, values[:dataBelow], Graphics.TEXT_JUSTIFY_LEFT);
-        } else {
-            dc.drawText(baseX, y1, fontSmallData, values[:dataBelow], Graphics.TEXT_JUSTIFY_CENTER);
-        }
-        
-        // Draw seconds
-        if(propShowSeconds) {
-            dc.drawText(baseX + halfClockWidth - textSideAdj, y1, fontSmallData, values[:dataSeconds], Graphics.TEXT_JUSTIFY_RIGHT);
-        }
-
-        // Draw Notification count
-        dc.setColor(themeColors[notif], Graphics.COLOR_TRANSPARENT);
-        if(propDateAlignment == 0) {
-            if(!propShowSeconds) { // No seconds, notification on right side
-                dc.drawText(baseX + halfClockWidth - textSideAdj, y1, fontSmallData, values[:dataNotifications], Graphics.TEXT_JUSTIFY_RIGHT);
+            // Line below clock
+            dc.setColor(themeColors[date], Graphics.COLOR_TRANSPARENT);
+            if(propDateAlignment == 0) {
+                dc.drawText(baseX - halfClockWidth + textSideAdj, yClockBelow, fontSmallData, values[:dataBelow], Graphics.TEXT_JUSTIFY_LEFT);
             } else {
-                var date_width = dc.getTextWidthInPixels(values[:dataBelow], fontSmallData);
-                var sec_width = dc.getTextWidthInPixels(values[:dataSeconds], fontSmallData); 
-                var date_right_edge = baseX - halfClockWidth + textSideAdj + date_width;
-                var sec_left = baseX + halfClockWidth - textSideAdj - sec_width;
-                var pos = sec_left - marginX;
-                if((sec_left - date_right_edge) < 3 * marginX) {
-                    pos = (date_right_edge + sec_left) / 2;
-                }
-                dc.drawText(pos, y1, fontSmallData, values[:dataNotifications], Graphics.TEXT_JUSTIFY_CENTER);
+                dc.drawText(baseX, yClockBelow, fontSmallData, values[:dataBelow], Graphics.TEXT_JUSTIFY_CENTER);
             }
-        } else { // Date is centered, notification on left side
-            dc.drawText(baseX - halfClockWidth, y1, fontSmallData, values[:dataNotifications], Graphics.TEXT_JUSTIFY_LEFT);
+
+            // Seconds
+            if(propShowSeconds) {
+                 dc.drawText(baseX + halfClockWidth - textSideAdj, yClockBelow, fontSmallData, values[:dataSeconds], Graphics.TEXT_JUSTIFY_RIGHT);
+            }
+
+            // Notifications
+            dc.setColor(themeColors[notif], Graphics.COLOR_TRANSPARENT);
+            if(propDateAlignment == 0) {
+                if(!propShowSeconds) { 
+                    dc.drawText(baseX + halfClockWidth - textSideAdj, yClockBelow, fontSmallData, values[:dataNotifications], Graphics.TEXT_JUSTIFY_RIGHT);
+                } else {
+                    var date_width = dc.getTextWidthInPixels(values[:dataBelow], fontSmallData);
+                    var sec_width = dc.getTextWidthInPixels(values[:dataSeconds], fontSmallData); 
+                    var pos = (baseX + halfClockWidth - textSideAdj - sec_width) - marginX; 
+                    if(((baseX + halfClockWidth - textSideAdj - sec_width) - (baseX - halfClockWidth + textSideAdj + date_width)) < 3 * marginX) {
+                        pos = ((baseX - halfClockWidth + textSideAdj + date_width) + (baseX + halfClockWidth - textSideAdj - sec_width)) / 2;
+                    }
+                    dc.drawText(pos, yClockBelow, fontSmallData, values[:dataNotifications], Graphics.TEXT_JUSTIFY_CENTER);
+                }
+            } else { 
+                dc.drawText(baseX - halfClockWidth, yClockBelow, fontSmallData, values[:dataNotifications], Graphics.TEXT_JUSTIFY_LEFT);
+            }
+
+            // Side Bars
+            drawSideBars(dc, values);
+
+            // Icons & Battery
+            var step_width = (screenHeight == 240) ? 30 : 0; 
+            dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+            dc.drawText(centerX - (step_width / 2) - (marginX / 2), bottomFiveY + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon1], Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
+            dc.drawText(centerX + (step_width / 2) + (marginX / 2) - 2, bottomFiveY + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon2], Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+            
+            drawBatteryIcon(dc, (screenHeight == 240) ? centerX + 32 : null, (screenHeight == 240) ? bottomFiveY : null, values);
         }
 
-        // Draw the three bottom data fields
         var digits = getFieldWidths();
 
-        drawDataField(dc, fieldXCoords[0], fieldY, 3, values[:dataLabelBottomLeft], values[:dataBottomLeft], digits[0], fontLargeData, largeDataWidth * digits[0]);
-        drawDataField(dc, fieldXCoords[1], fieldY, 3, values[:dataLabelBottomMiddle], values[:dataBottomMiddle], digits[1], fontLargeData, largeDataWidth * digits[1]);
-        drawDataField(dc, fieldXCoords[2], fieldY, 3, values[:dataLabelBottomRight], values[:dataBottomRight], digits[2], fontLargeData, largeDataWidth * digits[2]);
-        drawDataField(dc, fieldXCoords[3], fieldY, 3, values[:dataLabelBottomFourth], values[:dataBottomFourth], digits[3], fontLargeData, largeDataWidth * digits[3]);
-
-        // Draw the 5 digit bottom field
-        var step_width = 0;
-        if(screenHeight == 240) {
-            step_width = drawDataField(dc, centerX - 19, bottomFiveY + 3, 0, null, values[:dataBottom], 5, fontBottomData, bottomDataWidth * 5);
-        } else {
-            step_width = drawDataField(dc, centerX, bottomFiveY, 0, null, values[:dataBottom], 5, fontBottomData, bottomDataWidth * 5);
-        }
-
-        // Draw icons
-        dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
-        if(screenHeight == 240) { step_width += 30; }
-        dc.drawText(centerX - (step_width / 2) - (marginX / 2), bottomFiveY + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon1], Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
-        dc.drawText(centerX + (step_width / 2) + (marginX / 2) - 2, bottomFiveY + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon2], Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+        drawDataField(dc, fieldXCoords[0], fieldY, 3, values[:dataLabelBottomLeft], values[:dataBottomLeft], digits[0], true);
+        drawDataField(dc, fieldXCoords[1], fieldY, 3, values[:dataLabelBottomMiddle], values[:dataBottomMiddle], digits[1], true);
+        drawDataField(dc, fieldXCoords[2], fieldY, 3, values[:dataLabelBottomRight], values[:dataBottomRight], digits[2], true);
+        drawDataField(dc, fieldXCoords[3], fieldY, 3, values[:dataLabelBottomFourth], values[:dataBottomFourth], digits[3], true);
         
-        // Draw battery icon
-        if(screenHeight == 240 and propBottomFieldShows != -2) {
-            drawBatteryIcon(dc, centerX + 32, bottomFiveY, values);
+        var bWidth = 0;
+        if(screenHeight == 240) {
+            bWidth = drawDataField(dc, centerX - 19, bottomFiveY + 3, 0, null, values[:dataBottom], 5, false);
         } else {
-            drawBatteryIcon(dc, null, null, values);
+            bWidth = drawDataField(dc, centerX, bottomFiveY, 0, null, values[:dataBottom], 5, false);
         }
     }
 
@@ -978,14 +1002,18 @@ class Segment34View extends WatchUi.WatchFace {
         dc.clear();
 
         if(propAodStyle == 2) {
-            drawWatchface(dc, now, true, values);
+            drawWatchfaceLayers(dc, now, values, modeDynamic);
+            
+            // Overlay the burn-in protection pattern
             drawPattern(dc, 0x000000, (now.min % 3));
+
         } else if (propAodStyle == 1) {
+            // Style 1: Minimal/Simple AOD
             var clock_color = themeColors[clock];
             if(clock_color == 0x000000) { clock_color = 0x555555; }
 
+            // Draw Clock (Normal, Outline, or Filled-Outline based on settings)
             if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2 or propClockOutlineStyle == 5) {
-                // Draw Clock
                 dc.setColor(clock_color, Graphics.COLOR_TRANSPARENT);
                 dc.drawText(baseX, baseY, fontClock, values[:dataClock], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             }
@@ -1001,12 +1029,15 @@ class Segment34View extends WatchUi.WatchFace {
                 dc.drawText(baseX, baseY, fontClock, values[:dataClock], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             }
 
-            // Draw clock gradient
-            dc.drawBitmap(centerX - halfClockWidth - (now.min % 2), baseY - halfClockHeight, drawAODPattern);
+            // Draw AOD-specific clock gradient (using the existing bitmap resource)
+            if (drawAODPattern != null) {
+                dc.drawBitmap(centerX - halfClockWidth - (now.min % 2), baseY - halfClockHeight, drawAODPattern);
+            }
 
-            // Draw Line below clock
+            // Draw Data Line below clock (Date or custom field)
             var y1 = baseY + halfClockHeight + marginY;
             dc.setColor(themeColors[dateDim], Graphics.COLOR_TRANSPARENT);
+
             if(propAodAlignment == 0) {
                 dc.drawText(baseX - halfClockWidth + textSideAdj - (now.min % 3), y1, fontAODData, values[:dataAODLeft], Graphics.TEXT_JUSTIFY_LEFT);
             } else {
@@ -1063,44 +1094,93 @@ class Segment34View extends WatchUi.WatchFace {
         } 
     }
 
-    hidden function drawDataField(dc as Dc, x as Number, y as Number, adjX as Number, label as String?, value as String, width as Number, font as FontResource, bgwidth as Number) as Number {
+    hidden function createStaticLayer(dc as Dc, values as Dictionary) as Void {
+        if (!useLayer) { return; }
+
+        var options = {
+            :width => dc.getWidth(),
+            :height => dc.getHeight(),
+            :palette => themeColors // Crucial for memory savings
+        };
+
+        // Allocate the buffer
+        try {
+            var ref = Graphics.createBufferedBitmap(options);
+            offscreenBuffer = ref.get();
+        } catch (e) {
+            useLayer = false;
+            return;
+        }
+
+        if (offscreenBuffer != null) {
+            var bDc = offscreenBuffer.getDc();
+            
+            bDc.setColor(themeColors[bg], themeColors[bg]);
+            bDc.clear();
+
+            drawWatchfaceLayers(bDc, null, values, modeStatic);
+        }
+    }
+
+    hidden function drawDataField(dc as Dc, x as Number, y as Number, adjX as Number, label as String?, value as String, width as Number, useLargeFont as Boolean) as Number {
+        
         if(value.length() == 0 and (label == null or label.length() == 0)) { return 0; }
         if(width == 0) { return 0; }
-        var valueBg = "";
-        var bgChar = "#";
-        if(screenHeight == 360 and width == 5 and label == null) { bgChar = "$"; }
-        for(var i=0; i<width; i++) { valueBg += bgChar; }
+        
+        var font;
+        var value_bg_width;
+        
+        if (useLargeFont) {
+            font = fontLargeData;
+            value_bg_width = width * largeDataWidth;
+        } else {
+            font = fontBottomData;
+            value_bg_width = width * bottomDataWidth;
+        }
 
-        var value_bg_width = bgwidth;//dc.getTextWidthInPixels(valueBg, font);
         var half_bg_width = Math.round(value_bg_width / 2);
         var data_y = y;
 
-        if((propLabelVisibility == 0 or propLabelVisibility == 2) and !(label == null)) {
-            dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
-            if(propBottomFieldLabelAlignment == 0) {
-                dc.drawText(x - half_bg_width + adjX, y, fontLabel, label, Graphics.TEXT_JUSTIFY_LEFT);
-            } else {
-                dc.drawText(x, y, fontLabel, label, Graphics.TEXT_JUSTIFY_CENTER);
+        if (mDrawMode & modeStatic) {
+            if((propLabelVisibility == 0 or propLabelVisibility == 2) and !(label == null)) {
+                dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
+                if(propBottomFieldLabelAlignment == 0) {
+                    dc.drawText(x - half_bg_width + adjX, y, fontLabel, label, Graphics.TEXT_JUSTIFY_LEFT);
+                } else {
+                    dc.drawText(x, y, fontLabel, label, Graphics.TEXT_JUSTIFY_CENTER);
+                }
             }
+        }
+        
+        if((propLabelVisibility == 0 or propLabelVisibility == 2) and !(label == null)) {
             data_y += labelHeight + labelMargin;
         }
 
-        if(propShowDataBg) {
-            dc.setColor(themeColors[fieldBg], Graphics.COLOR_TRANSPARENT);
-            dc.drawText(x - half_bg_width + adjX, data_y, font, valueBg, Graphics.TEXT_JUSTIFY_LEFT);
+        if (mDrawMode & modeStatic) {
+            if(propShowDataBg) {
+                var valueBg = "";
+                var bgChar = "#";
+                if(screenHeight == 360 and width == 5 and label == null) { bgChar = "$"; }
+                for(var i=0; i<width; i++) { valueBg += bgChar; }
+
+                dc.setColor(themeColors[fieldBg], Graphics.COLOR_TRANSPARENT);
+                dc.drawText(x - half_bg_width + adjX, data_y, font, valueBg, Graphics.TEXT_JUSTIFY_LEFT);
+            }
         }
 
-        dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
-        if(propBottomFieldAlignment == 0) {
-            dc.drawText(x - half_bg_width + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_LEFT);
-        } else if (propBottomFieldAlignment == 1) {
-            dc.drawText(x + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_CENTER);
-        } else if (propBottomFieldAlignment == 2) {
-            dc.drawText(x + half_bg_width - 1 + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_RIGHT);
-        } else if (propBottomFieldAlignment == 3 and width != 5) {
-            dc.drawText(x - half_bg_width + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_LEFT);
-        } else if (propBottomFieldAlignment == 3 and width == 5) {
-            dc.drawText(x + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_CENTER);
+        if (mDrawMode & modeDynamic) {
+            dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+            if(propBottomFieldAlignment == 0) {
+                dc.drawText(x - half_bg_width + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_LEFT);
+            } else if (propBottomFieldAlignment == 1) {
+                dc.drawText(x + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_CENTER);
+            } else if (propBottomFieldAlignment == 2) {
+                dc.drawText(x + half_bg_width - 1 + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_RIGHT);
+            } else if (propBottomFieldAlignment == 3 and width != 5) {
+                dc.drawText(x - half_bg_width + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_LEFT);
+            } else if (propBottomFieldAlignment == 3 and width == 5) {
+                dc.drawText(x + adjX, data_y, font, value, Graphics.TEXT_JUSTIFY_CENTER);
+            }
         }
 
         return value_bg_width;
