@@ -193,7 +193,6 @@
     <string id="LABEL_UV_2">UV INDEX</string>
     <string id="LABEL_HUM_1">HUM</string>
     <string id="LABEL_HUM_2">HUMIDITY</string>
-    <string id="LABEL_FL_1">FL</string>
     <string id="LABEL_FL_3">FEELS LIKE</string>
     <string id="LABEL_CGM">CGM</string>
     <string id="LABEL_CGMAGE">CGM AGE</string>
@@ -429,6 +428,7 @@
     <string id="settings_alternative_timezone_2_label" scope="settings">Alternative Timezone 2 label</string>
     <string id="settings_alternative_timezone_2_offset" scope="settings">Alternative Timezone 2 offset</string>
     <string id="settings_temperature_unit" scope="settings">Temperature unit</string>
+    <string id="settings_show_temp_unit" scope="settings">Show temperature unit</string>
     <string id="settings_c" scope="settings">C</string>
     <string id="settings_f" scope="settings">F</string>
     <string id="settings_wind_speed_unit" scope="settings">Wind speed unit</string>

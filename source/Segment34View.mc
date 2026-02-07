@@ -129,6 +129,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propZeropadHour as Boolean = true;
     hidden var propTimeSeparator as Number = 0;
     hidden var propTempUnit as Number = 0;
+    hidden var propShowTempUnit as Boolean = true;
     hidden var propWindUnit as Number = 0;
     hidden var propPressureUnit as Number = 0;
     hidden var propTopPartShows as Number = 0;
@@ -1432,6 +1433,7 @@ class Segment34View extends WatchUi.WatchFace {
         propZeropadHour = getValueOrDefault("zeropadHour", true) as Boolean;
         propTimeSeparator = getValueOrDefault("timeSeparator", 0) as Number;
         propTempUnit = getValueOrDefault("tempUnit", 0) as Number;
+        propShowTempUnit = getValueOrDefault("showTempUnit", true) as Boolean;
         propWindUnit = getValueOrDefault("windUnit", 0) as Number;
         propPressureUnit = getValueOrDefault("pressureUnit", 0) as Number;
         propLabelVisibility = getValueOrDefault("labelVisibility", 0) as Number;
@@ -2220,7 +2222,7 @@ class Segment34View extends WatchUi.WatchFace {
                 if (tempIterator != null) {
                     var temp = tempIterator.next();
                     if(temp != null and temp.data != null) {
-                        val = formatTemperature(temp.data, cachedTempUnit).format(numberFormat) + cachedTempUnit;
+                        val = formatTemperature(convertTemperature(temp.data, cachedTempUnit));
                     }
                 }
             }
@@ -2269,14 +2271,12 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 43) { // High temp
             if(weatherCondition != null and weatherCondition.highTemperature != null) {
                 var tempVal = weatherCondition.highTemperature;
-                var temp = formatTemperature(tempVal, cachedTempUnit).format("%01d");
-                val = temp + cachedTempUnit;
+                val = formatTemperature(convertTemperature(tempVal, cachedTempUnit));
             }
         } else if(complicationType == 44) { // Low temp
             if(weatherCondition != null and weatherCondition.lowTemperature != null) {
                 var tempVal = weatherCondition.lowTemperature;
-                var temp = formatTemperature(tempVal, cachedTempUnit).format("%01d");
-                val = temp + cachedTempUnit;
+                val = formatTemperature(convertTemperature(tempVal, cachedTempUnit));
             }
         } else if(complicationType == 45) { // Temperature, Wind, Feels like
             var temp = getTemperature();
@@ -2599,7 +2599,7 @@ class Segment34View extends WatchUi.WatchFace {
             case 66: return formatLabel(Rez.Strings.LABEL_HUM_1, Rez.Strings.LABEL_HUM_2, Rez.Strings.LABEL_HUM_2, labelSize);
             case 71: return WatchUi.loadResource(Rez.Strings.LABEL_CGM) as String;
             case 72: return WatchUi.loadResource(Rez.Strings.LABEL_CGMAGE) as String;
-            case 74: return formatLabel(Rez.Strings.LABEL_FL_1, Rez.Strings.LABEL_FL_1, Rez.Strings.LABEL_FL_3, labelSize);
+            case 74: return formatLabel(Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL_3, labelSize);
         }
 
         return "";
@@ -2792,8 +2792,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getTemperature() as String {
         if(weatherCondition != null and weatherCondition.temperature != null) {
             var temp_val = weatherCondition.temperature;
-            var temp = formatTemperature(temp_val, cachedTempUnit).format("%01d");
-            return temp + cachedTempUnit;
+            return formatTemperature(convertTemperature(temp_val, cachedTempUnit));
         }
         return "";
     }
@@ -2807,7 +2806,14 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function formatTemperature(temp as Number, unit as String) as Number {
+    hidden function formatTemperature(temp) as String {
+        if(propShowTempUnit) {
+            return temp.format("%d") + cachedTempUnit;
+        }
+        return temp.format("%d");
+    }
+
+    hidden function convertTemperature(temp as Number, unit as String) as Number {
         if(unit.equals("C")) {
             return temp;
         } else {
@@ -2815,7 +2821,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function formatTemperatureFloat(temp as Float, unit as String) as Float {
+    hidden function convertTemperatureFloat(temp as Float, unit as String) as Float {
         if(unit.equals("C")) {
             return temp;
         } else {
@@ -2881,12 +2887,12 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getFeelsLike(include_label as Boolean) as String {
         var fl = "";
         if(weatherCondition != null and weatherCondition.feelsLikeTemperature != null) {
-            var fltemp = formatTemperatureFloat(weatherCondition.feelsLikeTemperature, cachedTempUnit);
+            var fltemp = convertTemperatureFloat(weatherCondition.feelsLikeTemperature, cachedTempUnit);
             if(include_label) {
                 var fllabel = Application.loadResource(Rez.Strings.LABEL_FL);
-                fl = fllabel + fltemp.format("%d") + cachedTempUnit;
+                fl = fllabel + formatTemperature(fltemp);
             } else {
-                fl = fltemp.format("%d") + cachedTempUnit;
+                fl = formatTemperature(fltemp);
             }
 
         }
@@ -2914,9 +2920,9 @@ class Segment34View extends WatchUi.WatchFace {
         var ret = "";
         if(weatherCondition != null) {
             if(weatherCondition.highTemperature != null or weatherCondition.lowTemperature != null) {
-                var high = formatTemperature(weatherCondition.highTemperature, cachedTempUnit);
-                var low = formatTemperature(weatherCondition.lowTemperature, cachedTempUnit);
-                ret = high.format("%d") + cachedTempUnit + "/" + low.format("%d") + cachedTempUnit;
+                var high = convertTemperature(weatherCondition.highTemperature, cachedTempUnit);
+                var low = convertTemperature(weatherCondition.lowTemperature, cachedTempUnit);
+                ret = formatTemperature(high) + "/" + formatTemperature(low);
             }
         }
         return ret;
