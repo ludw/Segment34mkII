@@ -326,6 +326,7 @@
     <string id="settings_weather_conditions_precipitation" scope="settings">Conditions météo, Risque de précipitations</string>
     <string id="settings_weather_conditions" scope="settings">Conditions météo</string>
     <string id="settings_weather_conditions_temperature" scope="settings">Conditions météo, Température</string>
+    <string id="settings_weather_conditions_feelslike" scope="settings">Conditions météo, Ressenti</string>
     <string id="settings_daily_high_temperature" scope="settings">Température maximale quotidienne</string>
     <string id="settings_daily_low_temperature" scope="settings">Température minimale quotidienne</string>
     <string id="settings_temperature" scope="settings">Température</string>
@@ -352,6 +353,7 @@
     <string id="settings_bottom_value_4" scope="settings">Valeur inférieure 4 (si disponible) :</string>
     <string id="settings_bottom_5_digit" scope="settings">Valeur à 5 chiffres inférieure :</string>
     <string id="settings_bottom_5_digit_value" scope="settings">Valeur à 5 chiffres inférieure :</string>
+    <string id="settings_bottom_5_digit_value_2" scope="settings">Valeur à 5 chiffres inférieure 2 (carré uniquement) :</string>
     <string id="settings_distance_meter_day" scope="settings">Distance (mètres) / jour</string>
     <string id="settings_battery_display" scope="settings">Affichage de la batterie :</string>
     <string id="settings_remaining_days" scope="settings">Jours restants</string>
@@ -439,7 +441,7 @@
     <string id="settings_week_number_offset" scope="settings">Décalage du numéro de semaine (0 = numéro de semaine normal)</string>
     <string id="settings_show_clock_background" scope="settings">Afficher l'arrière-plan de l'horloge</string>
     <string id="settings_show_data_fields_background" scope="settings">Afficher l'arrière-plan des champs de données</string>
-    <string id="settings_show_notification_count" scope="settings">Afficher le nombre de notifications</string>
+    <string id="settings_notification_field_shows" scope="settings">Le nombre à gauche des secondes affiche</string>
     <string id="settings_zeropad_hour_clock" scope="settings">Zéro-padding de l'heure sur l'horloge</string>
     <string id="settings_separator_hours_minutes" scope="settings">Séparateur entre heures et minutes</string>
     <string id="settings_colon" scope="settings">:</string>
@@ -453,4 +455,14 @@
     <string id="settings_hide_all_labels" scope="settings">Masquer toutes les étiquettes</string>
     <string id="settings_hide_top_labels" scope="settings">Masquer les étiquettes supérieures</string>
     <string id="settings_hide_bottom_labels" scope="settings">Masquer les étiquettes inférieures</string>
+    <string id="settings_left_bar_shows" scope="settings">La barre gauche affiche</string>
+    <string id="settings_right_bar_shows" scope="settings">La barre droite affiche</string>
+    <string id="settings_step_goal_progress" scope="settings">Progression de l'objectif de pas</string>
+    <string id="settings_floor_climb_progress" scope="settings">Progression des étages montés</string>
+    <string id="settings_act_min_progress" scope="settings">Objectif de minutes actives, progression hebdomadaire</string>
+    <string id="settings_text_alignment_bottom_labels" scope="settings">Alignement du texte pour les étiquettes des champs inférieurs :</string>
+    <string id="settings_temperature_uv_precipitation" scope="settings">Température, Indice UV, Risque de précipitations</string>
+    <string id="settings_temperature_uv_wind" scope="settings">Température, Indice UV, Vent</string>
+    <string id="settings_cgm_glucose_trend" scope="settings">CGM Glycémie + Tendance</string>
+    <string id="settings_cgm_age" scope="settings">CGM Âge (minutes)</string>
 </strings>

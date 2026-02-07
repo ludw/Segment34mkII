@@ -327,6 +327,7 @@
     <string id="settings_weather_conditions_precipitation" scope="settings">Weather conditions, Precipitation chance</string>
     <string id="settings_weather_conditions" scope="settings">Weather conditions</string>
     <string id="settings_weather_conditions_temperature" scope="settings">Weather conditions, Temperature</string>
+    <string id="settings_weather_conditions_feelslike" scope="settings">Weather conditions, Feels like</string>
     <string id="settings_daily_high_temperature" scope="settings">Daily high temperature</string>
     <string id="settings_daily_low_temperature" scope="settings">Daily low temperature</string>
     <string id="settings_temperature" scope="settings">Temperature</string>
@@ -353,6 +354,7 @@
     <string id="settings_bottom_value_4" scope="settings">Bottom value 4 (if available):</string>
     <string id="settings_bottom_5_digit" scope="settings">Bottom 5 digit value:</string>
     <string id="settings_bottom_5_digit_value" scope="settings">Bottom 5 digit value:</string>
+    <string id="settings_bottom_5_digit_value_2" scope="settings">Bottom 5 digit value 2 (square watches only):</string>
     <string id="settings_distance_meter_day" scope="settings">Distance (meter) / day</string>
     <string id="settings_battery_display" scope="settings">Battery display:</string>
     <string id="settings_remaining_days" scope="settings">Remaining days</string>
@@ -440,7 +442,7 @@
     <string id="settings_week_number_offset" scope="settings">Week number offset (0 = normal week number)</string>
     <string id="settings_show_clock_background" scope="settings">Show clock background</string>
     <string id="settings_show_data_fields_background" scope="settings">Show data fields background</string>
-    <string id="settings_show_notification_count" scope="settings">Show Notification Count (the number next to seconds)</string>
+    <string id="settings_notification_field_shows" scope="settings">Number left of seconds shows</string>
     <string id="settings_zeropad_hour_clock" scope="settings">Zeropad hour on clock</string>
     <string id="settings_separator_hours_minutes" scope="settings">Separator between Hours and Minutes</string>
     <string id="settings_colon" scope="settings">:</string>

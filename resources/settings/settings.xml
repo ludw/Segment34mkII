@@ -254,6 +254,7 @@
             <listEntry value="20">@Strings.settings_weather_conditions_precipitation</listEntry>
             <listEntry value="50">@Strings.settings_weather_conditions</listEntry>
             <listEntry value="70">@Strings.settings_weather_conditions_temperature</listEntry>
+            <listEntry value="73">@Strings.settings_weather_conditions_feelslike</listEntry>
             <listEntry value="43">@Strings.settings_daily_high_temperature</listEntry>
             <listEntry value="44">@Strings.settings_daily_low_temperature</listEntry>
             <listEntry value="53">@Strings.settings_temperature</listEntry>
@@ -270,6 +271,7 @@
             <listEntry value="61">@Strings.settings_current_location_military</listEntry>
             <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
             <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
+            <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
         </settingConfig>
     </setting>
 
@@ -292,6 +294,7 @@
             <listEntry value="20">@Strings.settings_weather_conditions_precipitation_chance</listEntry>
             <listEntry value="50">@Strings.settings_weather_conditions</listEntry>
             <listEntry value="70">@Strings.settings_weather_conditions_temperature</listEntry>
+            <listEntry value="73">@Strings.settings_weather_conditions_feelslike</listEntry>
             <listEntry value="43">@Strings.settings_daily_high_temperature</listEntry>
             <listEntry value="44">@Strings.settings_daily_low_temperature</listEntry>
             <listEntry value="53">@Strings.settings_temperature</listEntry>
@@ -308,6 +311,7 @@
             <listEntry value="61">@Strings.settings_current_location_military</listEntry>
             <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
             <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
+            <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
         </settingConfig>
     </setting>
 
@@ -342,11 +346,20 @@
             <listEntry value="61">@Strings.settings_current_location_military</listEntry>
             <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
             <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
+            <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
         </settingConfig>
     </setting>
 
-    <setting propertyKey="@Properties.showNotificationCount" title="@Strings.settings_show_notification_count">
-        <settingConfig type="boolean" />
+    <setting propertyKey="@Properties.notificationCountShows" title="@Strings.settings_notification_field_shows">
+        <settingConfig type="list">
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="36">@Strings.settings_notification_count</listEntry>
+            <listEntry value="31">@Strings.settings_week_number</listEntry>
+            <listEntry value="34">@Strings.settings_battery_percentage</listEntry>
+            <listEntry value="35">@Strings.settings_battery_days_remaining</listEntry>
+            <listEntry value="42">@Strings.settings_alarms_count</listEntry>
+            <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
+        </settingConfig>
     </setting>
 
     <setting propertyKey="@Properties.fieldLayout" title="@Strings.settings_bottom_field_layout">
@@ -621,6 +634,36 @@
             <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
             <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
             <listEntry value="57">@Strings.settings_next_calendar_event_time</listEntry>
+            <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.bottomField2Shows" title="@Strings.settings_bottom_5_digit_value_2">
+        <settingConfig type="list">
+            <listEntry value="-2">@Strings.settings_hidden</listEntry>
+            <listEntry value="17">@Strings.settings_steps_day</listEntry>
+            <listEntry value="18">@Strings.settings_distance_meter_day</listEntry>
+            <listEntry value="21">@Strings.settings_run_distance_km_week</listEntry>
+            <listEntry value="22">@Strings.settings_run_distance_miles_week</listEntry>
+            <listEntry value="23">@Strings.settings_bike_distance_km_week</listEntry>
+            <listEntry value="24">@Strings.settings_bike_distance_miles_week</listEntry>
+            <listEntry value="32">@Strings.settings_total_distance_7_days_km</listEntry>
+            <listEntry value="33">@Strings.settings_total_distance_7_days_miles</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed_day</listEntry>
+            <listEntry value="5">@Strings.settings_meters_climbed_day</listEntry>
+            <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
+            <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
+            <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="19">@Strings.settings_wheelchair_pushes_day</listEntry>
+            <listEntry value="12">@Strings.settings_altitude_m</listEntry>
+            <listEntry value="15">@Strings.settings_altitude_ft</listEntry>
+            <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
+            <listEntry value="30">@Strings.settings_barometric_pressure_sea</listEntry>
+            <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
+            <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
+            <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
+            <listEntry value="57">@Strings.settings_next_calendar_event_time</listEntry>
+            <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
         </settingConfig>
     </setting>
 
