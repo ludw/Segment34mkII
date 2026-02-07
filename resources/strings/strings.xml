@@ -193,7 +193,8 @@
     <string id="LABEL_UV_2">UV INDEX</string>
     <string id="LABEL_HUM_1">HUM</string>
     <string id="LABEL_HUM_2">HUMIDITY</string>
-
+    <string id="LABEL_FL_1">FL</string>
+    <string id="LABEL_FL_3">FEELS LIKE</string>
     <string id="LABEL_CGM">CGM</string>
     <string id="LABEL_CGMAGE">CGM AGE</string>
 
@@ -293,6 +294,7 @@
     <string id="settings_weather_daily_high" scope="settings">Weather: Daily high temperature</string>
     <string id="settings_weather_daily_low" scope="settings">Weather: Daily low temperature</string>
     <string id="settings_weather_temperature" scope="settings">Weather: Temperature</string>
+    <string id="settings_weather_feels_like" scope="settings">Weather: Feels Like Temperature</string>
     <string id="settings_weather_chance_precipitation" scope="settings">Weather: Chance of Precipitation</string>
     <string id="settings_weather_humidity" scope="settings">Weather: Humidity</string>
     <string id="settings_weather_uv_index" scope="settings">Weather: UV index</string>

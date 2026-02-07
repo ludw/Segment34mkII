@@ -148,6 +148,7 @@
             <listEntry value="43">@Strings.settings_weather_daily_high</listEntry>
             <listEntry value="44">@Strings.settings_weather_daily_low</listEntry>
             <listEntry value="53">@Strings.settings_weather_temperature</listEntry>
+            <listEntry value="74">@Strings.settings_weather_feels_like</listEntry>
             <listEntry value="54">@Strings.settings_weather_chance_precipitation</listEntry>
             <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
             <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
@@ -205,6 +206,7 @@
             <listEntry value="43">@Strings.settings_weather_daily_high</listEntry>
             <listEntry value="44">@Strings.settings_weather_daily_low</listEntry>
             <listEntry value="53">@Strings.settings_weather_temperature</listEntry>
+            <listEntry value="74">@Strings.settings_weather_feels_like</listEntry>
             <listEntry value="54">@Strings.settings_weather_chance_precipitation</listEntry>
             <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
             <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
@@ -428,6 +430,7 @@
             <listEntry value="43">@Strings.settings_weather_daily_high</listEntry>
             <listEntry value="44">@Strings.settings_weather_daily_low</listEntry>
             <listEntry value="53">@Strings.settings_weather_temperature</listEntry>
+            <listEntry value="74">@Strings.settings_weather_feels_like</listEntry>
             <listEntry value="54">@Strings.settings_weather_chance_precipitation</listEntry>
             <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
             <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
@@ -485,6 +488,7 @@
             <listEntry value="43">@Strings.settings_weather_daily_high</listEntry>
             <listEntry value="44">@Strings.settings_weather_daily_low</listEntry>
             <listEntry value="53">@Strings.settings_weather_temperature</listEntry>
+            <listEntry value="74">@Strings.settings_weather_feels_like</listEntry>
             <listEntry value="54">@Strings.settings_weather_chance_precipitation</listEntry>
             <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
             <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
@@ -542,6 +546,7 @@
             <listEntry value="43">@Strings.settings_weather_daily_high</listEntry>
             <listEntry value="44">@Strings.settings_weather_daily_low</listEntry>
             <listEntry value="53">@Strings.settings_weather_temperature</listEntry>
+            <listEntry value="74">@Strings.settings_weather_feels_like</listEntry>
             <listEntry value="54">@Strings.settings_weather_chance_precipitation</listEntry>
             <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
             <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
@@ -599,6 +604,7 @@
             <listEntry value="43">@Strings.settings_weather_daily_high</listEntry>
             <listEntry value="44">@Strings.settings_weather_daily_low</listEntry>
             <listEntry value="53">@Strings.settings_weather_temperature</listEntry>
+            <listEntry value="74">@Strings.settings_weather_feels_like</listEntry>
             <listEntry value="54">@Strings.settings_weather_chance_precipitation</listEntry>
             <listEntry value="66">@Strings.settings_weather_humidity</listEntry>
             <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>

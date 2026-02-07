@@ -2452,6 +2452,8 @@ class Segment34View extends WatchUi.WatchFace {
             var condition = getWeatherCondition(false);
             var fl = getFeelsLike(false);
             val = join([condition, fl]);
+        } else if(complicationType == 74) { // Feels like
+            val = getFeelsLike(false);
         }
 
         return val;
@@ -2597,6 +2599,7 @@ class Segment34View extends WatchUi.WatchFace {
             case 66: return formatLabel(Rez.Strings.LABEL_HUM_1, Rez.Strings.LABEL_HUM_2, Rez.Strings.LABEL_HUM_2, labelSize);
             case 71: return WatchUi.loadResource(Rez.Strings.LABEL_CGM) as String;
             case 72: return WatchUi.loadResource(Rez.Strings.LABEL_CGMAGE) as String;
+            case 74: return formatLabel(Rez.Strings.LABEL_FL_1, Rez.Strings.LABEL_FL_1, Rez.Strings.LABEL_FL_3, labelSize);
         }
 
         return "";
