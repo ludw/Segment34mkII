@@ -196,6 +196,8 @@
     <string id="LABEL_FL_3">FEELS LIKE</string>
     <string id="LABEL_CGM">CGM</string>
     <string id="LABEL_CGMAGE">CGM AGE</string>
+    <string id="LABEL_HRS_NEXT_SUN_EVENT_1">H SUN</string>
+      <string id="LABEL_HRS_NEXT_SUN_EVENT_3">HRS SUN</string>
 
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Color Theme</string>
@@ -276,7 +278,8 @@
     <string id="settings_body_battery" scope="settings">Body battery</string>
     <string id="settings_sunrise_time" scope="settings">Sunrise time</string>
     <string id="settings_sunset_time" scope="settings">Sunset time</string>
-    <string id="settings_next_sun_event" scope="settings">Next sun event time</string>
+    <string id="settings_next_sun_event" scope="settings">Next sun event (sunset/sunrise) time</string>
+    <string id="settings_hrs_next_sun_event" scope="settings">Hours to next sun event (sunset/sunrise)</string>
     <string id="settings_alternative_timezone_1" scope="settings">Alternative Timezone 1</string>
     <string id="settings_alternative_timezone_2" scope="settings">Alternative Timezone 2</string>
     <string id="settings_barometric_pressure_raw" scope="settings">Barometric Pressure, raw</string>

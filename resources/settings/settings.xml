@@ -132,6 +132,7 @@
             <listEntry value="39">@Strings.settings_sunrise_time</listEntry>
             <listEntry value="40">@Strings.settings_sunset_time</listEntry>
             <listEntry value="55">@Strings.settings_next_sun_event</listEntry>
+            <listEntry value="75">@Strings.settings_hrs_next_sun_event</listEntry>
             <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
             <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
             <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
@@ -190,6 +191,7 @@
             <listEntry value="39">@Strings.settings_sunrise_time</listEntry>
             <listEntry value="40">@Strings.settings_sunset_time</listEntry>
             <listEntry value="55">@Strings.settings_next_sun_event</listEntry>
+            <listEntry value="75">@Strings.settings_hrs_next_sun_event</listEntry>
             <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
             <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
             <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
@@ -414,6 +416,7 @@
             <listEntry value="39">@Strings.settings_sunrise_time</listEntry>
             <listEntry value="40">@Strings.settings_sunset_time</listEntry>
             <listEntry value="55">@Strings.settings_next_sun_event</listEntry>
+            <listEntry value="75">@Strings.settings_hrs_next_sun_event</listEntry>
             <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
             <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
             <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
@@ -472,6 +475,7 @@
             <listEntry value="39">@Strings.settings_sunrise_time</listEntry>
             <listEntry value="40">@Strings.settings_sunset_time</listEntry>
             <listEntry value="55">@Strings.settings_next_sun_event</listEntry>
+            <listEntry value="75">@Strings.settings_hrs_next_sun_event</listEntry>
             <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
             <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
             <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
@@ -530,6 +534,7 @@
             <listEntry value="39">@Strings.settings_sunrise_time</listEntry>
             <listEntry value="40">@Strings.settings_sunset_time</listEntry>
             <listEntry value="55">@Strings.settings_next_sun_event</listEntry>
+            <listEntry value="75">@Strings.settings_hrs_next_sun_event</listEntry>
             <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
             <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
             <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
@@ -588,6 +593,7 @@
             <listEntry value="39">@Strings.settings_sunrise_time</listEntry>
             <listEntry value="40">@Strings.settings_sunset_time</listEntry>
             <listEntry value="55">@Strings.settings_next_sun_event</listEntry>
+            <listEntry value="75">@Strings.settings_hrs_next_sun_event</listEntry>
             <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
             <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
             <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>
@@ -762,6 +768,7 @@
             <listEntry value="39">@Strings.settings_sunrise_time</listEntry>
             <listEntry value="40">@Strings.settings_sunset_time</listEntry>
             <listEntry value="55">@Strings.settings_next_sun_event</listEntry>
+            <listEntry value="75">@Strings.settings_hrs_next_sun_event</listEntry>
             <listEntry value="16">@Strings.settings_alternative_timezone_1</listEntry>
             <listEntry value="41">@Strings.settings_alternative_timezone_2</listEntry>
             <listEntry value="26">@Strings.settings_barometric_pressure_raw</listEntry>

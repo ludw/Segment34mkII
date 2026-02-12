@@ -61,7 +61,8 @@ Pull requests are welcome, but please follow the following guidelines:
 
 ## Change log
 2026-02-07 v4.2.1
-- Feels like as option for many fields
+- New value: Feels like temperature
+- New value: Hours until next sunset/sunrise
 - Option to hide temperature units
 
 2026-02-05 v4.2.0

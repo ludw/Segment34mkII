@@ -196,6 +196,8 @@
 
     <string id="LABEL_CGM">CGM</string>
     <string id="LABEL_CGMAGE">CGM ÂGE</string>
+    <string id="LABEL_HRS_NEXT_SUN_EVENT_1">H SOLEIL</string>
+    <string id="LABEL_HRS_NEXT_SUN_EVENT_3">HRS SOLEIL</string>
 
     <string id="settings_color_theme" scope="settings">Thème de couleur</string>
     <string id="settings_yellow_on_turquoise" scope="settings">Jaune sur turquoise</string>
@@ -275,7 +277,8 @@
     <string id="settings_body_battery" scope="settings">Batterie corporelle</string>
     <string id="settings_sunrise_time" scope="settings">Heure de lever du soleil</string>
     <string id="settings_sunset_time" scope="settings">Heure de coucher du soleil</string>
-    <string id="settings_next_sun_event" scope="settings">Heure du prochain événement solaire</string>
+    <string id="settings_next_sun_event" scope="settings">Heure du prochain événement solaire (lever/coucher)</string>
+    <string id="settings_hrs_next_sun_event" scope="settings">Heures avant le prochain événement solaire (lever/coucher)</string>
     <string id="settings_alternative_timezone_1" scope="settings">Fuseau horaire alternatif 1</string>
     <string id="settings_alternative_timezone_2" scope="settings">Fuseau horaire alternatif 2</string>
     <string id="settings_barometric_pressure_raw" scope="settings">Pression barométrique, brute</string>

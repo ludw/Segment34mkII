@@ -2454,6 +2454,8 @@ class Segment34View extends WatchUi.WatchFace {
             val = join([condition, fl]);
         } else if(complicationType == 74) { // Feels like
             val = getFeelsLike(false);
+        } else if(complicationType == 75) { // Hours to next sun event
+            val = hoursToNextSunEvent();
         }
 
         return val;
@@ -2600,6 +2602,7 @@ class Segment34View extends WatchUi.WatchFace {
             case 71: return WatchUi.loadResource(Rez.Strings.LABEL_CGM) as String;
             case 72: return WatchUi.loadResource(Rez.Strings.LABEL_CGMAGE) as String;
             case 74: return formatLabel(Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL_3, labelSize);
+            case 75: return formatLabel(Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_3, labelSize);
         }
 
         return "";
@@ -2934,6 +2937,18 @@ class Segment34View extends WatchUi.WatchFace {
             ret = weatherCondition.precipitationChance.format("%d") + "%";
         }
         return ret;
+    }
+
+    hidden function hoursToNextSunEvent() as String {
+        var nextSunEventArray = getNextSunEvent();
+        if(nextSunEventArray != null && nextSunEventArray.size() == 2) {
+            var nextSunEvent = nextSunEventArray[0] as Time.Moment;
+            var now = Time.now();
+            // Converting seconds to hours
+            var diff = nextSunEvent.subtract(now) as Time.Duration;
+            return (diff.value() / 3600.0).format("%.1f");
+        }
+        return "";
     }
 
     hidden function getNextSunEvent() as Array {
