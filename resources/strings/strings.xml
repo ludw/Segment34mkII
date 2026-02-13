@@ -244,6 +244,7 @@
     <string id="settings_filled_numbers_plain" scope="settings">Filled numbers no outline, no gradient in AOD (better for redshift)</string>
     <string id="settings_update_frequency" scope="settings">Update frequency for data</string>
     <string id="settings_every_minute" scope="settings">Every minute</string>
+    <string id="settings_every_30_seconds" scope="settings">Every 30 seconds</string>
     <string id="settings_every_5_seconds" scope="settings">Every 5 seconds</string>
     <string id="settings_every_second" scope="settings">Every second</string>
     <string id="settings_top_part_shows" scope="settings">Top Part shows</string>

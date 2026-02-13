@@ -87,6 +87,7 @@
     <setting propertyKey="@Properties.updateFreq" title="@Strings.settings_update_frequency">
         <settingConfig type="list">
             <listEntry value="60">@Strings.settings_every_minute</listEntry>
+            <listEntry value="30">@Strings.settings_every_30_seconds</listEntry>
             <listEntry value="5">@Strings.settings_every_5_seconds</listEntry>
             <listEntry value="1">@Strings.settings_every_second</listEntry>
         </settingConfig>

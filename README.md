@@ -64,6 +64,7 @@ Pull requests are welcome, but please follow the following guidelines:
 - New value: Feels like temperature
 - New value: Hours until next sunset/sunrise
 - Option to hide temperature units
+- Option for updating data every 30s
 
 2026-02-05 v4.2.0
 - Issue with CGM trend arrow looking like a rectangle on some watches
