@@ -2945,8 +2945,11 @@ class Segment34View extends WatchUi.WatchFace {
             var nextSunEvent = nextSunEventArray[0] as Time.Moment;
             var now = Time.now();
             // Converting seconds to hours
-            var diff = nextSunEvent.subtract(now) as Time.Duration;
-            return (diff.value() / 3600.0).format("%.1f");
+            var diff = (nextSunEvent.subtract(now)).value();
+            if(diff >= 36000) { // No decimals if 10+ hours
+                return (diff / 3600.0).format("%d");
+            }
+            return (diff / 3600.0).format("%.1f");
         }
         return "";
     }
