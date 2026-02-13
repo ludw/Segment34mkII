@@ -60,7 +60,7 @@ Pull requests are welcome, but please follow the following guidelines:
 - Second custom theme for easy switching
 
 ## Change log
-2026-02-07 v4.2.1
+2026-02-13 v4.3.0
 - New value: Feels like temperature
 - New value: Hours until next sunset/sunrise
 - Option to hide temperature units
