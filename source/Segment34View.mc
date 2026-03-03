@@ -552,7 +552,6 @@ class Segment34View extends WatchUi.WatchFace {
         histogramTargetWidth = 55;
         histogramBarWidth = 3;
         histogramBarSpacing = 3;
-
     }
 
     hidden function computeDisplayValues(now as Gregorian.Info) as Dictionary {
@@ -2128,13 +2127,13 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 20) { // Weather condition
             val = getWeatherCondition(true);
         } else if(complicationType == 21) { // Weekly run distance (km)
-            val = getWeeklyDistanceFromComplication(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE, 0.001, width);
+            val = getWeeklyDistanceFromComplication(true, 0.001, width);
         } else if(complicationType == 22) { // Weekly run distance (miles)
-            val = getWeeklyDistanceFromComplication(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE, 0.000621371, width);
+            val = getWeeklyDistanceFromComplication(true, 0.000621371, width);
         } else if(complicationType == 23) { // Weekly bike distance (km)
-            val = getWeeklyDistanceFromComplication(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE, 0.001, width);
+            val = getWeeklyDistanceFromComplication(false, 0.001, width);
         } else if(complicationType == 24) { // Weekly bike distance (miles)
-            val = getWeeklyDistanceFromComplication(Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE, 0.000621371, width);
+            val = getWeeklyDistanceFromComplication(false, 0.000621371, width);
         } else if(complicationType == 25) { // Training status
             if (hasComplications) {
                 try {
@@ -2787,7 +2786,7 @@ class Segment34View extends WatchUi.WatchFace {
             Rez.Strings.WEATHER_48, Rez.Strings.WEATHER_49, Rez.Strings.WEATHER_50, Rez.Strings.WEATHER_51,
             Rez.Strings.WEATHER_52, Rez.Strings.WEATHER_53
         ];
-        var idx = weatherCondition.condition;
+        var idx = weatherCondition.condition.toNumber();
         if (idx < 0 || idx >= weatherStrings.size()) { idx = 53; }
         var ret = weatherStrings[idx];
 
@@ -3034,17 +3033,18 @@ class Segment34View extends WatchUi.WatchFace {
         return weekly_distance;
     }
 
-    hidden function getWeeklyDistanceFromComplication(complicationType as Complications.Type, conversionFactor as Float, width as Number) as String {
+    hidden function getWeeklyDistanceFromComplication(isRun as Boolean, conversionFactor as Float, width as Number) as String {
         var val = "";
         if (hasComplications) {
             try {
-                var complication = Complications.getComplication(new Id(complicationType));
+                var compType = isRun ? Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE : Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE;
+                var complication = Complications.getComplication(new Id(compType));
                 if (complication != null && complication.value != null) {
                     var distance = complication.value * conversionFactor;
                     val = formatDistanceByWidth(distance, width);
                 }
             } catch(e) {
-                // Complication not found
+                // Complication not found or type not supported on this device
             }
         }
         return val;
