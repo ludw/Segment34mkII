@@ -552,6 +552,7 @@ class Segment34View extends WatchUi.WatchFace {
         histogramTargetWidth = 55;
         histogramBarWidth = 3;
         histogramBarSpacing = 3;
+
     }
 
     hidden function computeDisplayValues(now as Gregorian.Info) as Dictionary {
@@ -726,6 +727,7 @@ class Segment34View extends WatchUi.WatchFace {
 
         bottomFiveY = y3 + halfMarginY + bottomFiveAdj;
         if((propLabelVisibility == 1 or propLabelVisibility == 3)) { bottomFiveY = bottomFiveY - labelHeight; }
+        calculateSquareLayout();
     }
 
     (:InstinctCrossover)
@@ -3316,6 +3318,11 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     // Non-Square stubs for other devices
+    (:Round)
+    hidden function calculateSquareLayout() as Void {
+        // No-op for non-square devices
+    }
+
     (:Round)
     hidden function loadBottomField2Property() as Void {
         // No-op for non-square devices devices
