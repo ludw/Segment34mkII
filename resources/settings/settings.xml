@@ -364,6 +364,10 @@
             <listEntry value="35">@Strings.settings_battery_days_remaining</listEntry>
             <listEntry value="42">@Strings.settings_alarms_count</listEntry>
             <listEntry value="64">@Strings.settings_weather_uv_index</listEntry>
+            <listEntry value="14">@Strings.settings_body_battery</listEntry>
+            <listEntry value="13">@Strings.settings_stress_score</listEntry>
+            <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
+            <listEntry value="4">@Strings.settings_floors_climbed_day</listEntry>
         </settingConfig>
     </setting>
 
