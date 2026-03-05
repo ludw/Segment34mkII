@@ -60,6 +60,12 @@ Pull requests are welcome, but please follow the following guidelines:
 - Second custom theme for easy switching
 
 ## Change log
+2026-03-05 v4.4.0
+- New option for clock font, with a more readable 17 segment font
+- Option for disabling clock gradient overlay
+- Spanish translation thanks to igminchero
+- Resting HR as value
+
 2026-03-03 v4.3.1
 - More options for field left of seconds
 - Fixed issue with dual bottom fields on Venu X1

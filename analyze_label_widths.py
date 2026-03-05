@@ -79,6 +79,8 @@ def main():
         ('French', base_dir / 'resources-fre' / 'strings' / 'strings.xml'),
         ('Italian', base_dir / 'resources-ita' / 'strings' / 'strings.xml'),
         ('Polish', base_dir / 'resources-pol' / 'strings' / 'strings.xml'),
+        ('German', base_dir / 'resources-deu' / 'strings.xml'),
+        ('Spanish', base_dir / 'resources-spa' / 'strings.xml'),
     ]
 
     # Collect all labels with widths
