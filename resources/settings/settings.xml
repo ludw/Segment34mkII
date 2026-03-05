@@ -80,7 +80,22 @@
             <listEntry value="4">@Strings.settings_filled_numbers_no_outline_filled</listEntry>
             <listEntry value="2">@Strings.settings_filled_numbers_with_outline</listEntry>
             <listEntry value="3">@Strings.settings_filled_numbers_with_outline_aod</listEntry>
-            <listEntry value="5">@Strings.settings_filled_numbers_plain</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.clockGradientOverlay" title="@Strings.settings_clock_gradient_overlay">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.settings_gradient_clock_and_aod</listEntry>
+            <listEntry value="1">@Strings.settings_gradient_aod_only</listEntry>
+            <listEntry value="2">@Strings.settings_gradient_clock_only</listEntry>
+            <listEntry value="3">@Strings.settings_gradient_none</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.clockFont" title="@Strings.settings_clock_font">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.settings_font_34_segments</listEntry>
+            <listEntry value="1">@Strings.settings_font_17_segments</listEntry>
         </settingConfig>
     </setting>
 

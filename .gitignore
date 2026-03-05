@@ -3,3 +3,4 @@ bin
 **/.DS_Store
 .vscode
 build_devices.sh
+release

@@ -63,6 +63,7 @@ Pull requests are welcome, but please follow the following guidelines:
 2026-03-03 v4.3.1
 - More options for field left of seconds
 - Fixed issue with dual bottom fields on Venu X1
+- Bug fixes to prevent crashes
 
 2026-02-13 v4.3.0
 - New value: Feels like temperature

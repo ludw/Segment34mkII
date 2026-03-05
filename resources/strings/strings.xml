@@ -242,6 +242,14 @@
     <string id="settings_filled_numbers_with_outline" scope="settings">Filled numbers with outline, same in AOD</string>
     <string id="settings_filled_numbers_with_outline_aod" scope="settings">Filled numbers with outline, only outline in AOD</string>
     <string id="settings_filled_numbers_plain" scope="settings">Filled numbers no outline, no gradient in AOD (better for redshift)</string>
+    <string id="settings_clock_gradient_overlay" scope="settings">Clock Gradient Overlay</string>
+    <string id="settings_gradient_clock_and_aod" scope="settings">Gradient for both clock and AOD (default)</string>
+    <string id="settings_gradient_aod_only" scope="settings">No gradient for clock, gradient in AOD</string>
+    <string id="settings_gradient_clock_only" scope="settings">Gradient for clock, no gradient in AOD</string>
+    <string id="settings_gradient_none" scope="settings">No gradients</string>
+    <string id="settings_clock_font" scope="settings">Clock Font</string>
+    <string id="settings_font_34_segments" scope="settings">34 Segments, default</string>
+    <string id="settings_font_17_segments" scope="settings">17 Segments, blockier more readable</string>
     <string id="settings_update_frequency" scope="settings">Update frequency for data</string>
     <string id="settings_every_minute" scope="settings">Every minute</string>
     <string id="settings_every_30_seconds" scope="settings">Every 30 seconds</string>

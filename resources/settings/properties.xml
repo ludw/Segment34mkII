@@ -17,6 +17,8 @@
     <property id="sunsetFieldShows" type="number">40</property>
     <property id="histogramData" type="number">0</property>
     <property id="clockOutlineStyle" type="number">0</property>
+    <property id="clockGradientOverlay" type="number">0</property>
+    <property id="clockFont" type="number">0</property>
     <property id="showClockBg" type="boolean">true</property>
     <property id="showDataBg" type="boolean">true</property>
     <property id="alwaysShowSeconds" type="boolean">false</property>
