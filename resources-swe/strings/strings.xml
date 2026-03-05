@@ -198,6 +198,9 @@
     <string id="LABEL_CGMAGE">CGM ÅLDER</string>
     <string id="LABEL_HRS_NEXT_SUN_EVENT_1">T SOL</string>
     <string id="LABEL_HRS_NEXT_SUN_EVENT_3">TIM SOL</string>
+    <string id="LABEL_RHR_1">VHR</string>
+    <string id="LABEL_RHR_2">VILO-HR</string>
+    <string id="LABEL_RHR_3">VILO-HR</string>
 
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Färgtema</string>
@@ -280,6 +283,7 @@
     <string id="settings_sunset_time" scope="settings">Solnedgångstid</string>
     <string id="settings_next_sun_event" scope="settings">Nästa solhändelse tid (solnedgång/soluppgång)</string>
     <string id="settings_hrs_next_sun_event" scope="settings">Timmar till nästa solhändelse (solnedgång/soluppgång)</string>
+    <string id="settings_resting_heart_rate" scope="settings">Vilande hjärtfrekvens</string>
     <string id="settings_alternative_timezone_1" scope="settings">Alternativ tidszon 1</string>
     <string id="settings_alternative_timezone_2" scope="settings">Alternativ tidszon 2</string>
     <string id="settings_barometric_pressure_raw" scope="settings">Barometriskt tryck, rå</string>

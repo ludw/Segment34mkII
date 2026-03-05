@@ -2506,6 +2506,13 @@ class Segment34View extends WatchUi.WatchFace {
             val = getFeelsLike(false);
         } else if(complicationType == 75) { // Hours to next sun event
             val = hoursToNextSunEvent();
+        } else if(complicationType == 76) { // Resting Heart Rate
+            var profile = UserProfile.getProfile();
+            if(profile has :restingHeartRate) {
+                if(profile.restingHeartRate != null) {
+                    val = profile.restingHeartRate.format(numberFormat);
+                }
+            }
         }
 
         return val;
@@ -2653,6 +2660,7 @@ class Segment34View extends WatchUi.WatchFace {
             case 72: return WatchUi.loadResource(Rez.Strings.LABEL_CGMAGE) as String;
             case 74: return formatLabel(Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL_3, labelSize);
             case 75: return formatLabel(Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_3, labelSize);
+            case 76: return formatLabel(Rez.Strings.LABEL_RHR_1, Rez.Strings.LABEL_RHR_2, Rez.Strings.LABEL_RHR_3, labelSize);
         }
 
         return "";

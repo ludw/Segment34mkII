@@ -138,6 +138,7 @@
             <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
             <listEntry value="9">@Strings.settings_respiration_rate</listEntry>
             <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="76">@Strings.settings_resting_heart_rate</listEntry>
             <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
             <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
             <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
@@ -197,6 +198,7 @@
             <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
             <listEntry value="9">@Strings.settings_respiration_rate</listEntry>
             <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="76">@Strings.settings_resting_heart_rate</listEntry>
             <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
             <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
             <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
@@ -426,6 +428,7 @@
             <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
             <listEntry value="9">@Strings.settings_respiration_rate</listEntry>
             <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="76">@Strings.settings_resting_heart_rate</listEntry>
             <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
             <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
             <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
@@ -485,6 +488,7 @@
             <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
             <listEntry value="9">@Strings.settings_respiration_rate</listEntry>
             <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="76">@Strings.settings_resting_heart_rate</listEntry>
             <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
             <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
             <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
@@ -544,6 +548,7 @@
             <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
             <listEntry value="9">@Strings.settings_respiration_rate</listEntry>
             <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="76">@Strings.settings_resting_heart_rate</listEntry>
             <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
             <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
             <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
@@ -603,6 +608,7 @@
             <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
             <listEntry value="9">@Strings.settings_respiration_rate</listEntry>
             <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="76">@Strings.settings_resting_heart_rate</listEntry>
             <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
             <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
             <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
@@ -657,6 +663,7 @@
             <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
             <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
             <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="76">@Strings.settings_resting_heart_rate</listEntry>
             <listEntry value="19">@Strings.settings_wheelchair_pushes_day</listEntry>
             <listEntry value="12">@Strings.settings_altitude_m</listEntry>
             <listEntry value="15">@Strings.settings_altitude_ft</listEntry>
@@ -686,6 +693,7 @@
             <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
             <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
             <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="76">@Strings.settings_resting_heart_rate</listEntry>
             <listEntry value="19">@Strings.settings_wheelchair_pushes_day</listEntry>
             <listEntry value="12">@Strings.settings_altitude_m</listEntry>
             <listEntry value="15">@Strings.settings_altitude_ft</listEntry>
@@ -778,6 +786,7 @@
             <listEntry value="8">@Strings.settings_vo2_max_cycling</listEntry>
             <listEntry value="9">@Strings.settings_respiration_rate</listEntry>
             <listEntry value="10">@Strings.settings_heart_rate</listEntry>
+            <listEntry value="76">@Strings.settings_resting_heart_rate</listEntry>
             <listEntry value="59">@Strings.settings_pulse_ox</listEntry>
             <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
             <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>

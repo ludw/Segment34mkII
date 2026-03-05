@@ -196,6 +196,9 @@
 
     <string id="LABEL_CGM">CGM</string>
     <string id="LABEL_CGMAGE">CGM ALTER</string>
+    <string id="LABEL_RHR_1">RHF</string>
+    <string id="LABEL_RHR_2">RUHE HF</string>
+    <string id="LABEL_RHR_3">RUHE HF</string>
 
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Farbschema</string>
@@ -267,6 +270,7 @@
     <string id="settings_vo2_max_cycling" scope="settings">VO2 Max Radfahren</string>
     <string id="settings_respiration_rate" scope="settings">Atemfrequenz</string>
     <string id="settings_heart_rate" scope="settings">Herzfrequenz</string>
+    <string id="settings_resting_heart_rate" scope="settings">Ruheherzfrequenz</string>
     <string id="settings_pulse_ox" scope="settings">Pulse Ox</string>
     <string id="settings_calories_kcal_day" scope="settings">Kalorien (kcal) / Tag</string>
     <string id="settings_active_calories_kcal_day" scope="settings">Aktive Kalorien (kcal) / Tag</string>
