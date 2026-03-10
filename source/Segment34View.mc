@@ -2318,7 +2318,7 @@ class Segment34View extends WatchUi.WatchFace {
             val = getTemperature();
         } else if(complicationType == 54) { // Precipitation chance
             val = getPrecip();
-            if(width == 3 and val.equals("100%")) { val = "100"; }
+            if(width == 3 and val.equals("\u26C6100%")) { val = "\u26C6100"; }
         } else if(complicationType == 55) { // Next Sun Event
             var nextSunEventArray = getNextSunEvent();
             if(nextSunEventArray != null && nextSunEventArray.size() == 2) { 
@@ -2460,8 +2460,6 @@ class Segment34View extends WatchUi.WatchFace {
             var wind = getWind();
             var precip = getPrecip();
             var uv = getUVIndex();
-            if(!precip.equals("")) { precip = "\u26C6" + precip; }
-            if(!uv.equals("")) { uv = "\u2600" + uv; }
             val = join([wind, precip, uv]);
         }
 
@@ -2924,7 +2922,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getUVIndex() as String {
         var ret = "";
         if(weatherCondition != null and weatherCondition has :uvIndex and weatherCondition.uvIndex != null) {
-            ret = weatherCondition.uvIndex.format("%d");
+            ret = "\u2600" + weatherCondition.uvIndex.format("%d");
         }
         return ret;
     }
@@ -2944,7 +2942,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getPrecip() as String {
         var ret = "";
         if(weatherCondition != null and weatherCondition.precipitationChance != null) {
-            ret = weatherCondition.precipitationChance.format("%d") + "%";
+            ret = "\u26C6" + weatherCondition.precipitationChance.format("%d") + "%";
         }
         return ret;
     }
