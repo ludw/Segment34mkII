@@ -1786,7 +1786,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function isWeatherSource(id as Number) as Boolean {
-        if (id == 20 || id == 39 || id == 40 || (id >= 43 && id <= 55) || (id >= 63 && id <= 70)) {
+        if (id == 20 || id == 39 || id == 40 || (id >= 43 && id <= 55) || (id >= 63 && id <= 70) || id == 76) {
             return true;
         }
         return false;
@@ -2456,6 +2456,13 @@ class Segment34View extends WatchUi.WatchFace {
             val = getFeelsLike(false);
         } else if(complicationType == 75) { // Hours to next sun event
             val = hoursToNextSunEvent();
+        } else if(complicationType == 76) { // Wind, Precipitation chance, UV Index
+            var wind = getWind();
+            var precip = getPrecip();
+            var uv = getUVIndex();
+            if(!precip.equals("")) { precip = "\u26C6" + precip; }
+            if(!uv.equals("")) { uv = "\u2600" + uv; }
+            val = join([wind, precip, uv]);
         }
 
         return val;
@@ -2802,7 +2809,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function getTempUnit() as String {
         var temp_unit_setting = System.getDeviceSettings().temperatureUnits;
-        if((temp_unit_setting == System.UNIT_METRIC and propTempUnit == 0) or propTempUnit == 1) {
+        if((temp_unit_setting == System.UNIT_METRIC and (propTempUnit == 0 or propTempUnit == 3)) or propTempUnit == 1) {
             return "C";
         } else {
             return "F";
@@ -2811,6 +2818,9 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function formatTemperature(temp) as String {
         if(propShowTempUnit) {
+            if(propTempUnit == 3) {
+                return temp.format("%d") + "\u00B0";
+            }
             return temp.format("%d") + cachedTempUnit;
         }
         return temp.format("%d");

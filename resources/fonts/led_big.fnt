@@ -1,5 +1,5 @@
 info face="LED" size=27 bold=0 italic=0 smooth=1 spacing=1,1
-common lineHeight=29 base=27 scaleW=260 scaleH=27 pages=1
+common lineHeight=29 base=27 scaleW=1180 scaleH=27 pages=1
 page id=0 file="led_big.png"
 chars count=36
 
@@ -64,3 +64,7 @@ char id=104 x=1012 y=0 width=20 height=27 xoffset=0 yoffset=0 xadvance=24 page=0
 char id=124 x=1092 y=0 width=7 height=27 xoffset=0 yoffset=0 xadvance=7 page=0
 char id=125 x=1092 y=0 width=7 height=27 xoffset=0 yoffset=0 xadvance=7 page=0
 char id=36 x=1099 y=0 width=20 height=27 xoffset=0 yoffset=0 xadvance=24 page=0
+
+char id=9728 x=1120 y=0 width=20 height=27 xoffset=0 yoffset=0 xadvance=24 page=0
+char id=9926 x=1142 y=0 width=20 height=27 xoffset=0 yoffset=0 xadvance=24 page=0
+char id=176 x=1164 y=0 width=14 height=27 xoffset=0 yoffset=0 xadvance=14 page=0

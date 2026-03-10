@@ -60,6 +60,10 @@ Pull requests are welcome, but please follow the following guidelines:
 - Second custom theme for easy switching
 
 ## Change log
+2026-03-10 v4.4.0
+- New value: Wind, Precipitation chance, UV Index (with icons)
+- New temperature unit option: ° (degree only)
+
 2026-02-13 v4.3.0
 - New value: Feels like temperature
 - New value: Hours until next sunset/sunrise

@@ -254,6 +254,7 @@
             <listEntry value="65">@Strings.settings_temperature_uv_high_low</listEntry>
             <listEntry value="68">@Strings.settings_temperature_uv_precipitation</listEntry>
             <listEntry value="69">@Strings.settings_temperature_uv_wind</listEntry>
+            <listEntry value="76">@Strings.settings_wind_precipitation_uv</listEntry>
             <listEntry value="67">@Strings.settings_temperature_feels_high_low</listEntry>
             <listEntry value="52">@Strings.settings_temperature_precipitation_high_low</listEntry>
             <listEntry value="20">@Strings.settings_weather_conditions_precipitation</listEntry>
@@ -294,6 +295,7 @@
             <listEntry value="65">@Strings.settings_temperature_uv_high_low</listEntry>
             <listEntry value="68">@Strings.settings_temperature_uv_precipitation</listEntry>
             <listEntry value="69">@Strings.settings_temperature_uv_wind</listEntry>
+            <listEntry value="76">@Strings.settings_wind_precipitation_uv</listEntry>
             <listEntry value="67">@Strings.settings_temperature_feels_high_low</listEntry>
             <listEntry value="52">@Strings.settings_temperature_precipitation_high_low</listEntry>
             <listEntry value="20">@Strings.settings_weather_conditions_precipitation_chance</listEntry>
@@ -1124,6 +1126,7 @@
             <listEntry value="0">@Strings.settings_auto_use_system</listEntry>
             <listEntry value="1">@Strings.settings_c</listEntry>
             <listEntry value="2">@Strings.settings_f</listEntry>
+            <listEntry value="3">@Strings.settings_degree_only</listEntry>
         </settingConfig>
     </setting>
 

@@ -461,4 +461,6 @@
     <string id="settings_text_alignment_bottom_labels" scope="settings">Textausrichtung untere Feld-Beschriftungen:</string>
     <string id="settings_temperature_uv_precipitation" scope="settings">Temp, UV Index, Regenwahrsch.</string>
     <string id="settings_temperature_uv_wind" scope="settings">Temp, UV Index, Wind</string>
+    <string id="settings_wind_precipitation_uv" scope="settings">Wind, Regenwahrsch., UV Index</string>
+    <string id="settings_degree_only" scope="settings">° (nur Grad)</string>
 </strings>
