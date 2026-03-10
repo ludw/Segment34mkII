@@ -62,6 +62,8 @@ Pull requests are welcome, but please follow the following guidelines:
 ## Change log
 2026-03-10 v4.4.0
 - New value: Wind, Precipitation chance, UV Index (with icons)
+- New value: Wind, Precipitation chance, UV Index, Humidity
+- Humidity, Precipitation chance, and UV Index now display with weather icons
 - New temperature unit option: ° (degree only)
 
 2026-02-13 v4.3.0

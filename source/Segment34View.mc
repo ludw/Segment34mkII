@@ -1786,7 +1786,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function isWeatherSource(id as Number) as Boolean {
-        if (id == 20 || id == 39 || id == 40 || (id >= 43 && id <= 55) || (id >= 63 && id <= 70) || id == 76) {
+        if (id == 20 || id == 39 || id == 40 || (id >= 43 && id <= 55) || (id >= 63 && id <= 70) || id == 76 || id == 77) {
             return true;
         }
         return false;
@@ -2461,6 +2461,12 @@ class Segment34View extends WatchUi.WatchFace {
             var precip = getPrecip();
             var uv = getUVIndex();
             val = join([wind, precip, uv]);
+        } else if(complicationType == 77) { // Wind, Precipitation chance, UV Index, Humidity
+            var wind = getWind();
+            var precip = getPrecip();
+            var uv = getUVIndex();
+            var humidity = getHumidity();
+            val = join([wind, precip, uv, humidity]);
         }
 
         return val;
@@ -2914,7 +2920,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getHumidity() as String {
         var ret = "";
         if(weatherCondition != null and weatherCondition.relativeHumidity != null) {
-            ret = weatherCondition.relativeHumidity.format("%d") + "%";
+            ret = "\u25CF" + weatherCondition.relativeHumidity.format("%d") + "%";
         }
         return ret;
     }

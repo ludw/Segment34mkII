@@ -255,6 +255,7 @@
             <listEntry value="68">@Strings.settings_temperature_uv_precipitation</listEntry>
             <listEntry value="69">@Strings.settings_temperature_uv_wind</listEntry>
             <listEntry value="76">@Strings.settings_wind_precipitation_uv</listEntry>
+            <listEntry value="77">@Strings.settings_wind_precipitation_uv_humidity</listEntry>
             <listEntry value="67">@Strings.settings_temperature_feels_high_low</listEntry>
             <listEntry value="52">@Strings.settings_temperature_precipitation_high_low</listEntry>
             <listEntry value="20">@Strings.settings_weather_conditions_precipitation</listEntry>
@@ -296,6 +297,7 @@
             <listEntry value="68">@Strings.settings_temperature_uv_precipitation</listEntry>
             <listEntry value="69">@Strings.settings_temperature_uv_wind</listEntry>
             <listEntry value="76">@Strings.settings_wind_precipitation_uv</listEntry>
+            <listEntry value="77">@Strings.settings_wind_precipitation_uv_humidity</listEntry>
             <listEntry value="67">@Strings.settings_temperature_feels_high_low</listEntry>
             <listEntry value="52">@Strings.settings_temperature_precipitation_high_low</listEntry>
             <listEntry value="20">@Strings.settings_weather_conditions_precipitation_chance</listEntry>
