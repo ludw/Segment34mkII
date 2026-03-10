@@ -29,23 +29,22 @@ https://apps.garmin.com/apps/aa85d03d-ab89-4e06-b8c6-71a014198593
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M51A1RGV)
 
 ## Contributing (code)
-Pull requests are welcome, but please follow the following guidelines:
-- For larger changes, **please open an issue first** and discuss what you have in mind.
-- Keep PRs small, don't do a lot of different changes at once.
-- Explain what you have changed and why.
-- Only submit code you have actually run and tested (on all supported screen sizes).
-- Remeber that watch faces has to be performant and memory efficient.
-  Changes that significantly increase memory use or degrade performance will be rejected.
-- For optimizations, please provide memory and profiler comparisons.
-- Try to keep the code in the same style as the rest of the project.
-   - Indent with four spaces.
-   - local variables with snake_case.
-   - function and global variables names with camelCase.
-   - cache all properties.
-   - use comments only when they add value.
-     Explain things that look strange or values that has to be looked up to be understood.
+This is more of a hobby project than an actively maintained project, I have limited time to review and respond to issues so response time can be long.
 
- ## TODO / Things people have asked for
+If you want to contribute code to this repository, please start by opening an issue and explaining what you have in mind and why. If I think it sounds like a good idea I can add you to contributors and let you open a PR. 
+
+As memory is very limited on a watchface (especially on older devices) new features must meet a high bar:
+- Useful for a large number of users
+- Implemented in a performant and memory efficient manner
+- Not in the way for existing users, if it changes how it looks it should probably be optional
+- Fits in well with the aesthetics of the watch face
+
+For refactorings and optimizations keep in mind that:
+- I value my own understanding of the codebase, refactorings reduce this understanding and must outweigh the loss in other benefits
+- Optimizations must include profiler results and memory useage
+- Both optimizations and refactorings require significant testing across all supported devices
+
+ ## Things people have asked for (may or may not be implemented)
 - Adjustable font size
 - Goal completion marker
 - Pressure trend
