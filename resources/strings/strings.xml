@@ -201,6 +201,12 @@
     <string id="LABEL_RHR_1">RHR</string>
     <string id="LABEL_RHR_2">REST HR</string>
     <string id="LABEL_RHR_3">RESTING HR</string>
+    <string id="LABEL_7DRUN_1">7D RN</string>
+    <string id="LABEL_7DRUN_2">7D RUN</string>
+    <string id="LABEL_7DRUN_3">7D RUN</string>
+    <string id="LABEL_7DBIKE_1">7D BK</string>
+    <string id="LABEL_7DBIKE_2">7D BIKE</string>
+    <string id="LABEL_7DBIKE_3">7D BIKE</string>
 
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Color Theme</string>
@@ -266,18 +272,12 @@
     <string id="settings_hidden" scope="settings">Hidden</string>
     <string id="settings_active_min_week" scope="settings">Active min / week</string>
     <string id="settings_active_min_day" scope="settings">Active min / day</string>
-    <string id="settings_distance_km_day" scope="settings">Distance (km) / day</string>
-    <string id="settings_distance_miles_day" scope="settings">Distance (miles) / day</string>
-    <string id="settings_run_distance_km_week" scope="settings">Run distance (km) / week</string>
-    <string id="settings_run_distance_km_7_days" scope="settings">Run distance past 7 days (km)</string>
-    <string id="settings_run_distance_miles_week" scope="settings">Run distance (miles) / week</string>
-    <string id="settings_run_distance_miles_7_days" scope="settings">Run distance past 7 days (miles)</string>
-    <string id="settings_bike_distance_km_week" scope="settings">Bike distance (km) / week</string>
-    <string id="settings_bike_distance_km_7_days" scope="settings">Bike distance past 7 days (km)</string>
-    <string id="settings_bike_distance_miles_week" scope="settings">Bike distance (miles) / week</string>
-    <string id="settings_bike_distance_miles_7_days" scope="settings">Bike distance past 7 days (miles)</string>
-    <string id="settings_total_distance_7_days_km" scope="settings">Total distance past 7 days (km)</string>
-    <string id="settings_total_distance_7_days_miles" scope="settings">Total distance past 7 days (miles)</string>
+    <string id="settings_distance_day" scope="settings">Distance / day</string>
+    <string id="settings_run_distance_week" scope="settings">Run distance / week</string>
+    <string id="settings_run_distance_7_days" scope="settings">Run distance past 7 days</string>
+    <string id="settings_bike_distance_week" scope="settings">Bike distance / week</string>
+    <string id="settings_bike_distance_7_days" scope="settings">Bike distance past 7 days</string>
+    <string id="settings_total_distance_7_days" scope="settings">Total distance past 7 days</string>
     <string id="settings_floors_climbed_day" scope="settings">Floors climbed / day</string>
     <string id="settings_meters_climbed_day" scope="settings">Meters climbed / day</string>
     <string id="settings_time_to_recovery" scope="settings">Time to Recovery (h)</string>
@@ -451,6 +451,9 @@
     <string id="settings_show_temp_unit" scope="settings">Show temperature unit</string>
     <string id="settings_c" scope="settings">C</string>
     <string id="settings_f" scope="settings">F</string>
+    <string id="settings_distance_unit" scope="settings">Distance unit</string>
+    <string id="settings_km" scope="settings">km</string>
+    <string id="settings_miles" scope="settings">miles</string>
     <string id="settings_wind_speed_unit" scope="settings">Wind speed unit</string>
     <string id="settings_ms" scope="settings">m/s</string>
     <string id="settings_kmh" scope="settings">km/h</string>

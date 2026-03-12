@@ -201,6 +201,12 @@
     <string id="LABEL_RHR_1">RFC</string>
     <string id="LABEL_RHR_2">FC RIPO</string>
     <string id="LABEL_RHR_3">FC RIPOSO</string>
+    <string id="LABEL_7DRUN_1">7G CR</string>
+    <string id="LABEL_7DRUN_2">7G CORS</string>
+    <string id="LABEL_7DRUN_3">7G CORS</string>
+    <string id="LABEL_7DBIKE_1">7G BC</string>
+    <string id="LABEL_7DBIKE_2">7G BICI</string>
+    <string id="LABEL_7DBIKE_3">7G BICI</string>
 
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Tema Colore</string>
@@ -257,18 +263,12 @@
     <string id="settings_hidden" scope="settings">Nascosto</string>
     <string id="settings_active_min_week" scope="settings">Minuti attivi / settimana</string>
     <string id="settings_active_min_day" scope="settings">Minuti attivi / giorno</string>
-    <string id="settings_distance_km_day" scope="settings">Distanza (km) / giorno</string>
-    <string id="settings_distance_miles_day" scope="settings">Distanza (miglia) / giorno</string>
-    <string id="settings_run_distance_km_week" scope="settings">Distanza corsa (km) / settimana</string>
-    <string id="settings_run_distance_km_7_days" scope="settings">Distanza corsa ultimi 7 giorni (km)</string>
-    <string id="settings_run_distance_miles_week" scope="settings">Distanza corsa (miglia) / settimana</string>
-    <string id="settings_run_distance_miles_7_days" scope="settings">Distanza corsa ultimi 7 giorni (miglia)</string>
-    <string id="settings_bike_distance_km_week" scope="settings">Distanza bici (km) / settimana</string>
-    <string id="settings_bike_distance_km_7_days" scope="settings">Distanza bici ultimi 7 giorni (km)</string>
-    <string id="settings_bike_distance_miles_week" scope="settings">Distanza bici (miglia) / settimana</string>
-    <string id="settings_bike_distance_miles_7_days" scope="settings">Distanza bici ultimi 7 giorni (miglia)</string>
-    <string id="settings_total_distance_7_days_km" scope="settings">Distanza totale ultimi 7 giorni (km)</string>
-    <string id="settings_total_distance_7_days_miles" scope="settings">Distanza totale ultimi 7 giorni (miglia)</string>
+    <string id="settings_distance_day" scope="settings">Distanza / giorno</string>
+    <string id="settings_run_distance_week" scope="settings">Distanza corsa / settimana</string>
+    <string id="settings_run_distance_7_days" scope="settings">Distanza corsa ultimi 7 giorni</string>
+    <string id="settings_bike_distance_week" scope="settings">Distanza bici / settimana</string>
+    <string id="settings_bike_distance_7_days" scope="settings">Distanza bici ultimi 7 giorni</string>
+    <string id="settings_total_distance_7_days" scope="settings">Distanza totale ultimi 7 giorni</string>
     <string id="settings_floors_climbed_day" scope="settings">Piani saliti / giorno</string>
     <string id="settings_meters_climbed_day" scope="settings">Metri saliti / giorno</string>
     <string id="settings_time_to_recovery" scope="settings">Tempo al recupero (h)</string>
@@ -440,6 +440,9 @@
     <string id="settings_temperature_unit" scope="settings">Unità temperatura</string>
     <string id="settings_c" scope="settings">C</string>
     <string id="settings_f" scope="settings">F</string>
+    <string id="settings_distance_unit" scope="settings">Unità di distanza</string>
+    <string id="settings_km" scope="settings">km</string>
+    <string id="settings_miles" scope="settings">miglia</string>
     <string id="settings_wind_speed_unit" scope="settings">Unità velocità vento</string>
     <string id="settings_ms" scope="settings">m/s</string>
     <string id="settings_kmh" scope="settings">km/h</string>

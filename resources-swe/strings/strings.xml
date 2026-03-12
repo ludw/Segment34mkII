@@ -201,6 +201,12 @@
     <string id="LABEL_RHR_1">VHR</string>
     <string id="LABEL_RHR_2">VILO-HR</string>
     <string id="LABEL_RHR_3">VILO-HR</string>
+    <string id="LABEL_7DRUN_1">7D LP</string>
+    <string id="LABEL_7DRUN_2">7D LÖPN</string>
+    <string id="LABEL_7DRUN_3">7D LÖPN</string>
+    <string id="LABEL_7DBIKE_1">7D CY</string>
+    <string id="LABEL_7DBIKE_2">7D CYKL</string>
+    <string id="LABEL_7DBIKE_3">7D CYKL</string>
 
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Färgtema</string>
@@ -257,18 +263,12 @@
     <string id="settings_hidden" scope="settings">Dolt</string>
     <string id="settings_active_min_week" scope="settings">Aktiva min / vecka</string>
     <string id="settings_active_min_day" scope="settings">Aktiva min / dag</string>
-    <string id="settings_distance_km_day" scope="settings">Distans (km) / dag</string>
-    <string id="settings_distance_miles_day" scope="settings">Distans (mil) / dag</string>
-    <string id="settings_run_distance_km_week" scope="settings">Springdistans (km) / vecka</string>
-    <string id="settings_run_distance_km_7_days" scope="settings">Springdistans senaste 7 dagarna (km)</string>
-    <string id="settings_run_distance_miles_week" scope="settings">Springdistans (mil) / vecka</string>
-    <string id="settings_run_distance_miles_7_days" scope="settings">Springdistans senaste 7 dagarna (mil)</string>
-    <string id="settings_bike_distance_km_week" scope="settings">Cykeldistans (km) / vecka</string>
-    <string id="settings_bike_distance_km_7_days" scope="settings">Cykeldistans senaste 7 dagarna (km)</string>
-    <string id="settings_bike_distance_miles_week" scope="settings">Cykeldistans (mil) / vecka</string>
-    <string id="settings_bike_distance_miles_7_days" scope="settings">Cykeldistans senaste 7 dagarna (mil)</string>
-    <string id="settings_total_distance_7_days_km" scope="settings">Total distans senaste 7 dagarna (km)</string>
-    <string id="settings_total_distance_7_days_miles" scope="settings">Total distans senaste 7 dagarna (mil)</string>
+    <string id="settings_distance_day" scope="settings">Distans / dag</string>
+    <string id="settings_run_distance_week" scope="settings">Springdistans / vecka</string>
+    <string id="settings_run_distance_7_days" scope="settings">Springdistans senaste 7 dagarna</string>
+    <string id="settings_bike_distance_week" scope="settings">Cykeldistans / vecka</string>
+    <string id="settings_bike_distance_7_days" scope="settings">Cykeldistans senaste 7 dagarna</string>
+    <string id="settings_total_distance_7_days" scope="settings">Total distans senaste 7 dagarna</string>
     <string id="settings_floors_climbed_day" scope="settings">Våningar klättrade / dag</string>
     <string id="settings_meters_climbed_day" scope="settings">Meter klättrade / dag</string>
     <string id="settings_time_to_recovery" scope="settings">Tid till återhämtning (h)</string>
@@ -440,6 +440,9 @@
     <string id="settings_temperature_unit" scope="settings">Temperaturenhet</string>
     <string id="settings_c" scope="settings">C</string>
     <string id="settings_f" scope="settings">F</string>
+    <string id="settings_distance_unit" scope="settings">Avståndsenhet</string>
+    <string id="settings_km" scope="settings">km</string>
+    <string id="settings_miles" scope="settings">miles</string>
     <string id="settings_wind_speed_unit" scope="settings">Vindhastighet enhet</string>
     <string id="settings_ms" scope="settings">m/s</string>
     <string id="settings_kmh" scope="settings">km/h</string>

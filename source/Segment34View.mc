@@ -132,6 +132,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propTimeSeparator as Number = 0;
     hidden var propTempUnit as Number = 0;
     hidden var propShowTempUnit as Boolean = true;
+    hidden var propDistanceUnit as Number = 0;
     hidden var propWindUnit as Number = 0;
     hidden var propPressureUnit as Number = 0;
     hidden var propTopPartShows as Number = 0;
@@ -1484,6 +1485,7 @@ class Segment34View extends WatchUi.WatchFace {
         propTimeSeparator = getValueOrDefault("timeSeparator", 0) as Number;
         propTempUnit = getValueOrDefault("tempUnit", 0) as Number;
         propShowTempUnit = getValueOrDefault("showTempUnit", true) as Boolean;
+        propDistanceUnit = getValueOrDefault("distanceUnit", 0) as Number;
         propWindUnit = getValueOrDefault("windUnit", 0) as Number;
         propPressureUnit = getValueOrDefault("pressureUnit", 0) as Number;
         propLabelVisibility = getValueOrDefault("labelVisibility", 0) as Number;
@@ -2031,20 +2033,11 @@ class Segment34View extends WatchUi.WatchFace {
                     val = activityInfo.activeMinutesDay.total.format(numberFormat);
                 }
             }
-        } else if(complicationType == 2) { // distance (km) / day
+        } else if(complicationType == 2) { // distance / day
             if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
             if(activityInfo has :distance) {
                 if(activityInfo.distance != null) {
-                    var distance_km = activityInfo.distance / 100000.0;
-                    val = formatDistanceByWidth(distance_km, width);
-                }
-            }
-        } else if(complicationType == 3) { // distance (miles) / day
-            if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
-            if(activityInfo has :distance) {
-                if(activityInfo.distance != null) {
-                    var distance_miles = activityInfo.distance / 160900.0;
-                    val = formatDistanceByWidth(distance_miles, width);
+                    val = formatDistanceByWidth(activityInfo.distance / (isMetricDistance() ? 100000.0 : 160900.0), width);
                 }
             }
         } else if(complicationType == 4) { // floors climbed / day
@@ -2175,14 +2168,10 @@ class Segment34View extends WatchUi.WatchFace {
             }
         } else if(complicationType == 20) { // Weather condition
             val = getWeatherCondition(true);
-        } else if(complicationType == 21) { // Weekly run distance (km)
-            val = getWeeklyDistanceFromComplication(true, 0.001, width);
-        } else if(complicationType == 22) { // Weekly run distance (miles)
-            val = getWeeklyDistanceFromComplication(true, 0.000621371, width);
-        } else if(complicationType == 23) { // Weekly bike distance (km)
-            val = getWeeklyDistanceFromComplication(false, 0.001, width);
-        } else if(complicationType == 24) { // Weekly bike distance (miles)
-            val = getWeeklyDistanceFromComplication(false, 0.000621371, width);
+        } else if(complicationType == 21) { // Weekly run distance
+            val = getWeeklyDistanceFromComplication(true, isMetricDistance() ? 0.001 : 0.000621371, width);
+        } else if(complicationType == 23) { // Weekly bike distance
+            val = getWeeklyDistanceFromComplication(false, isMetricDistance() ? 0.001 : 0.000621371, width);
         } else if(complicationType == 25) { // Training status
             if (hasComplications) {
                 try {
@@ -2237,12 +2226,8 @@ class Segment34View extends WatchUi.WatchFace {
             var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
             var week_number = isoWeekNumber(today.year, today.month, today.day);
             val = week_number.format(numberFormat);
-        } else if(complicationType == 32) { // Weekly distance (km)
-            var weekly_distance = getWeeklyDistance() / 100000.0;  // Convert to km
-            val = formatDistanceByWidth(weekly_distance, width);
-        } else if(complicationType == 33) { // Weekly distance (miles)
-            var weekly_distance = getWeeklyDistance() * 0.00000621371;  // Convert to miles
-            val = formatDistanceByWidth(weekly_distance, width);
+        } else if(complicationType == 32) { // Total distance past 7 days
+            val = formatDistanceByWidth(getWeeklyDistance() * (isMetricDistance() ? 0.00001 : 0.00000621371), width);
         } else if(complicationType == 34) { // Battery percentage
             var battery = System.getSystemStats().battery;
             val = battery.format("%d");
@@ -2513,14 +2498,12 @@ class Segment34View extends WatchUi.WatchFace {
                     val = profile.restingHeartRate.format(numberFormat);
                 }
             }
-        } else if(complicationType == 77) { // Run distance past 7 days (km)
-            val = formatDistanceByWidth(getActivityDistancePast7Days(Activity.SPORT_RUNNING) / 1000.0, width);
-        } else if(complicationType == 78) { // Run distance past 7 days (miles)
-            val = formatDistanceByWidth(getActivityDistancePast7Days(Activity.SPORT_RUNNING) * 0.000621371, width);
-        } else if(complicationType == 79) { // Bike distance past 7 days (km)
-            val = formatDistanceByWidth(getActivityDistancePast7Days(Activity.SPORT_CYCLING) / 1000.0, width);
-        } else if(complicationType == 80) { // Bike distance past 7 days (miles)
-            val = formatDistanceByWidth(getActivityDistancePast7Days(Activity.SPORT_CYCLING) * 0.000621371, width);
+        } else if(complicationType == 77) { // Run distance past 7 days
+            var factor77 = isMetricDistance() ? 0.001 : 0.000621371;
+            val = formatDistanceByWidth(getActivityDistancePast7Days(Activity.SPORT_RUNNING) * factor77, width);
+        } else if(complicationType == 78) { // Bike distance past 7 days
+            var factor78 = isMetricDistance() ? 0.001 : 0.000621371;
+            val = formatDistanceByWidth(getActivityDistancePast7Days(Activity.SPORT_CYCLING) * factor78, width);
         }
 
         return val;
@@ -2669,6 +2652,8 @@ class Segment34View extends WatchUi.WatchFace {
             case 74: return formatLabel(Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL_3, labelSize);
             case 75: return formatLabel(Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_3, labelSize);
             case 76: return formatLabel(Rez.Strings.LABEL_RHR_1, Rez.Strings.LABEL_RHR_2, Rez.Strings.LABEL_RHR_3, labelSize);
+            case 77: return formatLabel(Rez.Strings.LABEL_7DRUN_1, Rez.Strings.LABEL_7DRUN_2, Rez.Strings.LABEL_7DRUN_3, labelSize);
+            case 78: return formatLabel(Rez.Strings.LABEL_7DBIKE_1, Rez.Strings.LABEL_7DBIKE_2, Rez.Strings.LABEL_7DBIKE_3, labelSize);
         }
 
         return "";
@@ -2864,6 +2849,10 @@ class Segment34View extends WatchUi.WatchFace {
             return formatTemperature(convertTemperature(temp_val, cachedTempUnit));
         }
         return "";
+    }
+
+    hidden function isMetricDistance() as Boolean {
+        return (System.getDeviceSettings().distanceUnits == System.UNIT_METRIC and propDistanceUnit == 0) or propDistanceUnit == 1;
     }
 
     hidden function getTempUnit() as String {

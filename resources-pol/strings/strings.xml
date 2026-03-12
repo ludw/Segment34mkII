@@ -201,6 +201,12 @@
     <string id="LABEL_RHR_1">SPOCZ</string>
     <string id="LABEL_RHR_2">SPOCZ HR</string>
     <string id="LABEL_RHR_3">TĘTNO SPOCZ</string>
+    <string id="LABEL_7DRUN_1">7D BG</string>
+    <string id="LABEL_7DRUN_2">7D BIEG</string>
+    <string id="LABEL_7DRUN_3">7D BIEG</string>
+    <string id="LABEL_7DBIKE_1">7D RW</string>
+    <string id="LABEL_7DBIKE_2">7D ROWER</string>
+    <string id="LABEL_7DBIKE_3">7D ROWER</string>
 
     <string id="settings_color_theme" scope="settings">Motyw kolorystyczny</string>
     <string id="settings_yellow_on_turquoise" scope="settings">Żółty na turkusowym</string>
@@ -256,18 +262,12 @@
     <string id="settings_hidden" scope="settings">Ukryte</string>
     <string id="settings_active_min_week" scope="settings">Aktywne min / tydzień</string>
     <string id="settings_active_min_day" scope="settings">Aktywne min / dzień</string>
-    <string id="settings_distance_km_day" scope="settings">Dystans (km) / dzień</string>
-    <string id="settings_distance_miles_day" scope="settings">Dystans (mile) / dzień</string>
-    <string id="settings_run_distance_km_week" scope="settings">Dystans biegu (km) / tydzień</string>
-    <string id="settings_run_distance_km_7_days" scope="settings">Dystans biegu ostatnie 7 dni (km)</string>
-    <string id="settings_run_distance_miles_week" scope="settings">Dystans biegu (mile) / tydzień</string>
-    <string id="settings_run_distance_miles_7_days" scope="settings">Dystans biegu ostatnie 7 dni (mile)</string>
-    <string id="settings_bike_distance_km_week" scope="settings">Dystans roweru (km) / tydzień</string>
-    <string id="settings_bike_distance_km_7_days" scope="settings">Dystans roweru ostatnie 7 dni (km)</string>
-    <string id="settings_bike_distance_miles_week" scope="settings">Dystans roweru (mile) / tydzień</string>
-    <string id="settings_bike_distance_miles_7_days" scope="settings">Dystans roweru ostatnie 7 dni (mile)</string>
-    <string id="settings_total_distance_7_days_km" scope="settings">Całkowity dystans ostatnie 7 dni (km)</string>
-    <string id="settings_total_distance_7_days_miles" scope="settings">Całkowity dystans ostatnie 7 dni (mile)</string>
+    <string id="settings_distance_day" scope="settings">Dystans / dzień</string>
+    <string id="settings_run_distance_week" scope="settings">Dystans biegu / tydzień</string>
+    <string id="settings_run_distance_7_days" scope="settings">Dystans biegu ostatnie 7 dni</string>
+    <string id="settings_bike_distance_week" scope="settings">Dystans roweru / tydzień</string>
+    <string id="settings_bike_distance_7_days" scope="settings">Dystans roweru ostatnie 7 dni</string>
+    <string id="settings_total_distance_7_days" scope="settings">Całkowity dystans ostatnie 7 dni</string>
     <string id="settings_floors_climbed_day" scope="settings">Piętra wspięte / dzień</string>
     <string id="settings_meters_climbed_day" scope="settings">Metry wspięte / dzień</string>
     <string id="settings_time_to_recovery" scope="settings">Czas do regeneracji (h)</string>
@@ -439,6 +439,9 @@
     <string id="settings_temperature_unit" scope="settings">Jednostka temperatury</string>
     <string id="settings_c" scope="settings">C</string>
     <string id="settings_f" scope="settings">F</string>
+    <string id="settings_distance_unit" scope="settings">Jednostka dystansu</string>
+    <string id="settings_km" scope="settings">km</string>
+    <string id="settings_miles" scope="settings">mile</string>
     <string id="settings_wind_speed_unit" scope="settings">Jednostka prędkości wiatru</string>
     <string id="settings_ms" scope="settings">m/s</string>
     <string id="settings_kmh" scope="settings">km/h</string>
