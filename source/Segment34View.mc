@@ -2513,6 +2513,14 @@ class Segment34View extends WatchUi.WatchFace {
                     val = profile.restingHeartRate.format(numberFormat);
                 }
             }
+        } else if(complicationType == 77) { // Run distance past 7 days (km)
+            val = formatDistanceByWidth(getActivityDistancePast7Days(Activity.SPORT_RUNNING) / 1000.0, width);
+        } else if(complicationType == 78) { // Run distance past 7 days (miles)
+            val = formatDistanceByWidth(getActivityDistancePast7Days(Activity.SPORT_RUNNING) * 0.000621371, width);
+        } else if(complicationType == 79) { // Bike distance past 7 days (km)
+            val = formatDistanceByWidth(getActivityDistancePast7Days(Activity.SPORT_CYCLING) / 1000.0, width);
+        } else if(complicationType == 80) { // Bike distance past 7 days (miles)
+            val = formatDistanceByWidth(getActivityDistancePast7Days(Activity.SPORT_CYCLING) * 0.000621371, width);
         }
 
         return val;
@@ -3088,6 +3096,26 @@ class Segment34View extends WatchUi.WatchFace {
             }
         }
         return weekly_distance;
+    }
+
+    hidden function getActivityDistancePast7Days(sport as Number) as Number {
+        if (!(UserProfile has :getUserActivityHistory)) { return 0; }
+        var sevenDaysAgo = Time.now().subtract(new Time.Duration(7 * 24 * 3600));
+        var totalMeters = 0;
+        var iter = UserProfile.getUserActivityHistory();
+        var act = iter.next();
+        var count = 0;
+        while (act != null && count < 50) {
+            count++;
+            if (act.startTime != null) {
+                if (act.startTime.lessThan(sevenDaysAgo)) { break; } // newest-first; stop here
+                if (act.type == sport && act.distance != null) {
+                    totalMeters += act.distance;
+                }
+            }
+            act = iter.next();
+        }
+        return totalMeters;
     }
 
     hidden function getWeeklyDistanceFromComplication(isRun as Boolean, conversionFactor as Float, width as Number) as String {

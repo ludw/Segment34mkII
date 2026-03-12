@@ -269,9 +269,13 @@
     <string id="settings_distance_km_day" scope="settings">Distance (km) / day</string>
     <string id="settings_distance_miles_day" scope="settings">Distance (miles) / day</string>
     <string id="settings_run_distance_km_week" scope="settings">Run distance (km) / week</string>
+    <string id="settings_run_distance_km_7_days" scope="settings">Run distance past 7 days (km)</string>
     <string id="settings_run_distance_miles_week" scope="settings">Run distance (miles) / week</string>
+    <string id="settings_run_distance_miles_7_days" scope="settings">Run distance past 7 days (miles)</string>
     <string id="settings_bike_distance_km_week" scope="settings">Bike distance (km) / week</string>
+    <string id="settings_bike_distance_km_7_days" scope="settings">Bike distance past 7 days (km)</string>
     <string id="settings_bike_distance_miles_week" scope="settings">Bike distance (miles) / week</string>
+    <string id="settings_bike_distance_miles_7_days" scope="settings">Bike distance past 7 days (miles)</string>
     <string id="settings_total_distance_7_days_km" scope="settings">Total distance past 7 days (km)</string>
     <string id="settings_total_distance_7_days_miles" scope="settings">Total distance past 7 days (miles)</string>
     <string id="settings_floors_climbed_day" scope="settings">Floors climbed / day</string>

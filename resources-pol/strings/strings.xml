@@ -259,9 +259,13 @@
     <string id="settings_distance_km_day" scope="settings">Dystans (km) / dzień</string>
     <string id="settings_distance_miles_day" scope="settings">Dystans (mile) / dzień</string>
     <string id="settings_run_distance_km_week" scope="settings">Dystans biegu (km) / tydzień</string>
+    <string id="settings_run_distance_km_7_days" scope="settings">Dystans biegu ostatnie 7 dni (km)</string>
     <string id="settings_run_distance_miles_week" scope="settings">Dystans biegu (mile) / tydzień</string>
+    <string id="settings_run_distance_miles_7_days" scope="settings">Dystans biegu ostatnie 7 dni (mile)</string>
     <string id="settings_bike_distance_km_week" scope="settings">Dystans roweru (km) / tydzień</string>
+    <string id="settings_bike_distance_km_7_days" scope="settings">Dystans roweru ostatnie 7 dni (km)</string>
     <string id="settings_bike_distance_miles_week" scope="settings">Dystans roweru (mile) / tydzień</string>
+    <string id="settings_bike_distance_miles_7_days" scope="settings">Dystans roweru ostatnie 7 dni (mile)</string>
     <string id="settings_total_distance_7_days_km" scope="settings">Całkowity dystans ostatnie 7 dni (km)</string>
     <string id="settings_total_distance_7_days_miles" scope="settings">Całkowity dystans ostatnie 7 dni (mile)</string>
     <string id="settings_floors_climbed_day" scope="settings">Piętra wspięte / dzień</string>

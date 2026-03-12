@@ -260,9 +260,13 @@
     <string id="settings_distance_km_day" scope="settings">Distanza (km) / giorno</string>
     <string id="settings_distance_miles_day" scope="settings">Distanza (miglia) / giorno</string>
     <string id="settings_run_distance_km_week" scope="settings">Distanza corsa (km) / settimana</string>
+    <string id="settings_run_distance_km_7_days" scope="settings">Distanza corsa ultimi 7 giorni (km)</string>
     <string id="settings_run_distance_miles_week" scope="settings">Distanza corsa (miglia) / settimana</string>
+    <string id="settings_run_distance_miles_7_days" scope="settings">Distanza corsa ultimi 7 giorni (miglia)</string>
     <string id="settings_bike_distance_km_week" scope="settings">Distanza bici (km) / settimana</string>
+    <string id="settings_bike_distance_km_7_days" scope="settings">Distanza bici ultimi 7 giorni (km)</string>
     <string id="settings_bike_distance_miles_week" scope="settings">Distanza bici (miglia) / settimana</string>
+    <string id="settings_bike_distance_miles_7_days" scope="settings">Distanza bici ultimi 7 giorni (miglia)</string>
     <string id="settings_total_distance_7_days_km" scope="settings">Distanza totale ultimi 7 giorni (km)</string>
     <string id="settings_total_distance_7_days_miles" scope="settings">Distanza totale ultimi 7 giorni (miglia)</string>
     <string id="settings_floors_climbed_day" scope="settings">Piani saliti / giorno</string>
