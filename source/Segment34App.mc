@@ -21,9 +21,8 @@ class Segment34App extends Application.AppBase {
     // Return the initial view of your application here
     function getInitialView() {
         mView = new Segment34View();
-		onSettingsChanged();
         var delegate = new Segment34Delegate(mView);
-		return [mView, delegate];
+        return [mView, delegate];
     }
 
     function onSettingsChanged() as Void {

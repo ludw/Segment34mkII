@@ -193,6 +193,7 @@
     <string id="LABEL_UV_2">UV INDEX</string>
     <string id="LABEL_HUM_1">FUKT</string>
     <string id="LABEL_HUM_2">FUKTIGHET</string>
+    <string id="LABEL_FL_3">KÄNNS SOM</string>
 
     <string id="LABEL_CGM">CGM</string>
     <string id="LABEL_CGMAGE">CGM ÅLDER</string>

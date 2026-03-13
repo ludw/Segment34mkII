@@ -193,9 +193,12 @@
     <string id="LABEL_UV_2">UV INDEX</string>
     <string id="LABEL_HUM_1">FEUCHT</string>
     <string id="LABEL_HUM_2">LUFTFEUCHTIGKEIT</string>
+    <string id="LABEL_FL_3">GEFUHLT</string>
 
     <string id="LABEL_CGM">CGM</string>
     <string id="LABEL_CGMAGE">CGM ALTER</string>
+    <string id="LABEL_HRS_NEXT_SUN_EVENT_1">H SONN</string>
+    <string id="LABEL_HRS_NEXT_SUN_EVENT_3">STD SONN</string>
     <string id="LABEL_RHR_1">RHF</string>
     <string id="LABEL_RHR_2">RUHE HF</string>
     <string id="LABEL_RHR_3">RUHE HF</string>

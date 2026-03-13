@@ -47,17 +47,17 @@
     <string id="WEATHER_35">ARENA</string>
     <string id="WEATHER_36">GALERNA</string>
     <string id="WEATHER_37">TORMENTA DE ARENA</string>
-    <string id="WEATHER_38">CENIZA VOLCÁNICA</string>
+    <string id="WEATHER_38">CENIZA VOLCANICA</string>
     <string id="WEATHER_39">BRUMA</string>
     <string id="WEATHER_40">BUEN TIEMPO</string>
-    <string id="WEATHER_41">HURACÁN</string>
+    <string id="WEATHER_41">HURACAN</string>
     <string id="WEATHER_42">TORMENTA TROPICAL</string>
     <string id="WEATHER_43">PROBABLE NIEVE</string>
     <string id="WEATHER_44">PROB. LLUVIA Y NIEVE</string>
     <string id="WEATHER_45">NUBOSO PROB. LLUVIA</string>
     <string id="WEATHER_46">NUBOSO PROB. NIEVE</string>
     <string id="WEATHER_47">NUB. PROB. LLUVIA/NIEVE</string>
-    <string id="WEATHER_48">RÁFAGAS DE NIEVE</string>
+    <string id="WEATHER_48">RAFAGAS DE NIEVE</string>
     <string id="WEATHER_49">LLUVIA HELADA</string>
     <string id="WEATHER_50">AGUANIEVE</string>
     <string id="WEATHER_51">HIELO Y NIEVE</string>
@@ -70,7 +70,7 @@
     <string id="DAY_OF_WEEK_WED">MIÉ</string>
     <string id="DAY_OF_WEEK_THU">JUE</string>
     <string id="DAY_OF_WEEK_FRI">VIE</string>
-    <string id="DAY_OF_WEEK_SAT">SÁB</string>
+    <string id="DAY_OF_WEEK_SAT">SAB</string>
 
     <string id="MONTH_JAN">ENE</string>
     <string id="MONTH_FEB">FEB</string>

@@ -28,9 +28,9 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var centerY as Number;
     hidden var marginX as Number;
     hidden var marginY as Number;
-    hidden var halfMarginY as Number;
-    hidden var halfClockHeight as Number;
-    hidden var halfClockWidth as Number;
+    hidden var halfMarginY as Number = 0;
+    hidden var halfClockHeight as Number = 0;
+    hidden var halfClockWidth as Number = 0;
     hidden var barBottomAdj as Number = 0;
     hidden var bottomFiveAdj as Number = 0;
     hidden var fieldSpaceingAdj as Number = 0;
@@ -206,8 +206,7 @@ class Segment34View extends WatchUi.WatchFace {
         WatchFace.initialize();
 
         if(System.getDeviceSettings() has :requiresBurnInProtection) { canBurnIn = System.getDeviceSettings().requiresBurnInProtection; }
-        updateProperties();
-        
+
         screenHeight = Toybox.System.getDeviceSettings().screenHeight;
         screenWidth = Toybox.System.getDeviceSettings().screenWidth;
         fontMoon = Application.loadResource(Rez.Fonts.moon);
@@ -216,6 +215,13 @@ class Segment34View extends WatchUi.WatchFace {
         centerY = Math.round(screenHeight / 2);
         marginY = Math.round(screenHeight / 30);
         marginX = Math.round(screenWidth / 20);
+        hasComplications = Toybox has :Complications;
+
+        reloadSettings();
+    }
+
+    hidden function reloadSettings() as Void {
+        updateProperties();
 
         releaseResources();
         loadResources();
@@ -226,10 +232,9 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             halfClockWidth = Math.round(clockWidth / 2);
         }
-        
+
         halfMarginY = Math.round(marginY / 2);
-        hasComplications = Toybox has :Complications;
-        
+
         calculateLayout();
 
         updateWeather();
@@ -748,7 +753,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     function onSettingsChanged() as Void {
-        initialize();
+        reloadSettings();
         lastUpdate = null;
         lastSlowUpdate = null;
         WatchUi.requestUpdate();
