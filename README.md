@@ -63,6 +63,8 @@ For refactorings and optimizations keep in mind that:
 - Built with the latest Garmin SDK
 - New option for run / bike distance past 7 days (rolling)
 - All distance fields now use one setting for distance unit (km / miles)
+- Fixes to the spanish translation
+- Notification count is always hidden when 0
 
 2026-03-05 v4.4.0
 - New option for clock font, with a more readable 17 segment font

@@ -2257,8 +2257,8 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 36) { // Notification count
             var notif_count = System.getDeviceSettings().notificationCount;
             if(notif_count != null) {
-                if(width == 2 and notif_count == 0) {
-                    val = ""; // Hide when shown in the notification field and is zero
+                if(notif_count == 0) {
+                    val = ""; // Hide when zero
                 } else {
                     val = notif_count.format(numberFormat);
                 }
