@@ -59,6 +59,11 @@ For refactorings and optimizations keep in mind that:
 - Second custom theme for easy switching
 
 ## Change log
+2026-03-05 v4.5.0
+- Built with the latest Garmin SDK
+- New option for run / bike distance past 7 days (rolling)
+- All distance fields now use one setting for distance unit (km / miles)
+
 2026-03-05 v4.4.0
 - New option for clock font, with a more readable 17 segment font
 - Option for disabling clock gradient overlay
