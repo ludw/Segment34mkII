@@ -43,15 +43,15 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden var fontMoon as WatchUi.FontResource;
     hidden var fontIcons as WatchUi.FontResource;
-    (:initialized) hidden var fontClock as WatchUi.FontResource;
-    (:initialized) hidden var fontClockOutline as WatchUi.FontResource;
-    (:initialized) hidden var fontLabel as WatchUi.FontResource;
-    (:initialized) hidden var fontTinyData as WatchUi.FontResource;
-    (:initialized) hidden var fontSmallData as WatchUi.FontResource;
-    (:initialized) hidden var fontLargeData as WatchUi.FontResource;
-    (:initialized) hidden var fontAODData as WatchUi.FontResource;
-    (:initialized) hidden var fontBottomData as WatchUi.FontResource;
-    (:initialized) hidden var fontBattery as WatchUi.FontResource;
+    hidden var fontClock as WatchUi.FontResource?;
+    hidden var fontClockOutline as WatchUi.FontResource?;
+    hidden var fontLabel as WatchUi.FontResource?;
+    hidden var fontTinyData as WatchUi.FontResource?;
+    hidden var fontSmallData as WatchUi.FontResource?;
+    hidden var fontLargeData as WatchUi.FontResource?;
+    hidden var fontAODData as WatchUi.FontResource?;
+    hidden var fontBottomData as WatchUi.FontResource?;
+    hidden var fontBattery as WatchUi.FontResource?;
     hidden var weekNames as Array<String>?;
     hidden var monthNames as Array<String>?;
 
@@ -216,7 +216,8 @@ class Segment34View extends WatchUi.WatchFace {
         centerY = Math.round(screenHeight / 2);
         marginY = Math.round(screenHeight / 30);
         marginX = Math.round(screenWidth / 20);
-        
+
+        releaseResources();
         loadResources();
 
         halfClockHeight = Math.round(clockHeight / 2);
@@ -242,6 +243,20 @@ class Segment34View extends WatchUi.WatchFace {
         strLabelBottomMiddle = getLabelByType(propMiddleValueShows, fieldWidths[1] - 1);
         strLabelBottomRight = getLabelByType(propRightValueShows, fieldWidths[2] - 1);
         strLabelBottomFourth = getLabelByType(propFourthValueShows, fieldWidths[3] - 1);
+    }
+
+    hidden function releaseResources() as Void {
+        fontClock = null;
+        fontClockOutline = null;
+        fontLabel = null;
+        fontTinyData = null;
+        fontSmallData = null;
+        fontLargeData = null;
+        fontAODData = null;
+        fontBottomData = null;
+        fontBattery = null;
+        drawGradient = null;
+        drawAODPattern = null;
     }
 
     hidden function loadSmallFont(resDefault, resReadable, resLines) as Void {
@@ -1431,11 +1446,16 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getValueOrDefault(propName as String, defaultVal as PropertyValueType) as PropertyValueType {
-        var val = Application.Properties.getValue(propName);
-        if(val == null) {
+        try {
+            var val = Application.Properties.getValue(propName);
+            if(val == null) {
+                return defaultVal;
+            }
+            return val;
+        } catch(e instanceof Lang.Exception) {
+            System.println("getValueOrDefault(" + propName + "): " + e.getErrorMessage());
             return defaultVal;
         }
-        return val;
     }
 
     hidden function updateProperties() as Void {
@@ -1692,38 +1712,33 @@ class Segment34View extends WatchUi.WatchFace {
         return null;
     }
 
+    hidden function goalPercent(val as Number, goal as Number) as Number {
+        if(goal == 0 || val == 0) { return 0; }
+        return Math.round(val.toFloat() / goal.toFloat() * 100.0);
+    }
+
     hidden function getStepGoalProgress() as Number? {
-        if(ActivityMonitor.getInfo().steps != null and ActivityMonitor.getInfo().stepGoal != null) {
-            var steps = ActivityMonitor.getInfo().steps;
-            var goal = ActivityMonitor.getInfo().stepGoal;
-            if(goal == null or goal == 0) { return 0; }
-            if(steps == null or steps == 0) { return 0; }
-            return Math.round(steps.toFloat() / goal.toFloat() * 100.0);
+        var info = ActivityMonitor.getInfo();
+        if(info.steps != null and info.stepGoal != null) {
+            return goalPercent(info.steps, info.stepGoal);
         }
         return null;
     }
 
     hidden function getFloorGoalProgress() as Number? {
-        if(ActivityMonitor.getInfo() has :floorsClimbed and ActivityMonitor.getInfo() has :floorsClimbedGoal) {
-            if(ActivityMonitor.getInfo().floorsClimbed != null and ActivityMonitor.getInfo().floorsClimbedGoal != null) {
-                var floors = ActivityMonitor.getInfo().floorsClimbed;
-                var goal = ActivityMonitor.getInfo().floorsClimbedGoal;
-                if(goal == null or goal == 0) { return 0; }
-                if(floors == null or floors == 0) { return 0; }
-                return Math.round(floors.toFloat() / goal.toFloat() * 100.0);
+        var info = ActivityMonitor.getInfo();
+        if(info has :floorsClimbed and info has :floorsClimbedGoal) {
+            if(info.floorsClimbed != null and info.floorsClimbedGoal != null) {
+                return goalPercent(info.floorsClimbed, info.floorsClimbedGoal);
             }
         }
         return null;
     }
 
     hidden function getActMinGoalProgress() as Number? {
-        if(ActivityMonitor.getInfo().activeMinutesWeek != null and ActivityMonitor.getInfo().activeMinutesWeekGoal != null) {
-            var actmin = ActivityMonitor.getInfo().activeMinutesWeek;
-            var val = actmin.total;
-            var goal = ActivityMonitor.getInfo().activeMinutesWeekGoal;
-            if(goal == null or goal == 0) { return 0; }
-            if(val == null or val == 0) { return 0; }
-            return Math.round(val.toFloat() / goal.toFloat() * 100.0);
+        var info = ActivityMonitor.getInfo();
+        if(info.activeMinutesWeek != null and info.activeMinutesWeekGoal != null) {
+            return goalPercent(info.activeMinutesWeek.total, info.activeMinutesWeekGoal);
         }
         return null;
     }
@@ -1732,11 +1747,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(ActivityMonitor.getInfo() has :moveBarLevel) {
             if(ActivityMonitor.getInfo().moveBarLevel != null) {
                 var mov = ActivityMonitor.getInfo().moveBarLevel;
-                if(mov == 1) { return 40; }
-                if(mov == 2) { return 55; }
-                if(mov == 3) { return 70; }
-                if(mov == 4) { return 85; }
-                if(mov == 5) { return 100; }
+                if(mov >= 1 && mov <= 5) { return 25 + mov * 15; }
             }
         }
         return null;
@@ -2261,42 +2272,13 @@ class Segment34View extends WatchUi.WatchFace {
                     }
                 }
             }
-        } else if(complicationType == 39) { // Sunrise
-            var now = Time.now();
+        } else if(complicationType == 39 || complicationType == 40) { // Sunrise / Sunset
             if(weatherCondition != null) {
                 var loc = weatherCondition.observationLocationPosition;
                 if(loc != null) {
-                    var s = Weather.getSunrise(loc, now);
-                    if(s != null) {
-                        var sunrise = Time.Gregorian.info(s, Time.FORMAT_SHORT);
-                        var sunriseHour = formatHour(sunrise.hour);
-                        if(width < 5) {
-                            val = sunriseHour.format("%02d") + sunrise.min.format("%02d");
-                        } else {
-                            val = sunriseHour.format("%02d") + ":" + sunrise.min.format("%02d");
-                        }
-                    } else {
-                        val = Application.loadResource(Rez.Strings.LABEL_NA);
-                    }
-                }
-            }
-        } else if(complicationType == 40) { // Sunset
-            var now = Time.now();
-            if(weatherCondition != null) {
-                var loc = weatherCondition.observationLocationPosition;
-                if(loc != null) {
-                    var s = Weather.getSunset(loc, now);
-                    if(s != null) {
-                        var sunset = Time.Gregorian.info(s, Time.FORMAT_SHORT);
-                        var sunsetHour = formatHour(sunset.hour);
-                        if(width < 5) {
-                            val = sunsetHour.format("%02d") + sunset.min.format("%02d");
-                        } else {
-                            val = sunsetHour.format("%02d") + ":" + sunset.min.format("%02d");
-                        }
-                    } else {
-                        val = Application.loadResource(Rez.Strings.LABEL_NA);
-                    }
+                    var now = Time.now();
+                    var s = (complicationType == 39) ? Weather.getSunrise(loc, now) : Weather.getSunset(loc, now);
+                    val = formatSunTime(s, width);
                 }
             }
         } else if(complicationType == 41) { // Alt TZ 2
@@ -2356,14 +2338,8 @@ class Segment34View extends WatchUi.WatchFace {
             if(width == 3 and val.equals("100%")) { val = "100"; }
         } else if(complicationType == 55) { // Next Sun Event
             var nextSunEventArray = getNextSunEvent();
-            if(nextSunEventArray != null && nextSunEventArray.size() == 2) { 
-                var nextSunEvent = Time.Gregorian.info(nextSunEventArray[0], Time.FORMAT_SHORT);
-                var nextSunEventHour = formatHour(nextSunEvent.hour);
-                if(width < 5) {
-                    val = nextSunEventHour.format("%02d") + nextSunEvent.min.format("%02d");
-                } else {
-                    val = nextSunEventHour.format("%02d") + ":" + nextSunEvent.min.format("%02d");
-                }
+            if(nextSunEventArray != null && nextSunEventArray.size() == 2) {
+                val = formatSunTime(nextSunEventArray[0], width);
             }
         } else if(complicationType == 56) { // Millitary Date Time Group
             val = getDateTimeGroup();
@@ -2598,10 +2574,10 @@ class Segment34View extends WatchUi.WatchFace {
         switch(complicationType) {
             case 0: return formatLabel(Rez.Strings.LABEL_WMIN_1, Rez.Strings.LABEL_WMIN_2, Rez.Strings.LABEL_WMIN_3, labelSize);
             case 1: return formatLabel(Rez.Strings.LABEL_DMIN_1, Rez.Strings.LABEL_DMIN_2, Rez.Strings.LABEL_DMIN_3, labelSize);
+            case 3:
             case 2:
                 if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_DKM_1, Rez.Strings.LABEL_DKM_2, Rez.Strings.LABEL_DKM_2, labelSize); }
                 return formatLabel(Rez.Strings.LABEL_DMI_1, Rez.Strings.LABEL_DMI_2, Rez.Strings.LABEL_DMI_3, labelSize);
-            case 3: return formatLabel(Rez.Strings.LABEL_DMI_1, Rez.Strings.LABEL_DMI_2, Rez.Strings.LABEL_DMI_3, labelSize);
             case 4: return Application.loadResource(Rez.Strings.LABEL_FLOORS);
             case 5: return formatLabel(Rez.Strings.LABEL_CLIMB_1, Rez.Strings.LABEL_CLIMB_2, Rez.Strings.LABEL_CLIMB_2, labelSize);
             case 6: return formatLabel(Rez.Strings.LABEL_RECOV_1, Rez.Strings.LABEL_RECOV_2, Rez.Strings.LABEL_RECOV_3, labelSize);
@@ -2618,14 +2594,16 @@ class Segment34View extends WatchUi.WatchFace {
             case 18: return formatLabel(Rez.Strings.LABEL_DIST_1, Rez.Strings.LABEL_DIST_2, Rez.Strings.LABEL_DIST_3, labelSize);
             case 19: return Application.loadResource(Rez.Strings.LABEL_PUSHES);
             case 20: return "";
+            case 22:
+            case 77:
             case 21:
                 if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WRUNM_2, Rez.Strings.LABEL_WRUNM_3, labelSize); }
                 return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WRUNMI_2, Rez.Strings.LABEL_WRUNMI_3, labelSize);
-            case 22: return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WRUNMI_2, Rez.Strings.LABEL_WRUNMI_3, labelSize);
+            case 24:
+            case 78:
             case 23:
                 if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WBIKEKM_2, Rez.Strings.LABEL_WBIKEKM_3, labelSize); }
                 return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WBIKEMI_2, Rez.Strings.LABEL_WBIKEMI_3, labelSize);
-            case 24: return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WBIKEMI_2, Rez.Strings.LABEL_WBIKEMI_3, labelSize);
             case 25: return Application.loadResource(Rez.Strings.LABEL_TRAINING);
             case 26: return Application.loadResource(Rez.Strings.LABEL_PRESSURE);
             case 27: return formatLabel(Rez.Strings.LABEL_KG_1, Rez.Strings.LABEL_WEIGHT_2, Rez.Strings.LABEL_KG_3, labelSize);
@@ -2633,10 +2611,10 @@ class Segment34View extends WatchUi.WatchFace {
             case 29: return formatLabel(Rez.Strings.LABEL_ACAL_1, Rez.Strings.LABEL_ACAL_2, Rez.Strings.LABEL_ACAL_3, labelSize);
             case 30: return Application.loadResource(Rez.Strings.LABEL_PRESSURE);
             case 31: return Application.loadResource(Rez.Strings.LABEL_WEEK);
+            case 33:
             case 32:
                 if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WDISTKM_2, Rez.Strings.LABEL_WDISTKM_3, labelSize); }
                 return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WDISTMI_2, Rez.Strings.LABEL_WDISTMI_3, labelSize);
-            case 33: return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WDISTMI_2, Rez.Strings.LABEL_WDISTMI_3, labelSize);
             case 34: return formatLabel(Rez.Strings.LABEL_BATT_1, Rez.Strings.LABEL_BATT_2, Rez.Strings.LABEL_BATT_3, labelSize);
             case 35: return formatLabel(Rez.Strings.LABEL_BATTD_1, Rez.Strings.LABEL_BATTD_2, Rez.Strings.LABEL_BATTD_3, labelSize);
             case 36: return formatLabel(Rez.Strings.LABEL_NOTIFS_1, Rez.Strings.LABEL_NOTIFS_1, Rez.Strings.LABEL_NOTIFS_3, labelSize);
@@ -2660,8 +2638,6 @@ class Segment34View extends WatchUi.WatchFace {
             case 74: return formatLabel(Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL_3, labelSize);
             case 75: return formatLabel(Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_3, labelSize);
             case 76: return formatLabel(Rez.Strings.LABEL_RHR_1, Rez.Strings.LABEL_RHR_2, Rez.Strings.LABEL_RHR_3, labelSize);
-            case 77: if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WRUNM_2, Rez.Strings.LABEL_WRUNM_3, labelSize); } return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WRUNMI_2, Rez.Strings.LABEL_WRUNMI_3, labelSize);
-            case 78: if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WBIKEKM_2, Rez.Strings.LABEL_WBIKEKM_3, labelSize); } return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WBIKEMI_2, Rez.Strings.LABEL_WBIKEMI_3, labelSize);
         }
 
         return "";
@@ -2879,7 +2855,7 @@ class Segment34View extends WatchUi.WatchFace {
         return temp.format("%d");
     }
 
-    hidden function convertTemperature(temp as Number, unit as String) as Number {
+    hidden function convertTemperature(temp as Numeric, unit as String) as Numeric {
         if(unit.equals("C")) {
             return temp;
         } else {
@@ -2887,13 +2863,6 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function convertTemperatureFloat(temp as Float, unit as String) as Float {
-        if(unit.equals("C")) {
-            return temp;
-        } else {
-            return ((temp * 9/5) + 32);
-        }
-    }
 
     hidden function getWind() as String {
         var windspeed = "";
@@ -2953,7 +2922,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function getFeelsLike(include_label as Boolean) as String {
         var fl = "";
         if(weatherCondition != null and weatherCondition.feelsLikeTemperature != null) {
-            var fltemp = convertTemperatureFloat(weatherCondition.feelsLikeTemperature, cachedTempUnit);
+            var fltemp = convertTemperature(weatherCondition.feelsLikeTemperature, cachedTempUnit);
             if(include_label) {
                 var fllabel = Application.loadResource(Rez.Strings.LABEL_FL);
                 fl = fllabel + formatTemperature(fltemp);
@@ -3015,6 +2984,16 @@ class Segment34View extends WatchUi.WatchFace {
             return (diff / 3600.0).format("%.1f");
         }
         return "";
+    }
+
+    hidden function formatSunTime(s as Time.Moment?, width as Number) as String {
+        if(s != null) {
+            var info = Time.Gregorian.info(s, Time.FORMAT_SHORT);
+            var h = formatHour(info.hour);
+            if(width < 5) { return h.format("%02d") + info.min.format("%02d"); }
+            return h.format("%02d") + ":" + info.min.format("%02d");
+        }
+        return Application.loadResource(Rez.Strings.LABEL_NA);
     }
 
     hidden function getNextSunEvent() as Array {
