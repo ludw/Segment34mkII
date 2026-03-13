@@ -201,12 +201,6 @@
     <string id="LABEL_RHR_1">RHR</string>
     <string id="LABEL_RHR_2">REST HR</string>
     <string id="LABEL_RHR_3">RESTING HR</string>
-    <string id="LABEL_7DRUN_1">7D RN</string>
-    <string id="LABEL_7DRUN_2">7D RUN</string>
-    <string id="LABEL_7DRUN_3">7D RUN</string>
-    <string id="LABEL_7DBIKE_1">7D BK</string>
-    <string id="LABEL_7DBIKE_2">7D BIKE</string>
-    <string id="LABEL_7DBIKE_3">7D BIKE</string>
 
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Color Theme</string>

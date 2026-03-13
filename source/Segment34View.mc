@@ -2033,7 +2033,7 @@ class Segment34View extends WatchUi.WatchFace {
                     val = activityInfo.activeMinutesDay.total.format(numberFormat);
                 }
             }
-        } else if(complicationType == 2) { // distance / day
+        } else if(complicationType == 2 || complicationType == 3) { // distance / day
             if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
             if(activityInfo has :distance) {
                 if(activityInfo.distance != null) {
@@ -2168,9 +2168,9 @@ class Segment34View extends WatchUi.WatchFace {
             }
         } else if(complicationType == 20) { // Weather condition
             val = getWeatherCondition(true);
-        } else if(complicationType == 21) { // Weekly run distance
+        } else if(complicationType == 21 || complicationType == 22) { // Weekly run distance
             val = getWeeklyDistanceFromComplication(true, isMetricDistance() ? 0.001 : 0.000621371, width);
-        } else if(complicationType == 23) { // Weekly bike distance
+        } else if(complicationType == 23 || complicationType == 24) { // Weekly bike distance
             val = getWeeklyDistanceFromComplication(false, isMetricDistance() ? 0.001 : 0.000621371, width);
         } else if(complicationType == 25) { // Training status
             if (hasComplications) {
@@ -2226,7 +2226,7 @@ class Segment34View extends WatchUi.WatchFace {
             var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
             var week_number = isoWeekNumber(today.year, today.month, today.day);
             val = week_number.format(numberFormat);
-        } else if(complicationType == 32) { // Total distance past 7 days
+        } else if(complicationType == 32 || complicationType == 33) { // Total distance past 7 days
             val = formatDistanceByWidth(getWeeklyDistance() * (isMetricDistance() ? 0.00001 : 0.00000621371), width);
         } else if(complicationType == 34) { // Battery percentage
             var battery = System.getSystemStats().battery;
@@ -2598,7 +2598,9 @@ class Segment34View extends WatchUi.WatchFace {
         switch(complicationType) {
             case 0: return formatLabel(Rez.Strings.LABEL_WMIN_1, Rez.Strings.LABEL_WMIN_2, Rez.Strings.LABEL_WMIN_3, labelSize);
             case 1: return formatLabel(Rez.Strings.LABEL_DMIN_1, Rez.Strings.LABEL_DMIN_2, Rez.Strings.LABEL_DMIN_3, labelSize);
-            case 2: return formatLabel(Rez.Strings.LABEL_DKM_1, Rez.Strings.LABEL_DKM_2, Rez.Strings.LABEL_DKM_2, labelSize);
+            case 2:
+                if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_DKM_1, Rez.Strings.LABEL_DKM_2, Rez.Strings.LABEL_DKM_2, labelSize); }
+                return formatLabel(Rez.Strings.LABEL_DMI_1, Rez.Strings.LABEL_DMI_2, Rez.Strings.LABEL_DMI_3, labelSize);
             case 3: return formatLabel(Rez.Strings.LABEL_DMI_1, Rez.Strings.LABEL_DMI_2, Rez.Strings.LABEL_DMI_3, labelSize);
             case 4: return Application.loadResource(Rez.Strings.LABEL_FLOORS);
             case 5: return formatLabel(Rez.Strings.LABEL_CLIMB_1, Rez.Strings.LABEL_CLIMB_2, Rez.Strings.LABEL_CLIMB_2, labelSize);
@@ -2616,9 +2618,13 @@ class Segment34View extends WatchUi.WatchFace {
             case 18: return formatLabel(Rez.Strings.LABEL_DIST_1, Rez.Strings.LABEL_DIST_2, Rez.Strings.LABEL_DIST_3, labelSize);
             case 19: return Application.loadResource(Rez.Strings.LABEL_PUSHES);
             case 20: return "";
-            case 21: return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WRUNM_2, Rez.Strings.LABEL_WRUNM_3, labelSize);
+            case 21:
+                if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WRUNM_2, Rez.Strings.LABEL_WRUNM_3, labelSize); }
+                return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WRUNMI_2, Rez.Strings.LABEL_WRUNMI_3, labelSize);
             case 22: return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WRUNMI_2, Rez.Strings.LABEL_WRUNMI_3, labelSize);
-            case 23: return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WBIKEKM_2, Rez.Strings.LABEL_WBIKEKM_3, labelSize);
+            case 23:
+                if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WBIKEKM_2, Rez.Strings.LABEL_WBIKEKM_3, labelSize); }
+                return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WBIKEMI_2, Rez.Strings.LABEL_WBIKEMI_3, labelSize);
             case 24: return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WBIKEMI_2, Rez.Strings.LABEL_WBIKEMI_3, labelSize);
             case 25: return Application.loadResource(Rez.Strings.LABEL_TRAINING);
             case 26: return Application.loadResource(Rez.Strings.LABEL_PRESSURE);
@@ -2627,7 +2633,9 @@ class Segment34View extends WatchUi.WatchFace {
             case 29: return formatLabel(Rez.Strings.LABEL_ACAL_1, Rez.Strings.LABEL_ACAL_2, Rez.Strings.LABEL_ACAL_3, labelSize);
             case 30: return Application.loadResource(Rez.Strings.LABEL_PRESSURE);
             case 31: return Application.loadResource(Rez.Strings.LABEL_WEEK);
-            case 32: return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WDISTKM_2, Rez.Strings.LABEL_WDISTKM_3, labelSize);
+            case 32:
+                if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WDISTKM_2, Rez.Strings.LABEL_WDISTKM_3, labelSize); }
+                return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WDISTMI_2, Rez.Strings.LABEL_WDISTMI_3, labelSize);
             case 33: return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WDISTMI_2, Rez.Strings.LABEL_WDISTMI_3, labelSize);
             case 34: return formatLabel(Rez.Strings.LABEL_BATT_1, Rez.Strings.LABEL_BATT_2, Rez.Strings.LABEL_BATT_3, labelSize);
             case 35: return formatLabel(Rez.Strings.LABEL_BATTD_1, Rez.Strings.LABEL_BATTD_2, Rez.Strings.LABEL_BATTD_3, labelSize);
@@ -2652,8 +2660,8 @@ class Segment34View extends WatchUi.WatchFace {
             case 74: return formatLabel(Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL_3, labelSize);
             case 75: return formatLabel(Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_3, labelSize);
             case 76: return formatLabel(Rez.Strings.LABEL_RHR_1, Rez.Strings.LABEL_RHR_2, Rez.Strings.LABEL_RHR_3, labelSize);
-            case 77: return formatLabel(Rez.Strings.LABEL_7DRUN_1, Rez.Strings.LABEL_7DRUN_2, Rez.Strings.LABEL_7DRUN_3, labelSize);
-            case 78: return formatLabel(Rez.Strings.LABEL_7DBIKE_1, Rez.Strings.LABEL_7DBIKE_2, Rez.Strings.LABEL_7DBIKE_3, labelSize);
+            case 77: if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WRUNM_2, Rez.Strings.LABEL_WRUNM_3, labelSize); } return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WRUNMI_2, Rez.Strings.LABEL_WRUNMI_3, labelSize);
+            case 78: if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WBIKEKM_2, Rez.Strings.LABEL_WBIKEKM_3, labelSize); } return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WBIKEMI_2, Rez.Strings.LABEL_WBIKEMI_3, labelSize);
         }
 
         return "";

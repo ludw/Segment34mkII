@@ -201,12 +201,6 @@
     <string id="LABEL_RHR_1">SPOCZ</string>
     <string id="LABEL_RHR_2">SPOCZ HR</string>
     <string id="LABEL_RHR_3">TĘTNO SPOCZ</string>
-    <string id="LABEL_7DRUN_1">7D BG</string>
-    <string id="LABEL_7DRUN_2">7D BIEG</string>
-    <string id="LABEL_7DRUN_3">7D BIEG</string>
-    <string id="LABEL_7DBIKE_1">7D RW</string>
-    <string id="LABEL_7DBIKE_2">7D ROWER</string>
-    <string id="LABEL_7DBIKE_3">7D ROWER</string>
 
     <string id="settings_color_theme" scope="settings">Motyw kolorystyczny</string>
     <string id="settings_yellow_on_turquoise" scope="settings">Żółty na turkusowym</string>

@@ -201,12 +201,6 @@
     <string id="LABEL_RHR_1">RFC</string>
     <string id="LABEL_RHR_2">FC RIPO</string>
     <string id="LABEL_RHR_3">FC RIPOSO</string>
-    <string id="LABEL_7DRUN_1">7G CR</string>
-    <string id="LABEL_7DRUN_2">7G CORS</string>
-    <string id="LABEL_7DRUN_3">7G CORS</string>
-    <string id="LABEL_7DBIKE_1">7G BC</string>
-    <string id="LABEL_7DBIKE_2">7G BICI</string>
-    <string id="LABEL_7DBIKE_3">7G BICI</string>
 
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Tema Colore</string>

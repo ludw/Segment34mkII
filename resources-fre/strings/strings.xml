@@ -201,12 +201,6 @@
     <string id="LABEL_RHR_1">RFC</string>
     <string id="LABEL_RHR_2">FC REPO</string>
     <string id="LABEL_RHR_3">FC REPOS</string>
-    <string id="LABEL_7DRUN_1">7J CO</string>
-    <string id="LABEL_7DRUN_2">7J COUR</string>
-    <string id="LABEL_7DRUN_3">7J COUR</string>
-    <string id="LABEL_7DBIKE_1">7J VL</string>
-    <string id="LABEL_7DBIKE_2">7J VÉLO</string>
-    <string id="LABEL_7DBIKE_3">7J VÉLO</string>
 
     <string id="settings_color_theme" scope="settings">Thème de couleur</string>
     <string id="settings_yellow_on_turquoise" scope="settings">Jaune sur turquoise</string>

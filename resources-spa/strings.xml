@@ -200,12 +200,6 @@
     <string id="LABEL_RHR_1">FCC</string>
     <string id="LABEL_RHR_2">FC REP</string>
     <string id="LABEL_RHR_3">FC REPOSO</string>
-    <string id="LABEL_7DRUN_1">7D COR</string>
-    <string id="LABEL_7DRUN_2">7D CORR</string>
-    <string id="LABEL_7DRUN_3">7D CORR</string>
-    <string id="LABEL_7DBIKE_1">7D BI</string>
-    <string id="LABEL_7DBIKE_2">7D BICI</string>
-    <string id="LABEL_7DBIKE_3">7D BICI</string>
 
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Tema Colores</string>
