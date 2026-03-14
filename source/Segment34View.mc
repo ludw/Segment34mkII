@@ -80,6 +80,9 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var lastSlowUpdate as Number? = null;
     hidden var cachedValues as Dictionary = {};
     hidden var cachedTempUnit as String = "C";
+    hidden var cachedRunDist7Days as Number = 0;
+    hidden var cachedBikeDist7Days as Number = 0;
+    hidden var lastActivityDistUpdate as Number = 0;
 
     hidden var isWeatherRequired as Boolean = false;
     (:WeatherCache) hidden var lastHfTime as Number? = null;
@@ -2479,12 +2482,13 @@ class Segment34View extends WatchUi.WatchFace {
                     val = profile.restingHeartRate.format(numberFormat);
                 }
             }
-        } else if(complicationType == 77) { // Run distance past 7 days
-            var factor77 = isMetricDistance() ? 0.001 : 0.000621371;
-            val = formatDistanceByWidth(getActivityDistancePast7Days(Activity.SPORT_RUNNING) * factor77, width);
-        } else if(complicationType == 78) { // Bike distance past 7 days
-            var factor78 = isMetricDistance() ? 0.001 : 0.000621371;
-            val = formatDistanceByWidth(getActivityDistancePast7Days(Activity.SPORT_CYCLING) * factor78, width);
+        } else if(complicationType == 77 || complicationType == 78) { // Run/bike distance past 7 days
+            if(Time.now().value() - lastActivityDistUpdate >= 3600) {
+                lastActivityDistUpdate = Time.now().value();
+                updateActivityDistCache();
+            }
+            var distFactor = isMetricDistance() ? 0.001 : 0.000621371;
+            val = formatDistanceByWidth((complicationType == 77 ? cachedRunDist7Days : cachedBikeDist7Days) * distFactor, width);
         }
 
         return val;
@@ -3079,24 +3083,22 @@ class Segment34View extends WatchUi.WatchFace {
         return weekly_distance;
     }
 
-    hidden function getActivityDistancePast7Days(sport as Number) as Number {
-        if (!(UserProfile has :getUserActivityHistory)) { return 0; }
-        var sevenDaysAgo = Time.now().subtract(new Time.Duration(7 * 24 * 3600));
-        var totalMeters = 0;
+    hidden function updateActivityDistCache() as Void {
+        if (!(UserProfile has :getUserActivityHistory)) { return; }
+        var sevenDaysAgoVal = Time.now().value() - (7 * 24 * 3600);
+        var runDist = 0;
+        var bikeDist = 0;
         var iter = UserProfile.getUserActivityHistory();
         var act = iter.next();
-        var count = 0;
-        while (act != null && count < 50) {
-            count++;
-            if (act.startTime != null) {
-                if (act.startTime.lessThan(sevenDaysAgo)) { break; } // newest-first; stop here
-                if (act.type == sport && act.distance != null) {
-                    totalMeters += act.distance;
-                }
+        while (act != null) {
+            if (act.startTime != null && act.startTime.value() >= sevenDaysAgoVal && act.distance != null) {
+                if (act.type == Activity.SPORT_RUNNING) { runDist += act.distance; }
+                else if (act.type == Activity.SPORT_CYCLING) { bikeDist += act.distance; }
             }
             act = iter.next();
         }
-        return totalMeters;
+        cachedRunDist7Days = runDist;
+        cachedBikeDist7Days = bikeDist;
     }
 
     hidden function getWeeklyDistanceFromComplication(isRun as Boolean, conversionFactor as Float, width as Number) as String {
