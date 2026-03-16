@@ -59,7 +59,12 @@ For refactorings and optimizations keep in mind that:
 - Second custom theme for easy switching
 
 ## Change log
-2026-03-05 v4.5.1
+2026-03-16 v4.6.0
+- Fixed outline missalignment on digit 9, thanks Alvin for the report
+- Adjusted cache for "per 7 day" data to refresh after 5min instead of 1h
+
+
+2026-03-14 v4.5.1
 - Fixed issue with run / bike distance past 7 days
 
 2026-03-05 v4.5.0
