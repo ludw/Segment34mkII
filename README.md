@@ -59,6 +59,9 @@ For refactorings and optimizations keep in mind that:
 - Second custom theme for easy switching
 
 ## Change log
+2026-03-05 v4.5.1
+- Fixed issue with run / bike distance past 7 days
+
 2026-03-05 v4.5.0
 - Built with the latest Garmin SDK
 - New option for run / bike distance past 7 days (rolling)

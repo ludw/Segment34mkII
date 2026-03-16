@@ -2483,7 +2483,7 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 77 || complicationType == 78) { // Run/bike distance past 7 days
-            if(Time.now().value() - lastActivityDistUpdate >= 3600) {
+            if(Time.now().value() - lastActivityDistUpdate >= 60*5) {
                 lastActivityDistUpdate = Time.now().value();
                 updateActivityDistCache();
             }
