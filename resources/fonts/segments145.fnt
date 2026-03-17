@@ -3,6 +3,7 @@ common lineHeight=145 base=145 scaleW=804 scaleH=145 pages=1
 page id=0 file="segments145.png"
 chars count=11
 char id=32 x=0 y=0 width=0 height=145 xoffset=0 yoffset=0 xadvance=83 page=0
+char id=95 x=0 y=0 width=0 height=145 xoffset=0 yoffset=0 xadvance=83 page=0
 char id=35 x=0 y=0 width=77 height=145 xoffset=0 yoffset=0 xadvance=83 page=0
 char id=49 x=78 y=0 width=77 height=145 xoffset=0 yoffset=0 xadvance=83 page=0
 char id=50 x=156 y=0 width=77 height=145 xoffset=0 yoffset=0 xadvance=83 page=0
@@ -15,3 +16,7 @@ char id=56 x=624 y=0 width=77 height=145 xoffset=0 yoffset=0 xadvance=83 page=0
 char id=57 x=702 y=0 width=77 height=145 xoffset=0 yoffset=0 xadvance=83 page=0
 char id=48 x=780 y=0 width=77 height=145 xoffset=0 yoffset=0 xadvance=83 page=0
 char id=58 x=858 y=0 width=77 height=145 xoffset=0 yoffset=0 xadvance=83 page=0
+
+char id=65 x=936 y=0 width=77 height=72 xoffset=0 yoffset=0 xadvance=83 page=0
+char id=66 x=936 y=0 width=77 height=145 xoffset=0 yoffset=0 xadvance=83 page=0
+char id=80 x=936 y=73 width=77 height=72 xoffset=0 yoffset=73 xadvance=83 page=0

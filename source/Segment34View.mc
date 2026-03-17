@@ -183,7 +183,7 @@ class Segment34View extends WatchUi.WatchFace {
         lowBatt
     }
 
-    var clockBgText = "#####";
+    var clockBgText = "";
 
     (:Round240) const bottomFieldWidths = [3, 3, 3, 0];
     (:Round260) const bottomFieldWidths = [3, 4, 3, 0];
@@ -453,7 +453,7 @@ class Segment34View extends WatchUi.WatchFace {
         loadAODGraphics();
 
         clockHeight = 125;
-        clockWidth = 355;
+        clockWidth = 360;
         labelHeight = 10;
         labelMargin = 8;
         tinyDataHeight = 13;
@@ -1554,7 +1554,13 @@ class Segment34View extends WatchUi.WatchFace {
 
         initializeWeatherData();
 
-        if(propTimeSeparator == 2) { clockBgText = "####"; } else { clockBgText = "#####"; }
+        if(propTimeSeparator == 2) {
+            clockBgText = "####";
+        } else if(propTimeSeparator == 3) {
+            clockBgText = "####B";
+        } else {
+            clockBgText = "#####";
+        }
     }
 
     hidden function getAltitudeValue() as Float? {
@@ -1590,13 +1596,18 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function getClockData(now as Gregorian.Info) as String {
         var separator = ":";
+        var after = "";
         if(propTimeSeparator == 1) { separator = " "; }
         if(propTimeSeparator == 2) { separator = ""; }
+        if(propTimeSeparator == 3) {
+            separator = ""; 
+            if(now.hour >= 12) { after = "P"; } else { after = "A"; }
+        }
 
         if(propZeropadHour) {
-            return formatHour(now.hour).format("%02d") + separator + now.min.format("%02d");
+            return formatHour(now.hour).format("%02d") + separator + now.min.format("%02d") + after;
         } else {
-            return formatHour(now.hour).format("%2d") + separator + now.min.format("%02d");
+            return formatHour(now.hour).format("%2d") + separator + now.min.format("%02d") + after;
         }
     }
 

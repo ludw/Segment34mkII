@@ -467,6 +467,7 @@
     <string id="settings_colon" scope="settings">:</string>
     <string id="settings_blank_space" scope="settings">Blank space</string>
     <string id="settings_no_separator" scope="settings">No separator</string>
+    <string id="settings_ampm" scope="settings">No separator, show AM/PM after instead</string>
     <string id="settings_show_seconds_active" scope="settings">Show Seconds in Active mode</string>
     <string id="settings_show_seconds_inactive" scope="settings">Show seconds in Inactive mode (MIP screens only)</string>
     <string id="settings_show_stress_body_battery" scope="settings">Show Stress (orange) and Body Battery (blue) bars</string>
