@@ -877,19 +877,21 @@ class Segment34View extends WatchUi.WatchFace {
         dc.drawText(centerX, yn1, fontSmallData, values[:dataAboveLine2], Graphics.TEXT_JUSTIFY_CENTER);        
 
         // Draw Clock
-        dc.setColor(themeColors[clockBg], Graphics.COLOR_TRANSPARENT);
-        if(propShowClockBg and !aod) {
-            dc.drawText(baseX, baseY, fontClock, clockBgText, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-        }
-        dc.setColor(themeColors[clock], Graphics.COLOR_TRANSPARENT);
-        dc.drawText(baseX, baseY, fontClock, values[:dataClock], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        if(propClockOutlineStyle != 5) {
+            dc.setColor(themeColors[clockBg], Graphics.COLOR_TRANSPARENT);
+            if(propShowClockBg and !aod) {
+                dc.drawText(baseX, baseY, fontClock, clockBgText, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            }
+            dc.setColor(themeColors[clock], Graphics.COLOR_TRANSPARENT);
+            dc.drawText(baseX, baseY, fontClock, values[:dataClock], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
-        // Draw clock gradient
-        if(drawGradient != null and themeColors[bg] == 0x000000 and !aod) {
-            dc.drawBitmap(centerX - halfClockWidth, baseY - halfClockHeight, drawGradient);
+            // Draw clock gradient
+            if(drawGradient != null and themeColors[bg] == 0x000000 and !aod) {
+                dc.drawBitmap(centerX - halfClockWidth, baseY - halfClockHeight, drawGradient);
+            }
         }
 
-        if(propClockOutlineStyle == 2 or propClockOutlineStyle == 3) {
+        if(propClockOutlineStyle == 2 or propClockOutlineStyle == 3 or propClockOutlineStyle == 5) {
             if(fontClockOutline != null) { // Someone has only bothered to draw this font for AMOLED sizes
                 // Draw outline
                 dc.setColor(themeColors[outline], Graphics.COLOR_TRANSPARENT);
@@ -1034,20 +1036,22 @@ class Segment34View extends WatchUi.WatchFace {
             dc.drawText(baseX - halfClockWidth, yn0, fontSmallData, values[:dataNotifications], Graphics.TEXT_JUSTIFY_LEFT);
         }
 
-        // Draw Clock
-        dc.setColor(themeColors[clockBg], Graphics.COLOR_TRANSPARENT);
-        if(propShowClockBg and !aod) {
-            dc.drawText(baseX, baseY, fontClock, clockBgText, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-        }
-        dc.setColor(themeColors[clock], Graphics.COLOR_TRANSPARENT);
-        dc.drawText(baseX, baseY, fontClock, values[:dataClock], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        if(propClockOutlineStyle != 5) {
+            // Draw Clock
+            dc.setColor(themeColors[clockBg], Graphics.COLOR_TRANSPARENT);
+            if(propShowClockBg and !aod) {
+                dc.drawText(baseX, baseY, fontClock, clockBgText, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            }
+            dc.setColor(themeColors[clock], Graphics.COLOR_TRANSPARENT);
+            dc.drawText(baseX, baseY, fontClock, values[:dataClock], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
-        // Draw clock gradient
-        if(drawGradient != null and themeColors[bg] == 0x000000 and !aod) {
-            dc.drawBitmap(centerX - halfClockWidth, baseY - halfClockHeight, drawGradient);
+            // Draw clock gradient
+            if(drawGradient != null and themeColors[bg] == 0x000000 and !aod) {
+                dc.drawBitmap(centerX - halfClockWidth, baseY - halfClockHeight, drawGradient);
+            }
         }
 
-        if(propClockOutlineStyle == 2 or propClockOutlineStyle == 3) {
+        if(propClockOutlineStyle == 2 or propClockOutlineStyle == 3 or propClockOutlineStyle == 5) {
             if(fontClockOutline != null) {
                 dc.setColor(themeColors[outline], Graphics.COLOR_TRANSPARENT);
                 dc.drawText(baseX, baseY, fontClockOutline, values[:dataClock], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
@@ -1092,13 +1096,13 @@ class Segment34View extends WatchUi.WatchFace {
             var clock_color = themeColors[clock];
             if(clock_color == 0x000000) { clock_color = 0x555555; }
 
-            if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2 or propClockOutlineStyle == 5) {
+            if(propClockOutlineStyle == 0 or propClockOutlineStyle == 2) {
                 // Draw Clock
                 dc.setColor(clock_color, Graphics.COLOR_TRANSPARENT);
                 dc.drawText(baseX, baseY, fontClock, values[:dataClock], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             }
 
-            if(propClockOutlineStyle == 1 or propClockOutlineStyle == 2 or propClockOutlineStyle == 3) {
+            if(propClockOutlineStyle == 1 or propClockOutlineStyle == 2 or propClockOutlineStyle == 3 or propClockOutlineStyle == 5) {
                 dc.setColor(themeColors[outline], Graphics.COLOR_TRANSPARENT);
                 dc.drawText(baseX, baseY, fontClockOutline, values[:dataClock], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             }

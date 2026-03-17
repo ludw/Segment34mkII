@@ -244,6 +244,7 @@
     <string id="settings_filled_numbers_no_outline_filled" scope="settings">Filled numbers no outline, filled using outline color in AOD</string>
     <string id="settings_filled_numbers_with_outline" scope="settings">Filled numbers with outline, same in AOD</string>
     <string id="settings_filled_numbers_with_outline_aod" scope="settings">Filled numbers with outline, only outline in AOD</string>
+    <string id="settings_just_outline" scope="settings">Just show the outline</string>
     <string id="settings_filled_numbers_plain" scope="settings">Filled numbers no outline, no gradient in AOD (better for redshift)</string>
     <string id="settings_clock_gradient_overlay" scope="settings">Clock Gradient Overlay</string>
     <string id="settings_gradient_clock_and_aod" scope="settings">Gradient for both clock and AOD (default)</string>
