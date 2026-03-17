@@ -1510,7 +1510,12 @@ class Segment34View extends WatchUi.WatchFace {
         propHemisphere = getValueOrDefault("hemisphere", 0) as Number;
         propHourFormat = getValueOrDefault("hourFormat", 0) as Number;
         propZeropadHour = getValueOrDefault("zeropadHour", true) as Boolean;
+        propIs24H = System.getDeviceSettings().is24Hour;
         propTimeSeparator = getValueOrDefault("timeSeparator", 0) as Number;
+        // propTimeSeparator Auto (0): if 12h time use AM/PM (3), if 24h time use : (4)
+        if (propTimeSeparator == 0) {
+            if ((!propIs24H and propHourFormat == 0) or propHourFormat == 2) { propTimeSeparator = 3; } else { propTimeSeparator = 4; }
+        }
         propTempUnit = getValueOrDefault("tempUnit", 0) as Number;
         propShowTempUnit = getValueOrDefault("showTempUnit", true) as Boolean;
         propDistanceUnit = getValueOrDefault("distanceUnit", 0) as Number;
@@ -1525,7 +1530,6 @@ class Segment34View extends WatchUi.WatchFace {
         propTzName2 = getValueOrDefault("tzName2", "TZ2") as String;
         propWeekOffset = getValueOrDefault("weekOffset", 0) as Number;
         propSmallFontVariant = getValueOrDefault("smallFontVariant", 2) as Number;
-        propIs24H = System.getDeviceSettings().is24Hour;
         propStressDynamicColor = getValueOrDefault("stressDynamicColor", false) as Boolean;
 
         nightMode = null; // force update color theme
@@ -3226,11 +3230,17 @@ class Segment34View extends WatchUi.WatchFace {
         if(hour > 23) {
             hour -= 24;
         }
-        hour = formatHour(hour);
+        var f_hour = formatHour(hour);
         if(width < 5) {
-            val = hour.format("%02d") + min.format("%02d");
+            val = f_hour.format("%02d") + min.format("%02d");
         } else {
-            val = hour.format("%02d") + ":" + min.format("%02d");
+            if(propTimeSeparator == 3) {
+                var ampm = "A";
+                if(hour >= 12) { ampm = "P"; }
+                val = f_hour.format("%02d") + min.format("%02d") + ampm;
+            } else {
+                val = f_hour.format("%02d") + ":" + min.format("%02d");
+            }
         }
         return val;
     }

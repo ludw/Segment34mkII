@@ -52,17 +52,16 @@ For refactorings and optimizations keep in mind that:
 - Notifications as icon
 - 7 day rolling run distance
 - Line font for bottom fields
-- AM/PM indicator
 - clock font without segments
 - separate 24h mode for alt tz
 - Configurable data for the notification field, week number and other short info could work
 - Second custom theme for easy switching
 
 ## Change log
-2026-03-16 v4.6.0
+2026-03-17 v4.6.0
+- AM/PM display (to dissable set Separator between hours and minuts to ":")
 - Fixed outline missalignment on digit 9, thanks Alvin for the report
 - Adjusted cache for "per 7 day" data to refresh after 5min instead of 1h
-
 
 2026-03-14 v4.5.1
 - Fixed issue with run / bike distance past 7 days

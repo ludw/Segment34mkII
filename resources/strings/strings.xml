@@ -464,6 +464,7 @@
     <string id="settings_notification_field_shows" scope="settings">Number left of seconds shows</string>
     <string id="settings_zeropad_hour_clock" scope="settings">Zeropad hour on clock</string>
     <string id="settings_separator_hours_minutes" scope="settings">Separator between Hours and Minutes</string>
+    <string id="settings_auto" scope="settings">Auto</string>
     <string id="settings_colon" scope="settings">:</string>
     <string id="settings_blank_space" scope="settings">Blank space</string>
     <string id="settings_no_separator" scope="settings">No separator</string>
