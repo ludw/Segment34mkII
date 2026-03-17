@@ -341,7 +341,7 @@ class Segment34View extends WatchUi.WatchFace {
         fontBattery = fontTinyData;
 
         clockHeight = 80;
-        clockWidth = 227;
+        clockWidth = 230;
         labelHeight = 5;
         labelMargin = 6;
         tinyDataHeight = 8;
@@ -375,7 +375,7 @@ class Segment34View extends WatchUi.WatchFace {
         fontBattery = fontLabel;
 
         clockHeight = 80;
-        clockWidth = 236;
+        clockWidth = 240;
         labelHeight = 8;
         labelMargin = 6;
         tinyDataHeight = 10;
