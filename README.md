@@ -60,6 +60,7 @@ For refactorings and optimizations keep in mind that:
 ## Change log
 2026-03-17 v4.6.0
 - AM/PM display (to dissable set Separator between hours and minuts to ":")
+- Option to just show the outline for the clock
 - Fixed outline missalignment on digit 9, thanks Alvin for the report
 - Adjusted cache for "per 7 day" data to refresh after 5min instead of 1h
 
