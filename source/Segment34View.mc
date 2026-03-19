@@ -136,6 +136,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propTempUnit as Number = 0;
     hidden var propShowTempUnit as Boolean = true;
     hidden var propDistanceUnit as Number = 0;
+    hidden var propIsMetricDistance as Boolean = true;
     hidden var propWindUnit as Number = 0;
     hidden var propPressureUnit as Number = 0;
     hidden var propTopPartShows as Number = 0;
@@ -1511,6 +1512,7 @@ class Segment34View extends WatchUi.WatchFace {
         propTempUnit = p.getValue("tempUnit") as Number;
         propShowTempUnit = p.getValue("showTempUnit") as Boolean;
         propDistanceUnit = p.getValue("distanceUnit") as Number;
+        propIsMetricDistance = (System.getDeviceSettings().distanceUnits == System.UNIT_METRIC and propDistanceUnit == 0) or propDistanceUnit == 1;
         propWindUnit = p.getValue("windUnit") as Number;
         propPressureUnit = p.getValue("pressureUnit") as Number;
         propLabelVisibility = p.getValue("labelVisibility") as Number;
@@ -2063,7 +2065,7 @@ class Segment34View extends WatchUi.WatchFace {
             if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
             if(activityInfo has :distance) {
                 if(activityInfo.distance != null) {
-                    val = formatDistanceByWidth(activityInfo.distance / (isMetricDistance() ? 100000.0 : 160900.0), width);
+                    val = formatDistanceByWidth(activityInfo.distance / (propIsMetricDistance ? 100000.0 : 160900.0), width);
                 }
             }
         } else if(complicationType == 4) { // floors climbed / day
@@ -2195,9 +2197,9 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 20) { // Weather condition
             val = getWeatherCondition(true);
         } else if(complicationType == 21 || complicationType == 22) { // Weekly run distance
-            val = getWeeklyDistanceFromComplication(true, isMetricDistance() ? 0.001 : 0.000621371, width);
+            val = getWeeklyDistanceFromComplication(true, propIsMetricDistance ? 0.001 : 0.000621371, width);
         } else if(complicationType == 23 || complicationType == 24) { // Weekly bike distance
-            val = getWeeklyDistanceFromComplication(false, isMetricDistance() ? 0.001 : 0.000621371, width);
+            val = getWeeklyDistanceFromComplication(false, propIsMetricDistance ? 0.001 : 0.000621371, width);
         } else if(complicationType == 25) { // Training status
             if (hasComplications) {
                 try {
@@ -2253,16 +2255,14 @@ class Segment34View extends WatchUi.WatchFace {
             var week_number = isoWeekNumber(today.year, today.month, today.day);
             val = week_number.format(numberFormat);
         } else if(complicationType == 32 || complicationType == 33) { // Total distance past 7 days
-            val = formatDistanceByWidth(getWeeklyDistance() * (isMetricDistance() ? 0.00001 : 0.00000621371), width);
+            val = formatDistanceByWidth(getWeeklyDistance() * (propIsMetricDistance ? 0.00001 : 0.00000621371), width);
         } else if(complicationType == 34) { // Battery percentage
             var battery = System.getSystemStats().battery;
             val = battery.format("%d");
         } else if(complicationType == 35) { // Battery days remaining
-            if(System.getSystemStats() has :batteryInDays) {
-                if (System.getSystemStats().batteryInDays != null){
-                    var sample = Math.round(System.getSystemStats().batteryInDays);
-                    val = sample.format(numberFormat);
-                }
+            var stats35 = System.getSystemStats();
+            if(stats35 has :batteryInDays and stats35.batteryInDays != null) {
+                val = Math.round(stats35.batteryInDays).format(numberFormat);
             }
         } else if(complicationType == 36) { // Notification count
             var notif_count = System.getDeviceSettings().notificationCount;
@@ -2274,8 +2274,9 @@ class Segment34View extends WatchUi.WatchFace {
                 }
             }
         } else if(complicationType == 37) { // Solar intensity
-            if(System.getSystemStats() has :solarIntensity and System.getSystemStats().solarIntensity != null) {
-                val = System.getSystemStats().solarIntensity.format(numberFormat);
+            var stats37 = System.getSystemStats();
+            if(stats37 has :solarIntensity and stats37.solarIntensity != null) {
+                val = stats37.solarIntensity.format(numberFormat);
             }
         } else if(complicationType == 38) { // Sensor temperature
             if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getTemperatureHistory)) {
@@ -2494,7 +2495,7 @@ class Segment34View extends WatchUi.WatchFace {
                 lastActivityDistUpdate = Time.now().value();
                 updateActivityDistCache();
             }
-            var distFactor = isMetricDistance() ? 0.001 : 0.000621371;
+            var distFactor = propIsMetricDistance ? 0.001 : 0.000621371;
             val = formatDistanceByWidth((complicationType == 77 ? cachedRunDist7Days : cachedBikeDist7Days) * distFactor, width);
         }
 
@@ -2592,7 +2593,7 @@ class Segment34View extends WatchUi.WatchFace {
             case 1: return formatLabel(Rez.Strings.LABEL_DMIN_1, Rez.Strings.LABEL_DMIN_2, Rez.Strings.LABEL_DMIN_3, labelSize);
             case 3:
             case 2:
-                if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_DKM_1, Rez.Strings.LABEL_DKM_2, Rez.Strings.LABEL_DKM_2, labelSize); }
+                if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_DKM_1, Rez.Strings.LABEL_DKM_2, Rez.Strings.LABEL_DKM_2, labelSize); }
                 return formatLabel(Rez.Strings.LABEL_DMI_1, Rez.Strings.LABEL_DMI_2, Rez.Strings.LABEL_DMI_3, labelSize);
             case 4: return Application.loadResource(Rez.Strings.LABEL_FLOORS);
             case 5: return formatLabel(Rez.Strings.LABEL_CLIMB_1, Rez.Strings.LABEL_CLIMB_2, Rez.Strings.LABEL_CLIMB_2, labelSize);
@@ -2613,12 +2614,12 @@ class Segment34View extends WatchUi.WatchFace {
             case 22:
             case 77:
             case 21:
-                if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WRUNM_2, Rez.Strings.LABEL_WRUNM_3, labelSize); }
+                if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WRUNM_2, Rez.Strings.LABEL_WRUNM_3, labelSize); }
                 return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WRUNMI_2, Rez.Strings.LABEL_WRUNMI_3, labelSize);
             case 24:
             case 78:
             case 23:
-                if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WBIKEKM_2, Rez.Strings.LABEL_WBIKEKM_3, labelSize); }
+                if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WBIKEKM_2, Rez.Strings.LABEL_WBIKEKM_3, labelSize); }
                 return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WBIKEMI_2, Rez.Strings.LABEL_WBIKEMI_3, labelSize);
             case 25: return Application.loadResource(Rez.Strings.LABEL_TRAINING);
             case 26: return Application.loadResource(Rez.Strings.LABEL_PRESSURE);
@@ -2629,7 +2630,7 @@ class Segment34View extends WatchUi.WatchFace {
             case 31: return Application.loadResource(Rez.Strings.LABEL_WEEK);
             case 33:
             case 32:
-                if(isMetricDistance()) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WDISTKM_2, Rez.Strings.LABEL_WDISTKM_3, labelSize); }
+                if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WDISTKM_2, Rez.Strings.LABEL_WDISTKM_3, labelSize); }
                 return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WDISTMI_2, Rez.Strings.LABEL_WDISTMI_3, labelSize);
             case 34: return formatLabel(Rez.Strings.LABEL_BATT_1, Rez.Strings.LABEL_BATT_2, Rez.Strings.LABEL_BATT_3, labelSize);
             case 35: return formatLabel(Rez.Strings.LABEL_BATTD_1, Rez.Strings.LABEL_BATTD_2, Rez.Strings.LABEL_BATTD_3, labelSize);
@@ -2849,10 +2850,6 @@ class Segment34View extends WatchUi.WatchFace {
             return formatTemperature(convertTemperature(temp_val, cachedTempUnit));
         }
         return "";
-    }
-
-    hidden function isMetricDistance() as Boolean {
-        return (System.getDeviceSettings().distanceUnits == System.UNIT_METRIC and propDistanceUnit == 0) or propDistanceUnit == 1;
     }
 
     hidden function getTempUnit() as String {
