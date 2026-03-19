@@ -2577,17 +2577,11 @@ class Segment34View extends WatchUi.WatchFace {
         return ret;
     } 
 
+    (:WeatherCache)
     hidden function getLabelByType(complicationType as Number, labelSize as Number) as String {
         // labelSize 1 = short, 2 = mid, 3 = long
-
-        if(complicationType == 16) {
-            return propTzName1.toUpper() + ":";
-        }
-
-        if(complicationType == 41) {
-            return propTzName2.toUpper() + ":";
-        }
-        
+        if(complicationType == 16) { return propTzName1.toUpper() + ":"; }
+        if(complicationType == 41) { return propTzName2.toUpper() + ":"; }
         switch(complicationType) {
             case 0: return formatLabel(Rez.Strings.LABEL_WMIN_1, Rez.Strings.LABEL_WMIN_2, Rez.Strings.LABEL_WMIN_3, labelSize);
             case 1: return formatLabel(Rez.Strings.LABEL_DMIN_1, Rez.Strings.LABEL_DMIN_2, Rez.Strings.LABEL_DMIN_3, labelSize);
@@ -2656,14 +2650,96 @@ class Segment34View extends WatchUi.WatchFace {
             case 75: return formatLabel(Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_3, labelSize);
             case 76: return formatLabel(Rez.Strings.LABEL_RHR_1, Rez.Strings.LABEL_RHR_2, Rez.Strings.LABEL_RHR_3, labelSize);
         }
-
         return "";
     }
 
+    (:NoWeatherCache)
+    hidden function getLabelByType(complicationType as Number, labelSize as Number) as String {
+        // Low-mem version: formatLabel only takes short + mid (no long/_3 resources)
+        if(complicationType == 16) { return propTzName1.toUpper() + ":"; }
+        if(complicationType == 41) { return propTzName2.toUpper() + ":"; }
+        switch(complicationType) {
+            case 0: return formatLabel(Rez.Strings.LABEL_WMIN_1, Rez.Strings.LABEL_WMIN_2, labelSize);
+            case 1: return formatLabel(Rez.Strings.LABEL_DMIN_1, Rez.Strings.LABEL_DMIN_2, labelSize);
+            case 3:
+            case 2:
+                if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_DKM_1, Rez.Strings.LABEL_DKM_2, labelSize); }
+                return formatLabel(Rez.Strings.LABEL_DMI_1, Rez.Strings.LABEL_DMI_2, labelSize);
+            case 4: return Application.loadResource(Rez.Strings.LABEL_FLOORS);
+            case 5: return formatLabel(Rez.Strings.LABEL_CLIMB_1, Rez.Strings.LABEL_CLIMB_2, labelSize);
+            case 6: return formatLabel(Rez.Strings.LABEL_RECOV_1, Rez.Strings.LABEL_RECOV_2, labelSize);
+            case 7: return formatLabel(Rez.Strings.LABEL_VO2_1, Rez.Strings.LABEL_VO2_2, labelSize);
+            case 8: return formatLabel(Rez.Strings.LABEL_VO2_1, Rez.Strings.LABEL_VO2_2, labelSize);
+            case 9: return formatLabel(Rez.Strings.LABEL_RESP_1, Rez.Strings.LABEL_RESP_2, labelSize);
+            case 10: return Application.loadResource(Rez.Strings.LABEL_HR);
+            case 11: return formatLabel(Rez.Strings.LABEL_CAL_1, Rez.Strings.LABEL_CAL_2, labelSize);
+            case 12: return formatLabel(Rez.Strings.LABEL_ALT_1, Rez.Strings.LABEL_ALT_2, labelSize);
+            case 13: return Application.loadResource(Rez.Strings.LABEL_STRESS);
+            case 14: return formatLabel(Rez.Strings.LABEL_BBAT_1, Rez.Strings.LABEL_BBAT_2, labelSize);
+            case 15: return formatLabel(Rez.Strings.LABEL_ALT_1, Rez.Strings.LABEL_ALT_2, labelSize);
+            case 17: return Application.loadResource(Rez.Strings.LABEL_STEPS);
+            case 18: return formatLabel(Rez.Strings.LABEL_DIST_1, Rez.Strings.LABEL_DIST_2, labelSize);
+            case 19: return Application.loadResource(Rez.Strings.LABEL_PUSHES);
+            case 20: return "";
+            case 22:
+            case 77:
+            case 21:
+                if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WRUNM_2, labelSize); }
+                return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WRUNMI_2, labelSize);
+            case 24:
+            case 78:
+            case 23:
+                if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WBIKEKM_2, labelSize); }
+                return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WBIKEMI_2, labelSize);
+            case 25: return Application.loadResource(Rez.Strings.LABEL_TRAINING);
+            case 26: return Application.loadResource(Rez.Strings.LABEL_PRESSURE);
+            case 27: return formatLabel(Rez.Strings.LABEL_KG_1, Rez.Strings.LABEL_WEIGHT_2, labelSize);
+            case 28: return formatLabel(Rez.Strings.LABEL_LBS_1, Rez.Strings.LABEL_WEIGHT_2, labelSize);
+            case 29: return formatLabel(Rez.Strings.LABEL_ACAL_1, Rez.Strings.LABEL_ACAL_2, labelSize);
+            case 30: return Application.loadResource(Rez.Strings.LABEL_PRESSURE);
+            case 31: return Application.loadResource(Rez.Strings.LABEL_WEEK);
+            case 33:
+            case 32:
+                if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WDISTKM_2, labelSize); }
+                return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WDISTMI_2, labelSize);
+            case 34: return formatLabel(Rez.Strings.LABEL_BATT_1, Rez.Strings.LABEL_BATT_2, labelSize);
+            case 35: return formatLabel(Rez.Strings.LABEL_BATTD_1, Rez.Strings.LABEL_BATTD_2, labelSize);
+            case 36: return formatLabel(Rez.Strings.LABEL_NOTIFS_1, Rez.Strings.LABEL_NOTIFS_1, labelSize);
+            case 37: return formatLabel(Rez.Strings.LABEL_SUN_1, Rez.Strings.LABEL_SUNINT_2, labelSize);
+            case 38: return formatLabel(Rez.Strings.LABEL_TEMP_1, Rez.Strings.LABEL_TEMP_1, labelSize);
+            case 39: return formatLabel(Rez.Strings.LABEL_DAWN_1, Rez.Strings.LABEL_DAWN_2, labelSize);
+            case 40: return formatLabel(Rez.Strings.LABEL_DUSK_1, Rez.Strings.LABEL_DUSK_2, labelSize);
+            case 42: return formatLabel(Rez.Strings.LABEL_ALARM_1, Rez.Strings.LABEL_ALARM_2, labelSize);
+            case 43: return formatLabel(Rez.Strings.LABEL_HIGH_1, Rez.Strings.LABEL_HIGH_2, labelSize);
+            case 44: return formatLabel(Rez.Strings.LABEL_LOW_1, Rez.Strings.LABEL_LOW_2, labelSize);
+            case 53: return formatLabel(Rez.Strings.LABEL_TEMP_1, Rez.Strings.LABEL_TEMP_1, labelSize);
+            case 54: return formatLabel(Rez.Strings.LABEL_PRECIP_1, Rez.Strings.LABEL_PRECIP_1, labelSize);
+            case 55: return formatLabel(Rez.Strings.LABEL_NEXTSUN_1, Rez.Strings.LABEL_NEXTSUN_2, labelSize);
+            case 57: return formatLabel(Rez.Strings.LABEL_NEXTCAL_1, Rez.Strings.LABEL_NEXTCAL_2, labelSize);
+            case 59: return formatLabel(Rez.Strings.LABEL_OX_1, Rez.Strings.LABEL_OX_2, labelSize);
+            case 62: return formatLabel(Rez.Strings.LABEL_ACC_1, Rez.Strings.LABEL_ACC_2, labelSize);
+            case 64: return formatLabel(Rez.Strings.LABEL_UV_1, Rez.Strings.LABEL_UV_2, labelSize);
+            case 66: return formatLabel(Rez.Strings.LABEL_HUM_1, Rez.Strings.LABEL_HUM_2, labelSize);
+            case 71: return WatchUi.loadResource(Rez.Strings.LABEL_CGM) as String;
+            case 72: return WatchUi.loadResource(Rez.Strings.LABEL_CGMAGE) as String;
+            case 74: return formatLabel(Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL, labelSize);
+            case 75: return formatLabel(Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, labelSize);
+            case 76: return formatLabel(Rez.Strings.LABEL_RHR_1, Rez.Strings.LABEL_RHR_2, labelSize);
+        }
+        return "";
+    }
+
+    (:WeatherCache)
     hidden function formatLabel(short as ResourceId, mid as ResourceId, long as ResourceId, size as Number) as String {
         if(size == 1) { return Application.loadResource(short) + ":"; }
         if(size == 2) { return Application.loadResource(mid) + ":"; }
         return Application.loadResource(long) + ":";
+    }
+
+    (:NoWeatherCache)
+    hidden function formatLabel(short as ResourceId, mid as ResourceId, size as Number) as String {
+        if(size == 1) { return Application.loadResource(short) + ":"; }
+        return Application.loadResource(mid) + ":";
     }
 
     hidden function formatDate() as String {
