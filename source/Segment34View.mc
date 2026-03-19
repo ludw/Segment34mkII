@@ -2577,7 +2577,7 @@ class Segment34View extends WatchUi.WatchFace {
         return ret;
     } 
 
-    (:WeatherCache)
+    (:HighMem)
     hidden function getLabelByType(complicationType as Number, labelSize as Number) as String {
         // labelSize 1 = short, 2 = mid, 3 = long
         if(complicationType == 16) { return propTzName1.toUpper() + ":"; }
@@ -2653,7 +2653,7 @@ class Segment34View extends WatchUi.WatchFace {
         return "";
     }
 
-    (:NoWeatherCache)
+    (:LowMem)
     hidden function getLabelByType(complicationType as Number, labelSize as Number) as String {
         // Low-mem version: formatLabel only takes short + mid (no long/_3 resources)
         if(complicationType == 16) { return propTzName1.toUpper() + ":"; }
@@ -2729,14 +2729,14 @@ class Segment34View extends WatchUi.WatchFace {
         return "";
     }
 
-    (:WeatherCache)
+    (:HighMem)
     hidden function formatLabel(short as ResourceId, mid as ResourceId, long as ResourceId, size as Number) as String {
         if(size == 1) { return Application.loadResource(short) + ":"; }
         if(size == 2) { return Application.loadResource(mid) + ":"; }
         return Application.loadResource(long) + ":";
     }
 
-    (:NoWeatherCache)
+    (:LowMem)
     hidden function formatLabel(short as ResourceId, mid as ResourceId, size as Number) as String {
         if(size == 1) { return Application.loadResource(short) + ":"; }
         return Application.loadResource(mid) + ":";
