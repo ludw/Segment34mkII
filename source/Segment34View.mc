@@ -41,7 +41,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var histogramHeight as Number = 20;
     hidden var histogramTargetWidth as Number = 40;
 
-    hidden var fontMoon as WatchUi.FontResource;
+    hidden var fontMoon as WatchUi.FontResource?;
     hidden var fontIcons as WatchUi.FontResource;
     hidden var fontClock as WatchUi.FontResource?;
     hidden var fontClockOutline as WatchUi.FontResource?;
@@ -215,7 +215,6 @@ class Segment34View extends WatchUi.WatchFace {
 
         screenHeight = Toybox.System.getDeviceSettings().screenHeight;
         screenWidth = Toybox.System.getDeviceSettings().screenWidth;
-        fontMoon = Application.loadResource(Rez.Fonts.moon);
         fontIcons = Application.loadResource(Rez.Fonts.icons);
         centerX = Math.round(screenWidth / 2);
         centerY = Math.round(screenHeight / 2);
@@ -231,6 +230,9 @@ class Segment34View extends WatchUi.WatchFace {
 
         releaseResources();
         loadResources();
+        if(propTopPartShows == 0) {
+            fontMoon = Application.loadResource(Rez.Fonts.moon);
+        }
 
         halfClockHeight = Math.round(clockHeight / 2);
         if(clockBgText.length() == 4) {
@@ -257,6 +259,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function releaseResources() as Void {
+        fontMoon = null;
         fontClock = null;
         fontClockOutline = null;
         fontLabel = null;
@@ -633,7 +636,7 @@ class Segment34View extends WatchUi.WatchFace {
         
         // From updateSlowData logic
         values[:dataClock] = getClockData(now);
-        values[:dataMoon] = moonPhase(now);
+        values[:dataMoon] = (propTopPartShows == 0) ? moonPhase(now) : "";
         if(propTopPartShows == 2) {
             values[:dataGraph1] = getDataArrayByType(propHistogramData);
         } else {
@@ -2317,38 +2320,38 @@ class Segment34View extends WatchUi.WatchFace {
             var temp = getTemperature();
             var wind = getWind();
             var feelsLike = getFeelsLike(true);
-            val = join([temp, wind, feelsLike]);
+            val = joinFour(temp, wind, feelsLike, "");
         } else if(complicationType == 46) { // Temperature, Wind
             var temp = getTemperature();
             var wind = getWind();
-            val = join([temp, wind]);
+            val = joinFour(temp, wind, "", "");
         } else if(complicationType == 47) { // Temperature, Wind, Humidity
             var temp = getTemperature();
             var wind = getWind();
             var humidity = getHumidity();
-            val = join([temp, wind, humidity]);
+            val = joinFour(temp, wind, humidity, "");
         } else if(complicationType == 48) { // Temperature, Wind, High/Low
             var temp = getTemperature();
             var wind = getWind();
             var highlow = getHighLow();
-            val = join([temp, wind, highlow]);
+            val = joinFour(temp, wind, highlow, "");
         } else if(complicationType == 49) { // Temperature, Wind, Precipitation chance
             var temp = getTemperature();
             var wind = getWind();
             var precip = getPrecip();
-            val = join([temp, wind, precip]);
+            val = joinFour(temp, wind, precip, "");
         } else if(complicationType == 50) { // Weather condition without precipitation
             val = getWeatherCondition(false);
         } else if(complicationType == 51) { // Temperature, Humidity, High/Low
             var temp = getTemperature();
             var humidity = getHumidity();
             var highlow = getHighLow();
-            val = join([temp, humidity, highlow]);
+            val = joinFour(temp, humidity, highlow, "");
         } else if(complicationType == 52) { // Temperature, Percipitation chance, High/Low
             var temp = getTemperature();
             var precip = getPrecip();
             var highlow = getHighLow();
-            val = join([temp, precip, highlow]);
+            val = joinFour(temp, precip, highlow, "");
         } else if(complicationType == 53) { // Temperature
             val = getTemperature();
         } else if(complicationType == 54) { // Precipitation chance
@@ -2444,35 +2447,35 @@ class Segment34View extends WatchUi.WatchFace {
             var wind = getWind();
             var humidity = getHumidity();
             var precip = getPrecip();
-            val = join([temp, wind, humidity, precip]);
+            val = joinFour(temp, wind, humidity, precip);
         } else if(complicationType == 64) { // UV Index
             val = getUVIndex();
         } else if(complicationType == 65) { // Temperature, UV Index, High/Low
             var temp = getTemperature();
             var uv = getUVIndex();
             var highlow = getHighLow();
-            val = join([temp, uv, highlow]);
+            val = joinFour(temp, uv, highlow, "");
         } else if(complicationType == 66) { // Humidity
             val = getHumidity();
         } else if(complicationType == 67) { // Temperature, Feels like, High/Low
             var temp = getTemperature();
             var fl = getFeelsLike(true);
             var highlow = getHighLow();
-            val = join([temp, fl, highlow]);
+            val = joinFour(temp, fl, highlow, "");
         } else if(complicationType == 68) { // Temperature, UV, Precip
             var temp = getTemperature();
             var uv = getUVIndex();
             var precip = getPrecip();
-            val = join([temp, uv, precip]);
+            val = joinFour(temp, uv, precip, "");
         } else if(complicationType == 69) { // Temperature, UV, Wind
             var temp = getTemperature();
             var uv = getUVIndex();
             var wind = getWind();
-            val = join([temp, uv, wind]);
+            val = joinFour(temp, uv, wind, "");
         } else if(complicationType == 70) { // Weather condition, Temperature
             var condition = getWeatherCondition(false);
             var temp = getTemperature();
-            val = join([condition, temp]);
+            val = joinFour(condition, temp, "", "");
         } else if(complicationType == 71) { // CGM Glucose + Trend
             val = getCgmReading();
         } else if(complicationType == 72) { // CGM Age (minutes)
@@ -2480,7 +2483,7 @@ class Segment34View extends WatchUi.WatchFace {
         } else if(complicationType == 73) { // Weather condition, Feels like
             var condition = getWeatherCondition(false);
             var fl = getFeelsLike(false);
-            val = join([condition, fl]);
+            val = joinFour(condition, fl, "", "");
         } else if(complicationType == 74) { // Feels like
             val = getFeelsLike(false);
         } else if(complicationType == 75) { // Hours to next sun event
@@ -2785,18 +2788,12 @@ class Segment34View extends WatchUi.WatchFace {
         return value;
     }
 
-    hidden function join(array as Array<String>) as String {
+    hidden function joinFour(a as String, b as String, c as String, d as String) as String {
         var ret = "";
-        for(var i=0; i<array.size(); i++) {
-            if(array[i].length() == 0) {
-                continue;
-            }
-            if(ret.length() == 0) {
-                ret = array[i];
-            } else {
-                ret = ret + ", " + array[i];
-            }
-        }
+        if(a.length() > 0) { ret = a; }
+        if(b.length() > 0) { ret = ret.length() > 0 ? ret + ", " + b : b; }
+        if(c.length() > 0) { ret = ret.length() > 0 ? ret + ", " + c : c; }
+        if(d.length() > 0) { ret = ret.length() > 0 ? ret + ", " + d : d; }
         return ret;
     }
 
