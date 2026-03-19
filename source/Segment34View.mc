@@ -52,8 +52,10 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var fontAODData as WatchUi.FontResource?;
     hidden var fontBottomData as WatchUi.FontResource?;
     hidden var fontBattery as WatchUi.FontResource?;
-    hidden var weekNames as Array<String>?;
-    hidden var monthNames as Array<String>?;
+    hidden var cachedDayOfWeek as Number = -1;
+    hidden var cachedDayName as String = "";
+    hidden var cachedMonth as Number = -1;
+    hidden var cachedMonthName as String = "";
 
     // Layout Caching
     hidden var fieldXCoords as Array<Number> = [0, 0, 0, 0];
@@ -3311,24 +3313,24 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function dayName(day_of_week as Number) as String {
-        if(weekNames == null) { init_week_month_names(); }
-        return weekNames[day_of_week - 1];
+        if (cachedDayOfWeek == day_of_week) { return cachedDayName; }
+        cachedDayOfWeek = day_of_week;
+        var names = [Rez.Strings.DAY_OF_WEEK_SUN, Rez.Strings.DAY_OF_WEEK_MON, Rez.Strings.DAY_OF_WEEK_TUE,
+                     Rez.Strings.DAY_OF_WEEK_WED, Rez.Strings.DAY_OF_WEEK_THU, Rez.Strings.DAY_OF_WEEK_FRI,
+                     Rez.Strings.DAY_OF_WEEK_SAT];
+        cachedDayName = Application.loadResource(names[day_of_week - 1]);
+        return cachedDayName;
     }
 
     hidden function monthName(month as Number) as String {
-        if(monthNames == null) { init_week_month_names(); }
-        return monthNames[month - 1];
-    }
-
-    hidden function init_week_month_names() as Void {
-        weekNames = [Application.loadResource(Rez.Strings.DAY_OF_WEEK_SUN), Application.loadResource(Rez.Strings.DAY_OF_WEEK_MON),
-                     Application.loadResource(Rez.Strings.DAY_OF_WEEK_TUE), Application.loadResource(Rez.Strings.DAY_OF_WEEK_WED),
-                     Application.loadResource(Rez.Strings.DAY_OF_WEEK_THU), Application.loadResource(Rez.Strings.DAY_OF_WEEK_FRI),
-                     Application.loadResource(Rez.Strings.DAY_OF_WEEK_SAT)];
-        monthNames = [Application.loadResource(Rez.Strings.MONTH_JAN), Application.loadResource(Rez.Strings.MONTH_FEB), Application.loadResource(Rez.Strings.MONTH_MAR),
-                      Application.loadResource(Rez.Strings.MONTH_APR), Application.loadResource(Rez.Strings.MONTH_MAY), Application.loadResource(Rez.Strings.MONTH_JUN),
-                      Application.loadResource(Rez.Strings.MONTH_JUL), Application.loadResource(Rez.Strings.MONTH_AUG), Application.loadResource(Rez.Strings.MONTH_SEP),
-                      Application.loadResource(Rez.Strings.MONTH_OCT), Application.loadResource(Rez.Strings.MONTH_NOV), Application.loadResource(Rez.Strings.MONTH_DEC)];
+        if (cachedMonth == month) { return cachedMonthName; }
+        cachedMonth = month;
+        var names = [Rez.Strings.MONTH_JAN, Rez.Strings.MONTH_FEB, Rez.Strings.MONTH_MAR,
+                     Rez.Strings.MONTH_APR, Rez.Strings.MONTH_MAY, Rez.Strings.MONTH_JUN,
+                     Rez.Strings.MONTH_JUL, Rez.Strings.MONTH_AUG, Rez.Strings.MONTH_SEP,
+                     Rez.Strings.MONTH_OCT, Rez.Strings.MONTH_NOV, Rez.Strings.MONTH_DEC];
+        cachedMonthName = Application.loadResource(names[month - 1]);
+        return cachedMonthName;
     }
 
     hidden function isoWeekNumber(year as Number, month as Number, day as Number) as Number {
