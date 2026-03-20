@@ -1474,9 +1474,9 @@ class Segment34View extends WatchUi.WatchFace {
         propZeropadHour = p.getValue("zeropadHour") as Boolean;
         propIs24H = System.getDeviceSettings().is24Hour;
         propTimeSeparator = p.getValue("timeSeparator") as Number;
-        // propTimeSeparator Auto (0): if 12h time use AM/PM (3), if 24h time use : (4)
-        if (propTimeSeparator == 0) {
-            if ((!propIs24H and propHourFormat == 0) or propHourFormat == 2) { propTimeSeparator = 3; } else { propTimeSeparator = 4; }
+        // propTimeSeparator Auto (4): if 12h time use AM/PM (3), if 24h time use : (4)
+        if (propTimeSeparator == 4) {
+            if ((!propIs24H and propHourFormat == 0) or propHourFormat == 2) { propTimeSeparator = 3; } else { propTimeSeparator = 0; }
         }
         propTempUnit = p.getValue("tempUnit") as Number;
         propShowTempUnit = p.getValue("showTempUnit") as Boolean;
@@ -1808,9 +1808,7 @@ class Segment34View extends WatchUi.WatchFace {
     (:WeatherCache)
     hidden function computeCcHash(cc) as Number {
         if (cc == null) { return 0; }
-        
         var h = 17;
-
         var t = (cc.temperature != null) ? cc.temperature : -127;
         h = 31 * h + t;
         var c = (cc.condition != null) ? cc.condition : -1;

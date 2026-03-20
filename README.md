@@ -58,6 +58,12 @@ For refactorings and optimizations keep in mind that:
 - Second custom theme for easy switching
 
 ## Change log
+2026-03-20 v4.6.2
+- Changed default for AM/PM
+
+2026-03-20 v4.6.1
+- Fixed issue with settings not saving on some devices
+
 2026-03-17 v4.6.0
 - AM/PM display (to dissable set Separator between hours and minuts to ":")
 - Option to just show the outline for the clock

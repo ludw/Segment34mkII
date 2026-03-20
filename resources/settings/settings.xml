@@ -1188,8 +1188,8 @@
 
     <setting propertyKey="@Properties.timeSeparator" title="@Strings.settings_separator_hours_minutes">
             <settingConfig type="list">
-                <listEntry value="0">@Strings.settings_auto</listEntry>
-                <listEntry value="4">@Strings.settings_colon</listEntry>
+                <listEntry value="4">@Strings.settings_auto</listEntry>
+                <listEntry value="0">@Strings.settings_colon</listEntry>
                 <listEntry value="1">@Strings.settings_blank_space</listEntry>
                 <listEntry value="2">@Strings.settings_no_separator</listEntry>
                 <listEntry value="3">@Strings.settings_ampm</listEntry>
