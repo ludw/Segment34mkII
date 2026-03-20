@@ -73,8 +73,7 @@ class Segment34View extends WatchUi.WatchFace {
     public var nightModeOverride as Number = -1;
     hidden var themeColors as Array<Graphics.ColorType> = [];
     hidden var nightMode as Boolean?;
-    (:WeatherCache) hidden var weatherCondition as CurrentConditions or StoredWeather or Null;
-    (:NoWeatherCache) hidden var weatherCondition as CurrentConditions or Null;
+    hidden var weatherCondition as CurrentConditions or StoredWeather or Null;
     hidden var hrHistoryData as Array<Number>?;
     hidden var canBurnIn as Boolean = false;
     hidden var isSleeping as Boolean = false;
@@ -86,16 +85,16 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var cachedBikeDist7Days as Number = 0;
     hidden var lastActivityDistUpdate as Number = 0;
 
-    (:WeatherCache) hidden var lastHfTime as Number? = null;
-    (:WeatherCache) hidden var lastCcHash as Number? = null;
+    hidden var lastHfTime as Number? = null;
+    hidden var lastCcHash as Number? = null;
     hidden var isLowMem as Boolean = false;
 
     hidden var doesPartialUpdate as Boolean = false;
     hidden var hasComplications as Boolean = false;
 
     // CGM Connect Widget complication IDs (only on devices that support Complications API)
-    (:HighMem) hidden var cgmComplicationId as Complications.Id? = null;
-    (:HighMem) hidden var cgmAgeComplicationId as Complications.Id? = null;
+    hidden var cgmComplicationId as Complications.Id? = null;
+    hidden var cgmAgeComplicationId as Complications.Id? = null;
     
     hidden var propIs24H as Boolean = false;
     hidden var propTheme as Integer = 0;
@@ -187,7 +186,6 @@ class Segment34View extends WatchUi.WatchFace {
 
     var clockBgText = "";
 
-    (:Round240) const bottomFieldWidths = [3, 3, 3, 0];
     (:Round260) const bottomFieldWidths = [3, 4, 3, 0];
     (:Round280) const bottomFieldWidths = [4, 3, 4, 0];
     (:Round360) const bottomFieldWidths = [3, 4, 3, 0];
@@ -197,7 +195,6 @@ class Segment34View extends WatchUi.WatchFace {
     (:Round454) const bottomFieldWidths = [4, 4, 4, 0];
     (:Square) const bottomFieldWidths = [4, 4, 4, 0];
 
-    (:Round240) const barWidth = 3;
     (:Round260) const barWidth = 3;
     (:Round280) const barWidth = 3;
     (:Round360) const barWidth = 3;
@@ -278,41 +275,6 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             drawAODPattern = Application.loadResource(Rez.Drawables.aod2) as BitmapResource;
         }
-    }
-
-    (:Round240)
-    hidden function loadResources() as Void {
-        if(propClockFont == 0) {
-            fontClock = Application.loadResource(Rez.Fonts.segments80narrow);
-        } else {
-            fontClock = Application.loadResource(Rez.Fonts.segments80narrow_2);
-        }
-        fontTinyData = Application.loadResource(Rez.Fonts.smol);
-        loadSmallFont(Rez.Fonts.led_small, Rez.Fonts.led_small_readable, Rez.Fonts.led_small_lines);
-        fontLargeData = Application.loadResource(Rez.Fonts.led);
-        fontBottomData = Application.loadResource(Rez.Fonts.led_small);
-        fontLabel = Application.loadResource(Rez.Fonts.xsmol);
-        fontBattery = fontTinyData;
-
-        clockHeight = 80;
-        clockWidth = 220;
-        labelHeight = 5;
-        labelMargin = 6;
-        tinyDataHeight = 8;
-        smallDataHeight = 13;
-        largeDataHeight = 20;
-        largeDataWidth = 18;
-        bottomDataWidth = 12;
-
-        baseX = centerX;
-        baseY = centerY - smallDataHeight + 4;
-        marginY = Math.round(screenHeight / 35);
-        fieldSpaceingAdj = 10;
-        barBottomAdj = 1;
-        histogramBarWidth = 1;
-        histogramBarSpacing = 1;
-        histogramHeight = 15;
-        histogramTargetWidth = 30;
     }
 
     (:Round260)
@@ -1508,7 +1470,6 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    (:HighMem)
     hidden function getAltitudeValue() as Float? {
         if (hasComplications) {
             try {
@@ -1516,20 +1477,6 @@ class Segment34View extends WatchUi.WatchFace {
                 if (comp != null && comp.value != null) { return comp.value.toFloat(); }
             } catch(e) {}
         }
-        if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getElevationHistory)) {
-            var elv_iterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
-            if (elv_iterator != null) {
-                var sample = elv_iterator.next();
-                if (sample != null && sample.data != null) { return sample.data.toFloat(); }
-            }
-        }
-        var info = Activity.getActivityInfo();
-        if (info != null && info.altitude != null) { return info.altitude.toFloat(); }
-        return null;
-    }
-
-    (:LowMem)
-    hidden function getAltitudeValue() as Float? {
         if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getElevationHistory)) {
             var elv_iterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
             if (elv_iterator != null) {
@@ -1622,7 +1569,6 @@ class Segment34View extends WatchUi.WatchFace {
         return null;
     }
 
-    (:HighMem)
     hidden function getStressData() as Number? {
         if (hasComplications) {
             try {
@@ -1642,18 +1588,6 @@ class Segment34View extends WatchUi.WatchFace {
         return null;
     }
 
-    (:LowMem)
-    hidden function getStressData() as Number? {
-        if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
-            var st_iterator = Toybox.SensorHistory.getStressHistory({:period => 1});
-            if (st_iterator != null) {
-                var st = st_iterator.next();
-                if(st != null) { return st.data; }
-            }
-        }
-        return null;
-    }
-
     hidden function getStressColor(val as Number) as Graphics.ColorType {
         if (val <= 25) { return 0x00AAFF; } // Rest (Blue)
         if (val <= 50) { return 0xFFAA00; } // Low (Yellow/Orange)
@@ -1661,7 +1595,6 @@ class Segment34View extends WatchUi.WatchFace {
         return 0xAA0000;                   // High (Red)
     }
 
-    (:HighMem)
     hidden function getBBData() as Number? {
         if (hasComplications) {
             try {
@@ -1669,18 +1602,6 @@ class Segment34View extends WatchUi.WatchFace {
                 if (complication_bb != null && complication_bb.value != null) { return complication_bb.value; }
             } catch(e) {}
         }
-        if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
-            var bb_iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});
-            if (bb_iterator != null) {
-                var bb = bb_iterator.next();
-                if(bb != null) { return bb.data; }
-            }
-        }
-        return null;
-    }
-
-    (:LowMem)
-    hidden function getBBData() as Number? {
         if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
             var bb_iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});
             if (bb_iterator != null) {
@@ -1784,7 +1705,6 @@ class Segment34View extends WatchUi.WatchFace {
         return hour;
     }
 
-    (:WeatherCache)
     hidden function updateWeather() as Void {
         if(!(Toybox has :Weather) or !(Weather has :getCurrentConditions)) { return; }
 
@@ -1797,15 +1717,6 @@ class Segment34View extends WatchUi.WatchFace {
         cachedTempUnit = getTempUnit();
     }
 
-    (:NoWeatherCache)
-    hidden function updateWeather() as Void {
-        if(!(Toybox has :Weather) or !(Weather has :getCurrentConditions)) { return; }
-        weatherCondition = Weather.getCurrentConditions();
-        cachedTempUnit = getTempUnit();
-    }
-
-
-    (:WeatherCache)
     hidden function computeCcHash(cc) as Number {
         if (cc == null) { return 0; }
         var h = 17;
@@ -1821,7 +1732,6 @@ class Segment34View extends WatchUi.WatchFace {
         return h;
     }
 
-    (:WeatherCache)
     hidden function storeWeatherData() as Void {
         var now = Time.now().value();
         var sysStats = System.getSystemStats();
@@ -1899,7 +1809,6 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    (:WeatherCache)
     hidden function readWeatherData() as StoredWeather {
         var ret = new StoredWeather();
         var now = Time.now().value();
@@ -1941,9 +1850,6 @@ class Segment34View extends WatchUi.WatchFace {
         return ret;
     }
 
-    // Helpers for getValueByType() complications branches — excluded on LowMem (no Complications API)
-
-    (:HighMem)
     hidden function getRecoveryTimeVal(numberFormat as String) as String {
         if (hasComplications) {
             try {
@@ -1959,14 +1865,7 @@ class Segment34View extends WatchUi.WatchFace {
         if(info has :timeToRecovery && info.timeToRecovery != null) { return info.timeToRecovery.format(numberFormat); }
         return "";
     }
-    (:LowMem)
-    hidden function getRecoveryTimeVal(numberFormat as String) as String {
-        var info = ActivityMonitor.getInfo();
-        if(info has :timeToRecovery && info.timeToRecovery != null) { return info.timeToRecovery.format(numberFormat); }
-        return "";
-    }
 
-    (:HighMem)
     hidden function getTrainingStatusVal() as String {
         if (hasComplications) {
             try {
@@ -1976,10 +1875,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
         return "";
     }
-    (:LowMem)
-    hidden function getTrainingStatusVal() as String { return ""; }
 
-    (:HighMem)
     hidden function getCalendarEventVal(width as Number) as String {
         if (hasComplications) {
             try {
@@ -1999,10 +1895,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
         return "";
     }
-    (:LowMem)
-    hidden function getCalendarEventVal(width as Number) as String { return ""; }
 
-    (:HighMem)
     hidden function getPulseOxVal(numberFormat as String) as String {
         if (hasComplications) {
             try {
@@ -2010,17 +1903,6 @@ class Segment34View extends WatchUi.WatchFace {
                 if (complication != null && complication.value != null) { return complication.value.format(numberFormat); }
             } catch(e) {}
         }
-        if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getOxygenSaturationHistory)) {
-            var it = Toybox.SensorHistory.getOxygenSaturationHistory({:period => 1});
-            if (it != null) {
-                var ox = it.next();
-                if(ox != null and ox.data != null) { return ox.data.format("%d"); }
-            }
-        }
-        return "";
-    }
-    (:LowMem)
-    hidden function getPulseOxVal(numberFormat as String) as String {
         if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getOxygenSaturationHistory)) {
             var it = Toybox.SensorHistory.getOxygenSaturationHistory({:period => 1});
             if (it != null) {
@@ -2536,7 +2418,6 @@ class Segment34View extends WatchUi.WatchFace {
         return ret;
     } 
 
-    (:HighMem)
     hidden function getLabelByType(complicationType as Number, labelSize as Number) as String {
         // labelSize 1 = short, 2 = mid, 3 = long
         if(complicationType == 16) { return propTzName1.toUpper() + ":"; }
@@ -2612,93 +2493,10 @@ class Segment34View extends WatchUi.WatchFace {
         return "";
     }
 
-    (:LowMem)
-    hidden function getLabelByType(complicationType as Number, labelSize as Number) as String {
-        // Low-mem version: formatLabel only takes short + mid (no long/_3 resources)
-        if(complicationType == 16) { return propTzName1.toUpper() + ":"; }
-        if(complicationType == 41) { return propTzName2.toUpper() + ":"; }
-        switch(complicationType) {
-            case 0: return formatLabel(Rez.Strings.LABEL_WMIN_1, Rez.Strings.LABEL_WMIN_2, labelSize);
-            case 1: return formatLabel(Rez.Strings.LABEL_DMIN_1, Rez.Strings.LABEL_DMIN_2, labelSize);
-            case 3:
-            case 2:
-                if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_DKM_1, Rez.Strings.LABEL_DKM_2, labelSize); }
-                return formatLabel(Rez.Strings.LABEL_DMI_1, Rez.Strings.LABEL_DMI_2, labelSize);
-            case 4: return Application.loadResource(Rez.Strings.LABEL_FLOORS);
-            case 5: return formatLabel(Rez.Strings.LABEL_CLIMB_1, Rez.Strings.LABEL_CLIMB_2, labelSize);
-            case 6: return formatLabel(Rez.Strings.LABEL_RECOV_1, Rez.Strings.LABEL_RECOV_2, labelSize);
-            case 7: return formatLabel(Rez.Strings.LABEL_VO2_1, Rez.Strings.LABEL_VO2_2, labelSize);
-            case 8: return formatLabel(Rez.Strings.LABEL_VO2_1, Rez.Strings.LABEL_VO2_2, labelSize);
-            case 9: return formatLabel(Rez.Strings.LABEL_RESP_1, Rez.Strings.LABEL_RESP_2, labelSize);
-            case 10: return Application.loadResource(Rez.Strings.LABEL_HR);
-            case 11: return formatLabel(Rez.Strings.LABEL_CAL_1, Rez.Strings.LABEL_CAL_2, labelSize);
-            case 12: return formatLabel(Rez.Strings.LABEL_ALT_1, Rez.Strings.LABEL_ALT_2, labelSize);
-            case 13: return Application.loadResource(Rez.Strings.LABEL_STRESS);
-            case 14: return formatLabel(Rez.Strings.LABEL_BBAT_1, Rez.Strings.LABEL_BBAT_2, labelSize);
-            case 15: return formatLabel(Rez.Strings.LABEL_ALT_1, Rez.Strings.LABEL_ALT_2, labelSize);
-            case 17: return Application.loadResource(Rez.Strings.LABEL_STEPS);
-            case 18: return formatLabel(Rez.Strings.LABEL_DIST_1, Rez.Strings.LABEL_DIST_2, labelSize);
-            case 19: return Application.loadResource(Rez.Strings.LABEL_PUSHES);
-            case 20: return "";
-            case 22:
-            case 77:
-            case 21:
-                if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WRUNM_2, labelSize); }
-                return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WRUNMI_2, labelSize);
-            case 24:
-            case 78:
-            case 23:
-                if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WBIKEKM_2, labelSize); }
-                return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WBIKEMI_2, labelSize);
-            case 25: return Application.loadResource(Rez.Strings.LABEL_TRAINING);
-            case 26: return Application.loadResource(Rez.Strings.LABEL_PRESSURE);
-            case 27: return formatLabel(Rez.Strings.LABEL_KG_1, Rez.Strings.LABEL_WEIGHT_2, labelSize);
-            case 28: return formatLabel(Rez.Strings.LABEL_LBS_1, Rez.Strings.LABEL_WEIGHT_2, labelSize);
-            case 29: return formatLabel(Rez.Strings.LABEL_ACAL_1, Rez.Strings.LABEL_ACAL_2, labelSize);
-            case 30: return Application.loadResource(Rez.Strings.LABEL_PRESSURE);
-            case 31: return Application.loadResource(Rez.Strings.LABEL_WEEK);
-            case 33:
-            case 32:
-                if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WDISTKM_2, labelSize); }
-                return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WDISTMI_2, labelSize);
-            case 34: return formatLabel(Rez.Strings.LABEL_BATT_1, Rez.Strings.LABEL_BATT_2, labelSize);
-            case 35: return formatLabel(Rez.Strings.LABEL_BATTD_1, Rez.Strings.LABEL_BATTD_2, labelSize);
-            case 36: return formatLabel(Rez.Strings.LABEL_NOTIFS_1, Rez.Strings.LABEL_NOTIFS_1, labelSize);
-            case 37: return formatLabel(Rez.Strings.LABEL_SUN_1, Rez.Strings.LABEL_SUNINT_2, labelSize);
-            case 38: return formatLabel(Rez.Strings.LABEL_TEMP_1, Rez.Strings.LABEL_TEMP_1, labelSize);
-            case 39: return formatLabel(Rez.Strings.LABEL_DAWN_1, Rez.Strings.LABEL_DAWN_2, labelSize);
-            case 40: return formatLabel(Rez.Strings.LABEL_DUSK_1, Rez.Strings.LABEL_DUSK_2, labelSize);
-            case 42: return formatLabel(Rez.Strings.LABEL_ALARM_1, Rez.Strings.LABEL_ALARM_2, labelSize);
-            case 43: return formatLabel(Rez.Strings.LABEL_HIGH_1, Rez.Strings.LABEL_HIGH_2, labelSize);
-            case 44: return formatLabel(Rez.Strings.LABEL_LOW_1, Rez.Strings.LABEL_LOW_2, labelSize);
-            case 53: return formatLabel(Rez.Strings.LABEL_TEMP_1, Rez.Strings.LABEL_TEMP_1, labelSize);
-            case 54: return formatLabel(Rez.Strings.LABEL_PRECIP_1, Rez.Strings.LABEL_PRECIP_1, labelSize);
-            case 55: return formatLabel(Rez.Strings.LABEL_NEXTSUN_1, Rez.Strings.LABEL_NEXTSUN_2, labelSize);
-            case 57: return formatLabel(Rez.Strings.LABEL_NEXTCAL_1, Rez.Strings.LABEL_NEXTCAL_2, labelSize);
-            case 59: return formatLabel(Rez.Strings.LABEL_OX_1, Rez.Strings.LABEL_OX_2, labelSize);
-            case 62: return formatLabel(Rez.Strings.LABEL_ACC_1, Rez.Strings.LABEL_ACC_2, labelSize);
-            case 64: return formatLabel(Rez.Strings.LABEL_UV_1, Rez.Strings.LABEL_UV_2, labelSize);
-            case 66: return formatLabel(Rez.Strings.LABEL_HUM_1, Rez.Strings.LABEL_HUM_2, labelSize);
-            case 71: return WatchUi.loadResource(Rez.Strings.LABEL_CGM) as String;
-            case 72: return WatchUi.loadResource(Rez.Strings.LABEL_CGMAGE) as String;
-            case 74: return formatLabel(Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL, labelSize);
-            case 75: return formatLabel(Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, labelSize);
-            case 76: return formatLabel(Rez.Strings.LABEL_RHR_1, Rez.Strings.LABEL_RHR_2, labelSize);
-        }
-        return "";
-    }
-
-    (:HighMem)
     hidden function formatLabel(short as ResourceId, mid as ResourceId, long as ResourceId, size as Number) as String {
         if(size == 1) { return Application.loadResource(short) + ":"; }
         if(size == 2) { return Application.loadResource(mid) + ":"; }
         return Application.loadResource(long) + ":";
-    }
-
-    (:LowMem)
-    hidden function formatLabel(short as ResourceId, mid as ResourceId, size as Number) as String {
-        if(size == 1) { return Application.loadResource(short) + ":"; }
-        return Application.loadResource(mid) + ":";
     }
 
     hidden function formatDate() as String {
@@ -3134,7 +2932,6 @@ class Segment34View extends WatchUi.WatchFace {
         cachedBikeDist7Days = bikeDist;
     }
 
-    (:HighMem)
     hidden function getWeeklyDistanceFromComplication(isRun as Boolean, conversionFactor as Float, width as Number) as String {
         if (hasComplications) {
             try {
@@ -3147,13 +2944,7 @@ class Segment34View extends WatchUi.WatchFace {
         }
         return "";
     }
-    (:LowMem)
-    hidden function getWeeklyDistanceFromComplication(isRun as Boolean, conversionFactor as Float, width as Number) as String {
-        return "";
-    }
 
-    // CGM Connect Widget helper functions — only on devices that support Complications API
-    (:HighMem)
     hidden function getCgmComplicationByLabel(targetLabel as String) as Complications.Id? {
         if (!hasComplications) { return null; }
         try {
@@ -3175,10 +2966,6 @@ class Segment34View extends WatchUi.WatchFace {
         return null;
     }
 
-    (:LowMem)
-    hidden function getCgmComplicationByLabel(targetLabel as String) as Null { return null; }
-
-    (:HighMem)
     hidden function convertCgmTrendToArrow(trend as String) as String {
         if (trend.equals("R")) { return "a"; }  // Rapidly rising ↑
         if (trend.equals("r")) { return "b"; }  // Rising ↗
@@ -3188,7 +2975,6 @@ class Segment34View extends WatchUi.WatchFace {
         return "";
     }
 
-    (:HighMem)
     hidden function getCgmReading() as String {
         if (!hasComplications) { return ""; }
         try {
@@ -3213,10 +2999,6 @@ class Segment34View extends WatchUi.WatchFace {
         } catch (e) {}
         return "";
     }
-    (:LowMem)
-    hidden function getCgmReading() as String { return ""; }
-
-    (:HighMem)
     hidden function getCgmAge() as String {
         if (!hasComplications) { return ""; }
         try {
@@ -3234,9 +3016,6 @@ class Segment34View extends WatchUi.WatchFace {
         } catch (e) {}
         return "";
     }
-    (:LowMem)
-    hidden function getCgmAge() as String { return ""; }
-
     hidden function secondaryTimezone(offset, width) as String {
         var val = "";
         var now = Time.now();
@@ -3513,7 +3292,6 @@ class Segment34Delegate extends WatchUi.WatchFaceDelegate {
         return true;
     }
 
-    (:HighMem)
     function handlePress(areaSetting as String) {
         var cID = Application.Properties.getValue(areaSetting) as Complications.Type;
 
@@ -3541,31 +3319,8 @@ class Segment34Delegate extends WatchUi.WatchFaceDelegate {
         }
     }
 
-    (:LowMem)
-    function handlePress(areaSetting as String) {
-        var cID = Application.Properties.getValue(areaSetting) as Number;
-
-        if(cID == -1) {
-            switch(view.nightModeOverride) {
-                case 1:
-                    view.nightModeOverride = 0;
-                    view.infoMessage = "DAY THEME";
-                    break;
-                case 0:
-                    view.nightModeOverride = -1;
-                    view.infoMessage = "THEME AUTO";
-                    break;
-                default:
-                    view.nightModeOverride = 1;
-                    view.infoMessage = "NIGHT THEME";
-            }
-            view.onSettingsChanged();
-        }
-    }
-
 }
 
-(:WeatherCache)
 class StoredWeather {
     public var observationLocationPosition as Position.Location or Null;
     public var precipitationChance as Lang.Number or Null;
