@@ -90,9 +90,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var isLowMem as Boolean = false;
 
     hidden var doesPartialUpdate as Boolean = false;
-    hidden var hasComplications as Boolean = false;
-
-    // CGM Connect Widget complication IDs (only on devices that support Complications API)
+    // CGM Connect Widget complication IDs
     hidden var cgmComplicationId as Complications.Id? = null;
     hidden var cgmAgeComplicationId as Complications.Id? = null;
     
@@ -216,8 +214,6 @@ class Segment34View extends WatchUi.WatchFace {
         centerY = Math.round(screenHeight / 2);
         marginY = Math.round(screenHeight / 30);
         marginX = Math.round(screenWidth / 20);
-        hasComplications = Toybox has :Complications;
-
         reloadSettings();
     }
 
@@ -1471,21 +1467,10 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getAltitudeValue() as Float? {
-        if (hasComplications) {
-            try {
-                var comp = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_ALTITUDE));
-                if (comp != null && comp.value != null) { return comp.value.toFloat(); }
-            } catch(e) {}
-        }
-        if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getElevationHistory)) {
-            var elv_iterator = Toybox.SensorHistory.getElevationHistory({:period => 1});
-            if (elv_iterator != null) {
-                var sample = elv_iterator.next();
-                if (sample != null && sample.data != null) { return sample.data.toFloat(); }
-            }
-        }
-        var info = Activity.getActivityInfo();
-        if (info != null && info.altitude != null) { return info.altitude.toFloat(); }
+        try {
+            var comp = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_ALTITUDE));
+            if (comp != null && comp.value != null) { return comp.value.toFloat(); }
+        } catch(e) {}
         return null;
     }
 
@@ -1570,21 +1555,12 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getStressData() as Number? {
-        if (hasComplications) {
-            try {
-                var complication_stress = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_STRESS));
-                if (complication_stress != null && complication_stress.value != null) {
-                    return complication_stress.value;
-                }
-            } catch(e) {}
-        }
-        if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
-            var st_iterator = Toybox.SensorHistory.getStressHistory({:period => 1});
-            if (st_iterator != null) {
-                var st = st_iterator.next();
-                if(st != null) { return st.data; }
+        try {
+            var complication_stress = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_STRESS));
+            if (complication_stress != null && complication_stress.value != null) {
+                return complication_stress.value;
             }
-        }
+        } catch(e) {}
         return null;
     }
 
@@ -1596,19 +1572,10 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getBBData() as Number? {
-        if (hasComplications) {
-            try {
-                var complication_bb = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_BODY_BATTERY));
-                if (complication_bb != null && complication_bb.value != null) { return complication_bb.value; }
-            } catch(e) {}
-        }
-        if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory) && (Toybox.SensorHistory has :getStressHistory)) {
-            var bb_iterator = Toybox.SensorHistory.getBodyBatteryHistory({:period => 1});
-            if (bb_iterator != null) {
-                var bb = bb_iterator.next();
-                if(bb != null) { return bb.data; }
-            }
-        }
+        try {
+            var complication_bb = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_BODY_BATTERY));
+            if (complication_bb != null && complication_bb.value != null) { return complication_bb.value; }
+        } catch(e) {}
         return null;
     }
 
@@ -1851,65 +1818,48 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getRecoveryTimeVal(numberFormat as String) as String {
-        if (hasComplications) {
-            try {
-                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_RECOVERY_TIME));
-                if (complication != null && complication.value != null) {
-                    var recovery_h = complication.value / 60.0;
-                    if(recovery_h < 9.9 and recovery_h != 0) { return recovery_h.format("%.1f"); }
-                    return Math.round(recovery_h).format(numberFormat);
-                }
-            } catch(e) {}
-        }
-        var info = ActivityMonitor.getInfo();
-        if(info has :timeToRecovery && info.timeToRecovery != null) { return info.timeToRecovery.format(numberFormat); }
+        try {
+            var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_RECOVERY_TIME));
+            if (complication != null && complication.value != null) {
+                var recovery_h = complication.value / 60.0;
+                if(recovery_h < 9.9 and recovery_h != 0) { return recovery_h.format("%.1f"); }
+                return Math.round(recovery_h).format(numberFormat);
+            }
+        } catch(e) {}
         return "";
     }
 
     hidden function getTrainingStatusVal() as String {
-        if (hasComplications) {
-            try {
-                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_TRAINING_STATUS));
-                if (complication != null && complication.value != null) { return complication.value.toUpper(); }
-            } catch(e) {}
-        }
+        try {
+            var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_TRAINING_STATUS));
+            if (complication != null && complication.value != null) { return complication.value.toUpper(); }
+        } catch(e) {}
         return "";
     }
 
     hidden function getCalendarEventVal(width as Number) as String {
-        if (hasComplications) {
-            try {
-                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_CALENDAR_EVENTS));
-                var colon_index = null;
-                var val = "";
-                if (complication != null && complication.value != null) {
-                    val = complication.value;
-                    colon_index = val.find(":");
-                    if (colon_index != null && colon_index < 2) { val = "0" + val; }
-                } else {
-                    val = "--:--";
-                }
-                if (width < 5 and colon_index != null) { val = val.substring(0, 2) + val.substring(3, 5); }
-                return val;
-            } catch(e) {}
-        }
+        try {
+            var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_CALENDAR_EVENTS));
+            var colon_index = null;
+            var val = "";
+            if (complication != null && complication.value != null) {
+                val = complication.value;
+                colon_index = val.find(":");
+                if (colon_index != null && colon_index < 2) { val = "0" + val; }
+            } else {
+                val = "--:--";
+            }
+            if (width < 5 and colon_index != null) { val = val.substring(0, 2) + val.substring(3, 5); }
+            return val;
+        } catch(e) {}
         return "";
     }
 
     hidden function getPulseOxVal(numberFormat as String) as String {
-        if (hasComplications) {
-            try {
-                var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_PULSE_OX));
-                if (complication != null && complication.value != null) { return complication.value.format(numberFormat); }
-            } catch(e) {}
-        }
-        if ((Toybox has :SensorHistory) and (Toybox.SensorHistory has :getOxygenSaturationHistory)) {
-            var it = Toybox.SensorHistory.getOxygenSaturationHistory({:period => 1});
-            if (it != null) {
-                var ox = it.next();
-                if(ox != null and ox.data != null) { return ox.data.format("%d"); }
-            }
-        }
+        try {
+            var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_PULSE_OX));
+            if (complication != null && complication.value != null) { return complication.value.format(numberFormat); }
+        } catch(e) {}
         return "";
     }
 
@@ -2933,20 +2883,17 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getWeeklyDistanceFromComplication(isRun as Boolean, conversionFactor as Float, width as Number) as String {
-        if (hasComplications) {
-            try {
-                var compType = isRun ? Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE : Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE;
-                var complication = Complications.getComplication(new Id(compType));
-                if (complication != null && complication.value != null) {
-                    return formatDistanceByWidth(complication.value * conversionFactor, width);
-                }
-            } catch(e) {}
-        }
+        try {
+            var compType = isRun ? Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE : Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE;
+            var complication = Complications.getComplication(new Id(compType));
+            if (complication != null && complication.value != null) {
+                return formatDistanceByWidth(complication.value * conversionFactor, width);
+            }
+        } catch(e) {}
         return "";
     }
 
     hidden function getCgmComplicationByLabel(targetLabel as String) as Complications.Id? {
-        if (!hasComplications) { return null; }
         try {
             var iter = Complications.getComplications();
             if (iter == null) { return null; }
@@ -2976,7 +2923,6 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getCgmReading() as String {
-        if (!hasComplications) { return ""; }
         try {
             if (cgmComplicationId == null) {
                 cgmComplicationId = getCgmComplicationByLabel("CGM");
@@ -3000,7 +2946,6 @@ class Segment34View extends WatchUi.WatchFace {
         return "";
     }
     hidden function getCgmAge() as String {
-        if (!hasComplications) { return ""; }
         try {
             if (cgmAgeComplicationId == null) {
                 cgmAgeComplicationId = getCgmComplicationByLabel("CGM Age");
