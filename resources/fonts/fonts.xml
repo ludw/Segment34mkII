@@ -1,7 +1,6 @@
 <fonts>
     <font id="segments80" filename="segments80.fnt" antialias="true" filter=" #1234567890:ABP" />
     <font id="segments80wide" filename="segments80wide.fnt" antialias="true" filter=" #1234567890:ABP" />
-    <font id="segments80narrow" filename="segments80narrow.fnt" antialias="true" filter=" #1234567890:ABP" />
     <font id="segments125" filename="segments125.fnt" antialias="false" filter=" #1234567890:ABP" />
     <font id="segments125outline" filename="segments125outline.fnt" antialias="false" filter=" #1234567890:ABP" />
     <font id="segments125narrow" filename="segments125narrow.fnt" antialias="false" filter=" #1234567890:ABP" />
@@ -11,7 +10,6 @@
 
     <font id="segments80_2" filename="segments80_2.fnt" antialias="true" filter=" #1234567890:ABP" />
     <font id="segments80wide_2" filename="segments80wide_2.fnt" antialias="true" filter=" #1234567890:ABP" />
-    <font id="segments80narrow_2" filename="segments80narrow_2.fnt" antialias="true" filter=" #1234567890:ABP" />
     <font id="segments125_2" filename="segments125_2.fnt" antialias="true" filter=" #1234567890:ABP" />
     <font id="segments125outline_2" filename="segments125outline_2.fnt" antialias="true" filter=" #1234567890:ABP" />
     <font id="segments125narrow_2" filename="segments125narrow_2.fnt" antialias="true" filter=" #1234567890:ABP" />
