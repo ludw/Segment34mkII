@@ -1818,48 +1818,39 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function getRecoveryTimeVal(numberFormat as String) as String {
-        try {
-            var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_RECOVERY_TIME));
-            if (complication != null && complication.value != null) {
-                var recovery_h = complication.value / 60.0;
-                if(recovery_h < 9.9 and recovery_h != 0) { return recovery_h.format("%.1f"); }
-                return Math.round(recovery_h).format(numberFormat);
-            }
-        } catch(e) {}
+        var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_RECOVERY_TIME));
+        if (complication != null && complication.value != null) {
+            var recovery_h = complication.value / 60.0;
+            if(recovery_h < 9.9 and recovery_h != 0) { return recovery_h.format("%.1f"); }
+            return Math.round(recovery_h).format(numberFormat);
+        }
         return "";
     }
 
     hidden function getTrainingStatusVal() as String {
-        try {
-            var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_TRAINING_STATUS));
-            if (complication != null && complication.value != null) { return complication.value.toUpper(); }
-        } catch(e) {}
+        var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_TRAINING_STATUS));
+        if (complication != null && complication.value != null) { return complication.value.toUpper(); }
         return "";
     }
 
     hidden function getCalendarEventVal(width as Number) as String {
-        try {
-            var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_CALENDAR_EVENTS));
-            var colon_index = null;
-            var val = "";
-            if (complication != null && complication.value != null) {
-                val = complication.value;
-                colon_index = val.find(":");
-                if (colon_index != null && colon_index < 2) { val = "0" + val; }
-            } else {
-                val = "--:--";
-            }
-            if (width < 5 and colon_index != null) { val = val.substring(0, 2) + val.substring(3, 5); }
-            return val;
-        } catch(e) {}
-        return "";
+        var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_CALENDAR_EVENTS));
+        var colon_index = null;
+        var val = "";
+        if (complication != null && complication.value != null) {
+            val = complication.value;
+            colon_index = val.find(":");
+            if (colon_index != null && colon_index < 2) { val = "0" + val; }
+        } else {
+            val = "--:--";
+        }
+        if (width < 5 and colon_index != null) { val = val.substring(0, 2) + val.substring(3, 5); }
+        return val;
     }
 
     hidden function getPulseOxVal(numberFormat as String) as String {
-        try {
-            var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_PULSE_OX));
-            if (complication != null && complication.value != null) { return complication.value.format(numberFormat); }
-        } catch(e) {}
+        var complication = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_PULSE_OX));
+        if (complication != null && complication.value != null) { return complication.value.format(numberFormat); }
         return "";
     }
 
