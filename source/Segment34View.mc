@@ -86,7 +86,6 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var cachedBikeDist7Days as Number = 0;
     hidden var lastActivityDistUpdate as Number = 0;
 
-    hidden var isWeatherRequired as Boolean = false;
     (:WeatherCache) hidden var lastHfTime as Number? = null;
     (:WeatherCache) hidden var lastCcHash as Number? = null;
     hidden var isLowMem as Boolean = false;
@@ -228,7 +227,6 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function reloadSettings() as Void {
         updateProperties();
 
-        releaseResources();
         loadResources();
         if(propTopPartShows == 0) {
             fontMoon = Application.loadResource(Rez.Fonts.moon);
@@ -256,21 +254,6 @@ class Segment34View extends WatchUi.WatchFace {
         strLabelBottomMiddle = getLabelByType(propMiddleValueShows, fieldWidths[1] - 1);
         strLabelBottomRight = getLabelByType(propRightValueShows, fieldWidths[2] - 1);
         strLabelBottomFourth = getLabelByType(propFourthValueShows, fieldWidths[3] - 1);
-    }
-
-    hidden function releaseResources() as Void {
-        fontMoon = null;
-        fontClock = null;
-        fontClockOutline = null;
-        fontLabel = null;
-        fontTinyData = null;
-        fontSmallData = null;
-        fontLargeData = null;
-        fontAODData = null;
-        fontBottomData = null;
-        fontBattery = null;
-        drawGradient = null;
-        drawAODPattern = null;
     }
 
     hidden function loadSmallFont(resDefault, resReadable, resLines) as Void {
@@ -1334,7 +1317,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     hidden function setColorTheme(theme as Number) as Array<Graphics.ColorType> {
-        if(theme == 30) { return parseCustomThemeString(propColorOverride); }
+        if(theme == 30) { return parseThemeString(propColorOverride); }
 
         var themeRes = [
             Rez.Strings.theme_0, Rez.Strings.theme_1, Rez.Strings.theme_2, Rez.Strings.theme_3,
@@ -1355,31 +1338,9 @@ class Segment34View extends WatchUi.WatchFace {
         return parseThemeString(str);
     }
 
-    hidden function parseThemeString(csv as String) as Array<Graphics.ColorType> {
-        var res = new [13]; 
-        var comma = 0;
-        for(var i=0; i<13; i++) {
-            comma = csv.find(",");
-            var hex = "";
-            if(comma != null) {
-                hex = csv.substring(0, comma);
-                csv = csv.substring(comma + 1, csv.length());
-            } else {
-                hex = csv;
-            }
-            
-            if(hex.equals("FFFFFFFF")) {
-                res[i] = Graphics.COLOR_TRANSPARENT; 
-            } else {
-                res[i] = hex.toNumberWithBase(16);
-            }
-        }
-        return res;
-    }
-
-    hidden function parseCustomThemeString(str as String) as Array<Graphics.ColorType> {
+    hidden function parseThemeString(str as String) as Array<Graphics.ColorType> {
         if(str.length() == 0) { return setColorTheme(-1); }
-        
+
         var ret = [];
         var color_str = "";
         var color = null;
@@ -1388,12 +1349,15 @@ class Segment34View extends WatchUi.WatchFace {
         for(var i=0; i<len; i += 8) {
             if(i+7 > len) { break; }
             color_str = str.substring(i+1, i+7);
-            color = color_str.toNumberWithBase(16);
-            
-            if(color == null or color < 0 or color > 16777215) {
-                 return setColorTheme(-1);
+            if(color_str.equals("TRANSP")) {
+                ret.add(Graphics.COLOR_TRANSPARENT as Graphics.ColorType);
+            } else {
+                color = color_str.toNumberWithBase(16);
+                if(color == null or color < 0 or color > 16777215) {
+                    return setColorTheme(-1);
+                }
+                ret.add(color as Graphics.ColorType);
             }
-            ret.add(color as Graphics.ColorType);
         }
 
         if(ret.size() != 13) {
@@ -1534,28 +1498,6 @@ class Segment34View extends WatchUi.WatchFace {
         nightMode = null; // force update color theme
         updateColorTheme();
         updateActiveLabels();
-
-        isWeatherRequired = false;
-
-        var weatherFields = [
-            propSunriseFieldShows, propSunsetFieldShows,
-            propWeatherLine1Shows, propWeatherLine2Shows,
-            propDateFieldShows,
-            propLeftValueShows, propMiddleValueShows, 
-            propRightValueShows, propFourthValueShows,
-            propBottomFieldShows,
-            propAodFieldShows, propAodRightFieldShows,
-            getBottomField2Shows()
-        ];
-
-        for(var i=0; i<weatherFields.size(); i++) {
-            if (isWeatherSource(weatherFields[i])) {
-                isWeatherRequired = true;
-                break;
-            }
-        }
-
-        initializeWeatherData();
 
         if(propTimeSeparator == 2) {
             clockBgText = "####";
@@ -1843,29 +1785,7 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     (:WeatherCache)
-    hidden function initializeWeatherData() as Void {
-        if (isWeatherRequired && weatherCondition == null) {
-            try { weatherCondition = readWeatherData(); } catch(e) {}
-            if (weatherCondition == null) {
-                if(Toybox has :Weather && Weather has :getCurrentConditions) {
-                    weatherCondition = Weather.getCurrentConditions();
-                }
-            }
-        }
-    }
-
-    (:NoWeatherCache)
-    hidden function initializeWeatherData() as Void {
-        if (isWeatherRequired && weatherCondition == null) {
-            if(Toybox has :Weather && Weather has :getCurrentConditions) {
-                weatherCondition = Weather.getCurrentConditions();
-            }
-        }
-    }
-
-    (:WeatherCache)
     hidden function updateWeather() as Void {
-        if (!isWeatherRequired) { return; }
         if(!(Toybox has :Weather) or !(Weather has :getCurrentConditions)) { return; }
 
         if(Weather.getCurrentConditions() != null) {
@@ -1879,18 +1799,11 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:NoWeatherCache)
     hidden function updateWeather() as Void {
-        if (!isWeatherRequired) { return; }
         if(!(Toybox has :Weather) or !(Weather has :getCurrentConditions)) { return; }
         weatherCondition = Weather.getCurrentConditions();
         cachedTempUnit = getTempUnit();
     }
 
-    hidden function isWeatherSource(id as Number) as Boolean {
-        if (id == 20 || id == 39 || id == 40 || (id >= 43 && id <= 55) || (id >= 63 && id <= 70)) {
-            return true;
-        }
-        return false;
-    }
 
     (:WeatherCache)
     hidden function computeCcHash(cc) as Number {
