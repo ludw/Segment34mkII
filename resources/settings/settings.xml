@@ -100,6 +100,13 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.fontSize" title="@Strings.settings_font_size">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.settings_font_small</listEntry>
+            <listEntry value="1">@Strings.settings_font_large</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.updateFreq" title="@Strings.settings_update_frequency">
         <settingConfig type="list">
             <listEntry value="60">@Strings.settings_every_minute</listEntry>
