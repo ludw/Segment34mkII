@@ -120,7 +120,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propAodRightFieldShows as Number = -2;
     hidden var propDateFieldShows as Number = -1;
     hidden var propBottomFieldShows as Number = 17;
-    (:Square) hidden var propBottomField2Shows as Number = -2;
+    hidden var propBottomField2Shows as Number = -2;
     hidden var propAodAlignment as Number = 0;
     hidden var propDateAlignment as Number = 0;
     hidden var propBottomFieldAlignment as Number = 2;
@@ -245,10 +245,17 @@ class Segment34View extends WatchUi.WatchFace {
         var fieldWidths = getFieldWidths();
         strLabelTopLeft = getLabelByType(propSunriseFieldShows, 1);
         strLabelTopRight = getLabelByType(propSunsetFieldShows, 1);
-        strLabelBottomLeft = getLabelByType(propLeftValueShows, fieldWidths[0] - 1 - propFontSize);
-        strLabelBottomMiddle = getLabelByType(propMiddleValueShows, fieldWidths[1] - 1 - propFontSize);
-        strLabelBottomRight = getLabelByType(propRightValueShows, fieldWidths[2] - 1 - propFontSize);
-        strLabelBottomFourth = getLabelByType(propFourthValueShows, fieldWidths[3] - 1 - propFontSize);
+        if(propFontSize == 0) {
+            strLabelBottomLeft = getLabelByType(propLeftValueShows, fieldWidths[0] - 1);
+            strLabelBottomMiddle = getLabelByType(propMiddleValueShows, fieldWidths[1] - 1);
+            strLabelBottomRight = getLabelByType(propRightValueShows, fieldWidths[2] - 1);
+            strLabelBottomFourth = getLabelByType(propFourthValueShows, fieldWidths[3] - 1);
+        } else { // Large text
+            strLabelBottomLeft = getLabelByType(propLeftValueShows, 1);
+            strLabelBottomMiddle = getLabelByType(propMiddleValueShows, 1);
+            strLabelBottomRight = getLabelByType(propRightValueShows, 1);
+            strLabelBottomFourth = getLabelByType(propFourthValueShows, 1);
+        }
     }
 
     hidden function loadSmallFont(resDefault, resReadable, resLines) as Void {
@@ -516,8 +523,7 @@ class Segment34View extends WatchUi.WatchFace {
             tinyDataHeight = 13;
             smallDataHeight = 20;
             largeDataHeight = 27;
-            largeDataWidth = 24;
-            bottomDataWidth = 24;
+            bottomFiveAdj = 4;
             baseY = centerY - smallDataHeight + 4;
             bottomFieldWidths = [4, 4, 4, 0];
 
@@ -525,16 +531,18 @@ class Segment34View extends WatchUi.WatchFace {
             fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
             loadSmallFont(Rez.Fonts.led_big, Rez.Fonts.led_big_readable, Rez.Fonts.led_big_lines);
             fontLargeData = Application.loadResource(Rez.Fonts.led_big);
+            fontBottomData = fontLargeData;
             fontLabel = fontTinyData;
             fontAODData = Application.loadResource(Rez.Fonts.led_big);
-            fontBattery = fontTinyData;
+            fontBattery = Application.loadResource(Rez.Fonts.led_lines);
 
             labelHeight = 13;
             labelMargin = 8;
             tinyDataHeight = 13;
             smallDataHeight = 27;
-            largeDataHeight = 40;
-            baseY = centerY - 10;
+            largeDataHeight = 27;
+            bottomFiveAdj = 6;
+            baseY = centerY - 5;
             bottomFieldWidths = [3, 3, 3, 0];
         }
         
@@ -545,7 +553,8 @@ class Segment34View extends WatchUi.WatchFace {
         baseX = centerX + 3;
         fieldSpaceingAdj = 20;
         textSideAdj = 4;
-        bottomFiveAdj = 4;
+        largeDataWidth = 24;
+        bottomDataWidth = 24;
         barBottomAdj = 2;
         marginY = 17;
         histogramHeight = 30;
@@ -807,36 +816,37 @@ class Segment34View extends WatchUi.WatchFace {
         dc.clear();
         var yn1 = baseY - halfClockHeight - marginY - smallDataHeight;
         var yn2 = yn1 - marginY - smallDataHeight;
-        var yn3 = yn2 - marginY - histogramHeight;
+        var yn3 = yn2 - marginY - labelHeight - tinyDataHeight;
 
         // Draw Top data fields or histogram
         if(propTopPartShows == 2) {
+            yn3 = yn2 - marginY - histogramHeight;
             drawHistogram(dc, values[:dataGraph1], centerX, yn3, histogramHeight);
         } else {
-            var top_data_height = halfMarginY;
+            var top_data_height = 0;
             var top_field_font = fontTinyData;
             var top_field_center_offset = 20;
             if(propTopPartShows == 1) { top_field_center_offset = labelHeight; }
             if(propLabelVisibility == 0 or propLabelVisibility == 3) {
                 dc.setColor(themeColors[fieldLbl], Graphics.COLOR_TRANSPARENT);
-                dc.drawText(centerX - top_field_center_offset, marginY, fontLabel, values[:dataLabelTopLeft], Graphics.TEXT_JUSTIFY_RIGHT);
-                dc.drawText(centerX + top_field_center_offset, marginY, fontLabel, values[:dataLabelTopRight], Graphics.TEXT_JUSTIFY_LEFT);
+                dc.drawText(centerX - top_field_center_offset, yn3, fontLabel, values[:dataLabelTopLeft], Graphics.TEXT_JUSTIFY_RIGHT);
+                dc.drawText(centerX + top_field_center_offset, yn3, fontLabel, values[:dataLabelTopRight], Graphics.TEXT_JUSTIFY_LEFT);
 
                 top_data_height = labelHeight + halfMarginY;
             }
 
             dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
             if(propTopPartShows == 0) {
-                dc.drawText(centerX - top_field_center_offset, marginY + top_data_height, top_field_font, values[:dataTopLeft], Graphics.TEXT_JUSTIFY_RIGHT);
-                dc.drawText(centerX + top_field_center_offset, marginY + top_data_height, top_field_font, values[:dataTopRight], Graphics.TEXT_JUSTIFY_LEFT);
+                dc.drawText(centerX - top_field_center_offset, yn3 + top_data_height, top_field_font, values[:dataTopLeft], Graphics.TEXT_JUSTIFY_RIGHT);
+                dc.drawText(centerX + top_field_center_offset, yn3 + top_data_height, top_field_font, values[:dataTopRight], Graphics.TEXT_JUSTIFY_LEFT);
 
                 // Draw Moon
                 dc.setColor(themeColors[moon], Graphics.COLOR_TRANSPARENT);
-                dc.drawText(centerX, marginY + ((top_data_height + tinyDataHeight) / 2), fontMoon, values[:dataMoon], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(centerX, yn3 + ((top_data_height + tinyDataHeight) / 2), fontMoon, values[:dataMoon], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             } else {
                 if(top_data_height == halfMarginY) { top_field_font = fontSmallData; }
-                dc.drawText(centerX - top_field_center_offset, marginY + top_data_height, top_field_font, values[:dataTopLeft], Graphics.TEXT_JUSTIFY_RIGHT);
-                dc.drawText(centerX + top_field_center_offset, marginY + top_data_height, top_field_font, values[:dataTopRight], Graphics.TEXT_JUSTIFY_LEFT);
+                dc.drawText(centerX - top_field_center_offset, yn3 + top_data_height, top_field_font, values[:dataTopLeft], Graphics.TEXT_JUSTIFY_RIGHT);
+                dc.drawText(centerX + top_field_center_offset, yn3 + top_data_height, top_field_font, values[:dataTopRight], Graphics.TEXT_JUSTIFY_LEFT);
             }
         }
 
@@ -937,7 +947,7 @@ class Segment34View extends WatchUi.WatchFace {
         drawBottomFieldsWithIcons(dc, values);
 
         // Draw battery icon
-        drawBatteryIcon(dc, null, null, values);
+        drawBatteryIcon(dc, values);
     }
 
     (:InstinctCrossover)
@@ -1084,7 +1094,7 @@ class Segment34View extends WatchUi.WatchFace {
         dc.drawText(centerX + (step_width / 2) + (marginX / 2) - 2, bottomFiveY + (largeDataHeight / 2) + iconYAdj, fontIcons, values[:dataIcon2], Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
 
         // Draw battery icon
-        drawBatteryIcon(dc, null, null, values);
+        drawBatteryIcon(dc, values);
     }
 
     (:MIP)
@@ -1292,30 +1302,48 @@ class Segment34View extends WatchUi.WatchFace {
     }
 
     (:AMOLED)
-    hidden function drawBatteryIcon(dc as Dc, x as Number?, y as Number?, values as Dictionary) {
+    hidden function drawBatteryIcon(dc as Dc, values as Dictionary) {
         if(propBatteryVariant == 2) { return; }
-        if(x == null) { x = centerX; }
-        if(y == null) { y =  screenHeight - 25; }
-
+        if(propBatteryVariant == -1 and propFontSize == 1 and (propBottomFieldShows != -2 or propBottomField2Shows != -2)) { return; } // Auto - hide if large font and bottom field is shown
+        var x = centerX;
+        var y =  screenHeight - 25;
         dc.setColor(0x555555, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(x, y, fontIcons, "C", Graphics.TEXT_JUSTIFY_CENTER);
-        if(System.getSystemStats().battery <= 15) {
-            dc.setColor(0xFF0000, Graphics.COLOR_TRANSPARENT);
+
+        if(propFontSize == 0) {
+            dc.drawText(x, y, fontIcons, "C", Graphics.TEXT_JUSTIFY_CENTER);
+            if(System.getSystemStats().battery <= 15) {
+                dc.setColor(0xFF0000, Graphics.COLOR_TRANSPARENT);
+            } else {
+                dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+            }
+            if(propBatteryVariant == 3 or propBatteryVariant == -1) {
+                dc.drawText(x - 19, y + 4, fontBattery, values[:dataBattery], Graphics.TEXT_JUSTIFY_LEFT);
+            } else { // centered when not a bar
+                dc.drawText(x - 1, y + 4, fontBattery, values[:dataBattery], Graphics.TEXT_JUSTIFY_CENTER);
+            }
         } else {
-            dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+            y =  screenHeight - 30;
+            dc.drawText(x, y, fontIcons, "T", Graphics.TEXT_JUSTIFY_CENTER);
+            if(System.getSystemStats().battery <= 15) {
+                dc.setColor(0xFF0000, Graphics.COLOR_TRANSPARENT);
+            } else {
+                dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+            }
+            if(propBatteryVariant == 3 or propBatteryVariant == -1) {
+                dc.drawText(x - 26, y + 4, fontBattery, values[:dataBattery], Graphics.TEXT_JUSTIFY_LEFT);
+            } else { // centered when not a bar
+                dc.drawText(x - 1, y + 4, fontBattery, values[:dataBattery], Graphics.TEXT_JUSTIFY_CENTER);
+            }
         }
-        if(propBatteryVariant == 3) {
-            dc.drawText(x - 19, y + 4, fontBattery, values[:dataBattery], Graphics.TEXT_JUSTIFY_LEFT);
-        } else { // centered when not a bar
-            dc.drawText(x - 1, y + 4, fontBattery, values[:dataBattery], Graphics.TEXT_JUSTIFY_CENTER);
-        }
+        
+        
     }
 
     (:MIP)
-    hidden function drawBatteryIcon(dc as Dc, x as Number?, y as Number?, values as Dictionary) {
+    hidden function drawBatteryIcon(dc as Dc, values as Dictionary) {
         if(propBatteryVariant == 2) { return; }
-        if(x == null) { x = centerX; }
-        if(y == null) { y =  screenHeight - 18; }
+        var x = centerX;
+        var y =  screenHeight - 18;
 
         dc.setColor(0x555555, Graphics.COLOR_TRANSPARENT);
         dc.drawText(x, y, fontIcons, "B", Graphics.TEXT_JUSTIFY_CENTER);
@@ -1722,7 +1750,7 @@ class Segment34View extends WatchUi.WatchFace {
             } else {
                 value = sample.format("%d");
             }
-        } else if(propBatteryVariant == 3) {
+        } else if(propBatteryVariant == 3 or propBatteryVariant == -1) {
                 var sample = 0;
                 var max = 0;
                 var batLevel = System.getSystemStats().battery; 
@@ -2497,7 +2525,7 @@ class Segment34View extends WatchUi.WatchFace {
 
         switch(propDateFormat) {
             case 0: // Default: THU, 14 MAR 2024
-                value = dayName(today.day_of_week) + ", " + today.day + " " + monthName(today.month) + " " + today.year;
+                value = dayName(today.day_of_week) + ", " + today.day + " " + monthName(today.month);
                 break;
             case 1: // ISO: 2024-03-14
                 value = today.year + "-" + today.month.format("%02d") + "-" + today.day.format("%02d");

@@ -1,5 +1,5 @@
 info face="Icons" size=22 bold=0 italic=0 smooth=1 spacing=1,1
-common lineHeight=22 base=20 scaleW=246 scaleH=22 pages=1
+common lineHeight=28 base=28 scaleW=246 scaleH=28 pages=1
 page id=0 file="icons.png"
 chars count=3
 char id=104 x=0 y=0 width=15 height=20 xoffset=3 yoffset=0 xadvance=22 page=0
@@ -29,3 +29,4 @@ char id=81 x=321 y=0 width=16 height=21 xoffset=1 yoffset=0 xadvance=19 page=0
 char id=82 x=339 y=0 width=16 height=21 xoffset=1 yoffset=0 xadvance=19 page=0
 
 char id=83 x=356 y=0 width=20 height=20 xoffset=0 yoffset=0 xadvance=20 page=0
+char id=84 x=378 y=0 width=60 height=28 xoffset=0 yoffset=0 xadvance=60 page=0
