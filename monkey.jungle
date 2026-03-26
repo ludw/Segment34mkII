@@ -30,13 +30,6 @@ fenix8solar51mm.excludeAnnotations = Round260;Round360;Round390;Round416;Round45
 enduro3.excludeAnnotations = Round260;Round360;Round390;Round416;Round454;AMOLED;InstinctCrossover;Square
 
 # -----------------------------------------------------------------------------
-# 360x360 AMOLED DEVICES
-# -----------------------------------------------------------------------------
-
-venu2s.excludeAnnotations = Round260;Round280;Round390;Round416;Round454;MIP;InstinctCrossover;Square
-fr265s.excludeAnnotations = Round260;Round280;Round390;Round416;Round454;MIP;InstinctCrossover;Square
-
-# -----------------------------------------------------------------------------
 # 390x390 AMOLED DEVICES
 # -----------------------------------------------------------------------------
 

@@ -198,7 +198,6 @@ class Segment34View extends WatchUi.WatchFace {
 
     (:Round260) const barWidth = 3;
     (:Round280) const barWidth = 3;
-    (:Round360) const barWidth = 3;
     (:Round390) const barWidth = 4;
     (:InstinctCrossover) const barWidth = 4;
     (:Round416) const barWidth = 4;
@@ -324,70 +323,49 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             fontClock = Application.loadResource(Rez.Fonts.segments80wide_2);
         }
-        fontTinyData = Application.loadResource(Rez.Fonts.storre);
-        loadSmallFont(Rez.Fonts.led_small, Rez.Fonts.led_small_readable, Rez.Fonts.led_small_lines);
-        fontLargeData = Application.loadResource(Rez.Fonts.led);
-        fontBottomData = fontLargeData;
-        fontLabel = Application.loadResource(Rez.Fonts.smol);
-        fontBattery = fontLabel;
+        if(propFontSize == 0) {
+            fontTinyData = Application.loadResource(Rez.Fonts.storre);
+            loadSmallFont(Rez.Fonts.led_small, Rez.Fonts.led_small_readable, Rez.Fonts.led_small_lines);
+            fontLargeData = Application.loadResource(Rez.Fonts.led);
+            fontBottomData = fontLargeData;
+            fontLabel = Application.loadResource(Rez.Fonts.smol);
+            fontBattery = fontLabel;
+
+            marginY = 9;
+            labelHeight = 8;
+            smallDataHeight = 13;
+            bottomFiveAdj = 5;
+            baseY = centerY - smallDataHeight - 4;
+            bottomFieldWidths = [4, 3, 4, 0];
+        } else {
+            fontTinyData = Application.loadResource(Rez.Fonts.storre);
+            loadSmallFont(Rez.Fonts.led, Rez.Fonts.led_inbetween, Rez.Fonts.led_lines);
+            fontLargeData = Application.loadResource(Rez.Fonts.led);
+            fontBottomData = fontLargeData;
+            fontLabel = fontTinyData;
+            fontAODData = Application.loadResource(Rez.Fonts.led);
+            fontBattery = Application.loadResource(Rez.Fonts.led_small_lines);
+
+            marginY = 7;
+            labelHeight = 10;            
+            smallDataHeight = 20;
+            bottomFiveAdj = 5;
+            baseY = centerY - 5;
+            bottomFieldWidths = [3, 3, 3, 0];
+        }
 
         clockHeight = 80;
         clockWidth = 240;
-        labelHeight = 8;
         labelMargin = 6;
         tinyDataHeight = 10;
-        smallDataHeight = 13;
         largeDataHeight = 20;
         largeDataWidth = 18;
         bottomDataWidth = 18;
-
         baseX = centerX;
-        baseY = centerY - smallDataHeight - 4;
-        bottomFiveAdj = 5;
         barBottomAdj = 1;
         histogramBarWidth = 1;
         histogramBarSpacing = 1;
         histogramHeight = 20;
-    }
-
-    (:Round360)
-    hidden function loadResources() as Void {
-        if(propClockFont == 0) {
-            fontClock = Application.loadResource(Rez.Fonts.segments125narrow);
-            fontClockOutline = Application.loadResource(Rez.Fonts.segments125narrowoutline);
-        } else {
-            fontClock = Application.loadResource(Rez.Fonts.segments125narrow_2);
-            fontClockOutline = Application.loadResource(Rez.Fonts.segments125narrowoutline_2);
-        }
-        fontTinyData = Application.loadResource(Rez.Fonts.storre);
-        loadSmallFont(Rez.Fonts.led, Rez.Fonts.led_inbetween, Rez.Fonts.led_lines);
-        fontLargeData = Application.loadResource(Rez.Fonts.led_big);
-        fontBottomData = Application.loadResource(Rez.Fonts.led);
-        fontLabel = Application.loadResource(Rez.Fonts.smol);
-        fontAODData = fontBottomData;
-        fontBattery = Application.loadResource(Rez.Fonts.led_small_lines);
-
-        loadAODGraphics();
-
-        clockHeight = 125;
-        clockWidth = 345;
-        labelHeight = 8;
-        labelMargin = 8;
-        tinyDataHeight = 10;
-        smallDataHeight = 20;
-        largeDataHeight = 27;
-        largeDataWidth = 24;
-        bottomDataWidth = 18;
-
-        baseX = centerX;
-        baseY = centerY - smallDataHeight + 4;
-        fieldSpaceingAdj = 20;
-        barBottomAdj = 2;
-        textSideAdj = 10;
-        iconYAdj = -4;
-        marginY = 10;
-        histogramHeight = 20;
-        histogramTargetWidth = 30;
     }
 
     (:Round390)
@@ -1382,20 +1360,36 @@ class Segment34View extends WatchUi.WatchFace {
     (:MIP)
     hidden function drawBatteryIcon(dc as Dc, values as Dictionary) {
         if(propBatteryVariant == 2) { return; }
+        if(propBatteryVariant == -1 and propFontSize == 1 and (propBottomFieldShows != -2 or propBottomField2Shows != -2)) { return; } // Auto - hide if large font and bottom field is shown
         var x = centerX;
-        var y =  screenHeight - 18;
-
+        var y =  screenHeight - 20;
         dc.setColor(0x555555, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(x, y, fontIcons, "B", Graphics.TEXT_JUSTIFY_CENTER);
-        if(System.getSystemStats().battery <= 15) {
-            dc.setColor(0xFF0000, Graphics.COLOR_TRANSPARENT);
+
+        if(propFontSize == 0) {
+            dc.drawText(x, y, fontIcons, "B", Graphics.TEXT_JUSTIFY_CENTER);
+            if(System.getSystemStats().battery <= 15) {
+                dc.setColor(0xFF0000, Graphics.COLOR_TRANSPARENT);
+            } else {
+                dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+            }
+            if(propBatteryVariant == 3) {
+                dc.drawText(x - 11, y + 3, fontBattery, values[:dataBattery], Graphics.TEXT_JUSTIFY_LEFT);
+            } else {
+                dc.drawText(x - 1, y + 3, fontBattery, values[:dataBattery], Graphics.TEXT_JUSTIFY_CENTER);
+            }
         } else {
-            dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
-        }
-        if(propBatteryVariant == 3) {
-            dc.drawText(x - 11, y + 3, fontBattery, values[:dataBattery], Graphics.TEXT_JUSTIFY_LEFT);
-        } else {
-            dc.drawText(x - 1, y + 3, fontBattery, values[:dataBattery], Graphics.TEXT_JUSTIFY_CENTER);
+            y =  screenHeight - 26;
+            dc.drawText(x, y, fontIcons, "C", Graphics.TEXT_JUSTIFY_CENTER);
+            if(System.getSystemStats().battery <= 15) {
+                dc.setColor(0xFF0000, Graphics.COLOR_TRANSPARENT);
+            } else {
+                dc.setColor(themeColors[dataVal], Graphics.COLOR_TRANSPARENT);
+            }
+            if(propBatteryVariant == 3) {
+                dc.drawText(x - 19, y + 4, fontBattery, values[:dataBattery], Graphics.TEXT_JUSTIFY_LEFT);
+            } else {
+                dc.drawText(x - 1, y + 4, fontBattery, values[:dataBattery], Graphics.TEXT_JUSTIFY_CENTER);
+            }
         }
     }
 
@@ -1796,7 +1790,7 @@ class Segment34View extends WatchUi.WatchFace {
                 var max = 0;
                 var batLevel = System.getSystemStats().battery; 
 
-                if(screenHeight > 280) {
+                if(screenHeight > 280 or propFontSize == 1) {
                     sample = Math.round(batLevel / 100.0 * 35).toNumber();
                     max = 35;
                 } else {
@@ -1878,11 +1872,7 @@ class Segment34View extends WatchUi.WatchFace {
                 if(cc.feelsLikeTemperature != null) { cc_data["feelsLikeTemperature"] = cc.feelsLikeTemperature; }
                 if(cc.windBearing != null) { cc_data["windBearing"] = cc.windBearing; }
                 if(cc.windSpeed != null) { cc_data["windSpeed"] = cc.windSpeed; }
-                if (cc.uvIndex != null) {
-                    cc_data["uvIndex"] = cc.uvIndex;
-                } else {
-                    cc_data["uvIndex"] = -1;
-                }
+                if(cc has :uvIndex and cc.uvIndex != null) { cc_data["uvIndex"] = cc.uvIndex; }
             }
 
             cc_data["timestamp"] = now;
@@ -1911,11 +1901,7 @@ class Segment34View extends WatchUi.WatchFace {
                     "windBearing" => hf[i].windBearing,
                     "windSpeed" => hf[i].windSpeed
                 };
-                if(hf[i].uvIndex != null) {
-                    tmp["uvIndex"] = hf[i].uvIndex; 
-                } else {
-                    tmp["uvIndex"] = -1;
-                }
+                if(hf[i] has :uvIndex) { tmp["uvIndex"] = hf[i].uvIndex; }
                 
                 hf_data.add(tmp);
             }
@@ -2844,7 +2830,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function getUVIndex() as String {
         var ret = "";
-        if(weatherCondition != null and weatherCondition.uvIndex != null) {
+        if(weatherCondition != null and weatherCondition has :uvIndex and weatherCondition.uvIndex != null) {
             ret = weatherCondition.uvIndex.format("%d");
         }
         return ret;
