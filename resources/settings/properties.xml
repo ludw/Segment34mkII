@@ -1,4 +1,5 @@
 <properties>
+    <property id="adj" type="number">0</property>
     <property id="colorTheme" type="number">0</property>
     <property id="nightColorTheme" type="number">-1</property>
     <property id="nightThemeActivation" type="number">0</property>

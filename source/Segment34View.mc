@@ -95,6 +95,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var cgmComplicationId as Complications.Id? = null;
     hidden var cgmAgeComplicationId as Complications.Id? = null;
     
+    hidden var propAdj as Integer = 0;
     hidden var propIs24H as Boolean = false;
     hidden var propTheme as Integer = 0;
     hidden var propNightTheme as Integer = -1;
@@ -472,28 +473,49 @@ class Segment34View extends WatchUi.WatchFace {
             fontClock = Application.loadResource(Rez.Fonts.segments125_2);
             fontClockOutline = Application.loadResource(Rez.Fonts.segments125outline_2);
         }
-        fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
-        loadSmallFont(Rez.Fonts.led, Rez.Fonts.led_inbetween, Rez.Fonts.led_lines);
-        fontLargeData = Application.loadResource(Rez.Fonts.led_big);
-        fontBottomData = fontLargeData;
-        fontLabel = Application.loadResource(Rez.Fonts.storre);
-        fontAODData = Application.loadResource(Rez.Fonts.led);
-        fontBattery = fontTinyData;
+
+        if(propFontSize == 0) {
+            fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
+            loadSmallFont(Rez.Fonts.led, Rez.Fonts.led_inbetween, Rez.Fonts.led_lines);
+            fontLargeData = Application.loadResource(Rez.Fonts.led_big);
+            fontBottomData = fontLargeData;
+            fontLabel = Application.loadResource(Rez.Fonts.storre);
+            fontAODData = Application.loadResource(Rez.Fonts.led);
+            fontBattery = fontTinyData;
+
+            marginY = 13;
+            labelHeight = 10;
+            smallDataHeight = 20;
+            bottomFiveAdj = 4;
+            baseY = centerY - smallDataHeight - 4;
+            bottomFieldWidths = [4, 4, 4, 0];
+        } else {
+            fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
+            loadSmallFont(Rez.Fonts.led_big, Rez.Fonts.led_big_readable, Rez.Fonts.led_big_lines);
+            fontLargeData = Application.loadResource(Rez.Fonts.led_big);
+            fontBottomData = fontLargeData;
+            fontLabel = fontTinyData;
+            fontAODData = Application.loadResource(Rez.Fonts.led_big);
+            fontBattery = Application.loadResource(Rez.Fonts.led_lines);
+
+            marginY = 12;
+            labelHeight = 13;            
+            smallDataHeight = 27;
+            bottomFiveAdj = 6;
+            baseY = centerY - 5;
+            bottomFieldWidths = [3, 3, 3, 0];
+        }
 
         loadAODGraphics();
 
         clockHeight = 125;
         clockWidth = 360;
-        labelHeight = 10;
         labelMargin = 8;
         tinyDataHeight = 13;
-        smallDataHeight = 20;
         largeDataHeight = 27;
         largeDataWidth = 24;
         bottomDataWidth = 24;
-
         baseX = centerX;
-        baseY = centerY - smallDataHeight - 5;
         barBottomAdj = 2;
         bottomFiveAdj = 8;
         histogramHeight = 25;
@@ -518,13 +540,11 @@ class Segment34View extends WatchUi.WatchFace {
             fontAODData = Application.loadResource(Rez.Fonts.led);
             fontBattery = fontTinyData;
 
+            marginY = 17;
             labelHeight = 10;
-            labelMargin = 8;
-            tinyDataHeight = 13;
             smallDataHeight = 20;
-            largeDataHeight = 27;
             bottomFiveAdj = 4;
-            baseY = centerY - smallDataHeight + 4;
+            baseY = centerY - smallDataHeight;
             bottomFieldWidths = [4, 4, 4, 0];
 
         } else {
@@ -536,11 +556,9 @@ class Segment34View extends WatchUi.WatchFace {
             fontAODData = Application.loadResource(Rez.Fonts.led_big);
             fontBattery = Application.loadResource(Rez.Fonts.led_lines);
 
-            labelHeight = 13;
-            labelMargin = 8;
-            tinyDataHeight = 13;
+            marginY = 14;
+            labelHeight = 13;            
             smallDataHeight = 27;
-            largeDataHeight = 27;
             bottomFiveAdj = 6;
             baseY = centerY - 5;
             bottomFieldWidths = [3, 3, 3, 0];
@@ -550,13 +568,15 @@ class Segment34View extends WatchUi.WatchFace {
         clockWidth = 413;
         loadAODGraphics();
 
+        labelMargin = 8;
+        tinyDataHeight = 13;
+        largeDataHeight = 27;
         baseX = centerX + 3;
         fieldSpaceingAdj = 20;
         textSideAdj = 4;
         largeDataWidth = 24;
         bottomDataWidth = 24;
         barBottomAdj = 2;
-        marginY = 17;
         histogramHeight = 30;
         histogramTargetWidth = 45;
     }
@@ -816,7 +836,7 @@ class Segment34View extends WatchUi.WatchFace {
         dc.clear();
         var yn1 = baseY - halfClockHeight - marginY - smallDataHeight;
         var yn2 = yn1 - marginY - smallDataHeight;
-        var yn3 = yn2 - marginY - labelHeight - tinyDataHeight;
+        var yn3 = yn2 - marginY - labelHeight - tinyDataHeight - halfMarginY;
 
         // Draw Top data fields or histogram
         if(propTopPartShows == 2) {
@@ -1322,7 +1342,7 @@ class Segment34View extends WatchUi.WatchFace {
                 dc.drawText(x - 1, y + 4, fontBattery, values[:dataBattery], Graphics.TEXT_JUSTIFY_CENTER);
             }
         } else {
-            y =  screenHeight - 30;
+            y =  screenHeight - 33;
             dc.drawText(x, y, fontIcons, "T", Graphics.TEXT_JUSTIFY_CENTER);
             if(System.getSystemStats().battery <= 15) {
                 dc.setColor(0xFF0000, Graphics.COLOR_TRANSPARENT);
@@ -1507,6 +1527,7 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function updateProperties() as Void {
         var p = Application.Properties;
+        propAdj = p.getValue("adj") as Number;
         propTheme = p.getValue("colorTheme") as Number;
         propNightTheme = p.getValue("nightColorTheme") as Number;
         propNightThemeActivation = p.getValue("nightThemeActivation") as Number;
@@ -2524,8 +2545,8 @@ class Segment34View extends WatchUi.WatchFace {
         var value = "";
 
         switch(propDateFormat) {
-            case 0: // Default: THU, 14 MAR 2024
-                value = dayName(today.day_of_week) + ", " + today.day + " " + monthName(today.month);
+            case 0: // Default: THU, 14 MAR
+                value = dayName(today.day_of_week) + ", " + today.day + " " + monthName(today.month);  // TODO: maybe we need this but with year
                 break;
             case 1: // ISO: 2024-03-14
                 value = today.year + "-" + today.month.format("%02d") + "-" + today.day.format("%02d");

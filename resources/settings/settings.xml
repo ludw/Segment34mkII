@@ -1,5 +1,9 @@
 <settings>
 
+    <setting propertyKey="@Properties.adj" title="Generic adjustment">
+        <settingConfig type="numeric" />
+    </setting>
+
     <setting propertyKey="@Properties.colorTheme" title="@Strings.settings_color_theme">
         <settingConfig type="list">
             <listEntry value="0">@Strings.settings_yellow_on_turquoise</listEntry>
