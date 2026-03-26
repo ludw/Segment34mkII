@@ -289,27 +289,49 @@ class Segment34View extends WatchUi.WatchFace {
         } else {
             fontClock = Application.loadResource(Rez.Fonts.segments80_2);
         }
-        fontTinyData = Application.loadResource(Rez.Fonts.smol);
-        loadSmallFont(Rez.Fonts.led_small, Rez.Fonts.led_small_readable, Rez.Fonts.led_small_lines);
-        fontLargeData = Application.loadResource(Rez.Fonts.led);
-        fontBottomData = fontLargeData;
-        fontLabel = Application.loadResource(Rez.Fonts.xsmol);
-        fontBattery = fontTinyData;
+
+        if(propFontSize == 0) {
+            fontTinyData = Application.loadResource(Rez.Fonts.storre);
+            loadSmallFont(Rez.Fonts.led_small, Rez.Fonts.led_small_readable, Rez.Fonts.led_small_lines);
+            fontLargeData = Application.loadResource(Rez.Fonts.led);
+            fontBottomData = fontLargeData;
+            fontLabel = Application.loadResource(Rez.Fonts.smol);
+            fontBattery = fontLabel;
+
+            marginY = 7;
+            labelHeight = 8;
+            tinyDataHeight = 8;
+            smallDataHeight = 13;
+            bottomFiveAdj = 2;
+            baseY = centerY - smallDataHeight - 4;
+            bottomFieldWidths = [3, 3, 3, 0];
+        } else {
+            fontTinyData = Application.loadResource(Rez.Fonts.storre);
+            loadSmallFont(Rez.Fonts.led, Rez.Fonts.led_inbetween, Rez.Fonts.led_lines);
+            fontLargeData = Application.loadResource(Rez.Fonts.led);
+            fontBottomData = fontLargeData;
+            fontLabel = fontTinyData;
+            fontAODData = Application.loadResource(Rez.Fonts.led);
+            fontBattery = Application.loadResource(Rez.Fonts.led_small_lines);
+
+            marginY = 5;
+            labelHeight = 10;     
+            tinyDataHeight = 10;       
+            smallDataHeight = 20;
+            bottomFiveAdj = 2;
+            baseY = centerY - 6;
+            bottomFieldWidths = [4, 4, 0, 0];
+        }
 
         clockHeight = 80;
         clockWidth = 230;
-        labelHeight = 5;
         labelMargin = 6;
-        tinyDataHeight = 8;
-        smallDataHeight = 13;
         largeDataHeight = 20;
         largeDataWidth = 18;
         bottomDataWidth = 18;
 
         baseX = centerX + 1;
-        baseY = centerY - smallDataHeight - 1;
-        fieldSpaceingAdj = 15;
-        bottomFiveAdj = 2;
+        fieldSpaceingAdj = 5;
         barBottomAdj = 1;
         histogramBarWidth = 1;
         histogramBarSpacing = 1;
@@ -841,7 +863,7 @@ class Segment34View extends WatchUi.WatchFace {
             yn3 = yn2 - marginY - histogramHeight;
             drawHistogram(dc, values[:dataGraph1], centerX, yn3, histogramHeight);
         } else {
-            var top_data_height = 0;
+            var top_data_height = marginY;
             var top_field_font = fontTinyData;
             var top_field_center_offset = 20;
             if(propTopPartShows == 1) { top_field_center_offset = labelHeight; }
@@ -862,7 +884,7 @@ class Segment34View extends WatchUi.WatchFace {
                 dc.setColor(themeColors[moon], Graphics.COLOR_TRANSPARENT);
                 dc.drawText(centerX, yn3 + ((top_data_height + tinyDataHeight) / 2), fontMoon, values[:dataMoon], Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             } else {
-                if(top_data_height == halfMarginY) { top_field_font = fontSmallData; }
+                if(top_data_height == marginY) { top_field_font = fontSmallData; }
                 dc.drawText(centerX - top_field_center_offset, yn3 + top_data_height, top_field_font, values[:dataTopLeft], Graphics.TEXT_JUSTIFY_RIGHT);
                 dc.drawText(centerX + top_field_center_offset, yn3 + top_data_height, top_field_font, values[:dataTopRight], Graphics.TEXT_JUSTIFY_LEFT);
             }
