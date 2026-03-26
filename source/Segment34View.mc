@@ -399,31 +399,51 @@ class Segment34View extends WatchUi.WatchFace {
             fontClock = Application.loadResource(Rez.Fonts.segments125_2);
             fontClockOutline = Application.loadResource(Rez.Fonts.segments125outline_2);
         }
-        fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
-        loadSmallFont(Rez.Fonts.led, Rez.Fonts.led_inbetween, Rez.Fonts.led_lines);
-        fontLargeData = Application.loadResource(Rez.Fonts.led_big);
-        fontBottomData = fontLargeData;
-        fontLabel = Application.loadResource(Rez.Fonts.storre);
-        fontAODData = Application.loadResource(Rez.Fonts.led);
-        fontBattery = fontTinyData;
 
+        if(propFontSize == 0) {
+            fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
+            loadSmallFont(Rez.Fonts.led, Rez.Fonts.led_inbetween, Rez.Fonts.led_lines);
+            fontLargeData = Application.loadResource(Rez.Fonts.led_big);
+            fontBottomData = fontLargeData;
+            fontLabel = Application.loadResource(Rez.Fonts.storre);
+            fontAODData = Application.loadResource(Rez.Fonts.led);
+            fontBattery = fontTinyData;
+
+            marginY = 10;
+            labelHeight = 10;
+            smallDataHeight = 20;
+            bottomFiveAdj = 6;
+            baseY = centerY - smallDataHeight - 3;
+            bottomFieldWidths = [4, 3, 4, 0];
+        } else {
+            fontTinyData = Application.loadResource(Rez.Fonts.led_small_lines);
+            loadSmallFont(Rez.Fonts.led_big, Rez.Fonts.led_big_readable, Rez.Fonts.led_big_lines);
+            fontLargeData = Application.loadResource(Rez.Fonts.led_big);
+            fontBottomData = fontLargeData;
+            fontLabel = fontTinyData;
+            fontAODData = Application.loadResource(Rez.Fonts.led_big);
+            fontBattery = Application.loadResource(Rez.Fonts.led_lines);
+
+            marginY = 8;
+            labelHeight = 13;            
+            smallDataHeight = 27;
+            bottomFiveAdj = 4;
+            baseY = centerY - 6;
+            bottomFieldWidths = [3, 3, 3, 0];
+        }
+        
         loadAODGraphics();
 
         clockHeight = 125;
         clockWidth = 360;
-        labelHeight = 10;
         labelMargin = 8;
         tinyDataHeight = 13;
-        smallDataHeight = 20;
         largeDataHeight = 27;
         largeDataWidth = 24;
         bottomDataWidth = 24;
 
         baseX = centerX;
-        baseY = centerY - smallDataHeight - 3;
         barBottomAdj = 2;
-        bottomFiveAdj = 6;
-        marginY = 10;
         histogramHeight = 25;
     }
 
