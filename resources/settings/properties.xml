@@ -47,6 +47,7 @@
     <property id="bottomFieldAlignment" type="number">2</property>
     <property id="bottomFieldLabelAlignment" type="number">0</property>
     <property id="dateFormat" type="number">0</property>
+    <property id="dateCustomFormat" type="string">DDD, DD MMMM</property>
     <property id="smallFontVariant" type="number">2</property>
     <property id="hemisphere" type="number">0</property>
     <property id="tzOffset1" type="number">0</property>

@@ -193,6 +193,7 @@
     <string id="LABEL_UV_2">INDEKS UV</string>
     <string id="LABEL_HUM_1">WILG</string>
     <string id="LABEL_HUM_2">WILG</string>
+    <string id="LABEL_FL_3">ODCZUWALNA</string>
 
     <string id="LABEL_CGM">CGM</string>
     <string id="LABEL_CGMAGE">CGM WIEK</string>
@@ -416,16 +417,9 @@
     <string id="settings_24h" scope="settings">24h</string>
     <string id="settings_12h" scope="settings">12h</string>
     <string id="settings_date_format" scope="settings">Format daty</string>
-    <string id="settings_weekday_dd_month_yyyy" scope="settings">DZIEŃ TYGODNIA, DD MIESIĄC RRRR</string>
-    <string id="settings_weekday_dd_month" scope="settings">DZIEŃ TYGODNIA, DD MIESIĄC</string>
-    <string id="settings_yyyy_mm_dd" scope="settings">RRRR-MM-DD</string>
-    <string id="settings_mm_dd_yyyy" scope="settings">MM/DD/RRRR</string>
-    <string id="settings_dd_mm_yyyy" scope="settings">DD.MM.RRRR</string>
-    <string id="settings_weekday_yyyy_mm_dd" scope="settings">DZIEŃ TYGODNIA, RRRR-MM-DD</string>
-    <string id="settings_weekday_mm_dd_yyyy" scope="settings">DZIEŃ TYGODNIA, MM/DD/RRRR</string>
-    <string id="settings_weekday_dd_mm_yyyy" scope="settings">DZIEŃ TYGODNIA, DD.MM.RRRR</string>
-    <string id="settings_weekday_dd_month_week" scope="settings">DZIEŃ TYGODNIA, DD MIESIĄC (Tydzień)</string>
-    <string id="settings_weekday_dd_month_yyyy_week" scope="settings">DZIEŃ TYGODNIA, DD MIESIĄC RRRR (Tydzień)</string>
+    <string id="settings_date_format_auto" scope="settings">Auto - DDD, DD MMMM YYYY (rok pominięty dla dużej czcionki)</string>
+    <string id="settings_date_format_custom" scope="settings">Własny - wpisz format poniżej</string>
+    <string id="settings_date_custom_format" scope="settings">Format (DDD=dzień tyg. DD=dzień MM=mies.# MMMM=miesiąc YYYY WW=tydzień)</string>
     <string id="settings_alternative_timezone_1_label" scope="settings">Etykieta alternatywnej strefy czasowej 1</string>
     <string id="settings_alternative_timezone_1_offset" scope="settings">Przesunięcie alternatywnej strefy czasowej 1</string>
     <string id="settings_alternative_timezone_2_label" scope="settings">Etykieta alternatywnej strefy czasowej 2</string>

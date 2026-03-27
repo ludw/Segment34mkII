@@ -431,16 +431,9 @@
     <string id="settings_24h" scope="settings">24h</string>
     <string id="settings_12h" scope="settings">12h</string>
     <string id="settings_date_format" scope="settings">Date format</string>
-    <string id="settings_weekday_dd_month_yyyy" scope="settings">WEEKDAY, DD MONTH YYYY</string>
-    <string id="settings_weekday_dd_month" scope="settings">WEEKDAY, DD MONTH</string>
-    <string id="settings_yyyy_mm_dd" scope="settings">YYYY-MM-DD</string>
-    <string id="settings_mm_dd_yyyy" scope="settings">MM/DD/YYYY</string>
-    <string id="settings_dd_mm_yyyy" scope="settings">DD.MM.YYYY</string>
-    <string id="settings_weekday_yyyy_mm_dd" scope="settings">WEEKDAY, YYYY-MM-DD</string>
-    <string id="settings_weekday_mm_dd_yyyy" scope="settings">WEEKDAY, MM/DD/YYYY</string>
-    <string id="settings_weekday_dd_mm_yyyy" scope="settings">WEEKDAY, DD.MM.YYYY</string>
-    <string id="settings_weekday_dd_month_week" scope="settings">WEEKDAY, DD MONTH (Week)</string>
-    <string id="settings_weekday_dd_month_yyyy_week" scope="settings">WEEKDAY, DD MONTH YYYY (Week)</string>
+    <string id="settings_date_format_auto" scope="settings">Auto - WEEKDAY, DD MONTH YYYY (year omitted for large font)</string>
+    <string id="settings_date_format_custom" scope="settings">Custom - enter format below</string>
+    <string id="settings_date_custom_format" scope="settings">Custom format (DDD=weekday DD=day MM=month# MMMM=month YYYY WW=week)</string>
     <string id="settings_alternative_timezone_1_label" scope="settings">Alternative Timezone 1 label</string>
     <string id="settings_alternative_timezone_1_offset" scope="settings">Alternative Timezone 1 offset</string>
     <string id="settings_alternative_timezone_2_label" scope="settings">Alternative Timezone 2 label</string>

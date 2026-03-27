@@ -418,16 +418,9 @@
     <string id="settings_24h" scope="settings">24h</string>
     <string id="settings_12h" scope="settings">12h</string>
     <string id="settings_date_format" scope="settings">Datumformat</string>
-    <string id="settings_weekday_dd_month_yyyy" scope="settings">VECKODAG, DD MÅNAD ÅÅÅÅ</string>
-    <string id="settings_weekday_dd_month" scope="settings">VECKODAG, DD MÅNAD</string>
-    <string id="settings_yyyy_mm_dd" scope="settings">ÅÅÅÅ-MM-DD</string>
-    <string id="settings_mm_dd_yyyy" scope="settings">MM/DD/ÅÅÅÅ</string>
-    <string id="settings_dd_mm_yyyy" scope="settings">DD.MM.ÅÅÅÅ</string>
-    <string id="settings_weekday_yyyy_mm_dd" scope="settings">VECKODAG, ÅÅÅÅ-MM-DD</string>
-    <string id="settings_weekday_mm_dd_yyyy" scope="settings">VECKODAG, MM/DD/ÅÅÅÅ</string>
-    <string id="settings_weekday_dd_mm_yyyy" scope="settings">VECKODAG, DD.MM.ÅÅÅÅ</string>
-    <string id="settings_weekday_dd_month_week" scope="settings">VECKODAG, DD MÅNAD (Vecka)</string>
-    <string id="settings_weekday_dd_month_yyyy_week" scope="settings">VECKODAG, DD MÅNAD ÅÅÅÅ (Vecka)</string>
+    <string id="settings_date_format_auto" scope="settings">Auto - DDD, DD MMMM YYYY (år utelämnas för stor stil)</string>
+    <string id="settings_date_format_custom" scope="settings">Anpassat - ange format nedan</string>
+    <string id="settings_date_custom_format" scope="settings">Format (DDD=veckodag DD=dag MM=mån.# MMMM=månad YYYY WW=vecka)</string>
     <string id="settings_alternative_timezone_1_label" scope="settings">Alternativ tidszon 1 etikett</string>
     <string id="settings_alternative_timezone_1_offset" scope="settings">Alternativ tidszon 1 offset</string>
     <string id="settings_alternative_timezone_2_label" scope="settings">Alternativ tidszon 2 etikett</string>

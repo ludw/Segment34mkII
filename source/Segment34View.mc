@@ -148,6 +148,7 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propWeatherLine1Shows as Number = 49;
     hidden var propWeatherLine2Shows as Number = 50;
     hidden var propDateFormat as Number = 0;
+    hidden var propDateCustomFormat as String = "DDD, DD MMMM";
     hidden var propNotificationCountShows as Number = 36;
     hidden var propTzOffset1 as Number = 0;
     hidden var propTzOffset2 as Number = 0;
@@ -1625,6 +1626,7 @@ class Segment34View extends WatchUi.WatchFace {
         propPressureUnit = p.getValue("pressureUnit") as Number;
         propLabelVisibility = p.getValue("labelVisibility") as Number;
         propDateFormat = p.getValue("dateFormat") as Number;
+        propDateCustomFormat = p.getValue("dateCustomFormat") as String;
         propNotificationCountShows = p.getValue("notificationCountShows") as Number;
         propTzOffset1 = p.getValue("tzOffset1") as Number;
         propTzOffset2 = p.getValue("tzOffset2") as Number;
@@ -2574,42 +2576,67 @@ class Segment34View extends WatchUi.WatchFace {
     hidden function formatDate() as String {
         var now = Time.now();
         var today = Time.Gregorian.info(now, Time.FORMAT_SHORT);
-        var value = "";
 
-        switch(propDateFormat) {
-            case 0: // Default: THU, 14 MAR
-                value = dayName(today.day_of_week) + ", " + today.day + " " + monthName(today.month);  // TODO: maybe we need this but with year
-                break;
-            case 1: // ISO: 2024-03-14
-                value = today.year + "-" + today.month.format("%02d") + "-" + today.day.format("%02d");
-                break;
-            case 2: // US: 03/14/2024
-                value = today.month.format("%02d") + "/" + today.day.format("%02d") + "/" + today.year;
-                break;
-            case 3: // EU: 14.03.2024
-                value = today.day.format("%02d") + "." + today.month.format("%02d") + "." + today.year;
-                break;
-            case 4: // THU, 14 MAR (Week number)
-                value = dayName(today.day_of_week) + ", " + today.day + " " + monthName(today.month) + " (W" + isoWeekNumber(today.year, today.month, today.day) + ")";
-                break;
-            case 5: // THU, 14 MAR 2024 (Week number)
-                value = dayName(today.day_of_week) + ", " + today.day + " " + monthName(today.month) + " " + today.year + " (W" + isoWeekNumber(today.year, today.month, today.day) + ")";
-                break;
-            case 6: // WEEKDAY, DD MONTH
-                value = dayName(today.day_of_week) + ", " + today.day + " " + monthName(today.month);
-                break;
-            case 7: // WEEKDAY, YYYY-MM-DD
-                value = dayName(today.day_of_week) + ", " + today.year + "-" + today.month.format("%02d") + "-" + today.day.format("%02d");
-                break;
-            case 8: // WEEKDAY, MM/DD/YYYY
-                value = dayName(today.day_of_week) + ", " + today.month.format("%02d") + "/" + today.day.format("%02d") + "/" + today.year;
-                break;
-            case 9: // WEEKDAY, DD.MM.YYYY
-                value = dayName(today.day_of_week) + ", " + today.day.format("%02d") + "." + today.month.format("%02d") + "." + today.year;
-                break;
+        if(propDateFormat == 1) {
+            return formatCustomDate(today);
         }
+        // Auto: omit year for large font
+        var base = dayName(today.day_of_week) + ", " + today.day + " " + monthName(today.month);
+        if(propFontSize == 1) {
+            return base;
+        }
+        return base + " " + today.year;
+    }
 
-        return value;
+    hidden function formatCustomDate(today as Time.Gregorian.Info) as String {
+        var fmt = propDateCustomFormat;
+        var result = "";
+        var i = 0;
+        var len = fmt.length();
+        while(i < len) {
+            if(i + 4 <= len) {
+                var tok4 = fmt.substring(i, i + 4);
+                if(tok4.equals("MMMM")) {
+                    result += monthName(today.month);
+                    i += 4;
+                    continue;
+                }
+                if(tok4.equals("YYYY")) {
+                    result += today.year.toString();
+                    i += 4;
+                    continue;
+                }
+            }
+            if(i + 3 <= len) {
+                var tok3 = fmt.substring(i, i + 3);
+                if(tok3.equals("DDD")) {
+                    result += dayName(today.day_of_week);
+                    i += 3;
+                    continue;
+                }
+            }
+            if(i + 2 <= len) {
+                var tok2 = fmt.substring(i, i + 2);
+                if(tok2.equals("DD")) {
+                    result += today.day.toString();
+                    i += 2;
+                    continue;
+                }
+                if(tok2.equals("MM")) {
+                    result += today.month.format("%02d");
+                    i += 2;
+                    continue;
+                }
+                if(tok2.equals("WW")) {
+                    result += isoWeekNumber(today.year, today.month, today.day).toString();
+                    i += 2;
+                    continue;
+                }
+            }
+            result += fmt.substring(i, i + 1);
+            i += 1;
+        }
+        return result.toUpper();
     }
 
     hidden function joinFour(a as String, b as String, c as String, d as String) as String {

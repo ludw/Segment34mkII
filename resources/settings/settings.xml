@@ -1029,17 +1029,13 @@
 
     <setting propertyKey="@Properties.dateFormat" title="@Strings.settings_date_format">
         <settingConfig type="list">
-            <listEntry value="0">@Strings.settings_weekday_dd_month_yyyy</listEntry>
-            <listEntry value="6">@Strings.settings_weekday_dd_month</listEntry>
-            <listEntry value="1">@Strings.settings_yyyy_mm_dd</listEntry>
-            <listEntry value="2">@Strings.settings_mm_dd_yyyy</listEntry>
-            <listEntry value="3">@Strings.settings_dd_mm_yyyy</listEntry>
-            <listEntry value="7">@Strings.settings_weekday_yyyy_mm_dd</listEntry>
-            <listEntry value="8">@Strings.settings_weekday_mm_dd_yyyy</listEntry>
-            <listEntry value="9">@Strings.settings_weekday_dd_mm_yyyy</listEntry>
-            <listEntry value="4">@Strings.settings_weekday_dd_month_week</listEntry>
-            <listEntry value="5">@Strings.settings_weekday_dd_month_yyyy_week</listEntry>
+            <listEntry value="0">@Strings.settings_date_format_auto</listEntry>
+            <listEntry value="1">@Strings.settings_date_format_custom</listEntry>
         </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.dateCustomFormat" title="@Strings.settings_date_custom_format">
+        <settingConfig type="alphaNumeric" />
     </setting>
 
     <setting propertyKey="@Properties.tzName1" title="@Strings.settings_alternative_timezone_1_label">

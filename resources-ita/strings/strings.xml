@@ -418,16 +418,9 @@
     <string id="settings_24h" scope="settings">24h</string>
     <string id="settings_12h" scope="settings">12h</string>
     <string id="settings_date_format" scope="settings">Formato data</string>
-    <string id="settings_weekday_dd_month_yyyy" scope="settings">GIORNO, GG MESE AAAA</string>
-    <string id="settings_weekday_dd_month" scope="settings">GIORNO, GG MESE</string>
-    <string id="settings_yyyy_mm_dd" scope="settings">AAAA-MM-GG</string>
-    <string id="settings_mm_dd_yyyy" scope="settings">MM/GG/AAAA</string>
-    <string id="settings_dd_mm_yyyy" scope="settings">GG.MM.AAAA</string>
-    <string id="settings_weekday_yyyy_mm_dd" scope="settings">GIORNO, AAAA-MM-GG</string>
-    <string id="settings_weekday_mm_dd_yyyy" scope="settings">GIORNO, MM/GG/AAAA</string>
-    <string id="settings_weekday_dd_mm_yyyy" scope="settings">GIORNO, GG.MM.AAAA</string>
-    <string id="settings_weekday_dd_month_week" scope="settings">GIORNO, GG MESE (Settimana)</string>
-    <string id="settings_weekday_dd_month_yyyy_week" scope="settings">GIORNO, GG MESE AAAA (Settimana)</string>
+    <string id="settings_date_format_auto" scope="settings">Auto - DDD, DD MMMM YYYY (anno omesso per font grande)</string>
+    <string id="settings_date_format_custom" scope="settings">Personalizzato - inserire il formato qui sotto</string>
+    <string id="settings_date_custom_format" scope="settings">Formato (DDD=giorno sett. DD=giorno MM=mese# MMMM=mese YYYY WW=settimana)</string>
     <string id="settings_alternative_timezone_1_label" scope="settings">Etichetta fuso orario alternativo 1</string>
     <string id="settings_alternative_timezone_1_offset" scope="settings">Offset fuso orario alternativo 1</string>
     <string id="settings_alternative_timezone_2_label" scope="settings">Etichetta fuso orario alternativo 2</string>

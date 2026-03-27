@@ -193,6 +193,7 @@
     <string id="LABEL_UV_2">INDICE UV</string>
     <string id="LABEL_HUM_1">HUM</string>
     <string id="LABEL_HUM_2">HUMIDITÉ</string>
+    <string id="LABEL_FL_3">RESSENTI</string>
 
     <string id="LABEL_CGM">CGM</string>
     <string id="LABEL_CGMAGE">CGM AGE</string>
@@ -416,16 +417,9 @@
     <string id="settings_24h" scope="settings">24h</string>
     <string id="settings_12h" scope="settings">12h</string>
     <string id="settings_date_format" scope="settings">Format de date</string>
-    <string id="settings_weekday_dd_month_yyyy" scope="settings">JOUR, JJ MOIS AAAA</string>
-    <string id="settings_weekday_dd_month" scope="settings">JOUR, JJ MOIS</string>
-    <string id="settings_yyyy_mm_dd" scope="settings">AAAA-MM-JJ</string>
-    <string id="settings_mm_dd_yyyy" scope="settings">MM/JJ/AAAA</string>
-    <string id="settings_dd_mm_yyyy" scope="settings">JJ.MM.AAAA</string>
-    <string id="settings_weekday_yyyy_mm_dd" scope="settings">JOUR, AAAA-MM-JJ</string>
-    <string id="settings_weekday_mm_dd_yyyy" scope="settings">JOUR, MM/JJ/AAAA</string>
-    <string id="settings_weekday_dd_mm_yyyy" scope="settings">JOUR, JJ.MM.AAAA</string>
-    <string id="settings_weekday_dd_month_week" scope="settings">JOUR, JJ MOIS (Semaine)</string>
-    <string id="settings_weekday_dd_month_yyyy_week" scope="settings">JOUR, JJ MOIS AAAA (Semaine)</string>
+    <string id="settings_date_format_auto" scope="settings">Auto - DDD, DD MMMM YYYY (année omise pour grande police)</string>
+    <string id="settings_date_format_custom" scope="settings">Personnalisé - entrez le format ci-dessous</string>
+    <string id="settings_date_custom_format" scope="settings">Format (DDD=jour semaine DD=jour MM=mois# MMMM=mois YYYY WW=semaine)</string>
     <string id="settings_alternative_timezone_1_label" scope="settings">Libellé du fuseau horaire alternatif 1</string>
     <string id="settings_alternative_timezone_1_offset" scope="settings">Décalage du fuseau horaire alternatif 1</string>
     <string id="settings_alternative_timezone_2_label" scope="settings">Libellé du fuseau horaire alternatif 2</string>
