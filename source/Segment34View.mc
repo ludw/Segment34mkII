@@ -2035,19 +2035,19 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function getUnitByType(complicationType) as String {
         var unit = "";
-        if(complicationType == 11) { // Calories / day
+        if(complicationType == 10) { // Calories / day
             unit = Application.loadResource(Rez.Strings.UNIT_KCAL);
-        } else if(complicationType == 12) { // Altitude (m)
+        } else if(complicationType == 11) { // Altitude (m)
             unit = Application.loadResource(Rez.Strings.UNIT_M);
-        } else if(complicationType == 15) { // Altitude (ft)
+        } else if(complicationType == 14) { // Altitude (ft)
             unit = Application.loadResource(Rez.Strings.UNIT_FT);
-        } else if(complicationType == 17) { // Steps / day
+        } else if(complicationType == 16) { // Steps / day
             unit = Application.loadResource(Rez.Strings.UNIT_STEPS);
-        } else if(complicationType == 19) { // Wheelchair pushes
+        } else if(complicationType == 18) { // Wheelchair pushes
             unit = Application.loadResource(Rez.Strings.UNIT_PUSHES);
-        } else if(complicationType == 29) { // Active calories / day
+        } else if(complicationType == 25) { // Active calories / day
             unit = Application.loadResource(Rez.Strings.UNIT_KCAL);
-        } else if(complicationType == 58) { // Active/Total calories / day
+        } else if(complicationType == 46) { // Active/Total calories / day
             unit = Application.loadResource(Rez.Strings.UNIT_KCAL);
         }
         return unit;
@@ -2072,40 +2072,40 @@ class Segment34View extends WatchUi.WatchFace {
             if(activityInfo.activeMinutesDay != null) {
                 val = activityInfo.activeMinutesDay.total.format(numberFormat);
             }
-        } else if(complicationType == 2 || complicationType == 3) { // distance / day
+        } else if(complicationType == 2) { // distance / day
             if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
             if(activityInfo.distance != null) {
                 val = formatDistanceByWidth(activityInfo.distance / (propIsMetricDistance ? 100000.0 : 160900.0), width);
             }
-        } else if(complicationType == 4) { // floors climbed / day
+        } else if(complicationType == 3) { // floors climbed / day
             if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
             if(activityInfo.floorsClimbed != null) {
                 val = activityInfo.floorsClimbed.format(numberFormat);
             }
-        } else if(complicationType == 5) { // meters climbed / day
+        } else if(complicationType == 4) { // meters climbed / day
             if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
             if(activityInfo.metersClimbed != null) {
                 val = activityInfo.metersClimbed.format(numberFormat);
             }
-        } else if(complicationType == 6) { // Time to Recovery (h)
+        } else if(complicationType == 5) { // Time to Recovery (h)
             val = getRecoveryTimeVal(numberFormat);
 
-        } else if(complicationType == 7) { // VO2 Max Running
+        } else if(complicationType == 6) { // VO2 Max Running
             var profile = UserProfile.getProfile();
             if(profile.vo2maxRunning != null) {
                 val = profile.vo2maxRunning.format(numberFormat);
             }
-        } else if(complicationType == 8) { // VO2 Max Cycling
+        } else if(complicationType == 7) { // VO2 Max Cycling
             var profile = UserProfile.getProfile();
             if(profile.vo2maxCycling != null) {
                 val = profile.vo2maxCycling.format(numberFormat);
             }
-        } else if(complicationType == 9) { // Respiration rate
+        } else if(complicationType == 8) { // Respiration rate
             if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
             if(activityInfo.respirationRate != null) {
                 val = activityInfo.respirationRate.format(numberFormat);
             }
-        } else if(complicationType == 10) {
+        } else if(complicationType == 9) {
             // Try to retrieve live HR from Activity::Info
             var activity_info = Activity.getActivityInfo();
             var sample = activity_info.currentHeartRate;
@@ -2120,34 +2120,34 @@ class Segment34View extends WatchUi.WatchFace {
                     }
                 }
             }
-        } else if(complicationType == 11) { // Calories
+        } else if(complicationType == 10) { // Calories
             if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
             if(activityInfo.calories != null) {
                 val = activityInfo.calories.format(numberFormat);
             }
-        } else if(complicationType == 12) { // Altitude (m)
+        } else if(complicationType == 11) { // Altitude (m)
                 var alt = getAltitudeValue();
                 if (alt != null) {
                     val = alt.format(numberFormat);
             }
-        } else if(complicationType == 13) { // Stress
+        } else if(complicationType == 12) { // Stress
         var st = getStressData();
             if(st != null) {
                 val = st.format(numberFormat);
             }
-        } else if(complicationType == 14) { // Body battery
+        } else if(complicationType == 13) { // Body battery
             var bb = getBBData();
             if(bb != null) {
                 val = bb.format(numberFormat);
             }
-        } else if(complicationType == 15) { // Altitude (ft)
+        } else if(complicationType == 14) { // Altitude (ft)
             var alt = getAltitudeValue();
             if (alt != null) {
                 val = (alt * 3.28084).format(numberFormat);
             }
-        } else if(complicationType == 16) { // Alt TZ 1
+        } else if(complicationType == 15) { // Alt TZ 1
             val = secondaryTimezone(propTzOffset1, width);
-        } else if(complicationType == 17) { // Steps / day
+        } else if(complicationType == 16) { // Steps / day
             if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
             if(activityInfo.steps != null) {
                 if(width >= 5) {
@@ -2162,28 +2162,28 @@ class Segment34View extends WatchUi.WatchFace {
                 }
 
             }
-        } else if(complicationType == 18) { // Distance (m) / day
+        } else if(complicationType == 17) { // Distance (m) / day
             if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
             if(activityInfo.distance != null) {
                 val = (activityInfo.distance / 100).format(numberFormat);
             }
-        } else if(complicationType == 19) { // Wheelchair pushes
+        } else if(complicationType == 18) { // Wheelchair pushes
             if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
             if(activityInfo.pushes != null) {
                 val = activityInfo.pushes.format(numberFormat);
             }
-        } else if(complicationType == 21 || complicationType == 22) { // Weekly run distance
+        } else if(complicationType == 19) { // Weekly run distance
             val = getWeeklyDistanceFromComplication(true, propIsMetricDistance ? 0.001 : 0.000621371, width);
-        } else if(complicationType == 23 || complicationType == 24) { // Weekly bike distance
+        } else if(complicationType == 20) { // Weekly bike distance
             val = getWeeklyDistanceFromComplication(false, propIsMetricDistance ? 0.001 : 0.000621371, width);
-        } else if(complicationType == 25) { // Training status
+        } else if(complicationType == 21) { // Training status
             val = getTrainingStatusVal();
-        } else if(complicationType == 26) { // Raw Barometric pressure (hPA)
+        } else if(complicationType == 22) { // Raw Barometric pressure (hPA)
             var info = Activity.getActivityInfo();
             if (info.rawAmbientPressure != null) {
                 val = formatPressure(info.rawAmbientPressure / 100.0, width);
             }
-        } else if(complicationType == 27) { // Weight kg
+        } else if(complicationType == 23) { // Weight kg
             var profile = UserProfile.getProfile();
             if(profile.weight != null) {
                 var weight_kg = profile.weight / 1000.0;
@@ -2193,12 +2193,12 @@ class Segment34View extends WatchUi.WatchFace {
                     val = weight_kg.format("%.1f");
                 }
             }
-        } else if(complicationType == 28) { // Weight lbs
+        } else if(complicationType == 24) { // Weight lbs
             var profile = UserProfile.getProfile();
             if(profile.weight != null) {
                 val = (profile.weight * 0.00220462).format(numberFormat);
             }
-        } else if(complicationType == 29) { // Act Calories
+        } else if(complicationType == 25) { // Act Calories
             if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
             var rest_calories = getRestCalories();
             // Get total calories and subtract rest calories
@@ -2208,26 +2208,26 @@ class Segment34View extends WatchUi.WatchFace {
                     val = active_calories.format(numberFormat);
                 } else { val = "0"; }
             }
-        } else if(complicationType == 30) { // Sea level pressure (hPA)
+        } else if(complicationType == 26) { // Sea level pressure (hPA)
             var info = Activity.getActivityInfo();
             if (info.meanSeaLevelPressure != null) {
                 val = formatPressure(info.meanSeaLevelPressure / 100.0, width);
             }
-        } else if(complicationType == 31) { // Week number
+        } else if(complicationType == 27) { // Week number
             var today = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
             var week_number = isoWeekNumber(today.year, today.month, today.day);
             val = week_number.format(numberFormat);
-        } else if(complicationType == 32 || complicationType == 33) { // Total distance past 7 days
+        } else if(complicationType == 28 || complicationType == 29) { // Total distance past 7 days
             val = formatDistanceByWidth(getWeeklyDistance() * (propIsMetricDistance ? 0.00001 : 0.00000621371), width);
-        } else if(complicationType == 34) { // Battery percentage
+        } else if(complicationType == 30) { // Battery percentage
             var battery = System.getSystemStats().battery;
             val = battery.format("%d");
-        } else if(complicationType == 35) { // Battery days remaining
+        } else if(complicationType == 31) { // Battery days remaining
             var stats35 = System.getSystemStats();
             if(stats35.batteryInDays != null) {
                 val = Math.round(stats35.batteryInDays).format(numberFormat);
             }
-        } else if(complicationType == 36) { // Notification count
+        } else if(complicationType == 32) { // Notification count
             var notif_count = System.getDeviceSettings().notificationCount;
             if(notif_count != null) {
                 if(notif_count == 0) {
@@ -2236,12 +2236,12 @@ class Segment34View extends WatchUi.WatchFace {
                     val = notif_count.format(numberFormat);
                 }
             }
-        } else if(complicationType == 37) { // Solar intensity
+        } else if(complicationType == 33) { // Solar intensity
             var stats37 = System.getSystemStats();
             if(stats37.solarIntensity != null) {
                 val = stats37.solarIntensity.format(numberFormat);
             }
-        } else if(complicationType == 38) { // Sensor temperature
+        } else if(complicationType == 34) { // Sensor temperature
             var tempIterator = Toybox.SensorHistory.getTemperatureHistory({:period => 1});
             if (tempIterator != null) {
                 var temp = tempIterator.next();
@@ -2249,44 +2249,44 @@ class Segment34View extends WatchUi.WatchFace {
                     val = formatTemperature(convertTemperature(temp.data, cachedTempUnit));
                 }
             }
-        } else if(complicationType == 39 || complicationType == 40) { // Sunrise / Sunset
+        } else if(complicationType == 35 || complicationType == 36) { // Sunrise / Sunset
             if(weatherCondition != null) {
                 var loc = weatherCondition.observationLocationPosition;
                 if(loc != null) {
                     var now = Time.now();
-                    var s = (complicationType == 39) ? Weather.getSunrise(loc, now) : Weather.getSunset(loc, now);
+                    var s = (complicationType == 35) ? Weather.getSunrise(loc, now) : Weather.getSunset(loc, now);
                     val = formatSunTime(s, width);
                 }
             }
-        } else if(complicationType == 41) { // Alt TZ 2
+        } else if(complicationType == 37) { // Alt TZ 2
             val = secondaryTimezone(propTzOffset2, width);
-        } else if(complicationType == 42) { // Alarms
+        } else if(complicationType == 38) { // Alarms
             val = System.getDeviceSettings().alarmCount.format(numberFormat);
-        } else if(complicationType == 43) { // High temp
+        } else if(complicationType == 39) { // High temp
             if(weatherCondition != null and weatherCondition.highTemperature != null) {
                 var tempVal = weatherCondition.highTemperature;
                 val = formatTemperature(convertTemperature(tempVal, cachedTempUnit));
             }
-        } else if(complicationType == 44) { // Low temp
+        } else if(complicationType == 40) { // Low temp
             if(weatherCondition != null and weatherCondition.lowTemperature != null) {
                 var tempVal = weatherCondition.lowTemperature;
                 val = formatTemperature(convertTemperature(tempVal, cachedTempUnit));
             }
-        } else if(complicationType == 53) { // Temperature
+        } else if(complicationType == 41) { // Temperature
             val = getTemperature();
-        } else if(complicationType == 54) { // Precipitation chance
+        } else if(complicationType == 42) { // Precipitation chance
             val = getPrecip();
             if(width == 3 and val.equals("100%")) { val = "100"; }
-        } else if(complicationType == 55) { // Next Sun Event
+        } else if(complicationType == 43) { // Next Sun Event
             var nextSunEventArray = getNextSunEvent();
             if(nextSunEventArray != null && nextSunEventArray.size() == 2) {
                 val = formatSunTime(nextSunEventArray[0], width);
             }
-        } else if(complicationType == 56) { // Millitary Date Time Group
+        } else if(complicationType == 44) { // Millitary Date Time Group
             val = getDateTimeGroup();
-        } else if(complicationType == 57) { // Time of the next Calendar Event
+        } else if(complicationType == 45) { // Time of the next Calendar Event
             val = getCalendarEventVal(width);
-        } else if(complicationType == 58) { // Active / Total calories
+        } else if(complicationType == 46) { // Active / Total calories
             if(activityInfo == null) { activityInfo = ActivityMonitor.getInfo(); }
             var rest_calories = getRestCalories();
             var total_calories = 0;
@@ -2297,25 +2297,25 @@ class Segment34View extends WatchUi.WatchFace {
             var active_calories = total_calories - rest_calories;
             active_calories = (active_calories > 0) ? active_calories : 0; // Ensure active calories is not negative
             val = active_calories.format(numberFormat) + "/" + total_calories.format(numberFormat);
-        } else if(complicationType == 59) { // PulseOx
+        } else if(complicationType == 47) { // PulseOx
             val = getPulseOxVal(numberFormat);
-        } else if(complicationType == 60) { // Location Long Lat dec deg
+        } else if(complicationType == 48) { // Location Long Lat dec deg
             var pos = Activity.getActivityInfo().currentLocation;
             if(pos != null) {
                 val = pos.toDegrees()[0] + " " + pos.toDegrees()[1];
             } else {
                 val = Application.loadResource(Rez.Strings.LABEL_POS_NA);
             }
-            
-        } else if(complicationType == 61) { // Location Millitary format
+
+        } else if(complicationType == 49) { // Location Millitary format
             var pos = Activity.getActivityInfo().currentLocation;
             if(pos != null) {
                 val = pos.toGeoString(Position.GEO_MGRS);
             } else {
                 val = Application.loadResource(Rez.Strings.LABEL_POS_NA);
             }
-            
-        } else if(complicationType == 62) { // Location Accuracy
+
+        } else if(complicationType == 50) { // Location Accuracy
             var acc = Activity.getActivityInfo().currentLocationAccuracy;
             if(acc != null) {
                 if(width < 4) {
@@ -2324,33 +2324,33 @@ class Segment34View extends WatchUi.WatchFace {
                     val = ["N/A", "LAST", "POOR", "USBL", "GOOD"][acc];
                 }
             }
-        } else if(complicationType == 64) { // UV Index
+        } else if(complicationType == 51) { // UV Index
             val = getUVIndex();
-        } else if(complicationType == 66) { // Humidity
+        } else if(complicationType == 52) { // Humidity
             val = getHumidity();
-        } else if(complicationType == 71) { // CGM Glucose + Trend
+        } else if(complicationType == 53) { // CGM Glucose + Trend
             val = getCgmReading();
-        } else if(complicationType == 72) { // CGM Age (minutes)
+        } else if(complicationType == 54) { // CGM Age (minutes)
             val = getCgmAge();
-        } else if(complicationType == 74) { // Feels like
+        } else if(complicationType == 55) { // Feels like
             val = getFeelsLike();
-        } else if(complicationType == 75) { // Hours to next sun event
+        } else if(complicationType == 56) { // Hours to next sun event
             val = hoursToNextSunEvent();
-        } else if(complicationType == 76) { // Resting Heart Rate
+        } else if(complicationType == 57) { // Resting Heart Rate
             var profile = UserProfile.getProfile();
             if(profile.restingHeartRate != null) {
                 val = profile.restingHeartRate.format(numberFormat);
             }
-        } else if(complicationType == 77 || complicationType == 78) { // Run/bike distance past 7 days
+        } else if(complicationType == 58 || complicationType == 59) { // Run/bike distance past 7 days
             if(Time.now().value() - lastActivityDistUpdate >= 60*5) {
                 lastActivityDistUpdate = Time.now().value();
                 updateActivityDistCache();
             }
             var distFactor = propIsMetricDistance ? 0.001 : 0.000621371;
-            val = formatDistanceByWidth((complicationType == 77 ? cachedRunDist7Days : cachedBikeDist7Days) * distFactor, width);
-        } else if(complicationType == 79) { // Weather data 1 format string
+            val = formatDistanceByWidth((complicationType == 58 ? cachedRunDist7Days : cachedBikeDist7Days) * distFactor, width);
+        } else if(complicationType == 60) { // Weather data 1 format string
             val = getWeatherByFormat(propWeatherFormat1);
-        } else if(complicationType == 80) { // Weather data 2 format string
+        } else if(complicationType == 61) { // Weather data 2 format string
             val = getWeatherByFormat(propWeatherFormat2);
         }
 
@@ -2434,75 +2434,71 @@ class Segment34View extends WatchUi.WatchFace {
 
     hidden function getLabelByType(complicationType as Number, labelSize as Number) as String {
         // labelSize 1 = short, 2 = mid
-        if(complicationType == 16) { return propTzName1.toUpper() + ":"; }
-        if(complicationType == 41) { return propTzName2.toUpper() + ":"; }
+        if(complicationType == 15) { return propTzName1.toUpper() + ":"; }
+        if(complicationType == 37) { return propTzName2.toUpper() + ":"; }
         switch(complicationType) {
             case 0: return formatLabel(Rez.Strings.LABEL_WMIN_1, Rez.Strings.LABEL_WMIN_2, labelSize);
             case 1: return formatLabel(Rez.Strings.LABEL_DMIN_1, Rez.Strings.LABEL_DMIN_2, labelSize);
-            case 3:
             case 2:
                 if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_DKM_1, Rez.Strings.LABEL_DKM_2, labelSize); }
                 return formatLabel(Rez.Strings.LABEL_DMI_1, Rez.Strings.LABEL_DMI_2, labelSize);
-            case 4: return Application.loadResource(Rez.Strings.LABEL_FLOORS);
-            case 5: return formatLabel(Rez.Strings.LABEL_CLIMB_1, Rez.Strings.LABEL_CLIMB_2, labelSize);
-            case 6: return formatLabel(Rez.Strings.LABEL_RECOV_1, Rez.Strings.LABEL_RECOV_2, labelSize);
-            case 7: return formatLabel(Rez.Strings.LABEL_VO2_1, Rez.Strings.LABEL_VO2RUN_2, labelSize);
-            case 8: return formatLabel(Rez.Strings.LABEL_VO2_1, Rez.Strings.LABEL_VO2BIKE_2, labelSize);
-            case 9: return formatLabel(Rez.Strings.LABEL_RESP_1, Rez.Strings.LABEL_RESP_2, labelSize);
-            case 10: return Application.loadResource(Rez.Strings.LABEL_HR);
-            case 11: return formatLabel(Rez.Strings.LABEL_CAL_1, Rez.Strings.LABEL_CAL_2, labelSize);
-            case 12: return formatLabel(Rez.Strings.LABEL_ALT_1, Rez.Strings.LABEL_ALT_2, labelSize);
-            case 13: return Application.loadResource(Rez.Strings.LABEL_STRESS);
-            case 14: return formatLabel(Rez.Strings.LABEL_BBAT_1, Rez.Strings.LABEL_BBAT_2, labelSize);
-            case 15: return formatLabel(Rez.Strings.LABEL_ALT_1, Rez.Strings.LABEL_ALT_2, labelSize);
-            case 17: return Application.loadResource(Rez.Strings.LABEL_STEPS);
-            case 18: return formatLabel(Rez.Strings.LABEL_DIST_1, Rez.Strings.LABEL_DIST_2, labelSize);
-            case 19: return Application.loadResource(Rez.Strings.LABEL_PUSHES);
-            case 20: return "";
-            case 22:
-            case 77:
-            case 21:
+            case 3: return Application.loadResource(Rez.Strings.LABEL_FLOORS);
+            case 4: return formatLabel(Rez.Strings.LABEL_CLIMB_1, Rez.Strings.LABEL_CLIMB_2, labelSize);
+            case 5: return formatLabel(Rez.Strings.LABEL_RECOV_1, Rez.Strings.LABEL_RECOV_2, labelSize);
+            case 6: return formatLabel(Rez.Strings.LABEL_VO2_1, Rez.Strings.LABEL_VO2RUN_2, labelSize);
+            case 7: return formatLabel(Rez.Strings.LABEL_VO2_1, Rez.Strings.LABEL_VO2BIKE_2, labelSize);
+            case 8: return formatLabel(Rez.Strings.LABEL_RESP_1, Rez.Strings.LABEL_RESP_2, labelSize);
+            case 9: return Application.loadResource(Rez.Strings.LABEL_HR);
+            case 10: return formatLabel(Rez.Strings.LABEL_CAL_1, Rez.Strings.LABEL_CAL_2, labelSize);
+            case 11: return formatLabel(Rez.Strings.LABEL_ALT_1, Rez.Strings.LABEL_ALT_2, labelSize);
+            case 12: return Application.loadResource(Rez.Strings.LABEL_STRESS);
+            case 13: return formatLabel(Rez.Strings.LABEL_BBAT_1, Rez.Strings.LABEL_BBAT_2, labelSize);
+            case 14: return formatLabel(Rez.Strings.LABEL_ALT_1, Rez.Strings.LABEL_ALT_2, labelSize);
+            case 16: return Application.loadResource(Rez.Strings.LABEL_STEPS);
+            case 17: return formatLabel(Rez.Strings.LABEL_DIST_1, Rez.Strings.LABEL_DIST_2, labelSize);
+            case 18: return Application.loadResource(Rez.Strings.LABEL_PUSHES);
+            case 58:
+            case 19:
                 if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WRUNM_2, labelSize); }
                 return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WRUNMI_2, labelSize);
-            case 24:
-            case 78:
-            case 23:
+            case 59:
+            case 20:
                 if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WBIKEKM_2, labelSize); }
                 return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WBIKEMI_2, labelSize);
-            case 25: return Application.loadResource(Rez.Strings.LABEL_TRAINING);
+            case 21: return Application.loadResource(Rez.Strings.LABEL_TRAINING);
+            case 22: return Application.loadResource(Rez.Strings.LABEL_PRESSURE);
+            case 23: return formatLabel(Rez.Strings.LABEL_KG_1, Rez.Strings.LABEL_WEIGHT_2, labelSize);
+            case 24: return formatLabel(Rez.Strings.LABEL_LBS_1, Rez.Strings.LABEL_WEIGHT_2, labelSize);
+            case 25: return formatLabel(Rez.Strings.LABEL_ACAL_1, Rez.Strings.LABEL_ACAL_2, labelSize);
             case 26: return Application.loadResource(Rez.Strings.LABEL_PRESSURE);
-            case 27: return formatLabel(Rez.Strings.LABEL_KG_1, Rez.Strings.LABEL_WEIGHT_2, labelSize);
-            case 28: return formatLabel(Rez.Strings.LABEL_LBS_1, Rez.Strings.LABEL_WEIGHT_2, labelSize);
-            case 29: return formatLabel(Rez.Strings.LABEL_ACAL_1, Rez.Strings.LABEL_ACAL_2, labelSize);
-            case 30: return Application.loadResource(Rez.Strings.LABEL_PRESSURE);
-            case 31: return Application.loadResource(Rez.Strings.LABEL_WEEK);
-            case 33:
-            case 32:
+            case 27: return Application.loadResource(Rez.Strings.LABEL_WEEK);
+            case 29:
+            case 28:
                 if(propIsMetricDistance) { return formatLabel(Rez.Strings.LABEL_WKM_1, Rez.Strings.LABEL_WDISTKM_2, labelSize); }
                 return formatLabel(Rez.Strings.LABEL_WMI_1, Rez.Strings.LABEL_WDISTMI_2, labelSize);
-            case 34: return formatLabel(Rez.Strings.LABEL_BATT_1, Rez.Strings.LABEL_BATT_2, labelSize);
-            case 35: return formatLabel(Rez.Strings.LABEL_BATTD_1, Rez.Strings.LABEL_BATTD_2, labelSize);
-            case 36: return formatLabel(Rez.Strings.LABEL_NOTIFS_1, Rez.Strings.LABEL_NOTIFS_1, labelSize);
-            case 37: return formatLabel(Rez.Strings.LABEL_SUN_1, Rez.Strings.LABEL_SUNINT_2, labelSize);
-            case 38: return formatLabel(Rez.Strings.LABEL_TEMP_1, Rez.Strings.LABEL_STEMP_2, labelSize);
-            case 39: return formatLabel(Rez.Strings.LABEL_SUNRISE_1, Rez.Strings.LABEL_SUNRISE_2, labelSize);
-            case 40: return formatLabel(Rez.Strings.LABEL_SUNSET_1, Rez.Strings.LABEL_SUNSET_2, labelSize);
-            case 42: return formatLabel(Rez.Strings.LABEL_ALARM_1, Rez.Strings.LABEL_ALARM_2, labelSize);
-            case 43: return formatLabel(Rez.Strings.LABEL_HIGH_1, Rez.Strings.LABEL_HIGH_2, labelSize);
-            case 44: return formatLabel(Rez.Strings.LABEL_LOW_1, Rez.Strings.LABEL_LOW_2, labelSize);
-            case 53: return formatLabel(Rez.Strings.LABEL_TEMP_1, Rez.Strings.LABEL_TEMP_1, labelSize);
-            case 54: return formatLabel(Rez.Strings.LABEL_PRECIP_1, Rez.Strings.LABEL_PRECIP_1, labelSize);
-            case 55: return formatLabel(Rez.Strings.LABEL_NEXTSUN_1, Rez.Strings.LABEL_NEXTSUN_2, labelSize);
-            case 57: return formatLabel(Rez.Strings.LABEL_NEXTCAL_1, Rez.Strings.LABEL_NEXTCAL_2, labelSize);
-            case 59: return formatLabel(Rez.Strings.LABEL_OX_1, Rez.Strings.LABEL_OX_2, labelSize);
-            case 62: return formatLabel(Rez.Strings.LABEL_ACC_1, Rez.Strings.LABEL_ACC_2, labelSize);
-            case 64: return formatLabel(Rez.Strings.LABEL_UV_1, Rez.Strings.LABEL_UV_2, labelSize);
-            case 66: return formatLabel(Rez.Strings.LABEL_HUM_1, Rez.Strings.LABEL_HUM_2, labelSize);
-            case 71: return WatchUi.loadResource(Rez.Strings.LABEL_CGM) as String;
-            case 72: return WatchUi.loadResource(Rez.Strings.LABEL_CGMAGE) as String;
-            case 74: return formatLabel(Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL_2, labelSize);
-            case 75: return formatLabel(Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, labelSize);
-            case 76: return formatLabel(Rez.Strings.LABEL_RHR_1, Rez.Strings.LABEL_RHR_2, labelSize);
+            case 30: return formatLabel(Rez.Strings.LABEL_BATT_1, Rez.Strings.LABEL_BATT_2, labelSize);
+            case 31: return formatLabel(Rez.Strings.LABEL_BATTD_1, Rez.Strings.LABEL_BATTD_2, labelSize);
+            case 32: return formatLabel(Rez.Strings.LABEL_NOTIFS_1, Rez.Strings.LABEL_NOTIFS_1, labelSize);
+            case 33: return formatLabel(Rez.Strings.LABEL_SUN_1, Rez.Strings.LABEL_SUNINT_2, labelSize);
+            case 34: return formatLabel(Rez.Strings.LABEL_TEMP_1, Rez.Strings.LABEL_STEMP_2, labelSize);
+            case 35: return formatLabel(Rez.Strings.LABEL_SUNRISE_1, Rez.Strings.LABEL_SUNRISE_2, labelSize);
+            case 36: return formatLabel(Rez.Strings.LABEL_SUNSET_1, Rez.Strings.LABEL_SUNSET_2, labelSize);
+            case 38: return formatLabel(Rez.Strings.LABEL_ALARM_1, Rez.Strings.LABEL_ALARM_2, labelSize);
+            case 39: return formatLabel(Rez.Strings.LABEL_HIGH_1, Rez.Strings.LABEL_HIGH_2, labelSize);
+            case 40: return formatLabel(Rez.Strings.LABEL_LOW_1, Rez.Strings.LABEL_LOW_2, labelSize);
+            case 41: return formatLabel(Rez.Strings.LABEL_TEMP_1, Rez.Strings.LABEL_TEMP_1, labelSize);
+            case 42: return formatLabel(Rez.Strings.LABEL_PRECIP_1, Rez.Strings.LABEL_PRECIP_1, labelSize);
+            case 43: return formatLabel(Rez.Strings.LABEL_NEXTSUN_1, Rez.Strings.LABEL_NEXTSUN_2, labelSize);
+            case 45: return formatLabel(Rez.Strings.LABEL_NEXTCAL_1, Rez.Strings.LABEL_NEXTCAL_2, labelSize);
+            case 47: return formatLabel(Rez.Strings.LABEL_OX_1, Rez.Strings.LABEL_OX_2, labelSize);
+            case 50: return formatLabel(Rez.Strings.LABEL_ACC_1, Rez.Strings.LABEL_ACC_2, labelSize);
+            case 51: return formatLabel(Rez.Strings.LABEL_UV_1, Rez.Strings.LABEL_UV_2, labelSize);
+            case 52: return formatLabel(Rez.Strings.LABEL_HUM_1, Rez.Strings.LABEL_HUM_2, labelSize);
+            case 53: return WatchUi.loadResource(Rez.Strings.LABEL_CGM) as String;
+            case 54: return WatchUi.loadResource(Rez.Strings.LABEL_CGMAGE) as String;
+            case 55: return formatLabel(Rez.Strings.LABEL_FL, Rez.Strings.LABEL_FL_2, labelSize);
+            case 56: return formatLabel(Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, Rez.Strings.LABEL_HRS_NEXT_SUN_EVENT_1, labelSize);
+            case 57: return formatLabel(Rez.Strings.LABEL_RHR_1, Rez.Strings.LABEL_RHR_2, labelSize);
         }
         return "";
     }

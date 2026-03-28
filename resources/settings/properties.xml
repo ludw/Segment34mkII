@@ -13,11 +13,11 @@
     <property id="showTempUnit" type="boolean">true</property>
     <property id="windUnit" type="number">0</property>
     <property id="pressureUnit" type="number">0</property>
-    <property id="notificationCountShows" type="number">36</property>
+    <property id="notificationCountShows" type="number">32</property>
     <property id="showSeconds" type="boolean">true</property>
     <property id="topPartShows" type="number">0</property>
-    <property id="sunriseFieldShows" type="number">39</property>
-    <property id="sunsetFieldShows" type="number">40</property>
+    <property id="sunriseFieldShows" type="number">35</property>
+    <property id="sunsetFieldShows" type="number">36</property>
     <property id="histogramData" type="number">0</property>
     <property id="clockOutlineStyle" type="number">0</property>
     <property id="clockGradientOverlay" type="number">0</property>
@@ -28,16 +28,16 @@
     <property id="alwaysShowSeconds" type="boolean">false</property>
     <property id="updateFreq" type="number">5</property>
     <property id="batteryVariant" type="number">-1</property>
-    <property id="weatherLine1Shows" type="number">79</property>
-    <property id="weatherLine2Shows" type="number">80</property>
+    <property id="weatherLine1Shows" type="number">60</property>
+    <property id="weatherLine2Shows" type="number">61</property>
     <property id="weatherFormat1" type="string">t w p</property>
     <property id="weatherFormat2" type="string">c</property>
     <property id="fieldLayout" type="number">0</property>
-    <property id="leftValueShows" type="number">6</property>
-    <property id="middleValueShows" type="number">10</property>
+    <property id="leftValueShows" type="number">5</property>
+    <property id="middleValueShows" type="number">9</property>
     <property id="rightValueShows" type="number">0</property>
     <property id="fourthValueShows" type="number">-2</property>
-    <property id="bottomFieldShows" type="number">17</property>
+    <property id="bottomFieldShows" type="number">16</property>
     <property id="bottomField2Shows" type="number">-2</property>
     <property id="aodStyle" type="number">1</property>
     <property id="aodFieldShows" type="number">-1</property>
