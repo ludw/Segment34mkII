@@ -146,8 +146,10 @@ class Segment34View extends WatchUi.WatchFace {
     hidden var propHistogramData as Number = 0;
     hidden var propSunriseFieldShows as Number = 39;
     hidden var propSunsetFieldShows as Number = 40;
-    hidden var propWeatherLine1Shows as Number = 49;
-    hidden var propWeatherLine2Shows as Number = 50;
+    hidden var propWeatherLine1Shows as Number = 79;
+    hidden var propWeatherLine2Shows as Number = 80;
+    hidden var propWeatherFormat1 as String = "t w p";
+    hidden var propWeatherFormat2 as String = "c";
     hidden var propDateFormat as Number = 0;
     hidden var propDateCustomFormat as String = "DDD, DD MMMM";
     hidden var propNotificationCountShows as Number = 36;
@@ -1587,6 +1589,8 @@ class Segment34View extends WatchUi.WatchFace {
         propSunsetFieldShows = p.getValue("sunsetFieldShows") as Number;
         propWeatherLine1Shows = p.getValue("weatherLine1Shows") as Number;
         propWeatherLine2Shows = p.getValue("weatherLine2Shows") as Number;
+        propWeatherFormat1 = p.getValue("weatherFormat1") as String;
+        propWeatherFormat2 = p.getValue("weatherFormat2") as String;
         propDateFieldShows = p.getValue("dateFieldShows") as Number;
         propShowSeconds = p.getValue("showSeconds") as Boolean;
         propAlwaysShowSeconds = p.getValue("alwaysShowSeconds") as Boolean;
@@ -2416,6 +2420,10 @@ class Segment34View extends WatchUi.WatchFace {
             }
             var distFactor = propIsMetricDistance ? 0.001 : 0.000621371;
             val = formatDistanceByWidth((complicationType == 77 ? cachedRunDist7Days : cachedBikeDist7Days) * distFactor, width);
+        } else if(complicationType == 79) { // Weather data 1 format string
+            val = getWeatherByFormat(propWeatherFormat1);
+        } else if(complicationType == 80) { // Weather data 2 format string
+            val = getWeatherByFormat(propWeatherFormat2);
         }
 
         return val;
@@ -2595,51 +2603,37 @@ class Segment34View extends WatchUi.WatchFace {
         var fmt = propDateCustomFormat;
         var result = "";
         var i = 0;
-        var len = fmt.length();
-        while(i < len) {
-            if(i + 4 <= len) {
-                var tok4 = fmt.substring(i, i + 4);
-                if(tok4.equals("MMMM")) {
-                    result += monthName(today.month);
-                    i += 4;
-                    continue;
-                }
-                if(tok4.equals("YYYY")) {
-                    result += today.year.toString();
-                    i += 4;
-                    continue;
-                }
-            }
-            if(i + 3 <= len) {
-                var tok3 = fmt.substring(i, i + 3);
-                if(tok3.equals("DDD")) {
-                    result += dayName(today.day_of_week);
-                    i += 3;
-                    continue;
-                }
-            }
-            if(i + 2 <= len) {
-                var tok2 = fmt.substring(i, i + 2);
-                if(tok2.equals("DD")) {
-                    result += today.day.toString();
-                    i += 2;
-                    continue;
-                }
-                if(tok2.equals("MM")) {
-                    result += today.month.format("%02d");
-                    i += 2;
-                    continue;
-                }
-                if(tok2.equals("WW")) {
-                    result += isoWeekNumber(today.year, today.month, today.day).toString();
-                    i += 2;
-                    continue;
-                }
-            }
-            result += fmt.substring(i, i + 1);
+        while(i < fmt.length()) {
+            var ch = fmt.substring(i, i + 1);
+            if(ch.equals("y")) { result += today.year.toString(); }
+            else if(ch.equals("m")) { result += today.month.format("%02d"); }
+            else if(ch.equals("d")) { result += today.day.toString(); }
+            else if(ch.equals("o")) { result += dayName(today.day_of_week); }
+            else if(ch.equals("n")) { result += monthName(today.month); }
+            else if(ch.equals("w")) { result += isoWeekNumber(today.year, today.month, today.day).toString(); }
+            else { result += ch; }
             i += 1;
         }
-        return result.toUpper();
+        return result;
+    }
+
+    hidden function getWeatherByFormat(format as String) as String {
+        var result = "";
+        var i = 0;
+        while(i < format.length()) {
+            var ch = format.substring(i, i + 1);
+            if(ch.equals("t")) { result = result + getTemperature(); }
+            else if(ch.equals("w")) { result = result + getWind(); }
+            else if(ch.equals("h")) { result = result + getHumidity(); }
+            else if(ch.equals("p")) { result = result + getPrecip(); }
+            else if(ch.equals("u")) { result = result + getUVIndex(); }
+            else if(ch.equals("l")) { result = result + getHighLow(); }
+            else if(ch.equals("f")) { result = result + getFeelsLike(false); }
+            else if(ch.equals("c")) { result = result + getWeatherCondition(false); }
+            else { result = result + ch; }
+            i += 1;
+        }
+        return result;
     }
 
     hidden function joinFour(a as String, b as String, c as String, d as String) as String {

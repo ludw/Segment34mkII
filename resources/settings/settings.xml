@@ -62,8 +62,8 @@
             <listEntry value="16">@Strings.settings_green_on_white</listEntry>
             <listEntry value="17">@Strings.settings_orange_on_white</listEntry>
             <listEntry value="21">@Strings.settings_purple_on_white</listEntry>
-            <listEntry value="30">@Strings.settings_custom_colors_faq</listEntry>
-            <listEntry value="31">@Strings.settings_custom_colors2_faq</listEntry>
+            <listEntry value="30">@Strings.settings_custom_colors</listEntry>
+            <listEntry value="31">@Strings.settings_custom_colors2</listEntry>
         </settingConfig>
     </setting>
 
@@ -275,26 +275,8 @@
         <settingConfig type="list">
             <listEntry value="-2">@Strings.settings_hidden</listEntry>
             <listEntry value="-1">@Strings.settings_date</listEntry>
-            <listEntry value="45">@Strings.settings_temperature_wind_feels</listEntry>
-            <listEntry value="46">@Strings.settings_temperature_wind</listEntry>
-            <listEntry value="47">@Strings.settings_temperature_wind_humidity</listEntry>
-            <listEntry value="48">@Strings.settings_temperature_wind_high_low</listEntry>
-            <listEntry value="49">@Strings.settings_temperature_wind_precipitation</listEntry>
-            <listEntry value="63">@Strings.settings_temperature_wind_humidity_precipitation</listEntry>
-            <listEntry value="51">@Strings.settings_temperature_humidity_high_low</listEntry>
-            <listEntry value="65">@Strings.settings_temperature_uv_high_low</listEntry>
-            <listEntry value="68">@Strings.settings_temperature_uv_precipitation</listEntry>
-            <listEntry value="69">@Strings.settings_temperature_uv_wind</listEntry>
-            <listEntry value="67">@Strings.settings_temperature_feels_high_low</listEntry>
-            <listEntry value="52">@Strings.settings_temperature_precipitation_high_low</listEntry>
-            <listEntry value="20">@Strings.settings_weather_conditions_precipitation</listEntry>
-            <listEntry value="50">@Strings.settings_weather_conditions</listEntry>
-            <listEntry value="70">@Strings.settings_weather_conditions_temperature</listEntry>
-            <listEntry value="73">@Strings.settings_weather_conditions_feelslike</listEntry>
-            <listEntry value="43">@Strings.settings_daily_high_temperature</listEntry>
-            <listEntry value="44">@Strings.settings_daily_low_temperature</listEntry>
-            <listEntry value="53">@Strings.settings_temperature</listEntry>
-            <listEntry value="54">@Strings.settings_chance_of_precipitation</listEntry>
+            <listEntry value="79">@Strings.settings_weather_data_1</listEntry>
+            <listEntry value="80">@Strings.settings_weather_data_2</listEntry>
             <listEntry value="17">@Strings.settings_steps_day</listEntry>
             <listEntry value="19">@Strings.settings_wheelchair_pushes_day</listEntry>
             <listEntry value="11">@Strings.settings_calories_kcal_day_2</listEntry>
@@ -315,26 +297,8 @@
         <settingConfig type="list">
             <listEntry value="-2">@Strings.settings_hidden</listEntry>
             <listEntry value="-1">@Strings.settings_date</listEntry>
-            <listEntry value="45">@Strings.settings_temperature_wind_feels</listEntry>
-            <listEntry value="46">@Strings.settings_temperature_wind</listEntry>
-            <listEntry value="47">@Strings.settings_temperature_wind_humidity</listEntry>
-            <listEntry value="48">@Strings.settings_temperature_wind_high_low</listEntry>
-            <listEntry value="49">@Strings.settings_temperature_wind_precipitation</listEntry>
-            <listEntry value="63">@Strings.settings_temperature_wind_humidity_precipitation</listEntry>
-            <listEntry value="51">@Strings.settings_temperature_humidity_high_low</listEntry>
-            <listEntry value="65">@Strings.settings_temperature_uv_high_low</listEntry>
-            <listEntry value="68">@Strings.settings_temperature_uv_precipitation</listEntry>
-            <listEntry value="69">@Strings.settings_temperature_uv_wind</listEntry>
-            <listEntry value="67">@Strings.settings_temperature_feels_high_low</listEntry>
-            <listEntry value="52">@Strings.settings_temperature_precipitation_high_low</listEntry>
-            <listEntry value="20">@Strings.settings_weather_conditions_precipitation_chance</listEntry>
-            <listEntry value="50">@Strings.settings_weather_conditions</listEntry>
-            <listEntry value="70">@Strings.settings_weather_conditions_temperature</listEntry>
-            <listEntry value="73">@Strings.settings_weather_conditions_feelslike</listEntry>
-            <listEntry value="43">@Strings.settings_daily_high_temperature</listEntry>
-            <listEntry value="44">@Strings.settings_daily_low_temperature</listEntry>
-            <listEntry value="53">@Strings.settings_temperature</listEntry>
-            <listEntry value="54">@Strings.settings_chance_of_precipitation</listEntry>
+            <listEntry value="79">@Strings.settings_weather_data_1</listEntry>
+            <listEntry value="80">@Strings.settings_weather_data_2</listEntry>
             <listEntry value="17">@Strings.settings_steps_day</listEntry>
             <listEntry value="19">@Strings.settings_wheelchair_pushes_day</listEntry>
             <listEntry value="11">@Strings.settings_calories_kcal_day_2</listEntry>
@@ -351,25 +315,20 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.weatherFormat1" title="@Strings.settings_weather_format_1">
+        <settingConfig type="string" maxLength="20" />
+    </setting>
+
+    <setting propertyKey="@Properties.weatherFormat2" title="@Strings.settings_weather_format_2">
+        <settingConfig type="string" maxLength="20" />
+    </setting>
+
     <setting propertyKey="@Properties.dateFieldShows" title="@Strings.settings_line_below_clock">
         <settingConfig type="list">
             <listEntry value="-2">@Strings.settings_hidden</listEntry>
             <listEntry value="-1">@Strings.settings_date</listEntry>
-            <listEntry value="45">@Strings.settings_temperature_wind_feels</listEntry>
-            <listEntry value="46">@Strings.settings_temperature_wind</listEntry>
-            <listEntry value="47">@Strings.settings_temperature_wind_humidity</listEntry>
-            <listEntry value="48">@Strings.settings_temperature_wind_high_low</listEntry>
-            <listEntry value="49">@Strings.settings_temperature_wind_precipitation</listEntry>
-            <listEntry value="63">@Strings.settings_temperature_wind_humidity_precipitation</listEntry>
-            <listEntry value="51">@Strings.settings_temperature_humidity_high_low</listEntry>
-            <listEntry value="65">@Strings.settings_temperature_uv_high_low</listEntry>
-            <listEntry value="68">@Strings.settings_temperature_uv_precipitation</listEntry>
-            <listEntry value="69">@Strings.settings_temperature_uv_wind</listEntry>
-            <listEntry value="67">@Strings.settings_temperature_feels_high_low</listEntry>
-            <listEntry value="52">@Strings.settings_temperature_precipitation_high_low</listEntry>
-            <listEntry value="20">@Strings.settings_weather_conditions_precipitation_chance</listEntry>
-            <listEntry value="50">@Strings.settings_weather_conditions</listEntry>
-            <listEntry value="70">@Strings.settings_weather_conditions_temperature</listEntry>
+            <listEntry value="79">@Strings.settings_weather_data_1</listEntry>
+            <listEntry value="80">@Strings.settings_weather_data_2</listEntry>
             <listEntry value="17">@Strings.settings_steps_day</listEntry>
             <listEntry value="19">@Strings.settings_wheelchair_pushes_day</listEntry>
             <listEntry value="11">@Strings.settings_calories_kcal_day_2</listEntry>

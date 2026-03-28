@@ -198,18 +198,16 @@
     <string id="settings_green_on_white" scope="settings">Green on white (not recommended for AMOLED)</string>
     <string id="settings_orange_on_white" scope="settings">Orange on white (not recommended for AMOLED)</string>
     <string id="settings_purple_on_white" scope="settings">Purple on white (not recommended for AMOLED)</string>
-    <string id="settings_custom_colors" scope="settings">Custom colors, see FAQ 1.2.0 for details</string>
-    <string id="settings_custom_colors_faq" scope="settings">Custom colors, see FAQ for details</string>
+    <string id="settings_custom_colors" scope="settings">Custom colors, see FAQ for details</string>
     <string id="settings_custom_colors2" scope="settings">Custom colors 2, see FAQ for details</string>
-    <string id="settings_custom_colors2_faq" scope="settings">Custom colors 2, see FAQ for details</string>
     <string id="settings_night_color_theme" scope="settings">Night Color Theme</string>
     <string id="settings_no_change" scope="settings">No change</string>
     <string id="settings_night_theme_activation" scope="settings">Activate Night Color Theme:</string>
     <string id="settings_during_scheduled_sleep" scope="settings">During scheduled sleep hours</string>
     <string id="settings_two_hours_before" scope="settings">2 hours before scheduled sleep hours</string>
     <string id="settings_from_sunset_sunrise" scope="settings">From Sunset to Sunrise (requires weather data)</string>
-    <string id="settings_custom_colors_read" scope="settings">Custom colors, read FAQ first</string>
-    <string id="settings_custom_colors2_read" scope="settings">Custom colors 2, read FAQ first</string>
+    <string id="settings_custom_colors_read" scope="settings">Custom colors, read FAQ at ludw.github.io</string>
+    <string id="settings_custom_colors2_read" scope="settings">Custom colors 2, read FAQ at ludw.github.io</string>
     <string id="settings_enter_13_values" scope="settings">Enter 13 values separated by spaces, #FFFFFF format or -</string>
     <string id="settings_clock_outline_style" scope="settings">Clock outline style (AMOLED only)</string>
     <string id="settings_filled_numbers_no_outline" scope="settings">Filled numbers no outline, same in AOD</string>
@@ -306,24 +304,10 @@
     <string id="settings_lines_highest_contrast" scope="settings">Lines (highest contrast)</string>
     <string id="settings_line_1_above_clock" scope="settings">Line 1 above clock shows:</string>
     <string id="settings_date" scope="settings">Date</string>
-    <string id="settings_temperature_wind_feels" scope="settings">Temperature, Wind, Feels like</string>
-    <string id="settings_temperature_wind" scope="settings">Temperature, Wind</string>
-    <string id="settings_temperature_wind_humidity" scope="settings">Temperature, Wind, Humidity</string>
-    <string id="settings_temperature_wind_high_low" scope="settings">Temperature, Wind, High/Low</string>
-    <string id="settings_temperature_wind_precipitation" scope="settings">Temperature, Wind, Precipitation chance</string>
-    <string id="settings_temperature_wind_humidity_precipitation" scope="settings">Temperature, Wind, Humidity, Precipitation chance</string>
-    <string id="settings_temperature_humidity_high_low" scope="settings">Temperature, Humidity, High/Low</string>
-    <string id="settings_temperature_uv_high_low" scope="settings">Temperature, UV Index, High/Low</string>
-    <string id="settings_temperature_feels_high_low" scope="settings">Temperature, Feels like, High/Low</string>
-    <string id="settings_temperature_precipitation_high_low" scope="settings">Temperature, Percipitation chance, High/Low</string>
-    <string id="settings_weather_conditions_precipitation" scope="settings">Weather conditions, Precipitation chance</string>
-    <string id="settings_weather_conditions" scope="settings">Weather conditions</string>
-    <string id="settings_weather_conditions_temperature" scope="settings">Weather conditions, Temperature</string>
-    <string id="settings_weather_conditions_feelslike" scope="settings">Weather conditions, Feels like</string>
-    <string id="settings_daily_high_temperature" scope="settings">Daily high temperature</string>
-    <string id="settings_daily_low_temperature" scope="settings">Daily low temperature</string>
-    <string id="settings_temperature" scope="settings">Temperature</string>
-    <string id="settings_chance_of_precipitation" scope="settings">Chance of Precipitation</string>
+    <string id="settings_weather_data_1" scope="settings">Weather data 1 (specify format below)</string>
+    <string id="settings_weather_data_2" scope="settings">Weather data 2 (specify format below)</string>
+    <string id="settings_weather_format_1" scope="settings">Weather data 1 format (t=temp w=wind h=humidity p=precip u=UV l=high/low f=feels c=condition)</string>
+    <string id="settings_weather_format_2" scope="settings">Weather data 2 format (t=temp w=wind h=humidity p=precip u=UV l=high/low f=feels c=condition)</string>
     <string id="settings_steps_day" scope="settings">Steps / day</string>
     <string id="settings_wheelchair_pushes_day" scope="settings">Wheelchair pushes / day</string>
     <string id="settings_calories_kcal_day_2" scope="settings">Calories (kcal) / day</string>
@@ -406,7 +390,7 @@
     <string id="settings_date_format" scope="settings">Date format</string>
     <string id="settings_date_format_auto" scope="settings">Auto - WEEKDAY, DD MONTH YYYY (year omitted for large font)</string>
     <string id="settings_date_format_custom" scope="settings">Custom - enter format below</string>
-    <string id="settings_date_custom_format" scope="settings">Custom format (DDD=weekday DD=day MM=month# MMMM=month YYYY WW=week)</string>
+    <string id="settings_date_custom_format" scope="settings">Custom format (o=weekday d=day m=month# n=month y=year w=week)</string>
     <string id="settings_alternative_timezone_1_label" scope="settings">Alternative Timezone 1 label</string>
     <string id="settings_alternative_timezone_1_offset" scope="settings">Alternative Timezone 1 offset</string>
     <string id="settings_alternative_timezone_2_label" scope="settings">Alternative Timezone 2 label</string>
