@@ -31,6 +31,7 @@
             <listEntry value="17">@Strings.settings_orange_on_white</listEntry>
             <listEntry value="21">@Strings.settings_purple_on_white</listEntry>
             <listEntry value="30">@Strings.settings_custom_colors</listEntry>
+            <listEntry value="31">@Strings.settings_custom_colors2</listEntry>
         </settingConfig>
     </setting>
 
@@ -62,6 +63,7 @@
             <listEntry value="17">@Strings.settings_orange_on_white</listEntry>
             <listEntry value="21">@Strings.settings_purple_on_white</listEntry>
             <listEntry value="30">@Strings.settings_custom_colors_faq</listEntry>
+            <listEntry value="31">@Strings.settings_custom_colors2_faq</listEntry>
         </settingConfig>
     </setting>
 
@@ -74,6 +76,10 @@
     </setting>
 
     <setting propertyKey="@Properties.colorOverride" title="@Strings.settings_custom_colors_read">
+        <settingConfig type="alphanumeric" errorMessage="@Strings.settings_enter_13_values" />
+    </setting>
+
+    <setting propertyKey="@Properties.colorOverride2" title="@Strings.settings_custom_colors2_read">
         <settingConfig type="alphanumeric" errorMessage="@Strings.settings_enter_13_values" />
     </setting>
 

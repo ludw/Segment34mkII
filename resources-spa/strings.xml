@@ -7,6 +7,7 @@
     <string id="UNIT_STEPS">PASOS</string>
     <string id="UNIT_PUSHES">EMPUJES</string>
     <string id="LABEL_FL">PISOS</string>
+    <string id="LABEL_FL_2">SENSACIÓN</string>
     <string id="LABEL_NA">N/D</string>
     <string id="LABEL_POS_NA">POSICIÓN N/D</string>
     <string id="WEATHER_0">DESPEJADO</string>
@@ -87,119 +88,88 @@
 
     <string id="LABEL_WMIN_1">MIN S</string>
     <string id="LABEL_WMIN_2">MIN SEM</string>
-    <string id="LABEL_WMIN_3">MIN ACT SEM</string>
     <string id="LABEL_DMIN_1">MIN D</string>
     <string id="LABEL_DMIN_2">MIN HOY</string>
-    <string id="LABEL_DMIN_3">MIN ACT DIA</string>
     <string id="LABEL_DKM_1">KM D</string>
     <string id="LABEL_DKM_2">KM HOY</string>
     <string id="LABEL_DMI_1">MI D</string>
     <string id="LABEL_DMI_2">MI HOY</string>
-    <string id="LABEL_DMI_3">MILLAS HOY</string>
     <string id="LABEL_FLOORS">PISOS:</string>
     <string id="LABEL_CLIMB_1">SUBIDA</string>
     <string id="LABEL_CLIMB_2">M SUBIDOS</string>
     <string id="LABEL_RECOV_1">RECUP</string>
     <string id="LABEL_RECOV_2">HRS RECUP</string>
-    <string id="LABEL_RECOV_3">HORAS RECUP</string>
     <string id="LABEL_VO2_1">VO2</string>
     <string id="LABEL_VO2_2">VO2 MAX</string>
-    <string id="LABEL_VO2RUN_3">VO2 MAX CARR</string>
-    <string id="LABEL_VO2BIKE_3">VO2 MAX BICI</string>
+    <string id="LABEL_VO2RUN_2">VO2 CORRER</string>
+    <string id="LABEL_VO2BIKE_2">VO2 BICI</string>
     <string id="LABEL_RESP_1">RESP</string>
     <string id="LABEL_RESP_2">FREC RESP</string>
-    <string id="LABEL_RESP_3">FREC RESPIR</string>
     <string id="LABEL_HR">FC:</string>
     <string id="LABEL_CAL_1">CAL</string>
     <string id="LABEL_CAL_2">CALORIAS</string>
-    <string id="LABEL_CAL_3">CAL DIA</string>
     <string id="LABEL_ALT_1">ALT</string>
     <string id="LABEL_ALT_2">ALTITUD</string>
-    <string id="LABEL_ALTM_3">ALTITUD M</string>
     <string id="LABEL_STRESS">STRESS:</string>
-    <string id="LABEL_ALTFT_3">ALTITUD PIES</string>
     <string id="LABEL_BBAT_1">BAT C</string>
     <string id="LABEL_BBAT_2">BAT CUERPO</string>
-    <string id="LABEL_BBAT_3">BAT CORPORAL</string>
     <string id="LABEL_STEPS">PASOS:</string>
     <string id="LABEL_DIST_1">DIST</string>
     <string id="LABEL_DIST_2">M HOY</string>
-    <string id="LABEL_DIST_3">METROS HOY</string>
     <string id="LABEL_PUSHES">EMPUJES:</string>
     <string id="LABEL_WKM_1">KM SEM</string>
     <string id="LABEL_WRUNM_2">KM CORRER S</string>
-    <string id="LABEL_WRUNM_3">KM CORRER SEM</string>
     <string id="LABEL_WMI_1">MI SEM</string>
     <string id="LABEL_WRUNMI_2">MI CORRER S</string>
-    <string id="LABEL_WRUNMI_3">MI CORRER SEM</string>
     <string id="LABEL_WBIKEKM_2">KM BICI S</string>
-    <string id="LABEL_WBIKEKM_3">KM BICI SEM</string>
     <string id="LABEL_WBIKEMI_2">MI BICI S</string>
-    <string id="LABEL_WBIKEMI_3">MI BICI SEM</string>
     <string id="LABEL_TRAINING">ENTRENAMIENTO:</string>
     <string id="LABEL_PRESSURE">PRESIÓN:</string>
     <string id="LABEL_KG_1">KG</string>
     <string id="LABEL_WEIGHT_2">PESO</string>
-    <string id="LABEL_KG_3">PESO KG</string>
     <string id="LABEL_LBS_1">LIBRAS</string>
-    <string id="LABEL_LBS_3">PESO LIBRAS</string>
     <string id="LABEL_ACAL_1">CAL A</string>
     <string id="LABEL_ACAL_2">CAL ACT.</string>
-    <string id="LABEL_ACAL_3">CALORIAS ACT.</string>
     <string id="LABEL_WEEK">SEMANA:</string>
     <string id="LABEL_WDISTKM_2">KM SEM</string>
-    <string id="LABEL_WDISTKM_3">DIST KM SEM</string>
     <string id="LABEL_WDISTMI_2">MI SEM</string>
-    <string id="LABEL_WDISTMI_3">MILLAS SEM</string>
     <string id="LABEL_BATT_1">BAT</string>
     <string id="LABEL_BATT_2">BAT %</string>
-    <string id="LABEL_BATT_3">BATERIA %</string>
     <string id="LABEL_BATTD_1">BAT D</string>
     <string id="LABEL_BATTD_2">DIAS BAT</string>
-    <string id="LABEL_BATTD_3">DIAS BATERIA</string>
     <string id="LABEL_NOTIFS_1">NOTIFS</string>
-    <string id="LABEL_NOTIFS_3">NOTIFICACION</string>
     <string id="LABEL_SUN_1">SOL</string>
     <string id="LABEL_SUNINT_2">INT SOL</string>
-    <string id="LABEL_SUNINT_3">INTENSIDAD</string>
     <string id="LABEL_TEMP_1">TEMP</string>
-    <string id="LABEL_STEMP_3">TEMP SENSOR</string>
-    <string id="LABEL_DAWN_1">AMANEC</string>
-    <string id="LABEL_DAWN_2">AMANECER</string>
-    <string id="LABEL_DUSK_1">ANOCHER</string>
-    <string id="LABEL_DUSK_2">ANOCHECER</string>
+    <string id="LABEL_STEMP_2">S TEMP</string>
+    <string id="LABEL_SUNRISE_1">AMANEC</string>
+    <string id="LABEL_SUNRISE_2">AMANECER</string>
+    <string id="LABEL_SUNSET_1">ANOCHER</string>
+    <string id="LABEL_SUNSET_2">ANOCHECER</string>
     <string id="LABEL_ALARM_1">ALARMA</string>
     <string id="LABEL_ALARM_2">ALARMAS</string>
     <string id="LABEL_HIGH_1">MAX</string>
     <string id="LABEL_HIGH_2">MAX DIARIO</string>
     <string id="LABEL_LOW_1">MIN</string>
     <string id="LABEL_LOW_2">MIN DIARIO</string>
-    <string id="LABEL_TEMP_3">TEMPERATURA</string>
     <string id="LABEL_PRECIP_1">PRECIP</string>
-    <string id="LABEL_PRECIP_3">PRECIP</string>
     <string id="LABEL_NEXTSUN_1">SOL</string>
     <string id="LABEL_NEXTSUN_2">PROX SOL</string>
-    <string id="LABEL_NEXTSUN_3">PROX SOL EVNT</string>
     <string id="LABEL_NEXTCAL_1">CAL</string>
     <string id="LABEL_NEXTCAL_2">PROX CAL</string>
-    <string id="LABEL_NEXTCAL_3">PROX CAL EVNT</string>
     <string id="LABEL_OX_1">OXI</string>
     <string id="LABEL_OX_2">OXIMETRIA</string>
     <string id="LABEL_ACC_1">PREC</string>
     <string id="LABEL_ACC_2">PREC POSIC</string>
-    <string id="LABEL_ACC_3">PREC POSICION</string>
     <string id="LABEL_UV_1">UV</string>
     <string id="LABEL_UV_2">INDICE UV</string>
     <string id="LABEL_HUM_1">HUM</string>
     <string id="LABEL_HUM_2">HUMEDAD</string>
-    <string id="LABEL_FL_3">SENS. TÉRMICA</string>
     <string id="LABEL_CGM">CGM</string>
     <string id="LABEL_CGMAGE">CGM EDAD</string>
     <string id="LABEL_HRS_NEXT_SUN_EVENT_1">H SOL</string>
-    <string id="LABEL_HRS_NEXT_SUN_EVENT_3">HORAS SOL</string>
     <string id="LABEL_RHR_1">FCC</string>
     <string id="LABEL_RHR_2">FC REP</string>
-    <string id="LABEL_RHR_3">FC REPOSO</string>
 
     <!-- Settings strings with scope="settings" -->
     <string id="settings_color_theme" scope="settings">Tema Colores</string>
@@ -229,6 +199,8 @@
     <string id="settings_purple_on_white" scope="settings">Morado en blanco (no recomendado para AMOLED)</string>
     <string id="settings_custom_colors" scope="settings">Colores personalizados, vea FAQ 1.2.0 para detalles</string>
     <string id="settings_custom_colors_faq" scope="settings">Colores personalizados, vea FAQ para detalles</string>
+    <string id="settings_custom_colors2" scope="settings">Colores personalizados 2, vea FAQ para detalles</string>
+    <string id="settings_custom_colors2_faq" scope="settings">Colores personalizados 2, vea FAQ para detalles</string>
     <string id="settings_night_color_theme" scope="settings">Tema de Color Noche</string>
     <string id="settings_no_change" scope="settings">Sin cambios</string>
     <string id="settings_night_theme_activation" scope="settings">Activar tema Color Noche:</string>
@@ -236,6 +208,7 @@
     <string id="settings_two_hours_before" scope="settings">2 horas antes de la hora de sueño programado</string>
     <string id="settings_from_sunset_sunrise" scope="settings">Del anochecer al amanecer (requiere datos meteo)</string>
     <string id="settings_custom_colors_read" scope="settings">Colores personalizados, lea antes las FAQ</string>
+    <string id="settings_custom_colors2_read" scope="settings">Colores personalizados 2, lea antes las FAQ</string>
     <string id="settings_enter_13_values" scope="settings">Introduzca 13 valores separados por espacios, formato #FFFFFF o -</string>
     <string id="settings_clock_outline_style" scope="settings">Estilo del contorno del reloj (solo AMOLED)</string>
     <string id="settings_filled_numbers_no_outline" scope="settings">Números rellenos sin contorno, igual en AOD</string>
