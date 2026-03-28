@@ -2172,8 +2172,6 @@ class Segment34View extends WatchUi.WatchFace {
             if(activityInfo.pushes != null) {
                 val = activityInfo.pushes.format(numberFormat);
             }
-        } else if(complicationType == 20) { // Weather condition
-            val = getWeatherCondition(true);
         } else if(complicationType == 21 || complicationType == 22) { // Weekly run distance
             val = getWeeklyDistanceFromComplication(true, propIsMetricDistance ? 0.001 : 0.000621371, width);
         } else if(complicationType == 23 || complicationType == 24) { // Weekly bike distance
@@ -2274,42 +2272,6 @@ class Segment34View extends WatchUi.WatchFace {
                 var tempVal = weatherCondition.lowTemperature;
                 val = formatTemperature(convertTemperature(tempVal, cachedTempUnit));
             }
-        } else if(complicationType == 45) { // Temperature, Wind, Feels like
-            var temp = getTemperature();
-            var wind = getWind();
-            var feelsLike = getFeelsLike(true);
-            val = joinFour(temp, wind, feelsLike, "");
-        } else if(complicationType == 46) { // Temperature, Wind
-            var temp = getTemperature();
-            var wind = getWind();
-            val = joinFour(temp, wind, "", "");
-        } else if(complicationType == 47) { // Temperature, Wind, Humidity
-            var temp = getTemperature();
-            var wind = getWind();
-            var humidity = getHumidity();
-            val = joinFour(temp, wind, humidity, "");
-        } else if(complicationType == 48) { // Temperature, Wind, High/Low
-            var temp = getTemperature();
-            var wind = getWind();
-            var highlow = getHighLow();
-            val = joinFour(temp, wind, highlow, "");
-        } else if(complicationType == 49) { // Temperature, Wind, Precipitation chance
-            var temp = getTemperature();
-            var wind = getWind();
-            var precip = getPrecip();
-            val = joinFour(temp, wind, precip, "");
-        } else if(complicationType == 50) { // Weather condition without precipitation
-            val = getWeatherCondition(false);
-        } else if(complicationType == 51) { // Temperature, Humidity, High/Low
-            var temp = getTemperature();
-            var humidity = getHumidity();
-            var highlow = getHighLow();
-            val = joinFour(temp, humidity, highlow, "");
-        } else if(complicationType == 52) { // Temperature, Percipitation chance, High/Low
-            var temp = getTemperature();
-            var precip = getPrecip();
-            var highlow = getHighLow();
-            val = joinFour(temp, precip, highlow, "");
         } else if(complicationType == 53) { // Temperature
             val = getTemperature();
         } else if(complicationType == 54) { // Precipitation chance
@@ -2362,50 +2324,16 @@ class Segment34View extends WatchUi.WatchFace {
                     val = ["N/A", "LAST", "POOR", "USBL", "GOOD"][acc];
                 }
             }
-        } else if(complicationType == 63) { // Temperature, Wind, Humidity, Precipitation chance
-            var temp = getTemperature();
-            var wind = getWind();
-            var humidity = getHumidity();
-            var precip = getPrecip();
-            val = joinFour(temp, wind, humidity, precip);
         } else if(complicationType == 64) { // UV Index
             val = getUVIndex();
-        } else if(complicationType == 65) { // Temperature, UV Index, High/Low
-            var temp = getTemperature();
-            var uv = getUVIndex();
-            var highlow = getHighLow();
-            val = joinFour(temp, uv, highlow, "");
         } else if(complicationType == 66) { // Humidity
             val = getHumidity();
-        } else if(complicationType == 67) { // Temperature, Feels like, High/Low
-            var temp = getTemperature();
-            var fl = getFeelsLike(true);
-            var highlow = getHighLow();
-            val = joinFour(temp, fl, highlow, "");
-        } else if(complicationType == 68) { // Temperature, UV, Precip
-            var temp = getTemperature();
-            var uv = getUVIndex();
-            var precip = getPrecip();
-            val = joinFour(temp, uv, precip, "");
-        } else if(complicationType == 69) { // Temperature, UV, Wind
-            var temp = getTemperature();
-            var uv = getUVIndex();
-            var wind = getWind();
-            val = joinFour(temp, uv, wind, "");
-        } else if(complicationType == 70) { // Weather condition, Temperature
-            var condition = getWeatherCondition(false);
-            var temp = getTemperature();
-            val = joinFour(condition, temp, "", "");
         } else if(complicationType == 71) { // CGM Glucose + Trend
             val = getCgmReading();
         } else if(complicationType == 72) { // CGM Age (minutes)
             val = getCgmAge();
-        } else if(complicationType == 73) { // Weather condition, Feels like
-            var condition = getWeatherCondition(false);
-            var fl = getFeelsLike(false);
-            val = joinFour(condition, fl, "", "");
         } else if(complicationType == 74) { // Feels like
-            val = getFeelsLike(false);
+            val = getFeelsLike();
         } else if(complicationType == 75) { // Hours to next sun event
             val = hoursToNextSunEvent();
         } else if(complicationType == 76) { // Resting Heart Rate
@@ -2628,21 +2556,12 @@ class Segment34View extends WatchUi.WatchFace {
             else if(ch.equals("p")) { result = result + getPrecip(); }
             else if(ch.equals("u")) { result = result + getUVIndex(); }
             else if(ch.equals("l")) { result = result + getHighLow(); }
-            else if(ch.equals("f")) { result = result + getFeelsLike(false); }
-            else if(ch.equals("c")) { result = result + getWeatherCondition(false); }
+            else if(ch.equals("f")) { result = result + getFeelsLike(); }
+            else if(ch.equals("c")) { result = result + getWeatherCondition(); }
             else { result = result + ch; }
             i += 1;
         }
         return result;
-    }
-
-    hidden function joinFour(a as String, b as String, c as String, d as String) as String {
-        var ret = "";
-        if(a.length() > 0) { ret = a; }
-        if(b.length() > 0) { ret = ret.length() > 0 ? ret + ", " + b : b; }
-        if(c.length() > 0) { ret = ret.length() > 0 ? ret + ", " + c : c; }
-        if(d.length() > 0) { ret = ret.length() > 0 ? ret + ", " + d : d; }
-        return ret;
     }
 
     hidden function getDateTimeGroup() as String {
@@ -2726,21 +2645,10 @@ class Segment34View extends WatchUi.WatchFace {
         }
     }
 
-    hidden function getWeatherCondition(includePrecipitation as Boolean) as String {
+    hidden function getWeatherCondition() as String {
         // Early return if no weather data
         if (weatherCondition == null || weatherCondition.condition == null) {
             return "";
-        }
-
-        var perp = "";
-        // Safely check precipitation chance
-        if(includePrecipitation) {
-            if (weatherCondition.precipitationChance != null &&
-                weatherCondition.precipitationChance instanceof Number) {
-                if(weatherCondition.precipitationChance > 0) {
-                    perp = " (" + weatherCondition.precipitationChance.format("%02d") + "%)";
-                }
-            }
         }
 
         var weatherStrings = [
@@ -2761,9 +2669,7 @@ class Segment34View extends WatchUi.WatchFace {
         ];
         var idx = weatherCondition.condition.toNumber();
         if (idx < 0 || idx >= weatherStrings.size()) { idx = 53; }
-        var ret = weatherStrings[idx];
-
-        return Application.loadResource(ret) + perp;
+        return Application.loadResource(weatherStrings[idx]);
     }
 
     hidden function getTemperature() as String {
@@ -2854,20 +2760,11 @@ class Segment34View extends WatchUi.WatchFace {
         return bearing + windspeed;
     }
 
-    hidden function getFeelsLike(include_label as Boolean) as String {
-        var fl = "";
+    hidden function getFeelsLike() as String {
         if(weatherCondition != null and weatherCondition.feelsLikeTemperature != null) {
-            var fltemp = convertTemperature(weatherCondition.feelsLikeTemperature, cachedTempUnit);
-            if(include_label) {
-                var fllabel = Application.loadResource(Rez.Strings.LABEL_FL);
-                fl = fllabel + formatTemperature(fltemp);
-            } else {
-                fl = formatTemperature(fltemp);
-            }
-
+            return formatTemperature(convertTemperature(weatherCondition.feelsLikeTemperature, cachedTempUnit));
         }
-
-        return fl;
+        return "";
     }
 
     hidden function getHumidity() as String {

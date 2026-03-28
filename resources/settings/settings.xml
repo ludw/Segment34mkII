@@ -316,11 +316,11 @@
     </setting>
 
     <setting propertyKey="@Properties.weatherFormat1" title="@Strings.settings_weather_format_1">
-        <settingConfig type="string" maxLength="20" />
+        <settingConfig type="alphaNumeric" />
     </setting>
 
     <setting propertyKey="@Properties.weatherFormat2" title="@Strings.settings_weather_format_2">
-        <settingConfig type="string" maxLength="20" />
+        <settingConfig type="alphaNumeric" />
     </setting>
 
     <setting propertyKey="@Properties.dateFieldShows" title="@Strings.settings_line_below_clock">
@@ -714,7 +714,8 @@
         <settingConfig type="list">
             <listEntry value="-2">@Strings.settings_hidden</listEntry>
             <listEntry value="-1">@Strings.settings_date</listEntry>
-            <listEntry value="20">@Strings.settings_weather_conditions</listEntry>
+            <listEntry value="79">@Strings.settings_weather_data_1</listEntry>
+            <listEntry value="80">@Strings.settings_weather_data_2</listEntry>
             <listEntry value="17">@Strings.settings_steps_day</listEntry>
             <listEntry value="11">@Strings.settings_calories_kcal_day</listEntry>
             <listEntry value="29">@Strings.settings_active_calories_kcal_day</listEntry>
